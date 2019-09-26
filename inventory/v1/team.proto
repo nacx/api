@@ -5,6 +5,7 @@ package tetrate.api.inventory.v1;
 option go_package = "github.com/tetrateio/tetrate/api/inventory/v1;invv1";
 
 import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
 
 
 // The Team Service provides access to team management features
@@ -24,9 +25,22 @@ service TeamService {
     option (google.api.http).get = "/v1/roles";
   };
 
-  // Lists all existing bindings betwrrn a role a resource, and a group or user.
+  // Lists all existing bindings between a role a resource, and a group or user.
   rpc ListRoleBindings(ListRoleBindingsRequest) returns (ListRoleBindingsResponse) {
-    option (google.api.http).get = "/v1/bindings/{name}";
+    option (google.api.http).get = "/v1/bindings/{name=**}";
+  };
+
+  // Resets the password of the given user so it can be changed
+  rpc ResetPassword(ResetPasswordRequest) returns (google.protobuf.Empty) {
+    option (google.api.http).post = "/v1/users/{name=**}/resetpassword";
+  };
+
+  // Changes the password for the current user, where the user is extracted from the request via HTTP auth
+  rpc ChangePassword(ChangePasswordRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/v1/auth/changepassword"
+      body: "*"
+    };
   };
 }
 
@@ -52,6 +66,9 @@ message User {
 
   // Email of the user or service account, if known
   string email = 5;
+
+  // The login name used to access the Tetrate platform
+  string login_name = 6;
 }
 
 // A group represents a logical grouping of entities in a hierarchy.
@@ -146,4 +163,16 @@ message ListRoleBindingsRequest {
 message ListRoleBindingsResponse {
   // Existing bindings for the requested resource
   repeated RoleBinding bindings = 1;
+}
+
+// Request to reset he password for a given user
+message ResetPasswordRequest{
+  // Name of the user to reset the password for
+  string name = 1;
+}
+
+// Request to change the password of the current user
+message ChangePasswordRequest{
+  // The new password
+  string new_password = 2;
 }
