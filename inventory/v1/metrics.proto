@@ -1,0 +1,60 @@
+// Copyright (c) Tetrate, Inc 2018 All Rights Reserved.
+
+syntax = "proto3";
+
+package tetrate.api.inventory.v1;
+option go_package = "github.com/tetrateio/tetrate/api/inventory/v1;invv1";
+
+import "google/api/annotations.proto";
+
+// MetricsService delivers various metrics for any given Tetrate service
+service MetricsService {
+  // Get average rate of requests or number of requests per second (such as QPS)
+  // to a given service in a specified rolling duration, or a duration range.
+  // If range provided, it overrides duration
+  rpc GetRate(GetMetricsRequest) returns (GetMetricsResponse) {
+    option (google.api.http).get = "/v1/metrics/rate/{service}";
+  };
+
+  // Get average error rate or number of failed requests per second (such as non 200s)
+  // for a given service in the specified rolling duration, or a duration range
+  rpc GetError(GetMetricsRequest) returns (GetMetricsResponse) {
+    option (google.api.http).get = "/v1/metrics/error/{service}";
+  };
+
+  // Get average request duration in seconds for a given service in the specified
+  // rolling duration or a duration range. This represents latency at server-side
+  // as recorded by mesh
+  rpc GetLatency(GetMetricsRequest) returns (GetMetricsResponse) {
+    option (google.api.http).get = "/v1/metrics/latency/{service}";
+  };
+
+  // Get health of a given service from the list of active workloads for a given service.
+  // Value 1 or greater indicates healthy service. Duration ignored
+  rpc GetHealth(GetMetricsRequest) returns (GetMetricsResponse) {
+    option (google.api.http).get = "/v1/metrics/health/{service}";
+  };
+}
+
+// Request to retrieve metrics for a given service. Duration is rolling in minutes,
+// as in last n minutes. Start/end are Unix timestamps in seconds. Any combination of
+// duration/start/end may be provided in any order. filter unused for now
+message GetMetricsRequest {
+  string service = 1;
+  int32 duration = 2;
+  uint64 start = 3;
+  uint64 end = 4;
+  string filter = 5;
+}
+
+// Single service response row with value, and corresponding Unix timestamp in seconds
+message MetricsResponse {
+  double value = 2;
+  uint64 timestamp = 3;
+}
+
+// GetMetricsResponse returns multiple response records for a given service
+message GetMetricsResponse {
+  string name = 1;
+  repeated MetricsResponse metricsResponse = 2;
+}
