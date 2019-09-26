@@ -19,7 +19,7 @@ DESCRIPTOR := liaison.proto-descriptor
 ENVOYFILTER := envoyfilter.yaml
 
 ALL_GENERATED := $(ALL_GO_PROTOS) $(ALL_GO_VALIDATE_PROTOS) $(DESCRIPTOR) $(ENVOYFILTER) \
-	$(ALL_CLIENT_PROTOS)
+	$(ALL_CLIENT_PROTOS) ./google ./validate node_modules
 
 GOPATH := $(shell go env GOPATH)
 GOSRCDIR := $(GOPATH)/src
@@ -87,7 +87,7 @@ node_modules: touch
 	@yarn
 
 .PHONY: js touch
-js: node_modules touch $(ALL_JS_PROTOS) $(ALL_TS_PROTOS)
+js: node_modules $(ALL_JS_PROTOS) $(ALL_TS_PROTOS)
 
 touch:
 	mkdir -p ./google/api
@@ -96,5 +96,5 @@ touch:
 	touch ./validate/validate_pb.js
 
 clean:
-	rm -fr $(ALL_GENERATED) ./google ./validate
+	rm -fr $(ALL_GENERATED)
 	@echo "cleaned $(ALL_GENERATED)"
