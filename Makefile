@@ -3,7 +3,7 @@
 APIS := audit/v1 inventory/v1 liaison/v1alpha1 liaison/v1 test/v1
 
 PROTOC_VERSION := 3.6.1
-PROTOC_GEN_GO_VERSION := v1.3.1
+PROTOC_GEN_GO_VERSION := v1.2.0
 
 GOPATH := $(shell go env GOPATH)
 GOSRCDIR := $(GOPATH)/src
