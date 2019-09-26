@@ -62,6 +62,24 @@ export interface TetrateApiTccCoreV1Cluster {
     registry?: TetrateApiTccCoreV1Registry;
     /**
      * 
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1Cluster
+     */
+    country?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1Cluster
+     */
+    datacenter?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1Cluster
+     */
+    availabilityZone?: string;
+    /**
+     * 
      * @type {{ [key: string]: string; }}
      * @memberof TetrateApiTccCoreV1Cluster
      */
@@ -76,6 +94,9 @@ export function TetrateApiTccCoreV1ClusterFromJSON(json: any): TetrateApiTccCore
         'id': !exists(json, 'id') ? undefined : json['id'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'registry': !exists(json, 'registry') ? undefined : TetrateApiTccCoreV1RegistryFromJSON(json['registry']),
+        'country': !exists(json, 'country') ? undefined : json['country'],
+        'datacenter': !exists(json, 'datacenter') ? undefined : json['datacenter'],
+        'availabilityZone': !exists(json, 'availabilityZone') ? undefined : json['availabilityZone'],
         'labels': !exists(json, 'labels') ? undefined : json['labels'],
     };
 }
@@ -91,6 +112,9 @@ export function TetrateApiTccCoreV1ClusterToJSON(value?: TetrateApiTccCoreV1Clus
         'id': value.id,
         'description': value.description,
         'registry': TetrateApiTccCoreV1RegistryToJSON(value.registry),
+        'country': value.country,
+        'datacenter': value.datacenter,
+        'availabilityZone': value.availabilityZone,
         'labels': value.labels,
     };
 }

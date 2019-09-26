@@ -145,12 +145,6 @@ service PhysicalResourceModel {
   };
 }
 
-enum Registry {
-  UNKNOWN = 0;
-  KUBERNETES = 1;
-  VM = 2;
-}
-
 message Cluster {
   string name = 1;
   string tenant = 2;
@@ -160,7 +154,10 @@ message Cluster {
   Registry registry = 6;
 
   // Information like datacenter where the cluster is present
-  map<string, string> labels = 7;
+  string country = 7;
+  string datacenter = 8;
+  string availability_zone = 9;
+  map<string, string> labels = 10;
 }
 
 message CreateClusterRequest {

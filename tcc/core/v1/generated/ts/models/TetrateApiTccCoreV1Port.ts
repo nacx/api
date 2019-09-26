@@ -25,7 +25,7 @@ export interface TetrateApiTccCoreV1Port {
      */
     number?: number;
     /**
-     * The protocol exposed on the port. MUST BE one of HTTP|GRPC|HTTP2|TCP|TLS. TLS implies the connection will be routed based on the SNI header to the destination without terminating the TLS connection.
+     * The protocol exposed on the port. MUST BE one of HTTP|GRPC|HTTP2|HTTPS|TCP|TLS. TLS implies the connection will be routed based on the SNI header to the destination without terminating the TLS connection.
      * @type {string}
      * @memberof TetrateApiTccCoreV1Port
      */

@@ -41,16 +41,6 @@ func (m *ClientSettings) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Name
-
-	// no validation rules for Tenant
-
-	// no validation rules for Cluster
-
-	// no validation rules for Namespace
-
-	// no validation rules for Deployment
-
 	if v, ok := interface{}(m.GetHttpRequestTimeout()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
 			return ClientSettingsValidationError{
@@ -81,7 +71,15 @@ func (m *ClientSettings) Validate() error {
 		}
 	}
 
-	// no validation rules for TcpKeepalive
+	if v, ok := interface{}(m.GetTcpKeepalive()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ClientSettingsValidationError{
+				field:  "TcpKeepalive",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
 
 	// no validation rules for CircuitBreakerSensitivity
 

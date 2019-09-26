@@ -4,6 +4,7 @@ package tetrate.api.tcc.core.v1;
 option go_package = "github.com/tetrateio/tetrate/api/tcc/core/v1";
 
 import "google/protobuf/duration.proto";
+import "google/protobuf/wrappers.proto";
 
 // All the timeouts, retries, circuit breakers etc. that consumers
 // want to set to gaurd against failures of their dependencies. These
@@ -17,35 +18,28 @@ import "google/protobuf/duration.proto";
 // will make Pilot apply these customizations only to the namespace
 // concerned without leaking it to all other namespaces.
 message ClientSettings {
-  string name = 1;
-  string tenant = 2;
-  // empty if this is applicable to entire cluster
-  string cluster = 3;
-  // empty if this is applicable to entire namespace
-  string namespace = 4;
-  string deployment = 5;
-
   // Timeout for HTTP requests.
-  google.protobuf.Duration http_request_timeout = 6;
+  google.protobuf.Duration http_request_timeout = 1;
 
   // Retry policy for HTTP requests.
-  HTTPRetry http_retries = 7;
+  HTTPRetry http_retries = 2;
 
   // These two settings will go to dest rule
   // TCP connection timeout.
-  google.protobuf.Duration tcp_connect_timeout = 8;
+  google.protobuf.Duration tcp_connect_timeout = 3;
 
   // If set then set SO_KEEPALIVE on the socket to enable TCP Keepalives.
-  bool tcp_keepalive = 9;
+  google.protobuf.BoolValue tcp_keepalive = 4;
 
   enum Sensitivity {
-    LOW = 0;
-    MEDIUM = 1;
-    HIGH = 2;
+    UNSET = 0;
+    LOW = 1;
+    MEDIUM = 2;
+    HIGH = 3;
   }
   // the sensitivity levels will translate to specific values of
   // dest rule outlier detection.
-  Sensitivity circuit_breaker_sensitivity = 10;
+  Sensitivity circuit_breaker_sensitivity = 5;
 }
 
 message HTTPRetry {

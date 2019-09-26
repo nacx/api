@@ -2826,23 +2826,6 @@
     "tetrate.api.tcc.core.v1.ClientSettings": {
       "type": "object",
       "properties": {
-        "name": {
-          "type": "string"
-        },
-        "tenant": {
-          "type": "string"
-        },
-        "cluster": {
-          "type": "string",
-          "title": "empty if this is applicable to entire cluster"
-        },
-        "namespace": {
-          "type": "string",
-          "title": "empty if this is applicable to entire namespace"
-        },
-        "deployment": {
-          "type": "string"
-        },
         "httpRequestTimeout": {
           "type": "string",
           "description": "Timeout for HTTP requests."
@@ -2870,11 +2853,12 @@
     "tetrate.api.tcc.core.v1.ClientSettings.Sensitivity": {
       "type": "string",
       "enum": [
+        "UNSET",
         "LOW",
         "MEDIUM",
         "HIGH"
       ],
-      "default": "LOW"
+      "default": "UNSET"
     },
     "tetrate.api.tcc.core.v1.Cluster": {
       "type": "object",
@@ -2897,12 +2881,21 @@
         "registry": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.Registry"
         },
+        "country": {
+          "type": "string",
+          "title": "Information like datacenter where the cluster is present"
+        },
+        "datacenter": {
+          "type": "string"
+        },
+        "availabilityZone": {
+          "type": "string"
+        },
         "labels": {
           "type": "object",
           "additionalProperties": {
             "type": "string"
-          },
-          "title": "Information like datacenter where the cluster is present"
+          }
         }
       }
     },
@@ -3657,6 +3650,9 @@
         "loadBalancerClass": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.LoadBalancerClass"
         },
+        "registry": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Registry"
+        },
         "clusterNamespace": {
           "type": "string",
           "description": "The namespace where the load balancer is/will be deployed in a given cluster."
@@ -3674,6 +3670,10 @@
             "$ref": "#/definitions/tetrate.api.tcc.core.v1.TLSSettings"
           },
           "title": "Map of applications attached to this loadbalancer in the form\napplicationId: TLS credential information"
+        },
+        "clientSettings": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.ClientSettings",
+          "description": "Client settings are applicable for traffic from the load\nbalancer's cluster namespace to the application's namespaces."
         },
         "etag": {
           "type": "string"
@@ -3725,7 +3725,7 @@
         },
         "protocol": {
           "type": "string",
-          "description": "The protocol exposed on the port.\nMUST BE one of HTTP|GRPC|HTTP2|TCP|TLS.\nTLS implies the connection will be routed based on the SNI header to\nthe destination without terminating the TLS connection."
+          "description": "The protocol exposed on the port.\nMUST BE one of HTTP|GRPC|HTTP2|HTTPS|TCP|TLS.\nTLS implies the connection will be routed based on the SNI header to\nthe destination without terminating the TLS connection."
         },
         "name": {
           "type": "string",

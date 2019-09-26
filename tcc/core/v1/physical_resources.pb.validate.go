@@ -52,6 +52,12 @@ func (m *Cluster) Validate() error {
 
 	// no validation rules for Registry
 
+	// no validation rules for Country
+
+	// no validation rules for Datacenter
+
+	// no validation rules for AvailabilityZone
+
 	// no validation rules for Labels
 
 	return nil

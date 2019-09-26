@@ -17,6 +17,7 @@
  * @enum {string}
  */
 export enum TetrateApiTccCoreV1ClientSettingsSensitivity {
+    UNSET = 'UNSET',
     LOW = 'LOW',
     MEDIUM = 'MEDIUM',
     HIGH = 'HIGH'

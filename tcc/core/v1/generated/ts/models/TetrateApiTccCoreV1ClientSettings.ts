@@ -28,36 +28,6 @@ import {
  */
 export interface TetrateApiTccCoreV1ClientSettings {
     /**
-     * 
-     * @type {string}
-     * @memberof TetrateApiTccCoreV1ClientSettings
-     */
-    name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TetrateApiTccCoreV1ClientSettings
-     */
-    tenant?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TetrateApiTccCoreV1ClientSettings
-     */
-    cluster?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TetrateApiTccCoreV1ClientSettings
-     */
-    namespace?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TetrateApiTccCoreV1ClientSettings
-     */
-    deployment?: string;
-    /**
      * Timeout for HTTP requests.
      * @type {string}
      * @memberof TetrateApiTccCoreV1ClientSettings
@@ -91,11 +61,6 @@ export interface TetrateApiTccCoreV1ClientSettings {
 
 export function TetrateApiTccCoreV1ClientSettingsFromJSON(json: any): TetrateApiTccCoreV1ClientSettings {
     return {
-        'name': !exists(json, 'name') ? undefined : json['name'],
-        'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
-        'cluster': !exists(json, 'cluster') ? undefined : json['cluster'],
-        'namespace': !exists(json, 'namespace') ? undefined : json['namespace'],
-        'deployment': !exists(json, 'deployment') ? undefined : json['deployment'],
         'httpRequestTimeout': !exists(json, 'httpRequestTimeout') ? undefined : json['httpRequestTimeout'],
         'httpRetries': !exists(json, 'httpRetries') ? undefined : TetrateApiTccCoreV1HTTPRetryFromJSON(json['httpRetries']),
         'tcpConnectTimeout': !exists(json, 'tcpConnectTimeout') ? undefined : json['tcpConnectTimeout'],
@@ -109,11 +74,6 @@ export function TetrateApiTccCoreV1ClientSettingsToJSON(value?: TetrateApiTccCor
         return undefined;
     }
     return {
-        'name': value.name,
-        'tenant': value.tenant,
-        'cluster': value.cluster,
-        'namespace': value.namespace,
-        'deployment': value.deployment,
         'httpRequestTimeout': value.httpRequestTimeout,
         'httpRetries': TetrateApiTccCoreV1HTTPRetryToJSON(value.httpRetries),
         'tcpConnectTimeout': value.tcpConnectTimeout,

@@ -1522,11 +1522,23 @@ func (m *LoadBalancer) Validate() error {
 
 	// no validation rules for LoadBalancerClass
 
+	// no validation rules for Registry
+
 	// no validation rules for ClusterNamespace
 
 	// no validation rules for Labels
 
 	// no validation rules for Applications
+
+	if v, ok := interface{}(m.GetClientSettings()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return LoadBalancerValidationError{
+				field:  "ClientSettings",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
 
 	// no validation rules for Etag
 

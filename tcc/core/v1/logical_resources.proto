@@ -299,18 +299,23 @@ message LoadBalancer {
   bool enable_workflows = 6;
 
   LoadBalancerClass load_balancer_class = 7;
+  Registry registry = 8;
 
   // The namespace where the load balancer is/will be deployed in a given cluster.
-  string cluster_namespace = 8;
+  string cluster_namespace = 9;
 
   // Labels that uniquely identify the cluster loadbalancer.
   // If omitted, defaults to "app: istio-ingressgateway"
-  map<string, string> labels = 9;
+  map<string, string> labels = 10;
 
   // Map of applications attached to this loadbalancer in the form
   // applicationId: TLS credential information
-  map<string, TLSSettings> applications = 10;
-  string etag = 11;
+  map<string, TLSSettings> applications = 11;
+
+  // Client settings are applicable for traffic from the load
+  // balancer's cluster namespace to the application's namespaces.
+  ClientSettings client_settings = 12;
+  string etag = 13;
 }
 
 message CreateLoadBalancerRequest {
