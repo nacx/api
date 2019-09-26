@@ -1982,28 +1982,118 @@ var _ interface {
 	ErrorName() string
 } = DeleteEndpointRequestValidationError{}
 
-// Validate checks the field values on BulkUpdateClusterRequest with the rules
+// Validate checks the field values on BulkLoadClusterRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
-func (m *BulkUpdateClusterRequest) Validate() error {
+func (m *BulkLoadClusterRequest) Validate() error {
 	if m == nil {
 		return nil
 	}
 
-	// no validation rules for Name
+	// no validation rules for Parent
 
 	// no validation rules for Tenant
 
 	// no validation rules for Environment
 
-	// no validation rules for Cluster
+	for idx, item := range m.GetClusters() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return BulkLoadClusterRequestValidationError{
+					field:  fmt.Sprintf("Clusters[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// BulkLoadClusterRequestValidationError is the validation error returned by
+// BulkLoadClusterRequest.Validate if the designated constraints aren't met.
+type BulkLoadClusterRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e BulkLoadClusterRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e BulkLoadClusterRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e BulkLoadClusterRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e BulkLoadClusterRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e BulkLoadClusterRequestValidationError) ErrorName() string {
+	return "BulkLoadClusterRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e BulkLoadClusterRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sBulkLoadClusterRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = BulkLoadClusterRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = BulkLoadClusterRequestValidationError{}
+
+// Validate checks the field values on
+// BulkLoadClusterRequest_ClusterWithNamespaces with the rules defined in the
+// proto definition for this message. If any rules are violated, an error is returned.
+func (m *BulkLoadClusterRequest_ClusterWithNamespaces) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if v, ok := interface{}(m.GetCluster()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return BulkLoadClusterRequest_ClusterWithNamespacesValidationError{
+				field:  "Cluster",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
 
 	for idx, item := range m.GetNamespaces() {
 		_, _ = idx, item
 
 		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
-				return BulkUpdateClusterRequestValidationError{
+				return BulkLoadClusterRequest_ClusterWithNamespacesValidationError{
 					field:  fmt.Sprintf("Namespaces[%v]", idx),
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -2013,12 +2103,92 @@ func (m *BulkUpdateClusterRequest) Validate() error {
 
 	}
 
+	return nil
+}
+
+// BulkLoadClusterRequest_ClusterWithNamespacesValidationError is the
+// validation error returned by
+// BulkLoadClusterRequest_ClusterWithNamespaces.Validate if the designated
+// constraints aren't met.
+type BulkLoadClusterRequest_ClusterWithNamespacesValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e BulkLoadClusterRequest_ClusterWithNamespacesValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e BulkLoadClusterRequest_ClusterWithNamespacesValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e BulkLoadClusterRequest_ClusterWithNamespacesValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e BulkLoadClusterRequest_ClusterWithNamespacesValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e BulkLoadClusterRequest_ClusterWithNamespacesValidationError) ErrorName() string {
+	return "BulkLoadClusterRequest_ClusterWithNamespacesValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e BulkLoadClusterRequest_ClusterWithNamespacesValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sBulkLoadClusterRequest_ClusterWithNamespaces.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = BulkLoadClusterRequest_ClusterWithNamespacesValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = BulkLoadClusterRequest_ClusterWithNamespacesValidationError{}
+
+// Validate checks the field values on
+// BulkLoadClusterRequest_NamespaceWithDeployments with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *BulkLoadClusterRequest_NamespaceWithDeployments) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if v, ok := interface{}(m.GetNamespace()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return BulkLoadClusterRequest_NamespaceWithDeploymentsValidationError{
+				field:  "Namespace",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
 	for idx, item := range m.GetDeployments() {
 		_, _ = idx, item
 
 		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
-				return BulkUpdateClusterRequestValidationError{
+				return BulkLoadClusterRequest_NamespaceWithDeploymentsValidationError{
 					field:  fmt.Sprintf("Deployments[%v]", idx),
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -2028,12 +2198,94 @@ func (m *BulkUpdateClusterRequest) Validate() error {
 
 	}
 
+	return nil
+}
+
+// BulkLoadClusterRequest_NamespaceWithDeploymentsValidationError is the
+// validation error returned by
+// BulkLoadClusterRequest_NamespaceWithDeployments.Validate if the designated
+// constraints aren't met.
+type BulkLoadClusterRequest_NamespaceWithDeploymentsValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e BulkLoadClusterRequest_NamespaceWithDeploymentsValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e BulkLoadClusterRequest_NamespaceWithDeploymentsValidationError) Reason() string {
+	return e.reason
+}
+
+// Cause function returns cause value.
+func (e BulkLoadClusterRequest_NamespaceWithDeploymentsValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e BulkLoadClusterRequest_NamespaceWithDeploymentsValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e BulkLoadClusterRequest_NamespaceWithDeploymentsValidationError) ErrorName() string {
+	return "BulkLoadClusterRequest_NamespaceWithDeploymentsValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e BulkLoadClusterRequest_NamespaceWithDeploymentsValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sBulkLoadClusterRequest_NamespaceWithDeployments.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = BulkLoadClusterRequest_NamespaceWithDeploymentsValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = BulkLoadClusterRequest_NamespaceWithDeploymentsValidationError{}
+
+// Validate checks the field values on
+// BulkLoadClusterRequest_DeploymentWithEndpoints with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *BulkLoadClusterRequest_DeploymentWithEndpoints) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if v, ok := interface{}(m.GetDeployment()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return BulkLoadClusterRequest_DeploymentWithEndpointsValidationError{
+				field:  "Deployment",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
 	for idx, item := range m.GetEndpoints() {
 		_, _ = idx, item
 
 		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
-				return BulkUpdateClusterRequestValidationError{
+				return BulkLoadClusterRequest_DeploymentWithEndpointsValidationError{
 					field:  fmt.Sprintf("Endpoints[%v]", idx),
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -2046,9 +2298,11 @@ func (m *BulkUpdateClusterRequest) Validate() error {
 	return nil
 }
 
-// BulkUpdateClusterRequestValidationError is the validation error returned by
-// BulkUpdateClusterRequest.Validate if the designated constraints aren't met.
-type BulkUpdateClusterRequestValidationError struct {
+// BulkLoadClusterRequest_DeploymentWithEndpointsValidationError is the
+// validation error returned by
+// BulkLoadClusterRequest_DeploymentWithEndpoints.Validate if the designated
+// constraints aren't met.
+type BulkLoadClusterRequest_DeploymentWithEndpointsValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -2056,24 +2310,26 @@ type BulkUpdateClusterRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e BulkUpdateClusterRequestValidationError) Field() string { return e.field }
+func (e BulkLoadClusterRequest_DeploymentWithEndpointsValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e BulkUpdateClusterRequestValidationError) Reason() string { return e.reason }
+func (e BulkLoadClusterRequest_DeploymentWithEndpointsValidationError) Reason() string {
+	return e.reason
+}
 
 // Cause function returns cause value.
-func (e BulkUpdateClusterRequestValidationError) Cause() error { return e.cause }
+func (e BulkLoadClusterRequest_DeploymentWithEndpointsValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e BulkUpdateClusterRequestValidationError) Key() bool { return e.key }
+func (e BulkLoadClusterRequest_DeploymentWithEndpointsValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e BulkUpdateClusterRequestValidationError) ErrorName() string {
-	return "BulkUpdateClusterRequestValidationError"
+func (e BulkLoadClusterRequest_DeploymentWithEndpointsValidationError) ErrorName() string {
+	return "BulkLoadClusterRequest_DeploymentWithEndpointsValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e BulkUpdateClusterRequestValidationError) Error() string {
+func (e BulkLoadClusterRequest_DeploymentWithEndpointsValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -2085,14 +2341,14 @@ func (e BulkUpdateClusterRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sBulkUpdateClusterRequest.%s: %s%s",
+		"invalid %sBulkLoadClusterRequest_DeploymentWithEndpoints.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = BulkUpdateClusterRequestValidationError{}
+var _ error = BulkLoadClusterRequest_DeploymentWithEndpointsValidationError{}
 
 var _ interface {
 	Field() string
@@ -2100,4 +2356,4 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = BulkUpdateClusterRequestValidationError{}
+} = BulkLoadClusterRequest_DeploymentWithEndpointsValidationError{}

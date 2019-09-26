@@ -14,9 +14,9 @@
 
 import * as runtime from '../runtime';
 import {
-    TetrateApiTccCoreV1BulkUpdateClusterRequest,
-    TetrateApiTccCoreV1BulkUpdateClusterRequestFromJSON,
-    TetrateApiTccCoreV1BulkUpdateClusterRequestToJSON,
+    TetrateApiTccCoreV1BulkLoadClusterRequest,
+    TetrateApiTccCoreV1BulkLoadClusterRequestFromJSON,
+    TetrateApiTccCoreV1BulkLoadClusterRequestToJSON,
     TetrateApiTccCoreV1Cluster,
     TetrateApiTccCoreV1ClusterFromJSON,
     TetrateApiTccCoreV1ClusterToJSON,
@@ -55,11 +55,10 @@ import {
     TetrateApiTccCoreV1NamespaceToJSON,
 } from '../models';
 
-export interface BulkUpdateClusterRequest {
+export interface BulkLoadClusterRequest {
     tenant: string;
     environment: string;
-    cluster: string;
-    body: TetrateApiTccCoreV1BulkUpdateClusterRequest;
+    body: TetrateApiTccCoreV1BulkLoadClusterRequest;
 }
 
 export interface CreateClusterRequest {
@@ -231,21 +230,17 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
 
     /**
      */
-    async bulkUpdateClusterRaw(requestParameters: BulkUpdateClusterRequest): Promise<runtime.ApiResponse<any>> {
+    async bulkLoadClusterRaw(requestParameters: BulkLoadClusterRequest): Promise<runtime.ApiResponse<any>> {
         if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
-            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling bulkUpdateCluster.');
+            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling bulkLoadCluster.');
         }
 
         if (requestParameters.environment === null || requestParameters.environment === undefined) {
-            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling bulkUpdateCluster.');
-        }
-
-        if (requestParameters.cluster === null || requestParameters.cluster === undefined) {
-            throw new runtime.RequiredError('cluster','Required parameter requestParameters.cluster was null or undefined when calling bulkUpdateCluster.');
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling bulkLoadCluster.');
         }
 
         if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling bulkUpdateCluster.');
+            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling bulkLoadCluster.');
         }
 
         const queryParameters: runtime.HTTPQuery = {};
@@ -255,11 +250,11 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/bulkupdate`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/bulkloadcluster`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: TetrateApiTccCoreV1BulkUpdateClusterRequestToJSON(requestParameters.body),
+            body: TetrateApiTccCoreV1BulkLoadClusterRequestToJSON(requestParameters.body),
         });
 
         return new runtime.TextApiResponse(response);
@@ -267,8 +262,8 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
 
     /**
      */
-    async bulkUpdateCluster(requestParameters: BulkUpdateClusterRequest): Promise<object> {
-        const response = await this.bulkUpdateClusterRaw(requestParameters);
+    async bulkLoadCluster(requestParameters: BulkLoadClusterRequest): Promise<object> {
+        const response = await this.bulkLoadClusterRaw(requestParameters);
         return await response.value();
     }
 

@@ -732,6 +732,50 @@
         ]
       }
     },
+    "/v1/tenants/{tenant}/environments/{environment}/bulkloadcluster": {
+      "post": {
+        "operationId": "BulkLoadCluster",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "environment",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.BulkLoadClusterRequest"
+            }
+          }
+        ],
+        "tags": [
+          "PhysicalResourceModel"
+        ]
+      }
+    },
     "/v1/tenants/{tenant}/environments/{environment}/clusters": {
       "get": {
         "operationId": "ListClusters",
@@ -808,56 +852,6 @@
             "required": true,
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.CreateClusterRequest"
-            }
-          }
-        ],
-        "tags": [
-          "PhysicalResourceModel"
-        ]
-      }
-    },
-    "/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/bulkupdate": {
-      "post": {
-        "operationId": "BulkUpdateCluster",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
-          },
-          "404": {
-            "description": "Returned when the resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "tenant",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "environment",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "cluster",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.BulkUpdateClusterRequest"
             }
           }
         ],
@@ -2766,10 +2760,10 @@
         }
       }
     },
-    "tetrate.api.tcc.core.v1.BulkUpdateClusterRequest": {
+    "tetrate.api.tcc.core.v1.BulkLoadClusterRequest": {
       "type": "object",
       "properties": {
-        "name": {
+        "parent": {
           "type": "string"
         },
         "tenant": {
@@ -2778,20 +2772,34 @@
         "environment": {
           "type": "string"
         },
+        "clusters": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.core.v1.BulkLoadClusterRequest.ClusterWithNamespaces"
+          }
+        }
+      },
+      "title": "Cluster, Namespaces, deployments, and endpoints in this request will replace the existing contents of a cluster"
+    },
+    "tetrate.api.tcc.core.v1.BulkLoadClusterRequest.ClusterWithNamespaces": {
+      "type": "object",
+      "properties": {
         "cluster": {
-          "type": "string"
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Cluster"
         },
         "namespaces": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/tetrate.api.tcc.core.v1.Namespace"
+            "$ref": "#/definitions/tetrate.api.tcc.core.v1.BulkLoadClusterRequest.NamespaceWithDeployments"
           }
-        },
-        "deployments": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/tetrate.api.tcc.core.v1.Deployment"
-          }
+        }
+      }
+    },
+    "tetrate.api.tcc.core.v1.BulkLoadClusterRequest.DeploymentWithEndpoints": {
+      "type": "object",
+      "properties": {
+        "deployment": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Deployment"
         },
         "endpoints": {
           "type": "array",
@@ -2799,8 +2807,21 @@
             "$ref": "#/definitions/tetrate.api.tcc.core.v1.Endpoint"
           }
         }
-      },
-      "title": "Namespaces, deployments, and endpoints in this request will replace the existing contents of a cluster"
+      }
+    },
+    "tetrate.api.tcc.core.v1.BulkLoadClusterRequest.NamespaceWithDeployments": {
+      "type": "object",
+      "properties": {
+        "namespace": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Namespace"
+        },
+        "deployments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.core.v1.BulkLoadClusterRequest.DeploymentWithEndpoints"
+          }
+        }
+      }
     },
     "tetrate.api.tcc.core.v1.ClientSettings": {
       "type": "object",
