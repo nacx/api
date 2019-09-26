@@ -1,24 +1,9 @@
 # Copyright (c) Tetrate, Inc 2019 All Rights Reserved.
 
-PROTOC_VERSION := 3.6.1
-PROTOC_GEN_GO_VERSION := v1.2.0
 ISTIO_API_VERSION := 1.1.0-snapshot.5
 
 GOPATH := $(shell go env GOPATH)
 GOSRCDIR := $(GOPATH)/src
-
-PROTOC_INSTALLED := $(shell protoc --version | cut -d " " -f 2)
-PROTOC_GEN_GO_INSTALLED := $(shell git -C $(GOSRCDIR)/github.com/golang/protobuf branch 2> \
-	/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/' | rev | cut -d " " -f 1 | cut -c2- | rev)
-
-ifneq ($(PROTOC_INSTALLED),$(PROTOC_VERSION))
-$(error Bad protoc version $(PROTOC_INSTALLED), please install $(PROTOC_VERSION))
-endif
-
-ifneq ($(PROTOC_GEN_GO_INSTALLED),$(PROTOC_GEN_GO_VERSION))
-$(error Bad protoc-gen-go version $(PROTOC_GEN_GO_INSTALLED), \
-	please install $(PROTOC_GEN_GO_VERSION))
-endif
 
 TOPDIR := ../../..
 VENDOR := $(TOPDIR)/third_party/protobuf/
@@ -48,8 +33,8 @@ ENVOYFILTER := envoyfilter.yaml
 ALL_GENERATED := $(ALL_GO_PROTOS) $(ALL_GO_VALIDATE_PROTOS) $(DESCRIPTOR) $(ENVOYFILTER) \
 	$(ISTIO_API) $(ALL_CLIENT_PROTOS) $(ALL_JS_ARTIFACTS)
 
-.PHONY: all
-all: $(DESCRIPTOR) $(ENVOYFILTER) node_modules
+.PHONY: build
+build: $(DESCRIPTOR) $(ENVOYFILTER) node_modules
 	@echo "all protos done"
 
 # Install all the required global deps.

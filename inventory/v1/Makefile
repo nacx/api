@@ -13,8 +13,8 @@ ENVOYFILTER := envoyfilter.yaml
 GOPATH := $(shell go env GOPATH)
 GOSRCDIR := $(GOPATH)/src
 
-.PHONY: all
-all: $(DESCRIPTOR) $(ENVOYFILTER)
+.PHONY: build
+build: $(DESCRIPTOR) $(ENVOYFILTER)
 	@echo "all protos done"
 
 $(DESCRIPTOR):
