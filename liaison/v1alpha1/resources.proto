@@ -11,7 +11,7 @@ import "validate/validate.proto";
 service ResourcesService {
   // SetResource sets a resource from YAML bytes. When the resource exists it
   // updates the corresponding resource.
-  rpc SetResource(SetResourceRequest) returns (Resource) {
+  rpc SetResource(SetResourceRequest) returns (SetResourceResponse) {
     option (google.api.http) = {
       post : "/v1alpha1/resources"
       body : "*"
@@ -26,6 +26,10 @@ service ResourcesService {
 
 // A representation of a stored resource.
 message Resource { string key = 1; }
+
+message SetResourceResponse {
+  repeated Resource resources = 1;
+}
 
 // A request message to upload a resource in YAML format.
 message SetResourceRequest {

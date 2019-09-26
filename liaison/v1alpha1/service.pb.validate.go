@@ -203,8 +203,6 @@ func (m *ListServicesRequest) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Namespace
-
 	return nil
 }
 
