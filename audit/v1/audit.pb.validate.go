@@ -15,7 +15,7 @@ import (
 	"time"
 	"unicode/utf8"
 
-	"github.com/golang/protobuf/ptypes"
+	"github.com/gogo/protobuf/types"
 )
 
 // ensure the imports are used
@@ -30,7 +30,7 @@ var (
 	_ = time.Duration(0)
 	_ = (*url.URL)(nil)
 	_ = (*mail.Address)(nil)
-	_ = ptypes.DynamicAny{}
+	_ = types.DynamicAny{}
 )
 
 // Validate checks the field values on AuditLog with the rules defined in the
@@ -47,12 +47,17 @@ func (m *AuditLog) Validate() error {
 		}
 	}
 
-	if v, ok := interface{}(m.GetCreateTime()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return AuditLogValidationError{
-				field:  "CreateTime",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetCreateTime()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return AuditLogValidationError{
+					field:  "CreateTime",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -224,12 +229,17 @@ func (m *ListAuditLogsResponse) Validate() error {
 	for idx, item := range m.GetAuditLogs() {
 		_, _ = idx, item
 
-		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return ListAuditLogsResponseValidationError{
-					field:  fmt.Sprintf("AuditLogs[%v]", idx),
-					reason: "embedded message failed validation",
-					cause:  err,
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return ListAuditLogsResponseValidationError{
+						field:  fmt.Sprintf("AuditLogs[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
 				}
 			}
 		}

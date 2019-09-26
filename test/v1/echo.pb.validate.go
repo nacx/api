@@ -15,7 +15,7 @@ import (
 	"time"
 	"unicode/utf8"
 
-	"github.com/golang/protobuf/ptypes"
+	"github.com/gogo/protobuf/types"
 )
 
 // ensure the imports are used
@@ -30,7 +30,7 @@ var (
 	_ = time.Duration(0)
 	_ = (*url.URL)(nil)
 	_ = (*mail.Address)(nil)
-	_ = ptypes.DynamicAny{}
+	_ = types.DynamicAny{}
 )
 
 // Validate checks the field values on EchoRequest with the rules defined in
@@ -119,12 +119,17 @@ func (m *EchoResponse) Validate() error {
 
 	// no validation rules for Body
 
-	if v, ok := interface{}(m.GetServerTime()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return EchoResponseValidationError{
-				field:  "ServerTime",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetServerTime()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return EchoResponseValidationError{
+					field:  "ServerTime",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}

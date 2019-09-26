@@ -15,7 +15,7 @@ import (
 	"time"
 	"unicode/utf8"
 
-	"github.com/golang/protobuf/ptypes"
+	"github.com/gogo/protobuf/types"
 )
 
 // ensure the imports are used
@@ -30,7 +30,7 @@ var (
 	_ = time.Duration(0)
 	_ = (*url.URL)(nil)
 	_ = (*mail.Address)(nil)
-	_ = ptypes.DynamicAny{}
+	_ = types.DynamicAny{}
 )
 
 // Validate checks the field values on RoutingInfo with the rules defined in
@@ -44,34 +44,49 @@ func (m *RoutingInfo) Validate() error {
 	for idx, item := range m.GetSubsets() {
 		_, _ = idx, item
 
-		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return RoutingInfoValidationError{
-					field:  fmt.Sprintf("Subsets[%v]", idx),
-					reason: "embedded message failed validation",
-					cause:  err,
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return RoutingInfoValidationError{
+						field:  fmt.Sprintf("Subsets[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
 				}
 			}
 		}
 
 	}
 
-	if v, ok := interface{}(m.GetHttpSettings()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return RoutingInfoValidationError{
-				field:  "HttpSettings",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetHttpSettings()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return RoutingInfoValidationError{
+					field:  "HttpSettings",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
 
-	if v, ok := interface{}(m.GetTcpSettings()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return RoutingInfoValidationError{
-				field:  "TcpSettings",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetTcpSettings()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return RoutingInfoValidationError{
+					field:  "TcpSettings",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -306,22 +321,32 @@ func (m *HttpSettings) Validate() error {
 		return nil
 	}
 
-	if v, ok := interface{}(m.GetStickySession()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return HttpSettingsValidationError{
-				field:  "StickySession",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetStickySession()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return HttpSettingsValidationError{
+					field:  "StickySession",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
 
-	if v, ok := interface{}(m.GetCorsPolicy()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return HttpSettingsValidationError{
-				field:  "CorsPolicy",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetCorsPolicy()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return HttpSettingsValidationError{
+					field:  "CorsPolicy",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -329,12 +354,17 @@ func (m *HttpSettings) Validate() error {
 	for idx, item := range m.GetRouteRules() {
 		_, _ = idx, item
 
-		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return HttpSettingsValidationError{
-					field:  fmt.Sprintf("RouteRules[%v]", idx),
-					reason: "embedded message failed validation",
-					cause:  err,
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return HttpSettingsValidationError{
+						field:  fmt.Sprintf("RouteRules[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
 				}
 			}
 		}
@@ -413,12 +443,17 @@ func (m *TcpSettings) Validate() error {
 		}
 	}
 
-	if v, ok := interface{}(m.GetRoute()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return TcpSettingsValidationError{
-				field:  "Route",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetRoute()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return TcpSettingsValidationError{
+					field:  "Route",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -490,24 +525,34 @@ func (m *HttpRule) Validate() error {
 	for idx, item := range m.GetMatch() {
 		_, _ = idx, item
 
-		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return HttpRuleValidationError{
-					field:  fmt.Sprintf("Match[%v]", idx),
-					reason: "embedded message failed validation",
-					cause:  err,
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return HttpRuleValidationError{
+						field:  fmt.Sprintf("Match[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
 				}
 			}
 		}
 
 	}
 
-	if v, ok := interface{}(m.GetModify()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return HttpRuleValidationError{
-				field:  "Modify",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetModify()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return HttpRuleValidationError{
+					field:  "Modify",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -516,24 +561,34 @@ func (m *HttpRule) Validate() error {
 
 	case *HttpRule_Route:
 
-		if v, ok := interface{}(m.GetRoute()).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return HttpRuleValidationError{
-					field:  "Route",
-					reason: "embedded message failed validation",
-					cause:  err,
+		{
+			tmp := m.GetRoute()
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return HttpRuleValidationError{
+						field:  "Route",
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
 				}
 			}
 		}
 
 	case *HttpRule_Redirect:
 
-		if v, ok := interface{}(m.GetRedirect()).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return HttpRuleValidationError{
-					field:  "Redirect",
-					reason: "embedded message failed validation",
-					cause:  err,
+		{
+			tmp := m.GetRedirect()
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return HttpRuleValidationError{
+						field:  "Redirect",
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
 				}
 			}
 		}
@@ -605,42 +660,62 @@ func (m *HttpMatchCondition) Validate() error {
 		return nil
 	}
 
-	if v, ok := interface{}(m.GetUri()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return HttpMatchConditionValidationError{
-				field:  "Uri",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetUri()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return HttpMatchConditionValidationError{
+					field:  "Uri",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
 
-	if v, ok := interface{}(m.GetScheme()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return HttpMatchConditionValidationError{
-				field:  "Scheme",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetScheme()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return HttpMatchConditionValidationError{
+					field:  "Scheme",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
 
-	if v, ok := interface{}(m.GetMethod()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return HttpMatchConditionValidationError{
-				field:  "Method",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetMethod()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return HttpMatchConditionValidationError{
+					field:  "Method",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
 
-	if v, ok := interface{}(m.GetAuthority()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return HttpMatchConditionValidationError{
-				field:  "Authority",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetAuthority()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return HttpMatchConditionValidationError{
+					field:  "Authority",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -860,22 +935,32 @@ func (m *Headers) Validate() error {
 		return nil
 	}
 
-	if v, ok := interface{}(m.GetRequest()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return HeadersValidationError{
-				field:  "Request",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetRequest()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return HeadersValidationError{
+					field:  "Request",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
 
-	if v, ok := interface{}(m.GetResponse()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return HeadersValidationError{
-				field:  "Response",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetResponse()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return HeadersValidationError{
+					field:  "Response",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -945,22 +1030,32 @@ func (m *HttpModifyAction) Validate() error {
 		return nil
 	}
 
-	if v, ok := interface{}(m.GetRewrite()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return HttpModifyActionValidationError{
-				field:  "Rewrite",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetRewrite()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return HttpModifyActionValidationError{
+					field:  "Rewrite",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
 
-	if v, ok := interface{}(m.GetHeaders()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return HttpModifyActionValidationError{
-				field:  "Headers",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetHeaders()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return HttpModifyActionValidationError{
+					field:  "Headers",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -1039,12 +1134,17 @@ func (m *Route) Validate() error {
 	for idx, item := range m.GetDestinations() {
 		_, _ = idx, item
 
-		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return RouteValidationError{
-					field:  fmt.Sprintf("Destinations[%v]", idx),
-					reason: "embedded message failed validation",
-					cause:  err,
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return RouteValidationError{
+						field:  fmt.Sprintf("Destinations[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
 				}
 			}
 		}
@@ -1183,22 +1283,32 @@ func (m *CorsPolicy) Validate() error {
 		return nil
 	}
 
-	if v, ok := interface{}(m.GetMaxAge()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return CorsPolicyValidationError{
-				field:  "MaxAge",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetMaxAge()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return CorsPolicyValidationError{
+					field:  "MaxAge",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
 
-	if v, ok := interface{}(m.GetAllowCredentials()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return CorsPolicyValidationError{
-				field:  "AllowCredentials",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetAllowCredentials()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return CorsPolicyValidationError{
+					field:  "AllowCredentials",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -1289,12 +1399,17 @@ func (m *HttpSettings_HTTPCookie) Validate() error {
 		}
 	}
 
-	if v, ok := interface{}(m.GetTtl()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return HttpSettings_HTTPCookieValidationError{
-				field:  "Ttl",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetTtl()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return HttpSettings_HTTPCookieValidationError{
+					field:  "Ttl",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -1379,12 +1494,17 @@ func (m *HttpSettings_StickySession) Validate() error {
 
 	case *HttpSettings_StickySession_Cookie:
 
-		if v, ok := interface{}(m.GetCookie()).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return HttpSettings_StickySessionValidationError{
-					field:  "Cookie",
-					reason: "embedded message failed validation",
-					cause:  err,
+		{
+			tmp := m.GetCookie()
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return HttpSettings_StickySessionValidationError{
+						field:  "Cookie",
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
 				}
 			}
 		}

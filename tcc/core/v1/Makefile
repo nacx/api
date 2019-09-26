@@ -9,6 +9,8 @@ VENDOR := $(TOPDIR)/third_party/protobuf/
 APIS := $(TOPDIR)/api
 TS_OUTPUT_GEN := ./generated/ts
 
+include $(TOPDIR)/api/gogo.mk
+
 PROTO_SOURCES = $(wildcard *.proto)
 PROTO_GO_SOURCES = $(patsubst %.proto,%.pb.go,$(PROTO_SOURCES))
 PROTO_GO_VALIDATE_SOURCES := $(patsubst %.proto,%.pb.validate.go,$(PROTO_SOURCES))
@@ -22,21 +24,18 @@ TS_RUNTIME = ./generated/ts/runtime.ts
 DESCRIPTOR := core.proto-descriptor
 SWAGGER := core.swagger.json
 
-GOPATH := $(shell go env GOPATH)
-GOSRCDIR := $(GOPATH)/src
-
 all: $(DESCRIPTOR) $(SWAGGER) generate-ts
 	@echo "all protos done"
 
 ${DESCRIPTOR}:
 	@echo "building protos"
 	protoc -I ./ \
+		-I /usr/include/protobuf \
 		-I $(VENDOR) \
 		-I $(APIS) \
-		-I $(GOSRCDIR)/github.com/envoyproxy/protoc-gen-validate \
-		--grpc-gateway_out=allow_delete_body=true,paths=source_relative:. \
-		--go_out=paths=source_relative,plugins=grpc:. \
-		--validate_out=paths=source_relative,lang=go:. \
+		--gogofast_out=paths=source_relative,plugins=grpc,$(MAPS):. \
+		--grpc-gateway_out=allow_delete_body=true,paths=source_relative,$(MAPS):. \
+		--validate_out=paths=source_relative,lang=gogo:. \
 		--descriptor_set_out=$(DESCRIPTOR) --include_imports \
 		$(PROTO_SOURCES)
 	@echo "done building protos"
@@ -46,9 +45,9 @@ ${DESCRIPTOR}:
 $(SWAGGER):
 	@echo "building protos"
 	protoc -I ./ \
+		-I /usr/include/protobuf \
 		-I $(VENDOR) \
 		-I $(APIS) \
-		-I $(GOSRCDIR)/github.com/envoyproxy/protoc-gen-validate \
 		--swagger_out=allow_delete_body=true,json_names_for_fields=true,allow_merge=true,merge_file_name=core,fqn_for_swagger_name=true:. \
 		$(PROTO_SOURCES)
 	sed -i -e 's/\\n/ /g' $@

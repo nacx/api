@@ -15,7 +15,7 @@ import (
 	"time"
 	"unicode/utf8"
 
-	"github.com/golang/protobuf/ptypes"
+	"github.com/gogo/protobuf/types"
 )
 
 // ensure the imports are used
@@ -30,7 +30,7 @@ var (
 	_ = time.Duration(0)
 	_ = (*url.URL)(nil)
 	_ = (*mail.Address)(nil)
-	_ = ptypes.DynamicAny{}
+	_ = types.DynamicAny{}
 )
 
 // Validate checks the field values on ClientSettings with the rules defined in
@@ -41,42 +41,62 @@ func (m *ClientSettings) Validate() error {
 		return nil
 	}
 
-	if v, ok := interface{}(m.GetHttpRequestTimeout()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return ClientSettingsValidationError{
-				field:  "HttpRequestTimeout",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetHttpRequestTimeout()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return ClientSettingsValidationError{
+					field:  "HttpRequestTimeout",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
 
-	if v, ok := interface{}(m.GetHttpRetries()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return ClientSettingsValidationError{
-				field:  "HttpRetries",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetHttpRetries()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return ClientSettingsValidationError{
+					field:  "HttpRetries",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
 
-	if v, ok := interface{}(m.GetTcpConnectTimeout()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return ClientSettingsValidationError{
-				field:  "TcpConnectTimeout",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetTcpConnectTimeout()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return ClientSettingsValidationError{
+					field:  "TcpConnectTimeout",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
 
-	if v, ok := interface{}(m.GetTcpKeepalive()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return ClientSettingsValidationError{
-				field:  "TcpKeepalive",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetTcpKeepalive()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return ClientSettingsValidationError{
+					field:  "TcpKeepalive",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -154,12 +174,17 @@ func (m *HTTPRetry) Validate() error {
 		}
 	}
 
-	if v, ok := interface{}(m.GetPerTryTimeout()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return HTTPRetryValidationError{
-				field:  "PerTryTimeout",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetPerTryTimeout()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return HTTPRetryValidationError{
+					field:  "PerTryTimeout",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}

@@ -15,7 +15,7 @@ import (
 	"time"
 	"unicode/utf8"
 
-	"github.com/golang/protobuf/ptypes"
+	"github.com/gogo/protobuf/types"
 )
 
 // ensure the imports are used
@@ -30,7 +30,7 @@ var (
 	_ = time.Duration(0)
 	_ = (*url.URL)(nil)
 	_ = (*mail.Address)(nil)
-	_ = ptypes.DynamicAny{}
+	_ = types.DynamicAny{}
 )
 
 // Validate checks the field values on Cluster with the rules defined in the
@@ -430,12 +430,17 @@ func (m *ListClustersResponse) Validate() error {
 	for idx, item := range m.GetClusters() {
 		_, _ = idx, item
 
-		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return ListClustersResponseValidationError{
-					field:  fmt.Sprintf("Clusters[%v]", idx),
-					reason: "embedded message failed validation",
-					cause:  err,
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return ListClustersResponseValidationError{
+						field:  fmt.Sprintf("Clusters[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
 				}
 			}
 		}
@@ -990,12 +995,17 @@ func (m *ListNamespacesResponse) Validate() error {
 	for idx, item := range m.GetNamespaces() {
 		_, _ = idx, item
 
-		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return ListNamespacesResponseValidationError{
-					field:  fmt.Sprintf("Namespaces[%v]", idx),
-					reason: "embedded message failed validation",
-					cause:  err,
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return ListNamespacesResponseValidationError{
+						field:  fmt.Sprintf("Namespaces[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
 				}
 			}
 		}
@@ -1221,12 +1231,17 @@ func (m *Deployment) Validate() error {
 	for idx, item := range m.GetPorts() {
 		_, _ = idx, item
 
-		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return DeploymentValidationError{
-					field:  fmt.Sprintf("Ports[%v]", idx),
-					reason: "embedded message failed validation",
-					cause:  err,
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return DeploymentValidationError{
+						field:  fmt.Sprintf("Ports[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
 				}
 			}
 		}
@@ -1358,12 +1373,17 @@ func (m *CreateDeploymentRequest) Validate() error {
 	for idx, item := range m.GetPorts() {
 		_, _ = idx, item
 
-		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return CreateDeploymentRequestValidationError{
-					field:  fmt.Sprintf("Ports[%v]", idx),
-					reason: "embedded message failed validation",
-					cause:  err,
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return CreateDeploymentRequestValidationError{
+						field:  fmt.Sprintf("Ports[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
 				}
 			}
 		}
@@ -1643,12 +1663,17 @@ func (m *ListDeploymentsResponse) Validate() error {
 	for idx, item := range m.GetDeployments() {
 		_, _ = idx, item
 
-		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return ListDeploymentsResponseValidationError{
-					field:  fmt.Sprintf("Deployments[%v]", idx),
-					reason: "embedded message failed validation",
-					cause:  err,
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return ListDeploymentsResponseValidationError{
+						field:  fmt.Sprintf("Deployments[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
 				}
 			}
 		}
@@ -2305,12 +2330,17 @@ func (m *ListEndpointsResponse) Validate() error {
 	for idx, item := range m.GetEndpoints() {
 		_, _ = idx, item
 
-		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return ListEndpointsResponseValidationError{
-					field:  fmt.Sprintf("Endpoints[%v]", idx),
-					reason: "embedded message failed validation",
-					cause:  err,
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return ListEndpointsResponseValidationError{
+						field:  fmt.Sprintf("Endpoints[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
 				}
 			}
 		}
@@ -2521,12 +2551,17 @@ func (m *BulkLoadClusterRequest) Validate() error {
 	for idx, item := range m.GetClusters() {
 		_, _ = idx, item
 
-		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return BulkLoadClusterRequestValidationError{
-					field:  fmt.Sprintf("Clusters[%v]", idx),
-					reason: "embedded message failed validation",
-					cause:  err,
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return BulkLoadClusterRequestValidationError{
+						field:  fmt.Sprintf("Clusters[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
 				}
 			}
 		}
@@ -2607,12 +2642,17 @@ func (m *BulkLoadClusterRequest_ClusterWithNamespaces) Validate() error {
 		}
 	}
 
-	if v, ok := interface{}(m.GetCluster()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return BulkLoadClusterRequest_ClusterWithNamespacesValidationError{
-				field:  "Cluster",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetCluster()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return BulkLoadClusterRequest_ClusterWithNamespacesValidationError{
+					field:  "Cluster",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -2620,12 +2660,17 @@ func (m *BulkLoadClusterRequest_ClusterWithNamespaces) Validate() error {
 	for idx, item := range m.GetNamespaces() {
 		_, _ = idx, item
 
-		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return BulkLoadClusterRequest_ClusterWithNamespacesValidationError{
-					field:  fmt.Sprintf("Namespaces[%v]", idx),
-					reason: "embedded message failed validation",
-					cause:  err,
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return BulkLoadClusterRequest_ClusterWithNamespacesValidationError{
+						field:  fmt.Sprintf("Namespaces[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
 				}
 			}
 		}
@@ -2709,12 +2754,17 @@ func (m *BulkLoadClusterRequest_NamespaceWithDeployments) Validate() error {
 		}
 	}
 
-	if v, ok := interface{}(m.GetNamespace()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return BulkLoadClusterRequest_NamespaceWithDeploymentsValidationError{
-				field:  "Namespace",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetNamespace()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return BulkLoadClusterRequest_NamespaceWithDeploymentsValidationError{
+					field:  "Namespace",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -2722,12 +2772,17 @@ func (m *BulkLoadClusterRequest_NamespaceWithDeployments) Validate() error {
 	for idx, item := range m.GetDeployments() {
 		_, _ = idx, item
 
-		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return BulkLoadClusterRequest_NamespaceWithDeploymentsValidationError{
-					field:  fmt.Sprintf("Deployments[%v]", idx),
-					reason: "embedded message failed validation",
-					cause:  err,
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return BulkLoadClusterRequest_NamespaceWithDeploymentsValidationError{
+						field:  fmt.Sprintf("Deployments[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
 				}
 			}
 		}
@@ -2813,12 +2868,17 @@ func (m *BulkLoadClusterRequest_DeploymentWithEndpoints) Validate() error {
 		}
 	}
 
-	if v, ok := interface{}(m.GetDeployment()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return BulkLoadClusterRequest_DeploymentWithEndpointsValidationError{
-				field:  "Deployment",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetDeployment()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return BulkLoadClusterRequest_DeploymentWithEndpointsValidationError{
+					field:  "Deployment",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -2826,12 +2886,17 @@ func (m *BulkLoadClusterRequest_DeploymentWithEndpoints) Validate() error {
 	for idx, item := range m.GetEndpoints() {
 		_, _ = idx, item
 
-		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return BulkLoadClusterRequest_DeploymentWithEndpointsValidationError{
-					field:  fmt.Sprintf("Endpoints[%v]", idx),
-					reason: "embedded message failed validation",
-					cause:  err,
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return BulkLoadClusterRequest_DeploymentWithEndpointsValidationError{
+						field:  fmt.Sprintf("Endpoints[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
 				}
 			}
 		}

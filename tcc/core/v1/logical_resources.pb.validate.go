@@ -15,7 +15,7 @@ import (
 	"time"
 	"unicode/utf8"
 
-	"github.com/golang/protobuf/ptypes"
+	"github.com/gogo/protobuf/types"
 )
 
 // ensure the imports are used
@@ -30,7 +30,7 @@ var (
 	_ = time.Duration(0)
 	_ = (*url.URL)(nil)
 	_ = (*mail.Address)(nil)
-	_ = ptypes.DynamicAny{}
+	_ = types.DynamicAny{}
 )
 
 // Validate checks the field values on Environment with the rules defined in
@@ -59,12 +59,17 @@ func (m *Environment) Validate() error {
 
 	// no validation rules for Description
 
-	if v, ok := interface{}(m.GetClientSettings()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return EnvironmentValidationError{
-				field:  "ClientSettings",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetClientSettings()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return EnvironmentValidationError{
+					field:  "ClientSettings",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -147,12 +152,17 @@ func (m *CreateEnvironmentRequest) Validate() error {
 
 	// no validation rules for Description
 
-	if v, ok := interface{}(m.GetClientSettings()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return CreateEnvironmentRequestValidationError{
-				field:  "ClientSettings",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetClientSettings()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return CreateEnvironmentRequestValidationError{
+					field:  "ClientSettings",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -330,12 +340,17 @@ func (m *EnvironmentPolicyRequest) Validate() error {
 		}
 	}
 
-	if v, ok := interface{}(m.GetPolicy()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return EnvironmentPolicyRequestValidationError{
-				field:  "Policy",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetPolicy()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return EnvironmentPolicyRequestValidationError{
+					field:  "Policy",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -486,12 +501,17 @@ func (m *ListEnvironmentsResponse) Validate() error {
 	for idx, item := range m.GetEnvironments() {
 		_, _ = idx, item
 
-		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return ListEnvironmentsResponseValidationError{
-					field:  fmt.Sprintf("Environments[%v]", idx),
-					reason: "embedded message failed validation",
-					cause:  err,
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return ListEnvironmentsResponseValidationError{
+						field:  fmt.Sprintf("Environments[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
 				}
 			}
 		}
@@ -673,12 +693,17 @@ func (m *Application) Validate() error {
 
 	// no validation rules for Description
 
-	if v, ok := interface{}(m.GetClientSettings()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return ApplicationValidationError{
-				field:  "ClientSettings",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetClientSettings()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return ApplicationValidationError{
+					field:  "ClientSettings",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -686,24 +711,34 @@ func (m *Application) Validate() error {
 	for idx, item := range m.GetAppLbs() {
 		_, _ = idx, item
 
-		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return ApplicationValidationError{
-					field:  fmt.Sprintf("AppLbs[%v]", idx),
-					reason: "embedded message failed validation",
-					cause:  err,
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return ApplicationValidationError{
+						field:  fmt.Sprintf("AppLbs[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
 				}
 			}
 		}
 
 	}
 
-	if v, ok := interface{}(m.GetUseMtlsBetweenServices()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return ApplicationValidationError{
-				field:  "UseMtlsBetweenServices",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetUseMtlsBetweenServices()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return ApplicationValidationError{
+					field:  "UseMtlsBetweenServices",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -793,12 +828,17 @@ func (m *CreateApplicationRequest) Validate() error {
 
 	// no validation rules for Description
 
-	if v, ok := interface{}(m.GetClientSettings()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return CreateApplicationRequestValidationError{
-				field:  "ClientSettings",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetClientSettings()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return CreateApplicationRequestValidationError{
+					field:  "ClientSettings",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -806,24 +846,34 @@ func (m *CreateApplicationRequest) Validate() error {
 	for idx, item := range m.GetAppLbs() {
 		_, _ = idx, item
 
-		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return CreateApplicationRequestValidationError{
-					field:  fmt.Sprintf("AppLbs[%v]", idx),
-					reason: "embedded message failed validation",
-					cause:  err,
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return CreateApplicationRequestValidationError{
+						field:  fmt.Sprintf("AppLbs[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
 				}
 			}
 		}
 
 	}
 
-	if v, ok := interface{}(m.GetUseMtlsBetweenServices()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return CreateApplicationRequestValidationError{
-				field:  "UseMtlsBetweenServices",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetUseMtlsBetweenServices()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return CreateApplicationRequestValidationError{
+					field:  "UseMtlsBetweenServices",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -1015,12 +1065,17 @@ func (m *ApplicationPolicyRequest) Validate() error {
 		}
 	}
 
-	if v, ok := interface{}(m.GetPolicy()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return ApplicationPolicyRequestValidationError{
-				field:  "Policy",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetPolicy()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return ApplicationPolicyRequestValidationError{
+					field:  "Policy",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -1178,12 +1233,17 @@ func (m *ListApplicationsResponse) Validate() error {
 	for idx, item := range m.GetApplications() {
 		_, _ = idx, item
 
-		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return ListApplicationsResponseValidationError{
-					field:  fmt.Sprintf("Applications[%v]", idx),
-					reason: "embedded message failed validation",
-					cause:  err,
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return ListApplicationsResponseValidationError{
+						field:  fmt.Sprintf("Applications[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
 				}
 			}
 		}
@@ -1354,12 +1414,17 @@ func (m *ApplicationSpecificLB) Validate() error {
 		}
 	}
 
-	if v, ok := interface{}(m.GetTls()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return ApplicationSpecificLBValidationError{
-				field:  "Tls",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetTls()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return ApplicationSpecificLBValidationError{
+					field:  "Tls",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -1373,12 +1438,17 @@ func (m *ApplicationSpecificLB) Validate() error {
 		}
 	}
 
-	if v, ok := interface{}(m.GetRoutingInfo()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return ApplicationSpecificLBValidationError{
-				field:  "RoutingInfo",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetRoutingInfo()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return ApplicationSpecificLBValidationError{
+					field:  "RoutingInfo",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -1495,24 +1565,34 @@ func (m *Service) Validate() error {
 	for idx, item := range m.GetPorts() {
 		_, _ = idx, item
 
-		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return ServiceValidationError{
-					field:  fmt.Sprintf("Ports[%v]", idx),
-					reason: "embedded message failed validation",
-					cause:  err,
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return ServiceValidationError{
+						field:  fmt.Sprintf("Ports[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
 				}
 			}
 		}
 
 	}
 
-	if v, ok := interface{}(m.GetRoutingInfo()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return ServiceValidationError{
-				field:  "RoutingInfo",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetRoutingInfo()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return ServiceValidationError{
+					field:  "RoutingInfo",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -1529,12 +1609,17 @@ func (m *Service) Validate() error {
 	for idx, item := range m.GetSubsets() {
 		_, _ = idx, item
 
-		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return ServiceValidationError{
-					field:  fmt.Sprintf("Subsets[%v]", idx),
-					reason: "embedded message failed validation",
-					cause:  err,
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return ServiceValidationError{
+						field:  fmt.Sprintf("Subsets[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
 				}
 			}
 		}
@@ -1645,24 +1730,34 @@ func (m *CreateServiceRequest) Validate() error {
 	for idx, item := range m.GetPorts() {
 		_, _ = idx, item
 
-		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return CreateServiceRequestValidationError{
-					field:  fmt.Sprintf("Ports[%v]", idx),
-					reason: "embedded message failed validation",
-					cause:  err,
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return CreateServiceRequestValidationError{
+						field:  fmt.Sprintf("Ports[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
 				}
 			}
 		}
 
 	}
 
-	if v, ok := interface{}(m.GetRoutingInfo()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return CreateServiceRequestValidationError{
-				field:  "RoutingInfo",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetRoutingInfo()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return CreateServiceRequestValidationError{
+					field:  "RoutingInfo",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -1672,12 +1767,17 @@ func (m *CreateServiceRequest) Validate() error {
 	for idx, item := range m.GetSubsets() {
 		_, _ = idx, item
 
-		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return CreateServiceRequestValidationError{
-					field:  fmt.Sprintf("Subsets[%v]", idx),
-					reason: "embedded message failed validation",
-					cause:  err,
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return CreateServiceRequestValidationError{
+						field:  fmt.Sprintf("Subsets[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
 				}
 			}
 		}
@@ -1941,12 +2041,17 @@ func (m *ListServicesResponse) Validate() error {
 	for idx, item := range m.GetServices() {
 		_, _ = idx, item
 
-		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return ListServicesResponseValidationError{
-					field:  fmt.Sprintf("Services[%v]", idx),
-					reason: "embedded message failed validation",
-					cause:  err,
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return ListServicesResponseValidationError{
+						field:  fmt.Sprintf("Services[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
 				}
 			}
 		}
@@ -2198,24 +2303,34 @@ func (m *LoadBalancer) Validate() error {
 
 		// no validation rules for Applications[key]
 
-		if v, ok := interface{}(val).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return LoadBalancerValidationError{
-					field:  fmt.Sprintf("Applications[%v]", key),
-					reason: "embedded message failed validation",
-					cause:  err,
+		{
+			tmp := val
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return LoadBalancerValidationError{
+						field:  fmt.Sprintf("Applications[%v]", key),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
 				}
 			}
 		}
 
 	}
 
-	if v, ok := interface{}(m.GetClientSettings()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return LoadBalancerValidationError{
-				field:  "ClientSettings",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetClientSettings()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return LoadBalancerValidationError{
+					field:  "ClientSettings",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -2376,24 +2491,34 @@ func (m *CreateLoadBalancerRequest) Validate() error {
 
 		// no validation rules for Applications[key]
 
-		if v, ok := interface{}(val).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return CreateLoadBalancerRequestValidationError{
-					field:  fmt.Sprintf("Applications[%v]", key),
-					reason: "embedded message failed validation",
-					cause:  err,
+		{
+			tmp := val
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return CreateLoadBalancerRequestValidationError{
+						field:  fmt.Sprintf("Applications[%v]", key),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
 				}
 			}
 		}
 
 	}
 
-	if v, ok := interface{}(m.GetClientSettings()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return CreateLoadBalancerRequestValidationError{
-				field:  "ClientSettings",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetClientSettings()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return CreateLoadBalancerRequestValidationError{
+					field:  "ClientSettings",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -2593,12 +2718,17 @@ func (m *LoadBalancerPolicyRequest) Validate() error {
 		}
 	}
 
-	if v, ok := interface{}(m.GetPolicy()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return LoadBalancerPolicyRequestValidationError{
-				field:  "Policy",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetPolicy()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return LoadBalancerPolicyRequestValidationError{
+					field:  "Policy",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
@@ -2756,12 +2886,17 @@ func (m *ListLoadBalancersResponse) Validate() error {
 	for idx, item := range m.GetLoadbalancers() {
 		_, _ = idx, item
 
-		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return ListLoadBalancersResponseValidationError{
-					field:  fmt.Sprintf("Loadbalancers[%v]", idx),
-					reason: "embedded message failed validation",
-					cause:  err,
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return ListLoadBalancersResponseValidationError{
+						field:  fmt.Sprintf("Loadbalancers[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
 				}
 			}
 		}
@@ -2928,12 +3063,17 @@ func (m *ListOfLBRoutingInfo) Validate() error {
 	for idx, item := range m.GetLbSettings() {
 		_, _ = idx, item
 
-		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return ListOfLBRoutingInfoValidationError{
-					field:  fmt.Sprintf("LbSettings[%v]", idx),
-					reason: "embedded message failed validation",
-					cause:  err,
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return ListOfLBRoutingInfoValidationError{
+						field:  fmt.Sprintf("LbSettings[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
 				}
 			}
 		}
@@ -3014,22 +3154,32 @@ func (m *ListOfLBRoutingInfo_LBRoutingInfo) Validate() error {
 		}
 	}
 
-	if v, ok := interface{}(m.GetTls()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return ListOfLBRoutingInfo_LBRoutingInfoValidationError{
-				field:  "Tls",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetTls()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return ListOfLBRoutingInfo_LBRoutingInfoValidationError{
+					field:  "Tls",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
 
-	if v, ok := interface{}(m.GetRoutingInfo()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return ListOfLBRoutingInfo_LBRoutingInfoValidationError{
-				field:  "RoutingInfo",
-				reason: "embedded message failed validation",
-				cause:  err,
+	{
+		tmp := m.GetRoutingInfo()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return ListOfLBRoutingInfo_LBRoutingInfoValidationError{
+					field:  "RoutingInfo",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
 	}
