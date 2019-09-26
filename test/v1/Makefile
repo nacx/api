@@ -18,11 +18,9 @@ all: $(DESCRIPTOR)
 
 ${DESCRIPTOR}:
 	@echo "building protos"
-	GO111MODULE=off go get -d github.com/lyft/protoc-gen-validate
-	GO111MODULE=off make -C $(GOSRCDIR)/github.com/lyft/protoc-gen-validate build
 	protoc -I ./ \
 		-I $(VENDOR) \
-		-I $(GOSRCDIR)/github.com/lyft/protoc-gen-validate \
+		-I $(GOSRCDIR)/github.com/envoyproxy/protoc-gen-validate \
 		--go_out=paths=source_relative,plugins=grpc:. \
 		--validate_out=paths=source_relative,lang=go:. \
 		--descriptor_set_out=$(DESCRIPTOR) --include_imports \

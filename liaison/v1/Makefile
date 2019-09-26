@@ -39,7 +39,7 @@ define protoc_gen_go
 	protoc -I ./ \
 		-I $(VENDOR) \
 		-I $(ISTIO_API) \
-		-I $(GOSRCDIR)/github.com/lyft/protoc-gen-validate \
+		-I $(GOSRCDIR)/github.com/envoyproxy/protoc-gen-validate \
 		--go_out=paths=source_relative,plugins=grpc:. \
 		--validate_out=paths=source_relative,lang=go:. \
 		$(2) \
