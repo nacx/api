@@ -31,9 +31,9 @@ type Service struct {
 	// Resource name with format:
 	//   "services/<FQDN>"
 	// where the FQDN is the 'name' in tetrate.api.inventory.v1.Service.
-	Name string `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
+	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	// The name displayed to end users.
-	DisplayName          string   `protobuf:"bytes,2,opt,name=display_name,json=displayName" json:"display_name,omitempty"`
+	DisplayName          string   `protobuf:"bytes,2,opt,name=display_name,json=displayName,proto3" json:"display_name,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -108,7 +108,7 @@ func (m *ListServicesRequest) XXX_DiscardUnknown() {
 var xxx_messageInfo_ListServicesRequest proto.InternalMessageInfo
 
 type ListServicesResponse struct {
-	Services             []*Service `protobuf:"bytes,1,rep,name=services" json:"services,omitempty"`
+	Services             []*Service `protobuf:"bytes,1,rep,name=services,proto3" json:"services,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}   `json:"-"`
 	XXX_unrecognized     []byte     `json:"-"`
 	XXX_sizecache        int32      `json:"-"`
@@ -146,7 +146,7 @@ func (m *ListServicesResponse) GetServices() []*Service {
 }
 
 type GetServiceRequest struct {
-	Name                 string   `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
+	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -184,7 +184,7 @@ func (m *GetServiceRequest) GetName() string {
 }
 
 type CreateServiceRequest struct {
-	Service              *Service `protobuf:"bytes,1,opt,name=service" json:"service,omitempty"`
+	Service              *Service `protobuf:"bytes,1,opt,name=service,proto3" json:"service,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -222,7 +222,7 @@ func (m *CreateServiceRequest) GetService() *Service {
 }
 
 type UpdateServiceRequest struct {
-	Service              *Service `protobuf:"bytes,1,opt,name=service" json:"service,omitempty"`
+	Service              *Service `protobuf:"bytes,1,opt,name=service,proto3" json:"service,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -260,7 +260,7 @@ func (m *UpdateServiceRequest) GetService() *Service {
 }
 
 type DeleteServiceRequest struct {
-	Name                 string   `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
+	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -315,8 +315,9 @@ var _ grpc.ClientConn
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion4
 
-// Client API for Services service
-
+// ServicesClient is the client API for Services service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type ServicesClient interface {
 	ListServices(ctx context.Context, in *ListServicesRequest, opts ...grpc.CallOption) (*ListServicesResponse, error)
 	GetService(ctx context.Context, in *GetServiceRequest, opts ...grpc.CallOption) (*Service, error)
@@ -335,7 +336,7 @@ func NewServicesClient(cc *grpc.ClientConn) ServicesClient {
 
 func (c *servicesClient) ListServices(ctx context.Context, in *ListServicesRequest, opts ...grpc.CallOption) (*ListServicesResponse, error) {
 	out := new(ListServicesResponse)
-	err := grpc.Invoke(ctx, "/tetrate.api.liaison.v1alpha1.Services/ListServices", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/tetrate.api.liaison.v1alpha1.Services/ListServices", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -344,7 +345,7 @@ func (c *servicesClient) ListServices(ctx context.Context, in *ListServicesReque
 
 func (c *servicesClient) GetService(ctx context.Context, in *GetServiceRequest, opts ...grpc.CallOption) (*Service, error) {
 	out := new(Service)
-	err := grpc.Invoke(ctx, "/tetrate.api.liaison.v1alpha1.Services/GetService", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/tetrate.api.liaison.v1alpha1.Services/GetService", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -353,7 +354,7 @@ func (c *servicesClient) GetService(ctx context.Context, in *GetServiceRequest, 
 
 func (c *servicesClient) CreateService(ctx context.Context, in *CreateServiceRequest, opts ...grpc.CallOption) (*Service, error) {
 	out := new(Service)
-	err := grpc.Invoke(ctx, "/tetrate.api.liaison.v1alpha1.Services/CreateService", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/tetrate.api.liaison.v1alpha1.Services/CreateService", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -362,7 +363,7 @@ func (c *servicesClient) CreateService(ctx context.Context, in *CreateServiceReq
 
 func (c *servicesClient) UpdateService(ctx context.Context, in *UpdateServiceRequest, opts ...grpc.CallOption) (*Service, error) {
 	out := new(Service)
-	err := grpc.Invoke(ctx, "/tetrate.api.liaison.v1alpha1.Services/UpdateService", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/tetrate.api.liaison.v1alpha1.Services/UpdateService", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -371,15 +372,14 @@ func (c *servicesClient) UpdateService(ctx context.Context, in *UpdateServiceReq
 
 func (c *servicesClient) DeleteService(ctx context.Context, in *DeleteServiceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
-	err := grpc.Invoke(ctx, "/tetrate.api.liaison.v1alpha1.Services/DeleteService", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/tetrate.api.liaison.v1alpha1.Services/DeleteService", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// Server API for Services service
-
+// ServicesServer is the server API for Services service.
 type ServicesServer interface {
 	ListServices(context.Context, *ListServicesRequest) (*ListServicesResponse, error)
 	GetService(context.Context, *GetServiceRequest) (*Service, error)

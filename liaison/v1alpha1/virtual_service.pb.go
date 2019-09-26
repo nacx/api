@@ -31,12 +31,12 @@ const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 type VirtualService struct {
 	// Resource name with format:
 	//   "ingressGateway/<service name>/virtualService"
-	Name string `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
+	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	// The name displayed to end users.
-	DisplayName string `protobuf:"bytes,2,opt,name=display_name,json=displayName" json:"display_name,omitempty"`
+	DisplayName string `protobuf:"bytes,2,opt,name=display_name,json=displayName,proto3" json:"display_name,omitempty"`
 	// The Istio VirtualService config object specifying service routing rules
 	// for this ingress Envoy.
-	VirtualService       *v1alpha3.VirtualService `protobuf:"bytes,3,opt,name=virtual_service,json=virtualService" json:"virtual_service,omitempty"`
+	VirtualService       *v1alpha3.VirtualService `protobuf:"bytes,3,opt,name=virtual_service,json=virtualService,proto3" json:"virtual_service,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}                 `json:"-"`
 	XXX_unrecognized     []byte                   `json:"-"`
 	XXX_sizecache        int32                    `json:"-"`
@@ -88,7 +88,7 @@ func (m *VirtualService) GetVirtualService() *v1alpha3.VirtualService {
 }
 
 type GetVirtualServiceRequest struct {
-	Name                 string   `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
+	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -126,7 +126,7 @@ func (m *GetVirtualServiceRequest) GetName() string {
 }
 
 type UpdateVirtualServiceRequest struct {
-	VirtualService       *VirtualService `protobuf:"bytes,1,opt,name=virtual_service,json=virtualService" json:"virtual_service,omitempty"`
+	VirtualService       *VirtualService `protobuf:"bytes,1,opt,name=virtual_service,json=virtualService,proto3" json:"virtual_service,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
 	XXX_unrecognized     []byte          `json:"-"`
 	XXX_sizecache        int32           `json:"-"`
@@ -177,8 +177,9 @@ var _ grpc.ClientConn
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion4
 
-// Client API for VirtualServices service
-
+// VirtualServicesClient is the client API for VirtualServices service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type VirtualServicesClient interface {
 	GetVirtualService(ctx context.Context, in *GetVirtualServiceRequest, opts ...grpc.CallOption) (*VirtualService, error)
 	UpdateVirtualService(ctx context.Context, in *UpdateVirtualServiceRequest, opts ...grpc.CallOption) (*VirtualService, error)
@@ -194,7 +195,7 @@ func NewVirtualServicesClient(cc *grpc.ClientConn) VirtualServicesClient {
 
 func (c *virtualServicesClient) GetVirtualService(ctx context.Context, in *GetVirtualServiceRequest, opts ...grpc.CallOption) (*VirtualService, error) {
 	out := new(VirtualService)
-	err := grpc.Invoke(ctx, "/tetrate.api.liaison.v1alpha1.VirtualServices/GetVirtualService", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/tetrate.api.liaison.v1alpha1.VirtualServices/GetVirtualService", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -203,15 +204,14 @@ func (c *virtualServicesClient) GetVirtualService(ctx context.Context, in *GetVi
 
 func (c *virtualServicesClient) UpdateVirtualService(ctx context.Context, in *UpdateVirtualServiceRequest, opts ...grpc.CallOption) (*VirtualService, error) {
 	out := new(VirtualService)
-	err := grpc.Invoke(ctx, "/tetrate.api.liaison.v1alpha1.VirtualServices/UpdateVirtualService", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/tetrate.api.liaison.v1alpha1.VirtualServices/UpdateVirtualService", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// Server API for VirtualServices service
-
+// VirtualServicesServer is the server API for VirtualServices service.
 type VirtualServicesServer interface {
 	GetVirtualService(context.Context, *GetVirtualServiceRequest) (*VirtualService, error)
 	UpdateVirtualService(context.Context, *UpdateVirtualServiceRequest) (*VirtualService, error)

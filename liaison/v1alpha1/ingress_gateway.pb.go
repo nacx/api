@@ -33,18 +33,18 @@ const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 type IngressGateway struct {
 	// Resource name with format:
 	//   "ingressGateways/<service name of ingress Envoy>"
-	Name string `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
+	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	// The name displayed to end users.
-	DisplayName string `protobuf:"bytes,2,opt,name=display_name,json=displayName" json:"display_name,omitempty"`
+	DisplayName string `protobuf:"bytes,2,opt,name=display_name,json=displayName,proto3" json:"display_name,omitempty"`
 	// The security zone this ingress gateway is within. This is just a label to
 	// allow users to create logical groupings of ingress gateways. The intended
 	// use case is for the platform owner to create "Security zones" so that
 	// network admins can administer only the ingress gateways that they care
 	// about.
-	Zone string `protobuf:"bytes,3,opt,name=zone" json:"zone,omitempty"`
+	Zone string `protobuf:"bytes,3,opt,name=zone,proto3" json:"zone,omitempty"`
 	// The Istio Gateway config object specifying traffic that this ingress Envoy
 	// will allow through.
-	Gateway              *v1alpha3.Gateway `protobuf:"bytes,4,opt,name=gateway" json:"gateway,omitempty"`
+	Gateway              *v1alpha3.Gateway `protobuf:"bytes,4,opt,name=gateway,proto3" json:"gateway,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
 	XXX_unrecognized     []byte            `json:"-"`
 	XXX_sizecache        int32             `json:"-"`
@@ -133,7 +133,7 @@ func (m *ListIngressGatewaysRequest) XXX_DiscardUnknown() {
 var xxx_messageInfo_ListIngressGatewaysRequest proto.InternalMessageInfo
 
 type ListIngressGatewaysResponse struct {
-	IngressGateways      []*IngressGateway `protobuf:"bytes,1,rep,name=ingress_gateways,json=ingressGateways" json:"ingress_gateways,omitempty"`
+	IngressGateways      []*IngressGateway `protobuf:"bytes,1,rep,name=ingress_gateways,json=ingressGateways,proto3" json:"ingress_gateways,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
 	XXX_unrecognized     []byte            `json:"-"`
 	XXX_sizecache        int32             `json:"-"`
@@ -171,7 +171,7 @@ func (m *ListIngressGatewaysResponse) GetIngressGateways() []*IngressGateway {
 }
 
 type GetIngressGatewayRequest struct {
-	Name                 string   `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
+	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -209,7 +209,7 @@ func (m *GetIngressGatewayRequest) GetName() string {
 }
 
 type CreateIngressGatewayRequest struct {
-	IngressGateway       *IngressGateway `protobuf:"bytes,1,opt,name=ingress_gateway,json=ingressGateway" json:"ingress_gateway,omitempty"`
+	IngressGateway       *IngressGateway `protobuf:"bytes,1,opt,name=ingress_gateway,json=ingressGateway,proto3" json:"ingress_gateway,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
 	XXX_unrecognized     []byte          `json:"-"`
 	XXX_sizecache        int32           `json:"-"`
@@ -247,7 +247,7 @@ func (m *CreateIngressGatewayRequest) GetIngressGateway() *IngressGateway {
 }
 
 type UpdateIngressGatewayRequest struct {
-	IngressGateway       *IngressGateway `protobuf:"bytes,1,opt,name=ingress_gateway,json=ingressGateway" json:"ingress_gateway,omitempty"`
+	IngressGateway       *IngressGateway `protobuf:"bytes,1,opt,name=ingress_gateway,json=ingressGateway,proto3" json:"ingress_gateway,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
 	XXX_unrecognized     []byte          `json:"-"`
 	XXX_sizecache        int32           `json:"-"`
@@ -285,7 +285,7 @@ func (m *UpdateIngressGatewayRequest) GetIngressGateway() *IngressGateway {
 }
 
 type DeleteIngressGatewayRequest struct {
-	Name                 string   `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
+	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -340,8 +340,9 @@ var _ grpc.ClientConn
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion4
 
-// Client API for IngressGateways service
-
+// IngressGatewaysClient is the client API for IngressGateways service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type IngressGatewaysClient interface {
 	ListIngressGateways(ctx context.Context, in *ListIngressGatewaysRequest, opts ...grpc.CallOption) (*ListIngressGatewaysResponse, error)
 	GetIngressGateway(ctx context.Context, in *GetIngressGatewayRequest, opts ...grpc.CallOption) (*IngressGateway, error)
@@ -360,7 +361,7 @@ func NewIngressGatewaysClient(cc *grpc.ClientConn) IngressGatewaysClient {
 
 func (c *ingressGatewaysClient) ListIngressGateways(ctx context.Context, in *ListIngressGatewaysRequest, opts ...grpc.CallOption) (*ListIngressGatewaysResponse, error) {
 	out := new(ListIngressGatewaysResponse)
-	err := grpc.Invoke(ctx, "/tetrate.api.liaison.v1alpha1.IngressGateways/ListIngressGateways", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/tetrate.api.liaison.v1alpha1.IngressGateways/ListIngressGateways", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -369,7 +370,7 @@ func (c *ingressGatewaysClient) ListIngressGateways(ctx context.Context, in *Lis
 
 func (c *ingressGatewaysClient) GetIngressGateway(ctx context.Context, in *GetIngressGatewayRequest, opts ...grpc.CallOption) (*IngressGateway, error) {
 	out := new(IngressGateway)
-	err := grpc.Invoke(ctx, "/tetrate.api.liaison.v1alpha1.IngressGateways/GetIngressGateway", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/tetrate.api.liaison.v1alpha1.IngressGateways/GetIngressGateway", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -378,7 +379,7 @@ func (c *ingressGatewaysClient) GetIngressGateway(ctx context.Context, in *GetIn
 
 func (c *ingressGatewaysClient) CreateIngressGateway(ctx context.Context, in *CreateIngressGatewayRequest, opts ...grpc.CallOption) (*IngressGateway, error) {
 	out := new(IngressGateway)
-	err := grpc.Invoke(ctx, "/tetrate.api.liaison.v1alpha1.IngressGateways/CreateIngressGateway", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/tetrate.api.liaison.v1alpha1.IngressGateways/CreateIngressGateway", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -387,7 +388,7 @@ func (c *ingressGatewaysClient) CreateIngressGateway(ctx context.Context, in *Cr
 
 func (c *ingressGatewaysClient) UpdateIngressGateway(ctx context.Context, in *UpdateIngressGatewayRequest, opts ...grpc.CallOption) (*IngressGateway, error) {
 	out := new(IngressGateway)
-	err := grpc.Invoke(ctx, "/tetrate.api.liaison.v1alpha1.IngressGateways/UpdateIngressGateway", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/tetrate.api.liaison.v1alpha1.IngressGateways/UpdateIngressGateway", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -396,15 +397,14 @@ func (c *ingressGatewaysClient) UpdateIngressGateway(ctx context.Context, in *Up
 
 func (c *ingressGatewaysClient) DeleteIngressGateway(ctx context.Context, in *DeleteIngressGatewayRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
-	err := grpc.Invoke(ctx, "/tetrate.api.liaison.v1alpha1.IngressGateways/DeleteIngressGateway", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/tetrate.api.liaison.v1alpha1.IngressGateways/DeleteIngressGateway", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// Server API for IngressGateways service
-
+// IngressGatewaysServer is the server API for IngressGateways service.
 type IngressGatewaysServer interface {
 	ListIngressGateways(context.Context, *ListIngressGatewaysRequest) (*ListIngressGatewaysResponse, error)
 	GetIngressGateway(context.Context, *GetIngressGatewayRequest) (*IngressGateway, error)
