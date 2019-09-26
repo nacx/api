@@ -106,15 +106,16 @@ node_modules: touch
 .PHONY: js touch
 js: node_modules $(ALL_JS_PROTOS) $(ALL_TS_PROTOS)
 
-touch:
+touch: mcp networking
 	@mkdir -p ./google/api
 	@mkdir -p ./validate
 	@mkdir -p $(ISTIO_API)/gogoproto
 	@touch ./google/api/annotations_pb.js
 	@touch ./validate/validate_pb.js
 	@touch $(ISTIO_API)/gogoproto/gogo_pb.js
-	@[[ -s "./mcp" ]] && echo "mcp: ok" || ln -s $(ISTIO_API)/mcp ./mcp
-	@[[ -s "./networking" ]] && echo "networking: ok" || ln -s $(ISTIO_API)/networking ./networking
+
+mcp networking:
+	@ln -s $(ISTIO_API)/$@ $@
 
 clean:
 	rm -fr $(ALL_GENERATED)
