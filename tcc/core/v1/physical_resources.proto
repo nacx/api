@@ -10,7 +10,6 @@ import "google/protobuf/empty.proto";
 import "validate/validate.proto";
 
 import "routing_info.proto";
-import "policy.proto";
 
 service PhysicalResourceModel {
   rpc CreateCluster(CreateClusterRequest) returns (Cluster) {
@@ -42,19 +41,6 @@ service PhysicalResourceModel {
   rpc DeleteCluster(DeleteClusterRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       delete: "/v1/tenants/{tenant}/environments/{environment}/clusters/{id}"
-    };
-  };
-
-  rpc GetClusterPolicy(GetClusterRequest) returns (Policy) {
-    option (google.api.http) = {
-      get: "/v1/tenants/{tenant}/environments/{environment}/clusters/{id}/policy"
-    };
-  };
-
-  rpc SetClusterPolicy(ClusterPolicyRequest) returns (google.protobuf.Empty) {
-    option (google.api.http) = {
-      put: "/v1/tenants/{tenant}/environments/{environment}/clusters/{id}/policy"
-      body: "policy"
     };
   };
 
@@ -97,19 +83,6 @@ service PhysicalResourceModel {
     };
   };
 
-  rpc GetNamespacePolicy(GetNamespaceRequest) returns (Policy) {
-    option (google.api.http) = {
-      get: "/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces/{id}/policy"
-    };
-  };
-
-  rpc SetNamespacePolicy(NamespacePolicyRequest) returns (google.protobuf.Empty) {
-    option (google.api.http) = {
-      put: "/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces/{id}/policy"
-      body: "policy"
-    };
-  };
-
   rpc CreateDeployment(CreateDeploymentRequest) returns (Deployment) {
     option (google.api.http) = {
       post: "/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces/{namespace}/deployments"
@@ -142,19 +115,6 @@ service PhysicalResourceModel {
     };
   };
 
-  rpc GetDeploymentPolicy(GetDeploymentRequest) returns (Policy) {
-    option (google.api.http) = {
-      get: "/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces/{namespace}/deployments/{id}/policy"
-    };
-  };
-
-  rpc SetDeploymentPolicy(DeploymentPolicyRequest) returns (google.protobuf.Empty) {
-    option (google.api.http) = {
-      put: "/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces/{namespace}/deployments/{id}/policy"
-      body: "policy"
-    };
-  };
-
   rpc CreateEndpoint(CreateEndpointRequest) returns (Endpoint) {
     option (google.api.http) = {
       post: "/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces/{namespace}/deployments/{deployment}/endpoints"
@@ -184,19 +144,6 @@ service PhysicalResourceModel {
   rpc DeleteEndpoint(DeleteEndpointRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       delete: "/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces/{namespace}/deployments/{deployment}/endpoints/{id}"
-    };
-  };
-
-  rpc GetEndpointPolicy(GetEndpointRequest) returns (Policy) {
-    option (google.api.http) = {
-      get: "/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces/{namespace}/deployments/{deployment}/endpoints/{id}/policy"
-    };
-  };
-
-  rpc SetEndpointPolicy(EndpointPolicyRequest) returns (google.protobuf.Empty) {
-    option (google.api.http) = {
-      put: "/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces/{namespace}/deployments/{deployment}/endpoints/{id}/policy"
-      body: "policy"
     };
   };
 }
@@ -239,14 +186,6 @@ message GetClusterRequest {
   string tenant = 2 [(validate.rules).string.min_len = 1];
   string environment = 3 [(validate.rules).string.min_len = 1];
   string id = 4 [(validate.rules).string.min_len = 1];
-}
-
-message ClusterPolicyRequest {
-  string name = 1;
-  string tenant = 2 [(validate.rules).string.min_len = 1];
-  string environment = 3 [(validate.rules).string.min_len = 1];
-  string id = 4 [(validate.rules).string.min_len = 1];
-  Policy policy = 5 [(validate.rules).message.required = true];
 }
 
 message ListClustersRequest {
@@ -295,15 +234,6 @@ message GetNamespaceRequest {
   string environment = 3 [(validate.rules).string.min_len = 1];
   string cluster = 4 [(validate.rules).string.min_len = 1];
   string id = 5 [(validate.rules).string.min_len = 1];
-}
-
-message NamespacePolicyRequest {
-  string name = 1;
-  string tenant = 2 [(validate.rules).string.min_len = 1];
-  string environment = 3 [(validate.rules).string.min_len = 1];
-  string cluster = 4 [(validate.rules).string.min_len = 1];
-  string id = 5 [(validate.rules).string.min_len = 1];
-  Policy policy = 6 [(validate.rules).message.required = true];
 }
 
 message ListNamespacesRequest {
@@ -363,16 +293,6 @@ message GetDeploymentRequest {
   string cluster = 4 [(validate.rules).string.min_len = 1];
   string namespace = 5 [(validate.rules).string.min_len = 1];
   string id = 6 [(validate.rules).string.min_len = 1];
-}
-
-message DeploymentPolicyRequest {
-  string name = 1;
-  string tenant = 2 [(validate.rules).string.min_len = 1];
-  string environment = 3 [(validate.rules).string.min_len = 1];
-  string cluster = 4 [(validate.rules).string.min_len = 1];
-  string namespace = 5 [(validate.rules).string.min_len = 1];
-  string id = 6 [(validate.rules).string.min_len = 1];
-  Policy policy = 7 [(validate.rules).message.required = true];
 }
 
 message ListDeploymentsRequest {
@@ -475,17 +395,6 @@ message GetEndpointRequest {
   string namespace = 5 [(validate.rules).string.min_len = 1];
   string deployment = 6 [(validate.rules).string.min_len = 1];
   string id = 7 [(validate.rules).string.min_len = 1];
-}
-
-message EndpointPolicyRequest {
-  string name = 1;
-  string tenant = 2 [(validate.rules).string.min_len = 1];
-  string environment = 3 [(validate.rules).string.min_len = 1];
-  string cluster = 4 [(validate.rules).string.min_len = 1];
-  string namespace = 5 [(validate.rules).string.min_len = 1];
-  string deployment = 6 [(validate.rules).string.min_len = 1];
-  string id = 7 [(validate.rules).string.min_len = 1];
-  Policy policy = 8 [(validate.rules).message.required = true];
 }
 
 message ListEndpointsRequest {

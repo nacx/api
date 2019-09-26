@@ -53,9 +53,6 @@ import {
     TetrateApiTccCoreV1Namespace,
     TetrateApiTccCoreV1NamespaceFromJSON,
     TetrateApiTccCoreV1NamespaceToJSON,
-    TetrateApiTccCoreV1Policy,
-    TetrateApiTccCoreV1PolicyFromJSON,
-    TetrateApiTccCoreV1PolicyToJSON,
 } from '../models';
 
 export interface BulkLoadClusterRequest {
@@ -135,23 +132,7 @@ export interface GetClusterRequest {
     name?: string;
 }
 
-export interface GetClusterPolicyRequest {
-    tenant: string;
-    environment: string;
-    id: string;
-    name?: string;
-}
-
 export interface GetDeploymentRequest {
-    tenant: string;
-    environment: string;
-    cluster: string;
-    namespace: string;
-    id: string;
-    name?: string;
-}
-
-export interface GetDeploymentPolicyRequest {
     tenant: string;
     environment: string;
     cluster: string;
@@ -170,25 +151,7 @@ export interface GetEndpointRequest {
     name?: string;
 }
 
-export interface GetEndpointPolicyRequest {
-    tenant: string;
-    environment: string;
-    cluster: string;
-    namespace: string;
-    deployment: string;
-    id: string;
-    name?: string;
-}
-
 export interface GetNamespaceRequest {
-    tenant: string;
-    environment: string;
-    cluster: string;
-    id: string;
-    name?: string;
-}
-
-export interface GetNamespacePolicyRequest {
     tenant: string;
     environment: string;
     cluster: string;
@@ -224,40 +187,6 @@ export interface ListNamespacesRequest {
     environment: string;
     cluster: string;
     parent?: string;
-}
-
-export interface SetClusterPolicyRequest {
-    tenant: string;
-    environment: string;
-    id: string;
-    body: TetrateApiTccCoreV1Policy;
-}
-
-export interface SetDeploymentPolicyRequest {
-    tenant: string;
-    environment: string;
-    cluster: string;
-    namespace: string;
-    id: string;
-    body: TetrateApiTccCoreV1Policy;
-}
-
-export interface SetEndpointPolicyRequest {
-    tenant: string;
-    environment: string;
-    cluster: string;
-    namespace: string;
-    deployment: string;
-    id: string;
-    body: TetrateApiTccCoreV1Policy;
-}
-
-export interface SetNamespacePolicyRequest {
-    tenant: string;
-    environment: string;
-    cluster: string;
-    id: string;
-    body: TetrateApiTccCoreV1Policy;
 }
 
 export interface UpdateClusterRequest {
@@ -744,46 +673,6 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
 
     /**
      */
-    async getClusterPolicyRaw(requestParameters: GetClusterPolicyRequest): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
-            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling getClusterPolicy.');
-        }
-
-        if (requestParameters.environment === null || requestParameters.environment === undefined) {
-            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling getClusterPolicy.');
-        }
-
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getClusterPolicy.');
-        }
-
-        const queryParameters: runtime.HTTPQuery = {};
-
-        if (requestParameters.name !== undefined) {
-            queryParameters['name'] = requestParameters.name;
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        const response = await this.request({
-            path: `/v1/tenants/{tenant}/environments/{environment}/clusters/{id}/policy`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        });
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccCoreV1PolicyFromJSON(jsonValue));
-    }
-
-    /**
-     */
-    async getClusterPolicy(requestParameters: GetClusterPolicyRequest): Promise<TetrateApiTccCoreV1Policy> {
-        const response = await this.getClusterPolicyRaw(requestParameters);
-        return await response.value();
-    }
-
-    /**
-     */
     async getDeploymentRaw(requestParameters: GetDeploymentRequest): Promise<runtime.ApiResponse<any>> {
         if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling getDeployment.');
@@ -827,54 +716,6 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
      */
     async getDeployment(requestParameters: GetDeploymentRequest): Promise<TetrateApiTccCoreV1Deployment> {
         const response = await this.getDeploymentRaw(requestParameters);
-        return await response.value();
-    }
-
-    /**
-     */
-    async getDeploymentPolicyRaw(requestParameters: GetDeploymentPolicyRequest): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
-            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling getDeploymentPolicy.');
-        }
-
-        if (requestParameters.environment === null || requestParameters.environment === undefined) {
-            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling getDeploymentPolicy.');
-        }
-
-        if (requestParameters.cluster === null || requestParameters.cluster === undefined) {
-            throw new runtime.RequiredError('cluster','Required parameter requestParameters.cluster was null or undefined when calling getDeploymentPolicy.');
-        }
-
-        if (requestParameters.namespace === null || requestParameters.namespace === undefined) {
-            throw new runtime.RequiredError('namespace','Required parameter requestParameters.namespace was null or undefined when calling getDeploymentPolicy.');
-        }
-
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getDeploymentPolicy.');
-        }
-
-        const queryParameters: runtime.HTTPQuery = {};
-
-        if (requestParameters.name !== undefined) {
-            queryParameters['name'] = requestParameters.name;
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        const response = await this.request({
-            path: `/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces/{namespace}/deployments/{id}/policy`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))).replace(`{${"namespace"}}`, encodeURIComponent(String(requestParameters.namespace))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        });
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccCoreV1PolicyFromJSON(jsonValue));
-    }
-
-    /**
-     */
-    async getDeploymentPolicy(requestParameters: GetDeploymentPolicyRequest): Promise<TetrateApiTccCoreV1Policy> {
-        const response = await this.getDeploymentPolicyRaw(requestParameters);
         return await response.value();
     }
 
@@ -932,58 +773,6 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
 
     /**
      */
-    async getEndpointPolicyRaw(requestParameters: GetEndpointPolicyRequest): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
-            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling getEndpointPolicy.');
-        }
-
-        if (requestParameters.environment === null || requestParameters.environment === undefined) {
-            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling getEndpointPolicy.');
-        }
-
-        if (requestParameters.cluster === null || requestParameters.cluster === undefined) {
-            throw new runtime.RequiredError('cluster','Required parameter requestParameters.cluster was null or undefined when calling getEndpointPolicy.');
-        }
-
-        if (requestParameters.namespace === null || requestParameters.namespace === undefined) {
-            throw new runtime.RequiredError('namespace','Required parameter requestParameters.namespace was null or undefined when calling getEndpointPolicy.');
-        }
-
-        if (requestParameters.deployment === null || requestParameters.deployment === undefined) {
-            throw new runtime.RequiredError('deployment','Required parameter requestParameters.deployment was null or undefined when calling getEndpointPolicy.');
-        }
-
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getEndpointPolicy.');
-        }
-
-        const queryParameters: runtime.HTTPQuery = {};
-
-        if (requestParameters.name !== undefined) {
-            queryParameters['name'] = requestParameters.name;
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        const response = await this.request({
-            path: `/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces/{namespace}/deployments/{deployment}/endpoints/{id}/policy`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))).replace(`{${"namespace"}}`, encodeURIComponent(String(requestParameters.namespace))).replace(`{${"deployment"}}`, encodeURIComponent(String(requestParameters.deployment))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        });
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccCoreV1PolicyFromJSON(jsonValue));
-    }
-
-    /**
-     */
-    async getEndpointPolicy(requestParameters: GetEndpointPolicyRequest): Promise<TetrateApiTccCoreV1Policy> {
-        const response = await this.getEndpointPolicyRaw(requestParameters);
-        return await response.value();
-    }
-
-    /**
-     */
     async getNamespaceRaw(requestParameters: GetNamespaceRequest): Promise<runtime.ApiResponse<any>> {
         if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling getNamespace.');
@@ -1023,50 +812,6 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
      */
     async getNamespace(requestParameters: GetNamespaceRequest): Promise<TetrateApiTccCoreV1Namespace> {
         const response = await this.getNamespaceRaw(requestParameters);
-        return await response.value();
-    }
-
-    /**
-     */
-    async getNamespacePolicyRaw(requestParameters: GetNamespacePolicyRequest): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
-            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling getNamespacePolicy.');
-        }
-
-        if (requestParameters.environment === null || requestParameters.environment === undefined) {
-            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling getNamespacePolicy.');
-        }
-
-        if (requestParameters.cluster === null || requestParameters.cluster === undefined) {
-            throw new runtime.RequiredError('cluster','Required parameter requestParameters.cluster was null or undefined when calling getNamespacePolicy.');
-        }
-
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getNamespacePolicy.');
-        }
-
-        const queryParameters: runtime.HTTPQuery = {};
-
-        if (requestParameters.name !== undefined) {
-            queryParameters['name'] = requestParameters.name;
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        const response = await this.request({
-            path: `/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces/{id}/policy`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        });
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccCoreV1PolicyFromJSON(jsonValue));
-    }
-
-    /**
-     */
-    async getNamespacePolicy(requestParameters: GetNamespacePolicyRequest): Promise<TetrateApiTccCoreV1Policy> {
-        const response = await this.getNamespacePolicyRaw(requestParameters);
         return await response.value();
     }
 
@@ -1235,202 +980,6 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
      */
     async listNamespaces(requestParameters: ListNamespacesRequest): Promise<TetrateApiTccCoreV1ListNamespacesResponse> {
         const response = await this.listNamespacesRaw(requestParameters);
-        return await response.value();
-    }
-
-    /**
-     */
-    async setClusterPolicyRaw(requestParameters: SetClusterPolicyRequest): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
-            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling setClusterPolicy.');
-        }
-
-        if (requestParameters.environment === null || requestParameters.environment === undefined) {
-            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling setClusterPolicy.');
-        }
-
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling setClusterPolicy.');
-        }
-
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling setClusterPolicy.');
-        }
-
-        const queryParameters: runtime.HTTPQuery = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        const response = await this.request({
-            path: `/v1/tenants/{tenant}/environments/{environment}/clusters/{id}/policy`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
-            method: 'PUT',
-            headers: headerParameters,
-            query: queryParameters,
-            body: TetrateApiTccCoreV1PolicyToJSON(requestParameters.body),
-        });
-
-        return new runtime.TextApiResponse(response);
-    }
-
-    /**
-     */
-    async setClusterPolicy(requestParameters: SetClusterPolicyRequest): Promise<object> {
-        const response = await this.setClusterPolicyRaw(requestParameters);
-        return await response.value();
-    }
-
-    /**
-     */
-    async setDeploymentPolicyRaw(requestParameters: SetDeploymentPolicyRequest): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
-            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling setDeploymentPolicy.');
-        }
-
-        if (requestParameters.environment === null || requestParameters.environment === undefined) {
-            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling setDeploymentPolicy.');
-        }
-
-        if (requestParameters.cluster === null || requestParameters.cluster === undefined) {
-            throw new runtime.RequiredError('cluster','Required parameter requestParameters.cluster was null or undefined when calling setDeploymentPolicy.');
-        }
-
-        if (requestParameters.namespace === null || requestParameters.namespace === undefined) {
-            throw new runtime.RequiredError('namespace','Required parameter requestParameters.namespace was null or undefined when calling setDeploymentPolicy.');
-        }
-
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling setDeploymentPolicy.');
-        }
-
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling setDeploymentPolicy.');
-        }
-
-        const queryParameters: runtime.HTTPQuery = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        const response = await this.request({
-            path: `/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces/{namespace}/deployments/{id}/policy`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))).replace(`{${"namespace"}}`, encodeURIComponent(String(requestParameters.namespace))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
-            method: 'PUT',
-            headers: headerParameters,
-            query: queryParameters,
-            body: TetrateApiTccCoreV1PolicyToJSON(requestParameters.body),
-        });
-
-        return new runtime.TextApiResponse(response);
-    }
-
-    /**
-     */
-    async setDeploymentPolicy(requestParameters: SetDeploymentPolicyRequest): Promise<object> {
-        const response = await this.setDeploymentPolicyRaw(requestParameters);
-        return await response.value();
-    }
-
-    /**
-     */
-    async setEndpointPolicyRaw(requestParameters: SetEndpointPolicyRequest): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
-            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling setEndpointPolicy.');
-        }
-
-        if (requestParameters.environment === null || requestParameters.environment === undefined) {
-            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling setEndpointPolicy.');
-        }
-
-        if (requestParameters.cluster === null || requestParameters.cluster === undefined) {
-            throw new runtime.RequiredError('cluster','Required parameter requestParameters.cluster was null or undefined when calling setEndpointPolicy.');
-        }
-
-        if (requestParameters.namespace === null || requestParameters.namespace === undefined) {
-            throw new runtime.RequiredError('namespace','Required parameter requestParameters.namespace was null or undefined when calling setEndpointPolicy.');
-        }
-
-        if (requestParameters.deployment === null || requestParameters.deployment === undefined) {
-            throw new runtime.RequiredError('deployment','Required parameter requestParameters.deployment was null or undefined when calling setEndpointPolicy.');
-        }
-
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling setEndpointPolicy.');
-        }
-
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling setEndpointPolicy.');
-        }
-
-        const queryParameters: runtime.HTTPQuery = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        const response = await this.request({
-            path: `/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces/{namespace}/deployments/{deployment}/endpoints/{id}/policy`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))).replace(`{${"namespace"}}`, encodeURIComponent(String(requestParameters.namespace))).replace(`{${"deployment"}}`, encodeURIComponent(String(requestParameters.deployment))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
-            method: 'PUT',
-            headers: headerParameters,
-            query: queryParameters,
-            body: TetrateApiTccCoreV1PolicyToJSON(requestParameters.body),
-        });
-
-        return new runtime.TextApiResponse(response);
-    }
-
-    /**
-     */
-    async setEndpointPolicy(requestParameters: SetEndpointPolicyRequest): Promise<object> {
-        const response = await this.setEndpointPolicyRaw(requestParameters);
-        return await response.value();
-    }
-
-    /**
-     */
-    async setNamespacePolicyRaw(requestParameters: SetNamespacePolicyRequest): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
-            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling setNamespacePolicy.');
-        }
-
-        if (requestParameters.environment === null || requestParameters.environment === undefined) {
-            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling setNamespacePolicy.');
-        }
-
-        if (requestParameters.cluster === null || requestParameters.cluster === undefined) {
-            throw new runtime.RequiredError('cluster','Required parameter requestParameters.cluster was null or undefined when calling setNamespacePolicy.');
-        }
-
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling setNamespacePolicy.');
-        }
-
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling setNamespacePolicy.');
-        }
-
-        const queryParameters: runtime.HTTPQuery = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        const response = await this.request({
-            path: `/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces/{id}/policy`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
-            method: 'PUT',
-            headers: headerParameters,
-            query: queryParameters,
-            body: TetrateApiTccCoreV1PolicyToJSON(requestParameters.body),
-        });
-
-        return new runtime.TextApiResponse(response);
-    }
-
-    /**
-     */
-    async setNamespacePolicy(requestParameters: SetNamespacePolicyRequest): Promise<object> {
-        const response = await this.setNamespacePolicyRaw(requestParameters);
         return await response.value();
     }
 

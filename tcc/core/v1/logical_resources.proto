@@ -137,19 +137,6 @@ service LogicalResourceModel {
     };
   };
 
-  rpc GetServicePolicy(GetServiceRequest) returns (Policy) {
-    option (google.api.http) = {
-      get: "/v1/tenants/{tenant}/environments/{environment}/applications/{application}/services/{id}/policy"
-    };
-  };
-
-  rpc SetServicePolicy(ServicePolicyRequest) returns (google.protobuf.Empty) {
-    option (google.api.http) = {
-      put: "/v1/tenants/{tenant}/environments/{environment}/applications/{application}/services/{id}/policy"
-      body: "policy"
-    };
-  };
-
   rpc CreateLoadBalancer(CreateLoadBalancerRequest) returns (LoadBalancer) {
     option (google.api.http) = {
       post: "/v1/tenants/{tenant}/environments/{environment}/loadbalancers"
@@ -426,16 +413,6 @@ message GetServiceRequest {
   string environment = 3 [(validate.rules).string.min_len = 1];
   string application = 4 [(validate.rules).string.min_len = 1];
   string id = 5 [(validate.rules).string.min_len = 1];
-}
-
-message ServicePolicyRequest {
-  // Internal use only. Auto populated field.
-  string name = 1;
-  string tenant = 2 [(validate.rules).string.min_len = 1];
-  string environment = 3 [(validate.rules).string.min_len = 1];
-  string application = 4 [(validate.rules).string.min_len = 1];
-  string id = 5 [(validate.rules).string.min_len = 1];
-  Policy policy = 6 [(validate.rules).message.required = true];
 }
 
 message ListServicesRequest {

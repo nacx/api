@@ -89,19 +89,6 @@ service Organization {
     };
   };
 
-  rpc GetTeamPolicy(GetTeamRequest) returns (Policy) {
-    option (google.api.http) = {
-      get: "/v1/tenants/{tenant}/teams/{id}/policy"
-    };
-  };
-
-  rpc SetTeamPolicy(TeamPolicyRequest) returns (google.protobuf.Empty) {
-    option (google.api.http) = {
-      put: "/v1/tenants/{tenant}/teams/{id}/policy"
-      body: "policy"
-    };
-  };
-
   rpc CreateUser(CreateUserRequest) returns (User) {
     option (google.api.http) = {
       post: "/v1/tenants/{tenant}/users"
@@ -125,19 +112,6 @@ service Organization {
   rpc DeleteUser(DeleteUserRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       delete: "/v1/tenants/{tenant}/users/{id}"
-    };
-  };
-
-  rpc GetUserPolicy(GetUserRequest) returns (Policy) {
-    option (google.api.http) = {
-      get: "/v1/tenants/{tenant}/users/{id}/policy"
-    };
-  };
-
-  rpc SetUserPolicy(UserPolicyRequest) returns (google.protobuf.Empty) {
-    option (google.api.http) = {
-      put: "/v1/tenants/{tenant}/users/{id}/policy"
-      body: "policy"
     };
   };
 
@@ -215,14 +189,6 @@ message GetTeamRequest {
   string id = 3 [(validate.rules).string.min_len = 1];
 }
 
-message TeamPolicyRequest {
-  // Internal use only. Auto populated field.
-  string name = 1;
-  string tenant = 2 [(validate.rules).string.min_len = 1];
-  string id = 3 [(validate.rules).string.min_len = 1];
-  Policy policy = 4 [(validate.rules).message.required = true];
-}
-
 message ListTeamsRequest {
   // Internal use only. Auto populated field.
   string parent = 1;
@@ -264,14 +230,6 @@ message GetUserRequest {
   string name = 1;
   string tenant = 2 [(validate.rules).string.min_len = 1];
   string id = 3 [(validate.rules).string.min_len = 1];
-}
-
-message UserPolicyRequest {
-  // Internal use only. Auto populated field.
-  string name = 1;
-  string tenant = 2 [(validate.rules).string.min_len = 1];
-  string id = 3 [(validate.rules).string.min_len = 1];
-  Policy policy = 4 [(validate.rules).message.required = true];
 }
 
 message ListUsersRequest {
