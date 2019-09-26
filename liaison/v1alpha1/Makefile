@@ -40,7 +40,7 @@ all: $(DESCRIPTOR) $(ENVOYFILTER) node_modules
 
 # Install all the required global deps.
 define install_deps
-	make $(ISTIO_API)
+	$(MAKE) $(ISTIO_API)
 	@yarn
 endef
 
