@@ -16,7 +16,7 @@ $(DESCRIPTOR): $(PROTO_GO_SOURCES)
 $(PROTO_GO_SOURCES): $(PROTO_SOURCES)
 	@protoc -I ./ \
 		-I$(VENDOR) \
-		--go_out=plugins=grpc:$(GOPATH)/src/ \
+		--go_out=paths=source_relative,plugins=grpc:. \
 		--descriptor_set_out=$(DESCRIPTOR) --include_imports \
 		$?
 
