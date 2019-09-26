@@ -2953,6 +2953,9 @@
           "additionalProperties": {
             "type": "string"
           }
+        },
+        "etag": {
+          "type": "string"
         }
       }
     },
@@ -3471,6 +3474,9 @@
         "lbManagementIp": {
           "type": "string",
           "title": "information specific to F5 load balancers if deployment refers to F5"
+        },
+        "etag": {
+          "type": "string"
         }
       }
     },

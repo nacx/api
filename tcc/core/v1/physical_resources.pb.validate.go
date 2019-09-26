@@ -80,6 +80,13 @@ func (m *Cluster) Validate() error {
 
 	// no validation rules for Labels
 
+	if utf8.RuneCountInString(m.GetEtag()) < 1 {
+		return ClusterValidationError{
+			field:  "Etag",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
 	return nil
 }
 
@@ -1227,6 +1234,13 @@ func (m *Deployment) Validate() error {
 	}
 
 	// no validation rules for LbManagementIp
+
+	if utf8.RuneCountInString(m.GetEtag()) < 1 {
+		return DeploymentValidationError{
+			field:  "Etag",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
