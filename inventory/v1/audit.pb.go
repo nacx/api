@@ -49,7 +49,7 @@ func (m *AuditLog) Reset()         { *m = AuditLog{} }
 func (m *AuditLog) String() string { return proto.CompactTextString(m) }
 func (*AuditLog) ProtoMessage()    {}
 func (*AuditLog) Descriptor() ([]byte, []int) {
-	return fileDescriptor_audit_eeac6809193aade9, []int{0}
+	return fileDescriptor_audit_708f656eacfbad8c, []int{0}
 }
 func (m *AuditLog) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_AuditLog.Unmarshal(m, b)
@@ -124,7 +124,7 @@ func (m *ListAuditLogsRequest) Reset()         { *m = ListAuditLogsRequest{} }
 func (m *ListAuditLogsRequest) String() string { return proto.CompactTextString(m) }
 func (*ListAuditLogsRequest) ProtoMessage()    {}
 func (*ListAuditLogsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_audit_eeac6809193aade9, []int{1}
+	return fileDescriptor_audit_708f656eacfbad8c, []int{1}
 }
 func (m *ListAuditLogsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListAuditLogsRequest.Unmarshal(m, b)
@@ -166,7 +166,7 @@ func (m *ListServiceAuditLogsRequest) Reset()         { *m = ListServiceAuditLog
 func (m *ListServiceAuditLogsRequest) String() string { return proto.CompactTextString(m) }
 func (*ListServiceAuditLogsRequest) ProtoMessage()    {}
 func (*ListServiceAuditLogsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_audit_eeac6809193aade9, []int{2}
+	return fileDescriptor_audit_708f656eacfbad8c, []int{2}
 }
 func (m *ListServiceAuditLogsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListServiceAuditLogsRequest.Unmarshal(m, b)
@@ -212,7 +212,7 @@ func (m *ListAuditLogsResponse) Reset()         { *m = ListAuditLogsResponse{} }
 func (m *ListAuditLogsResponse) String() string { return proto.CompactTextString(m) }
 func (*ListAuditLogsResponse) ProtoMessage()    {}
 func (*ListAuditLogsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_audit_eeac6809193aade9, []int{3}
+	return fileDescriptor_audit_708f656eacfbad8c, []int{3}
 }
 func (m *ListAuditLogsResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListAuditLogsResponse.Unmarshal(m, b)
@@ -360,9 +360,9 @@ var _AuditService_serviceDesc = grpc.ServiceDesc{
 	Metadata: "audit.proto",
 }
 
-func init() { proto.RegisterFile("audit.proto", fileDescriptor_audit_eeac6809193aade9) }
+func init() { proto.RegisterFile("audit.proto", fileDescriptor_audit_708f656eacfbad8c) }
 
-var fileDescriptor_audit_eeac6809193aade9 = []byte{
+var fileDescriptor_audit_708f656eacfbad8c = []byte{
 	// 495 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x53, 0xcd, 0x6e, 0xd3, 0x4c,
 	0x14, 0x95, 0x9d, 0xa6, 0x6d, 0xae, 0xfb, 0x7d, 0x54, 0xa3, 0x82, 0x46, 0x06, 0x89, 0xe0, 0x55,

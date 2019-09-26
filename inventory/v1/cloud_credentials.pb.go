@@ -49,7 +49,7 @@ func (x CloudCredentials_Provider) String() string {
 	return proto.EnumName(CloudCredentials_Provider_name, int32(x))
 }
 func (CloudCredentials_Provider) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_cloud_credentials_30e4870f4852b674, []int{0, 0}
+	return fileDescriptor_cloud_credentials_40168a2e5bd8e3ea, []int{0, 0}
 }
 
 // Cloud credentials represent the opaque credentials existing in hte platform
@@ -66,7 +66,7 @@ func (m *CloudCredentials) Reset()         { *m = CloudCredentials{} }
 func (m *CloudCredentials) String() string { return proto.CompactTextString(m) }
 func (*CloudCredentials) ProtoMessage()    {}
 func (*CloudCredentials) Descriptor() ([]byte, []int) {
-	return fileDescriptor_cloud_credentials_30e4870f4852b674, []int{0}
+	return fileDescriptor_cloud_credentials_40168a2e5bd8e3ea, []int{0}
 }
 func (m *CloudCredentials) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CloudCredentials.Unmarshal(m, b)
@@ -120,7 +120,7 @@ func (m *AzureCredentials) Reset()         { *m = AzureCredentials{} }
 func (m *AzureCredentials) String() string { return proto.CompactTextString(m) }
 func (*AzureCredentials) ProtoMessage()    {}
 func (*AzureCredentials) Descriptor() ([]byte, []int) {
-	return fileDescriptor_cloud_credentials_30e4870f4852b674, []int{1}
+	return fileDescriptor_cloud_credentials_40168a2e5bd8e3ea, []int{1}
 }
 func (m *AzureCredentials) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_AzureCredentials.Unmarshal(m, b)
@@ -178,7 +178,7 @@ func (m *AddCredentialsResponse) Reset()         { *m = AddCredentialsResponse{}
 func (m *AddCredentialsResponse) String() string { return proto.CompactTextString(m) }
 func (*AddCredentialsResponse) ProtoMessage()    {}
 func (*AddCredentialsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_cloud_credentials_30e4870f4852b674, []int{2}
+	return fileDescriptor_cloud_credentials_40168a2e5bd8e3ea, []int{2}
 }
 func (m *AddCredentialsResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_AddCredentialsResponse.Unmarshal(m, b)
@@ -208,7 +208,7 @@ func (m *ListCredentialsRequest) Reset()         { *m = ListCredentialsRequest{}
 func (m *ListCredentialsRequest) String() string { return proto.CompactTextString(m) }
 func (*ListCredentialsRequest) ProtoMessage()    {}
 func (*ListCredentialsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_cloud_credentials_30e4870f4852b674, []int{3}
+	return fileDescriptor_cloud_credentials_40168a2e5bd8e3ea, []int{3}
 }
 func (m *ListCredentialsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListCredentialsRequest.Unmarshal(m, b)
@@ -240,7 +240,7 @@ func (m *ListCredentialsResponse) Reset()         { *m = ListCredentialsResponse
 func (m *ListCredentialsResponse) String() string { return proto.CompactTextString(m) }
 func (*ListCredentialsResponse) ProtoMessage()    {}
 func (*ListCredentialsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_cloud_credentials_30e4870f4852b674, []int{4}
+	return fileDescriptor_cloud_credentials_40168a2e5bd8e3ea, []int{4}
 }
 func (m *ListCredentialsResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListCredentialsResponse.Unmarshal(m, b)
@@ -279,7 +279,7 @@ func (m *GetCredentialsRequest) Reset()         { *m = GetCredentialsRequest{} }
 func (m *GetCredentialsRequest) String() string { return proto.CompactTextString(m) }
 func (*GetCredentialsRequest) ProtoMessage()    {}
 func (*GetCredentialsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_cloud_credentials_30e4870f4852b674, []int{5}
+	return fileDescriptor_cloud_credentials_40168a2e5bd8e3ea, []int{5}
 }
 func (m *GetCredentialsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetCredentialsRequest.Unmarshal(m, b)
@@ -318,7 +318,7 @@ func (m *DeleteCredentialsRequest) Reset()         { *m = DeleteCredentialsReque
 func (m *DeleteCredentialsRequest) String() string { return proto.CompactTextString(m) }
 func (*DeleteCredentialsRequest) ProtoMessage()    {}
 func (*DeleteCredentialsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_cloud_credentials_30e4870f4852b674, []int{6}
+	return fileDescriptor_cloud_credentials_40168a2e5bd8e3ea, []int{6}
 }
 func (m *DeleteCredentialsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DeleteCredentialsRequest.Unmarshal(m, b)
@@ -538,10 +538,10 @@ var _CloudCredentialsService_serviceDesc = grpc.ServiceDesc{
 }
 
 func init() {
-	proto.RegisterFile("cloud_credentials.proto", fileDescriptor_cloud_credentials_30e4870f4852b674)
+	proto.RegisterFile("cloud_credentials.proto", fileDescriptor_cloud_credentials_40168a2e5bd8e3ea)
 }
 
-var fileDescriptor_cloud_credentials_30e4870f4852b674 = []byte{
+var fileDescriptor_cloud_credentials_40168a2e5bd8e3ea = []byte{
 	// 544 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x54, 0x5f, 0x6f, 0x12, 0x4f,
 	0x14, 0xfd, 0x6d, 0xa1, 0xfd, 0xc1, 0x6d, 0x62, 0xc8, 0x58, 0x60, 0xb3, 0xad, 0x4a, 0x36, 0x51,

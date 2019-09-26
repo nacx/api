@@ -52,7 +52,7 @@ func (x Service_Kind) String() string {
 	return proto.EnumName(Service_Kind_name, int32(x))
 }
 func (Service_Kind) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_service_85b723c07d7c2427, []int{0, 0}
+	return fileDescriptor_service_116bcdcb0f408ebf, []int{0, 0}
 }
 
 // ServiceStatus represents the health status of this service
@@ -79,7 +79,7 @@ func (x Service_Status) String() string {
 	return proto.EnumName(Service_Status_name, int32(x))
 }
 func (Service_Status) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_service_85b723c07d7c2427, []int{0, 1}
+	return fileDescriptor_service_116bcdcb0f408ebf, []int{0, 1}
 }
 
 // Transport protocols that are currently supported
@@ -109,7 +109,7 @@ func (x PortSpec_Protocol) String() string {
 	return proto.EnumName(PortSpec_Protocol_name, int32(x))
 }
 func (PortSpec_Protocol) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_service_85b723c07d7c2427, []int{7, 0}
+	return fileDescriptor_service_116bcdcb0f408ebf, []int{7, 0}
 }
 
 // Tetrate service definition that uniquely identifies services
@@ -139,7 +139,7 @@ func (m *Service) Reset()         { *m = Service{} }
 func (m *Service) String() string { return proto.CompactTextString(m) }
 func (*Service) ProtoMessage()    {}
 func (*Service) Descriptor() ([]byte, []int) {
-	return fileDescriptor_service_85b723c07d7c2427, []int{0}
+	return fileDescriptor_service_116bcdcb0f408ebf, []int{0}
 }
 func (m *Service) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Service.Unmarshal(m, b)
@@ -226,7 +226,7 @@ func (m *ListServicesRequest) Reset()         { *m = ListServicesRequest{} }
 func (m *ListServicesRequest) String() string { return proto.CompactTextString(m) }
 func (*ListServicesRequest) ProtoMessage()    {}
 func (*ListServicesRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_service_85b723c07d7c2427, []int{1}
+	return fileDescriptor_service_116bcdcb0f408ebf, []int{1}
 }
 func (m *ListServicesRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListServicesRequest.Unmarshal(m, b)
@@ -258,7 +258,7 @@ func (m *ListServicesResponse) Reset()         { *m = ListServicesResponse{} }
 func (m *ListServicesResponse) String() string { return proto.CompactTextString(m) }
 func (*ListServicesResponse) ProtoMessage()    {}
 func (*ListServicesResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_service_85b723c07d7c2427, []int{2}
+	return fileDescriptor_service_116bcdcb0f408ebf, []int{2}
 }
 func (m *ListServicesResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListServicesResponse.Unmarshal(m, b)
@@ -311,7 +311,7 @@ func (m *Metadata) Reset()         { *m = Metadata{} }
 func (m *Metadata) String() string { return proto.CompactTextString(m) }
 func (*Metadata) ProtoMessage()    {}
 func (*Metadata) Descriptor() ([]byte, []int) {
-	return fileDescriptor_service_85b723c07d7c2427, []int{3}
+	return fileDescriptor_service_116bcdcb0f408ebf, []int{3}
 }
 func (m *Metadata) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Metadata.Unmarshal(m, b)
@@ -390,7 +390,7 @@ func (m *Cluster) Reset()         { *m = Cluster{} }
 func (m *Cluster) String() string { return proto.CompactTextString(m) }
 func (*Cluster) ProtoMessage()    {}
 func (*Cluster) Descriptor() ([]byte, []int) {
-	return fileDescriptor_service_85b723c07d7c2427, []int{4}
+	return fileDescriptor_service_116bcdcb0f408ebf, []int{4}
 }
 func (m *Cluster) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Cluster.Unmarshal(m, b)
@@ -452,7 +452,7 @@ func (m *Workload) Reset()         { *m = Workload{} }
 func (m *Workload) String() string { return proto.CompactTextString(m) }
 func (*Workload) ProtoMessage()    {}
 func (*Workload) Descriptor() ([]byte, []int) {
-	return fileDescriptor_service_85b723c07d7c2427, []int{5}
+	return fileDescriptor_service_116bcdcb0f408ebf, []int{5}
 }
 func (m *Workload) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Workload.Unmarshal(m, b)
@@ -520,7 +520,7 @@ func (m *Endpoint) Reset()         { *m = Endpoint{} }
 func (m *Endpoint) String() string { return proto.CompactTextString(m) }
 func (*Endpoint) ProtoMessage()    {}
 func (*Endpoint) Descriptor() ([]byte, []int) {
-	return fileDescriptor_service_85b723c07d7c2427, []int{6}
+	return fileDescriptor_service_116bcdcb0f408ebf, []int{6}
 }
 func (m *Endpoint) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Endpoint.Unmarshal(m, b)
@@ -697,7 +697,7 @@ func (m *PortSpec) Reset()         { *m = PortSpec{} }
 func (m *PortSpec) String() string { return proto.CompactTextString(m) }
 func (*PortSpec) ProtoMessage()    {}
 func (*PortSpec) Descriptor() ([]byte, []int) {
-	return fileDescriptor_service_85b723c07d7c2427, []int{7}
+	return fileDescriptor_service_116bcdcb0f408ebf, []int{7}
 }
 func (m *PortSpec) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PortSpec.Unmarshal(m, b)
@@ -763,7 +763,7 @@ func (m *ServiceBinding) Reset()         { *m = ServiceBinding{} }
 func (m *ServiceBinding) String() string { return proto.CompactTextString(m) }
 func (*ServiceBinding) ProtoMessage()    {}
 func (*ServiceBinding) Descriptor() ([]byte, []int) {
-	return fileDescriptor_service_85b723c07d7c2427, []int{8}
+	return fileDescriptor_service_116bcdcb0f408ebf, []int{8}
 }
 func (m *ServiceBinding) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ServiceBinding.Unmarshal(m, b)
@@ -825,7 +825,7 @@ func (m *Policy) Reset()         { *m = Policy{} }
 func (m *Policy) String() string { return proto.CompactTextString(m) }
 func (*Policy) ProtoMessage()    {}
 func (*Policy) Descriptor() ([]byte, []int) {
-	return fileDescriptor_service_85b723c07d7c2427, []int{9}
+	return fileDescriptor_service_116bcdcb0f408ebf, []int{9}
 }
 func (m *Policy) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Policy.Unmarshal(m, b)
@@ -871,7 +871,7 @@ func (m *BindServiceRequest) Reset()         { *m = BindServiceRequest{} }
 func (m *BindServiceRequest) String() string { return proto.CompactTextString(m) }
 func (*BindServiceRequest) ProtoMessage()    {}
 func (*BindServiceRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_service_85b723c07d7c2427, []int{10}
+	return fileDescriptor_service_116bcdcb0f408ebf, []int{10}
 }
 func (m *BindServiceRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_BindServiceRequest.Unmarshal(m, b)
@@ -917,7 +917,7 @@ func (m *UnbindServiceRequest) Reset()         { *m = UnbindServiceRequest{} }
 func (m *UnbindServiceRequest) String() string { return proto.CompactTextString(m) }
 func (*UnbindServiceRequest) ProtoMessage()    {}
 func (*UnbindServiceRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_service_85b723c07d7c2427, []int{11}
+	return fileDescriptor_service_116bcdcb0f408ebf, []int{11}
 }
 func (m *UnbindServiceRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_UnbindServiceRequest.Unmarshal(m, b)
@@ -962,7 +962,7 @@ func (m *ListBindingsRequest) Reset()         { *m = ListBindingsRequest{} }
 func (m *ListBindingsRequest) String() string { return proto.CompactTextString(m) }
 func (*ListBindingsRequest) ProtoMessage()    {}
 func (*ListBindingsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_service_85b723c07d7c2427, []int{12}
+	return fileDescriptor_service_116bcdcb0f408ebf, []int{12}
 }
 func (m *ListBindingsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListBindingsRequest.Unmarshal(m, b)
@@ -1000,7 +1000,7 @@ func (m *ListBindingsResponse) Reset()         { *m = ListBindingsResponse{} }
 func (m *ListBindingsResponse) String() string { return proto.CompactTextString(m) }
 func (*ListBindingsResponse) ProtoMessage()    {}
 func (*ListBindingsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_service_85b723c07d7c2427, []int{13}
+	return fileDescriptor_service_116bcdcb0f408ebf, []int{13}
 }
 func (m *ListBindingsResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListBindingsResponse.Unmarshal(m, b)
@@ -1037,7 +1037,7 @@ func (m *ListPoliciesRequest) Reset()         { *m = ListPoliciesRequest{} }
 func (m *ListPoliciesRequest) String() string { return proto.CompactTextString(m) }
 func (*ListPoliciesRequest) ProtoMessage()    {}
 func (*ListPoliciesRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_service_85b723c07d7c2427, []int{14}
+	return fileDescriptor_service_116bcdcb0f408ebf, []int{14}
 }
 func (m *ListPoliciesRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListPoliciesRequest.Unmarshal(m, b)
@@ -1068,7 +1068,7 @@ func (m *ListPoliciesResponse) Reset()         { *m = ListPoliciesResponse{} }
 func (m *ListPoliciesResponse) String() string { return proto.CompactTextString(m) }
 func (*ListPoliciesResponse) ProtoMessage()    {}
 func (*ListPoliciesResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_service_85b723c07d7c2427, []int{15}
+	return fileDescriptor_service_116bcdcb0f408ebf, []int{15}
 }
 func (m *ListPoliciesResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListPoliciesResponse.Unmarshal(m, b)
@@ -1364,9 +1364,9 @@ var _InventoryService_serviceDesc = grpc.ServiceDesc{
 	Metadata: "service.proto",
 }
 
-func init() { proto.RegisterFile("service.proto", fileDescriptor_service_85b723c07d7c2427) }
+func init() { proto.RegisterFile("service.proto", fileDescriptor_service_116bcdcb0f408ebf) }
 
-var fileDescriptor_service_85b723c07d7c2427 = []byte{
+var fileDescriptor_service_116bcdcb0f408ebf = []byte{
 	// 1216 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x57, 0xed, 0x6e, 0x1b, 0x45,
 	0x17, 0xce, 0xfa, 0x73, 0x7d, 0x12, 0xfb, 0xb5, 0xe6, 0x0d, 0xd5, 0xca, 0xad, 0x54, 0x77, 0x11,

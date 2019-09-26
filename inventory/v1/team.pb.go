@@ -48,7 +48,7 @@ func (x User_Kind) String() string {
 	return proto.EnumName(User_Kind_name, int32(x))
 }
 func (User_Kind) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_team_c591374f923e7c89, []int{0, 0}
+	return fileDescriptor_team_309934e23206cf87, []int{0, 0}
 }
 
 // A cloud principal. It can be a human user or a service account.
@@ -73,7 +73,7 @@ func (m *User) Reset()         { *m = User{} }
 func (m *User) String() string { return proto.CompactTextString(m) }
 func (*User) ProtoMessage()    {}
 func (*User) Descriptor() ([]byte, []int) {
-	return fileDescriptor_team_c591374f923e7c89, []int{0}
+	return fileDescriptor_team_309934e23206cf87, []int{0}
 }
 func (m *User) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_User.Unmarshal(m, b)
@@ -156,7 +156,7 @@ func (m *Group) Reset()         { *m = Group{} }
 func (m *Group) String() string { return proto.CompactTextString(m) }
 func (*Group) ProtoMessage()    {}
 func (*Group) Descriptor() ([]byte, []int) {
-	return fileDescriptor_team_c591374f923e7c89, []int{1}
+	return fileDescriptor_team_309934e23206cf87, []int{1}
 }
 func (m *Group) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Group.Unmarshal(m, b)
@@ -221,7 +221,7 @@ func (m *Role) Reset()         { *m = Role{} }
 func (m *Role) String() string { return proto.CompactTextString(m) }
 func (*Role) ProtoMessage()    {}
 func (*Role) Descriptor() ([]byte, []int) {
-	return fileDescriptor_team_c591374f923e7c89, []int{2}
+	return fileDescriptor_team_309934e23206cf87, []int{2}
 }
 func (m *Role) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Role.Unmarshal(m, b)
@@ -281,7 +281,7 @@ func (m *RoleBinding) Reset()         { *m = RoleBinding{} }
 func (m *RoleBinding) String() string { return proto.CompactTextString(m) }
 func (*RoleBinding) ProtoMessage()    {}
 func (*RoleBinding) Descriptor() ([]byte, []int) {
-	return fileDescriptor_team_c591374f923e7c89, []int{3}
+	return fileDescriptor_team_309934e23206cf87, []int{3}
 }
 func (m *RoleBinding) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_RoleBinding.Unmarshal(m, b)
@@ -339,7 +339,7 @@ func (m *ResourceRef) Reset()         { *m = ResourceRef{} }
 func (m *ResourceRef) String() string { return proto.CompactTextString(m) }
 func (*ResourceRef) ProtoMessage()    {}
 func (*ResourceRef) Descriptor() ([]byte, []int) {
-	return fileDescriptor_team_c591374f923e7c89, []int{4}
+	return fileDescriptor_team_309934e23206cf87, []int{4}
 }
 func (m *ResourceRef) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ResourceRef.Unmarshal(m, b)
@@ -391,7 +391,7 @@ func (m *ListGroupsRequest) Reset()         { *m = ListGroupsRequest{} }
 func (m *ListGroupsRequest) String() string { return proto.CompactTextString(m) }
 func (*ListGroupsRequest) ProtoMessage()    {}
 func (*ListGroupsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_team_c591374f923e7c89, []int{5}
+	return fileDescriptor_team_309934e23206cf87, []int{5}
 }
 func (m *ListGroupsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListGroupsRequest.Unmarshal(m, b)
@@ -424,7 +424,7 @@ func (m *ListGroupsResponse) Reset()         { *m = ListGroupsResponse{} }
 func (m *ListGroupsResponse) String() string { return proto.CompactTextString(m) }
 func (*ListGroupsResponse) ProtoMessage()    {}
 func (*ListGroupsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_team_c591374f923e7c89, []int{6}
+	return fileDescriptor_team_309934e23206cf87, []int{6}
 }
 func (m *ListGroupsResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListGroupsResponse.Unmarshal(m, b)
@@ -462,7 +462,7 @@ func (m *ListUsersRequest) Reset()         { *m = ListUsersRequest{} }
 func (m *ListUsersRequest) String() string { return proto.CompactTextString(m) }
 func (*ListUsersRequest) ProtoMessage()    {}
 func (*ListUsersRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_team_c591374f923e7c89, []int{7}
+	return fileDescriptor_team_309934e23206cf87, []int{7}
 }
 func (m *ListUsersRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListUsersRequest.Unmarshal(m, b)
@@ -495,7 +495,7 @@ func (m *ListUsersResponse) Reset()         { *m = ListUsersResponse{} }
 func (m *ListUsersResponse) String() string { return proto.CompactTextString(m) }
 func (*ListUsersResponse) ProtoMessage()    {}
 func (*ListUsersResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_team_c591374f923e7c89, []int{8}
+	return fileDescriptor_team_309934e23206cf87, []int{8}
 }
 func (m *ListUsersResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListUsersResponse.Unmarshal(m, b)
@@ -533,7 +533,7 @@ func (m *ListRolesRequest) Reset()         { *m = ListRolesRequest{} }
 func (m *ListRolesRequest) String() string { return proto.CompactTextString(m) }
 func (*ListRolesRequest) ProtoMessage()    {}
 func (*ListRolesRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_team_c591374f923e7c89, []int{9}
+	return fileDescriptor_team_309934e23206cf87, []int{9}
 }
 func (m *ListRolesRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListRolesRequest.Unmarshal(m, b)
@@ -566,7 +566,7 @@ func (m *ListRolesResponse) Reset()         { *m = ListRolesResponse{} }
 func (m *ListRolesResponse) String() string { return proto.CompactTextString(m) }
 func (*ListRolesResponse) ProtoMessage()    {}
 func (*ListRolesResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_team_c591374f923e7c89, []int{10}
+	return fileDescriptor_team_309934e23206cf87, []int{10}
 }
 func (m *ListRolesResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListRolesResponse.Unmarshal(m, b)
@@ -606,7 +606,7 @@ func (m *ListRoleBindingsRequest) Reset()         { *m = ListRoleBindingsRequest
 func (m *ListRoleBindingsRequest) String() string { return proto.CompactTextString(m) }
 func (*ListRoleBindingsRequest) ProtoMessage()    {}
 func (*ListRoleBindingsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_team_c591374f923e7c89, []int{11}
+	return fileDescriptor_team_309934e23206cf87, []int{11}
 }
 func (m *ListRoleBindingsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListRoleBindingsRequest.Unmarshal(m, b)
@@ -646,7 +646,7 @@ func (m *ListRoleBindingsResponse) Reset()         { *m = ListRoleBindingsRespon
 func (m *ListRoleBindingsResponse) String() string { return proto.CompactTextString(m) }
 func (*ListRoleBindingsResponse) ProtoMessage()    {}
 func (*ListRoleBindingsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_team_c591374f923e7c89, []int{12}
+	return fileDescriptor_team_309934e23206cf87, []int{12}
 }
 func (m *ListRoleBindingsResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListRoleBindingsResponse.Unmarshal(m, b)
@@ -686,7 +686,7 @@ func (m *ResetPasswordRequest) Reset()         { *m = ResetPasswordRequest{} }
 func (m *ResetPasswordRequest) String() string { return proto.CompactTextString(m) }
 func (*ResetPasswordRequest) ProtoMessage()    {}
 func (*ResetPasswordRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_team_c591374f923e7c89, []int{13}
+	return fileDescriptor_team_309934e23206cf87, []int{13}
 }
 func (m *ResetPasswordRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ResetPasswordRequest.Unmarshal(m, b)
@@ -726,7 +726,7 @@ func (m *ChangePasswordRequest) Reset()         { *m = ChangePasswordRequest{} }
 func (m *ChangePasswordRequest) String() string { return proto.CompactTextString(m) }
 func (*ChangePasswordRequest) ProtoMessage()    {}
 func (*ChangePasswordRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_team_c591374f923e7c89, []int{14}
+	return fileDescriptor_team_309934e23206cf87, []int{14}
 }
 func (m *ChangePasswordRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ChangePasswordRequest.Unmarshal(m, b)
@@ -1021,9 +1021,9 @@ var _TeamService_serviceDesc = grpc.ServiceDesc{
 	Metadata: "team.proto",
 }
 
-func init() { proto.RegisterFile("team.proto", fileDescriptor_team_c591374f923e7c89) }
+func init() { proto.RegisterFile("team.proto", fileDescriptor_team_309934e23206cf87) }
 
-var fileDescriptor_team_c591374f923e7c89 = []byte{
+var fileDescriptor_team_309934e23206cf87 = []byte{
 	// 820 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x96, 0xef, 0x4e, 0x33, 0x45,
 	0x14, 0xc6, 0x5d, 0xd8, 0x56, 0x7a, 0x8a, 0x04, 0x46, 0x84, 0x4d, 0x45, 0x2c, 0x83, 0x24, 0x58,
