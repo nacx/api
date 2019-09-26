@@ -1,6 +1,7 @@
+export * from './TetrateApiQRbacV1Binding';
+export * from './TetrateApiQRbacV1Policy';
 export * from './TetrateApiTccCoreV1Application';
 export * from './TetrateApiTccCoreV1ApplicationSpecificLB';
-export * from './TetrateApiTccCoreV1Binding';
 export * from './TetrateApiTccCoreV1BulkLoadClusterRequest';
 export * from './TetrateApiTccCoreV1BulkLoadClusterRequestClusterWithNamespaces';
 export * from './TetrateApiTccCoreV1BulkLoadClusterRequestDeploymentWithEndpoints';
@@ -49,7 +50,6 @@ export * from './TetrateApiTccCoreV1ListTenantsResponse';
 export * from './TetrateApiTccCoreV1ListUsersResponse';
 export * from './TetrateApiTccCoreV1LoadBalancerClass';
 export * from './TetrateApiTccCoreV1Namespace';
-export * from './TetrateApiTccCoreV1Policy';
 export * from './TetrateApiTccCoreV1Port';
 export * from './TetrateApiTccCoreV1Redirect';
 export * from './TetrateApiTccCoreV1Registry';

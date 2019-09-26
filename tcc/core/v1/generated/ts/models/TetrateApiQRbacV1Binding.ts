@@ -15,31 +15,31 @@ import { exists, mapValues } from '../runtime';
 /**
  * A binding associates a role with a set of subjects. Bindings are used to configure policies, where different roles can be assigned to different sets of subjects to configure a fine-grained access control to the resource protected by the policy.
  * @export
- * @interface TetrateApiTccCoreV1Binding
+ * @interface TetrateApiQRbacV1Binding
  */
-export interface TetrateApiTccCoreV1Binding {
+export interface TetrateApiQRbacV1Binding {
     /**
      * The role that defines the permissions that will be granted to the target resource.
      * @type {string}
-     * @memberof TetrateApiTccCoreV1Binding
+     * @memberof TetrateApiQRbacV1Binding
      */
     role?: string;
     /**
      * The set of subjects that will be allowed to access the target resource with the permissions defined by the role.
      * @type {Array<string>}
-     * @memberof TetrateApiTccCoreV1Binding
+     * @memberof TetrateApiQRbacV1Binding
      */
     subjects?: Array<string>;
 }
 
-export function TetrateApiTccCoreV1BindingFromJSON(json: any): TetrateApiTccCoreV1Binding {
+export function TetrateApiQRbacV1BindingFromJSON(json: any): TetrateApiQRbacV1Binding {
     return {
         'role': !exists(json, 'role') ? undefined : json['role'],
         'subjects': !exists(json, 'subjects') ? undefined : json['subjects'],
     };
 }
 
-export function TetrateApiTccCoreV1BindingToJSON(value?: TetrateApiTccCoreV1Binding): any {
+export function TetrateApiQRbacV1BindingToJSON(value?: TetrateApiQRbacV1Binding): any {
     if (value === undefined) {
         return undefined;
     }

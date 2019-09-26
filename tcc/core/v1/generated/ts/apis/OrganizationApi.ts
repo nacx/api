@@ -14,6 +14,9 @@
 
 import * as runtime from '../runtime';
 import {
+    TetrateApiQRbacV1Policy,
+    TetrateApiQRbacV1PolicyFromJSON,
+    TetrateApiQRbacV1PolicyToJSON,
     TetrateApiTccCoreV1CreateTeamRequest,
     TetrateApiTccCoreV1CreateTeamRequestFromJSON,
     TetrateApiTccCoreV1CreateTeamRequestToJSON,
@@ -32,9 +35,6 @@ import {
     TetrateApiTccCoreV1ListUsersResponse,
     TetrateApiTccCoreV1ListUsersResponseFromJSON,
     TetrateApiTccCoreV1ListUsersResponseToJSON,
-    TetrateApiTccCoreV1Policy,
-    TetrateApiTccCoreV1PolicyFromJSON,
-    TetrateApiTccCoreV1PolicyToJSON,
     TetrateApiTccCoreV1Team,
     TetrateApiTccCoreV1TeamFromJSON,
     TetrateApiTccCoreV1TeamToJSON,
@@ -111,7 +111,7 @@ export interface ListUsersRequest {
 
 export interface SetTenantPolicyRequest {
     id: string;
-    body: TetrateApiTccCoreV1Policy;
+    body: TetrateApiQRbacV1Policy;
 }
 
 export interface UpdateTeamRequest {
@@ -431,12 +431,12 @@ export class OrganizationApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccCoreV1PolicyFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiQRbacV1PolicyFromJSON(jsonValue));
     }
 
     /**
      */
-    async getTenantPolicy(requestParameters: GetTenantPolicyRequest): Promise<TetrateApiTccCoreV1Policy> {
+    async getTenantPolicy(requestParameters: GetTenantPolicyRequest): Promise<TetrateApiQRbacV1Policy> {
         const response = await this.getTenantPolicyRaw(requestParameters);
         return await response.value();
     }
@@ -587,7 +587,7 @@ export class OrganizationApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: TetrateApiTccCoreV1PolicyToJSON(requestParameters.body),
+            body: TetrateApiQRbacV1PolicyToJSON(requestParameters.body),
         });
 
         return new runtime.TextApiResponse(response);

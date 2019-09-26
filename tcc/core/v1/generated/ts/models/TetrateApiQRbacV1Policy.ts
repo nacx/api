@@ -13,37 +13,37 @@
 
 import { exists, mapValues } from '../runtime';
 import {
-    TetrateApiTccCoreV1Binding,
-    TetrateApiTccCoreV1BindingFromJSON,
-    TetrateApiTccCoreV1BindingToJSON,
+    TetrateApiQRbacV1Binding,
+    TetrateApiQRbacV1BindingFromJSON,
+    TetrateApiQRbacV1BindingToJSON,
 } from './';
 
 /**
  * A policy defines the set of subjects that can access a resource and under which conditions that access is granted.
  * @export
- * @interface TetrateApiTccCoreV1Policy
+ * @interface TetrateApiQRbacV1Policy
  */
-export interface TetrateApiTccCoreV1Policy {
+export interface TetrateApiQRbacV1Policy {
     /**
      * The list of bindings configures the different access profiles that are allowed on the resource configured by the policy.
-     * @type {Array<TetrateApiTccCoreV1Binding>}
-     * @memberof TetrateApiTccCoreV1Policy
+     * @type {Array<TetrateApiQRbacV1Binding>}
+     * @memberof TetrateApiQRbacV1Policy
      */
-    bindings?: Array<TetrateApiTccCoreV1Binding>;
+    bindings?: Array<TetrateApiQRbacV1Binding>;
 }
 
-export function TetrateApiTccCoreV1PolicyFromJSON(json: any): TetrateApiTccCoreV1Policy {
+export function TetrateApiQRbacV1PolicyFromJSON(json: any): TetrateApiQRbacV1Policy {
     return {
-        'bindings': !exists(json, 'bindings') ? undefined : (json['bindings'] as Array<any>).map(TetrateApiTccCoreV1BindingFromJSON),
+        'bindings': !exists(json, 'bindings') ? undefined : (json['bindings'] as Array<any>).map(TetrateApiQRbacV1BindingFromJSON),
     };
 }
 
-export function TetrateApiTccCoreV1PolicyToJSON(value?: TetrateApiTccCoreV1Policy): any {
+export function TetrateApiQRbacV1PolicyToJSON(value?: TetrateApiQRbacV1Policy): any {
     if (value === undefined) {
         return undefined;
     }
     return {
-        'bindings': value.bindings === undefined ? undefined : (value.bindings as Array<any>).map(TetrateApiTccCoreV1BindingToJSON),
+        'bindings': value.bindings === undefined ? undefined : (value.bindings as Array<any>).map(TetrateApiQRbacV1BindingToJSON),
     };
 }
 

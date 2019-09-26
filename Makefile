@@ -1,6 +1,6 @@
 # Copyright (c) Tetrate, Inc 2019 All Rights Reserved.
 
-APIS := audit/v1 test/v1 tcc/core/v1 tcc/workflows/loadbalancer/v1 regsource/v1
+APIS := audit/v1 test/v1 q/rbac/v1 tcc/core/v1 tcc/workflows/loadbalancer/v1 regsource/v1
 
 .PHONY: all
 all: $(APIS)

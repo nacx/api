@@ -14,6 +14,9 @@
 
 import * as runtime from '../runtime';
 import {
+    TetrateApiQRbacV1Policy,
+    TetrateApiQRbacV1PolicyFromJSON,
+    TetrateApiQRbacV1PolicyToJSON,
     TetrateApiTccCoreV1Application,
     TetrateApiTccCoreV1ApplicationFromJSON,
     TetrateApiTccCoreV1ApplicationToJSON,
@@ -38,9 +41,6 @@ import {
     TetrateApiTccCoreV1ListServicesResponse,
     TetrateApiTccCoreV1ListServicesResponseFromJSON,
     TetrateApiTccCoreV1ListServicesResponseToJSON,
-    TetrateApiTccCoreV1Policy,
-    TetrateApiTccCoreV1PolicyFromJSON,
-    TetrateApiTccCoreV1PolicyToJSON,
     TetrateApiTccCoreV1Service,
     TetrateApiTccCoreV1ServiceFromJSON,
     TetrateApiTccCoreV1ServiceToJSON,
@@ -141,13 +141,13 @@ export interface SetApplicationPolicyRequest {
     tenant: string;
     environment: string;
     id: string;
-    body: TetrateApiTccCoreV1Policy;
+    body: TetrateApiQRbacV1Policy;
 }
 
 export interface SetEnvironmentPolicyRequest {
     tenant: string;
     id: string;
-    body: TetrateApiTccCoreV1Policy;
+    body: TetrateApiQRbacV1Policy;
 }
 
 export interface UpdateApplicationRequest {
@@ -483,12 +483,12 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccCoreV1PolicyFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiQRbacV1PolicyFromJSON(jsonValue));
     }
 
     /**
      */
-    async getApplicationPolicy(requestParameters: GetApplicationPolicyRequest): Promise<TetrateApiTccCoreV1Policy> {
+    async getApplicationPolicy(requestParameters: GetApplicationPolicyRequest): Promise<TetrateApiQRbacV1Policy> {
         const response = await this.getApplicationPolicyRaw(requestParameters);
         return await response.value();
     }
@@ -555,12 +555,12 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccCoreV1PolicyFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiQRbacV1PolicyFromJSON(jsonValue));
     }
 
     /**
      */
-    async getEnvironmentPolicy(requestParameters: GetEnvironmentPolicyRequest): Promise<TetrateApiTccCoreV1Policy> {
+    async getEnvironmentPolicy(requestParameters: GetEnvironmentPolicyRequest): Promise<TetrateApiQRbacV1Policy> {
         const response = await this.getEnvironmentPolicyRaw(requestParameters);
         return await response.value();
     }
@@ -747,7 +747,7 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: TetrateApiTccCoreV1PolicyToJSON(requestParameters.body),
+            body: TetrateApiQRbacV1PolicyToJSON(requestParameters.body),
         });
 
         return new runtime.TextApiResponse(response);
@@ -786,7 +786,7 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: TetrateApiTccCoreV1PolicyToJSON(requestParameters.body),
+            body: TetrateApiQRbacV1PolicyToJSON(requestParameters.body),
         });
 
         return new runtime.TextApiResponse(response);

@@ -1,0 +1,149 @@
+// Copyright (c) Tetrate, Inc 2019 All Rights Reserved.
+
+syntax = "proto3";
+
+package tetrate.api.q.rbac.v1;
+option go_package = "github.com/tetrateio/tetrate/api/q/rbac/v1";
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "validate/validate.proto";
+
+// RBAC service.
+//
+// The RBAC service provides a high level API to model Q RBAC policies.
+//
+// Policies in this API are resource centric; that is, they are applied to a resource.
+// All resources will have one and only one policy that describes how the resource can be accessed
+// and under in which conditions.
+service RBAC {
+
+  // Creates a Role in the system
+  rpc CreateRole(CreateRoleRequest) returns (Role) {
+    option (google.api.http) = {
+      post: "/v1/roles"
+      body: "*"
+    };
+  };
+
+  // List all existing roles in the system
+  rpc ListRoles(ListRolesRequest) returns (ListRolesResponse) {
+    option (google.api.http).get = "/v1/roles";
+  };
+
+  // Get the details of teh role with the given name
+  rpc GetRole(GetRoleRequest) returns (Role) {
+    option (google.api.http).get = "/v1/roles/{name}";
+  };
+
+  // Delete the role with the given name.
+  // Roles that are assigned to policies cannot be deleted. Policies need to be deleted first
+  rpc DeleteRole(DeleteRoleRequest) returns (google.protobuf.Empty) {
+    option (google.api.http).delete = "/v1/roles/{name}";
+  };
+}
+
+// Permission
+//
+// A permission defines an action that can be performed on a resource. By default access to resources
+// is deined unless an explicit permission grants access to perform an operation tagainst it.
+enum Permission {
+  // Default value to designate no value was explicitly set for the permission.
+  INVALID = 0;
+  // The read permission grants read-only access to the resource.
+  READ = 1;
+  // The write permission allows the subject to modify an existing resource.
+  WRITE = 2;
+  // The create permission allows subjects to create child resources on the resource.
+  CREATE = 3;
+  // The delete permission grants permissions to delete the resource.
+  DELETE = 4;
+  // The set-policy permission allows subjects to manage the access policies for the resources.
+  SET_POLICY = 5;
+}
+
+// Role
+//
+// A role configures a set of permissions and gives them a name. Permissions are grouped into roles and then
+// can be bound to different resources to configure the access policies.
+message Role {
+  // A unique name for the role in the system.
+  string name = 1 [(validate.rules).string.min_len = 1];
+
+  // Details of what the role does and what the configured permissions allow.
+  string description = 2;
+
+  // The list of permissions that will be granted by this role on all resources that are bound to it.
+  repeated Permission permissions = 3 [
+    (validate.rules).repeated = {
+      min_items: 1,
+      items: { enum: { defined_only: true } },
+  }];
+
+  // List of resource types where the role applies.
+  // The permission system is hierarchical and allows permissions to be applied at the root elements of the configuration
+  // hierarchy, so all child objects inherit them. This allows for easy and flexible permission configuration.
+  // There are, however, many scenarios in which permissions only make sense in certain types of resources instead of applying
+  // to the entire hierarchy. In those cases, the resources field can be populated with the types of resources that
+  // are affected by hte role, and the permission set defined by the role will only apply to those resources.
+  // If this field is omitted, the permissions apply to all resource types.
+  repeated string resources = 4;
+}
+
+// Policy
+//
+// A policy defines the set of subjects that can access a resource and under which conditions
+// that access is granted.
+message Policy {
+  // The list of bindings configures the different access profiles that are allowed on the resource
+  // configured by the policy.
+  repeated Binding bindings = 1 [(validate.rules).repeated.min_items = 1];
+}
+
+// Binding
+//
+// A binding associates a role with a set of subjects.
+// Bindings are used to configure policies, where different roles can be assigned to different sets of
+// subjects to configure a fine-grained access control to the resource protected by the policy.
+message Binding {
+  // The role that defines the permissions that will be granted to the target resource.
+  string role = 1 [(validate.rules).string.min_len = 1];
+
+  // The set of subjects that will be allowed to access the target resource with the permissions
+  // defined by the role.
+  repeated string subjects = 2 [
+    (validate.rules).repeated = {
+      min_items: 1,
+      items: { string: { min_len: 1 } },
+  }];
+}
+
+// Request to create a role
+message CreateRoleRequest {
+  string name = 1 [(validate.rules).string.pattern = "^[0-9A-Za-z]+$"];
+  string description = 2;
+  repeated Permission permissions = 3 [
+    (validate.rules).repeated = {
+      min_items: 1,
+      items: { enum: { defined_only: true } },
+  }];
+  repeated string resources = 4;
+}
+
+// Request to get the list of all existing roles
+message ListRolesRequest {}
+
+// Response to the list roles request with all existing roles
+message ListRolesResponse {
+  repeated Role roles = 1;
+}
+
+// Request to get a role by name
+message GetRoleRequest {
+  string name = 1 [(validate.rules).string.min_len = 1];
+}
+
+// Request to delete the role with the given name
+message DeleteRoleRequest {
+  string name = 1 [(validate.rules).string.min_len = 1];
+}

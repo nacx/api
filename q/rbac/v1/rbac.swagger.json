@@ -1,0 +1,190 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "rbac.proto",
+    "version": "version not set"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/roles": {
+      "get": {
+        "summary": "List all existing roles in the system",
+        "operationId": "ListRoles",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.q.rbac.v1.ListRolesResponse"
+            }
+          }
+        },
+        "tags": [
+          "RBAC"
+        ]
+      },
+      "post": {
+        "summary": "Creates a Role in the system",
+        "operationId": "CreateRole",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.q.rbac.v1.Role"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.q.rbac.v1.CreateRoleRequest"
+            }
+          }
+        ],
+        "tags": [
+          "RBAC"
+        ]
+      }
+    },
+    "/v1/roles/{name}": {
+      "get": {
+        "summary": "Get the details of teh role with the given name",
+        "operationId": "GetRole",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.q.rbac.v1.Role"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "RBAC"
+        ]
+      },
+      "delete": {
+        "summary": "Delete the role with the given name. Roles that are assigned to policies cannot be deleted. Policies need to be deleted first",
+        "operationId": "DeleteRole",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "RBAC"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "tetrate.api.q.rbac.v1.CreateRoleRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "permissions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.q.rbac.v1.Permission"
+          }
+        },
+        "resources": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "title": "Request to create a role"
+    },
+    "tetrate.api.q.rbac.v1.ListRolesResponse": {
+      "type": "object",
+      "properties": {
+        "roles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.q.rbac.v1.Role"
+          }
+        }
+      },
+      "title": "Response to the list roles request with all existing roles"
+    },
+    "tetrate.api.q.rbac.v1.Permission": {
+      "type": "string",
+      "enum": [
+        "INVALID",
+        "READ",
+        "WRITE",
+        "CREATE",
+        "DELETE",
+        "SET_POLICY"
+      ],
+      "default": "INVALID",
+      "description": "A permission defines an action that can be performed on a resource. By default access to resources is deined unless an explicit permission grants access to perform an operation tagainst it.   - INVALID: Default value to designate no value was explicitly set for the permission.  - READ: The read permission grants read-only access to the resource.  - WRITE: The write permission allows the subject to modify an existing resource.  - CREATE: The create permission allows subjects to create child resources on the resource.  - DELETE: The delete permission grants permissions to delete the resource.  - SET_POLICY: The set-policy permission allows subjects to manage the access policies for the resources.",
+      "title": "Permission"
+    },
+    "tetrate.api.q.rbac.v1.Role": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "A unique name for the role in the system."
+        },
+        "description": {
+          "type": "string",
+          "description": "Details of what the role does and what the configured permissions allow."
+        },
+        "permissions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.q.rbac.v1.Permission"
+          },
+          "description": "The list of permissions that will be granted by this role on all resources that are bound to it."
+        },
+        "resources": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of resource types where the role applies. The permission system is hierarchical and allows permissions to be applied at the root elements of the configuration hierarchy, so all child objects inherit them. This allows for easy and flexible permission configuration. There are, however, many scenarios in which permissions only make sense in certain types of resources instead of applying to the entire hierarchy. In those cases, the resources field can be populated with the types of resources that are affected by hte role, and the permission set defined by the role will only apply to those resources. If this field is omitted, the permissions apply to all resource types."
+        }
+      },
+      "description": "A role configures a set of permissions and gives them a name. Permissions are grouped into roles and then can be bound to different resources to configure the access policies.",
+      "title": "Role"
+    }
+  }
+}

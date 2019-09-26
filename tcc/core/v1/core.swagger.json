@@ -188,7 +188,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.Policy"
+              "$ref": "#/definitions/tetrate.api.q.rbac.v1.Policy"
             }
           },
           "404": {
@@ -245,7 +245,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.Policy"
+              "$ref": "#/definitions/tetrate.api.q.rbac.v1.Policy"
             }
           }
         ],
@@ -834,7 +834,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.Policy"
+              "$ref": "#/definitions/tetrate.api.q.rbac.v1.Policy"
             }
           },
           "404": {
@@ -915,7 +915,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.Policy"
+              "$ref": "#/definitions/tetrate.api.q.rbac.v1.Policy"
             }
           }
         ],
@@ -2302,7 +2302,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.Policy"
+              "$ref": "#/definitions/tetrate.api.q.rbac.v1.Policy"
             }
           },
           "404": {
@@ -2371,7 +2371,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.Policy"
+              "$ref": "#/definitions/tetrate.api.q.rbac.v1.Policy"
             }
           }
         ],
@@ -2782,6 +2782,38 @@
     }
   },
   "definitions": {
+    "tetrate.api.q.rbac.v1.Binding": {
+      "type": "object",
+      "properties": {
+        "role": {
+          "type": "string",
+          "description": "The role that defines the permissions that will be granted to the target resource."
+        },
+        "subjects": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The set of subjects that will be allowed to access the target resource with the permissions defined by the role."
+        }
+      },
+      "description": "A binding associates a role with a set of subjects. Bindings are used to configure policies, where different roles can be assigned to different sets of subjects to configure a fine-grained access control to the resource protected by the policy.",
+      "title": "Binding"
+    },
+    "tetrate.api.q.rbac.v1.Policy": {
+      "type": "object",
+      "properties": {
+        "bindings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.q.rbac.v1.Binding"
+          },
+          "description": "The list of bindings configures the different access profiles that are allowed on the resource configured by the policy."
+        }
+      },
+      "description": "A policy defines the set of subjects that can access a resource and under which conditions that access is granted.",
+      "title": "Policy"
+    },
     "tetrate.api.tcc.core.v1.Application": {
       "type": "object",
       "properties": {
@@ -2864,24 +2896,6 @@
           "description": "Indicator whether to use this LB as primary. This is used for Metrics reporting at the App level. If there are multiple dedicated load balancers in an App, only one and mandatorily one has to be marked primary. If there is only one dedicated load balancer in an app, it will be marked as primary by default."
         }
       }
-    },
-    "tetrate.api.tcc.core.v1.Binding": {
-      "type": "object",
-      "properties": {
-        "role": {
-          "type": "string",
-          "description": "The role that defines the permissions that will be granted to the target resource."
-        },
-        "subjects": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "The set of subjects that will be allowed to access the target resource with the permissions defined by the role."
-        }
-      },
-      "description": "A binding associates a role with a set of subjects. Bindings are used to configure policies, where different roles can be assigned to different sets of subjects to configure a fine-grained access control to the resource protected by the policy.",
-      "title": "Binding"
     },
     "tetrate.api.tcc.core.v1.BulkLoadClusterRequest": {
       "type": "object",
@@ -4027,20 +4041,6 @@
           }
         }
       }
-    },
-    "tetrate.api.tcc.core.v1.Policy": {
-      "type": "object",
-      "properties": {
-        "bindings": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/tetrate.api.tcc.core.v1.Binding"
-          },
-          "description": "The list of bindings configures the different access profiles that are allowed on the resource configured by the policy."
-        }
-      },
-      "description": "A policy defines the set of subjects that can access a resource and under which conditions that access is granted.",
-      "title": "Policy"
     },
     "tetrate.api.tcc.core.v1.Port": {
       "type": "object",

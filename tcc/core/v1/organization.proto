@@ -9,7 +9,7 @@ import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 import "validate/validate.proto";
 
-import "policy.proto";
+import "q/rbac/v1/rbac.proto";
 
 service Organization {
   rpc CreateTenant(CreateTenantRequest) returns (Tenant) {
@@ -44,7 +44,7 @@ service Organization {
     };
   };
 
-  rpc GetTenantPolicy(GetTenantRequest) returns (Policy) {
+  rpc GetTenantPolicy(GetTenantRequest) returns (tetrate.api.q.rbac.v1.Policy) {
     option (google.api.http) = {
       get: "/v1/tenants/{id}/policy"
     };
@@ -145,7 +145,7 @@ message TenantPolicyRequest {
   // Internal use only. Auto populated field.
   string name = 1;
   string id = 2 [(validate.rules).string.min_len = 1];
-  Policy policy = 3 [(validate.rules).message.required = true];
+  tetrate.api.q.rbac.v1.Policy policy = 3 [(validate.rules).message.required = true];
 }
 
 message ListTenantsRequest {}

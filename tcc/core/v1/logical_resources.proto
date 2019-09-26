@@ -13,7 +13,8 @@ import "validate/validate.proto";
 import "routing_info.proto";
 import "client_settings.proto";
 import "tlssettings.proto";
-import "policy.proto";
+
+import "q/rbac/v1/rbac.proto";
 
 service LogicalResourceModel {
   rpc CreateEnvironment(CreateEnvironmentRequest) returns (Environment) {
@@ -48,7 +49,7 @@ service LogicalResourceModel {
     };
   };
 
-  rpc GetEnvironmentPolicy(GetEnvironmentRequest) returns (Policy) {
+  rpc GetEnvironmentPolicy(GetEnvironmentRequest) returns (tetrate.api.q.rbac.v1.Policy) {
     option (google.api.http) = {
       get: "/v1/tenants/{tenant}/environments/{id}/policy"
     };
@@ -93,7 +94,7 @@ service LogicalResourceModel {
     };
   };
 
-  rpc GetApplicationPolicy(GetApplicationRequest) returns (Policy) {
+  rpc GetApplicationPolicy(GetApplicationRequest) returns (tetrate.api.q.rbac.v1.Policy) {
     option (google.api.http) = {
       get: "/v1/tenants/{tenant}/environments/{environment}/applications/{id}/policy"
     };
@@ -179,7 +180,7 @@ message EnvironmentPolicyRequest {
   string name = 1;
   string tenant = 2 [(validate.rules).string.min_len = 1];
   string id = 3 [(validate.rules).string.min_len = 1];
-  Policy policy = 4 [(validate.rules).message.required = true];
+  tetrate.api.q.rbac.v1.Policy policy = 4 [(validate.rules).message.required = true];
 }
 
 message ListEnvironmentsRequest {
@@ -273,7 +274,7 @@ message ApplicationPolicyRequest {
   string tenant = 2 [(validate.rules).string.min_len = 1];
   string environment = 3 [(validate.rules).string.min_len = 1];
   string id = 4 [(validate.rules).string.min_len = 1];
-  Policy policy = 5 [(validate.rules).message.required = true];
+  tetrate.api.q.rbac.v1.Policy policy = 5 [(validate.rules).message.required = true];
 }
 
 message ListApplicationsRequest {
