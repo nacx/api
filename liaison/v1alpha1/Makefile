@@ -17,31 +17,20 @@ GOSRCDIR := $(GOPATH)/src
 TOPDIR := ../../..
 VENDOR := $(TOPDIR)/third_party/protobuf/
 
-TOP_PROTOS := $(wildcard *.proto)
-ALL_PROTOS := $(wildcard *.proto) $(wildcard */*.proto) $(wildcard */*/*.proto)
+ALL_PROTOS := $(wildcard *.proto)
 ALL_GO_PROTOS := $(patsubst %.proto,%.pb.go,$(ALL_PROTOS))
 ALL_GO_VALIDATE_PROTOS := $(patsubst %.proto,%.pb.validate.go,$(ALL_PROTOS))
 
-ALL_JS_PROTOS := $(patsubst %.proto,%_pb.js,$(ALL_PROTOS))
-ALL_JS_SERVICE_PROTOS := $(patsubst %.proto,%_pb_service.js,$(ALL_PROTOS))
-ALL_TS_PROTOS := $(patsubst %.proto,%_pb.d.ts,$(ALL_PROTOS))
-ALL_TS_SERVICE_PROTOS := $(patsubst %.proto,%_pb_service.d.ts,$(ALL_PROTOS))
-ALL_CLIENT_PROTOS := $(ALL_JS_PROTOS) $(ALL_TS_PROTOS) $(ALL_JS_SERVICE_PROTOS) \
-	$(ALL_TS_SERVICE_PROTOS)
-
-ALL_JS_ARTIFACTS := ./google/api ./validate ./mcp ./networking node_modules
-
 ALL_GENERATED := $(ALL_GO_PROTOS) $(ALL_GO_VALIDATE_PROTOS) $(DESCRIPTOR) $(ENVOYFILTER) \
-	$(ISTIO_API) $(ALL_CLIENT_PROTOS) $(ALL_JS_ARTIFACTS)
+	$(ISTIO_API)
 
 .PHONY: all
-all: $(DESCRIPTOR) $(ALL_JS_PROTOS) $(ALL_TS_PROTOS) $(ENVOYFILTER) node_modules
+all: $(DESCRIPTOR) $(ENVOYFILTER)
 	@echo "all protos done"
 
 # Install all the required global deps.
 define install_deps
 	$(MAKE) $(ISTIO_API)
-	@yarn
 endef
 
 # Execute protoc gen go and generate the .proto-descriptor.
@@ -57,20 +46,6 @@ define protoc_gen_go
 		$(3)
 endef
 
-# Execute protoc gen ts (installed in ./node_modules/.bin/protoc-gen-ts).
-define protoc_gen_ts
-	$(call install_deps)
-	protoc -I ./ \
-		-I $(VENDOR) \
-		-I $(ISTIO_API) \
-		-I $(GOSRCDIR)/github.com/lyft/protoc-gen-validate \
-		--plugin=protoc-gen-ts=./node_modules/.bin/protoc-gen-ts \
-		--js_out=import_style=commonjs,binary:. \
-  		--ts_out=service=true:. \
-		$(2) \
-		$(3)
-endef
-
 # Execute grpc_transcoder to generate envoyfilter.yaml with a specified port.
 define grpc_transcoder
 	GO111MODULE=off go get github.com/tetratelabs/istio-tools/grpc-transcoder
@@ -80,42 +55,16 @@ define grpc_transcoder
 		--port $(2) > $(ENVOYFILTER)
 endef
 
-$(ALL_GO_PROTOS):
-	$(call protoc_gen_go,$@,``,$(patsubst %.pb.go,%.proto,$@))
-
-$(DESCRIPTOR): $(ALL_GO_PROTOS)
-	$(call protoc_gen_go,$@,--descriptor_set_out=$(DESCRIPTOR) --include_imports,$(TOP_PROTOS))
+$(DESCRIPTOR):
+	$(call protoc_gen_go,$@,--descriptor_set_out=$(DESCRIPTOR) --include_imports,$(ALL_PROTOS))
 
 $(ENVOYFILTER): $(DESCRIPTOR)
 	@echo "generating envoy filter"
 	$(call grpc_transcoder,$@,9080)
 
-$(ALL_JS_PROTOS):
-	$(call protoc_gen_ts,$@,``,$(patsubst %_pb.js,%.proto,$@))
-
-$(ALL_TS_PROTOS):
-	$(call protoc_gen_ts,$@,``,$(patsubst %_pb.d.ts,%.proto,$@))
-
 $(ISTIO_API):
 	@wget -q -O- https://github.com/istio/api/archive/$(ISTIO_API_VERSION).tar.gz \
 	| tar xz $(ISTIO_APIS)
-
-node_modules: touch
-	@yarn
-
-.PHONY: js touch
-js: node_modules $(ALL_JS_PROTOS) $(ALL_TS_PROTOS)
-
-touch: mcp networking
-	@mkdir -p ./google/api
-	@mkdir -p ./validate
-	@mkdir -p $(ISTIO_API)/gogoproto
-	@touch ./google/api/annotations_pb.js
-	@touch ./validate/validate_pb.js
-	@touch $(ISTIO_API)/gogoproto/gogo_pb.js
-
-mcp networking:
-	@ln -s $(ISTIO_API)/$@ $@
 
 clean:
 	rm -fr $(ALL_GENERATED)

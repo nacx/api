@@ -1,16 +1,7 @@
 envoyfilter.yaml
-node_modules
 *.log
 
-# these contains empty js files.
-validate
-google/api
-
 api-*
-
-# symlinks from istio api snapshot.
-mcp
-networking
 
 # descriptor.
 liaison.proto-descriptor
