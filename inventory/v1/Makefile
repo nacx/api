@@ -5,30 +5,39 @@ VENDOR := $(TOPDIR)/third_party/protobuf/
 
 PROTO_SOURCES := $(wildcard *.proto)
 PROTO_GO_SOURCES := $(patsubst %.proto,%.pb.go,$(PROTO_SOURCES))
+PROTO_GO_VALIDATE_SOURCES := $(patsubst %.proto,%.pb.validate.go,$(PROTO_SOURCES))
 
 DESCRIPTOR := inventory.proto-descriptor
 ENVOYFILTER := envoyfilter.yaml
 
+GOPATH := $(shell go env GOPATH)
+GOSRCDIR := $(GOPATH)/src
+
 .PHONY: all
 all: $(DESCRIPTOR) $(ENVOYFILTER)
-	@echo "All protos done"
+	@echo "all protos done"
 
 $(DESCRIPTOR):
-	@echo "building protos..."
+	@echo "building protos"
+	GO111MODULE=off go get -d github.com/lyft/protoc-gen-validate
+	GO111MODULE=off make -C $(GOSRCDIR)/github.com/lyft/protoc-gen-validate build
 	protoc -I ./ \
-		-I$(VENDOR) \
+		-I $(VENDOR) \
+		-I $(GOSRCDIR)/github.com/lyft/protoc-gen-validate \
 		--go_out=paths=source_relative,plugins=grpc:. \
 		--descriptor_set_out=$(DESCRIPTOR) --include_imports \
+		--validate_out=paths=source_relative,lang=go:. \
 		$(PROTO_SOURCES)
+	@echo "done building protos"
 
 $(ENVOYFILTER): $(DESCRIPTOR)
-	@echo "generating Envoy filter..."
-	GO111MODULE=off go get -u github.com/tetratelabs/istio-tools/grpc-transcoder
-	GO111MODULE=off go run github.com/tetratelabs/istio-tools/grpc-transcoder \
+	@echo "generating envoy filter..."
+	GO111MODULE=off go get github.com/tetratelabs/istio-tools/grpc-transcoder
+	grpc-transcoder \
 		--descriptor $(DESCRIPTOR) \
 		--service inventory-server \
 		--port 9080 >$(ENVOYFILTER)
 
 clean:
-	rm -f $(PROTO_GO_SOURCES) $(DESCRIPTOR) $(ENVOYFILTER)
-	@echo "Cleaned $(PROTO_GO_SOURCES) $(DESCRIPTOR) $(ENVOYFILTER)"
+	rm -f $(PROTO_GO_SOURCES) $(PROTO_GO_VALIDATE_SOURCES) $(DESCRIPTOR) $(ENVOYFILTER)
+	@echo "cleaned $(PROTO_GO_SOURCES) $(DESCRIPTOR) $(ENVOYFILTER)"
