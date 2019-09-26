@@ -13,19 +13,16 @@
 
 import { exists, mapValues } from '../runtime';
 import {
-    TetrateApiTccCoreV1ApplicationApplicationSpecificLB,
-    TetrateApiTccCoreV1ApplicationApplicationSpecificLBFromJSON,
-    TetrateApiTccCoreV1ApplicationApplicationSpecificLBToJSON,
+    TetrateApiTccCoreV1ApplicationSpecificLB,
+    TetrateApiTccCoreV1ApplicationSpecificLBFromJSON,
+    TetrateApiTccCoreV1ApplicationSpecificLBToJSON,
     TetrateApiTccCoreV1ClientSettings,
     TetrateApiTccCoreV1ClientSettingsFromJSON,
     TetrateApiTccCoreV1ClientSettingsToJSON,
-    TetrateApiTccCoreV1RoutingInfo,
-    TetrateApiTccCoreV1RoutingInfoFromJSON,
-    TetrateApiTccCoreV1RoutingInfoToJSON,
 } from './';
 
 /**
- * An Application is a collection of services. Each application corresponds to a kubernetes namespace or an application deployment on VMs. The hostname of the application is exposed via the load balancer (either shared or dedicated).
+ * An Application is a collection of services. Each application typically corresponds to one or more kubernetes namespace or an application deployment on VMs.
  * @export
  * @interface TetrateApiTccCoreV1Application
  */
@@ -49,7 +46,7 @@ export interface TetrateApiTccCoreV1Application {
      */
     environment?: string;
     /**
-     * short name for the application. Clusters are expected to have namespaces that match the application Id, especially on Kubernetes.
+     * short name for the application.
      * @type {string}
      * @memberof TetrateApiTccCoreV1Application
      */
@@ -61,29 +58,23 @@ export interface TetrateApiTccCoreV1Application {
      */
     description?: string;
     /**
-     * Hostname with which the application is exposed on a Gateway.
-     * @type {string}
-     * @memberof TetrateApiTccCoreV1Application
-     */
-    hostname?: string;
-    /**
-     * 
-     * @type {TetrateApiTccCoreV1RoutingInfo}
-     * @memberof TetrateApiTccCoreV1Application
-     */
-    routingInfo?: TetrateApiTccCoreV1RoutingInfo;
-    /**
      * 
      * @type {TetrateApiTccCoreV1ClientSettings}
      * @memberof TetrateApiTccCoreV1Application
      */
     clientSettings?: TetrateApiTccCoreV1ClientSettings;
     /**
-     * 
-     * @type {TetrateApiTccCoreV1ApplicationApplicationSpecificLB}
+     * An application can be exposed on a shared load balancer in the cluster or a dedicated load balancer in one of the application\'s namespaces. Set app_lbs to indicate that the application should be exposed on the dedicated load balancers. Namespace where each of the dedicated load balancer is scoped should be unique.
+     * @type {Array<TetrateApiTccCoreV1ApplicationSpecificLB>}
      * @memberof TetrateApiTccCoreV1Application
      */
-    appLb?: TetrateApiTccCoreV1ApplicationApplicationSpecificLB;
+    appLbs?: Array<TetrateApiTccCoreV1ApplicationSpecificLB>;
+    /**
+     * List of namespaces where the application services (or components) are scoped within. If omitted, the application is assumed to be scoped in a namespace matching the Id field.
+     * @type {Array<string>}
+     * @memberof TetrateApiTccCoreV1Application
+     */
+    namespaces?: Array<string>;
 }
 
 export function TetrateApiTccCoreV1ApplicationFromJSON(json: any): TetrateApiTccCoreV1Application {
@@ -93,10 +84,9 @@ export function TetrateApiTccCoreV1ApplicationFromJSON(json: any): TetrateApiTcc
         'environment': !exists(json, 'environment') ? undefined : json['environment'],
         'id': !exists(json, 'id') ? undefined : json['id'],
         'description': !exists(json, 'description') ? undefined : json['description'],
-        'hostname': !exists(json, 'hostname') ? undefined : json['hostname'],
-        'routingInfo': !exists(json, 'routingInfo') ? undefined : TetrateApiTccCoreV1RoutingInfoFromJSON(json['routingInfo']),
         'clientSettings': !exists(json, 'clientSettings') ? undefined : TetrateApiTccCoreV1ClientSettingsFromJSON(json['clientSettings']),
-        'appLb': !exists(json, 'appLb') ? undefined : TetrateApiTccCoreV1ApplicationApplicationSpecificLBFromJSON(json['appLb']),
+        'appLbs': !exists(json, 'appLbs') ? undefined : (json['appLbs'] as Array<any>).map(TetrateApiTccCoreV1ApplicationSpecificLBFromJSON),
+        'namespaces': !exists(json, 'namespaces') ? undefined : json['namespaces'],
     };
 }
 
@@ -110,10 +100,9 @@ export function TetrateApiTccCoreV1ApplicationToJSON(value?: TetrateApiTccCoreV1
         'environment': value.environment,
         'id': value.id,
         'description': value.description,
-        'hostname': value.hostname,
-        'routingInfo': TetrateApiTccCoreV1RoutingInfoToJSON(value.routingInfo),
         'clientSettings': TetrateApiTccCoreV1ClientSettingsToJSON(value.clientSettings),
-        'appLb': TetrateApiTccCoreV1ApplicationApplicationSpecificLBToJSON(value.appLb),
+        'appLbs': value.appLbs === undefined ? undefined : (value.appLbs as Array<any>).map(TetrateApiTccCoreV1ApplicationSpecificLBToJSON),
+        'namespaces': value.namespaces,
     };
 }
 

@@ -87,6 +87,12 @@ export interface TetrateApiTccCoreV1CreateServiceRequest {
      * @memberof TetrateApiTccCoreV1CreateServiceRequest
      */
     routingInfo?: TetrateApiTccCoreV1RoutingInfo;
+    /**
+     * Namespace where the service is scoped. It should be one of application namespaces. If the application has only one namespace and if this field is omitted, this filed would default to the application namespace. This field cannot be omitted if the application has more than one namespace.
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1CreateServiceRequest
+     */
+    namespace?: string;
 }
 
 export function TetrateApiTccCoreV1CreateServiceRequestFromJSON(json: any): TetrateApiTccCoreV1CreateServiceRequest {
@@ -101,6 +107,7 @@ export function TetrateApiTccCoreV1CreateServiceRequestFromJSON(json: any): Tetr
         'labels': !exists(json, 'labels') ? undefined : json['labels'],
         'ports': !exists(json, 'ports') ? undefined : (json['ports'] as Array<any>).map(TetrateApiTccCoreV1PortFromJSON),
         'routingInfo': !exists(json, 'routingInfo') ? undefined : TetrateApiTccCoreV1RoutingInfoFromJSON(json['routingInfo']),
+        'namespace': !exists(json, 'namespace') ? undefined : json['namespace'],
     };
 }
 
@@ -119,6 +126,7 @@ export function TetrateApiTccCoreV1CreateServiceRequestToJSON(value?: TetrateApi
         'labels': value.labels,
         'ports': value.ports === undefined ? undefined : (value.ports as Array<any>).map(TetrateApiTccCoreV1PortToJSON),
         'routingInfo': TetrateApiTccCoreV1RoutingInfoToJSON(value.routingInfo),
+        'namespace': value.namespace,
     };
 }
 

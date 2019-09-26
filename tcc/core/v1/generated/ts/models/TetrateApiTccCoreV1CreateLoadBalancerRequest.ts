@@ -16,15 +16,15 @@ import {
     TetrateApiTccCoreV1ClientSettings,
     TetrateApiTccCoreV1ClientSettingsFromJSON,
     TetrateApiTccCoreV1ClientSettingsToJSON,
+    TetrateApiTccCoreV1ListOfLBRoutingInfo,
+    TetrateApiTccCoreV1ListOfLBRoutingInfoFromJSON,
+    TetrateApiTccCoreV1ListOfLBRoutingInfoToJSON,
     TetrateApiTccCoreV1LoadBalancerClass,
     TetrateApiTccCoreV1LoadBalancerClassFromJSON,
     TetrateApiTccCoreV1LoadBalancerClassToJSON,
     TetrateApiTccCoreV1Registry,
     TetrateApiTccCoreV1RegistryFromJSON,
     TetrateApiTccCoreV1RegistryToJSON,
-    TetrateApiTccCoreV1TLSSettings,
-    TetrateApiTccCoreV1TLSSettingsFromJSON,
-    TetrateApiTccCoreV1TLSSettingsToJSON,
 } from './';
 
 /**
@@ -82,23 +82,23 @@ export interface TetrateApiTccCoreV1CreateLoadBalancerRequest {
      */
     registry?: TetrateApiTccCoreV1Registry;
     /**
-     * The namespace where the load balancer is/will be deployed in a given cluster.
+     * The namespace where the load balancer is/will be scoped (deployed in a given cluster).
      * @type {string}
      * @memberof TetrateApiTccCoreV1CreateLoadBalancerRequest
      */
-    clusterNamespace?: string;
+    namespace?: string;
     /**
-     * Labels that uniquely identify the cluster loadbalancer. If cluster level gateway was deployed using TCC helm charts, set this field to tcc: clustergateway.
+     * 
      * @type {{ [key: string]: string; }}
      * @memberof TetrateApiTccCoreV1CreateLoadBalancerRequest
      */
     labels?: { [key: string]: string; };
     /**
-     * Map of applications attached to this loadbalancer in the form applicationId: TLS credential information.
-     * @type {{ [key: string]: TetrateApiTccCoreV1TLSSettings; }}
+     * Map of applications attached to this loadbalancer in the form applicationId: ListOfLBRoutingInfo.
+     * @type {{ [key: string]: TetrateApiTccCoreV1ListOfLBRoutingInfo; }}
      * @memberof TetrateApiTccCoreV1CreateLoadBalancerRequest
      */
-    applications?: { [key: string]: TetrateApiTccCoreV1TLSSettings; };
+    applications?: { [key: string]: TetrateApiTccCoreV1ListOfLBRoutingInfo; };
     /**
      * 
      * @type {TetrateApiTccCoreV1ClientSettings}
@@ -117,9 +117,9 @@ export function TetrateApiTccCoreV1CreateLoadBalancerRequestFromJSON(json: any):
         'enableWorkflows': !exists(json, 'enableWorkflows') ? undefined : json['enableWorkflows'],
         'loadBalancerClass': !exists(json, 'loadBalancerClass') ? undefined : TetrateApiTccCoreV1LoadBalancerClassFromJSON(json['loadBalancerClass']),
         'registry': !exists(json, 'registry') ? undefined : TetrateApiTccCoreV1RegistryFromJSON(json['registry']),
-        'clusterNamespace': !exists(json, 'clusterNamespace') ? undefined : json['clusterNamespace'],
+        'namespace': !exists(json, 'namespace') ? undefined : json['namespace'],
         'labels': !exists(json, 'labels') ? undefined : json['labels'],
-        'applications': !exists(json, 'applications') ? undefined : mapValues(json['applications'], TetrateApiTccCoreV1TLSSettingsFromJSON),
+        'applications': !exists(json, 'applications') ? undefined : mapValues(json['applications'], TetrateApiTccCoreV1ListOfLBRoutingInfoFromJSON),
         'clientSettings': !exists(json, 'clientSettings') ? undefined : TetrateApiTccCoreV1ClientSettingsFromJSON(json['clientSettings']),
     };
 }
@@ -137,9 +137,9 @@ export function TetrateApiTccCoreV1CreateLoadBalancerRequestToJSON(value?: Tetra
         'enableWorkflows': value.enableWorkflows,
         'loadBalancerClass': TetrateApiTccCoreV1LoadBalancerClassToJSON(value.loadBalancerClass),
         'registry': TetrateApiTccCoreV1RegistryToJSON(value.registry),
-        'clusterNamespace': value.clusterNamespace,
+        'namespace': value.namespace,
         'labels': value.labels,
-        'applications': value.applications === undefined ? undefined : mapValues(value.applications, TetrateApiTccCoreV1TLSSettingsToJSON),
+        'applications': value.applications === undefined ? undefined : mapValues(value.applications, TetrateApiTccCoreV1ListOfLBRoutingInfoToJSON),
         'clientSettings': TetrateApiTccCoreV1ClientSettingsToJSON(value.clientSettings),
     };
 }

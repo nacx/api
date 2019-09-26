@@ -673,23 +673,6 @@ func (m *Application) Validate() error {
 
 	// no validation rules for Description
 
-	if utf8.RuneCountInString(m.GetHostname()) < 1 {
-		return ApplicationValidationError{
-			field:  "Hostname",
-			reason: "value length must be at least 1 runes",
-		}
-	}
-
-	if v, ok := interface{}(m.GetRoutingInfo()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return ApplicationValidationError{
-				field:  "RoutingInfo",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
 	if v, ok := interface{}(m.GetClientSettings()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
 			return ApplicationValidationError{
@@ -700,14 +683,19 @@ func (m *Application) Validate() error {
 		}
 	}
 
-	if v, ok := interface{}(m.GetAppLb()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return ApplicationValidationError{
-				field:  "AppLb",
-				reason: "embedded message failed validation",
-				cause:  err,
+	for idx, item := range m.GetAppLbs() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ApplicationValidationError{
+					field:  fmt.Sprintf("AppLbs[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
+
 	}
 
 	return nil
@@ -795,23 +783,6 @@ func (m *CreateApplicationRequest) Validate() error {
 
 	// no validation rules for Description
 
-	if utf8.RuneCountInString(m.GetHostname()) < 1 {
-		return CreateApplicationRequestValidationError{
-			field:  "Hostname",
-			reason: "value length must be at least 1 runes",
-		}
-	}
-
-	if v, ok := interface{}(m.GetRoutingInfo()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return CreateApplicationRequestValidationError{
-				field:  "RoutingInfo",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
 	if v, ok := interface{}(m.GetClientSettings()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
 			return CreateApplicationRequestValidationError{
@@ -822,14 +793,19 @@ func (m *CreateApplicationRequest) Validate() error {
 		}
 	}
 
-	if v, ok := interface{}(m.GetAppLb()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return CreateApplicationRequestValidationError{
-				field:  "AppLb",
-				reason: "embedded message failed validation",
-				cause:  err,
+	for idx, item := range m.GetAppLbs() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return CreateApplicationRequestValidationError{
+					field:  fmt.Sprintf("AppLbs[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
+
 	}
 
 	return nil
@@ -1343,6 +1319,109 @@ var _ interface {
 	ErrorName() string
 } = DeleteApplicationRequestValidationError{}
 
+// Validate checks the field values on ApplicationSpecificLB with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *ApplicationSpecificLB) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if len(m.GetLabels()) < 1 {
+		return ApplicationSpecificLBValidationError{
+			field:  "Labels",
+			reason: "value must contain at least 1 pair(s)",
+		}
+	}
+
+	if v, ok := interface{}(m.GetTls()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ApplicationSpecificLBValidationError{
+				field:  "Tls",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	// no validation rules for Namespace
+
+	if utf8.RuneCountInString(m.GetHostname()) < 1 {
+		return ApplicationSpecificLBValidationError{
+			field:  "Hostname",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if v, ok := interface{}(m.GetRoutingInfo()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ApplicationSpecificLBValidationError{
+				field:  "RoutingInfo",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// ApplicationSpecificLBValidationError is the validation error returned by
+// ApplicationSpecificLB.Validate if the designated constraints aren't met.
+type ApplicationSpecificLBValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ApplicationSpecificLBValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ApplicationSpecificLBValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ApplicationSpecificLBValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ApplicationSpecificLBValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ApplicationSpecificLBValidationError) ErrorName() string {
+	return "ApplicationSpecificLBValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ApplicationSpecificLBValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sApplicationSpecificLB.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ApplicationSpecificLBValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ApplicationSpecificLBValidationError{}
+
 // Validate checks the field values on Service with the rules defined in the
 // proto definition for this message. If any rules are violated, an error is returned.
 func (m *Service) Validate() error {
@@ -1422,6 +1501,8 @@ func (m *Service) Validate() error {
 			reason: "value length must be at least 1 runes",
 		}
 	}
+
+	// no validation rules for Namespace
 
 	return nil
 }
@@ -1548,6 +1629,8 @@ func (m *CreateServiceRequest) Validate() error {
 			}
 		}
 	}
+
+	// no validation rules for Namespace
 
 	return nil
 }
@@ -2151,9 +2234,9 @@ func (m *LoadBalancer) Validate() error {
 		}
 	}
 
-	if utf8.RuneCountInString(m.GetClusterNamespace()) < 1 {
+	if utf8.RuneCountInString(m.GetNamespace()) < 1 {
 		return LoadBalancerValidationError{
-			field:  "ClusterNamespace",
+			field:  "Namespace",
 			reason: "value length must be at least 1 runes",
 		}
 	}
@@ -2329,9 +2412,9 @@ func (m *CreateLoadBalancerRequest) Validate() error {
 		}
 	}
 
-	if utf8.RuneCountInString(m.GetClusterNamespace()) < 1 {
+	if utf8.RuneCountInString(m.GetNamespace()) < 1 {
 		return CreateLoadBalancerRequestValidationError{
-			field:  "ClusterNamespace",
+			field:  "Namespace",
 			reason: "value length must be at least 1 runes",
 		}
 	}
@@ -2896,25 +2979,117 @@ var _ interface {
 	ErrorName() string
 } = DeleteLoadBalancerRequestValidationError{}
 
-// Validate checks the field values on Application_ApplicationSpecificLB with
+// Validate checks the field values on ListOfLBRoutingInfo with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *ListOfLBRoutingInfo) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	for idx, item := range m.GetLbSettings() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ListOfLBRoutingInfoValidationError{
+					field:  fmt.Sprintf("LbSettings[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ListOfLBRoutingInfoValidationError is the validation error returned by
+// ListOfLBRoutingInfo.Validate if the designated constraints aren't met.
+type ListOfLBRoutingInfoValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ListOfLBRoutingInfoValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ListOfLBRoutingInfoValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ListOfLBRoutingInfoValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ListOfLBRoutingInfoValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ListOfLBRoutingInfoValidationError) ErrorName() string {
+	return "ListOfLBRoutingInfoValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ListOfLBRoutingInfoValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sListOfLBRoutingInfo.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ListOfLBRoutingInfoValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ListOfLBRoutingInfoValidationError{}
+
+// Validate checks the field values on ListOfLBRoutingInfo_LBRoutingInfo with
 // the rules defined in the proto definition for this message. If any rules
 // are violated, an error is returned.
-func (m *Application_ApplicationSpecificLB) Validate() error {
+func (m *ListOfLBRoutingInfo_LBRoutingInfo) Validate() error {
 	if m == nil {
 		return nil
 	}
 
-	if len(m.GetLabels()) < 1 {
-		return Application_ApplicationSpecificLBValidationError{
-			field:  "Labels",
-			reason: "value must contain at least 1 pair(s)",
+	if utf8.RuneCountInString(m.GetHostname()) < 1 {
+		return ListOfLBRoutingInfo_LBRoutingInfoValidationError{
+			field:  "Hostname",
+			reason: "value length must be at least 1 runes",
 		}
 	}
 
 	if v, ok := interface{}(m.GetTls()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return Application_ApplicationSpecificLBValidationError{
+			return ListOfLBRoutingInfo_LBRoutingInfoValidationError{
 				field:  "Tls",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if v, ok := interface{}(m.GetRoutingInfo()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ListOfLBRoutingInfo_LBRoutingInfoValidationError{
+				field:  "RoutingInfo",
 				reason: "embedded message failed validation",
 				cause:  err,
 			}
@@ -2924,10 +3099,10 @@ func (m *Application_ApplicationSpecificLB) Validate() error {
 	return nil
 }
 
-// Application_ApplicationSpecificLBValidationError is the validation error
-// returned by Application_ApplicationSpecificLB.Validate if the designated
+// ListOfLBRoutingInfo_LBRoutingInfoValidationError is the validation error
+// returned by ListOfLBRoutingInfo_LBRoutingInfo.Validate if the designated
 // constraints aren't met.
-type Application_ApplicationSpecificLBValidationError struct {
+type ListOfLBRoutingInfo_LBRoutingInfoValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -2935,24 +3110,24 @@ type Application_ApplicationSpecificLBValidationError struct {
 }
 
 // Field function returns field value.
-func (e Application_ApplicationSpecificLBValidationError) Field() string { return e.field }
+func (e ListOfLBRoutingInfo_LBRoutingInfoValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e Application_ApplicationSpecificLBValidationError) Reason() string { return e.reason }
+func (e ListOfLBRoutingInfo_LBRoutingInfoValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e Application_ApplicationSpecificLBValidationError) Cause() error { return e.cause }
+func (e ListOfLBRoutingInfo_LBRoutingInfoValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e Application_ApplicationSpecificLBValidationError) Key() bool { return e.key }
+func (e ListOfLBRoutingInfo_LBRoutingInfoValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e Application_ApplicationSpecificLBValidationError) ErrorName() string {
-	return "Application_ApplicationSpecificLBValidationError"
+func (e ListOfLBRoutingInfo_LBRoutingInfoValidationError) ErrorName() string {
+	return "ListOfLBRoutingInfo_LBRoutingInfoValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e Application_ApplicationSpecificLBValidationError) Error() string {
+func (e ListOfLBRoutingInfo_LBRoutingInfoValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -2964,14 +3139,14 @@ func (e Application_ApplicationSpecificLBValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sApplication_ApplicationSpecificLB.%s: %s%s",
+		"invalid %sListOfLBRoutingInfo_LBRoutingInfo.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = Application_ApplicationSpecificLBValidationError{}
+var _ error = ListOfLBRoutingInfo_LBRoutingInfoValidationError{}
 
 var _ interface {
 	Field() string
@@ -2979,93 +3154,4 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = Application_ApplicationSpecificLBValidationError{}
-
-// Validate checks the field values on
-// CreateApplicationRequest_ApplicationSpecificLB with the rules defined in
-// the proto definition for this message. If any rules are violated, an error
-// is returned.
-func (m *CreateApplicationRequest_ApplicationSpecificLB) Validate() error {
-	if m == nil {
-		return nil
-	}
-
-	if len(m.GetLabels()) < 1 {
-		return CreateApplicationRequest_ApplicationSpecificLBValidationError{
-			field:  "Labels",
-			reason: "value must contain at least 1 pair(s)",
-		}
-	}
-
-	if v, ok := interface{}(m.GetTls()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return CreateApplicationRequest_ApplicationSpecificLBValidationError{
-				field:  "Tls",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
-	return nil
-}
-
-// CreateApplicationRequest_ApplicationSpecificLBValidationError is the
-// validation error returned by
-// CreateApplicationRequest_ApplicationSpecificLB.Validate if the designated
-// constraints aren't met.
-type CreateApplicationRequest_ApplicationSpecificLBValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e CreateApplicationRequest_ApplicationSpecificLBValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e CreateApplicationRequest_ApplicationSpecificLBValidationError) Reason() string {
-	return e.reason
-}
-
-// Cause function returns cause value.
-func (e CreateApplicationRequest_ApplicationSpecificLBValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e CreateApplicationRequest_ApplicationSpecificLBValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e CreateApplicationRequest_ApplicationSpecificLBValidationError) ErrorName() string {
-	return "CreateApplicationRequest_ApplicationSpecificLBValidationError"
-}
-
-// Error satisfies the builtin error interface
-func (e CreateApplicationRequest_ApplicationSpecificLBValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sCreateApplicationRequest_ApplicationSpecificLB.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = CreateApplicationRequest_ApplicationSpecificLBValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = CreateApplicationRequest_ApplicationSpecificLBValidationError{}
+} = ListOfLBRoutingInfo_LBRoutingInfoValidationError{}

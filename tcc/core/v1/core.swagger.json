@@ -917,7 +917,7 @@
           },
           {
             "name": "id",
-            "description": "short name for the application. Clusters are expected to have namespaces that match the application Id, especially on Kubernetes.",
+            "description": "short name for the application.",
             "in": "path",
             "required": true,
             "type": "string"
@@ -3862,33 +3862,35 @@
         },
         "id": {
           "type": "string",
-          "description": "short name for the application. Clusters are expected to have namespaces that match the application Id, especially on Kubernetes."
+          "description": "short name for the application."
         },
         "description": {
           "type": "string",
           "description": "Additional information."
         },
-        "hostname": {
-          "type": "string",
-          "description": "Hostname with which the application is exposed on a Gateway."
-        },
-        "routingInfo": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.RoutingInfo",
-          "description": "HTTP Routing settings for the applications. Note that subsets should not be defined at application level."
-        },
         "clientSettings": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.ClientSettings",
           "description": "Resilience settings that apply to all services within the application, for outbound calls from the application's services to other services."
         },
-        "appLb": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Application.ApplicationSpecificLB",
-          "description": "An application can be exposed on a shared gateway in the cluster or a dedicated gateway in the app's namespace. Set app_lb to indicate that the application should be exposed on the dedicated load balancer deployed in the app namespace. It is assumed that the gateway service is deployed in the app's namespace."
+        "appLbs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.core.v1.ApplicationSpecificLB"
+          },
+          "description": "An application can be exposed on a shared load balancer in the cluster or a dedicated load balancer in one of the application's namespaces. Set app_lbs to indicate that the application should be exposed on the dedicated load balancers. Namespace where each of the dedicated load balancer is scoped should be unique."
+        },
+        "namespaces": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of namespaces where the application services (or components) are scoped within. If omitted, the application is assumed to be scoped in a namespace matching the Id field."
         }
       },
-      "description": "An Application is a collection of services. Each application corresponds to a kubernetes namespace or an application deployment on VMs. The hostname of the application is exposed via the load balancer (either shared or dedicated).",
+      "description": "An Application is a collection of services. Each application typically corresponds to one or more kubernetes namespace or an application deployment on VMs.",
       "title": "Application"
     },
-    "tetrate.api.tcc.core.v1.Application.ApplicationSpecificLB": {
+    "tetrate.api.tcc.core.v1.ApplicationSpecificLB": {
       "type": "object",
       "properties": {
         "labels": {
@@ -3896,11 +3898,23 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Load balancer deployment labels (Kubernetes only for now). If gateway was created using TCC helm charts, use tcc: appgateway for kubernetes. The gateway will expose the application on ports 80 and 443 (if tls is configured)."
+          "description": "Load balancer deployment labels (Kubernetes only for now). If gateway was created using TCC helm charts, use app: {namespace}-tcclb for kubernetes. The gateway will expose the application on ports 80 and 443 (if tls is configured)."
         },
         "tls": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.TLSSettings",
           "description": "TLS certificate info for the application. If nil, the gateway will expose the application on port 80 only. Internal use only. Auto populated."
+        },
+        "namespace": {
+          "type": "string",
+          "title": "The namespace where this dedicated load balancer of the application is scoped. It should be one of application namespaces. This field cannot be omitted if the application has more than one namespace. If there is only one dedicated load balancer and application has only one  namespace and if this namespace field is omitted, then this field would default to the application namespace"
+        },
+        "hostname": {
+          "type": "string",
+          "description": "Hostname with which the application is exposed on this load balancer."
+        },
+        "routingInfo": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.RoutingInfo",
+          "description": "HTTP Routing settings for the hostname. Note that subsets should not be defined at LB hostname level."
         }
       }
     },
@@ -4145,43 +4159,29 @@
         },
         "id": {
           "type": "string",
-          "description": "short name for the application. Clusters are expected to have namespaces that match the application Id, especially on Kubernetes. If present, this will be used as the id for the created object."
+          "description": "short name for the application."
         },
         "description": {
           "type": "string",
           "description": "Additional information."
         },
-        "hostname": {
-          "type": "string",
-          "description": "Hostname with which the application is exposed on a Gateway."
-        },
-        "routingInfo": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.RoutingInfo",
-          "description": "HTTP Routing settings for the applications. Note that subsets should not be defined at application level."
-        },
         "clientSettings": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.ClientSettings",
           "description": "Resilience settings that apply to all services within the application, for outbound calls from the application's services to other services."
         },
-        "appLb": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.CreateApplicationRequest.ApplicationSpecificLB",
-          "description": "An application can be exposed on a shared gateway in the cluster or a dedicated gateway in the app's namespace. Set app_lb to indicate that the application should be exposed on the dedicated load balancer deployed in the app namespace. It is assumed that the gateway service is deployed in the app's namespace."
-        }
-      }
-    },
-    "tetrate.api.tcc.core.v1.CreateApplicationRequest.ApplicationSpecificLB": {
-      "type": "object",
-      "properties": {
-        "labels": {
-          "type": "object",
-          "additionalProperties": {
+        "appLbs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.core.v1.ApplicationSpecificLB"
+          },
+          "description": "An application can be exposed on a shared load balancer in the cluster or a dedicated load balancer in one of the application's namespaces. Set app_lbs to indicate that the application should be exposed on the dedicated load balancers. Namespace where each of the dedicated load balancer is scoped should be unique."
+        },
+        "namespaces": {
+          "type": "array",
+          "items": {
             "type": "string"
           },
-          "description": "Load balancer deployment labels (Kubernetes only for now). If gateway was created using TCC helm charts, use tcc: appgateway for kubernetes. The gateway will expose the application on ports 80 and 443 (if tls is configured)."
-        },
-        "tls": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.TLSSettings",
-          "description": "TLS certificate info for the application. If nil, the gateway will expose the application on port 80 only. Internal use only. Auto populated."
+          "description": "List of namespaces where the application services (or components) are scoped within. If omitted, the application is assumed to be scoped in a namespace matching the Id field."
         }
       }
     },
@@ -4379,23 +4379,23 @@
         "registry": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.Registry"
         },
-        "clusterNamespace": {
+        "namespace": {
           "type": "string",
-          "description": "The namespace where the load balancer is/will be deployed in a given cluster."
+          "description": "The namespace where the load balancer is/will be scoped (deployed in a given cluster)."
         },
         "labels": {
           "type": "object",
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Labels that uniquely identify the cluster loadbalancer. If cluster level gateway was deployed using TCC helm charts, set this field to tcc: clustergateway."
+          "title": "Labels that uniquely identify the cluster loadbalancer. If gateway was created using TCC helm charts, use app: {namespace}-tcclb"
         },
         "applications": {
           "type": "object",
           "additionalProperties": {
-            "$ref": "#/definitions/tetrate.api.tcc.core.v1.TLSSettings"
+            "$ref": "#/definitions/tetrate.api.tcc.core.v1.ListOfLBRoutingInfo"
           },
-          "description": "Map of applications attached to this loadbalancer in the form applicationId: TLS credential information."
+          "description": "Map of applications attached to this loadbalancer in the form applicationId: ListOfLBRoutingInfo."
         },
         "clientSettings": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.ClientSettings",
@@ -4479,6 +4479,10 @@
         "routingInfo": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.RoutingInfo",
           "description": "HTTP Routing settings for the service. Note that subsets (versions of the service) if any should be defined here."
+        },
+        "namespace": {
+          "type": "string",
+          "description": "Namespace where the service is scoped. It should be one of application namespaces. If the application has only one namespace and if this field is omitted, this filed would default to the application namespace. This field cannot be omitted if the application has more than one namespace."
         }
       }
     },
@@ -4938,6 +4942,35 @@
         }
       }
     },
+    "tetrate.api.tcc.core.v1.ListOfLBRoutingInfo": {
+      "type": "object",
+      "properties": {
+        "lbSettings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.core.v1.ListOfLBRoutingInfo.LBRoutingInfo"
+          }
+        }
+      },
+      "description": "Traffic routing settings for various hostnames exposed at the cluster load balancer."
+    },
+    "tetrate.api.tcc.core.v1.ListOfLBRoutingInfo.LBRoutingInfo": {
+      "type": "object",
+      "properties": {
+        "hostname": {
+          "type": "string",
+          "description": "Hostname with which the application is exposed on this load balancer."
+        },
+        "tls": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.TLSSettings",
+          "description": "TLS certificate info for the application. If nil, the gateway will expose the application on port 80 only."
+        },
+        "routingInfo": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.RoutingInfo",
+          "description": "HTTP Routing settings for the hostname. Note that subsets should not be defined at LB hostname level."
+        }
+      }
+    },
     "tetrate.api.tcc.core.v1.ListServicesResponse": {
       "type": "object",
       "properties": {
@@ -5011,27 +5044,27 @@
         "registry": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.Registry"
         },
-        "clusterNamespace": {
+        "namespace": {
           "type": "string",
-          "description": "The namespace where the load balancer is/will be deployed in a given cluster."
+          "description": "The namespace where the load balancer is/will be scoped (deployed in a given cluster)."
         },
         "labels": {
           "type": "object",
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Labels that uniquely identify the cluster loadbalancer. If cluster level gateway was deployed using TCC helm charts, set this field to tcc: clustergateway."
+          "title": "Labels that uniquely identify the cluster loadbalancer. If gateway was created using TCC helm charts, use app: {namespace}-tcclb"
         },
         "applications": {
           "type": "object",
           "additionalProperties": {
-            "$ref": "#/definitions/tetrate.api.tcc.core.v1.TLSSettings"
+            "$ref": "#/definitions/tetrate.api.tcc.core.v1.ListOfLBRoutingInfo"
           },
-          "description": "Map of applications attached to this loadbalancer in the form applicationId: TLS credential information."
+          "description": "Map of applications attached to this loadbalancer in the form applicationName: ListOfLBRoutingInfo."
         },
         "clientSettings": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.ClientSettings",
-          "description": "Client settings are applicable for traffic from the load balancer's cluster namespace to the application's namespaces."
+          "description": "Client settings are applicable for traffic from this load balancer's namespace to the application's namespaces."
         },
         "etag": {
           "type": "string"
@@ -5281,6 +5314,10 @@
         },
         "etag": {
           "type": "string"
+        },
+        "namespace": {
+          "type": "string",
+          "description": "Namespace where the service is scoped and should be one of application namespaces. If the application has only one namespace and if this field is omitted, this filed would default to the application namespace. This field cannot be omitted if the application has more than one namespace."
         }
       }
     },

@@ -258,8 +258,8 @@ message DeleteEnvironmentRequest {
 
 // Application
 //
-// An Application is a collection of services. Each application corresponds to a kubernetes namespace or an application
-// deployment on VMs. The hostname of the application is exposed via the load balancer (either shared or dedicated).
+// An Application is a collection of services. Each application typically corresponds to one or more kubernetes namespace or an application
+// deployment on VMs.
 message Application {
   // Internal use only. Auto populated field.
   string name = 1;
@@ -267,32 +267,20 @@ message Application {
   string tenant = 2 [(validate.rules).string.min_len = 1];
   // Environment.Id.
   string environment = 3 [(validate.rules).string.min_len = 1];
-  // short name for the application. Clusters are expected to have namespaces that match the application Id, especially
-  // on Kubernetes.
+  // short name for the application.
   string id = 4 [(validate.rules).string.min_len = 1];
   // Additional information.
   string description = 5;
-  // Hostname with which the application is exposed on a Gateway.
-  string hostname = 6 [(validate.rules).string.min_len = 1];
-  // HTTP Routing settings for the applications. Note that subsets should not be defined at application level.
-  RoutingInfo routing_info = 7;
   // Resilience settings that apply to all services within the application, for outbound calls from the application's
   // services to other services.
   ClientSettings client_settings = 8;
-
-  message ApplicationSpecificLB {
-    // Load balancer deployment labels (Kubernetes only for now). If gateway was created using TCC helm charts, use tcc:
-    // appgateway for kubernetes. The gateway will expose the application on ports 80 and 443 (if tls is configured).
-    map<string, string> labels = 1 [(validate.rules).map.min_pairs = 1];
-    // TLS certificate info for the application. If nil, the gateway will expose the application on port 80 only.
-    // Internal use only. Auto populated.
-    TLSSettings tls = 2;
-  }
-
-  // An application can be exposed on a shared gateway in the cluster or a dedicated gateway in the app's namespace.
-  // Set app_lb to indicate that the application should be exposed on the dedicated load balancer deployed in the app
-  // namespace. It is assumed that the gateway service is deployed in the app's namespace.
-  ApplicationSpecificLB app_lb = 9;
+  // An application can be exposed on a shared load balancer in the cluster or a dedicated load balancer
+  // in one of the application's namespaces. Set app_lbs to indicate that the application should be exposed on
+  // the dedicated load balancers. Namespace where each of the dedicated load balancer is scoped should be unique.
+  repeated ApplicationSpecificLB app_lbs = 9;
+  // List of namespaces where the application services (or components) are scoped within. If omitted, the application
+  // is assumed to be scoped in a namespace matching the Id field.
+  repeated string namespaces = 10;
 }
 
 message CreateApplicationRequest {
@@ -302,32 +290,20 @@ message CreateApplicationRequest {
   string tenant = 2 [(validate.rules).string.min_len = 1];
   // Environment.Id.
   string environment = 3 [(validate.rules).string.min_len = 1];
-  // short name for the application. Clusters are expected to have namespaces that match the application Id, especially
-  // on Kubernetes. If present, this will be used as the id for the created object.
+  // short name for the application.
   string id = 4;
   // Additional information.
   string description = 5;
-  // Hostname with which the application is exposed on a Gateway.
-  string hostname = 6 [(validate.rules).string.min_len = 1];
-  // HTTP Routing settings for the applications. Note that subsets should not be defined at application level.
-  RoutingInfo routing_info = 7;
   // Resilience settings that apply to all services within the application, for outbound calls from the application's
   // services to other services.
   ClientSettings client_settings = 8;
-
-  message ApplicationSpecificLB {
-    // Load balancer deployment labels (Kubernetes only for now). If gateway was created using TCC helm charts, use tcc:
-    // appgateway for kubernetes. The gateway will expose the application on ports 80 and 443 (if tls is configured).
-    map<string, string> labels = 1 [(validate.rules).map.min_pairs = 1];
-    // TLS certificate info for the application. If nil, the gateway will expose the application on port 80 only.
-    // Internal use only. Auto populated.
-    TLSSettings tls = 2;
-  }
-
-  // An application can be exposed on a shared gateway in the cluster or a dedicated gateway in the app's namespace. Set
-  // app_lb to indicate that the application should be exposed on the dedicated load balancer deployed in the app
-  // namespace. It is assumed that the gateway service is deployed in the app's namespace.
-  ApplicationSpecificLB app_lb = 9;
+  // An application can be exposed on a shared load balancer in the cluster or a dedicated load balancer
+  // in one of the application's namespaces. Set app_lbs to indicate that the application should be exposed on
+  // the dedicated load balancers. Namespace where each of the dedicated load balancer is scoped should be unique.
+  repeated ApplicationSpecificLB app_lbs = 9;
+  // List of namespaces where the application services (or components) are scoped within. If omitted, the application
+  // is assumed to be scoped in a namespace matching the Id field.
+  repeated string namespaces = 10;
 }
 
 message GetApplicationRequest {
@@ -366,6 +342,24 @@ message DeleteApplicationRequest {
   string id = 4 [(validate.rules).string.min_len = 1];
 }
 
+message ApplicationSpecificLB {
+  // Load balancer deployment labels (Kubernetes only for now). If gateway was created using TCC helm charts, use app:
+  // {namespace}-tcclb for kubernetes. The gateway will expose the application on ports 80 and 443 (if tls is configured).
+  map<string, string> labels = 1 [(validate.rules).map.min_pairs = 1];
+  // TLS certificate info for the application. If nil, the gateway will expose the application on port 80 only.
+  // Internal use only. Auto populated.
+  TLSSettings tls = 2;
+  // The namespace where this dedicated load balancer of the application is scoped. It should be one of application
+  // namespaces. This field cannot be omitted if the application has more than one namespace. If there is only
+  // one dedicated load balancer and application has only one  namespace and if this namespace field is omitted,
+  // then this field would default to the application namespace
+  string namespace = 3;
+  // Hostname with which the application is exposed on this load balancer.
+  string hostname = 4 [(validate.rules).string.min_len = 1];
+  // HTTP Routing settings for the hostname. Note that subsets should not be defined at LB hostname level.
+  RoutingInfo routing_info = 5;
+}
+
 message Service {
   // Internal use only. Auto populated field.
   string name = 1;
@@ -388,6 +382,10 @@ message Service {
   // HTTP Routing settings for the service. Note that subsets (versions of the service) if any should be defined here.
   RoutingInfo routing_info = 10;
   string etag = 11 [(validate.rules).string.min_len = 1];
+  // Namespace where the service is scoped and should be one of application namespaces. If the application has
+  // only one namespace and if this field is omitted, this filed would default to the application namespace.
+  // This field cannot be omitted if the application has more than one namespace.
+  string namespace = 12;
 }
 
 message CreateServiceRequest {
@@ -411,6 +409,10 @@ message CreateServiceRequest {
   repeated Port ports = 9 ;
   // HTTP Routing settings for the service. Note that subsets (versions of the service) if any should be defined here.
   RoutingInfo routing_info = 10;
+  // Namespace where the service is scoped. It should be one of application namespaces. If the application has
+  // only one namespace and if this field is omitted, this filed would default to the application namespace.
+  // This field cannot be omitted if the application has more than one namespace.
+  string namespace = 11;
 }
 
 message GetServiceRequest {
@@ -471,17 +473,17 @@ message LoadBalancer {
   LoadBalancerClass load_balancer_class = 7 [(validate.rules).enum = {defined_only: true, not_in : [0]}];
   Registry registry = 8 [(validate.rules).enum = {defined_only: true, not_in : [0]}];
 
-  // The namespace where the load balancer is/will be deployed in a given cluster.
-  string cluster_namespace = 9 [(validate.rules).string.min_len = 1];
+  // The namespace where the load balancer is/will be scoped (deployed in a given cluster).
+  string namespace = 9 [(validate.rules).string.min_len = 1];
 
-  // Labels that uniquely identify the cluster loadbalancer. If cluster level gateway was deployed using TCC helm
-  // charts, set this field to tcc: clustergateway.
+  // Labels that uniquely identify the cluster loadbalancer. If gateway was created using TCC helm charts, use app:
+  // {namespace}-tcclb
   map<string, string> labels = 10 [(validate.rules).map.min_pairs = 1];
 
-  // Map of applications attached to this loadbalancer in the form applicationId: TLS credential information.
-  map<string, TLSSettings> applications = 11 [(validate.rules).map.no_sparse = true];
+  // Map of applications attached to this loadbalancer in the form applicationName: ListOfLBRoutingInfo.
+  map<string, ListOfLBRoutingInfo> applications = 11 [(validate.rules).map.no_sparse = true];
 
-  // Client settings are applicable for traffic from the load balancer's cluster namespace to the application's
+  // Client settings are applicable for traffic from this load balancer's namespace to the application's
   // namespaces.
   ClientSettings client_settings = 12;
   string etag = 13 [(validate.rules).string.min_len = 1];
@@ -503,15 +505,15 @@ message CreateLoadBalancerRequest {
   LoadBalancerClass load_balancer_class = 7 [(validate.rules).enum = {defined_only: true, not_in : [0]}];
   Registry registry = 8 [(validate.rules).enum = {defined_only: true, not_in : [0]}];
 
-  // The namespace where the load balancer is/will be deployed in a given cluster.
-  string cluster_namespace = 9 [(validate.rules).string.min_len = 1];
+  // The namespace where the load balancer is/will be scoped (deployed in a given cluster).
+  string namespace = 9 [(validate.rules).string.min_len = 1];
 
-  // Labels that uniquely identify the cluster loadbalancer. If cluster level gateway was deployed using TCC helm
-  // charts, set this field to tcc: clustergateway.
+  // Labels that uniquely identify the cluster loadbalancer. If gateway was created using TCC helm charts, use app:
+  // {namespace}-tcclb
   map<string, string> labels = 10 [(validate.rules).map.min_pairs = 1];
 
-  // Map of applications attached to this loadbalancer in the form applicationId: TLS credential information.
-  map<string, TLSSettings> applications = 11 [(validate.rules).map.no_sparse = true];
+   // Map of applications attached to this loadbalancer in the form applicationId: ListOfLBRoutingInfo.
+  map<string, ListOfLBRoutingInfo> applications = 11 [(validate.rules).map.no_sparse = true];
 
   // Client settings are applicable for traffic from the load balancer's cluster namespace to the application's
   // namespaces.
@@ -553,3 +555,18 @@ message DeleteLoadBalancerRequest {
   string environment = 3 [(validate.rules).string.min_len = 1];
   string id = 4 [(validate.rules).string.min_len = 1];
 }
+
+// Traffic routing settings for various hostnames exposed at the cluster load balancer.
+message ListOfLBRoutingInfo {
+  message LBRoutingInfo {
+    // Hostname with which the application is exposed on this load balancer.
+    string hostname = 1 [(validate.rules).string.min_len = 1];
+    // TLS certificate info for the application. If nil, the gateway will expose the application on port 80 only.
+    TLSSettings tls = 2;
+    // HTTP Routing settings for the hostname. Note that subsets should not be defined at LB hostname level.
+    RoutingInfo routing_info = 3;
+  };
+  repeated LBRoutingInfo lb_settings = 1;
+}
+
+
