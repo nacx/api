@@ -48,7 +48,17 @@ message User {
   // Groups the user belongs to
   repeated ResourceRef groups = 3;
 
-  // TODO: User details depending on the types we want to support, if needed
+  // Kind is the type of the actual user.
+  enum Kind {
+    // USER means a real human.
+    USER = 0;
+    // SERVICEACCOUNT means an account just used for programmatical access.
+    SERVICEACCOUNT = 1;
+  }
+  Kind kind = 4;
+
+  // Email of the user or service account, if known
+  string email = 5;
 }
 
 // Group represents a logical grouping of entities in a hierarchy.
