@@ -33,8 +33,8 @@ ENVOYFILTER := envoyfilter.yaml
 ALL_GENERATED := $(ALL_GO_PROTOS) $(ALL_GO_VALIDATE_PROTOS) $(DESCRIPTOR) $(ENVOYFILTER) \
 	$(ISTIO_API) $(ALL_CLIENT_PROTOS) $(ALL_JS_ARTIFACTS)
 
-.PHONY: build
-build: $(DESCRIPTOR) $(ENVOYFILTER) node_modules
+.PHONY: all
+all: $(DESCRIPTOR) $(ENVOYFILTER) node_modules
 	@echo "all protos done"
 
 # Install all the required global deps.

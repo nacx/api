@@ -21,13 +21,13 @@ $(error Bad protoc-gen-go version $(PROTOC_GEN_GO_INSTALLED), \
 	please install $(PROTOC_GEN_GO_VERSION))
 endif
 
-.PHONY: build
-build: $(APIS)
+.PHONY: all
+all: $(APIS)
 
 .PHONY: $(APIS)
 $(APIS):
-	@echo "--- $@: build ---"
-	$(MAKE) build -C $@
+	@echo "--- $@: all ---"
+	$(MAKE) all -C $@
 
 .PHONY: clean
 clean:

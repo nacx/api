@@ -12,8 +12,8 @@ DESCRIPTOR := test.proto-descriptor
 GOPATH := $(shell go env GOPATH)
 GOSRCDIR := $(GOPATH)/src
 
-.PHONY: build
-build: $(DESCRIPTOR)
+.PHONY: all
+all: $(DESCRIPTOR)
 	@echo "all protos done"
 
 ${DESCRIPTOR}:
