@@ -13,9 +13,9 @@
 
 import { exists, mapValues } from '../runtime';
 import {
-    TetrateApiTccCoreV1Deployment,
-    TetrateApiTccCoreV1DeploymentFromJSON,
-    TetrateApiTccCoreV1DeploymentToJSON,
+    TetrateApiTccCoreV1Port,
+    TetrateApiTccCoreV1PortFromJSON,
+    TetrateApiTccCoreV1PortToJSON,
 } from './';
 
 /**
@@ -30,12 +30,6 @@ export interface TetrateApiTccCoreV1CreateDeploymentRequest {
      * @memberof TetrateApiTccCoreV1CreateDeploymentRequest
      */
     parent?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TetrateApiTccCoreV1CreateDeploymentRequest
-     */
-    id?: string;
     /**
      * 
      * @type {string}
@@ -62,21 +56,48 @@ export interface TetrateApiTccCoreV1CreateDeploymentRequest {
     namespace?: string;
     /**
      * 
-     * @type {TetrateApiTccCoreV1Deployment}
+     * @type {string}
      * @memberof TetrateApiTccCoreV1CreateDeploymentRequest
      */
-    deployment?: TetrateApiTccCoreV1Deployment;
+    id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1CreateDeploymentRequest
+     */
+    hostname?: string;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof TetrateApiTccCoreV1CreateDeploymentRequest
+     */
+    labels?: { [key: string]: string; };
+    /**
+     * 
+     * @type {Array<TetrateApiTccCoreV1Port>}
+     * @memberof TetrateApiTccCoreV1CreateDeploymentRequest
+     */
+    ports?: Array<TetrateApiTccCoreV1Port>;
+    /**
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1CreateDeploymentRequest
+     */
+    lbManagementIp?: string;
 }
 
 export function TetrateApiTccCoreV1CreateDeploymentRequestFromJSON(json: any): TetrateApiTccCoreV1CreateDeploymentRequest {
     return {
         'parent': !exists(json, 'parent') ? undefined : json['parent'],
-        'id': !exists(json, 'id') ? undefined : json['id'],
         'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
         'environment': !exists(json, 'environment') ? undefined : json['environment'],
         'cluster': !exists(json, 'cluster') ? undefined : json['cluster'],
         'namespace': !exists(json, 'namespace') ? undefined : json['namespace'],
-        'deployment': !exists(json, 'deployment') ? undefined : TetrateApiTccCoreV1DeploymentFromJSON(json['deployment']),
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'hostname': !exists(json, 'hostname') ? undefined : json['hostname'],
+        'labels': !exists(json, 'labels') ? undefined : json['labels'],
+        'ports': !exists(json, 'ports') ? undefined : (json['ports'] as Array<any>).map(TetrateApiTccCoreV1PortFromJSON),
+        'lbManagementIp': !exists(json, 'lbManagementIp') ? undefined : json['lbManagementIp'],
     };
 }
 
@@ -86,12 +107,15 @@ export function TetrateApiTccCoreV1CreateDeploymentRequestToJSON(value?: Tetrate
     }
     return {
         'parent': value.parent,
-        'id': value.id,
         'tenant': value.tenant,
         'environment': value.environment,
         'cluster': value.cluster,
         'namespace': value.namespace,
-        'deployment': TetrateApiTccCoreV1DeploymentToJSON(value.deployment),
+        'id': value.id,
+        'hostname': value.hostname,
+        'labels': value.labels,
+        'ports': value.ports === undefined ? undefined : (value.ports as Array<any>).map(TetrateApiTccCoreV1PortToJSON),
+        'lbManagementIp': value.lbManagementIp,
     };
 }
 

@@ -163,11 +163,19 @@ message Cluster {
 
 message CreateClusterRequest {
   string parent = 1;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
   // if present, this will be used as the id for the created object
-  string id = 2;
-  string tenant = 3 [(validate.rules).string.min_len = 1];
-  string environment = 4 [(validate.rules).string.min_len = 1];
-  Cluster cluster = 5 [(validate.rules).message.required = true];
+  string id = 4;
+
+  string description = 5;
+  Registry registry = 6 [(validate.rules).enum.defined_only = true];
+
+  // Information like datacenter where the cluster is present
+  string country = 7;
+  string datacenter = 8;
+  string availability_zone = 9;
+  map<string, string> labels = 10;
 }
 
 message GetClusterRequest {
@@ -207,12 +215,14 @@ message Namespace {
 
 message CreateNamespaceRequest {
   string parent = 1;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  string cluster = 4 [(validate.rules).string.min_len = 1];
   // if present, this will be used as the id for the created object
-  string id = 2;
-  string tenant = 3 [(validate.rules).string.min_len = 1];
-  string environment = 4 [(validate.rules).string.min_len = 1];
-  string cluster = 5 [(validate.rules).string.min_len = 1];
-  Namespace namespace = 6 [(validate.rules).message.required = true];
+  string id = 5;
+
+  string description = 6;
+  map<string, string> labels = 7;
 }
 
 message GetNamespaceRequest {
@@ -258,13 +268,18 @@ message Deployment {
 
 message CreateDeploymentRequest {
   string parent = 1;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  string cluster = 4 [(validate.rules).string.min_len = 1];
+  string namespace = 5 [(validate.rules).string.min_len = 1];
   // if present, this will be used as the id for the created object
-  string id = 2;
-  string tenant = 3 [(validate.rules).string.min_len = 1];
-  string environment = 4 [(validate.rules).string.min_len = 1];
-  string cluster = 5 [(validate.rules).string.min_len = 1];
-  string namespace = 6 [(validate.rules).string.min_len = 1];
-  Deployment deployment = 7 [(validate.rules).message.required = true];
+  string id = 6;
+
+  string hostname = 7 [(validate.rules).string.min_len = 1];
+  map<string, string> labels = 8;
+  repeated Port ports = 9 [(validate.rules).repeated.min_items = 1];
+  // information specific to F5 load balancers if deployment refers to F5
+  string lb_management_ip = 10;
 }
 
 message GetDeploymentRequest {
@@ -330,18 +345,42 @@ message Endpoint {
   // with higher weights in a pool will receive proportionally higher
   // traffic.
   uint32 weight = 12;
+
+  string etag = 13 [(validate.rules).string.min_len = 1];
 }
 
 message CreateEndpointRequest {
   string parent = 1;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  string cluster = 4 [(validate.rules).string.min_len = 1];
+  string namespace = 5 [(validate.rules).string.min_len = 1];
+  string deployment = 6 [(validate.rules).string.min_len = 1];
   // if present, this will be used as the id for the created object
-  string id = 2;
-  string tenant = 3 [(validate.rules).string.min_len = 1];
-  string environment = 4 [(validate.rules).string.min_len = 1];
-  string cluster = 5 [(validate.rules).string.min_len = 1];
-  string namespace = 6 [(validate.rules).string.min_len = 1];
-  string deployment = 7 [(validate.rules).string.min_len = 1];
-  Endpoint endpoint = 8 [(validate.rules).message.required = true];
+  string id = 7;
+
+  // Address associated with the network endpoint without the port.
+  // Domain names can be used and must be fully-qualified without
+  // wildcards.
+  string address = 8 [(validate.rules).string.min_len = 1];
+
+  // Set of inbound traffic ports associated with the endpoint. The
+  // ports must be associated with a port number that was declared
+  // as part of the service.
+  map<uint32, uint32> ports = 9 [(validate.rules).map.min_pairs = 1];
+
+  // One or more labels associated with the endpoint.
+  map<string, string> labels = 10;
+
+  // The locality associated with the endpoint, in the form
+  // country/region/zone. A locality corresponds to a failure domain
+  // (country/region/zone).
+  string locality = 11;
+
+  // The load balancing weight associated with the endpoint. Endpoints
+  // with higher weights in a pool will receive proportionally higher
+  // traffic.
+  uint32 weight = 12;
 }
 
 message GetEndpointRequest {

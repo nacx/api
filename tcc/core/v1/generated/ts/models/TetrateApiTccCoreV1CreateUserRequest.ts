@@ -12,12 +12,6 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import {
-    TetrateApiTccCoreV1User,
-    TetrateApiTccCoreV1UserFromJSON,
-    TetrateApiTccCoreV1UserToJSON,
-} from './';
-
 /**
  * 
  * @export
@@ -31,7 +25,13 @@ export interface TetrateApiTccCoreV1CreateUserRequest {
      */
     parent?: string;
     /**
-     * 
+     * Tenant.Id
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1CreateUserRequest
+     */
+    tenant?: string;
+    /**
+     * if present, this will be used as the id for the created object.
      * @type {string}
      * @memberof TetrateApiTccCoreV1CreateUserRequest
      */
@@ -41,21 +41,15 @@ export interface TetrateApiTccCoreV1CreateUserRequest {
      * @type {string}
      * @memberof TetrateApiTccCoreV1CreateUserRequest
      */
-    tenant?: string;
-    /**
-     * 
-     * @type {TetrateApiTccCoreV1User}
-     * @memberof TetrateApiTccCoreV1CreateUserRequest
-     */
-    user?: TetrateApiTccCoreV1User;
+    description?: string;
 }
 
 export function TetrateApiTccCoreV1CreateUserRequestFromJSON(json: any): TetrateApiTccCoreV1CreateUserRequest {
     return {
         'parent': !exists(json, 'parent') ? undefined : json['parent'],
-        'id': !exists(json, 'id') ? undefined : json['id'],
         'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
-        'user': !exists(json, 'user') ? undefined : TetrateApiTccCoreV1UserFromJSON(json['user']),
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'description': !exists(json, 'description') ? undefined : json['description'],
     };
 }
 
@@ -65,9 +59,9 @@ export function TetrateApiTccCoreV1CreateUserRequestToJSON(value?: TetrateApiTcc
     }
     return {
         'parent': value.parent,
-        'id': value.id,
         'tenant': value.tenant,
-        'user': TetrateApiTccCoreV1UserToJSON(value.user),
+        'id': value.id,
+        'description': value.description,
     };
 }
 

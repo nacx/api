@@ -10,6 +10,7 @@ export * from './TetrateApiTccCoreV1Cluster';
 export * from './TetrateApiTccCoreV1ConfigData';
 export * from './TetrateApiTccCoreV1CorsPolicy';
 export * from './TetrateApiTccCoreV1CreateApplicationRequest';
+export * from './TetrateApiTccCoreV1CreateApplicationRequestApplicationSpecificLB';
 export * from './TetrateApiTccCoreV1CreateClusterRequest';
 export * from './TetrateApiTccCoreV1CreateDeploymentRequest';
 export * from './TetrateApiTccCoreV1CreateEndpointRequest';

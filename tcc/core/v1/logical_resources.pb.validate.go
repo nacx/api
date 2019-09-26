@@ -136,8 +136,6 @@ func (m *CreateEnvironmentRequest) Validate() error {
 
 	// no validation rules for Parent
 
-	// no validation rules for Id
-
 	if utf8.RuneCountInString(m.GetTenant()) < 1 {
 		return CreateEnvironmentRequestValidationError{
 			field:  "Tenant",
@@ -145,17 +143,14 @@ func (m *CreateEnvironmentRequest) Validate() error {
 		}
 	}
 
-	if m.GetEnvironment() == nil {
-		return CreateEnvironmentRequestValidationError{
-			field:  "Environment",
-			reason: "value is required",
-		}
-	}
+	// no validation rules for Id
 
-	if v, ok := interface{}(m.GetEnvironment()).(interface{ Validate() error }); ok {
+	// no validation rules for Description
+
+	if v, ok := interface{}(m.GetClientSettings()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
 			return CreateEnvironmentRequestValidationError{
-				field:  "Environment",
+				field:  "ClientSettings",
 				reason: "embedded message failed validation",
 				cause:  err,
 			}
@@ -682,8 +677,6 @@ func (m *CreateApplicationRequest) Validate() error {
 
 	// no validation rules for Parent
 
-	// no validation rules for Id
-
 	if utf8.RuneCountInString(m.GetTenant()) < 1 {
 		return CreateApplicationRequestValidationError{
 			field:  "Tenant",
@@ -698,17 +691,41 @@ func (m *CreateApplicationRequest) Validate() error {
 		}
 	}
 
-	if m.GetApplication() == nil {
+	// no validation rules for Id
+
+	// no validation rules for Description
+
+	if utf8.RuneCountInString(m.GetHostname()) < 1 {
 		return CreateApplicationRequestValidationError{
-			field:  "Application",
-			reason: "value is required",
+			field:  "Hostname",
+			reason: "value length must be at least 1 runes",
 		}
 	}
 
-	if v, ok := interface{}(m.GetApplication()).(interface{ Validate() error }); ok {
+	if v, ok := interface{}(m.GetRoutingInfo()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
 			return CreateApplicationRequestValidationError{
-				field:  "Application",
+				field:  "RoutingInfo",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if v, ok := interface{}(m.GetClientSettings()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return CreateApplicationRequestValidationError{
+				field:  "ClientSettings",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if v, ok := interface{}(m.GetAppLb()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return CreateApplicationRequestValidationError{
+				field:  "AppLb",
 				reason: "embedded message failed validation",
 				cause:  err,
 			}
@@ -1273,8 +1290,6 @@ func (m *CreateServiceRequest) Validate() error {
 
 	// no validation rules for Parent
 
-	// no validation rules for Id
-
 	if utf8.RuneCountInString(m.GetTenant()) < 1 {
 		return CreateServiceRequestValidationError{
 			field:  "Tenant",
@@ -1296,17 +1311,45 @@ func (m *CreateServiceRequest) Validate() error {
 		}
 	}
 
-	if m.GetService() == nil {
+	// no validation rules for Id
+
+	// no validation rules for Description
+
+	if utf8.RuneCountInString(m.GetHostname()) < 1 {
 		return CreateServiceRequestValidationError{
-			field:  "Service",
-			reason: "value is required",
+			field:  "Hostname",
+			reason: "value length must be at least 1 runes",
 		}
 	}
 
-	if v, ok := interface{}(m.GetService()).(interface{ Validate() error }); ok {
+	// no validation rules for Labels
+
+	if len(m.GetPorts()) < 1 {
+		return CreateServiceRequestValidationError{
+			field:  "Ports",
+			reason: "value must contain at least 1 item(s)",
+		}
+	}
+
+	for idx, item := range m.GetPorts() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return CreateServiceRequestValidationError{
+					field:  fmt.Sprintf("Ports[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if v, ok := interface{}(m.GetRoutingInfo()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
 			return CreateServiceRequestValidationError{
-				field:  "Service",
+				field:  "RoutingInfo",
 				reason: "embedded message failed validation",
 				cause:  err,
 			}
@@ -1882,8 +1925,6 @@ func (m *CreateLoadBalancerRequest) Validate() error {
 
 	// no validation rules for Parent
 
-	// no validation rules for Id
-
 	if utf8.RuneCountInString(m.GetTenant()) < 1 {
 		return CreateLoadBalancerRequestValidationError{
 			field:  "Tenant",
@@ -1898,17 +1939,41 @@ func (m *CreateLoadBalancerRequest) Validate() error {
 		}
 	}
 
-	if m.GetLoadbalancer() == nil {
+	// no validation rules for Id
+
+	// no validation rules for Description
+
+	// no validation rules for EnableWorkflows
+
+	if _, ok := LoadBalancerClass_name[int32(m.GetLoadBalancerClass())]; !ok {
 		return CreateLoadBalancerRequestValidationError{
-			field:  "Loadbalancer",
-			reason: "value is required",
+			field:  "LoadBalancerClass",
+			reason: "value must be one of the defined enum values",
 		}
 	}
 
-	if v, ok := interface{}(m.GetLoadbalancer()).(interface{ Validate() error }); ok {
+	if _, ok := Registry_name[int32(m.GetRegistry())]; !ok {
+		return CreateLoadBalancerRequestValidationError{
+			field:  "Registry",
+			reason: "value must be one of the defined enum values",
+		}
+	}
+
+	if utf8.RuneCountInString(m.GetClusterNamespace()) < 1 {
+		return CreateLoadBalancerRequestValidationError{
+			field:  "ClusterNamespace",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	// no validation rules for Labels
+
+	// no validation rules for Applications
+
+	if v, ok := interface{}(m.GetClientSettings()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
 			return CreateLoadBalancerRequestValidationError{
-				field:  "Loadbalancer",
+				field:  "ClientSettings",
 				reason: "embedded message failed validation",
 				cause:  err,
 			}
@@ -2398,3 +2463,87 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = Application_ApplicationSpecificLBValidationError{}
+
+// Validate checks the field values on
+// CreateApplicationRequest_ApplicationSpecificLB with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *CreateApplicationRequest_ApplicationSpecificLB) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Labels
+
+	if v, ok := interface{}(m.GetTls()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return CreateApplicationRequest_ApplicationSpecificLBValidationError{
+				field:  "Tls",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// CreateApplicationRequest_ApplicationSpecificLBValidationError is the
+// validation error returned by
+// CreateApplicationRequest_ApplicationSpecificLB.Validate if the designated
+// constraints aren't met.
+type CreateApplicationRequest_ApplicationSpecificLBValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e CreateApplicationRequest_ApplicationSpecificLBValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e CreateApplicationRequest_ApplicationSpecificLBValidationError) Reason() string {
+	return e.reason
+}
+
+// Cause function returns cause value.
+func (e CreateApplicationRequest_ApplicationSpecificLBValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e CreateApplicationRequest_ApplicationSpecificLBValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e CreateApplicationRequest_ApplicationSpecificLBValidationError) ErrorName() string {
+	return "CreateApplicationRequest_ApplicationSpecificLBValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e CreateApplicationRequest_ApplicationSpecificLBValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sCreateApplicationRequest_ApplicationSpecificLB.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = CreateApplicationRequest_ApplicationSpecificLBValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = CreateApplicationRequest_ApplicationSpecificLBValidationError{}

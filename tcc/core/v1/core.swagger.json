@@ -407,18 +407,21 @@
         "parameters": [
           {
             "name": "tenant",
+            "description": "Tenant.Id",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "environment",
+            "description": "Environment.Id",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "application",
+            "description": "Application.Id",
             "in": "path",
             "required": true,
             "type": "string"
@@ -2054,12 +2057,14 @@
         "parameters": [
           {
             "name": "tenant",
+            "description": "Tenant.Id",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "environment",
+            "description": "Environment.Id",
             "in": "path",
             "required": true,
             "type": "string"
@@ -2405,6 +2410,7 @@
         "parameters": [
           {
             "name": "tenant",
+            "description": "Tenant.Id",
             "in": "path",
             "required": true,
             "type": "string"
@@ -2604,6 +2610,7 @@
         "parameters": [
           {
             "name": "tenant",
+            "description": "Tenant.Id",
             "in": "path",
             "required": true,
             "type": "string"
@@ -3018,10 +3025,6 @@
           "type": "string",
           "description": "Internal use only. Auto populated field."
         },
-        "id": {
-          "type": "string",
-          "description": "short name for the application. Clusters are expected to have namespaces that match the application Id, especially on Kubernetes."
-        },
         "tenant": {
           "type": "string",
           "description": "Tenant.Id"
@@ -3030,8 +3033,45 @@
           "type": "string",
           "description": "Environment.Id"
         },
-        "application": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Application"
+        "id": {
+          "type": "string",
+          "description": "short name for the application. Clusters are expected to have namespaces that match the application Id, especially on Kubernetes.",
+          "title": "if present, this will be used as the id for the created object"
+        },
+        "description": {
+          "type": "string",
+          "description": "Additional information."
+        },
+        "hostname": {
+          "type": "string",
+          "description": "Hostname with which the application is exposed on a Gateway"
+        },
+        "routingInfo": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.RoutingInfo",
+          "description": "HTTP Routing settings for the applications. Note that subsets should not be defined at application level."
+        },
+        "clientSettings": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.ClientSettings",
+          "description": "Resilience settings that apply to all services within the application, for outbound calls from the application's services to other services."
+        },
+        "appLb": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.CreateApplicationRequest.ApplicationSpecificLB",
+          "description": "An application can be exposed on a shared gateway in the cluster or a dedicated gateway in the app's namespace. Set app_lb to indicate that the application should be exposed on the dedicated load balancer deployed in the app namespace. It is assumed that the gateway service is deployed in the app's namespace."
+        }
+      }
+    },
+    "tetrate.api.tcc.core.v1.CreateApplicationRequest.ApplicationSpecificLB": {
+      "type": "object",
+      "properties": {
+        "labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "tls": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.TLSSettings",
+          "description": "TLS certificate info for the application. If nil, the gateway will expose the application on port 80 only. Internal use only. Auto populated"
         }
       }
     },
@@ -3041,18 +3081,37 @@
         "parent": {
           "type": "string"
         },
-        "id": {
-          "type": "string",
-          "title": "if present, this will be used as the id for the created object"
-        },
         "tenant": {
           "type": "string"
         },
         "environment": {
           "type": "string"
         },
-        "cluster": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Cluster"
+        "id": {
+          "type": "string",
+          "title": "if present, this will be used as the id for the created object"
+        },
+        "description": {
+          "type": "string"
+        },
+        "registry": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Registry"
+        },
+        "country": {
+          "type": "string",
+          "title": "Information like datacenter where the cluster is present"
+        },
+        "datacenter": {
+          "type": "string"
+        },
+        "availabilityZone": {
+          "type": "string"
+        },
+        "labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
         }
       }
     },
@@ -3062,10 +3121,6 @@
         "parent": {
           "type": "string"
         },
-        "id": {
-          "type": "string",
-          "title": "if present, this will be used as the id for the created object"
-        },
         "tenant": {
           "type": "string"
         },
@@ -3078,8 +3133,28 @@
         "namespace": {
           "type": "string"
         },
-        "deployment": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Deployment"
+        "id": {
+          "type": "string",
+          "title": "if present, this will be used as the id for the created object"
+        },
+        "hostname": {
+          "type": "string"
+        },
+        "labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "ports": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.core.v1.Port"
+          }
+        },
+        "lbManagementIp": {
+          "type": "string",
+          "title": "information specific to F5 load balancers if deployment refers to F5"
         }
       }
     },
@@ -3089,10 +3164,6 @@
         "parent": {
           "type": "string"
         },
-        "id": {
-          "type": "string",
-          "title": "if present, this will be used as the id for the created object"
-        },
         "tenant": {
           "type": "string"
         },
@@ -3108,8 +3179,37 @@
         "deployment": {
           "type": "string"
         },
-        "endpoint": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Endpoint"
+        "id": {
+          "type": "string",
+          "title": "if present, this will be used as the id for the created object"
+        },
+        "address": {
+          "type": "string",
+          "description": "Address associated with the network endpoint without the port.\nDomain names can be used and must be fully-qualified without\nwildcards."
+        },
+        "ports": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "description": "Set of inbound traffic ports associated with the endpoint. The\nports must be associated with a port number that was declared\nas part of the service."
+        },
+        "labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "One or more labels associated with the endpoint."
+        },
+        "locality": {
+          "type": "string",
+          "description": "The locality associated with the endpoint, in the form\ncountry/region/zone. A locality corresponds to a failure domain\n(country/region/zone)."
+        },
+        "weight": {
+          "type": "integer",
+          "format": "int64",
+          "description": "The load balancing weight associated with the endpoint. Endpoints\nwith higher weights in a pool will receive proportionally higher\ntraffic."
         }
       }
     },
@@ -3120,15 +3220,21 @@
           "type": "string",
           "description": "Internal use only. Auto populated field."
         },
-        "id": {
-          "type": "string",
-          "description": "if present, this will be used as the id for the created object."
-        },
         "tenant": {
           "type": "string"
         },
-        "environment": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Environment"
+        "id": {
+          "type": "string",
+          "description": "if present, this will be used as the id for the created object.",
+          "title": "if present, this will be used as the id for the created object"
+        },
+        "description": {
+          "type": "string",
+          "description": "Additional information for readability."
+        },
+        "clientSettings": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.ClientSettings",
+          "description": "Resilience settings that apply to all clusters in the environment."
         }
       }
     },
@@ -3139,17 +3245,51 @@
           "type": "string",
           "description": "Internal use only. Auto populated field."
         },
-        "id": {
-          "type": "string"
-        },
         "tenant": {
-          "type": "string"
+          "type": "string",
+          "description": "Tenant.Id"
         },
         "environment": {
+          "type": "string",
+          "description": "Environment.Id"
+        },
+        "id": {
+          "type": "string",
+          "description": "if present, this will be used as the id for the created object.",
+          "title": "if present, this will be used as the id for the created object"
+        },
+        "description": {
           "type": "string"
         },
-        "loadbalancer": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.LoadBalancer"
+        "enableWorkflows": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "loadBalancerClass": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.LoadBalancerClass"
+        },
+        "registry": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Registry"
+        },
+        "clusterNamespace": {
+          "type": "string",
+          "description": "The namespace where the load balancer is/will be deployed in a given cluster."
+        },
+        "labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "applications": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/tetrate.api.tcc.core.v1.TLSSettings"
+          }
+        },
+        "clientSettings": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.ClientSettings",
+          "description": "Client settings are applicable for traffic from the load balancer's cluster namespace to the application's namespaces."
         }
       }
     },
@@ -3158,10 +3298,6 @@
       "properties": {
         "parent": {
           "type": "string"
-        },
-        "id": {
-          "type": "string",
-          "title": "if present, this will be used as the id for the created object"
         },
         "tenant": {
           "type": "string"
@@ -3172,8 +3308,18 @@
         "cluster": {
           "type": "string"
         },
-        "namespace": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Namespace"
+        "id": {
+          "type": "string",
+          "title": "if present, this will be used as the id for the created object"
+        },
+        "description": {
+          "type": "string"
+        },
+        "labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
         }
       }
     },
@@ -3184,20 +3330,45 @@
           "type": "string",
           "description": "Internal use only. Auto populated field."
         },
-        "id": {
-          "type": "string"
-        },
         "tenant": {
-          "type": "string"
+          "type": "string",
+          "description": "Tenant.Id"
         },
         "environment": {
-          "type": "string"
+          "type": "string",
+          "description": "Environment.Id"
         },
         "application": {
+          "type": "string",
+          "description": "Application.Id"
+        },
+        "id": {
+          "type": "string",
+          "description": "if present, this will be used as the id for the created object.",
+          "title": "if present, this will be used as the id for the created object"
+        },
+        "description": {
           "type": "string"
         },
-        "service": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Service"
+        "hostname": {
+          "type": "string",
+          "description": "FQDN hostname of the service."
+        },
+        "labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "ports": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.core.v1.Port"
+          }
+        },
+        "routingInfo": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.RoutingInfo",
+          "description": "HTTP Routing settings for the service. Note that subsets (versions of the service) if any should be defined here."
         }
       }
     },
@@ -3208,14 +3379,23 @@
           "type": "string",
           "description": "Internal use only. Auto populated field."
         },
-        "id": {
-          "type": "string"
-        },
         "tenant": {
+          "type": "string",
+          "description": "Tenant.Id"
+        },
+        "id": {
+          "type": "string",
+          "description": "if present, this will be used as the id for the created object.",
+          "title": "if present, this will be used as the id for the created object"
+        },
+        "description": {
           "type": "string"
         },
-        "team": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Team"
+        "members": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       }
     },
@@ -3225,8 +3405,8 @@
         "id": {
           "type": "string"
         },
-        "tenant": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Tenant"
+        "description": {
+          "type": "string"
         }
       }
     },
@@ -3237,14 +3417,17 @@
           "type": "string",
           "description": "Internal use only. Auto populated field."
         },
-        "id": {
-          "type": "string"
-        },
         "tenant": {
-          "type": "string"
+          "type": "string",
+          "description": "Tenant.Id"
         },
-        "user": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.User"
+        "id": {
+          "type": "string",
+          "description": "if present, this will be used as the id for the created object.",
+          "title": "if present, this will be used as the id for the created object"
+        },
+        "description": {
+          "type": "string"
         }
       }
     },
@@ -3341,6 +3524,9 @@
           "type": "integer",
           "format": "int64",
           "description": "The load balancing weight associated with the endpoint. Endpoints\nwith higher weights in a pool will receive proportionally higher\ntraffic."
+        },
+        "etag": {
+          "type": "string"
         }
       },
       "description": "Endpoint defines a network address (IP or hostname) associated with\nthe service."

@@ -12,12 +12,6 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import {
-    TetrateApiTccCoreV1Team,
-    TetrateApiTccCoreV1TeamFromJSON,
-    TetrateApiTccCoreV1TeamToJSON,
-} from './';
-
 /**
  * 
  * @export
@@ -31,7 +25,13 @@ export interface TetrateApiTccCoreV1CreateTeamRequest {
      */
     parent?: string;
     /**
-     * 
+     * Tenant.Id
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1CreateTeamRequest
+     */
+    tenant?: string;
+    /**
+     * if present, this will be used as the id for the created object.
      * @type {string}
      * @memberof TetrateApiTccCoreV1CreateTeamRequest
      */
@@ -41,21 +41,22 @@ export interface TetrateApiTccCoreV1CreateTeamRequest {
      * @type {string}
      * @memberof TetrateApiTccCoreV1CreateTeamRequest
      */
-    tenant?: string;
+    description?: string;
     /**
      * 
-     * @type {TetrateApiTccCoreV1Team}
+     * @type {Array<string>}
      * @memberof TetrateApiTccCoreV1CreateTeamRequest
      */
-    team?: TetrateApiTccCoreV1Team;
+    members?: Array<string>;
 }
 
 export function TetrateApiTccCoreV1CreateTeamRequestFromJSON(json: any): TetrateApiTccCoreV1CreateTeamRequest {
     return {
         'parent': !exists(json, 'parent') ? undefined : json['parent'],
-        'id': !exists(json, 'id') ? undefined : json['id'],
         'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
-        'team': !exists(json, 'team') ? undefined : TetrateApiTccCoreV1TeamFromJSON(json['team']),
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'description': !exists(json, 'description') ? undefined : json['description'],
+        'members': !exists(json, 'members') ? undefined : json['members'],
     };
 }
 
@@ -65,9 +66,10 @@ export function TetrateApiTccCoreV1CreateTeamRequestToJSON(value?: TetrateApiTcc
     }
     return {
         'parent': value.parent,
-        'id': value.id,
         'tenant': value.tenant,
-        'team': TetrateApiTccCoreV1TeamToJSON(value.team),
+        'id': value.id,
+        'description': value.description,
+        'members': value.members,
     };
 }
 

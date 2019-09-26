@@ -13,9 +13,9 @@
 
 import { exists, mapValues } from '../runtime';
 import {
-    TetrateApiTccCoreV1Cluster,
-    TetrateApiTccCoreV1ClusterFromJSON,
-    TetrateApiTccCoreV1ClusterToJSON,
+    TetrateApiTccCoreV1Registry,
+    TetrateApiTccCoreV1RegistryFromJSON,
+    TetrateApiTccCoreV1RegistryToJSON,
 } from './';
 
 /**
@@ -35,12 +35,6 @@ export interface TetrateApiTccCoreV1CreateClusterRequest {
      * @type {string}
      * @memberof TetrateApiTccCoreV1CreateClusterRequest
      */
-    id?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TetrateApiTccCoreV1CreateClusterRequest
-     */
     tenant?: string;
     /**
      * 
@@ -50,19 +44,60 @@ export interface TetrateApiTccCoreV1CreateClusterRequest {
     environment?: string;
     /**
      * 
-     * @type {TetrateApiTccCoreV1Cluster}
+     * @type {string}
      * @memberof TetrateApiTccCoreV1CreateClusterRequest
      */
-    cluster?: TetrateApiTccCoreV1Cluster;
+    id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1CreateClusterRequest
+     */
+    description?: string;
+    /**
+     * 
+     * @type {TetrateApiTccCoreV1Registry}
+     * @memberof TetrateApiTccCoreV1CreateClusterRequest
+     */
+    registry?: TetrateApiTccCoreV1Registry;
+    /**
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1CreateClusterRequest
+     */
+    country?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1CreateClusterRequest
+     */
+    datacenter?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1CreateClusterRequest
+     */
+    availabilityZone?: string;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof TetrateApiTccCoreV1CreateClusterRequest
+     */
+    labels?: { [key: string]: string; };
 }
 
 export function TetrateApiTccCoreV1CreateClusterRequestFromJSON(json: any): TetrateApiTccCoreV1CreateClusterRequest {
     return {
         'parent': !exists(json, 'parent') ? undefined : json['parent'],
-        'id': !exists(json, 'id') ? undefined : json['id'],
         'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
         'environment': !exists(json, 'environment') ? undefined : json['environment'],
-        'cluster': !exists(json, 'cluster') ? undefined : TetrateApiTccCoreV1ClusterFromJSON(json['cluster']),
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'description': !exists(json, 'description') ? undefined : json['description'],
+        'registry': !exists(json, 'registry') ? undefined : TetrateApiTccCoreV1RegistryFromJSON(json['registry']),
+        'country': !exists(json, 'country') ? undefined : json['country'],
+        'datacenter': !exists(json, 'datacenter') ? undefined : json['datacenter'],
+        'availabilityZone': !exists(json, 'availabilityZone') ? undefined : json['availabilityZone'],
+        'labels': !exists(json, 'labels') ? undefined : json['labels'],
     };
 }
 
@@ -72,10 +107,15 @@ export function TetrateApiTccCoreV1CreateClusterRequestToJSON(value?: TetrateApi
     }
     return {
         'parent': value.parent,
-        'id': value.id,
         'tenant': value.tenant,
         'environment': value.environment,
-        'cluster': TetrateApiTccCoreV1ClusterToJSON(value.cluster),
+        'id': value.id,
+        'description': value.description,
+        'registry': TetrateApiTccCoreV1RegistryToJSON(value.registry),
+        'country': value.country,
+        'datacenter': value.datacenter,
+        'availabilityZone': value.availabilityZone,
+        'labels': value.labels,
     };
 }
 

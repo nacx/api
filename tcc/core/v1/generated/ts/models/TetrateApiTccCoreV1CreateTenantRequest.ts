@@ -12,12 +12,6 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import {
-    TetrateApiTccCoreV1Tenant,
-    TetrateApiTccCoreV1TenantFromJSON,
-    TetrateApiTccCoreV1TenantToJSON,
-} from './';
-
 /**
  * 
  * @export
@@ -32,16 +26,16 @@ export interface TetrateApiTccCoreV1CreateTenantRequest {
     id?: string;
     /**
      * 
-     * @type {TetrateApiTccCoreV1Tenant}
+     * @type {string}
      * @memberof TetrateApiTccCoreV1CreateTenantRequest
      */
-    tenant?: TetrateApiTccCoreV1Tenant;
+    description?: string;
 }
 
 export function TetrateApiTccCoreV1CreateTenantRequestFromJSON(json: any): TetrateApiTccCoreV1CreateTenantRequest {
     return {
         'id': !exists(json, 'id') ? undefined : json['id'],
-        'tenant': !exists(json, 'tenant') ? undefined : TetrateApiTccCoreV1TenantFromJSON(json['tenant']),
+        'description': !exists(json, 'description') ? undefined : json['description'],
     };
 }
 
@@ -51,7 +45,7 @@ export function TetrateApiTccCoreV1CreateTenantRequestToJSON(value?: TetrateApiT
     }
     return {
         'id': value.id,
-        'tenant': TetrateApiTccCoreV1TenantToJSON(value.tenant),
+        'description': value.description,
     };
 }
 

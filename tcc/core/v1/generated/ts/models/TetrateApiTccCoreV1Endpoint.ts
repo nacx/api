@@ -90,6 +90,12 @@ export interface TetrateApiTccCoreV1Endpoint {
      * @memberof TetrateApiTccCoreV1Endpoint
      */
     weight?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1Endpoint
+     */
+    etag?: string;
 }
 
 export function TetrateApiTccCoreV1EndpointFromJSON(json: any): TetrateApiTccCoreV1Endpoint {
@@ -106,6 +112,7 @@ export function TetrateApiTccCoreV1EndpointFromJSON(json: any): TetrateApiTccCor
         'labels': !exists(json, 'labels') ? undefined : json['labels'],
         'locality': !exists(json, 'locality') ? undefined : json['locality'],
         'weight': !exists(json, 'weight') ? undefined : json['weight'],
+        'etag': !exists(json, 'etag') ? undefined : json['etag'],
     };
 }
 
@@ -126,6 +133,7 @@ export function TetrateApiTccCoreV1EndpointToJSON(value?: TetrateApiTccCoreV1End
         'labels': value.labels,
         'locality': value.locality,
         'weight': value.weight,
+        'etag': value.etag,
     };
 }
 

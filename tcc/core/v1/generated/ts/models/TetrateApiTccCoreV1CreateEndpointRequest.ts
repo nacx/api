@@ -12,12 +12,6 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import {
-    TetrateApiTccCoreV1Endpoint,
-    TetrateApiTccCoreV1EndpointFromJSON,
-    TetrateApiTccCoreV1EndpointToJSON,
-} from './';
-
 /**
  * 
  * @export
@@ -30,12 +24,6 @@ export interface TetrateApiTccCoreV1CreateEndpointRequest {
      * @memberof TetrateApiTccCoreV1CreateEndpointRequest
      */
     parent?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TetrateApiTccCoreV1CreateEndpointRequest
-     */
-    id?: string;
     /**
      * 
      * @type {string}
@@ -68,22 +56,56 @@ export interface TetrateApiTccCoreV1CreateEndpointRequest {
     deployment?: string;
     /**
      * 
-     * @type {TetrateApiTccCoreV1Endpoint}
+     * @type {string}
      * @memberof TetrateApiTccCoreV1CreateEndpointRequest
      */
-    endpoint?: TetrateApiTccCoreV1Endpoint;
+    id?: string;
+    /**
+     * Address associated with the network endpoint without the port. Domain names can be used and must be fully-qualified without wildcards.
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1CreateEndpointRequest
+     */
+    address?: string;
+    /**
+     * Set of inbound traffic ports associated with the endpoint. The ports must be associated with a port number that was declared as part of the service.
+     * @type {{ [key: string]: number; }}
+     * @memberof TetrateApiTccCoreV1CreateEndpointRequest
+     */
+    ports?: { [key: string]: number; };
+    /**
+     * One or more labels associated with the endpoint.
+     * @type {{ [key: string]: string; }}
+     * @memberof TetrateApiTccCoreV1CreateEndpointRequest
+     */
+    labels?: { [key: string]: string; };
+    /**
+     * The locality associated with the endpoint, in the form country/region/zone. A locality corresponds to a failure domain (country/region/zone).
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1CreateEndpointRequest
+     */
+    locality?: string;
+    /**
+     * The load balancing weight associated with the endpoint. Endpoints with higher weights in a pool will receive proportionally higher traffic.
+     * @type {number}
+     * @memberof TetrateApiTccCoreV1CreateEndpointRequest
+     */
+    weight?: number;
 }
 
 export function TetrateApiTccCoreV1CreateEndpointRequestFromJSON(json: any): TetrateApiTccCoreV1CreateEndpointRequest {
     return {
         'parent': !exists(json, 'parent') ? undefined : json['parent'],
-        'id': !exists(json, 'id') ? undefined : json['id'],
         'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
         'environment': !exists(json, 'environment') ? undefined : json['environment'],
         'cluster': !exists(json, 'cluster') ? undefined : json['cluster'],
         'namespace': !exists(json, 'namespace') ? undefined : json['namespace'],
         'deployment': !exists(json, 'deployment') ? undefined : json['deployment'],
-        'endpoint': !exists(json, 'endpoint') ? undefined : TetrateApiTccCoreV1EndpointFromJSON(json['endpoint']),
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'address': !exists(json, 'address') ? undefined : json['address'],
+        'ports': !exists(json, 'ports') ? undefined : json['ports'],
+        'labels': !exists(json, 'labels') ? undefined : json['labels'],
+        'locality': !exists(json, 'locality') ? undefined : json['locality'],
+        'weight': !exists(json, 'weight') ? undefined : json['weight'],
     };
 }
 
@@ -93,13 +115,17 @@ export function TetrateApiTccCoreV1CreateEndpointRequestToJSON(value?: TetrateAp
     }
     return {
         'parent': value.parent,
-        'id': value.id,
         'tenant': value.tenant,
         'environment': value.environment,
         'cluster': value.cluster,
         'namespace': value.namespace,
         'deployment': value.deployment,
-        'endpoint': TetrateApiTccCoreV1EndpointToJSON(value.endpoint),
+        'id': value.id,
+        'address': value.address,
+        'ports': value.ports,
+        'labels': value.labels,
+        'locality': value.locality,
+        'weight': value.weight,
     };
 }
 

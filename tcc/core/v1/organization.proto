@@ -114,7 +114,8 @@ message Tenant {
 
 message CreateTenantRequest {
   string id = 1;
-  Tenant tenant = 2 [(validate.rules).message.required = true];
+
+  string description = 3;
 }
 
 message GetTenantRequest {
@@ -144,9 +145,12 @@ message Team {
 
 message CreateTeamRequest {
   string parent = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Internal use only. Auto populated field."}];
-  string id = 2;
-  string tenant = 3 [(validate.rules).string.min_len = 1];
-  Team team = 4 [(validate.rules).message.required = true];
+  string tenant = 2 [(validate.rules).string.min_len = 1,(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Tenant.Id"}];
+  // if present, this will be used as the id for the created object
+  string id = 3 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "if present, this will be used as the id for the created object."}];
+
+  string description = 4;
+  repeated string members = 5;
 }
 
 message GetTeamRequest {
@@ -179,9 +183,11 @@ message User {
 
 message CreateUserRequest {
   string parent = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Internal use only. Auto populated field."}];
-  string id = 2;
-  string tenant = 3 [(validate.rules).string.min_len = 1];
-  User user = 4 [(validate.rules).message.required = true];
+  string tenant = 2 [(validate.rules).string.min_len = 1,(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Tenant.Id"}];
+  // if present, this will be used as the id for the created object
+  string id = 3 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "if present, this will be used as the id for the created object."}];
+
+  string description = 4;
 }
 
 message GetUserRequest {

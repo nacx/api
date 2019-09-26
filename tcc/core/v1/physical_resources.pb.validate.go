@@ -147,8 +147,6 @@ func (m *CreateClusterRequest) Validate() error {
 
 	// no validation rules for Parent
 
-	// no validation rules for Id
-
 	if utf8.RuneCountInString(m.GetTenant()) < 1 {
 		return CreateClusterRequestValidationError{
 			field:  "Tenant",
@@ -163,22 +161,24 @@ func (m *CreateClusterRequest) Validate() error {
 		}
 	}
 
-	if m.GetCluster() == nil {
+	// no validation rules for Id
+
+	// no validation rules for Description
+
+	if _, ok := Registry_name[int32(m.GetRegistry())]; !ok {
 		return CreateClusterRequestValidationError{
-			field:  "Cluster",
-			reason: "value is required",
+			field:  "Registry",
+			reason: "value must be one of the defined enum values",
 		}
 	}
 
-	if v, ok := interface{}(m.GetCluster()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return CreateClusterRequestValidationError{
-				field:  "Cluster",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
+	// no validation rules for Country
+
+	// no validation rules for Datacenter
+
+	// no validation rules for AvailabilityZone
+
+	// no validation rules for Labels
 
 	return nil
 }
@@ -699,8 +699,6 @@ func (m *CreateNamespaceRequest) Validate() error {
 
 	// no validation rules for Parent
 
-	// no validation rules for Id
-
 	if utf8.RuneCountInString(m.GetTenant()) < 1 {
 		return CreateNamespaceRequestValidationError{
 			field:  "Tenant",
@@ -722,22 +720,11 @@ func (m *CreateNamespaceRequest) Validate() error {
 		}
 	}
 
-	if m.GetNamespace() == nil {
-		return CreateNamespaceRequestValidationError{
-			field:  "Namespace",
-			reason: "value is required",
-		}
-	}
+	// no validation rules for Id
 
-	if v, ok := interface{}(m.GetNamespace()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return CreateNamespaceRequestValidationError{
-				field:  "Namespace",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
+	// no validation rules for Description
+
+	// no validation rules for Labels
 
 	return nil
 }
@@ -1308,8 +1295,6 @@ func (m *CreateDeploymentRequest) Validate() error {
 
 	// no validation rules for Parent
 
-	// no validation rules for Id
-
 	if utf8.RuneCountInString(m.GetTenant()) < 1 {
 		return CreateDeploymentRequestValidationError{
 			field:  "Tenant",
@@ -1338,22 +1323,40 @@ func (m *CreateDeploymentRequest) Validate() error {
 		}
 	}
 
-	if m.GetDeployment() == nil {
+	// no validation rules for Id
+
+	if utf8.RuneCountInString(m.GetHostname()) < 1 {
 		return CreateDeploymentRequestValidationError{
-			field:  "Deployment",
-			reason: "value is required",
+			field:  "Hostname",
+			reason: "value length must be at least 1 runes",
 		}
 	}
 
-	if v, ok := interface{}(m.GetDeployment()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return CreateDeploymentRequestValidationError{
-				field:  "Deployment",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
+	// no validation rules for Labels
+
+	if len(m.GetPorts()) < 1 {
+		return CreateDeploymentRequestValidationError{
+			field:  "Ports",
+			reason: "value must contain at least 1 item(s)",
 		}
 	}
+
+	for idx, item := range m.GetPorts() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return CreateDeploymentRequestValidationError{
+					field:  fmt.Sprintf("Ports[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	// no validation rules for LbManagementIp
 
 	return nil
 }
@@ -1872,6 +1875,13 @@ func (m *Endpoint) Validate() error {
 
 	// no validation rules for Weight
 
+	if utf8.RuneCountInString(m.GetEtag()) < 1 {
+		return EndpointValidationError{
+			field:  "Etag",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
 	return nil
 }
 
@@ -1939,8 +1949,6 @@ func (m *CreateEndpointRequest) Validate() error {
 
 	// no validation rules for Parent
 
-	// no validation rules for Id
-
 	if utf8.RuneCountInString(m.GetTenant()) < 1 {
 		return CreateEndpointRequestValidationError{
 			field:  "Tenant",
@@ -1976,22 +1984,27 @@ func (m *CreateEndpointRequest) Validate() error {
 		}
 	}
 
-	if m.GetEndpoint() == nil {
+	// no validation rules for Id
+
+	if utf8.RuneCountInString(m.GetAddress()) < 1 {
 		return CreateEndpointRequestValidationError{
-			field:  "Endpoint",
-			reason: "value is required",
+			field:  "Address",
+			reason: "value length must be at least 1 runes",
 		}
 	}
 
-	if v, ok := interface{}(m.GetEndpoint()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return CreateEndpointRequestValidationError{
-				field:  "Endpoint",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
+	if len(m.GetPorts()) < 1 {
+		return CreateEndpointRequestValidationError{
+			field:  "Ports",
+			reason: "value must contain at least 1 pair(s)",
 		}
 	}
+
+	// no validation rules for Labels
+
+	// no validation rules for Locality
+
+	// no validation rules for Weight
 
 	return nil
 }

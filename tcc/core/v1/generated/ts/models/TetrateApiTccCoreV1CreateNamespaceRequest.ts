@@ -12,12 +12,6 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import {
-    TetrateApiTccCoreV1Namespace,
-    TetrateApiTccCoreV1NamespaceFromJSON,
-    TetrateApiTccCoreV1NamespaceToJSON,
-} from './';
-
 /**
  * 
  * @export
@@ -30,12 +24,6 @@ export interface TetrateApiTccCoreV1CreateNamespaceRequest {
      * @memberof TetrateApiTccCoreV1CreateNamespaceRequest
      */
     parent?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TetrateApiTccCoreV1CreateNamespaceRequest
-     */
-    id?: string;
     /**
      * 
      * @type {string}
@@ -56,20 +44,33 @@ export interface TetrateApiTccCoreV1CreateNamespaceRequest {
     cluster?: string;
     /**
      * 
-     * @type {TetrateApiTccCoreV1Namespace}
+     * @type {string}
      * @memberof TetrateApiTccCoreV1CreateNamespaceRequest
      */
-    namespace?: TetrateApiTccCoreV1Namespace;
+    id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1CreateNamespaceRequest
+     */
+    description?: string;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof TetrateApiTccCoreV1CreateNamespaceRequest
+     */
+    labels?: { [key: string]: string; };
 }
 
 export function TetrateApiTccCoreV1CreateNamespaceRequestFromJSON(json: any): TetrateApiTccCoreV1CreateNamespaceRequest {
     return {
         'parent': !exists(json, 'parent') ? undefined : json['parent'],
-        'id': !exists(json, 'id') ? undefined : json['id'],
         'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
         'environment': !exists(json, 'environment') ? undefined : json['environment'],
         'cluster': !exists(json, 'cluster') ? undefined : json['cluster'],
-        'namespace': !exists(json, 'namespace') ? undefined : TetrateApiTccCoreV1NamespaceFromJSON(json['namespace']),
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'description': !exists(json, 'description') ? undefined : json['description'],
+        'labels': !exists(json, 'labels') ? undefined : json['labels'],
     };
 }
 
@@ -79,11 +80,12 @@ export function TetrateApiTccCoreV1CreateNamespaceRequestToJSON(value?: TetrateA
     }
     return {
         'parent': value.parent,
-        'id': value.id,
         'tenant': value.tenant,
         'environment': value.environment,
         'cluster': value.cluster,
-        'namespace': TetrateApiTccCoreV1NamespaceToJSON(value.namespace),
+        'id': value.id,
+        'description': value.description,
+        'labels': value.labels,
     };
 }
 

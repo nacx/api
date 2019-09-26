@@ -13,9 +13,18 @@
 
 import { exists, mapValues } from '../runtime';
 import {
-    TetrateApiTccCoreV1LoadBalancer,
-    TetrateApiTccCoreV1LoadBalancerFromJSON,
-    TetrateApiTccCoreV1LoadBalancerToJSON,
+    TetrateApiTccCoreV1ClientSettings,
+    TetrateApiTccCoreV1ClientSettingsFromJSON,
+    TetrateApiTccCoreV1ClientSettingsToJSON,
+    TetrateApiTccCoreV1LoadBalancerClass,
+    TetrateApiTccCoreV1LoadBalancerClassFromJSON,
+    TetrateApiTccCoreV1LoadBalancerClassToJSON,
+    TetrateApiTccCoreV1Registry,
+    TetrateApiTccCoreV1RegistryFromJSON,
+    TetrateApiTccCoreV1RegistryToJSON,
+    TetrateApiTccCoreV1TLSSettings,
+    TetrateApiTccCoreV1TLSSettingsFromJSON,
+    TetrateApiTccCoreV1TLSSettingsToJSON,
 } from './';
 
 /**
@@ -31,7 +40,19 @@ export interface TetrateApiTccCoreV1CreateLoadBalancerRequest {
      */
     parent?: string;
     /**
-     * 
+     * Tenant.Id
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1CreateLoadBalancerRequest
+     */
+    tenant?: string;
+    /**
+     * Environment.Id
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1CreateLoadBalancerRequest
+     */
+    environment?: string;
+    /**
+     * if present, this will be used as the id for the created object.
      * @type {string}
      * @memberof TetrateApiTccCoreV1CreateLoadBalancerRequest
      */
@@ -41,28 +62,65 @@ export interface TetrateApiTccCoreV1CreateLoadBalancerRequest {
      * @type {string}
      * @memberof TetrateApiTccCoreV1CreateLoadBalancerRequest
      */
-    tenant?: string;
+    description?: string;
     /**
      * 
+     * @type {boolean}
+     * @memberof TetrateApiTccCoreV1CreateLoadBalancerRequest
+     */
+    enableWorkflows?: boolean;
+    /**
+     * 
+     * @type {TetrateApiTccCoreV1LoadBalancerClass}
+     * @memberof TetrateApiTccCoreV1CreateLoadBalancerRequest
+     */
+    loadBalancerClass?: TetrateApiTccCoreV1LoadBalancerClass;
+    /**
+     * 
+     * @type {TetrateApiTccCoreV1Registry}
+     * @memberof TetrateApiTccCoreV1CreateLoadBalancerRequest
+     */
+    registry?: TetrateApiTccCoreV1Registry;
+    /**
+     * The namespace where the load balancer is/will be deployed in a given cluster.
      * @type {string}
      * @memberof TetrateApiTccCoreV1CreateLoadBalancerRequest
      */
-    environment?: string;
+    clusterNamespace?: string;
     /**
      * 
-     * @type {TetrateApiTccCoreV1LoadBalancer}
+     * @type {{ [key: string]: string; }}
      * @memberof TetrateApiTccCoreV1CreateLoadBalancerRequest
      */
-    loadbalancer?: TetrateApiTccCoreV1LoadBalancer;
+    labels?: { [key: string]: string; };
+    /**
+     * 
+     * @type {{ [key: string]: TetrateApiTccCoreV1TLSSettings; }}
+     * @memberof TetrateApiTccCoreV1CreateLoadBalancerRequest
+     */
+    applications?: { [key: string]: TetrateApiTccCoreV1TLSSettings; };
+    /**
+     * 
+     * @type {TetrateApiTccCoreV1ClientSettings}
+     * @memberof TetrateApiTccCoreV1CreateLoadBalancerRequest
+     */
+    clientSettings?: TetrateApiTccCoreV1ClientSettings;
 }
 
 export function TetrateApiTccCoreV1CreateLoadBalancerRequestFromJSON(json: any): TetrateApiTccCoreV1CreateLoadBalancerRequest {
     return {
         'parent': !exists(json, 'parent') ? undefined : json['parent'],
-        'id': !exists(json, 'id') ? undefined : json['id'],
         'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
         'environment': !exists(json, 'environment') ? undefined : json['environment'],
-        'loadbalancer': !exists(json, 'loadbalancer') ? undefined : TetrateApiTccCoreV1LoadBalancerFromJSON(json['loadbalancer']),
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'description': !exists(json, 'description') ? undefined : json['description'],
+        'enableWorkflows': !exists(json, 'enableWorkflows') ? undefined : json['enableWorkflows'],
+        'loadBalancerClass': !exists(json, 'loadBalancerClass') ? undefined : TetrateApiTccCoreV1LoadBalancerClassFromJSON(json['loadBalancerClass']),
+        'registry': !exists(json, 'registry') ? undefined : TetrateApiTccCoreV1RegistryFromJSON(json['registry']),
+        'clusterNamespace': !exists(json, 'clusterNamespace') ? undefined : json['clusterNamespace'],
+        'labels': !exists(json, 'labels') ? undefined : json['labels'],
+        'applications': !exists(json, 'applications') ? undefined : mapValues(json['applications'], TetrateApiTccCoreV1TLSSettingsFromJSON),
+        'clientSettings': !exists(json, 'clientSettings') ? undefined : TetrateApiTccCoreV1ClientSettingsFromJSON(json['clientSettings']),
     };
 }
 
@@ -72,10 +130,17 @@ export function TetrateApiTccCoreV1CreateLoadBalancerRequestToJSON(value?: Tetra
     }
     return {
         'parent': value.parent,
-        'id': value.id,
         'tenant': value.tenant,
         'environment': value.environment,
-        'loadbalancer': TetrateApiTccCoreV1LoadBalancerToJSON(value.loadbalancer),
+        'id': value.id,
+        'description': value.description,
+        'enableWorkflows': value.enableWorkflows,
+        'loadBalancerClass': TetrateApiTccCoreV1LoadBalancerClassToJSON(value.loadBalancerClass),
+        'registry': TetrateApiTccCoreV1RegistryToJSON(value.registry),
+        'clusterNamespace': value.clusterNamespace,
+        'labels': value.labels,
+        'applications': value.applications === undefined ? undefined : mapValues(value.applications, TetrateApiTccCoreV1TLSSettingsToJSON),
+        'clientSettings': TetrateApiTccCoreV1ClientSettingsToJSON(value.clientSettings),
     };
 }
 

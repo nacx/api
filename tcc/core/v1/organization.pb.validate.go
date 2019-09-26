@@ -118,22 +118,7 @@ func (m *CreateTenantRequest) Validate() error {
 
 	// no validation rules for Id
 
-	if m.GetTenant() == nil {
-		return CreateTenantRequestValidationError{
-			field:  "Tenant",
-			reason: "value is required",
-		}
-	}
-
-	if v, ok := interface{}(m.GetTenant()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return CreateTenantRequestValidationError{
-				field:  "Tenant",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
+	// no validation rules for Description
 
 	return nil
 }
@@ -592,8 +577,6 @@ func (m *CreateTeamRequest) Validate() error {
 
 	// no validation rules for Parent
 
-	// no validation rules for Id
-
 	if utf8.RuneCountInString(m.GetTenant()) < 1 {
 		return CreateTeamRequestValidationError{
 			field:  "Tenant",
@@ -601,22 +584,9 @@ func (m *CreateTeamRequest) Validate() error {
 		}
 	}
 
-	if m.GetTeam() == nil {
-		return CreateTeamRequestValidationError{
-			field:  "Team",
-			reason: "value is required",
-		}
-	}
+	// no validation rules for Id
 
-	if v, ok := interface{}(m.GetTeam()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return CreateTeamRequestValidationError{
-				field:  "Team",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
+	// no validation rules for Description
 
 	return nil
 }
@@ -1089,8 +1059,6 @@ func (m *CreateUserRequest) Validate() error {
 
 	// no validation rules for Parent
 
-	// no validation rules for Id
-
 	if utf8.RuneCountInString(m.GetTenant()) < 1 {
 		return CreateUserRequestValidationError{
 			field:  "Tenant",
@@ -1098,22 +1066,9 @@ func (m *CreateUserRequest) Validate() error {
 		}
 	}
 
-	if m.GetUser() == nil {
-		return CreateUserRequestValidationError{
-			field:  "User",
-			reason: "value is required",
-		}
-	}
+	// no validation rules for Id
 
-	if v, ok := interface{}(m.GetUser()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return CreateUserRequestValidationError{
-				field:  "User",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
+	// no validation rules for Description
 
 	return nil
 }

@@ -13,9 +13,9 @@
 
 import { exists, mapValues } from '../runtime';
 import {
-    TetrateApiTccCoreV1Environment,
-    TetrateApiTccCoreV1EnvironmentFromJSON,
-    TetrateApiTccCoreV1EnvironmentToJSON,
+    TetrateApiTccCoreV1ClientSettings,
+    TetrateApiTccCoreV1ClientSettingsFromJSON,
+    TetrateApiTccCoreV1ClientSettingsToJSON,
 } from './';
 
 /**
@@ -31,31 +31,38 @@ export interface TetrateApiTccCoreV1CreateEnvironmentRequest {
      */
     parent?: string;
     /**
-     * if present, this will be used as the id for the created object.
-     * @type {string}
-     * @memberof TetrateApiTccCoreV1CreateEnvironmentRequest
-     */
-    id?: string;
-    /**
      * 
      * @type {string}
      * @memberof TetrateApiTccCoreV1CreateEnvironmentRequest
      */
     tenant?: string;
     /**
-     * 
-     * @type {TetrateApiTccCoreV1Environment}
+     * if present, this will be used as the id for the created object.
+     * @type {string}
      * @memberof TetrateApiTccCoreV1CreateEnvironmentRequest
      */
-    environment?: TetrateApiTccCoreV1Environment;
+    id?: string;
+    /**
+     * Additional information for readability.
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1CreateEnvironmentRequest
+     */
+    description?: string;
+    /**
+     * 
+     * @type {TetrateApiTccCoreV1ClientSettings}
+     * @memberof TetrateApiTccCoreV1CreateEnvironmentRequest
+     */
+    clientSettings?: TetrateApiTccCoreV1ClientSettings;
 }
 
 export function TetrateApiTccCoreV1CreateEnvironmentRequestFromJSON(json: any): TetrateApiTccCoreV1CreateEnvironmentRequest {
     return {
         'parent': !exists(json, 'parent') ? undefined : json['parent'],
-        'id': !exists(json, 'id') ? undefined : json['id'],
         'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
-        'environment': !exists(json, 'environment') ? undefined : TetrateApiTccCoreV1EnvironmentFromJSON(json['environment']),
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'description': !exists(json, 'description') ? undefined : json['description'],
+        'clientSettings': !exists(json, 'clientSettings') ? undefined : TetrateApiTccCoreV1ClientSettingsFromJSON(json['clientSettings']),
     };
 }
 
@@ -65,9 +72,10 @@ export function TetrateApiTccCoreV1CreateEnvironmentRequestToJSON(value?: Tetrat
     }
     return {
         'parent': value.parent,
-        'id': value.id,
         'tenant': value.tenant,
-        'environment': TetrateApiTccCoreV1EnvironmentToJSON(value.environment),
+        'id': value.id,
+        'description': value.description,
+        'clientSettings': TetrateApiTccCoreV1ClientSettingsToJSON(value.clientSettings),
     };
 }
 

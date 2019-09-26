@@ -13,9 +13,12 @@
 
 import { exists, mapValues } from '../runtime';
 import {
-    TetrateApiTccCoreV1Service,
-    TetrateApiTccCoreV1ServiceFromJSON,
-    TetrateApiTccCoreV1ServiceToJSON,
+    TetrateApiTccCoreV1Port,
+    TetrateApiTccCoreV1PortFromJSON,
+    TetrateApiTccCoreV1PortToJSON,
+    TetrateApiTccCoreV1RoutingInfo,
+    TetrateApiTccCoreV1RoutingInfoFromJSON,
+    TetrateApiTccCoreV1RoutingInfoToJSON,
 } from './';
 
 /**
@@ -31,7 +34,25 @@ export interface TetrateApiTccCoreV1CreateServiceRequest {
      */
     parent?: string;
     /**
-     * 
+     * Tenant.Id
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1CreateServiceRequest
+     */
+    tenant?: string;
+    /**
+     * Environment.Id
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1CreateServiceRequest
+     */
+    environment?: string;
+    /**
+     * Application.Id
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1CreateServiceRequest
+     */
+    application?: string;
+    /**
+     * if present, this will be used as the id for the created object.
      * @type {string}
      * @memberof TetrateApiTccCoreV1CreateServiceRequest
      */
@@ -41,35 +62,45 @@ export interface TetrateApiTccCoreV1CreateServiceRequest {
      * @type {string}
      * @memberof TetrateApiTccCoreV1CreateServiceRequest
      */
-    tenant?: string;
+    description?: string;
     /**
-     * 
+     * FQDN hostname of the service.
      * @type {string}
      * @memberof TetrateApiTccCoreV1CreateServiceRequest
      */
-    environment?: string;
+    hostname?: string;
     /**
      * 
-     * @type {string}
+     * @type {{ [key: string]: string; }}
      * @memberof TetrateApiTccCoreV1CreateServiceRequest
      */
-    application?: string;
+    labels?: { [key: string]: string; };
     /**
      * 
-     * @type {TetrateApiTccCoreV1Service}
+     * @type {Array<TetrateApiTccCoreV1Port>}
      * @memberof TetrateApiTccCoreV1CreateServiceRequest
      */
-    service?: TetrateApiTccCoreV1Service;
+    ports?: Array<TetrateApiTccCoreV1Port>;
+    /**
+     * 
+     * @type {TetrateApiTccCoreV1RoutingInfo}
+     * @memberof TetrateApiTccCoreV1CreateServiceRequest
+     */
+    routingInfo?: TetrateApiTccCoreV1RoutingInfo;
 }
 
 export function TetrateApiTccCoreV1CreateServiceRequestFromJSON(json: any): TetrateApiTccCoreV1CreateServiceRequest {
     return {
         'parent': !exists(json, 'parent') ? undefined : json['parent'],
-        'id': !exists(json, 'id') ? undefined : json['id'],
         'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
         'environment': !exists(json, 'environment') ? undefined : json['environment'],
         'application': !exists(json, 'application') ? undefined : json['application'],
-        'service': !exists(json, 'service') ? undefined : TetrateApiTccCoreV1ServiceFromJSON(json['service']),
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'description': !exists(json, 'description') ? undefined : json['description'],
+        'hostname': !exists(json, 'hostname') ? undefined : json['hostname'],
+        'labels': !exists(json, 'labels') ? undefined : json['labels'],
+        'ports': !exists(json, 'ports') ? undefined : (json['ports'] as Array<any>).map(TetrateApiTccCoreV1PortFromJSON),
+        'routingInfo': !exists(json, 'routingInfo') ? undefined : TetrateApiTccCoreV1RoutingInfoFromJSON(json['routingInfo']),
     };
 }
 
@@ -79,11 +110,15 @@ export function TetrateApiTccCoreV1CreateServiceRequestToJSON(value?: TetrateApi
     }
     return {
         'parent': value.parent,
-        'id': value.id,
         'tenant': value.tenant,
         'environment': value.environment,
         'application': value.application,
-        'service': TetrateApiTccCoreV1ServiceToJSON(value.service),
+        'id': value.id,
+        'description': value.description,
+        'hostname': value.hostname,
+        'labels': value.labels,
+        'ports': value.ports === undefined ? undefined : (value.ports as Array<any>).map(TetrateApiTccCoreV1PortToJSON),
+        'routingInfo': TetrateApiTccCoreV1RoutingInfoToJSON(value.routingInfo),
     };
 }
 
