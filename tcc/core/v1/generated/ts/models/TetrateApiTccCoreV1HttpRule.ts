@@ -28,13 +28,13 @@ import {
 } from './';
 
 /**
- * A single HTTP rule
+ * A single HTTP rule.
  * @export
  * @interface TetrateApiTccCoreV1HttpRule
  */
 export interface TetrateApiTccCoreV1HttpRule {
     /**
-     * one or more match conditions (OR-ed)
+     * One or more match conditions (OR-ed).
      * @type {Array<TetrateApiTccCoreV1HttpMatchCondition>}
      * @memberof TetrateApiTccCoreV1HttpRule
      */

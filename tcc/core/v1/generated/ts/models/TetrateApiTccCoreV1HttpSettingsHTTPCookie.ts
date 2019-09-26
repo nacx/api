@@ -13,7 +13,7 @@
 
 import { exists, mapValues } from '../runtime';
 /**
- *   Describes a HTTP cookie that will be used for sticky sessions. If the cookie is not present, it will be generated.
+ * Describes a HTTP cookie that will be used for sticky sessions. If the cookie is not present, it will be generated.
  * @export
  * @interface TetrateApiTccCoreV1HttpSettingsHTTPCookie
  */

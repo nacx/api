@@ -13,25 +13,25 @@
 
 import { exists, mapValues } from '../runtime';
 /**
- *   HeaderOperations Describes the header manipulations to apply
+ * HeaderOperations Describes the header manipulations to apply.
  * @export
  * @interface TetrateApiTccCoreV1HeadersHeaderOperations
  */
 export interface TetrateApiTccCoreV1HeadersHeaderOperations {
     /**
-     * 
+     * Overwrite the headers specified by key with the given values.
      * @type {{ [key: string]: string; }}
      * @memberof TetrateApiTccCoreV1HeadersHeaderOperations
      */
     set?: { [key: string]: string; };
     /**
-     * 
+     * Append the given values to the headers specified by keys (will create a comma-separated list of values).
      * @type {{ [key: string]: string; }}
      * @memberof TetrateApiTccCoreV1HeadersHeaderOperations
      */
     add?: { [key: string]: string; };
     /**
-     * Remove a the specified headers
+     * Remove a the specified headers.
      * @type {Array<string>}
      * @memberof TetrateApiTccCoreV1HeadersHeaderOperations
      */

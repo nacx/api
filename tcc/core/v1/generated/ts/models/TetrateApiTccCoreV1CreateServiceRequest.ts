@@ -34,25 +34,25 @@ export interface TetrateApiTccCoreV1CreateServiceRequest {
      */
     parent?: string;
     /**
-     * Tenant.Id
+     * Tenant.Id.
      * @type {string}
      * @memberof TetrateApiTccCoreV1CreateServiceRequest
      */
     tenant?: string;
     /**
-     * Environment.Id
+     * Environment.Id.
      * @type {string}
      * @memberof TetrateApiTccCoreV1CreateServiceRequest
      */
     environment?: string;
     /**
-     * Application.Id
+     * Application.Id.
      * @type {string}
      * @memberof TetrateApiTccCoreV1CreateServiceRequest
      */
     application?: string;
     /**
-     * if present, this will be used as the id for the created object.
+     * If present, this will be used as the id for the created object.
      * @type {string}
      * @memberof TetrateApiTccCoreV1CreateServiceRequest
      */
@@ -70,7 +70,7 @@ export interface TetrateApiTccCoreV1CreateServiceRequest {
      */
     hostname?: string;
     /**
-     * 
+     * User identifiable tags associated with this service.
      * @type {{ [key: string]: string; }}
      * @memberof TetrateApiTccCoreV1CreateServiceRequest
      */

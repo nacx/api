@@ -40,19 +40,19 @@ export interface TetrateApiTccCoreV1CreateLoadBalancerRequest {
      */
     parent?: string;
     /**
-     * Tenant.Id
+     * Tenant.Id.
      * @type {string}
      * @memberof TetrateApiTccCoreV1CreateLoadBalancerRequest
      */
     tenant?: string;
     /**
-     * Environment.Id
+     * Environment.Id.
      * @type {string}
      * @memberof TetrateApiTccCoreV1CreateLoadBalancerRequest
      */
     environment?: string;
     /**
-     * if present, this will be used as the id for the created object.
+     * If present, this will be used as the id for the created object.
      * @type {string}
      * @memberof TetrateApiTccCoreV1CreateLoadBalancerRequest
      */
@@ -88,13 +88,13 @@ export interface TetrateApiTccCoreV1CreateLoadBalancerRequest {
      */
     clusterNamespace?: string;
     /**
-     * 
+     * Labels that uniquely identify the cluster loadbalancer. If cluster level gateway was deployed using TCC helm charts, set this field to tcc: clustergateway.
      * @type {{ [key: string]: string; }}
      * @memberof TetrateApiTccCoreV1CreateLoadBalancerRequest
      */
     labels?: { [key: string]: string; };
     /**
-     * 
+     * Map of applications attached to this loadbalancer in the form applicationId: TLS credential information.
      * @type {{ [key: string]: TetrateApiTccCoreV1TLSSettings; }}
      * @memberof TetrateApiTccCoreV1CreateLoadBalancerRequest
      */

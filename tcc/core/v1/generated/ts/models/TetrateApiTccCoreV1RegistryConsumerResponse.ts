@@ -13,7 +13,7 @@
 
 import { exists, mapValues } from '../runtime';
 /**
- * 
+ * RegistryConsumerResponse response returned by server.
  * @export
  * @interface TetrateApiTccCoreV1RegistryConsumerResponse
  */

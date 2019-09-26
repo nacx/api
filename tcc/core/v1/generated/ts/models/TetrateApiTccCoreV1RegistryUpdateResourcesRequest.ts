@@ -13,7 +13,7 @@
 
 import { exists, mapValues } from '../runtime';
 /**
- * 
+ * RegistryUpdateResourcesRequest request object.
  * @export
  * @interface TetrateApiTccCoreV1RegistryUpdateResourcesRequest
  */
@@ -25,7 +25,7 @@ export interface TetrateApiTccCoreV1RegistryUpdateResourcesRequest {
      */
     parent?: string;
     /**
-     * 
+     * Tenant where this service is residing e.g Tetrate.
      * @type {string}
      * @memberof TetrateApiTccCoreV1RegistryUpdateResourcesRequest
      */
@@ -37,19 +37,19 @@ export interface TetrateApiTccCoreV1RegistryUpdateResourcesRequest {
      */
     environment?: string;
     /**
-     * 
+     * Unique cluster acting as a source.
      * @type {string}
      * @memberof TetrateApiTccCoreV1RegistryUpdateResourcesRequest
      */
     cluster?: string;
     /**
-     * 
+     * registrytype indicates source of entry. Currently accepted values \"kubernetes\", \"f5\".
      * @type {string}
      * @memberof TetrateApiTccCoreV1RegistryUpdateResourcesRequest
      */
     registrytype?: string;
     /**
-     * 
+     * JSON bulk payload of all physical resources.
      * @type {string}
      * @memberof TetrateApiTccCoreV1RegistryUpdateResourcesRequest
      */

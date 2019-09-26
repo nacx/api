@@ -88,13 +88,13 @@ export interface TetrateApiTccCoreV1LoadBalancer {
      */
     clusterNamespace?: string;
     /**
-     * 
+     * Labels that uniquely identify the cluster loadbalancer. If cluster level gateway was deployed using TCC helm charts, set this field to tcc: clustergateway.
      * @type {{ [key: string]: string; }}
      * @memberof TetrateApiTccCoreV1LoadBalancer
      */
     labels?: { [key: string]: string; };
     /**
-     * 
+     * Map of applications attached to this loadbalancer in the form applicationId: TLS credential information.
      * @type {{ [key: string]: TetrateApiTccCoreV1TLSSettings; }}
      * @memberof TetrateApiTccCoreV1LoadBalancer
      */

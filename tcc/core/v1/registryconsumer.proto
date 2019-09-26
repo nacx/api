@@ -8,13 +8,14 @@ option go_package = "github.com/tetrateio/tetrate/api/tcc/core/v1";
 import "google/api/annotations.proto";
 import "validate/validate.proto";
 
-// RegistryConsumer service accepts bulk JSON payload to update resources
-// into TCC data model. A sync agent calls this API periodically to create
-// or update deployments, namespaces, or endpoints. API converts resources into
-// appropriate TCC data model fields, and pushes to the database
+// RegistryConsumer
+//
+// RegistryConsumer service accepts bulk JSON payload to update resources into TCC data model. A sync agent calls this
+// API periodically to create or update deployments, namespaces, or endpoints. API converts resources into appropriate
+// TCC data model fields, and pushes to the database.
 service RegistryConsumer {
-  // UpdateResources to be called periodically with a bulk payload. API detects the
-  // delta between last call, and determines resources to create, modify, delete
+  // UpdateResources to be called periodically with a bulk payload. API detects the delta between last call, and
+  // determines resources to create, modify, delete
   rpc UpdateResources(RegistryUpdateResourcesRequest) returns (RegistryConsumerResponse) {
     option (google.api.http) = {
       post: "/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/registryconsumer/{registrytype}"
@@ -23,27 +24,27 @@ service RegistryConsumer {
   };
 }
 
-// RegistryUpdateResourcesRequest request object
+// RegistryUpdateResourcesRequest request object.
 message RegistryUpdateResourcesRequest {
   string parent = 1;
 
-  // Tenant where this service is residing e.g Tetrate
+  // Tenant where this service is residing e.g Tetrate.
   string tenant = 2 [(validate.rules).string.min_len = 1];
 
   // environment are higher-level isolations e.g. prod, staging, development, etc.
   string environment = 3 [(validate.rules).string.min_len = 1];
 
-  // Unique cluster acting as a source
+  // Unique cluster acting as a source.
   string cluster = 4 [(validate.rules).string.min_len = 1];
 
-  // registrytype indicates source of entry. Currently accepted values "kubernetes", "f5"
+  // registrytype indicates source of entry. Currently accepted values "kubernetes", "f5".
   string registrytype = 5 [(validate.rules).string = {in: ["k8s", "vm"]}];
 
-  // JSON bulk payload of all physical resources
+  // JSON bulk payload of all physical resources.
   string payload = 6 [(validate.rules).string.min_len = 1];
 }
 
-// RegistryConsumerResponse response returned by server
+// RegistryConsumerResponse response returned by server.
 message RegistryConsumerResponse {
   string status = 1;
 }

@@ -19,7 +19,7 @@ import {
 } from './';
 
 /**
- * One or more destinations for the given request
+ * One or more destinations for the given request.
  * @export
  * @interface TetrateApiTccCoreV1Route
  */

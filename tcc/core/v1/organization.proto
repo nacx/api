@@ -6,7 +6,6 @@ option go_package = "github.com/tetrateio/tetrate/api/tcc/core/v1";
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 import "validate/validate.proto";
-import "protoc-gen-swagger/options/annotations.proto";
 
 service Organization {
   rpc CreateTenant(CreateTenantRequest) returns (Tenant) {
@@ -107,7 +106,8 @@ service Organization {
 }
 
 message Tenant {
-  string name = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Internal use only. Auto populated field."}];
+  // Internal use only. Auto populated field.
+  string name = 1;
   string id = 2 [(validate.rules).string.min_len = 1];
   string description = 3;
 }
@@ -119,7 +119,8 @@ message CreateTenantRequest {
 }
 
 message GetTenantRequest {
-  string name = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Internal use only. Auto populated field."}];
+  // Internal use only. Auto populated field.
+  string name = 1;
   string id = 2 [(validate.rules).string.min_len = 1];
 }
 
@@ -130,12 +131,14 @@ message ListTenantsResponse {
 }
 
 message DeleteTenantRequest {
-  string name = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Internal use only. Auto populated field."}];
+  // Internal use only. Auto populated field.
+  string name = 1;
   string id = 2 [(validate.rules).string.min_len = 1];
 }
 
 message Team {
-  string name = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Internal use only. Auto populated field."}];
+  // Internal use only. Auto populated field.
+  string name = 1;
   string tenant = 2 [(validate.rules).string.min_len = 1];
   string id = 3 [(validate.rules).string.min_len = 1];
   string description = 4;
@@ -144,23 +147,27 @@ message Team {
 }
 
 message CreateTeamRequest {
-  string parent = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Internal use only. Auto populated field."}];
-  string tenant = 2 [(validate.rules).string.min_len = 1,(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Tenant.Id"}];
-  // if present, this will be used as the id for the created object
-  string id = 3 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "if present, this will be used as the id for the created object."}];
+  // Internal use only. Auto populated field.
+  string parent = 1;
+  // Tenant.Id.
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  // If present, this will be used as the id for the created object.
+  string id = 3;
 
   string description = 4;
   repeated string members = 5;
 }
 
 message GetTeamRequest {
-  string name = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Internal use only. Auto populated field."}];
+  // Internal use only. Auto populated field.
+  string name = 1;
   string tenant = 2 [(validate.rules).string.min_len = 1];
   string id = 3 [(validate.rules).string.min_len = 1];
 }
 
 message ListTeamsRequest {
-  string parent = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Internal use only. Auto populated field."}];
+  // Internal use only. Auto populated field.
+  string parent = 1;
   string tenant = 2 [(validate.rules).string.min_len = 1];
 }
 
@@ -169,35 +176,41 @@ message ListTeamsResponse {
 }
 
 message DeleteTeamRequest {
-  string name = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Internal use only. Auto populated field."}];
+  // Internal use only. Auto populated field.
+  string name = 1;
   string tenant = 2 [(validate.rules).string.min_len = 1];
   string id = 3 [(validate.rules).string.min_len = 1];
 }
 
 message User {
-  string name = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Internal use only. Auto populated field."}];
+  // Internal use only. Auto populated field.
+  string name = 1;
   string tenant = 2 [(validate.rules).string.min_len = 1];
   string id = 3 [(validate.rules).string.min_len = 1];
   string description = 4;
 }
 
 message CreateUserRequest {
-  string parent = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Internal use only. Auto populated field."}];
-  string tenant = 2 [(validate.rules).string.min_len = 1,(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Tenant.Id"}];
-  // if present, this will be used as the id for the created object
-  string id = 3 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "if present, this will be used as the id for the created object."}];
+  // Internal use only. Auto populated field.
+  string parent = 1;
+  // Tenant.Id.
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  // If present, this will be used as the id for the created object.
+  string id = 3;
 
   string description = 4;
 }
 
 message GetUserRequest {
-  string name = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Internal use only. Auto populated field."}];
+  // Internal use only. Auto populated field.
+  string name = 1;
   string tenant = 2 [(validate.rules).string.min_len = 1];
   string id = 3 [(validate.rules).string.min_len = 1];
 }
 
 message ListUsersRequest {
-  string parent = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Internal use only. Auto populated field."}];
+  // Internal use only. Auto populated field.
+  string parent = 1;
   string tenant = 2 [(validate.rules).string.min_len = 1];
 }
 
@@ -206,7 +219,8 @@ message ListUsersResponse {
 }
 
 message DeleteUserRequest {
-  string name = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Internal use only. Auto populated field."}];
+  // Internal use only. Auto populated field.
+  string name = 1;
   string tenant = 2 [(validate.rules).string.min_len = 1];
   string id = 3 [(validate.rules).string.min_len = 1];
 }

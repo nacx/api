@@ -315,14 +315,14 @@
         "parameters": [
           {
             "name": "tenant",
-            "description": "Tenant.Id",
+            "description": "Tenant.Id.",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "environment",
-            "description": "Environment.Id",
+            "description": "Environment.Id.",
             "in": "path",
             "required": true,
             "type": "string"
@@ -408,21 +408,21 @@
         "parameters": [
           {
             "name": "tenant",
-            "description": "Tenant.Id",
+            "description": "Tenant.Id.",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "environment",
-            "description": "Environment.Id",
+            "description": "Environment.Id.",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "application",
-            "description": "Application.Id",
+            "description": "Application.Id.",
             "in": "path",
             "required": true,
             "type": "string"
@@ -567,28 +567,28 @@
         "parameters": [
           {
             "name": "tenant",
-            "description": "Tenant.Id",
+            "description": "Tenant.Id.",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "environment",
-            "description": "Environment.Id",
+            "description": "Environment.Id.",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "application",
-            "description": "Application.Id",
+            "description": "Application.Id.",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "id",
-            "description": "short name for the service. Clusters are expected to have namespaces that match the application, and services that match the Id, especially on Kubernetes.",
+            "description": "Short name for the service. Clusters are expected to have namespaces that match the application, and services that match the Id, especially on Kubernetes.",
             "in": "path",
             "required": true,
             "type": "string"
@@ -721,14 +721,14 @@
         "parameters": [
           {
             "name": "tenant",
-            "description": "Tenant.Id",
+            "description": "Tenant.Id.",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "environment",
-            "description": "Environment.Id",
+            "description": "Environment.Id.",
             "in": "path",
             "required": true,
             "type": "string"
@@ -920,7 +920,7 @@
           },
           {
             "name": "configtype",
-            "description": "currently accepted values are istio or f5",
+            "description": "Currently accepted values are istio or f5.",
             "in": "path",
             "required": true,
             "type": "string"
@@ -1815,7 +1815,7 @@
         "parameters": [
           {
             "name": "tenant",
-            "description": "Tenant where this service is residing e.g Tetrate",
+            "description": "Tenant where this service is residing e.g Tetrate.",
             "in": "path",
             "required": true,
             "type": "string"
@@ -1829,14 +1829,14 @@
           },
           {
             "name": "cluster",
-            "description": "Unique cluster acting as a source",
+            "description": "Unique cluster acting as a source.",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "registrytype",
-            "description": "registrytype indicates source of entry. Currently accepted values \"kubernetes\", \"f5\"",
+            "description": "registrytype indicates source of entry. Currently accepted values \"kubernetes\", \"f5\".",
             "in": "path",
             "required": true,
             "type": "string"
@@ -2058,14 +2058,14 @@
         "parameters": [
           {
             "name": "tenant",
-            "description": "Tenant.Id",
+            "description": "Tenant.Id.",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "environment",
-            "description": "Environment.Id",
+            "description": "Environment.Id.",
             "in": "path",
             "required": true,
             "type": "string"
@@ -2330,14 +2330,14 @@
         "parameters": [
           {
             "name": "tenant",
-            "description": "Tenant.Id",
+            "description": "Tenant.Id.",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "id",
-            "description": "A short name for the environment (e.g,, dev, stage, us-1, etc.)",
+            "description": "A short name for the environment (e.g,, dev, stage, us-1, etc.).",
             "in": "path",
             "required": true,
             "type": "string"
@@ -2411,7 +2411,7 @@
         "parameters": [
           {
             "name": "tenant",
-            "description": "Tenant.Id",
+            "description": "Tenant.Id.",
             "in": "path",
             "required": true,
             "type": "string"
@@ -2611,7 +2611,7 @@
         "parameters": [
           {
             "name": "tenant",
-            "description": "Tenant.Id",
+            "description": "Tenant.Id.",
             "in": "path",
             "required": true,
             "type": "string"
@@ -2767,11 +2767,11 @@
         },
         "tenant": {
           "type": "string",
-          "description": "Tenant.Id"
+          "description": "Tenant.Id."
         },
         "environment": {
           "type": "string",
-          "description": "Environment.Id"
+          "description": "Environment.Id."
         },
         "id": {
           "type": "string",
@@ -2783,7 +2783,7 @@
         },
         "hostname": {
           "type": "string",
-          "description": "Hostname with which the application is exposed on a Gateway"
+          "description": "Hostname with which the application is exposed on a Gateway."
         },
         "routingInfo": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.RoutingInfo",
@@ -2808,11 +2808,12 @@
           "type": "object",
           "additionalProperties": {
             "type": "string"
-          }
+          },
+          "description": "Load balancer deployment labels (Kubernetes only for now). If gateway was created using TCC helm charts, use tcc: appgateway for kubernetes. The gateway will expose the application on ports 80 and 443 (if tls is configured)."
         },
         "tls": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.TLSSettings",
-          "description": "TLS certificate info for the application. If nil, the gateway will expose the application on port 80 only. Internal use only. Auto populated"
+          "description": "TLS certificate info for the application. If nil, the gateway will expose the application on port 80 only. Internal use only. Auto populated."
         }
       }
     },
@@ -2901,11 +2902,11 @@
         },
         "circuitBreakerSensitivity": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.ClientSettings.Sensitivity",
-          "description": "  The sensitivity levels will translate to specific values of dest rule outlier detection."
+          "description": "The sensitivity levels will translate to specific values of dest rule outlier detection."
         }
       },
       "description": "All the timeouts, retries, circuit breakers etc. that consumers want to set to gaurd against failures of their dependencies. These roughly translate to pieces of istio virtual service, destination rules, etc. At runtime, for a given namespace, for the namespace's dependencies, we combine the client specified reliability settings with the virtual service/dest rule for the dependencies to produce an updated virtual service/dest rule per dependent service. All these client customized virtual services/dest rules will be private to the namespace i.e. will have an exportTo setting '.' . Doing so will make Pilot apply these customizations only to the namespace concerned without leaking it to all other namespaces.",
-      "title": "Client Settings"
+      "title": "ClientSettings"
     },
     "tetrate.api.tcc.core.v1.ClientSettings.Sensitivity": {
       "type": "string",
@@ -2976,7 +2977,7 @@
         },
         "payload": {
           "type": "string",
-          "description": "For istio, this is a huge YAML dump of all Istio artifacts like\nvirtual services, destination rules, service entries, gateways,\netc. in YAML form. For F5, its all f5 config artifacts."
+          "description": "For istio, this is a huge YAML dump of all Istio artifacts like virtual services, destination rules, service entries, gateways, etc. in YAML form. For F5, its all f5 config artifacts."
         }
       }
     },
@@ -2988,37 +2989,37 @@
           "items": {
             "type": "string"
           },
-          "description": "  The list of origins that are allowed to perform CORS requests. The content will be serialized into the Access-Control-Allow-Origin header. Wildcard * will allow all origins."
+          "description": "The list of origins that are allowed to perform CORS requests. The content will be serialized into the Access-Control-Allow-Origin header. Wildcard * will allow all origins."
         },
         "allowMethods": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "description": "  List of HTTP methods allowed to access the resource. The content will be serialized into the Access-Control-Allow-Methods header."
+          "description": "List of HTTP methods allowed to access the resource. The content will be serialized into the Access-Control-Allow-Methods header."
         },
         "allowHeaders": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "description": " List of HTTP headers that can be used when requesting the resource. Serialized to Access-Control-Allow-Headers header."
+          "description": "List of HTTP headers that can be used when requesting the resource. Serialized to Access-Control-Allow-Headers header."
         },
         "exposeHeaders": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "description": "  A white list of HTTP headers that the browsers are allowed to access. Serialized into Access-Control-Expose-Headers header."
+          "description": "A white list of HTTP headers that the browsers are allowed to access. Serialized into Access-Control-Expose-Headers header."
         },
         "maxAge": {
           "type": "string",
-          "description": "  Specifies how long the results of a preflight request can be cached. Translates to the Access-Control-Max-Age header."
+          "description": "Specifies how long the results of a preflight request can be cached. Translates to the Access-Control-Max-Age header."
         },
         "allowCredentials": {
           "type": "boolean",
           "format": "boolean",
-          "description": "  Indicates whether the caller is allowed to send the actual request (not the preflight) using credentials. Translates to Access-Control-Allow-Credentials header."
+          "description": "Indicates whether the caller is allowed to send the actual request (not the preflight) using credentials. Translates to Access-Control-Allow-Credentials header."
         }
       }
     },
@@ -3031,16 +3032,15 @@
         },
         "tenant": {
           "type": "string",
-          "description": "Tenant.Id"
+          "description": "Tenant.Id."
         },
         "environment": {
           "type": "string",
-          "description": "Environment.Id"
+          "description": "Environment.Id."
         },
         "id": {
           "type": "string",
-          "description": "short name for the application. Clusters are expected to have namespaces that match the application Id, especially on Kubernetes.",
-          "title": "if present, this will be used as the id for the created object"
+          "description": "short name for the application. Clusters are expected to have namespaces that match the application Id, especially on Kubernetes. If present, this will be used as the id for the created object."
         },
         "description": {
           "type": "string",
@@ -3048,7 +3048,7 @@
         },
         "hostname": {
           "type": "string",
-          "description": "Hostname with which the application is exposed on a Gateway"
+          "description": "Hostname with which the application is exposed on a Gateway."
         },
         "routingInfo": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.RoutingInfo",
@@ -3071,11 +3071,12 @@
           "type": "object",
           "additionalProperties": {
             "type": "string"
-          }
+          },
+          "description": "Load balancer deployment labels (Kubernetes only for now). If gateway was created using TCC helm charts, use tcc: appgateway for kubernetes. The gateway will expose the application on ports 80 and 443 (if tls is configured)."
         },
         "tls": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.TLSSettings",
-          "description": "TLS certificate info for the application. If nil, the gateway will expose the application on port 80 only. Internal use only. Auto populated"
+          "description": "TLS certificate info for the application. If nil, the gateway will expose the application on port 80 only. Internal use only. Auto populated."
         }
       }
     },
@@ -3189,7 +3190,7 @@
         },
         "address": {
           "type": "string",
-          "description": "Address associated with the network endpoint without the port.\nDomain names can be used and must be fully-qualified without\nwildcards."
+          "description": "Address associated with the network endpoint without the port. Domain names can be used and must be fully-qualified without wildcards."
         },
         "ports": {
           "type": "object",
@@ -3197,7 +3198,7 @@
             "type": "integer",
             "format": "int64"
           },
-          "description": "Set of inbound traffic ports associated with the endpoint. The\nports must be associated with a port number that was declared\nas part of the service."
+          "description": "Set of inbound traffic ports associated with the endpoint. The ports must be associated with a port number that was declared as part of the service."
         },
         "labels": {
           "type": "object",
@@ -3208,12 +3209,12 @@
         },
         "locality": {
           "type": "string",
-          "description": "The locality associated with the endpoint, in the form\ncountry/region/zone. A locality corresponds to a failure domain\n(country/region/zone)."
+          "description": "The locality associated with the endpoint, in the form country/region/zone. A locality corresponds to a failure domain (country/region/zone)."
         },
         "weight": {
           "type": "integer",
           "format": "int64",
-          "description": "The load balancing weight associated with the endpoint. Endpoints\nwith higher weights in a pool will receive proportionally higher\ntraffic."
+          "description": "The load balancing weight associated with the endpoint. Endpoints with higher weights in a pool will receive proportionally higher traffic."
         }
       }
     },
@@ -3229,8 +3230,7 @@
         },
         "id": {
           "type": "string",
-          "description": "if present, this will be used as the id for the created object.",
-          "title": "if present, this will be used as the id for the created object"
+          "description": "If present, this will be used as the id for the created object."
         },
         "description": {
           "type": "string",
@@ -3251,16 +3251,15 @@
         },
         "tenant": {
           "type": "string",
-          "description": "Tenant.Id"
+          "description": "Tenant.Id."
         },
         "environment": {
           "type": "string",
-          "description": "Environment.Id"
+          "description": "Environment.Id."
         },
         "id": {
           "type": "string",
-          "description": "if present, this will be used as the id for the created object.",
-          "title": "if present, this will be used as the id for the created object"
+          "description": "If present, this will be used as the id for the created object."
         },
         "description": {
           "type": "string"
@@ -3283,13 +3282,15 @@
           "type": "object",
           "additionalProperties": {
             "type": "string"
-          }
+          },
+          "description": "Labels that uniquely identify the cluster loadbalancer. If cluster level gateway was deployed using TCC helm charts, set this field to tcc: clustergateway."
         },
         "applications": {
           "type": "object",
           "additionalProperties": {
             "$ref": "#/definitions/tetrate.api.tcc.core.v1.TLSSettings"
-          }
+          },
+          "description": "Map of applications attached to this loadbalancer in the form applicationId: TLS credential information."
         },
         "clientSettings": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.ClientSettings",
@@ -3336,20 +3337,19 @@
         },
         "tenant": {
           "type": "string",
-          "description": "Tenant.Id"
+          "description": "Tenant.Id."
         },
         "environment": {
           "type": "string",
-          "description": "Environment.Id"
+          "description": "Environment.Id."
         },
         "application": {
           "type": "string",
-          "description": "Application.Id"
+          "description": "Application.Id."
         },
         "id": {
           "type": "string",
-          "description": "if present, this will be used as the id for the created object.",
-          "title": "if present, this will be used as the id for the created object"
+          "description": "If present, this will be used as the id for the created object."
         },
         "description": {
           "type": "string"
@@ -3362,7 +3362,8 @@
           "type": "object",
           "additionalProperties": {
             "type": "string"
-          }
+          },
+          "description": "User identifiable tags associated with this service."
         },
         "ports": {
           "type": "array",
@@ -3385,12 +3386,11 @@
         },
         "tenant": {
           "type": "string",
-          "description": "Tenant.Id"
+          "description": "Tenant.Id."
         },
         "id": {
           "type": "string",
-          "description": "if present, this will be used as the id for the created object.",
-          "title": "if present, this will be used as the id for the created object"
+          "description": "If present, this will be used as the id for the created object."
         },
         "description": {
           "type": "string"
@@ -3423,12 +3423,11 @@
         },
         "tenant": {
           "type": "string",
-          "description": "Tenant.Id"
+          "description": "Tenant.Id."
         },
         "id": {
           "type": "string",
-          "description": "if present, this will be used as the id for the created object.",
-          "title": "if present, this will be used as the id for the created object"
+          "description": "If present, this will be used as the id for the created object."
         },
         "description": {
           "type": "string"
@@ -3506,7 +3505,7 @@
         },
         "address": {
           "type": "string",
-          "description": "Address associated with the network endpoint without the port.\nDomain names can be used and must be fully-qualified without\nwildcards."
+          "description": "Address associated with the network endpoint without the port. Domain names can be used and must be fully-qualified without wildcards."
         },
         "ports": {
           "type": "object",
@@ -3514,7 +3513,7 @@
             "type": "integer",
             "format": "int64"
           },
-          "description": "Set of inbound traffic ports associated with the endpoint. The\nports must be associated with a port number that was declared\nas part of the service."
+          "description": "Set of inbound traffic ports associated with the endpoint. The ports must be associated with a port number that was declared as part of the service."
         },
         "labels": {
           "type": "object",
@@ -3525,18 +3524,18 @@
         },
         "locality": {
           "type": "string",
-          "description": "The locality associated with the endpoint, in the form\ncountry/region/zone. A locality corresponds to a failure domain\n(country/region/zone)."
+          "description": "The locality associated with the endpoint, in the form country/region/zone. A locality corresponds to a failure domain (country/region/zone)."
         },
         "weight": {
           "type": "integer",
           "format": "int64",
-          "description": "The load balancing weight associated with the endpoint. Endpoints\nwith higher weights in a pool will receive proportionally higher\ntraffic."
+          "description": "The load balancing weight associated with the endpoint. Endpoints with higher weights in a pool will receive proportionally higher traffic."
         },
         "etag": {
           "type": "string"
         }
       },
-      "description": "Endpoint defines a network address (IP or hostname) associated with\nthe service."
+      "description": "Endpoint defines a network address (IP or hostname) associated with the service."
     },
     "tetrate.api.tcc.core.v1.Environment": {
       "type": "object",
@@ -3547,11 +3546,11 @@
         },
         "tenant": {
           "type": "string",
-          "description": "Tenant.Id"
+          "description": "Tenant.Id."
         },
         "id": {
           "type": "string",
-          "description": "A short name for the environment (e.g,, dev, stage, us-1, etc.)"
+          "description": "A short name for the environment (e.g,, dev, stage, us-1, etc.)."
         },
         "description": {
           "type": "string",
@@ -3579,7 +3578,7 @@
         },
         "retryOn": {
           "type": "string",
-          "description": "  Specifies the conditions under which retry takes place. One or more policies can be specified using a ‘,’ delimited list. See the [supported policies](https://www.envoyproxy.io/docs/envoy/latest/configuration/http_filters/router_filter#x-envoy-retry-on) and [here](https://www.envoyproxy.io/docs/envoy/latest/configuration/http_filters/router_filter#x-envoy-retry-grpc-on) for more details."
+          "description": "Specifies the conditions under which retry takes place. One or more policies can be specified using a ‘,’ delimited list. See the [supported policies](https://www.envoyproxy.io/docs/envoy/latest/configuration/http_filters/router_filter#x-envoy-retry-on) and [here](https://www.envoyproxy.io/docs/envoy/latest/configuration/http_filters/router_filter#x-envoy-retry-grpc-on) for more details."
         }
       }
     },
@@ -3588,7 +3587,7 @@
       "properties": {
         "uri": {
           "type": "string",
-          "description": "  Rewrite the path (or the prefix) portion of the URI with this value. If the original URI was matched based on prefix, the value provided in this field will replace the corresponding matched prefix."
+          "description": "Rewrite the path (or the prefix) portion of the URI with this value. If the original URI was matched based on prefix, the value provided in this field will replace the corresponding matched prefix."
         },
         "authority": {
           "type": "string",
@@ -3601,14 +3600,14 @@
       "properties": {
         "request": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.Headers.HeaderOperations",
-          "description": "  Header manipulation rules to apply before forwarding a request to the destination service"
+          "description": "Header manipulation rules to apply before forwarding a request to the destination service."
         },
         "response": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.Headers.HeaderOperations",
-          "description": "Header manipulation rules to apply before returning a response to the caller"
+          "description": "Header manipulation rules to apply before returning a response to the caller."
         }
       },
-      "description": "Header manipulation rules"
+      "description": "Header manipulation rules."
     },
     "tetrate.api.tcc.core.v1.Headers.HeaderOperations": {
       "type": "object",
@@ -3617,51 +3616,54 @@
           "type": "object",
           "additionalProperties": {
             "type": "string"
-          }
+          },
+          "description": "Overwrite the headers specified by key with the given values."
         },
         "add": {
           "type": "object",
           "additionalProperties": {
             "type": "string"
-          }
+          },
+          "description": "Append the given values to the headers specified by keys (will create a comma-separated list of values)."
         },
         "remove": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "description": "Remove a the specified headers"
+          "description": "Remove a the specified headers."
         }
       },
-      "description": "  HeaderOperations Describes the header manipulations to apply"
+      "description": "HeaderOperations Describes the header manipulations to apply."
     },
     "tetrate.api.tcc.core.v1.HttpMatchCondition": {
       "type": "object",
       "properties": {
         "uri": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.StringMatch",
-          "description": "URI to match"
+          "description": "URI to match."
         },
         "scheme": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.StringMatch",
-          "description": "URI Scheme"
+          "title": "URI Scheme"
         },
         "method": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.StringMatch",
-          "description": "HTTP Method"
+          "description": "HTTP Method."
         },
         "authority": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.StringMatch",
-          "description": "HTTP Authority"
+          "description": "HTTP Authority."
         },
         "headers": {
           "type": "object",
           "additionalProperties": {
             "$ref": "#/definitions/tetrate.api.tcc.core.v1.StringMatch"
-          }
+          },
+          "description": "The header keys must be lowercase and use hyphen as the separator, e.g. x-request-id."
         }
       },
-      "description": "A single match clause to match all aspects of a request"
+      "description": "A single match clause to match all aspects of a request."
     },
     "tetrate.api.tcc.core.v1.HttpModifyAction": {
       "type": "object",
@@ -3673,7 +3675,7 @@
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.Headers"
         }
       },
-      "description": "HTTP path/url/header modification"
+      "description": "HTTP path/url/header modification."
     },
     "tetrate.api.tcc.core.v1.HttpRule": {
       "type": "object",
@@ -3683,11 +3685,11 @@
           "items": {
             "$ref": "#/definitions/tetrate.api.tcc.core.v1.HttpMatchCondition"
           },
-          "description": "one or more match conditions (OR-ed)"
+          "description": "One or more match conditions (OR-ed)."
         },
         "modify": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.HttpModifyAction",
-          "description": "  One or more mutations to be performed before forwarding. Includes typical modifications to be done on a single request like URL rewrite, host rewrite, headers to add/remove/append"
+          "description": "One or more mutations to be performed before forwarding. Includes typical modifications to be done on a single request like URL rewrite, host rewrite, headers to add/remove/append."
         },
         "route": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.Route"
@@ -3696,7 +3698,7 @@
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.Redirect"
         }
       },
-      "description": "A single HTTP rule"
+      "description": "A single HTTP rule."
     },
     "tetrate.api.tcc.core.v1.HttpSettings": {
       "type": "object",
@@ -3714,7 +3716,8 @@
           }
         }
       },
-      "description": "HTTP settings for a service. Applicable to ports receiving HTTP traffic."
+      "description": "HTTP settings for a service. Applicable to ports receiving HTTP traffic.",
+      "title": "HttpSettings"
     },
     "tetrate.api.tcc.core.v1.HttpSettings.HTTPCookie": {
       "type": "object",
@@ -3732,7 +3735,7 @@
           "description": "Lifetime of the cookie."
         }
       },
-      "description": "  Describes a HTTP cookie that will be used for sticky sessions. If the cookie is not present, it will be generated."
+      "description": "Describes a HTTP cookie that will be used for sticky sessions. If the cookie is not present, it will be generated."
     },
     "tetrate.api.tcc.core.v1.HttpSettings.StickySession": {
       "type": "object",
@@ -3911,13 +3914,15 @@
           "type": "object",
           "additionalProperties": {
             "type": "string"
-          }
+          },
+          "description": "Labels that uniquely identify the cluster loadbalancer. If cluster level gateway was deployed using TCC helm charts, set this field to tcc: clustergateway."
         },
         "applications": {
           "type": "object",
           "additionalProperties": {
             "$ref": "#/definitions/tetrate.api.tcc.core.v1.TLSSettings"
-          }
+          },
+          "description": "Map of applications attached to this loadbalancer in the form applicationId: TLS credential information."
         },
         "clientSettings": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.ClientSettings",
@@ -3979,7 +3984,7 @@
         },
         "protocol": {
           "type": "string",
-          "description": "  The protocol exposed on the port. MUST BE one of HTTP|GRPC|HTTP2|HTTPS|TCP|TLS. TLS implies the connection will be routed based on the SNI header to the destination without terminating the TLS connection."
+          "description": "The protocol exposed on the port. MUST BE one of HTTP|GRPC|HTTP2|HTTPS|TCP|TLS. TLS implies the connection will be routed based on the SNI header to the destination without terminating the TLS connection."
         },
         "name": {
           "type": "string",
@@ -4021,7 +4026,7 @@
           "type": "string"
         }
       },
-      "title": "RegistryConsumerResponse response returned by server"
+      "description": "RegistryConsumerResponse response returned by server."
     },
     "tetrate.api.tcc.core.v1.RegistryUpdateResourcesRequest": {
       "type": "object",
@@ -4031,7 +4036,7 @@
         },
         "tenant": {
           "type": "string",
-          "title": "Tenant where this service is residing e.g Tetrate"
+          "description": "Tenant where this service is residing e.g Tetrate."
         },
         "environment": {
           "type": "string",
@@ -4039,18 +4044,18 @@
         },
         "cluster": {
           "type": "string",
-          "title": "Unique cluster acting as a source"
+          "description": "Unique cluster acting as a source."
         },
         "registrytype": {
           "type": "string",
-          "title": "registrytype indicates source of entry. Currently accepted values \"kubernetes\", \"f5\""
+          "description": "registrytype indicates source of entry. Currently accepted values \"kubernetes\", \"f5\"."
         },
         "payload": {
           "type": "string",
-          "title": "JSON bulk payload of all physical resources"
+          "description": "JSON bulk payload of all physical resources."
         }
       },
-      "title": "RegistryUpdateResourcesRequest request object"
+      "description": "RegistryUpdateResourcesRequest request object."
     },
     "tetrate.api.tcc.core.v1.Route": {
       "type": "object",
@@ -4062,14 +4067,14 @@
           }
         }
       },
-      "description": "One or more destinations for the given request"
+      "description": "One or more destinations for the given request."
     },
     "tetrate.api.tcc.core.v1.Route.Destination": {
       "type": "object",
       "properties": {
         "host": {
           "type": "string",
-          "description": "if omitted, will route to same host as the service"
+          "description": "If omitted, will route to same host as the service."
         },
         "subset": {
           "type": "string"
@@ -4077,12 +4082,12 @@
         "weight": {
           "type": "integer",
           "format": "int64",
-          "description": "100 if omitted. sum of all weights should add up to 100"
+          "description": "100 if omitted. sum of all weights should add up to 100."
         },
         "port": {
           "type": "integer",
           "format": "int64",
-          "description": "optional"
+          "description": "Optional."
         }
       }
     },
@@ -4098,7 +4103,7 @@
         },
         "httpSettings": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.HttpSettings",
-          "description": "  HTTP specific settings, transformations and routing rules associated with HTTP traffic to this service."
+          "description": "HTTP specific settings, transformations and routing rules associated with HTTP traffic to this service."
         },
         "tcpSettings": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.TcpSettings",
@@ -4106,7 +4111,7 @@
         }
       },
       "description": "HTTP routing settings for application or service. Subsets of a service should be declared here as well.",
-      "title": "Routing Info"
+      "title": "RoutingInfo"
     },
     "tetrate.api.tcc.core.v1.Service": {
       "type": "object",
@@ -4117,19 +4122,19 @@
         },
         "tenant": {
           "type": "string",
-          "description": "Tenant.Id"
+          "description": "Tenant.Id."
         },
         "environment": {
           "type": "string",
-          "description": "Environment.Id"
+          "description": "Environment.Id."
         },
         "application": {
           "type": "string",
-          "description": "Application.Id"
+          "description": "Application.Id."
         },
         "id": {
           "type": "string",
-          "description": "short name for the service. Clusters are expected to have namespaces that match the application, and services that match the Id, especially on Kubernetes."
+          "description": "Short name for the service. Clusters are expected to have namespaces that match the application, and services that match the Id, especially on Kubernetes."
         },
         "description": {
           "type": "string"
@@ -4142,7 +4147,8 @@
           "type": "object",
           "additionalProperties": {
             "type": "string"
-          }
+          },
+          "description": "User identifiable tags associated with this service."
         },
         "ports": {
           "type": "array",
@@ -4164,15 +4170,15 @@
       "properties": {
         "exact": {
           "type": "string",
-          "description": "exact string match"
+          "description": "Exact string match."
         },
         "prefix": {
           "type": "string",
-          "description": "prefix-based match"
+          "description": "Prefix-based match."
         },
         "regex": {
           "type": "string",
-          "description": "ECMAscript style regex-based match"
+          "description": "ECMAscript style regex-based match."
         }
       },
       "description": "Describes how to match a given string in HTTP headers. Match is case-sensitive."
@@ -4187,7 +4193,8 @@
           "type": "object",
           "additionalProperties": {
             "type": "string"
-          }
+          },
+          "description": "Labels apply a filter over the endpoints of a service in the service registry."
         }
       }
     },
@@ -4200,11 +4207,11 @@
         },
         "privateKey": {
           "type": "string",
-          "description": "  For proxies running on VMs, the path to the file holding the server's private key."
+          "description": "For proxies running on VMs, the path to the file holding the server's private key."
         },
         "caCertificates": {
           "type": "string",
-          "description": "  For proxies running on VMs, the path to a file containing certificate authority certificates to use in verifying a presented client side certificate for mutual TLS connections."
+          "description": "For proxies running on VMs, the path to a file containing certificate authority certificates to use in verifying a presented client side certificate for mutual TLS connections."
         },
         "secretName": {
           "type": "string",

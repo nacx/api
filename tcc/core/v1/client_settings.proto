@@ -6,25 +6,29 @@ option go_package = "github.com/tetrateio/tetrate/api/tcc/core/v1";
 import "google/protobuf/duration.proto";
 import "google/protobuf/wrappers.proto";
 import "validate/validate.proto";
-import "protoc-gen-swagger/options/annotations.proto";
 
+// ClientSettings
+//
+// All the timeouts, retries, circuit breakers etc. that consumers want to set to gaurd against failures of their
+// dependencies. These roughly translate to pieces of istio virtual service, destination rules, etc. At runtime, for a
+// given namespace, for the namespace's dependencies, we combine the client specified reliability settings with the
+// virtual service/dest rule for the dependencies to produce an updated virtual service/dest rule per dependent service.
+// All these client customized virtual services/dest rules will be private to the namespace i.e. will have an exportTo
+// setting '.' . Doing so will make Pilot apply these customizations only to the namespace concerned without leaking it
+// to all other namespaces.
 message ClientSettings {
-  option (grpc.gateway.protoc_gen_swagger.options.openapiv2_schema) = {
-		json_schema: {
-			title: "Client Settings"
-			description: "All the timeouts, retries, circuit breakers etc. that consumers want to set to gaurd against failures of their dependencies. These roughly translate to pieces of istio virtual service, destination rules, etc. At runtime, for a given namespace, for the namespace's dependencies, we combine the client specified reliability settings with the virtual service/dest rule for the dependencies to produce an updated virtual service/dest rule per dependent service. All these client customized virtual services/dest rules will be private to the namespace i.e. will have an exportTo setting '.' . Doing so will make Pilot apply these customizations only to the namespace concerned without leaking it to all other namespaces."
-		}
-	};
-  
-  
-  google.protobuf.Duration http_request_timeout = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Timeout for HTTP requests."}];
 
-  HTTPRetry http_retries = 2 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Retry policy for HTTP requests."}];
+  // Timeout for HTTP requests.
+  google.protobuf.Duration http_request_timeout = 1;
 
-  google.protobuf.Duration tcp_connect_timeout = 3 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "TCP connection timeout."}];
+  // Retry policy for HTTP requests.
+  HTTPRetry http_retries = 2;
 
-  
-  google.protobuf.BoolValue tcp_keepalive = 4 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "If set then set SO_KEEPALIVE on the socket to enable TCP Keepalives."}];
+  // TCP connection timeout.
+  google.protobuf.Duration tcp_connect_timeout = 3;
+
+  // If set then set SO_KEEPALIVE on the socket to enable TCP Keepalives.
+  google.protobuf.BoolValue tcp_keepalive = 4;
 
   enum Sensitivity {
     UNSET = 0;
@@ -33,13 +37,22 @@ message ClientSettings {
     HIGH = 3;
   }
 
-  Sensitivity circuit_breaker_sensitivity = 5 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "  The sensitivity levels will translate to specific values of dest rule outlier detection."}];
+  // The sensitivity levels will translate to specific values of dest rule outlier detection.
+  Sensitivity circuit_breaker_sensitivity = 5;
 }
 
 message HTTPRetry {
-  int32 attempts = 1 [(validate.rules).int32.gte = 1, (grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Number of retries for a given request. The interval between retries will be determined automatically (25ms+). Actual number of retries attempted depends on the httpReqTimeout."}];
+  // Number of retries for a given request. The interval between retries will be determined automatically (25ms+).
+  // Actual number of retries attempted depends on the httpReqTimeout.
+  int32 attempts = 1 [(validate.rules).int32.gte = 1];
 
-  google.protobuf.Duration per_try_timeout = 2 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Timeout per retry attempt for a given request. format: 1h/1m/1s/1ms. MUST BE >=1ms."}];
+  // Timeout per retry attempt for a given request. format: 1h/1m/1s/1ms. MUST BE >=1ms.
+  google.protobuf.Duration per_try_timeout = 2;
 
-  string retry_on = 3 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "  Specifies the conditions under which retry takes place. One or more policies can be specified using a ‘,’ delimited list. See the [supported policies](https://www.envoyproxy.io/docs/envoy/latest/configuration/http_filters/router_filter#x-envoy-retry-on) and [here](https://www.envoyproxy.io/docs/envoy/latest/configuration/http_filters/router_filter#x-envoy-retry-grpc-on) for more details."}];
+  // Specifies the conditions under which retry takes place. One or more policies can be specified using a ‘,’
+  // delimited list. See the
+  // [supported policies](https://www.envoyproxy.io/docs/envoy/latest/configuration/http_filters/router_filter#x-envoy-retry-on)
+  // and [here](https://www.envoyproxy.io/docs/envoy/latest/configuration/http_filters/router_filter#x-envoy-retry-grpc-on)
+  // for more details.
+  string retry_on = 3;
 }

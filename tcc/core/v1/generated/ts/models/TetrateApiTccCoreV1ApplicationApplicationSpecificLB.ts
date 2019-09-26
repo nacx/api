@@ -25,7 +25,7 @@ import {
  */
 export interface TetrateApiTccCoreV1ApplicationApplicationSpecificLB {
     /**
-     * 
+     * Load balancer deployment labels (Kubernetes only for now). If gateway was created using TCC helm charts, use tcc: appgateway for kubernetes. The gateway will expose the application on ports 80 and 443 (if tls is configured).
      * @type {{ [key: string]: string; }}
      * @memberof TetrateApiTccCoreV1ApplicationApplicationSpecificLB
      */

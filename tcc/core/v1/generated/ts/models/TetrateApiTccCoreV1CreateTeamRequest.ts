@@ -25,13 +25,13 @@ export interface TetrateApiTccCoreV1CreateTeamRequest {
      */
     parent?: string;
     /**
-     * Tenant.Id
+     * Tenant.Id.
      * @type {string}
      * @memberof TetrateApiTccCoreV1CreateTeamRequest
      */
     tenant?: string;
     /**
-     * if present, this will be used as the id for the created object.
+     * If present, this will be used as the id for the created object.
      * @type {string}
      * @memberof TetrateApiTccCoreV1CreateTeamRequest
      */

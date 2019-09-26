@@ -6,7 +6,6 @@ option go_package = "github.com/tetrateio/tetrate/api/tcc/core/v1";
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 import "validate/validate.proto";
-import "protoc-gen-swagger/options/annotations.proto";
 import "routing_info.proto";
 import "client_settings.proto";
 import "tlssettings.proto";
@@ -141,37 +140,44 @@ service LogicalResourceModel {
   };
 }
 
+// Environment
+//
+// Environment is a collection of applications, services, load balancers, and clusters where they are deployed.
 message Environment {
-  option (grpc.gateway.protoc_gen_swagger.options.openapiv2_schema) = {
-		json_schema: {
-			title: "Environment"
-			description: "Environment is a collection of applications, services, load balancers, and clusters where they are deployed."
-		}
-	};
-  string name = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Internal use only. Auto populated field."}];
-  string tenant = 2 [(validate.rules).string.min_len = 1, (grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Tenant.Id"}];
-  string id = 3 [(validate.rules).string.min_len = 1, (grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "A short name for the environment (e.g,, dev, stage, us-1, etc.)"}];
-  string description = 4 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Additional information for readability."}];
-  ClientSettings client_settings = 5 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Resilience settings that apply to all clusters in the environment."}];
+  // Internal use only. Auto populated field.
+  string name = 1;
+  // Tenant.Id.
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  // A short name for the environment (e.g,, dev, stage, us-1, etc.).
+  string id = 3 [(validate.rules).string.min_len = 1];
+  // Additional information for readability.
+  string description = 4;
+  // Resilience settings that apply to all clusters in the environment.
+  ClientSettings client_settings = 5;
 }
 
 message CreateEnvironmentRequest {
-  string parent = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Internal use only. Auto populated field."}];
+  // Internal use only. Auto populated field.
+  string parent = 1;
   string tenant = 2 [(validate.rules).string.min_len = 1];
-  // if present, this will be used as the id for the created object
-  string id = 3 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "if present, this will be used as the id for the created object."}];
-  string description = 4 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Additional information for readability."}];
-  ClientSettings client_settings = 5 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Resilience settings that apply to all clusters in the environment."}];
+  // If present, this will be used as the id for the created object.
+  string id = 3;
+  // Additional information for readability.
+  string description = 4;
+  // Resilience settings that apply to all clusters in the environment.
+  ClientSettings client_settings = 5;
 }
 
 message GetEnvironmentRequest {
-  string name = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Internal use only. Auto populated field."}];
+  // Internal use only. Auto populated field.
+  string name = 1;
   string tenant = 2 [(validate.rules).string.min_len = 1];
   string id = 3 [(validate.rules).string.min_len = 1];
 }
 
 message ListEnvironmentsRequest {
-  string parent = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Internal use only. Auto populated field."}];
+  // Internal use only. Auto populated field.
+  string parent = 1;
   string tenant = 2 [(validate.rules).string.min_len = 1];
 }
 
@@ -180,64 +186,97 @@ message ListEnvironmentsResponse {
 }
 
 message DeleteEnvironmentRequest {
-  string name = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Internal use only. Auto populated field."}];
+  // Internal use only. Auto populated field.
+  string name = 1;
   string tenant = 2 [(validate.rules).string.min_len = 1];
   string id = 3 [(validate.rules).string.min_len = 1];
 }
 
+// Application
+//
+// An Application is a collection of services. Each application corresponds to a kubernetes namespace or an application
+// deployment on VMs. The hostname of the application is exposed via the load balancer (either shared or dedicated).
 message Application {
-  option (grpc.gateway.protoc_gen_swagger.options.openapiv2_schema) = {
-		json_schema: {
-			title: "Application"
-			description: "An Application is a collection of services. Each application corresponds to a kubernetes namespace or an application deployment on VMs. The hostname of the application is exposed via the load balancer (either shared or dedicated)."
-		}
-	};
-  string name = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Internal use only. Auto populated field."}];
-  string tenant = 2 [(validate.rules).string.min_len = 1, (grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Tenant.Id"}];
-  string environment = 3 [(validate.rules).string.min_len = 1,(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Environment.Id"}];
-  string id = 4 [(validate.rules).string.min_len = 1,(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "short name for the application. Clusters are expected to have namespaces that match the application Id, especially on Kubernetes."}];
-  string description = 5 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Additional information."}];
-  string hostname = 6 [(validate.rules).string.min_len = 1,(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Hostname with which the application is exposed on a Gateway"}];;
-  RoutingInfo routing_info = 7 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "HTTP Routing settings for the applications. Note that subsets should not be defined at application level."}];
-  ClientSettings client_settings = 8 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Resilience settings that apply to all services within the application, for outbound calls from the application's services to other services."}];
+  // Internal use only. Auto populated field.
+  string name = 1;
+  // Tenant.Id.
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  // Environment.Id.
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  // short name for the application. Clusters are expected to have namespaces that match the application Id, especially
+  // on Kubernetes.
+  string id = 4 [(validate.rules).string.min_len = 1];
+  // Additional information.
+  string description = 5;
+  // Hostname with which the application is exposed on a Gateway.
+  string hostname = 6 [(validate.rules).string.min_len = 1];
+  // HTTP Routing settings for the applications. Note that subsets should not be defined at application level.
+  RoutingInfo routing_info = 7;
+  // Resilience settings that apply to all services within the application, for outbound calls from the application's
+  // services to other services.
+  ClientSettings client_settings = 8;
 
   message ApplicationSpecificLB {
-    map<string, string> labels = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Load balancer deployment labels (Kubernetes only for now). If gateway was created using TCC helm charts, use tcc: appgateway for kubernetes. The gateway will expose the application on ports 80 and 443 (if tls is configured)."}];
-    TLSSettings tls = 2 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "TLS certificate info for the application. If nil, the gateway will expose the application on port 80 only. Internal use only. Auto populated"}];
+    // Load balancer deployment labels (Kubernetes only for now). If gateway was created using TCC helm charts, use tcc:
+    // appgateway for kubernetes. The gateway will expose the application on ports 80 and 443 (if tls is configured).
+    map<string, string> labels = 1;
+    // TLS certificate info for the application. If nil, the gateway will expose the application on port 80 only.
+    // Internal use only. Auto populated.
+    TLSSettings tls = 2;
   }
 
-  ApplicationSpecificLB app_lb = 9 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "An application can be exposed on a shared gateway in the cluster or a dedicated gateway in the app's namespace. Set app_lb to indicate that the application should be exposed on the dedicated load balancer deployed in the app namespace. It is assumed that the gateway service is deployed in the app's namespace."}];
+  // An application can be exposed on a shared gateway in the cluster or a dedicated gateway in the app's namespace.
+  // Set app_lb to indicate that the application should be exposed on the dedicated load balancer deployed in the app
+  // namespace. It is assumed that the gateway service is deployed in the app's namespace.
+  ApplicationSpecificLB app_lb = 9;
 }
 
 message CreateApplicationRequest {
-  string parent = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Internal use only. Auto populated field."}];
-  string tenant = 2 [(validate.rules).string.min_len = 1,(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Tenant.Id"}];
-  string environment = 3 [(validate.rules).string.min_len = 1,(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Environment.Id"}];
-  // if present, this will be used as the id for the created object
-  string id = 4 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "short name for the application. Clusters are expected to have namespaces that match the application Id, especially on Kubernetes."}];;
-
-  string description = 5 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Additional information."}];
-  string hostname = 6 [(validate.rules).string.min_len = 1,(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Hostname with which the application is exposed on a Gateway"}];;
-  RoutingInfo routing_info = 7 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "HTTP Routing settings for the applications. Note that subsets should not be defined at application level."}];
-  ClientSettings client_settings = 8 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Resilience settings that apply to all services within the application, for outbound calls from the application's services to other services."}];
+  // Internal use only. Auto populated field.
+  string parent = 1;
+  // Tenant.Id.
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  // Environment.Id.
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  // short name for the application. Clusters are expected to have namespaces that match the application Id, especially
+  // on Kubernetes. If present, this will be used as the id for the created object.
+  string id = 4;
+  // Additional information.
+  string description = 5;
+  // Hostname with which the application is exposed on a Gateway.
+  string hostname = 6 [(validate.rules).string.min_len = 1];
+  // HTTP Routing settings for the applications. Note that subsets should not be defined at application level.
+  RoutingInfo routing_info = 7;
+  // Resilience settings that apply to all services within the application, for outbound calls from the application's
+  // services to other services.
+  ClientSettings client_settings = 8;
 
   message ApplicationSpecificLB {
-    map<string, string> labels = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Load balancer deployment labels (Kubernetes only for now). If gateway was created using TCC helm charts, use tcc: appgateway for kubernetes. The gateway will expose the application on ports 80 and 443 (if tls is configured)."}];
-    TLSSettings tls = 2 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "TLS certificate info for the application. If nil, the gateway will expose the application on port 80 only. Internal use only. Auto populated"}];
+    // Load balancer deployment labels (Kubernetes only for now). If gateway was created using TCC helm charts, use tcc:
+    // appgateway for kubernetes. The gateway will expose the application on ports 80 and 443 (if tls is configured).
+    map<string, string> labels = 1;
+    // TLS certificate info for the application. If nil, the gateway will expose the application on port 80 only.
+    // Internal use only. Auto populated.
+    TLSSettings tls = 2;
   }
 
-  ApplicationSpecificLB app_lb = 9 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "An application can be exposed on a shared gateway in the cluster or a dedicated gateway in the app's namespace. Set app_lb to indicate that the application should be exposed on the dedicated load balancer deployed in the app namespace. It is assumed that the gateway service is deployed in the app's namespace."}];
+  // An application can be exposed on a shared gateway in the cluster or a dedicated gateway in the app's namespace. Set
+  // app_lb to indicate that the application should be exposed on the dedicated load balancer deployed in the app
+  // namespace. It is assumed that the gateway service is deployed in the app's namespace.
+  ApplicationSpecificLB app_lb = 9;
 }
 
 message GetApplicationRequest {
-  string name = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Internal use only. Auto populated field."}];
+  // Internal use only. Auto populated field.
+  string name = 1;
   string tenant = 2 [(validate.rules).string.min_len = 1];
   string environment = 3 [(validate.rules).string.min_len = 1];
   string id = 4 [(validate.rules).string.min_len = 1];
 }
 
 message ListApplicationsRequest {
-  string parent = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Internal use only. Auto populated field."}];
+  // Internal use only. Auto populated field.
+  string parent = 1;
   string tenant = 2 [(validate.rules).string.min_len = 1];
   string environment = 3 [(validate.rules).string.min_len = 1];
 }
@@ -247,45 +286,63 @@ message ListApplicationsResponse {
 }
 
 message DeleteApplicationRequest {
-  string name = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Internal use only. Auto populated field."}];
+  // Internal use only. Auto populated field.
+  string name = 1;
   string tenant = 2 [(validate.rules).string.min_len = 1];
   string environment = 3 [(validate.rules).string.min_len = 1];
   string id = 4 [(validate.rules).string.min_len = 1];
 }
 
 message Service {
-  string name = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Internal use only. Auto populated field."}];
-  string tenant = 2 [(validate.rules).string.min_len = 1,(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Tenant.Id"}];
-  string environment = 3 [(validate.rules).string.min_len = 1,(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Environment.Id"}];
-  string application = 4 [(validate.rules).string.min_len = 1,(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Application.Id"}];
-  string id = 5 [(validate.rules).string.min_len = 1,(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "short name for the service. Clusters are expected to have namespaces that match the application, and services that match the Id, especially on Kubernetes."}];
+  // Internal use only. Auto populated field.
+  string name = 1;
+  // Tenant.Id.
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  // Environment.Id.
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  // Application.Id.
+  string application = 4 [(validate.rules).string.min_len = 1];
+  // Short name for the service. Clusters are expected to have namespaces that match the application, and services that
+  // match the Id, especially on Kubernetes.
+  string id = 5 [(validate.rules).string.min_len = 1];
   string description = 6;
-  string hostname = 7 [(validate.rules).string.min_len = 1,(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "FQDN hostname of the service."}];
-  map<string, string> labels = 8 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "User identifiable tags associated with this service."}];
+  // FQDN hostname of the service.
+  string hostname = 7 [(validate.rules).string.min_len = 1];
+  // User identifiable tags associated with this service.
+  map<string, string> labels = 8;
 
   repeated Port ports = 9 ;
-  RoutingInfo routing_info = 10 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "HTTP Routing settings for the service. Note that subsets (versions of the service) if any should be defined here."}];
+  // HTTP Routing settings for the service. Note that subsets (versions of the service) if any should be defined here.
+  RoutingInfo routing_info = 10;
   string etag = 11 [(validate.rules).string.min_len = 1];
 }
 
 message CreateServiceRequest {
-  string parent = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Internal use only. Auto populated field."}];
-  string tenant = 2 [(validate.rules).string.min_len = 1,(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Tenant.Id"}];
-  string environment = 3 [(validate.rules).string.min_len = 1,(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Environment.Id"}];
-  string application = 4 [(validate.rules).string.min_len = 1,(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Application.Id"}];
-  // if present, this will be used as the id for the created object
-  string id = 5 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "if present, this will be used as the id for the created object."}];;
+  // Internal use only. Auto populated field.
+  string parent = 1;
+  // Tenant.Id.
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  // Environment.Id.
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  // Application.Id.
+  string application = 4 [(validate.rules).string.min_len = 1];
+  // If present, this will be used as the id for the created object.
+  string id = 5;
 
   string description = 6;
-  string hostname = 7 [(validate.rules).string.min_len = 1,(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "FQDN hostname of the service."}];
-  map<string, string> labels = 8 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "User identifiable tags associated with this service."}];
+  // FQDN hostname of the service.
+  string hostname = 7 [(validate.rules).string.min_len = 1];
+  // User identifiable tags associated with this service.
+  map<string, string> labels = 8;
 
   repeated Port ports = 9 ;
-  RoutingInfo routing_info = 10 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "HTTP Routing settings for the service. Note that subsets (versions of the service) if any should be defined here."}];
+  // HTTP Routing settings for the service. Note that subsets (versions of the service) if any should be defined here.
+  RoutingInfo routing_info = 10;
 }
 
 message GetServiceRequest {
-  string name = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Internal use only. Auto populated field."}];
+  // Internal use only. Auto populated field.
+  string name = 1;
   string tenant = 2 [(validate.rules).string.min_len = 1];
   string environment = 3 [(validate.rules).string.min_len = 1];
   string application = 4 [(validate.rules).string.min_len = 1];
@@ -293,7 +350,8 @@ message GetServiceRequest {
 }
 
 message ListServicesRequest {
-  string parent = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Internal use only. Auto populated field."}];
+  // Internal use only. Auto populated field.
+  string parent = 1;
   string tenant = 2 [(validate.rules).string.min_len = 1];
   string environment = 3 [(validate.rules).string.min_len = 1];
   string application = 4 [(validate.rules).string.min_len = 1];
@@ -304,7 +362,8 @@ message ListServicesResponse {
 }
 
 message DeleteServiceRequest {
-  string name = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Internal use only. Auto populated field."}];
+  // Internal use only. Auto populated field.
+  string name = 1;
   string tenant = 2 [(validate.rules).string.min_len = 1];
   string environment = 3 [(validate.rules).string.min_len = 1];
   string application = 4 [(validate.rules).string.min_len = 1];
@@ -318,7 +377,8 @@ enum LoadBalancerClass {
 }
 
 message LoadBalancer {
-  string name = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Internal use only. Auto populated field."}];
+  // Internal use only. Auto populated field.
+  string name = 1;
   string tenant = 2 [(validate.rules).string.min_len = 1];
   string environment = 3 [(validate.rules).string.min_len = 1];
   string id = 4 [(validate.rules).string.min_len = 1];
@@ -327,48 +387,65 @@ message LoadBalancer {
 
   LoadBalancerClass load_balancer_class = 7 [(validate.rules).enum.defined_only = true];
   Registry registry = 8 [(validate.rules).enum.defined_only = true];
-  
-  string cluster_namespace = 9 [(validate.rules).string.min_len = 1,(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "The namespace where the load balancer is/will be deployed in a given cluster."}];
 
-  map<string, string> labels = 10 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "  Labels that uniquely identify the cluster loadbalancer. If cluster level gateway was deployed using TCC helm charts, set this field to tcc: clustergateway"}];
+  // The namespace where the load balancer is/will be deployed in a given cluster.
+  string cluster_namespace = 9 [(validate.rules).string.min_len = 1];
 
-  map<string, TLSSettings> applications = 11 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Map of applications attached to this loadbalancer in the form applicationId: TLS credential information"}];
-  
-  ClientSettings client_settings = 12 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Client settings are applicable for traffic from the load balancer's cluster namespace to the application's namespaces."}];
+  // Labels that uniquely identify the cluster loadbalancer. If cluster level gateway was deployed using TCC helm
+  // charts, set this field to tcc: clustergateway.
+  map<string, string> labels = 10;
+
+  // Map of applications attached to this loadbalancer in the form applicationId: TLS credential information.
+  map<string, TLSSettings> applications = 11;
+
+  // Client settings are applicable for traffic from the load balancer's cluster namespace to the application's
+  // namespaces.
+  ClientSettings client_settings = 12;
   string etag = 13 [(validate.rules).string.min_len = 1];
 }
 
 message CreateLoadBalancerRequest {
-  string parent = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Internal use only. Auto populated field."}];
-  string tenant = 2 [(validate.rules).string.min_len = 1,(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Tenant.Id"}];
-  string environment = 3 [(validate.rules).string.min_len = 1,(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Environment.Id"}];
-  // if present, this will be used as the id for the created object
-  string id = 4 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "if present, this will be used as the id for the created object."}];;
+  // Internal use only. Auto populated field.
+  string parent = 1;
+  // Tenant.Id.
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  // Environment.Id.
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  // If present, this will be used as the id for the created object.
+  string id = 4;
 
   string description = 5;
   bool enable_workflows = 6;
 
   LoadBalancerClass load_balancer_class = 7 [(validate.rules).enum.defined_only = true];
   Registry registry = 8 [(validate.rules).enum.defined_only = true];
-  
-  string cluster_namespace = 9 [(validate.rules).string.min_len = 1,(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "The namespace where the load balancer is/will be deployed in a given cluster."}];
 
-  map<string, string> labels = 10 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "  Labels that uniquely identify the cluster loadbalancer. If cluster level gateway was deployed using TCC helm charts, set this field to tcc: clustergateway"}];
+  // The namespace where the load balancer is/will be deployed in a given cluster.
+  string cluster_namespace = 9 [(validate.rules).string.min_len = 1];
 
-  map<string, TLSSettings> applications = 11 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Map of applications attached to this loadbalancer in the form applicationId: TLS credential information"}];
-  
-  ClientSettings client_settings = 12 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Client settings are applicable for traffic from the load balancer's cluster namespace to the application's namespaces."}];
+  // Labels that uniquely identify the cluster loadbalancer. If cluster level gateway was deployed using TCC helm
+  // charts, set this field to tcc: clustergateway.
+  map<string, string> labels = 10;
+
+  // Map of applications attached to this loadbalancer in the form applicationId: TLS credential information.
+  map<string, TLSSettings> applications = 11;
+
+  // Client settings are applicable for traffic from the load balancer's cluster namespace to the application's
+  // namespaces.
+  ClientSettings client_settings = 12;
 }
 
 message GetLoadBalancerRequest {
-  string name = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Internal use only. Auto populated field."}];
+  // Internal use only. Auto populated field.
+  string name = 1;
   string tenant = 2 [(validate.rules).string.min_len = 1];
   string environment = 3 [(validate.rules).string.min_len = 1];
   string id = 4 [(validate.rules).string.min_len = 1];
 }
 
 message ListLoadBalancersRequest {
-  string parent = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Internal use only. Auto populated field."}];
+  // Internal use only. Auto populated field.
+  string parent = 1;
   string tenant = 2 [(validate.rules).string.min_len = 1];
   string environment = 3 [(validate.rules).string.min_len = 1];
 }
@@ -378,7 +455,8 @@ message ListLoadBalancersResponse {
 }
 
 message DeleteLoadBalancerRequest {
-  string name = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Internal use only. Auto populated field."}];
+  // Internal use only. Auto populated field.
+  string name = 1;
   string tenant = 2 [(validate.rules).string.min_len = 1];
   string environment = 3 [(validate.rules).string.min_len = 1];
   string id = 4 [(validate.rules).string.min_len = 1];

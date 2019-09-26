@@ -19,7 +19,7 @@ import { exists, mapValues } from '../runtime';
  */
 export interface TetrateApiTccCoreV1RouteDestination {
     /**
-     * if omitted, will route to same host as the service
+     * If omitted, will route to same host as the service.
      * @type {string}
      * @memberof TetrateApiTccCoreV1RouteDestination
      */
@@ -31,13 +31,13 @@ export interface TetrateApiTccCoreV1RouteDestination {
      */
     subset?: string;
     /**
-     * 100 if omitted. sum of all weights should add up to 100
+     * 100 if omitted. sum of all weights should add up to 100.
      * @type {number}
      * @memberof TetrateApiTccCoreV1RouteDestination
      */
     weight?: number;
     /**
-     * optional
+     * Optional.
      * @type {number}
      * @memberof TetrateApiTccCoreV1RouteDestination
      */

@@ -37,13 +37,13 @@ export interface TetrateApiTccCoreV1Application {
      */
     name?: string;
     /**
-     * Tenant.Id
+     * Tenant.Id.
      * @type {string}
      * @memberof TetrateApiTccCoreV1Application
      */
     tenant?: string;
     /**
-     * Environment.Id
+     * Environment.Id.
      * @type {string}
      * @memberof TetrateApiTccCoreV1Application
      */
@@ -61,7 +61,7 @@ export interface TetrateApiTccCoreV1Application {
      */
     description?: string;
     /**
-     * Hostname with which the application is exposed on a Gateway
+     * Hostname with which the application is exposed on a Gateway.
      * @type {string}
      * @memberof TetrateApiTccCoreV1Application
      */

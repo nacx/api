@@ -37,19 +37,19 @@ export interface TetrateApiTccCoreV1CreateApplicationRequest {
      */
     parent?: string;
     /**
-     * Tenant.Id
+     * Tenant.Id.
      * @type {string}
      * @memberof TetrateApiTccCoreV1CreateApplicationRequest
      */
     tenant?: string;
     /**
-     * Environment.Id
+     * Environment.Id.
      * @type {string}
      * @memberof TetrateApiTccCoreV1CreateApplicationRequest
      */
     environment?: string;
     /**
-     * short name for the application. Clusters are expected to have namespaces that match the application Id, especially on Kubernetes.
+     * short name for the application. Clusters are expected to have namespaces that match the application Id, especially on Kubernetes. If present, this will be used as the id for the created object.
      * @type {string}
      * @memberof TetrateApiTccCoreV1CreateApplicationRequest
      */
@@ -61,7 +61,7 @@ export interface TetrateApiTccCoreV1CreateApplicationRequest {
      */
     description?: string;
     /**
-     * Hostname with which the application is exposed on a Gateway
+     * Hostname with which the application is exposed on a Gateway.
      * @type {string}
      * @memberof TetrateApiTccCoreV1CreateApplicationRequest
      */

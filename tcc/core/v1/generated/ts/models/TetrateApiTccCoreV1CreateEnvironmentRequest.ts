@@ -37,7 +37,7 @@ export interface TetrateApiTccCoreV1CreateEnvironmentRequest {
      */
     tenant?: string;
     /**
-     * if present, this will be used as the id for the created object.
+     * If present, this will be used as the id for the created object.
      * @type {string}
      * @memberof TetrateApiTccCoreV1CreateEnvironmentRequest
      */

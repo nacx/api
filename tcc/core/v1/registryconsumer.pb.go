@@ -25,18 +25,18 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
-// RegistryUpdateResourcesRequest request object
+// RegistryUpdateResourcesRequest request object.
 type RegistryUpdateResourcesRequest struct {
 	Parent string `protobuf:"bytes,1,opt,name=parent,proto3" json:"parent,omitempty"`
-	// Tenant where this service is residing e.g Tetrate
+	// Tenant where this service is residing e.g Tetrate.
 	Tenant string `protobuf:"bytes,2,opt,name=tenant,proto3" json:"tenant,omitempty"`
 	// environment are higher-level isolations e.g. prod, staging, development, etc.
 	Environment string `protobuf:"bytes,3,opt,name=environment,proto3" json:"environment,omitempty"`
-	// Unique cluster acting as a source
+	// Unique cluster acting as a source.
 	Cluster string `protobuf:"bytes,4,opt,name=cluster,proto3" json:"cluster,omitempty"`
-	// registrytype indicates source of entry. Currently accepted values "kubernetes", "f5"
+	// registrytype indicates source of entry. Currently accepted values "kubernetes", "f5".
 	Registrytype string `protobuf:"bytes,5,opt,name=registrytype,proto3" json:"registrytype,omitempty"`
-	// JSON bulk payload of all physical resources
+	// JSON bulk payload of all physical resources.
 	Payload              string   `protobuf:"bytes,6,opt,name=payload,proto3" json:"payload,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -47,7 +47,7 @@ func (m *RegistryUpdateResourcesRequest) Reset()         { *m = RegistryUpdateRe
 func (m *RegistryUpdateResourcesRequest) String() string { return proto.CompactTextString(m) }
 func (*RegistryUpdateResourcesRequest) ProtoMessage()    {}
 func (*RegistryUpdateResourcesRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_registryconsumer_41c4441be8f50259, []int{0}
+	return fileDescriptor_registryconsumer_8b98d8d607db6684, []int{0}
 }
 func (m *RegistryUpdateResourcesRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_RegistryUpdateResourcesRequest.Unmarshal(m, b)
@@ -109,7 +109,7 @@ func (m *RegistryUpdateResourcesRequest) GetPayload() string {
 	return ""
 }
 
-// RegistryConsumerResponse response returned by server
+// RegistryConsumerResponse response returned by server.
 type RegistryConsumerResponse struct {
 	Status               string   `protobuf:"bytes,1,opt,name=status,proto3" json:"status,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -121,7 +121,7 @@ func (m *RegistryConsumerResponse) Reset()         { *m = RegistryConsumerRespon
 func (m *RegistryConsumerResponse) String() string { return proto.CompactTextString(m) }
 func (*RegistryConsumerResponse) ProtoMessage()    {}
 func (*RegistryConsumerResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_registryconsumer_41c4441be8f50259, []int{1}
+	return fileDescriptor_registryconsumer_8b98d8d607db6684, []int{1}
 }
 func (m *RegistryConsumerResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_RegistryConsumerResponse.Unmarshal(m, b)
@@ -165,8 +165,8 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type RegistryConsumerClient interface {
-	// UpdateResources to be called periodically with a bulk payload. API detects the
-	// delta between last call, and determines resources to create, modify, delete
+	// UpdateResources to be called periodically with a bulk payload. API detects the delta between last call, and
+	// determines resources to create, modify, delete
 	UpdateResources(ctx context.Context, in *RegistryUpdateResourcesRequest, opts ...grpc.CallOption) (*RegistryConsumerResponse, error)
 }
 
@@ -189,8 +189,8 @@ func (c *registryConsumerClient) UpdateResources(ctx context.Context, in *Regist
 
 // RegistryConsumerServer is the server API for RegistryConsumer service.
 type RegistryConsumerServer interface {
-	// UpdateResources to be called periodically with a bulk payload. API detects the
-	// delta between last call, and determines resources to create, modify, delete
+	// UpdateResources to be called periodically with a bulk payload. API detects the delta between last call, and
+	// determines resources to create, modify, delete
 	UpdateResources(context.Context, *RegistryUpdateResourcesRequest) (*RegistryConsumerResponse, error)
 }
 
@@ -230,10 +230,10 @@ var _RegistryConsumer_serviceDesc = grpc.ServiceDesc{
 }
 
 func init() {
-	proto.RegisterFile("registryconsumer.proto", fileDescriptor_registryconsumer_41c4441be8f50259)
+	proto.RegisterFile("registryconsumer.proto", fileDescriptor_registryconsumer_8b98d8d607db6684)
 }
 
-var fileDescriptor_registryconsumer_41c4441be8f50259 = []byte{
+var fileDescriptor_registryconsumer_8b98d8d607db6684 = []byte{
 	// 397 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x92, 0xc1, 0xaa, 0xd4, 0x30,
 	0x14, 0x86, 0x69, 0xe7, 0x3a, 0x32, 0xb9, 0x82, 0x43, 0x16, 0xf7, 0x96, 0x41, 0x44, 0xeb, 0x46,

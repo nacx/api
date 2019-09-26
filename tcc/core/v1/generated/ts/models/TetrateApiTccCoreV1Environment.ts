@@ -31,13 +31,13 @@ export interface TetrateApiTccCoreV1Environment {
      */
     name?: string;
     /**
-     * Tenant.Id
+     * Tenant.Id.
      * @type {string}
      * @memberof TetrateApiTccCoreV1Environment
      */
     tenant?: string;
     /**
-     * A short name for the environment (e.g,, dev, stage, us-1, etc.)
+     * A short name for the environment (e.g,, dev, stage, us-1, etc.).
      * @type {string}
      * @memberof TetrateApiTccCoreV1Environment
      */

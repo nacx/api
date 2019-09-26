@@ -25,13 +25,13 @@ export interface TetrateApiTccCoreV1TLSSettings {
      */
     serverCertificate?: string;
     /**
-     *   For proxies running on VMs, the path to the file holding the server\'s private key.
+     * For proxies running on VMs, the path to the file holding the server\'s private key.
      * @type {string}
      * @memberof TetrateApiTccCoreV1TLSSettings
      */
     privateKey?: string;
     /**
-     *   For proxies running on VMs, the path to a file containing certificate authority certificates to use in verifying a presented client side certificate for mutual TLS connections.
+     * For proxies running on VMs, the path to a file containing certificate authority certificates to use in verifying a presented client side certificate for mutual TLS connections.
      * @type {string}
      * @memberof TetrateApiTccCoreV1TLSSettings
      */

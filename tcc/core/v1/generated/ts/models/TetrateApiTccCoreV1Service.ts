@@ -34,25 +34,25 @@ export interface TetrateApiTccCoreV1Service {
      */
     name?: string;
     /**
-     * Tenant.Id
+     * Tenant.Id.
      * @type {string}
      * @memberof TetrateApiTccCoreV1Service
      */
     tenant?: string;
     /**
-     * Environment.Id
+     * Environment.Id.
      * @type {string}
      * @memberof TetrateApiTccCoreV1Service
      */
     environment?: string;
     /**
-     * Application.Id
+     * Application.Id.
      * @type {string}
      * @memberof TetrateApiTccCoreV1Service
      */
     application?: string;
     /**
-     * short name for the service. Clusters are expected to have namespaces that match the application, and services that match the Id, especially on Kubernetes.
+     * Short name for the service. Clusters are expected to have namespaces that match the application, and services that match the Id, especially on Kubernetes.
      * @type {string}
      * @memberof TetrateApiTccCoreV1Service
      */
@@ -70,7 +70,7 @@ export interface TetrateApiTccCoreV1Service {
      */
     hostname?: string;
     /**
-     * 
+     * User identifiable tags associated with this service.
      * @type {{ [key: string]: string; }}
      * @memberof TetrateApiTccCoreV1Service
      */

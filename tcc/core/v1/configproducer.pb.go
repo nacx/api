@@ -30,7 +30,7 @@ type ConfigDownloadRequest struct {
 	Tenant      string `protobuf:"bytes,2,opt,name=tenant,proto3" json:"tenant,omitempty"`
 	Environment string `protobuf:"bytes,3,opt,name=environment,proto3" json:"environment,omitempty"`
 	Cluster     string `protobuf:"bytes,4,opt,name=cluster,proto3" json:"cluster,omitempty"`
-	// currently accepted values are istio or f5
+	// Currently accepted values are istio or f5.
 	Configtype           string   `protobuf:"bytes,5,opt,name=configtype,proto3" json:"configtype,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -41,7 +41,7 @@ func (m *ConfigDownloadRequest) Reset()         { *m = ConfigDownloadRequest{} }
 func (m *ConfigDownloadRequest) String() string { return proto.CompactTextString(m) }
 func (*ConfigDownloadRequest) ProtoMessage()    {}
 func (*ConfigDownloadRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_configproducer_07648887fc400116, []int{0}
+	return fileDescriptor_configproducer_35f050630f841cdd, []int{0}
 }
 func (m *ConfigDownloadRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ConfigDownloadRequest.Unmarshal(m, b)
@@ -101,9 +101,8 @@ type ConfigData struct {
 	Cluster     string `protobuf:"bytes,2,opt,name=cluster,proto3" json:"cluster,omitempty"`
 	Environment string `protobuf:"bytes,3,opt,name=environment,proto3" json:"environment,omitempty"`
 	Tenant      string `protobuf:"bytes,4,opt,name=tenant,proto3" json:"tenant,omitempty"`
-	// For istio, this is a huge YAML dump of all Istio artifacts like
-	// virtual services, destination rules, service entries, gateways,
-	// etc. in YAML form. For F5, its all f5 config artifacts.
+	// For istio, this is a huge YAML dump of all Istio artifacts like virtual services, destination rules, service
+	// entries, gateways, etc. in YAML form. For F5, its all f5 config artifacts.
 	Payload              string   `protobuf:"bytes,5,opt,name=payload,proto3" json:"payload,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -114,7 +113,7 @@ func (m *ConfigData) Reset()         { *m = ConfigData{} }
 func (m *ConfigData) String() string { return proto.CompactTextString(m) }
 func (*ConfigData) ProtoMessage()    {}
 func (*ConfigData) Descriptor() ([]byte, []int) {
-	return fileDescriptor_configproducer_07648887fc400116, []int{1}
+	return fileDescriptor_configproducer_35f050630f841cdd, []int{1}
 }
 func (m *ConfigData) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ConfigData.Unmarshal(m, b)
@@ -247,10 +246,10 @@ var _ConfigProducer_serviceDesc = grpc.ServiceDesc{
 }
 
 func init() {
-	proto.RegisterFile("configproducer.proto", fileDescriptor_configproducer_07648887fc400116)
+	proto.RegisterFile("configproducer.proto", fileDescriptor_configproducer_35f050630f841cdd)
 }
 
-var fileDescriptor_configproducer_07648887fc400116 = []byte{
+var fileDescriptor_configproducer_35f050630f841cdd = []byte{
 	// 410 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x52, 0x4d, 0x8e, 0xd3, 0x30,
 	0x14, 0x56, 0xd2, 0x3f, 0xea, 0x0a, 0x84, 0x2c, 0x68, 0xa3, 0x0a, 0xa1, 0xd2, 0x6e, 0x90, 0x40,

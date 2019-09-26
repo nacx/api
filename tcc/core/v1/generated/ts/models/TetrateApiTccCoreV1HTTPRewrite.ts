@@ -19,7 +19,7 @@ import { exists, mapValues } from '../runtime';
  */
 export interface TetrateApiTccCoreV1HTTPRewrite {
     /**
-     *   Rewrite the path (or the prefix) portion of the URI with this value. If the original URI was matched based on prefix, the value provided in this field will replace the corresponding matched prefix.
+     * Rewrite the path (or the prefix) portion of the URI with this value. If the original URI was matched based on prefix, the value provided in this field will replace the corresponding matched prefix.
      * @type {string}
      * @memberof TetrateApiTccCoreV1HTTPRewrite
      */

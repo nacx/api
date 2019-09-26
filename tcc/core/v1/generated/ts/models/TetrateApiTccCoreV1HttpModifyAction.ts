@@ -22,7 +22,7 @@ import {
 } from './';
 
 /**
- * HTTP path/url/header modification
+ * HTTP path/url/header modification.
  * @export
  * @interface TetrateApiTccCoreV1HttpModifyAction
  */

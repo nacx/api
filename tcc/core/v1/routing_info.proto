@@ -6,20 +6,20 @@ option go_package = "github.com/tetrateio/tetrate/api/tcc/core/v1";
 import "google/protobuf/duration.proto";
 import "google/protobuf/wrappers.proto";
 import "validate/validate.proto";
-import "protoc-gen-swagger/options/annotations.proto";
 
+// RoutingInfo
+//
+// HTTP routing settings for application or service. Subsets of a service should be declared here as well.
 message RoutingInfo {
-  option (grpc.gateway.protoc_gen_swagger.options.openapiv2_schema) = {
-		json_schema: {
-			title: "Routing Info"
-			description: "HTTP routing settings for application or service. Subsets of a service should be declared here as well."
-		}
-	};
-  repeated Subset subsets = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "One or more versions of the service. Each version has a distinct name and a set of labels that help uniquely identify the pods/VMs of that version."}];
+  // One or more versions of the service. Each version has a distinct name and a set of labels that help uniquely
+  // identify the pods/VMs of that version.
+  repeated Subset subsets = 1;
 
-  HttpSettings http_settings = 2 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "  HTTP specific settings, transformations and routing rules associated with HTTP traffic to this service."}];
+  // HTTP specific settings, transformations and routing rules associated with HTTP traffic to this service.
+  HttpSettings http_settings = 2;
 
-  TcpSettings tcp_settings = 3 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "TCP specific settings, transformations and routing rules associated with non-HTTP traffic to this service."}];
+  // TCP specific settings, transformations and routing rules associated with non-HTTP traffic to this service.
+  TcpSettings tcp_settings = 3;
 }
 
 enum Registry {
@@ -29,55 +29,55 @@ enum Registry {
 }
 
 message Port {
-  uint32 number = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "A valid non-negative integer port number."}];
+  // A valid non-negative integer port number.
+  uint32 number = 1;
 
-  string protocol = 2 [(validate.rules).string = {in: ["HTTP", "GRPC", "HTTP2", "TCP", "TLS", "UDP", "SCTP"]}, (grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "  The protocol exposed on the port. MUST BE one of HTTP|GRPC|HTTP2|HTTPS|TCP|TLS. TLS implies the connection will be routed based on the SNI header to the destination without terminating the TLS connection."}];
+  // The protocol exposed on the port. MUST BE one of HTTP|GRPC|HTTP2|HTTPS|TCP|TLS. TLS implies the connection will be
+  // routed based on the SNI header to the destination without terminating the TLS connection.
+  string protocol = 2 [(validate.rules).string = {in: ["HTTP", "GRPC", "HTTP2", "TCP", "TLS", "UDP", "SCTP"]}];
 
-  string name = 3 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Name assigned to the port."}];
+  // Name assigned to the port.
+  string name = 3;
 
-  uint32 endpoint_port = 4 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "The endpoint port to which this service port maps to. For example, service port 80 exposed on the load balancer could map to an endpoint port 9080 on a VM."}];
+  // The endpoint port to which this service port maps to. For example, service port 80 exposed on the load balancer
+  // could map to an endpoint port 9080 on a VM.
+  uint32 endpoint_port = 4;
 }
 
 message Subset {
   string name = 1 [(validate.rules).string.min_len = 1];
-  map<string, string> labels = 2 [(validate.rules).map.min_pairs = 1, (grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Labels apply a filter over the endpoints of a service in the service registry."}];
+  // Labels apply a filter over the endpoints of a service in the service registry.
+  map<string, string> labels = 2 [(validate.rules).map.min_pairs = 1];
 }
 
-
+// HttpSettings
+//
+// HTTP settings for a service. Applicable to ports receiving HTTP traffic.
 message HttpSettings {
-    option (grpc.gateway.protoc_gen_swagger.options.openapiv2_schema) = {
-		json_schema: {
-			description: "HTTP settings for a service. Applicable to ports receiving HTTP traffic."
-		}
-	};
+  // Describes a HTTP cookie that will be used for sticky sessions. If the cookie is not present, it will be generated.
   message HTTPCookie {
-    option (grpc.gateway.protoc_gen_swagger.options.openapiv2_schema) = {
-		json_schema: {
-			description: "  Describes a HTTP cookie that will be used for sticky sessions. If the cookie is not present, it will be generated."
-		}
-	};    
-    string name = 1 [(validate.rules).string.min_len = 1, (grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Name of the cookie."}];
-    
-    string path = 2 [(validate.rules).string.min_len = 1, (grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Path to set for the cookie."}];
+    // Name of the cookie.
+    string name = 1 [(validate.rules).string.min_len = 1];
 
-    google.protobuf.Duration ttl = 3 [(validate.rules).message.required = true, (grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Lifetime of the cookie."}];
+    // Path to set for the cookie.
+    string path = 2 [(validate.rules).string.min_len = 1];
+
+    // Lifetime of the cookie.
+    google.protobuf.Duration ttl = 3 [(validate.rules).message.required = true];
   }
 
+  // If set, the load balancer will route all requests from a particular client to the same backend of the service.
   message StickySession {
-    option (grpc.gateway.protoc_gen_swagger.options.openapiv2_schema) = {
-		json_schema: {
-			description: "If set, the load balancer will route all requests from a particular client to the same backend of the service."
-		}
-	};
 
     oneof hash_key {
-      string header = 1 [(validate.rules).string.min_len = 1, (grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Hash based on a specific HTTP header."}];
+      // Hash based on a specific HTTP header.
+      string header = 1 [(validate.rules).string.min_len = 1];
 
-      
-      HTTPCookie cookie = 2 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Hash based on HTTP cookie."}];
+      // Hash based on HTTP cookie.
+      HTTPCookie cookie = 2;
 
-      
-      bool use_source_ip = 3 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Hash based on the source IP address."}];
+      // Hash based on the source IP address.
+      bool use_source_ip = 3;
     }
   }
 
@@ -86,27 +86,21 @@ message HttpSettings {
   repeated HttpRule route_rules = 3;
 }
 
+// TCP settings for a service. Applicable to ports receiving non-HTTP traffic.
 message TcpSettings {
-    option (grpc.gateway.protoc_gen_swagger.options.openapiv2_schema) = {
-		json_schema: {
-			description: "TCP settings for a service. Applicable to ports receiving non-HTTP traffic."
-		}
-	};
-  
-  Route route = 1 [(validate.rules).message.required = true, (grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "The destination to which the connection should be forwarded to."}];
+  // The destination to which the connection should be forwarded to.
+  Route route = 1 [(validate.rules).message.required = true];
 }
 
 
+  // A single HTTP rule.
 message HttpRule {
-    option (grpc.gateway.protoc_gen_swagger.options.openapiv2_schema) = {
-		json_schema: {
-			description: "A single HTTP rule"
-		}
-	};
-  
-  repeated HttpMatchCondition match = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "one or more match conditions (OR-ed)"}];
+  // One or more match conditions (OR-ed).
+  repeated HttpMatchCondition match = 1;
 
-  HttpModifyAction modify = 2 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "  One or more mutations to be performed before forwarding. Includes typical modifications to be done on a single request like URL rewrite, host rewrite, headers to add/remove/append"}];
+  // One or more mutations to be performed before forwarding. Includes typical modifications to be done on a single
+  // request like URL rewrite, host rewrite, headers to add/remove/append.
+  HttpModifyAction modify = 2;
 
   oneof route_or_redirect {
     Route route = 4;
@@ -114,131 +108,110 @@ message HttpRule {
   }
 }
 
-
+// A single match clause to match all aspects of a request.
 message HttpMatchCondition {
-    option (grpc.gateway.protoc_gen_swagger.options.openapiv2_schema) = {
-		json_schema: {
-			description: "A single match clause to match all aspects of a request"
-		}
-	};
-  
-  StringMatch uri = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "URI to match"}];
+  // URI to match.
+  StringMatch uri = 1;
 
-  
-  StringMatch scheme = 2 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "URI Scheme"}];
+  // URI Scheme
+  StringMatch scheme = 2;
 
-  
-  StringMatch method = 3 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "HTTP Method"}];
+  // HTTP Method.
+  StringMatch method = 3;
 
-  
-  StringMatch authority = 4 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "HTTP Authority"}];
+  // HTTP Authority.
+  StringMatch authority = 4;
 
-  
-  map<string, StringMatch> headers = 5 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "The header keys must be lowercase and use hyphen as the separator, e.g. x-request-id."}];
+  // The header keys must be lowercase and use hyphen as the separator, e.g. x-request-id.
+  map<string, StringMatch> headers = 5;
 }
 
-
+// Describes how to match a given string in HTTP headers. Match is case-sensitive.
 message StringMatch {
-    option (grpc.gateway.protoc_gen_swagger.options.openapiv2_schema) = {
-		json_schema: {
-			description: "Describes how to match a given string in HTTP headers. Match is case-sensitive."
-		}
-	};
   oneof match_type {
-    
-    string exact = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "exact string match"}];
+    // Exact string match.
+    string exact = 1;
 
-    
-    string prefix = 2 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "prefix-based match"}];
+    // Prefix-based match.
+    string prefix = 2;
 
-    
-    string regex = 3 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "ECMAscript style regex-based match"}];
+    // ECMAscript style regex-based match.
+    string regex = 3;
   }
 }
 
 message HTTPRewrite {
+  // Rewrite the path (or the prefix) portion of the URI with this value. If the original URI was matched based on
+  // prefix, the value provided in this field will replace the corresponding matched prefix.
+  string uri = 1;
 
-  string uri = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "  Rewrite the path (or the prefix) portion of the URI with this value. If the original URI was matched based on prefix, the value provided in this field will replace the corresponding matched prefix."}];
-
-  
-  string authority = 2 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Rewrite the Authority/Host header with this value."}];
+  // Rewrite the Authority/Host header with this value.
+  string authority = 2;
 }
 
-
+// Header manipulation rules.
 message Headers {
-    option (grpc.gateway.protoc_gen_swagger.options.openapiv2_schema) = {
-		json_schema: {
-			description: "Header manipulation rules"
-		}
-	};
+  // Header manipulation rules to apply before forwarding a request to the destination service.
+  HeaderOperations request = 1;
+  // Header manipulation rules to apply before returning a response to the caller.
+  HeaderOperations response = 2;
 
-  HeaderOperations request = 1[(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "  Header manipulation rules to apply before forwarding a request to the destination service"}];
-  
-  HeaderOperations response = 2 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Header manipulation rules to apply before returning a response to the caller"}];
-
-
+  // HeaderOperations Describes the header manipulations to apply.
   message HeaderOperations {
-  option (grpc.gateway.protoc_gen_swagger.options.openapiv2_schema) = {
-		json_schema: {
-			description: "  HeaderOperations Describes the header manipulations to apply"
-		}
-	};
-
-    map<string, string> set = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Overwrite the headers specified by key with the given values"}];
-
-    map<string, string> add = 2 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Append the given values to the headers specified by keys (will create a comma-separated list of values)"}];
-    
-    repeated string remove = 3 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "Remove a the specified headers"}];
+    // Overwrite the headers specified by key with the given values.
+    map<string, string> set = 1;
+    // Append the given values to the headers specified by keys (will create a comma-separated list of values).
+    map<string, string> add = 2;
+    // Remove a the specified headers.
+    repeated string remove = 3;
   }
 }
 
-
+// HTTP path/url/header modification.
 message HttpModifyAction {
-    option (grpc.gateway.protoc_gen_swagger.options.openapiv2_schema) = {
-		json_schema: {
-			description: "HTTP path/url/header modification"
-		}
-	};
   HTTPRewrite rewrite = 1;
   Headers headers = 2;
 }
 
-
+// One or more destinations for the given request.
 message Route {
-    option (grpc.gateway.protoc_gen_swagger.options.openapiv2_schema) = {
-		json_schema: {
-			description: "One or more destinations for the given request"
-		}
-	};
 
   message Destination {
-    
-    string host = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "if omitted, will route to same host as the service"}];
+    // If omitted, will route to same host as the service.
+    string host = 1;
     string subset = 2;
-    
-    uint32 weight = 3 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "100 if omitted. sum of all weights should add up to 100"}];
-   
-    uint32 port = 4 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "optional"}];
+    // 100 if omitted. sum of all weights should add up to 100.
+    uint32 weight = 3;
+    // Optional.
+    uint32 port = 4;
   }
   repeated Destination destinations = 1 [(validate.rules).repeated.min_items = 1];
 }
 
 message Redirect {
-  string uri = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "On a redirect, overwrite the Path portion of the URL with this value."}];
-
-  string authority = 2 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "On a redirect, overwrite the Authority/Host portion of the URL with this value."}];
+  // On a redirect, overwrite the Path portion of the URL with this value.
+  string uri = 1;
+  // On a redirect, overwrite the Authority/Host portion of the URL with this value.
+  string authority = 2;
 }
 
 message CorsPolicy {
-  repeated string allow_origin = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "  The list of origins that are allowed to perform CORS requests. The content will be serialized into the Access-Control-Allow-Origin header. Wildcard * will allow all origins."}];
-
-  repeated string allow_methods = 2 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "  List of HTTP methods allowed to access the resource. The content will be serialized into the Access-Control-Allow-Methods header."}];
-
-  repeated string allow_headers = 3 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: " List of HTTP headers that can be used when requesting the resource. Serialized to Access-Control-Allow-Headers header."}];
-
-  repeated string expose_headers = 4 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "  A white list of HTTP headers that the browsers are allowed to access. Serialized into Access-Control-Expose-Headers header."}];
-
-  google.protobuf.Duration max_age = 5 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "  Specifies how long the results of a preflight request can be cached. Translates to the Access-Control-Max-Age header."}];
-
-  google.protobuf.BoolValue allow_credentials = 6 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "  Indicates whether the caller is allowed to send the actual request (not the preflight) using credentials. Translates to Access-Control-Allow-Credentials header."}];
+  // The list of origins that are allowed to perform CORS requests. The content will be serialized into the
+  // Access-Control-Allow-Origin header. Wildcard * will allow all origins.
+  repeated string allow_origin = 1;
+  // List of HTTP methods allowed to access the resource. The content will be serialized into the
+  // Access-Control-Allow-Methods header.
+  repeated string allow_methods = 2;
+  // List of HTTP headers that can be used when requesting the resource. Serialized to Access-Control-Allow-Headers
+  // header.
+  repeated string allow_headers = 3;
+  // A white list of HTTP headers that the browsers are allowed to access. Serialized into Access-Control-Expose-Headers
+  // header.
+  repeated string expose_headers = 4;
+  // Specifies how long the results of a preflight request can be cached. Translates to the Access-Control-Max-Age
+  // header.
+  google.protobuf.Duration max_age = 5;
+  // Indicates whether the caller is allowed to send the actual request (not the preflight) using credentials.
+  // Translates to Access-Control-Allow-Credentials header.
+  google.protobuf.BoolValue allow_credentials = 6;
 }

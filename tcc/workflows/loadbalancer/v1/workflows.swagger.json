@@ -338,7 +338,7 @@
     },
     "/v1/tenants/{tenant}/environments/{environment}/workflows/loadbalancers/{loadbalancer}/requests/{id}/publish": {
       "post": {
-        "summary": "LB owner calls this API with additional settings like TLS, to\nfinally expose the service on the load balancer or remove a detached service",
+        "summary": "LB owner calls this API with additional settings like TLS, to finally expose the service on the load balancer or remove a detached service",
         "operationId": "Publish",
         "responses": {
           "200": {
@@ -458,11 +458,11 @@
         },
         "privateKey": {
           "type": "string",
-          "description": "  For proxies running on VMs, the path to the file holding the server's private key."
+          "description": "For proxies running on VMs, the path to the file holding the server's private key."
         },
         "caCertificates": {
           "type": "string",
-          "description": "  For proxies running on VMs, the path to a file containing certificate authority certificates to use in verifying a presented client side certificate for mutual TLS connections."
+          "description": "For proxies running on VMs, the path to a file containing certificate authority certificates to use in verifying a presented client side certificate for mutual TLS connections."
         },
         "secretName": {
           "type": "string",
