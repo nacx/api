@@ -36,7 +36,7 @@ func (m *Policy) Reset()         { *m = Policy{} }
 func (m *Policy) String() string { return proto.CompactTextString(m) }
 func (*Policy) ProtoMessage()    {}
 func (*Policy) Descriptor() ([]byte, []int) {
-	return fileDescriptor_policy_a7089d2b9fb12102, []int{0}
+	return fileDescriptor_policy_32a54c83777c916a, []int{0}
 }
 func (m *Policy) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Policy.Unmarshal(m, b)
@@ -69,10 +69,10 @@ func (m *Policy) GetBindings() []*Binding {
 // Bindings are used to configure policies, where different roles can be assigned to different sets of
 // subjects to configure a fine-grained access control to the resource protected by the policy.
 type Binding struct {
-	// The role that defines the permissions that will be granted to the target resource
+	// The role that defines the permissions that will be granted to the target resource.
 	Role string `protobuf:"bytes,1,opt,name=role,proto3" json:"role,omitempty"`
 	// The set of subjects that will be allowed to access the target resource with the permissions
-	// defined by the role
+	// defined by the role.
 	Subjects             []string `protobuf:"bytes,2,rep,name=subjects,proto3" json:"subjects,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -83,7 +83,7 @@ func (m *Binding) Reset()         { *m = Binding{} }
 func (m *Binding) String() string { return proto.CompactTextString(m) }
 func (*Binding) ProtoMessage()    {}
 func (*Binding) Descriptor() ([]byte, []int) {
-	return fileDescriptor_policy_a7089d2b9fb12102, []int{1}
+	return fileDescriptor_policy_32a54c83777c916a, []int{1}
 }
 func (m *Binding) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Binding.Unmarshal(m, b)
@@ -122,9 +122,9 @@ func init() {
 	proto.RegisterType((*Binding)(nil), "tetrate.api.tcc.core.v1.Binding")
 }
 
-func init() { proto.RegisterFile("policy.proto", fileDescriptor_policy_a7089d2b9fb12102) }
+func init() { proto.RegisterFile("policy.proto", fileDescriptor_policy_32a54c83777c916a) }
 
-var fileDescriptor_policy_a7089d2b9fb12102 = []byte{
+var fileDescriptor_policy_32a54c83777c916a = []byte{
 	// 233 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xe2, 0x29, 0xc8, 0xcf, 0xc9,
 	0x4c, 0xae, 0xd4, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x12, 0x2f, 0x49, 0x2d, 0x29, 0x4a, 0x2c,

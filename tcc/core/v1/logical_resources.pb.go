@@ -49,7 +49,7 @@ func (x LoadBalancerClass) String() string {
 	return proto.EnumName(LoadBalancerClass_name, int32(x))
 }
 func (LoadBalancerClass) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_f7fd9b3fb96aed0b, []int{0}
+	return fileDescriptor_logical_resources_3017f63dd27f17f9, []int{0}
 }
 
 // Environment
@@ -75,7 +75,7 @@ func (m *Environment) Reset()         { *m = Environment{} }
 func (m *Environment) String() string { return proto.CompactTextString(m) }
 func (*Environment) ProtoMessage()    {}
 func (*Environment) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_f7fd9b3fb96aed0b, []int{0}
+	return fileDescriptor_logical_resources_3017f63dd27f17f9, []int{0}
 }
 func (m *Environment) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Environment.Unmarshal(m, b)
@@ -149,7 +149,7 @@ func (m *CreateEnvironmentRequest) Reset()         { *m = CreateEnvironmentReque
 func (m *CreateEnvironmentRequest) String() string { return proto.CompactTextString(m) }
 func (*CreateEnvironmentRequest) ProtoMessage()    {}
 func (*CreateEnvironmentRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_f7fd9b3fb96aed0b, []int{1}
+	return fileDescriptor_logical_resources_3017f63dd27f17f9, []int{1}
 }
 func (m *CreateEnvironmentRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CreateEnvironmentRequest.Unmarshal(m, b)
@@ -218,7 +218,7 @@ func (m *GetEnvironmentRequest) Reset()         { *m = GetEnvironmentRequest{} }
 func (m *GetEnvironmentRequest) String() string { return proto.CompactTextString(m) }
 func (*GetEnvironmentRequest) ProtoMessage()    {}
 func (*GetEnvironmentRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_f7fd9b3fb96aed0b, []int{2}
+	return fileDescriptor_logical_resources_3017f63dd27f17f9, []int{2}
 }
 func (m *GetEnvironmentRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetEnvironmentRequest.Unmarshal(m, b)
@@ -274,7 +274,7 @@ func (m *EnvironmentPolicyRequest) Reset()         { *m = EnvironmentPolicyReque
 func (m *EnvironmentPolicyRequest) String() string { return proto.CompactTextString(m) }
 func (*EnvironmentPolicyRequest) ProtoMessage()    {}
 func (*EnvironmentPolicyRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_f7fd9b3fb96aed0b, []int{3}
+	return fileDescriptor_logical_resources_3017f63dd27f17f9, []int{3}
 }
 func (m *EnvironmentPolicyRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_EnvironmentPolicyRequest.Unmarshal(m, b)
@@ -335,7 +335,7 @@ func (m *ListEnvironmentsRequest) Reset()         { *m = ListEnvironmentsRequest
 func (m *ListEnvironmentsRequest) String() string { return proto.CompactTextString(m) }
 func (*ListEnvironmentsRequest) ProtoMessage()    {}
 func (*ListEnvironmentsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_f7fd9b3fb96aed0b, []int{4}
+	return fileDescriptor_logical_resources_3017f63dd27f17f9, []int{4}
 }
 func (m *ListEnvironmentsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListEnvironmentsRequest.Unmarshal(m, b)
@@ -380,7 +380,7 @@ func (m *ListEnvironmentsResponse) Reset()         { *m = ListEnvironmentsRespon
 func (m *ListEnvironmentsResponse) String() string { return proto.CompactTextString(m) }
 func (*ListEnvironmentsResponse) ProtoMessage()    {}
 func (*ListEnvironmentsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_f7fd9b3fb96aed0b, []int{5}
+	return fileDescriptor_logical_resources_3017f63dd27f17f9, []int{5}
 }
 func (m *ListEnvironmentsResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListEnvironmentsResponse.Unmarshal(m, b)
@@ -421,7 +421,7 @@ func (m *DeleteEnvironmentRequest) Reset()         { *m = DeleteEnvironmentReque
 func (m *DeleteEnvironmentRequest) String() string { return proto.CompactTextString(m) }
 func (*DeleteEnvironmentRequest) ProtoMessage()    {}
 func (*DeleteEnvironmentRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_f7fd9b3fb96aed0b, []int{6}
+	return fileDescriptor_logical_resources_3017f63dd27f17f9, []int{6}
 }
 func (m *DeleteEnvironmentRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DeleteEnvironmentRequest.Unmarshal(m, b)
@@ -496,7 +496,7 @@ func (m *Application) Reset()         { *m = Application{} }
 func (m *Application) String() string { return proto.CompactTextString(m) }
 func (*Application) ProtoMessage()    {}
 func (*Application) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_f7fd9b3fb96aed0b, []int{7}
+	return fileDescriptor_logical_resources_3017f63dd27f17f9, []int{7}
 }
 func (m *Application) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Application.Unmarshal(m, b)
@@ -602,7 +602,7 @@ func (m *CreateApplicationRequest) Reset()         { *m = CreateApplicationReque
 func (m *CreateApplicationRequest) String() string { return proto.CompactTextString(m) }
 func (*CreateApplicationRequest) ProtoMessage()    {}
 func (*CreateApplicationRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_f7fd9b3fb96aed0b, []int{8}
+	return fileDescriptor_logical_resources_3017f63dd27f17f9, []int{8}
 }
 func (m *CreateApplicationRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CreateApplicationRequest.Unmarshal(m, b)
@@ -693,7 +693,7 @@ func (m *GetApplicationRequest) Reset()         { *m = GetApplicationRequest{} }
 func (m *GetApplicationRequest) String() string { return proto.CompactTextString(m) }
 func (*GetApplicationRequest) ProtoMessage()    {}
 func (*GetApplicationRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_f7fd9b3fb96aed0b, []int{9}
+	return fileDescriptor_logical_resources_3017f63dd27f17f9, []int{9}
 }
 func (m *GetApplicationRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetApplicationRequest.Unmarshal(m, b)
@@ -757,7 +757,7 @@ func (m *ApplicationPolicyRequest) Reset()         { *m = ApplicationPolicyReque
 func (m *ApplicationPolicyRequest) String() string { return proto.CompactTextString(m) }
 func (*ApplicationPolicyRequest) ProtoMessage()    {}
 func (*ApplicationPolicyRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_f7fd9b3fb96aed0b, []int{10}
+	return fileDescriptor_logical_resources_3017f63dd27f17f9, []int{10}
 }
 func (m *ApplicationPolicyRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ApplicationPolicyRequest.Unmarshal(m, b)
@@ -826,7 +826,7 @@ func (m *ListApplicationsRequest) Reset()         { *m = ListApplicationsRequest
 func (m *ListApplicationsRequest) String() string { return proto.CompactTextString(m) }
 func (*ListApplicationsRequest) ProtoMessage()    {}
 func (*ListApplicationsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_f7fd9b3fb96aed0b, []int{11}
+	return fileDescriptor_logical_resources_3017f63dd27f17f9, []int{11}
 }
 func (m *ListApplicationsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListApplicationsRequest.Unmarshal(m, b)
@@ -878,7 +878,7 @@ func (m *ListApplicationsResponse) Reset()         { *m = ListApplicationsRespon
 func (m *ListApplicationsResponse) String() string { return proto.CompactTextString(m) }
 func (*ListApplicationsResponse) ProtoMessage()    {}
 func (*ListApplicationsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_f7fd9b3fb96aed0b, []int{12}
+	return fileDescriptor_logical_resources_3017f63dd27f17f9, []int{12}
 }
 func (m *ListApplicationsResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListApplicationsResponse.Unmarshal(m, b)
@@ -920,7 +920,7 @@ func (m *DeleteApplicationRequest) Reset()         { *m = DeleteApplicationReque
 func (m *DeleteApplicationRequest) String() string { return proto.CompactTextString(m) }
 func (*DeleteApplicationRequest) ProtoMessage()    {}
 func (*DeleteApplicationRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_f7fd9b3fb96aed0b, []int{13}
+	return fileDescriptor_logical_resources_3017f63dd27f17f9, []int{13}
 }
 func (m *DeleteApplicationRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DeleteApplicationRequest.Unmarshal(m, b)
@@ -978,7 +978,7 @@ type ApplicationSpecificLB struct {
 	// The namespace where this dedicated load balancer of the application is scoped. It should be one of application
 	// namespaces. This field cannot be omitted if the application has more than one namespace. If there is only
 	// one dedicated load balancer and application has only one  namespace and if this namespace field is omitted,
-	// then this field would default to the application namespace
+	// then this field would default to the application namespace.
 	Namespace string `protobuf:"bytes,3,opt,name=namespace,proto3" json:"namespace,omitempty"`
 	// Hostname with which the application is exposed on this load balancer.
 	Hostname string `protobuf:"bytes,4,opt,name=hostname,proto3" json:"hostname,omitempty"`
@@ -986,7 +986,7 @@ type ApplicationSpecificLB struct {
 	RoutingInfo *RoutingInfo `protobuf:"bytes,5,opt,name=routing_info,json=routingInfo,proto3" json:"routing_info,omitempty"`
 	// Indicator whether to use this LB as primary. This is used for Metrics reporting at the App level. If there are
 	// multiple dedicated load balancers in an App, only one and mandatorily one has to be marked primary. If there
-	// is only one dedicated load balancer in an app, it will be marked as primary by default
+	// is only one dedicated load balancer in an app, it will be marked as primary by default.
 	IsPrimary            bool     `protobuf:"varint,6,opt,name=is_primary,json=isPrimary,proto3" json:"is_primary,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -997,7 +997,7 @@ func (m *ApplicationSpecificLB) Reset()         { *m = ApplicationSpecificLB{} }
 func (m *ApplicationSpecificLB) String() string { return proto.CompactTextString(m) }
 func (*ApplicationSpecificLB) ProtoMessage()    {}
 func (*ApplicationSpecificLB) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_f7fd9b3fb96aed0b, []int{14}
+	return fileDescriptor_logical_resources_3017f63dd27f17f9, []int{14}
 }
 func (m *ApplicationSpecificLB) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ApplicationSpecificLB.Unmarshal(m, b)
@@ -1093,7 +1093,7 @@ func (m *Service) Reset()         { *m = Service{} }
 func (m *Service) String() string { return proto.CompactTextString(m) }
 func (*Service) ProtoMessage()    {}
 func (*Service) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_f7fd9b3fb96aed0b, []int{15}
+	return fileDescriptor_logical_resources_3017f63dd27f17f9, []int{15}
 }
 func (m *Service) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Service.Unmarshal(m, b)
@@ -1229,7 +1229,7 @@ func (m *CreateServiceRequest) Reset()         { *m = CreateServiceRequest{} }
 func (m *CreateServiceRequest) String() string { return proto.CompactTextString(m) }
 func (*CreateServiceRequest) ProtoMessage()    {}
 func (*CreateServiceRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_f7fd9b3fb96aed0b, []int{16}
+	return fileDescriptor_logical_resources_3017f63dd27f17f9, []int{16}
 }
 func (m *CreateServiceRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CreateServiceRequest.Unmarshal(m, b)
@@ -1342,7 +1342,7 @@ func (m *GetServiceRequest) Reset()         { *m = GetServiceRequest{} }
 func (m *GetServiceRequest) String() string { return proto.CompactTextString(m) }
 func (*GetServiceRequest) ProtoMessage()    {}
 func (*GetServiceRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_f7fd9b3fb96aed0b, []int{17}
+	return fileDescriptor_logical_resources_3017f63dd27f17f9, []int{17}
 }
 func (m *GetServiceRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetServiceRequest.Unmarshal(m, b)
@@ -1414,7 +1414,7 @@ func (m *ServicePolicyRequest) Reset()         { *m = ServicePolicyRequest{} }
 func (m *ServicePolicyRequest) String() string { return proto.CompactTextString(m) }
 func (*ServicePolicyRequest) ProtoMessage()    {}
 func (*ServicePolicyRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_f7fd9b3fb96aed0b, []int{18}
+	return fileDescriptor_logical_resources_3017f63dd27f17f9, []int{18}
 }
 func (m *ServicePolicyRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ServicePolicyRequest.Unmarshal(m, b)
@@ -1491,7 +1491,7 @@ func (m *ListServicesRequest) Reset()         { *m = ListServicesRequest{} }
 func (m *ListServicesRequest) String() string { return proto.CompactTextString(m) }
 func (*ListServicesRequest) ProtoMessage()    {}
 func (*ListServicesRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_f7fd9b3fb96aed0b, []int{19}
+	return fileDescriptor_logical_resources_3017f63dd27f17f9, []int{19}
 }
 func (m *ListServicesRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListServicesRequest.Unmarshal(m, b)
@@ -1550,7 +1550,7 @@ func (m *ListServicesResponse) Reset()         { *m = ListServicesResponse{} }
 func (m *ListServicesResponse) String() string { return proto.CompactTextString(m) }
 func (*ListServicesResponse) ProtoMessage()    {}
 func (*ListServicesResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_f7fd9b3fb96aed0b, []int{20}
+	return fileDescriptor_logical_resources_3017f63dd27f17f9, []int{20}
 }
 func (m *ListServicesResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListServicesResponse.Unmarshal(m, b)
@@ -1593,7 +1593,7 @@ func (m *DeleteServiceRequest) Reset()         { *m = DeleteServiceRequest{} }
 func (m *DeleteServiceRequest) String() string { return proto.CompactTextString(m) }
 func (*DeleteServiceRequest) ProtoMessage()    {}
 func (*DeleteServiceRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_f7fd9b3fb96aed0b, []int{21}
+	return fileDescriptor_logical_resources_3017f63dd27f17f9, []int{21}
 }
 func (m *DeleteServiceRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DeleteServiceRequest.Unmarshal(m, b)
@@ -1661,7 +1661,7 @@ type LoadBalancer struct {
 	// The namespace where the load balancer is/will be scoped (deployed in a given cluster).
 	Namespace string `protobuf:"bytes,9,opt,name=namespace,proto3" json:"namespace,omitempty"`
 	// Labels that uniquely identify the cluster loadbalancer. If gateway was created using TCC helm charts, use app:
-	// {namespace}-tcclb
+	// {namespace}-tcclb.
 	Labels map[string]string `protobuf:"bytes,10,rep,name=labels,proto3" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 	// Map of applications attached to this loadbalancer in the form applicationName: ListOfLBRoutingInfo.
 	Applications map[string]*ListOfLBRoutingInfo `protobuf:"bytes,11,rep,name=applications,proto3" json:"applications,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
@@ -1678,7 +1678,7 @@ func (m *LoadBalancer) Reset()         { *m = LoadBalancer{} }
 func (m *LoadBalancer) String() string { return proto.CompactTextString(m) }
 func (*LoadBalancer) ProtoMessage()    {}
 func (*LoadBalancer) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_f7fd9b3fb96aed0b, []int{22}
+	return fileDescriptor_logical_resources_3017f63dd27f17f9, []int{22}
 }
 func (m *LoadBalancer) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_LoadBalancer.Unmarshal(m, b)
@@ -1805,7 +1805,7 @@ type CreateLoadBalancerRequest struct {
 	// The namespace where the load balancer is/will be scoped (deployed in a given cluster).
 	Namespace string `protobuf:"bytes,9,opt,name=namespace,proto3" json:"namespace,omitempty"`
 	// Labels that uniquely identify the cluster loadbalancer. If gateway was created using TCC helm charts, use app:
-	// {namespace}-tcclb
+	// {namespace}-tcclb.
 	Labels map[string]string `protobuf:"bytes,10,rep,name=labels,proto3" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 	// Map of applications attached to this loadbalancer in the form applicationId: ListOfLBRoutingInfo.
 	Applications map[string]*ListOfLBRoutingInfo `protobuf:"bytes,11,rep,name=applications,proto3" json:"applications,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
@@ -1821,7 +1821,7 @@ func (m *CreateLoadBalancerRequest) Reset()         { *m = CreateLoadBalancerReq
 func (m *CreateLoadBalancerRequest) String() string { return proto.CompactTextString(m) }
 func (*CreateLoadBalancerRequest) ProtoMessage()    {}
 func (*CreateLoadBalancerRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_f7fd9b3fb96aed0b, []int{23}
+	return fileDescriptor_logical_resources_3017f63dd27f17f9, []int{23}
 }
 func (m *CreateLoadBalancerRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CreateLoadBalancerRequest.Unmarshal(m, b)
@@ -1940,7 +1940,7 @@ func (m *GetLoadBalancerRequest) Reset()         { *m = GetLoadBalancerRequest{}
 func (m *GetLoadBalancerRequest) String() string { return proto.CompactTextString(m) }
 func (*GetLoadBalancerRequest) ProtoMessage()    {}
 func (*GetLoadBalancerRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_f7fd9b3fb96aed0b, []int{24}
+	return fileDescriptor_logical_resources_3017f63dd27f17f9, []int{24}
 }
 func (m *GetLoadBalancerRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetLoadBalancerRequest.Unmarshal(m, b)
@@ -2004,7 +2004,7 @@ func (m *LoadBalancerPolicyRequest) Reset()         { *m = LoadBalancerPolicyReq
 func (m *LoadBalancerPolicyRequest) String() string { return proto.CompactTextString(m) }
 func (*LoadBalancerPolicyRequest) ProtoMessage()    {}
 func (*LoadBalancerPolicyRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_f7fd9b3fb96aed0b, []int{25}
+	return fileDescriptor_logical_resources_3017f63dd27f17f9, []int{25}
 }
 func (m *LoadBalancerPolicyRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_LoadBalancerPolicyRequest.Unmarshal(m, b)
@@ -2073,7 +2073,7 @@ func (m *ListLoadBalancersRequest) Reset()         { *m = ListLoadBalancersReque
 func (m *ListLoadBalancersRequest) String() string { return proto.CompactTextString(m) }
 func (*ListLoadBalancersRequest) ProtoMessage()    {}
 func (*ListLoadBalancersRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_f7fd9b3fb96aed0b, []int{26}
+	return fileDescriptor_logical_resources_3017f63dd27f17f9, []int{26}
 }
 func (m *ListLoadBalancersRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListLoadBalancersRequest.Unmarshal(m, b)
@@ -2125,7 +2125,7 @@ func (m *ListLoadBalancersResponse) Reset()         { *m = ListLoadBalancersResp
 func (m *ListLoadBalancersResponse) String() string { return proto.CompactTextString(m) }
 func (*ListLoadBalancersResponse) ProtoMessage()    {}
 func (*ListLoadBalancersResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_f7fd9b3fb96aed0b, []int{27}
+	return fileDescriptor_logical_resources_3017f63dd27f17f9, []int{27}
 }
 func (m *ListLoadBalancersResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListLoadBalancersResponse.Unmarshal(m, b)
@@ -2167,7 +2167,7 @@ func (m *DeleteLoadBalancerRequest) Reset()         { *m = DeleteLoadBalancerReq
 func (m *DeleteLoadBalancerRequest) String() string { return proto.CompactTextString(m) }
 func (*DeleteLoadBalancerRequest) ProtoMessage()    {}
 func (*DeleteLoadBalancerRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_f7fd9b3fb96aed0b, []int{28}
+	return fileDescriptor_logical_resources_3017f63dd27f17f9, []int{28}
 }
 func (m *DeleteLoadBalancerRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DeleteLoadBalancerRequest.Unmarshal(m, b)
@@ -2227,7 +2227,7 @@ func (m *ListOfLBRoutingInfo) Reset()         { *m = ListOfLBRoutingInfo{} }
 func (m *ListOfLBRoutingInfo) String() string { return proto.CompactTextString(m) }
 func (*ListOfLBRoutingInfo) ProtoMessage()    {}
 func (*ListOfLBRoutingInfo) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_f7fd9b3fb96aed0b, []int{29}
+	return fileDescriptor_logical_resources_3017f63dd27f17f9, []int{29}
 }
 func (m *ListOfLBRoutingInfo) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListOfLBRoutingInfo.Unmarshal(m, b)
@@ -2270,7 +2270,7 @@ func (m *ListOfLBRoutingInfo_LBRoutingInfo) Reset()         { *m = ListOfLBRouti
 func (m *ListOfLBRoutingInfo_LBRoutingInfo) String() string { return proto.CompactTextString(m) }
 func (*ListOfLBRoutingInfo_LBRoutingInfo) ProtoMessage()    {}
 func (*ListOfLBRoutingInfo_LBRoutingInfo) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_f7fd9b3fb96aed0b, []int{29, 0}
+	return fileDescriptor_logical_resources_3017f63dd27f17f9, []int{29, 0}
 }
 func (m *ListOfLBRoutingInfo_LBRoutingInfo) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListOfLBRoutingInfo_LBRoutingInfo.Unmarshal(m, b)
@@ -3317,10 +3317,10 @@ var _LogicalResourceModel_serviceDesc = grpc.ServiceDesc{
 }
 
 func init() {
-	proto.RegisterFile("logical_resources.proto", fileDescriptor_logical_resources_f7fd9b3fb96aed0b)
+	proto.RegisterFile("logical_resources.proto", fileDescriptor_logical_resources_3017f63dd27f17f9)
 }
 
-var fileDescriptor_logical_resources_f7fd9b3fb96aed0b = []byte{
+var fileDescriptor_logical_resources_3017f63dd27f17f9 = []byte{
 	// 2149 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xec, 0x5b, 0xcf, 0x73, 0xdb, 0xc6,
 	0x15, 0xce, 0x52, 0x12, 0x25, 0x3d, 0x4a, 0x32, 0xb9, 0x91, 0x6d, 0x0a, 0x4d, 0x5a, 0x19, 0x6d,

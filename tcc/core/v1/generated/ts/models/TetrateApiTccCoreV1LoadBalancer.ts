@@ -88,7 +88,7 @@ export interface TetrateApiTccCoreV1LoadBalancer {
      */
     namespace?: string;
     /**
-     * 
+     * Labels that uniquely identify the cluster loadbalancer. If gateway was created using TCC helm charts, use app: {namespace}-tcclb.
      * @type {{ [key: string]: string; }}
      * @memberof TetrateApiTccCoreV1LoadBalancer
      */

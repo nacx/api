@@ -19,13 +19,13 @@ import { exists, mapValues } from '../runtime';
  */
 export interface TetrateApiTccCoreV1Binding {
     /**
-     * 
+     * The role that defines the permissions that will be granted to the target resource.
      * @type {string}
      * @memberof TetrateApiTccCoreV1Binding
      */
     role?: string;
     /**
-     * 
+     * The set of subjects that will be allowed to access the target resource with the permissions defined by the role.
      * @type {Array<string>}
      * @memberof TetrateApiTccCoreV1Binding
      */

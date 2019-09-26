@@ -40,7 +40,7 @@ export interface TetrateApiTccCoreV1ApplicationSpecificLB {
      */
     tls?: TetrateApiTccCoreV1TLSSettings;
     /**
-     * 
+     * The namespace where this dedicated load balancer of the application is scoped. It should be one of application namespaces. This field cannot be omitted if the application has more than one namespace. If there is only one dedicated load balancer and application has only one  namespace and if this namespace field is omitted, then this field would default to the application namespace.
      * @type {string}
      * @memberof TetrateApiTccCoreV1ApplicationSpecificLB
      */
@@ -58,7 +58,7 @@ export interface TetrateApiTccCoreV1ApplicationSpecificLB {
      */
     routingInfo?: TetrateApiTccCoreV1RoutingInfo;
     /**
-     * 
+     * Indicator whether to use this LB as primary. This is used for Metrics reporting at the App level. If there are multiple dedicated load balancers in an App, only one and mandatorily one has to be marked primary. If there is only one dedicated load balancer in an app, it will be marked as primary by default.
      * @type {boolean}
      * @memberof TetrateApiTccCoreV1ApplicationSpecificLB
      */

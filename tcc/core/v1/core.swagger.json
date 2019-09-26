@@ -3906,7 +3906,7 @@
         },
         "namespace": {
           "type": "string",
-          "title": "The namespace where this dedicated load balancer of the application is scoped. It should be one of application namespaces. This field cannot be omitted if the application has more than one namespace. If there is only one dedicated load balancer and application has only one  namespace and if this namespace field is omitted, then this field would default to the application namespace"
+          "description": "The namespace where this dedicated load balancer of the application is scoped. It should be one of application namespaces. This field cannot be omitted if the application has more than one namespace. If there is only one dedicated load balancer and application has only one  namespace and if this namespace field is omitted, then this field would default to the application namespace."
         },
         "hostname": {
           "type": "string",
@@ -3919,7 +3919,7 @@
         "isPrimary": {
           "type": "boolean",
           "format": "boolean",
-          "title": "Indicator whether to use this LB as primary. This is used for Metrics reporting at the App level. If there are multiple dedicated load balancers in an App, only one and mandatorily one has to be marked primary. If there is only one dedicated load balancer in an app, it will be marked as primary by default"
+          "description": "Indicator whether to use this LB as primary. This is used for Metrics reporting at the App level. If there are multiple dedicated load balancers in an App, only one and mandatorily one has to be marked primary. If there is only one dedicated load balancer in an app, it will be marked as primary by default."
         }
       }
     },
@@ -3928,14 +3928,14 @@
       "properties": {
         "role": {
           "type": "string",
-          "title": "The role that defines the permissions that will be granted to the target resource"
+          "description": "The role that defines the permissions that will be granted to the target resource."
         },
         "subjects": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "title": "The set of subjects that will be allowed to access the target resource with the permissions defined by the role"
+          "description": "The set of subjects that will be allowed to access the target resource with the permissions defined by the role."
         }
       },
       "description": "A binding associates a role with a set of subjects. Bindings are used to configure policies, where different roles can be assigned to different sets of subjects to configure a fine-grained access control to the resource protected by the policy.",
@@ -4393,7 +4393,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "title": "Labels that uniquely identify the cluster loadbalancer. If gateway was created using TCC helm charts, use app: {namespace}-tcclb"
+          "description": "Labels that uniquely identify the cluster loadbalancer. If gateway was created using TCC helm charts, use app: {namespace}-tcclb."
         },
         "applications": {
           "type": "object",
@@ -5058,7 +5058,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "title": "Labels that uniquely identify the cluster loadbalancer. If gateway was created using TCC helm charts, use app: {namespace}-tcclb"
+          "description": "Labels that uniquely identify the cluster loadbalancer. If gateway was created using TCC helm charts, use app: {namespace}-tcclb."
         },
         "applications": {
           "type": "object",

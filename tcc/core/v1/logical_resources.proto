@@ -352,7 +352,7 @@ message ApplicationSpecificLB {
   // The namespace where this dedicated load balancer of the application is scoped. It should be one of application
   // namespaces. This field cannot be omitted if the application has more than one namespace. If there is only
   // one dedicated load balancer and application has only one  namespace and if this namespace field is omitted,
-  // then this field would default to the application namespace
+  // then this field would default to the application namespace.
   string namespace = 3;
   // Hostname with which the application is exposed on this load balancer.
   string hostname = 4 [(validate.rules).string.min_len = 1];
@@ -360,7 +360,7 @@ message ApplicationSpecificLB {
   RoutingInfo routing_info = 5;
   // Indicator whether to use this LB as primary. This is used for Metrics reporting at the App level. If there are
   // multiple dedicated load balancers in an App, only one and mandatorily one has to be marked primary. If there
-  // is only one dedicated load balancer in an app, it will be marked as primary by default
+  // is only one dedicated load balancer in an app, it will be marked as primary by default.
   bool is_primary = 6;
 }
 
@@ -481,7 +481,7 @@ message LoadBalancer {
   string namespace = 9 [(validate.rules).string.min_len = 1];
 
   // Labels that uniquely identify the cluster loadbalancer. If gateway was created using TCC helm charts, use app:
-  // {namespace}-tcclb
+  // {namespace}-tcclb.
   map<string, string> labels = 10 [(validate.rules).map.min_pairs = 1];
 
   // Map of applications attached to this loadbalancer in the form applicationName: ListOfLBRoutingInfo.
@@ -513,7 +513,7 @@ message CreateLoadBalancerRequest {
   string namespace = 9 [(validate.rules).string.min_len = 1];
 
   // Labels that uniquely identify the cluster loadbalancer. If gateway was created using TCC helm charts, use app:
-  // {namespace}-tcclb
+  // {namespace}-tcclb.
   map<string, string> labels = 10 [(validate.rules).map.min_pairs = 1];
 
    // Map of applications attached to this loadbalancer in the form applicationId: ListOfLBRoutingInfo.

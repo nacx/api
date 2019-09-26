@@ -24,11 +24,11 @@ message Policy {
 // subjects to configure a fine-grained access control to the resource protected by the policy.
 message Binding {
 
-  // The role that defines the permissions that will be granted to the target resource
+  // The role that defines the permissions that will be granted to the target resource.
   string role = 1 [(validate.rules).string.min_len = 1];
 
   // The set of subjects that will be allowed to access the target resource with the permissions
-  // defined by the role
+  // defined by the role.
   repeated string subjects = 2 [
     (validate.rules).repeated = {
       min_items: 1,
