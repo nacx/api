@@ -228,6 +228,7 @@ message Service {
   string description = 6;
   RoutingInfo routing_info = 7;
   repeated string service_deployments = 8;
+  string etag = 9;
 }
 
 message CreateServiceRequest {
@@ -279,8 +280,10 @@ message LoadBalancer {
   // or clusters/<cluster>/namespaces/<namespace>/deployments/<deployment>: TLS credential information
   map<string, TLSSettings> services = 6;
 
-  // List of physical load balancer deployments attached to this logical load balancer
+  // List of physical load balancer deployments attached to this logical loadbalancer
   repeated string loadbalancer_deployments = 7;
+
+  string etag = 8;
 }
 
 message CreateLoadBalancerRequest {

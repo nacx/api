@@ -14,74 +14,85 @@
 
 import * as runtime from '../runtime';
 import {
-    TetrateApiTccWorkflowsV1LBPublishAction,
-    TetrateApiTccWorkflowsV1LBPublishActionFromJSON,
-    TetrateApiTccWorkflowsV1LBPublishActionToJSON,
-    TetrateApiTccWorkflowsV1LBTicketDetails,
-    TetrateApiTccWorkflowsV1LBTicketDetailsFromJSON,
-    TetrateApiTccWorkflowsV1LBTicketDetailsToJSON,
-    TetrateApiTccWorkflowsV1LBTicketId,
-    TetrateApiTccWorkflowsV1LBTicketIdFromJSON,
-    TetrateApiTccWorkflowsV1LBTicketIdToJSON,
-    TetrateApiTccWorkflowsV1LBTicketResolution,
-    TetrateApiTccWorkflowsV1LBTicketResolutionFromJSON,
-    TetrateApiTccWorkflowsV1LBTicketResolutionToJSON,
-    TetrateApiTccWorkflowsV1LBTicketStatus,
-    TetrateApiTccWorkflowsV1LBTicketStatusFromJSON,
-    TetrateApiTccWorkflowsV1LBTicketStatusToJSON,
-    TetrateApiTccWorkflowsV1ListTicketsResponse,
-    TetrateApiTccWorkflowsV1ListTicketsResponseFromJSON,
-    TetrateApiTccWorkflowsV1ListTicketsResponseToJSON,
+    TetrateApiTccWorkflowsLoadbalancerV1CancelTicketRequest,
+    TetrateApiTccWorkflowsLoadbalancerV1CancelTicketRequestFromJSON,
+    TetrateApiTccWorkflowsLoadbalancerV1CancelTicketRequestToJSON,
+    TetrateApiTccWorkflowsLoadbalancerV1CreateTicketRequest,
+    TetrateApiTccWorkflowsLoadbalancerV1CreateTicketRequestFromJSON,
+    TetrateApiTccWorkflowsLoadbalancerV1CreateTicketRequestToJSON,
+    TetrateApiTccWorkflowsLoadbalancerV1ListTicketsResponse,
+    TetrateApiTccWorkflowsLoadbalancerV1ListTicketsResponseFromJSON,
+    TetrateApiTccWorkflowsLoadbalancerV1ListTicketsResponseToJSON,
+    TetrateApiTccWorkflowsLoadbalancerV1PublishTicketRequest,
+    TetrateApiTccWorkflowsLoadbalancerV1PublishTicketRequestFromJSON,
+    TetrateApiTccWorkflowsLoadbalancerV1PublishTicketRequestToJSON,
+    TetrateApiTccWorkflowsLoadbalancerV1ResolveTicketRequest,
+    TetrateApiTccWorkflowsLoadbalancerV1ResolveTicketRequestFromJSON,
+    TetrateApiTccWorkflowsLoadbalancerV1ResolveTicketRequestToJSON,
+    TetrateApiTccWorkflowsLoadbalancerV1TicketStatus,
+    TetrateApiTccWorkflowsLoadbalancerV1TicketStatusFromJSON,
+    TetrateApiTccWorkflowsLoadbalancerV1TicketStatusToJSON,
 } from '../models';
 
 export interface ApproveRequest {
     tenant: string;
     workspace: string;
-    requestid: string;
-    body: TetrateApiTccWorkflowsV1LBTicketResolution;
+    loadbalancer: string;
+    id: string;
+    body: TetrateApiTccWorkflowsLoadbalancerV1ResolveTicketRequest;
 }
 
 export interface AttachRequest {
     tenant: string;
     workspace: string;
-    body: TetrateApiTccWorkflowsV1LBTicketDetails;
+    id: string;
+    body: TetrateApiTccWorkflowsLoadbalancerV1CreateTicketRequest;
 }
 
 export interface CancelRequest {
     tenant: string;
     workspace: string;
-    requestid: string;
-    body: TetrateApiTccWorkflowsV1LBTicketId;
+    loadbalancer: string;
+    id: string;
+    body: TetrateApiTccWorkflowsLoadbalancerV1CancelTicketRequest;
 }
 
 export interface DenyRequest {
     tenant: string;
     workspace: string;
-    requestid: string;
-    body: TetrateApiTccWorkflowsV1LBTicketResolution;
+    loadbalancer: string;
+    id: string;
+    body: TetrateApiTccWorkflowsLoadbalancerV1ResolveTicketRequest;
 }
 
 export interface DetachRequest {
     tenant: string;
     workspace: string;
-    body: TetrateApiTccWorkflowsV1LBTicketDetails;
+    id: string;
+    body: TetrateApiTccWorkflowsLoadbalancerV1CreateTicketRequest;
 }
 
 export interface GetTicketStatusRequest {
     tenant: string;
     workspace: string;
-    requestid: string;
+    loadbalancer: string;
+    id: string;
+    name?: string;
 }
 
 export interface ListPendingTicketsRequest {
     tenant: string;
     workspace: string;
+    id: string;
+    parent?: string;
 }
 
 export interface PublishRequest {
     tenant: string;
     workspace: string;
-    body: TetrateApiTccWorkflowsV1LBPublishAction;
+    loadbalancer: string;
+    id: string;
+    body: TetrateApiTccWorkflowsLoadbalancerV1PublishTicketRequest;
 }
 
 /**
@@ -100,8 +111,12 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('workspace','Required parameter requestParameters.workspace was null or undefined when calling approve.');
         }
 
-        if (requestParameters.requestid === null || requestParameters.requestid === undefined) {
-            throw new runtime.RequiredError('requestid','Required parameter requestParameters.requestid was null or undefined when calling approve.');
+        if (requestParameters.loadbalancer === null || requestParameters.loadbalancer === undefined) {
+            throw new runtime.RequiredError('loadbalancer','Required parameter requestParameters.loadbalancer was null or undefined when calling approve.');
+        }
+
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling approve.');
         }
 
         if (requestParameters.body === null || requestParameters.body === undefined) {
@@ -115,19 +130,19 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/workflows/workspaces/{workspace}/loadbalancer/request/{requestid}/approve`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters.workspace))).replace(`{${"requestid"}}`, encodeURIComponent(String(requestParameters.requestid))),
+            path: `/v1/tenants/{tenant}/workspaces/{workspace}/loadbalancers/{loadbalancer}/requests/{id}/approve`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters.workspace))).replace(`{${"loadbalancer"}}`, encodeURIComponent(String(requestParameters.loadbalancer))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: TetrateApiTccWorkflowsV1LBTicketResolutionToJSON(requestParameters.body),
+            body: TetrateApiTccWorkflowsLoadbalancerV1ResolveTicketRequestToJSON(requestParameters.body),
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccWorkflowsV1LBTicketStatusFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccWorkflowsLoadbalancerV1TicketStatusFromJSON(jsonValue));
     }
 
     /**
      */
-    async approve(requestParameters: ApproveRequest): Promise<TetrateApiTccWorkflowsV1LBTicketStatus> {
+    async approve(requestParameters: ApproveRequest): Promise<TetrateApiTccWorkflowsLoadbalancerV1TicketStatus> {
         const response = await this.approveRaw(requestParameters);
         return await response.value();
     }
@@ -143,6 +158,10 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('workspace','Required parameter requestParameters.workspace was null or undefined when calling attach.');
         }
 
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling attach.');
+        }
+
         if (requestParameters.body === null || requestParameters.body === undefined) {
             throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling attach.');
         }
@@ -154,19 +173,19 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/workflows/workspaces/{workspace}/loadbalancer/attach`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters.workspace))),
+            path: `/v1/tenants/{tenant}/workspaces/{workspace}/loadbalancers/{id}/attach`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters.workspace))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: TetrateApiTccWorkflowsV1LBTicketDetailsToJSON(requestParameters.body),
+            body: TetrateApiTccWorkflowsLoadbalancerV1CreateTicketRequestToJSON(requestParameters.body),
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccWorkflowsV1LBTicketIdFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccWorkflowsLoadbalancerV1TicketStatusFromJSON(jsonValue));
     }
 
     /**
      */
-    async attach(requestParameters: AttachRequest): Promise<TetrateApiTccWorkflowsV1LBTicketId> {
+    async attach(requestParameters: AttachRequest): Promise<TetrateApiTccWorkflowsLoadbalancerV1TicketStatus> {
         const response = await this.attachRaw(requestParameters);
         return await response.value();
     }
@@ -182,8 +201,12 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('workspace','Required parameter requestParameters.workspace was null or undefined when calling cancel.');
         }
 
-        if (requestParameters.requestid === null || requestParameters.requestid === undefined) {
-            throw new runtime.RequiredError('requestid','Required parameter requestParameters.requestid was null or undefined when calling cancel.');
+        if (requestParameters.loadbalancer === null || requestParameters.loadbalancer === undefined) {
+            throw new runtime.RequiredError('loadbalancer','Required parameter requestParameters.loadbalancer was null or undefined when calling cancel.');
+        }
+
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling cancel.');
         }
 
         if (requestParameters.body === null || requestParameters.body === undefined) {
@@ -197,19 +220,19 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/workflows/workspaces/{workspace}/loadbalancer/request/{requestid}/cancel`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters.workspace))).replace(`{${"requestid"}}`, encodeURIComponent(String(requestParameters.requestid))),
+            path: `/v1/tenants/{tenant}/workspaces/{workspace}/loadbalancers/{loadbalancer}/requests/{id}/cancel`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters.workspace))).replace(`{${"loadbalancer"}}`, encodeURIComponent(String(requestParameters.loadbalancer))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: TetrateApiTccWorkflowsV1LBTicketIdToJSON(requestParameters.body),
+            body: TetrateApiTccWorkflowsLoadbalancerV1CancelTicketRequestToJSON(requestParameters.body),
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccWorkflowsV1LBTicketStatusFromJSON(jsonValue));
+        return new runtime.TextApiResponse(response);
     }
 
     /**
      */
-    async cancel(requestParameters: CancelRequest): Promise<TetrateApiTccWorkflowsV1LBTicketStatus> {
+    async cancel(requestParameters: CancelRequest): Promise<object> {
         const response = await this.cancelRaw(requestParameters);
         return await response.value();
     }
@@ -225,8 +248,12 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('workspace','Required parameter requestParameters.workspace was null or undefined when calling deny.');
         }
 
-        if (requestParameters.requestid === null || requestParameters.requestid === undefined) {
-            throw new runtime.RequiredError('requestid','Required parameter requestParameters.requestid was null or undefined when calling deny.');
+        if (requestParameters.loadbalancer === null || requestParameters.loadbalancer === undefined) {
+            throw new runtime.RequiredError('loadbalancer','Required parameter requestParameters.loadbalancer was null or undefined when calling deny.');
+        }
+
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deny.');
         }
 
         if (requestParameters.body === null || requestParameters.body === undefined) {
@@ -240,19 +267,19 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/workflows/workspaces/{workspace}/loadbalancer/request/{requestid}/deny`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters.workspace))).replace(`{${"requestid"}}`, encodeURIComponent(String(requestParameters.requestid))),
+            path: `/v1/tenants/{tenant}/workspaces/{workspace}/loadbalancers/{loadbalancer}/requests/{id}/deny`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters.workspace))).replace(`{${"loadbalancer"}}`, encodeURIComponent(String(requestParameters.loadbalancer))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: TetrateApiTccWorkflowsV1LBTicketResolutionToJSON(requestParameters.body),
+            body: TetrateApiTccWorkflowsLoadbalancerV1ResolveTicketRequestToJSON(requestParameters.body),
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccWorkflowsV1LBTicketStatusFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccWorkflowsLoadbalancerV1TicketStatusFromJSON(jsonValue));
     }
 
     /**
      */
-    async deny(requestParameters: DenyRequest): Promise<TetrateApiTccWorkflowsV1LBTicketStatus> {
+    async deny(requestParameters: DenyRequest): Promise<TetrateApiTccWorkflowsLoadbalancerV1TicketStatus> {
         const response = await this.denyRaw(requestParameters);
         return await response.value();
     }
@@ -268,6 +295,10 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('workspace','Required parameter requestParameters.workspace was null or undefined when calling detach.');
         }
 
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling detach.');
+        }
+
         if (requestParameters.body === null || requestParameters.body === undefined) {
             throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling detach.');
         }
@@ -279,19 +310,19 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/workflows/workspaces/{workspace}/loadbalancer/detach`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters.workspace))),
+            path: `/v1/tenants/{tenant}/workspaces/{workspace}/loadbalancers/{id}/detach`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters.workspace))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: TetrateApiTccWorkflowsV1LBTicketDetailsToJSON(requestParameters.body),
+            body: TetrateApiTccWorkflowsLoadbalancerV1CreateTicketRequestToJSON(requestParameters.body),
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccWorkflowsV1LBTicketIdFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccWorkflowsLoadbalancerV1TicketStatusFromJSON(jsonValue));
     }
 
     /**
      */
-    async detach(requestParameters: DetachRequest): Promise<TetrateApiTccWorkflowsV1LBTicketId> {
+    async detach(requestParameters: DetachRequest): Promise<TetrateApiTccWorkflowsLoadbalancerV1TicketStatus> {
         const response = await this.detachRaw(requestParameters);
         return await response.value();
     }
@@ -307,27 +338,35 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('workspace','Required parameter requestParameters.workspace was null or undefined when calling getTicketStatus.');
         }
 
-        if (requestParameters.requestid === null || requestParameters.requestid === undefined) {
-            throw new runtime.RequiredError('requestid','Required parameter requestParameters.requestid was null or undefined when calling getTicketStatus.');
+        if (requestParameters.loadbalancer === null || requestParameters.loadbalancer === undefined) {
+            throw new runtime.RequiredError('loadbalancer','Required parameter requestParameters.loadbalancer was null or undefined when calling getTicketStatus.');
+        }
+
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getTicketStatus.');
         }
 
         const queryParameters: runtime.HTTPQuery = {};
 
+        if (requestParameters.name !== undefined) {
+            queryParameters['name'] = requestParameters.name;
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/workflows/workspaces/{workspace}/loadbalancer/request/{requestid}/status`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters.workspace))).replace(`{${"requestid"}}`, encodeURIComponent(String(requestParameters.requestid))),
+            path: `/v1/tenants/{tenant}/workspaces/{workspace}/loadbalancers/{loadbalancer}/requests/{id}/status`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters.workspace))).replace(`{${"loadbalancer"}}`, encodeURIComponent(String(requestParameters.loadbalancer))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccWorkflowsV1LBTicketStatusFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccWorkflowsLoadbalancerV1TicketStatusFromJSON(jsonValue));
     }
 
     /**
      */
-    async getTicketStatus(requestParameters: GetTicketStatusRequest): Promise<TetrateApiTccWorkflowsV1LBTicketStatus> {
+    async getTicketStatus(requestParameters: GetTicketStatusRequest): Promise<TetrateApiTccWorkflowsLoadbalancerV1TicketStatus> {
         const response = await this.getTicketStatusRaw(requestParameters);
         return await response.value();
     }
@@ -343,23 +382,31 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('workspace','Required parameter requestParameters.workspace was null or undefined when calling listPendingTickets.');
         }
 
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling listPendingTickets.');
+        }
+
         const queryParameters: runtime.HTTPQuery = {};
+
+        if (requestParameters.parent !== undefined) {
+            queryParameters['parent'] = requestParameters.parent;
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/workflows/workspaces/{workspace}/loadbalancer/pending`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters.workspace))),
+            path: `/v1/tenants/{tenant}/workspaces/{workspace}/loadbalancers/{id}/pending`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters.workspace))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccWorkflowsV1ListTicketsResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccWorkflowsLoadbalancerV1ListTicketsResponseFromJSON(jsonValue));
     }
 
     /**
      */
-    async listPendingTickets(requestParameters: ListPendingTicketsRequest): Promise<TetrateApiTccWorkflowsV1ListTicketsResponse> {
+    async listPendingTickets(requestParameters: ListPendingTicketsRequest): Promise<TetrateApiTccWorkflowsLoadbalancerV1ListTicketsResponse> {
         const response = await this.listPendingTicketsRaw(requestParameters);
         return await response.value();
     }
@@ -376,6 +423,14 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('workspace','Required parameter requestParameters.workspace was null or undefined when calling publish.');
         }
 
+        if (requestParameters.loadbalancer === null || requestParameters.loadbalancer === undefined) {
+            throw new runtime.RequiredError('loadbalancer','Required parameter requestParameters.loadbalancer was null or undefined when calling publish.');
+        }
+
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling publish.');
+        }
+
         if (requestParameters.body === null || requestParameters.body === undefined) {
             throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling publish.');
         }
@@ -387,20 +442,20 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/workflows/workspaces/{workspace}/loadbalancer/publish`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters.workspace))),
+            path: `/v1/tenants/{tenant}/workspaces/{workspace}/loadbalancers/{loadbalancer}/requests/{id}/publish`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters.workspace))).replace(`{${"loadbalancer"}}`, encodeURIComponent(String(requestParameters.loadbalancer))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: TetrateApiTccWorkflowsV1LBPublishActionToJSON(requestParameters.body),
+            body: TetrateApiTccWorkflowsLoadbalancerV1PublishTicketRequestToJSON(requestParameters.body),
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccWorkflowsV1LBTicketStatusFromJSON(jsonValue));
+        return new runtime.TextApiResponse(response);
     }
 
     /**
      * LB owner calls this API with additional settings like TLS, to finally expose the service on the load balancer or remove a detached service
      */
-    async publish(requestParameters: PublishRequest): Promise<TetrateApiTccWorkflowsV1LBTicketStatus> {
+    async publish(requestParameters: PublishRequest): Promise<object> {
         const response = await this.publishRaw(requestParameters);
         return await response.value();
     }

@@ -1434,48 +1434,6 @@
         ]
       }
     },
-    "/v1/tenants/{tenant}/teams/{id}/members": {
-      "get": {
-        "operationId": "ListTeamMembers",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.ListTeamMembersResponse"
-            }
-          },
-          "404": {
-            "description": "Returned when the resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "tenant",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "name",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "Organization"
-        ]
-      }
-    },
     "/v1/tenants/{tenant}/users": {
       "get": {
         "operationId": "ListUsers",
@@ -3300,17 +3258,6 @@
         }
       }
     },
-    "tetrate.api.tcc.core.v1.ListTeamMembersResponse": {
-      "type": "object",
-      "properties": {
-        "members": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "tetrate.api.tcc.core.v1.ListTeamsResponse": {
       "type": "object",
       "properties": {
@@ -3385,7 +3332,10 @@
           "items": {
             "type": "string"
           },
-          "title": "List of physical load balancer deployments attached to this logical load balancer"
+          "title": "List of physical load balancer deployments attached to this logical loadbalancer"
+        },
+        "etag": {
+          "type": "string"
         }
       }
     },
@@ -3448,6 +3398,9 @@
         },
         "permissions": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.Permissions"
+        },
+        "etag": {
+          "type": "string"
         }
       }
     },
@@ -3633,6 +3586,9 @@
           "items": {
             "type": "string"
           }
+        },
+        "etag": {
+          "type": "string"
         }
       }
     },
@@ -3725,6 +3681,9 @@
           "items": {
             "type": "string"
           }
+        },
+        "etag": {
+          "type": "string"
         }
       }
     },

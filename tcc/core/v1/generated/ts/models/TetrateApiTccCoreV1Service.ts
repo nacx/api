@@ -72,6 +72,12 @@ export interface TetrateApiTccCoreV1Service {
      * @memberof TetrateApiTccCoreV1Service
      */
     serviceDeployments?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1Service
+     */
+    etag?: string;
 }
 
 export function TetrateApiTccCoreV1ServiceFromJSON(json: any): TetrateApiTccCoreV1Service {
@@ -84,6 +90,7 @@ export function TetrateApiTccCoreV1ServiceFromJSON(json: any): TetrateApiTccCore
         'description': !exists(json, 'description') ? undefined : json['description'],
         'routingInfo': !exists(json, 'routingInfo') ? undefined : TetrateApiTccCoreV1RoutingInfoFromJSON(json['routingInfo']),
         'serviceDeployments': !exists(json, 'serviceDeployments') ? undefined : json['serviceDeployments'],
+        'etag': !exists(json, 'etag') ? undefined : json['etag'],
     };
 }
 
@@ -100,6 +107,7 @@ export function TetrateApiTccCoreV1ServiceToJSON(value?: TetrateApiTccCoreV1Serv
         'description': value.description,
         'routingInfo': TetrateApiTccCoreV1RoutingInfoToJSON(value.routingInfo),
         'serviceDeployments': value.serviceDeployments,
+        'etag': value.etag,
     };
 }
 

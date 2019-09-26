@@ -204,6 +204,7 @@ message Namespace {
   repeated string dependencies = 6;
   ClientSettings client_settings = 7;
   Permissions permissions = 8;
+  string etag = 9;
 }
 
 message CreateNamespaceRequest {

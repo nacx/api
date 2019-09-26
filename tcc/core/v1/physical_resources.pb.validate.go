@@ -548,6 +548,8 @@ func (m *Namespace) Validate() error {
 		}
 	}
 
+	// no validation rules for Etag
+
 	return nil
 }
 

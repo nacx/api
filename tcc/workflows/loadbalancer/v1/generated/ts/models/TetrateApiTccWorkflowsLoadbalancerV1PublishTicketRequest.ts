@@ -21,52 +21,68 @@ import {
 /**
  * 
  * @export
- * @interface TetrateApiTccWorkflowsV1LBPublishAction
+ * @interface TetrateApiTccWorkflowsLoadbalancerV1PublishTicketRequest
  */
-export interface TetrateApiTccWorkflowsV1LBPublishAction {
+export interface TetrateApiTccWorkflowsLoadbalancerV1PublishTicketRequest {
     /**
      * 
      * @type {string}
-     * @memberof TetrateApiTccWorkflowsV1LBPublishAction
+     * @memberof TetrateApiTccWorkflowsLoadbalancerV1PublishTicketRequest
+     */
+    name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccWorkflowsLoadbalancerV1PublishTicketRequest
      */
     tenant?: string;
     /**
      * 
      * @type {string}
-     * @memberof TetrateApiTccWorkflowsV1LBPublishAction
+     * @memberof TetrateApiTccWorkflowsLoadbalancerV1PublishTicketRequest
      */
     workspace?: string;
     /**
      * 
      * @type {string}
-     * @memberof TetrateApiTccWorkflowsV1LBPublishAction
+     * @memberof TetrateApiTccWorkflowsLoadbalancerV1PublishTicketRequest
      */
-    requestid?: string;
+    loadbalancer?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccWorkflowsLoadbalancerV1PublishTicketRequest
+     */
+    id?: string;
     /**
      * 
      * @type {TetrateApiTccCoreV1TLSSettings}
-     * @memberof TetrateApiTccWorkflowsV1LBPublishAction
+     * @memberof TetrateApiTccWorkflowsLoadbalancerV1PublishTicketRequest
      */
     tls?: TetrateApiTccCoreV1TLSSettings;
 }
 
-export function TetrateApiTccWorkflowsV1LBPublishActionFromJSON(json: any): TetrateApiTccWorkflowsV1LBPublishAction {
+export function TetrateApiTccWorkflowsLoadbalancerV1PublishTicketRequestFromJSON(json: any): TetrateApiTccWorkflowsLoadbalancerV1PublishTicketRequest {
     return {
+        'name': !exists(json, 'name') ? undefined : json['name'],
         'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
         'workspace': !exists(json, 'workspace') ? undefined : json['workspace'],
-        'requestid': !exists(json, 'requestid') ? undefined : json['requestid'],
+        'loadbalancer': !exists(json, 'loadbalancer') ? undefined : json['loadbalancer'],
+        'id': !exists(json, 'id') ? undefined : json['id'],
         'tls': !exists(json, 'tls') ? undefined : TetrateApiTccCoreV1TLSSettingsFromJSON(json['tls']),
     };
 }
 
-export function TetrateApiTccWorkflowsV1LBPublishActionToJSON(value?: TetrateApiTccWorkflowsV1LBPublishAction): any {
+export function TetrateApiTccWorkflowsLoadbalancerV1PublishTicketRequestToJSON(value?: TetrateApiTccWorkflowsLoadbalancerV1PublishTicketRequest): any {
     if (value === undefined) {
         return undefined;
     }
     return {
+        'name': value.name,
         'tenant': value.tenant,
         'workspace': value.workspace,
-        'requestid': value.requestid,
+        'loadbalancer': value.loadbalancer,
+        'id': value.id,
         'tls': TetrateApiTccCoreV1TLSSettingsToJSON(value.tls),
     };
 }

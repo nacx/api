@@ -1001,6 +1001,8 @@ func (m *Service) Validate() error {
 		}
 	}
 
+	// no validation rules for Etag
+
 	return nil
 }
 
@@ -1475,6 +1477,8 @@ func (m *LoadBalancer) Validate() error {
 	// no validation rules for Description
 
 	// no validation rules for Services
+
+	// no validation rules for Etag
 
 	return nil
 }

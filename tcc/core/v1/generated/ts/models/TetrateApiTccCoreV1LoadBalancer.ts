@@ -66,6 +66,12 @@ export interface TetrateApiTccCoreV1LoadBalancer {
      * @memberof TetrateApiTccCoreV1LoadBalancer
      */
     loadbalancerDeployments?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1LoadBalancer
+     */
+    etag?: string;
 }
 
 export function TetrateApiTccCoreV1LoadBalancerFromJSON(json: any): TetrateApiTccCoreV1LoadBalancer {
@@ -77,6 +83,7 @@ export function TetrateApiTccCoreV1LoadBalancerFromJSON(json: any): TetrateApiTc
         'description': !exists(json, 'description') ? undefined : json['description'],
         'services': !exists(json, 'services') ? undefined : mapValues(json['services'], TetrateApiTccCoreV1TLSSettingsFromJSON),
         'loadbalancerDeployments': !exists(json, 'loadbalancerDeployments') ? undefined : json['loadbalancerDeployments'],
+        'etag': !exists(json, 'etag') ? undefined : json['etag'],
     };
 }
 
@@ -92,6 +99,7 @@ export function TetrateApiTccCoreV1LoadBalancerToJSON(value?: TetrateApiTccCoreV
         'description': value.description,
         'services': value.services === undefined ? undefined : mapValues(value.services, TetrateApiTccCoreV1TLSSettingsToJSON),
         'loadbalancerDeployments': value.loadbalancerDeployments,
+        'etag': value.etag,
     };
 }
 

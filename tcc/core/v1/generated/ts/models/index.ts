@@ -33,7 +33,6 @@ export * from './TetrateApiTccCoreV1ListEndpointsResponse';
 export * from './TetrateApiTccCoreV1ListLoadBalancersResponse';
 export * from './TetrateApiTccCoreV1ListNamespacesResponse';
 export * from './TetrateApiTccCoreV1ListServicesResponse';
-export * from './TetrateApiTccCoreV1ListTeamMembersResponse';
 export * from './TetrateApiTccCoreV1ListTeamsResponse';
 export * from './TetrateApiTccCoreV1ListTenantsResponse';
 export * from './TetrateApiTccCoreV1ListUsersResponse';

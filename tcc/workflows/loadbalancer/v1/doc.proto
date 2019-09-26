@@ -1,8 +1,8 @@
 // Copyright (c) Tetrate, Inc 2019 All Rights Reserved.
 syntax = "proto3";
 
-package tetrate.api.tcc.workflows.v1;
-option go_package = "github.com/tetrateio/tetrate/api/tcc/workflows/v1";
+package tetrate.api.tcc.workflows.loadbalancer.v1;
+option go_package = "github.com/tetrateio/tetrate/api/tcc/workflows/loadbalancer/v1";
 import "protoc-gen-swagger/options/annotations.proto";
 
 option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {

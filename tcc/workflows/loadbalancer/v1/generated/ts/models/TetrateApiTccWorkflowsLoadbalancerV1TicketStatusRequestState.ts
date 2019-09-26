@@ -16,7 +16,7 @@
  * @export
  * @enum {string}
  */
-export enum TetrateApiTccWorkflowsV1LBTicketStatusRequestState {
+export enum TetrateApiTccWorkflowsLoadbalancerV1TicketStatusRequestState {
     PENDING = 'PENDING',
     APPROVED = 'APPROVED',
     DENIED = 'DENIED',
@@ -24,11 +24,11 @@ export enum TetrateApiTccWorkflowsV1LBTicketStatusRequestState {
     CANCELED = 'CANCELED'
 }
 
-export function TetrateApiTccWorkflowsV1LBTicketStatusRequestStateFromJSON(json: any): TetrateApiTccWorkflowsV1LBTicketStatusRequestState {
-    return json as TetrateApiTccWorkflowsV1LBTicketStatusRequestState;
+export function TetrateApiTccWorkflowsLoadbalancerV1TicketStatusRequestStateFromJSON(json: any): TetrateApiTccWorkflowsLoadbalancerV1TicketStatusRequestState {
+    return json as TetrateApiTccWorkflowsLoadbalancerV1TicketStatusRequestState;
 }
 
-export function TetrateApiTccWorkflowsV1LBTicketStatusRequestStateToJSON(value?: TetrateApiTccWorkflowsV1LBTicketStatusRequestState): any {
+export function TetrateApiTccWorkflowsLoadbalancerV1TicketStatusRequestStateToJSON(value?: TetrateApiTccWorkflowsLoadbalancerV1TicketStatusRequestState): any {
     return value as any;
 }
 

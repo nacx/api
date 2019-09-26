@@ -4,7 +4,7 @@ YARN := $(or ${shell which yarn},yarn)
 NODE := $(or ${shell which node},node)
 OPENAPI_GEN := $(or ${shell which openapi-generator},openapi-generator)
 
-TOPDIR := ../../../..
+TOPDIR := ../../../../..
 VENDOR := $(TOPDIR)/third_party/protobuf/
 APIS := $(TOPDIR)/api
 TS_OUTPUT_GEN := ./generated/ts

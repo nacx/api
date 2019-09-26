@@ -23,9 +23,6 @@ import {
     TetrateApiTccCoreV1CreateUserRequest,
     TetrateApiTccCoreV1CreateUserRequestFromJSON,
     TetrateApiTccCoreV1CreateUserRequestToJSON,
-    TetrateApiTccCoreV1ListTeamMembersResponse,
-    TetrateApiTccCoreV1ListTeamMembersResponseFromJSON,
-    TetrateApiTccCoreV1ListTeamMembersResponseToJSON,
     TetrateApiTccCoreV1ListTeamsResponse,
     TetrateApiTccCoreV1ListTeamsResponseFromJSON,
     TetrateApiTccCoreV1ListTeamsResponseToJSON,
@@ -89,12 +86,6 @@ export interface GetTenantRequest {
 }
 
 export interface GetUserRequest {
-    tenant: string;
-    id: string;
-    name?: string;
-}
-
-export interface ListTeamMembersRequest {
     tenant: string;
     id: string;
     name?: string;
@@ -438,42 +429,6 @@ export class OrganizationApi extends runtime.BaseAPI {
      */
     async getUser(requestParameters: GetUserRequest): Promise<TetrateApiTccCoreV1User> {
         const response = await this.getUserRaw(requestParameters);
-        return await response.value();
-    }
-
-    /**
-     */
-    async listTeamMembersRaw(requestParameters: ListTeamMembersRequest): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
-            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling listTeamMembers.');
-        }
-
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling listTeamMembers.');
-        }
-
-        const queryParameters: runtime.HTTPQuery = {};
-
-        if (requestParameters.name !== undefined) {
-            queryParameters['name'] = requestParameters.name;
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        const response = await this.request({
-            path: `/v1/tenants/{tenant}/teams/{id}/members`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        });
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccCoreV1ListTeamMembersResponseFromJSON(jsonValue));
-    }
-
-    /**
-     */
-    async listTeamMembers(requestParameters: ListTeamMembersRequest): Promise<TetrateApiTccCoreV1ListTeamMembersResponse> {
-        const response = await this.listTeamMembersRaw(requestParameters);
         return await response.value();
     }
 

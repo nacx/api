@@ -102,12 +102,6 @@ service Organization {
       get: "/v1/tenants/{tenant}/users"
     };
   };
-
-  rpc ListTeamMembers(ListTeamMembersRequest) returns (ListTeamMembersResponse) {
-    option (google.api.http) = {
-      get: "/v1/tenants/{tenant}/teams/{id}/members"
-    };
-  };
 }
 
 message Tenant {
@@ -144,6 +138,7 @@ message Team {
   string id = 3;
   string description = 4;
   repeated string members = 5;
+  string etag = 6;
 }
 
 message CreateTeamRequest {
@@ -209,14 +204,4 @@ message DeleteUserRequest {
   string name = 1;
   string tenant = 2;
   string id = 3;
-}
-
-message ListTeamMembersRequest {
-  string name = 1;
-  string tenant = 2;
-  string id = 3;
-}
-
-message ListTeamMembersResponse {
-  repeated string members = 1;
 }

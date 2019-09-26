@@ -48,6 +48,12 @@ export interface TetrateApiTccCoreV1Team {
      * @memberof TetrateApiTccCoreV1Team
      */
     members?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1Team
+     */
+    etag?: string;
 }
 
 export function TetrateApiTccCoreV1TeamFromJSON(json: any): TetrateApiTccCoreV1Team {
@@ -57,6 +63,7 @@ export function TetrateApiTccCoreV1TeamFromJSON(json: any): TetrateApiTccCoreV1T
         'id': !exists(json, 'id') ? undefined : json['id'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'members': !exists(json, 'members') ? undefined : json['members'],
+        'etag': !exists(json, 'etag') ? undefined : json['etag'],
     };
 }
 
@@ -70,6 +77,7 @@ export function TetrateApiTccCoreV1TeamToJSON(value?: TetrateApiTccCoreV1Team): 
         'id': value.id,
         'description': value.description,
         'members': value.members,
+        'etag': value.etag,
     };
 }
 

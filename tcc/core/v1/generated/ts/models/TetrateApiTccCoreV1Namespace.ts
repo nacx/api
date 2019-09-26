@@ -75,6 +75,12 @@ export interface TetrateApiTccCoreV1Namespace {
      * @memberof TetrateApiTccCoreV1Namespace
      */
     permissions?: TetrateApiTccCoreV1Permissions;
+    /**
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1Namespace
+     */
+    etag?: string;
 }
 
 export function TetrateApiTccCoreV1NamespaceFromJSON(json: any): TetrateApiTccCoreV1Namespace {
@@ -87,6 +93,7 @@ export function TetrateApiTccCoreV1NamespaceFromJSON(json: any): TetrateApiTccCo
         'dependencies': !exists(json, 'dependencies') ? undefined : json['dependencies'],
         'clientSettings': !exists(json, 'clientSettings') ? undefined : TetrateApiTccCoreV1ClientSettingsFromJSON(json['clientSettings']),
         'permissions': !exists(json, 'permissions') ? undefined : TetrateApiTccCoreV1PermissionsFromJSON(json['permissions']),
+        'etag': !exists(json, 'etag') ? undefined : json['etag'],
     };
 }
 
@@ -103,6 +110,7 @@ export function TetrateApiTccCoreV1NamespaceToJSON(value?: TetrateApiTccCoreV1Na
         'dependencies': value.dependencies,
         'clientSettings': TetrateApiTccCoreV1ClientSettingsToJSON(value.clientSettings),
         'permissions': TetrateApiTccCoreV1PermissionsToJSON(value.permissions),
+        'etag': value.etag,
     };
 }
 
