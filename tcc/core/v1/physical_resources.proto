@@ -6,8 +6,6 @@ option go_package = "github.com/tetrateio/tetrate/api/tcc/core/v1";
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 import "routing_info.proto";
-import "client_settings.proto";
-import "tlssettings.proto";
 
 service PhysicalResourceModel {
   rpc CreateCluster(CreateClusterRequest) returns (Cluster) {
@@ -42,6 +40,13 @@ service PhysicalResourceModel {
     };
   };
 
+
+  rpc BulkUpdateCluster(BulkUpdateClusterRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/bulkupdate"
+      body: "*"
+    };
+  };
 
   rpc CreateNamespace(CreateNamespaceRequest) returns (Namespace) {
     option (google.api.http) = {
@@ -143,7 +148,7 @@ service PhysicalResourceModel {
 enum Registry {
   UNKNOWN = 0;
   KUBERNETES = 1;
-  F5 = 2;
+  VM = 2;
 }
 
 message Cluster {
@@ -156,7 +161,6 @@ message Cluster {
 
   // Information like datacenter where the cluster is present
   map<string, string> labels = 7;
-  ClientSettings client_settings = 8;
 }
 
 message CreateClusterRequest {
@@ -199,14 +203,7 @@ message Namespace {
   string cluster = 4;
   string id = 5;
   string description = 6;
-
-  // The deployments (or namespaces) that endpoints in this namespace depend upon
-  // for proper operation by name. If omitted, it's assumed that endpoints in
-  // this namespace depend only on other services in the same namespace as the
-  // endpoint.
-  repeated string dependencies = 7;
-  ClientSettings client_settings = 8;
-  string etag = 9;
+  string etag = 7;
 }
 
 message CreateNamespaceRequest {
@@ -255,29 +252,9 @@ message Deployment {
   string id = 6;
   string hostname = 7;
   map<string, string> labels = 8;
-
-  oneof type_info {
-    LoadBalancerInfo load_balancer = 9;
-    RoutingInfo service = 10;
-  }
-}
-
-message LoadBalancerInfo {
-  // If Class is NONE, none of the information in this message will be populated.
-  enum Class {
-    NONE = 0;
-    ENVOY = 1;
-    F5 = 2;
-  }
-  Class load_balancer_class = 1;
-
-  // Map of service deployments (in the cluster) attached to this loadbalancer deployment
-  // with their TLS credential information in the form:
-  // clusters/<cluster>/namespaces/<namespace>/deployments/<deployment>: TLS settings
-  map<string, TLSSettings> services = 2;
-
-  // information specific to F5 load balancers if load balancer class is F5
-  string management_ip = 3;
+  repeated Port ports = 9;
+  // information specific to F5 load balancers if deployment refers to F5
+  string lb_management_ip = 10;
 }
 
 message CreateDeploymentRequest {
@@ -399,4 +376,15 @@ message DeleteEndpointRequest {
   string namespace = 5;
   string deployment = 6;
   string id = 7;
+}
+
+// Namespaces, deployments, and endpoints in this request will replace the existing contents of a cluster
+message BulkUpdateClusterRequest {
+  string name = 1;
+  string tenant = 2;
+  string environment = 3;
+  string cluster = 4;
+  repeated Namespace namespaces = 5;
+  repeated Deployment deployments = 6;
+  repeated Endpoint endpoints = 7;
 }

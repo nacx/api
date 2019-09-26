@@ -13,9 +13,6 @@
 
 import { exists, mapValues } from '../runtime';
 import {
-    TetrateApiTccCoreV1ClientSettings,
-    TetrateApiTccCoreV1ClientSettingsFromJSON,
-    TetrateApiTccCoreV1ClientSettingsToJSON,
     TetrateApiTccCoreV1Registry,
     TetrateApiTccCoreV1RegistryFromJSON,
     TetrateApiTccCoreV1RegistryToJSON,
@@ -69,12 +66,6 @@ export interface TetrateApiTccCoreV1Cluster {
      * @memberof TetrateApiTccCoreV1Cluster
      */
     labels?: { [key: string]: string; };
-    /**
-     * 
-     * @type {TetrateApiTccCoreV1ClientSettings}
-     * @memberof TetrateApiTccCoreV1Cluster
-     */
-    clientSettings?: TetrateApiTccCoreV1ClientSettings;
 }
 
 export function TetrateApiTccCoreV1ClusterFromJSON(json: any): TetrateApiTccCoreV1Cluster {
@@ -86,7 +77,6 @@ export function TetrateApiTccCoreV1ClusterFromJSON(json: any): TetrateApiTccCore
         'description': !exists(json, 'description') ? undefined : json['description'],
         'registry': !exists(json, 'registry') ? undefined : TetrateApiTccCoreV1RegistryFromJSON(json['registry']),
         'labels': !exists(json, 'labels') ? undefined : json['labels'],
-        'clientSettings': !exists(json, 'clientSettings') ? undefined : TetrateApiTccCoreV1ClientSettingsFromJSON(json['clientSettings']),
     };
 }
 
@@ -102,7 +92,6 @@ export function TetrateApiTccCoreV1ClusterToJSON(value?: TetrateApiTccCoreV1Clus
         'description': value.description,
         'registry': TetrateApiTccCoreV1RegistryToJSON(value.registry),
         'labels': value.labels,
-        'clientSettings': TetrateApiTccCoreV1ClientSettingsToJSON(value.clientSettings),
     };
 }
 

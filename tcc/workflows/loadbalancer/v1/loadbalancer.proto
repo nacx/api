@@ -24,47 +24,47 @@ import "tcc/core/v1/tlssettings.proto";
 service LoadBalancerWorkflow {
   rpc Attach(CreateTicketRequest) returns (TicketStatus) {
     option (google.api.http) = {
-      post: "/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{id}/attach"
+      post: "/v1/tenants/{tenant}/environments/{environment}/workflows/loadbalancers/{id}/attach"
       body: "*"
     };
   };
 
   rpc Detach(CreateTicketRequest) returns (TicketStatus) {
     option (google.api.http) = {
-      post: "/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{id}/detach"
+      post: "/v1/tenants/{tenant}/environments/{environment}/workflows/loadbalancers/{id}/detach"
       body: "*"
     };
   };
 
   rpc GetTicketStatus(GetTicketStatusRequest) returns (TicketStatus) {
     option (google.api.http) = {
-      get: "/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{loadbalancer}/requests/{id}/status"
+      get: "/v1/tenants/{tenant}/environments/{environment}/workflows/loadbalancers/{loadbalancer}/requests/{id}/status"
     };
   }
 
   rpc ListPendingTickets(ListTicketsRequest) returns (ListTicketsResponse) {
     option (google.api.http) = {
-      get: "/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{id}/pending"
+      get: "/v1/tenants/{tenant}/environments/{environment}/workflows/loadbalancers/{id}/pending"
     };
   };
 
   rpc Approve(ResolveTicketRequest) returns (TicketStatus) {
     option (google.api.http) = {
-      post: "/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{loadbalancer}/requests/{id}/approve"
+      post: "/v1/tenants/{tenant}/environments/{environment}/workflows/loadbalancers/{loadbalancer}/requests/{id}/approve"
       body: "*"
     };
   };
 
   rpc Deny(ResolveTicketRequest) returns (TicketStatus) {
     option (google.api.http) = {
-      post: "/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{loadbalancer}/requests/{id}/deny"
+      post: "/v1/tenants/{tenant}/environments/{environment}/workflows/loadbalancers/{loadbalancer}/requests/{id}/deny"
       body: "*"
     };
   };
 
   rpc Cancel(CancelTicketRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      post: "/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{loadbalancer}/requests/{id}/cancel"
+      post: "/v1/tenants/{tenant}/environments/{environment}/workflows/loadbalancers/{loadbalancer}/requests/{id}/cancel"
       body: "*"
     };
   };
@@ -73,7 +73,7 @@ service LoadBalancerWorkflow {
   // finally expose the service on the load balancer or remove a detached service
   rpc Publish(PublishTicketRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      post: "/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{loadbalancer}/requests/{id}/publish"
+      post: "/v1/tenants/{tenant}/environments/{environment}/workflows/loadbalancers/{loadbalancer}/requests/{id}/publish"
       body: "*"
     };
   };

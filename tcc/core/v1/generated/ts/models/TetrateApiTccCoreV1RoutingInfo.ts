@@ -16,9 +16,6 @@ import {
     TetrateApiTccCoreV1HttpSettings,
     TetrateApiTccCoreV1HttpSettingsFromJSON,
     TetrateApiTccCoreV1HttpSettingsToJSON,
-    TetrateApiTccCoreV1Port,
-    TetrateApiTccCoreV1PortFromJSON,
-    TetrateApiTccCoreV1PortToJSON,
     TetrateApiTccCoreV1Subset,
     TetrateApiTccCoreV1SubsetFromJSON,
     TetrateApiTccCoreV1SubsetToJSON,
@@ -33,18 +30,6 @@ import {
  * @interface TetrateApiTccCoreV1RoutingInfo
  */
 export interface TetrateApiTccCoreV1RoutingInfo {
-    /**
-     * User identifiable tags associated with this service.
-     * @type {{ [key: string]: string; }}
-     * @memberof TetrateApiTccCoreV1RoutingInfo
-     */
-    labels?: { [key: string]: string; };
-    /**
-     * 
-     * @type {Array<TetrateApiTccCoreV1Port>}
-     * @memberof TetrateApiTccCoreV1RoutingInfo
-     */
-    ports?: Array<TetrateApiTccCoreV1Port>;
     /**
      * 
      * @type {Array<TetrateApiTccCoreV1Subset>}
@@ -67,8 +52,6 @@ export interface TetrateApiTccCoreV1RoutingInfo {
 
 export function TetrateApiTccCoreV1RoutingInfoFromJSON(json: any): TetrateApiTccCoreV1RoutingInfo {
     return {
-        'labels': !exists(json, 'labels') ? undefined : json['labels'],
-        'ports': !exists(json, 'ports') ? undefined : (json['ports'] as Array<any>).map(TetrateApiTccCoreV1PortFromJSON),
         'subsets': !exists(json, 'subsets') ? undefined : (json['subsets'] as Array<any>).map(TetrateApiTccCoreV1SubsetFromJSON),
         'httpSettings': !exists(json, 'httpSettings') ? undefined : TetrateApiTccCoreV1HttpSettingsFromJSON(json['httpSettings']),
         'tcpSettings': !exists(json, 'tcpSettings') ? undefined : TetrateApiTccCoreV1TcpSettingsFromJSON(json['tcpSettings']),
@@ -80,8 +63,6 @@ export function TetrateApiTccCoreV1RoutingInfoToJSON(value?: TetrateApiTccCoreV1
         return undefined;
     }
     return {
-        'labels': value.labels,
-        'ports': value.ports === undefined ? undefined : (value.ports as Array<any>).map(TetrateApiTccCoreV1PortToJSON),
         'subsets': value.subsets === undefined ? undefined : (value.subsets as Array<any>).map(TetrateApiTccCoreV1SubsetToJSON),
         'httpSettings': TetrateApiTccCoreV1HttpSettingsToJSON(value.httpSettings),
         'tcpSettings': TetrateApiTccCoreV1TcpSettingsToJSON(value.tcpSettings),

@@ -14,6 +14,9 @@
 
 import * as runtime from '../runtime';
 import {
+    TetrateApiTccCoreV1BulkUpdateClusterRequest,
+    TetrateApiTccCoreV1BulkUpdateClusterRequestFromJSON,
+    TetrateApiTccCoreV1BulkUpdateClusterRequestToJSON,
     TetrateApiTccCoreV1Cluster,
     TetrateApiTccCoreV1ClusterFromJSON,
     TetrateApiTccCoreV1ClusterToJSON,
@@ -51,6 +54,13 @@ import {
     TetrateApiTccCoreV1NamespaceFromJSON,
     TetrateApiTccCoreV1NamespaceToJSON,
 } from '../models';
+
+export interface BulkUpdateClusterRequest {
+    tenant: string;
+    environment: string;
+    cluster: string;
+    body: TetrateApiTccCoreV1BulkUpdateClusterRequest;
+}
 
 export interface CreateClusterRequest {
     tenant: string;
@@ -218,6 +228,49 @@ export interface UpdateNamespaceRequest {
  * no description
  */
 export class PhysicalResourceModelApi extends runtime.BaseAPI {
+
+    /**
+     */
+    async bulkUpdateClusterRaw(requestParameters: BulkUpdateClusterRequest): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
+            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling bulkUpdateCluster.');
+        }
+
+        if (requestParameters.environment === null || requestParameters.environment === undefined) {
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling bulkUpdateCluster.');
+        }
+
+        if (requestParameters.cluster === null || requestParameters.cluster === undefined) {
+            throw new runtime.RequiredError('cluster','Required parameter requestParameters.cluster was null or undefined when calling bulkUpdateCluster.');
+        }
+
+        if (requestParameters.body === null || requestParameters.body === undefined) {
+            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling bulkUpdateCluster.');
+        }
+
+        const queryParameters: runtime.HTTPQuery = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/bulkupdate`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: TetrateApiTccCoreV1BulkUpdateClusterRequestToJSON(requestParameters.body),
+        });
+
+        return new runtime.TextApiResponse(response);
+    }
+
+    /**
+     */
+    async bulkUpdateCluster(requestParameters: BulkUpdateClusterRequest): Promise<object> {
+        const response = await this.bulkUpdateClusterRaw(requestParameters);
+        return await response.value();
+    }
 
     /**
      */

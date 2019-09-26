@@ -12,21 +12,21 @@
  */
 
 /**
- * If Class is NONE, none of the information in this message will be populated.
+ * 
  * @export
  * @enum {string}
  */
-export enum TetrateApiTccCoreV1LoadBalancerInfoClass {
+export enum TetrateApiTccCoreV1LoadBalancerClass {
     NONE = 'NONE',
     ENVOY = 'ENVOY',
     F5 = 'F5'
 }
 
-export function TetrateApiTccCoreV1LoadBalancerInfoClassFromJSON(json: any): TetrateApiTccCoreV1LoadBalancerInfoClass {
-    return json as TetrateApiTccCoreV1LoadBalancerInfoClass;
+export function TetrateApiTccCoreV1LoadBalancerClassFromJSON(json: any): TetrateApiTccCoreV1LoadBalancerClass {
+    return json as TetrateApiTccCoreV1LoadBalancerClass;
 }
 
-export function TetrateApiTccCoreV1LoadBalancerInfoClassToJSON(value?: TetrateApiTccCoreV1LoadBalancerInfoClass): any {
+export function TetrateApiTccCoreV1LoadBalancerClassToJSON(value?: TetrateApiTccCoreV1LoadBalancerClass): any {
     return value as any;
 }
 

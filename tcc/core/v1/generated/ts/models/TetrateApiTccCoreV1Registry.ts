@@ -19,7 +19,7 @@
 export enum TetrateApiTccCoreV1Registry {
     UNKNOWN = 'UNKNOWN',
     KUBERNETES = 'KUBERNETES',
-    F5 = 'F5'
+    VM = 'VM'
 }
 
 export function TetrateApiTccCoreV1RegistryFromJSON(json: any): TetrateApiTccCoreV1Registry {

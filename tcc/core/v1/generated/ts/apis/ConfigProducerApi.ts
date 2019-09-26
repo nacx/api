@@ -21,8 +21,9 @@ import {
 
 export interface DownloadRequest {
     tenant: string;
-    configtype: string;
+    environment: string;
     cluster: string;
+    configtype: string;
 }
 
 /**
@@ -37,12 +38,16 @@ export class ConfigProducerApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling download.');
         }
 
-        if (requestParameters.configtype === null || requestParameters.configtype === undefined) {
-            throw new runtime.RequiredError('configtype','Required parameter requestParameters.configtype was null or undefined when calling download.');
+        if (requestParameters.environment === null || requestParameters.environment === undefined) {
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling download.');
         }
 
         if (requestParameters.cluster === null || requestParameters.cluster === undefined) {
             throw new runtime.RequiredError('cluster','Required parameter requestParameters.cluster was null or undefined when calling download.');
+        }
+
+        if (requestParameters.configtype === null || requestParameters.configtype === undefined) {
+            throw new runtime.RequiredError('configtype','Required parameter requestParameters.configtype was null or undefined when calling download.');
         }
 
         const queryParameters: runtime.HTTPQuery = {};
@@ -50,7 +55,7 @@ export class ConfigProducerApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/configproducer/{configtype}/{cluster}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"configtype"}}`, encodeURIComponent(String(requestParameters.configtype))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/configproducer/{configtype}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))).replace(`{${"configtype"}}`, encodeURIComponent(String(requestParameters.configtype))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

@@ -13,6 +13,9 @@
 
 import { exists, mapValues } from '../runtime';
 import {
+    TetrateApiTccCoreV1LoadBalancerClass,
+    TetrateApiTccCoreV1LoadBalancerClassFromJSON,
+    TetrateApiTccCoreV1LoadBalancerClassToJSON,
     TetrateApiTccCoreV1TLSSettings,
     TetrateApiTccCoreV1TLSSettingsFromJSON,
     TetrateApiTccCoreV1TLSSettingsToJSON,
@@ -61,6 +64,12 @@ export interface TetrateApiTccCoreV1LoadBalancer {
      */
     enableWorkflows?: boolean;
     /**
+     * 
+     * @type {TetrateApiTccCoreV1LoadBalancerClass}
+     * @memberof TetrateApiTccCoreV1LoadBalancer
+     */
+    loadBalancerClass?: TetrateApiTccCoreV1LoadBalancerClass;
+    /**
      * The namespace where the load balancer is/will be deployed in a given cluster.
      * @type {string}
      * @memberof TetrateApiTccCoreV1LoadBalancer
@@ -94,6 +103,7 @@ export function TetrateApiTccCoreV1LoadBalancerFromJSON(json: any): TetrateApiTc
         'id': !exists(json, 'id') ? undefined : json['id'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'enableWorkflows': !exists(json, 'enableWorkflows') ? undefined : json['enableWorkflows'],
+        'loadBalancerClass': !exists(json, 'loadBalancerClass') ? undefined : TetrateApiTccCoreV1LoadBalancerClassFromJSON(json['loadBalancerClass']),
         'clusterNamespace': !exists(json, 'clusterNamespace') ? undefined : json['clusterNamespace'],
         'labels': !exists(json, 'labels') ? undefined : json['labels'],
         'applications': !exists(json, 'applications') ? undefined : mapValues(json['applications'], TetrateApiTccCoreV1TLSSettingsFromJSON),
@@ -112,6 +122,7 @@ export function TetrateApiTccCoreV1LoadBalancerToJSON(value?: TetrateApiTccCoreV
         'id': value.id,
         'description': value.description,
         'enableWorkflows': value.enableWorkflows,
+        'loadBalancerClass': TetrateApiTccCoreV1LoadBalancerClassToJSON(value.loadBalancerClass),
         'clusterNamespace': value.clusterNamespace,
         'labels': value.labels,
         'applications': value.applications === undefined ? undefined : mapValues(value.applications, TetrateApiTccCoreV1TLSSettingsToJSON),

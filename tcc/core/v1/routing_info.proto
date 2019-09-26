@@ -8,19 +8,15 @@ import "google/protobuf/duration.proto";
 
 // Part of the Deployment type_info oneof
 message RoutingInfo {
-  // User identifiable tags associated with this service.
-  map<string, string> labels = 1;
-
-  repeated Port ports = 2;
-  repeated Subset subsets = 3;
+  repeated Subset subsets = 1;
 
   // HTTP specific settings, transformations and routing rules
   // associated with HTTP traffic to this service.
-  HttpSettings http_settings = 4;
+  HttpSettings http_settings = 2;
 
   // TCP specific settings, transformations and routing rules
   // associated with non-HTTP traffic to this service.
-  TcpSettings tcp_settings = 5;
+  TcpSettings tcp_settings = 3;
 }
 
 message Port {

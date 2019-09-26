@@ -178,50 +178,6 @@
         ]
       }
     },
-    "/v1/tenants/{tenant}/configproducer/{configtype}/{cluster}": {
-      "get": {
-        "operationId": "Download",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.ConfigData"
-            }
-          },
-          "404": {
-            "description": "Returned when the resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "tenant",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "configtype",
-            "description": "currently accepted values are istio or f5",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "cluster",
-            "description": "A unique identifier for the k8s cluster or VM cluster\nTypically we have multiple k8s clusters and one big giant VM cluster\nin a DC.",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "ConfigProducer"
-        ]
-      }
-    },
     "/v1/tenants/{tenant}/environments": {
       "get": {
         "operationId": "ListEnvironments",
@@ -857,6 +813,106 @@
         ],
         "tags": [
           "PhysicalResourceModel"
+        ]
+      }
+    },
+    "/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/bulkupdate": {
+      "post": {
+        "operationId": "BulkUpdateCluster",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "environment",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "cluster",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.BulkUpdateClusterRequest"
+            }
+          }
+        ],
+        "tags": [
+          "PhysicalResourceModel"
+        ]
+      }
+    },
+    "/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/configproducer/{configtype}": {
+      "get": {
+        "operationId": "Download",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.ConfigData"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "environment",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "cluster",
+            "description": "A unique identifier for the k8s cluster or VM cluster\nTypically we have multiple k8s clusters and one big giant VM cluster\nin a DC.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "configtype",
+            "description": "currently accepted values are istio or f5",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ConfigProducer"
         ]
       }
     },
@@ -1718,6 +1774,64 @@
         ]
       }
     },
+    "/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/registryconsumer/{registrytype}": {
+      "post": {
+        "operationId": "RegistryUpdate",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "environment",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "cluster",
+            "description": "A unique identifier for the k8s/vm cluster",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "registrytype",
+            "description": "currently accepted values are kubernetes or vm",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.RegistryUpdateRequest"
+            }
+          }
+        ],
+        "tags": [
+          "RegistryConsumer"
+        ]
+      }
+    },
     "/v1/tenants/{tenant}/environments/{environment}/clusters/{id}": {
       "get": {
         "operationId": "GetCluster",
@@ -2210,58 +2324,6 @@
         ]
       }
     },
-    "/v1/tenants/{tenant}/registryconsumer/{registrytype}/{cluster}": {
-      "post": {
-        "operationId": "Upload",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
-          },
-          "404": {
-            "description": "Returned when the resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "tenant",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "registrytype",
-            "description": "currently accepted values are kubernetes or f5",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "cluster",
-            "description": "A unique identifier for the k8s/f5 cluster",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.RegistryData"
-            }
-          }
-        ],
-        "tags": [
-          "RegistryConsumer"
-        ]
-      }
-    },
     "/v1/tenants/{tenant}/teams": {
       "get": {
         "operationId": "ListTeams",
@@ -2674,6 +2736,9 @@
         "description": {
           "type": "string"
         },
+        "hostname": {
+          "type": "string"
+        },
         "routingInfo": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.RoutingInfo"
         },
@@ -2694,12 +2759,48 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Labels that uniquely identify the load balancer in the application's namespace."
+          "description": "Labels that uniquely identify the load balancer in the application's namespace.\nIf omitted, defaults to \"app: \u003cid\u003e\"."
         },
         "tls": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.TLSSettings"
         }
       }
+    },
+    "tetrate.api.tcc.core.v1.BulkUpdateClusterRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "tenant": {
+          "type": "string"
+        },
+        "environment": {
+          "type": "string"
+        },
+        "cluster": {
+          "type": "string"
+        },
+        "namespaces": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.core.v1.Namespace"
+          }
+        },
+        "deployments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.core.v1.Deployment"
+          }
+        },
+        "endpoints": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.core.v1.Endpoint"
+          }
+        }
+      },
+      "title": "Namespaces, deployments, and endpoints in this request will replace the existing contents of a cluster"
     },
     "tetrate.api.tcc.core.v1.ClientSettings": {
       "type": "object",
@@ -2781,9 +2882,6 @@
             "type": "string"
           },
           "title": "Information like datacenter where the cluster is present"
-        },
-        "clientSettings": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.ClientSettings"
         }
       }
     },
@@ -2794,6 +2892,9 @@
           "type": "string"
         },
         "cluster": {
+          "type": "string"
+        },
+        "environment": {
           "type": "string"
         },
         "tenant": {
@@ -3111,11 +3212,15 @@
             "type": "string"
           }
         },
-        "loadBalancer": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.LoadBalancerInfo"
+        "ports": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.core.v1.Port"
+          }
         },
-        "service": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.RoutingInfo"
+        "lbManagementIp": {
+          "type": "string",
+          "title": "information specific to F5 load balancers if deployment refers to F5"
         }
       }
     },
@@ -3528,6 +3633,9 @@
           "type": "boolean",
           "format": "boolean"
         },
+        "loadBalancerClass": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.LoadBalancerClass"
+        },
         "clusterNamespace": {
           "type": "string",
           "description": "The namespace where the load balancer is/will be deployed in a given cluster."
@@ -3537,7 +3645,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "title": "Labels that uniquely identify the cluster loadbalancer"
+          "title": "Labels that uniquely identify the cluster loadbalancer.\nIf omitted, defaults to \"app: istio-ingressgateway\""
         },
         "applications": {
           "type": "object",
@@ -3551,34 +3659,14 @@
         }
       }
     },
-    "tetrate.api.tcc.core.v1.LoadBalancerInfo": {
-      "type": "object",
-      "properties": {
-        "loadBalancerClass": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.LoadBalancerInfo.Class"
-        },
-        "services": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/tetrate.api.tcc.core.v1.TLSSettings"
-          },
-          "title": "Map of service deployments (in the cluster) attached to this loadbalancer deployment\nwith their TLS credential information in the form:\nclusters/\u003ccluster\u003e/namespaces/\u003cnamespace\u003e/deployments/\u003cdeployment\u003e: TLS settings"
-        },
-        "managementIp": {
-          "type": "string",
-          "title": "information specific to F5 load balancers if load balancer class is F5"
-        }
-      }
-    },
-    "tetrate.api.tcc.core.v1.LoadBalancerInfo.Class": {
+    "tetrate.api.tcc.core.v1.LoadBalancerClass": {
       "type": "string",
       "enum": [
         "NONE",
         "ENVOY",
         "F5"
       ],
-      "default": "NONE",
-      "description": "If Class is NONE, none of the information in this message will be populated."
+      "default": "NONE"
     },
     "tetrate.api.tcc.core.v1.Namespace": {
       "type": "object",
@@ -3600,16 +3688,6 @@
         },
         "description": {
           "type": "string"
-        },
-        "dependencies": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "The deployments (or namespaces) that endpoints in this namespace depend upon\nfor proper operation by name. If omitted, it's assumed that endpoints in\nthis namespace depend only on other services in the same namespace as the\nendpoint."
-        },
-        "clientSettings": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.ClientSettings"
         },
         "etag": {
           "type": "string"
@@ -3657,23 +3735,26 @@
       "enum": [
         "UNKNOWN",
         "KUBERNETES",
-        "F5"
+        "VM"
       ],
       "default": "UNKNOWN"
     },
-    "tetrate.api.tcc.core.v1.RegistryData": {
+    "tetrate.api.tcc.core.v1.RegistryUpdateRequest": {
       "type": "object",
       "properties": {
         "registrytype": {
           "type": "string",
-          "title": "currently accepted values are kubernetes or f5"
+          "title": "currently accepted values are kubernetes or vm"
         },
-        "tenant": {
+        "environment": {
           "type": "string"
         },
         "cluster": {
           "type": "string",
-          "title": "A unique identifier for the k8s/f5 cluster"
+          "title": "A unique identifier for the k8s/vm cluster"
+        },
+        "tenant": {
+          "type": "string"
         },
         "payload": {
           "type": "string",
@@ -3719,19 +3800,6 @@
     "tetrate.api.tcc.core.v1.RoutingInfo": {
       "type": "object",
       "properties": {
-        "labels": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          },
-          "description": "User identifiable tags associated with this service."
-        },
-        "ports": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/tetrate.api.tcc.core.v1.Port"
-          }
-        },
         "subsets": {
           "type": "array",
           "items": {
@@ -3772,6 +3840,19 @@
         },
         "hostname": {
           "type": "string"
+        },
+        "labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "User identifiable tags associated with this service."
+        },
+        "ports": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.core.v1.Port"
+          }
         },
         "routingInfo": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.RoutingInfo"

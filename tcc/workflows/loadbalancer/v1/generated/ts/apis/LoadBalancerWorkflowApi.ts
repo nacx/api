@@ -130,7 +130,7 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{loadbalancer}/requests/{id}/approve`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"loadbalancer"}}`, encodeURIComponent(String(requestParameters.loadbalancer))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/workflows/loadbalancers/{loadbalancer}/requests/{id}/approve`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"loadbalancer"}}`, encodeURIComponent(String(requestParameters.loadbalancer))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -173,7 +173,7 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{id}/attach`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/workflows/loadbalancers/{id}/attach`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -220,7 +220,7 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{loadbalancer}/requests/{id}/cancel`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"loadbalancer"}}`, encodeURIComponent(String(requestParameters.loadbalancer))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/workflows/loadbalancers/{loadbalancer}/requests/{id}/cancel`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"loadbalancer"}}`, encodeURIComponent(String(requestParameters.loadbalancer))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -267,7 +267,7 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{loadbalancer}/requests/{id}/deny`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"loadbalancer"}}`, encodeURIComponent(String(requestParameters.loadbalancer))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/workflows/loadbalancers/{loadbalancer}/requests/{id}/deny`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"loadbalancer"}}`, encodeURIComponent(String(requestParameters.loadbalancer))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -310,7 +310,7 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{id}/detach`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/workflows/loadbalancers/{id}/detach`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -355,7 +355,7 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{loadbalancer}/requests/{id}/status`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"loadbalancer"}}`, encodeURIComponent(String(requestParameters.loadbalancer))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/workflows/loadbalancers/{loadbalancer}/requests/{id}/status`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"loadbalancer"}}`, encodeURIComponent(String(requestParameters.loadbalancer))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -395,7 +395,7 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{id}/pending`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/workflows/loadbalancers/{id}/pending`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -442,7 +442,7 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{loadbalancer}/requests/{id}/publish`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"loadbalancer"}}`, encodeURIComponent(String(requestParameters.loadbalancer))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/workflows/loadbalancers/{loadbalancer}/requests/{id}/publish`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"loadbalancer"}}`, encodeURIComponent(String(requestParameters.loadbalancer))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,

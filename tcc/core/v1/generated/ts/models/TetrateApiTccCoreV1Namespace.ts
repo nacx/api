@@ -12,12 +12,6 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import {
-    TetrateApiTccCoreV1ClientSettings,
-    TetrateApiTccCoreV1ClientSettingsFromJSON,
-    TetrateApiTccCoreV1ClientSettingsToJSON,
-} from './';
-
 /**
  * 
  * @export
@@ -61,18 +55,6 @@ export interface TetrateApiTccCoreV1Namespace {
      */
     description?: string;
     /**
-     * The deployments (or namespaces) that endpoints in this namespace depend upon for proper operation by name. If omitted, it\'s assumed that endpoints in this namespace depend only on other services in the same namespace as the endpoint.
-     * @type {Array<string>}
-     * @memberof TetrateApiTccCoreV1Namespace
-     */
-    dependencies?: Array<string>;
-    /**
-     * 
-     * @type {TetrateApiTccCoreV1ClientSettings}
-     * @memberof TetrateApiTccCoreV1Namespace
-     */
-    clientSettings?: TetrateApiTccCoreV1ClientSettings;
-    /**
      * 
      * @type {string}
      * @memberof TetrateApiTccCoreV1Namespace
@@ -88,8 +70,6 @@ export function TetrateApiTccCoreV1NamespaceFromJSON(json: any): TetrateApiTccCo
         'cluster': !exists(json, 'cluster') ? undefined : json['cluster'],
         'id': !exists(json, 'id') ? undefined : json['id'],
         'description': !exists(json, 'description') ? undefined : json['description'],
-        'dependencies': !exists(json, 'dependencies') ? undefined : json['dependencies'],
-        'clientSettings': !exists(json, 'clientSettings') ? undefined : TetrateApiTccCoreV1ClientSettingsFromJSON(json['clientSettings']),
         'etag': !exists(json, 'etag') ? undefined : json['etag'],
     };
 }
@@ -105,8 +85,6 @@ export function TetrateApiTccCoreV1NamespaceToJSON(value?: TetrateApiTccCoreV1Na
         'cluster': value.cluster,
         'id': value.id,
         'description': value.description,
-        'dependencies': value.dependencies,
-        'clientSettings': TetrateApiTccCoreV1ClientSettingsToJSON(value.clientSettings),
         'etag': value.etag,
     };
 }

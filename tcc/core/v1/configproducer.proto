@@ -16,7 +16,7 @@ import "google/api/annotations.proto";
 service ConfigProducer {
   rpc Download(ConfigDownloadRequest) returns (ConfigData) {
     option (google.api.http) = {
-      get: "/v1/tenants/{tenant}/configproducer/{configtype}/{cluster}"
+      get: "/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/configproducer/{configtype}"
     };
   };
 }
@@ -28,15 +28,17 @@ message ConfigDownloadRequest {
   // Typically we have multiple k8s clusters and one big giant VM cluster
   // in a DC.
   string cluster = 2;
-  string tenant = 3;
+  string environment = 3;
+  string tenant = 4;
 }
 
 message ConfigData {
   string configtype = 1;
   string cluster = 2;
-  string tenant = 3;
+  string environment = 3;
+  string tenant = 4;
   // For istio, this is a huge YAML dump of all Istio artifacts like
   // virtual services, destination rules, service entries, gateways,
   // etc. in YAML form. For F5, its all f5 config artifacts.
-  string payload = 4;
+  string payload = 5;
 }

@@ -13,6 +13,9 @@
 
 import { exists, mapValues } from '../runtime';
 import {
+    TetrateApiTccCoreV1Port,
+    TetrateApiTccCoreV1PortFromJSON,
+    TetrateApiTccCoreV1PortToJSON,
     TetrateApiTccCoreV1RoutingInfo,
     TetrateApiTccCoreV1RoutingInfoFromJSON,
     TetrateApiTccCoreV1RoutingInfoToJSON,
@@ -67,6 +70,18 @@ export interface TetrateApiTccCoreV1Service {
      */
     hostname?: string;
     /**
+     * User identifiable tags associated with this service.
+     * @type {{ [key: string]: string; }}
+     * @memberof TetrateApiTccCoreV1Service
+     */
+    labels?: { [key: string]: string; };
+    /**
+     * 
+     * @type {Array<TetrateApiTccCoreV1Port>}
+     * @memberof TetrateApiTccCoreV1Service
+     */
+    ports?: Array<TetrateApiTccCoreV1Port>;
+    /**
      * 
      * @type {TetrateApiTccCoreV1RoutingInfo}
      * @memberof TetrateApiTccCoreV1Service
@@ -89,6 +104,8 @@ export function TetrateApiTccCoreV1ServiceFromJSON(json: any): TetrateApiTccCore
         'id': !exists(json, 'id') ? undefined : json['id'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'hostname': !exists(json, 'hostname') ? undefined : json['hostname'],
+        'labels': !exists(json, 'labels') ? undefined : json['labels'],
+        'ports': !exists(json, 'ports') ? undefined : (json['ports'] as Array<any>).map(TetrateApiTccCoreV1PortFromJSON),
         'routingInfo': !exists(json, 'routingInfo') ? undefined : TetrateApiTccCoreV1RoutingInfoFromJSON(json['routingInfo']),
         'etag': !exists(json, 'etag') ? undefined : json['etag'],
     };
@@ -106,6 +123,8 @@ export function TetrateApiTccCoreV1ServiceToJSON(value?: TetrateApiTccCoreV1Serv
         'id': value.id,
         'description': value.description,
         'hostname': value.hostname,
+        'labels': value.labels,
+        'ports': value.ports === undefined ? undefined : (value.ports as Array<any>).map(TetrateApiTccCoreV1PortToJSON),
         'routingInfo': TetrateApiTccCoreV1RoutingInfoToJSON(value.routingInfo),
         'etag': value.etag,
     };

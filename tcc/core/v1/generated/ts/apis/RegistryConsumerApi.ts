@@ -14,16 +14,17 @@
 
 import * as runtime from '../runtime';
 import {
-    TetrateApiTccCoreV1RegistryData,
-    TetrateApiTccCoreV1RegistryDataFromJSON,
-    TetrateApiTccCoreV1RegistryDataToJSON,
+    TetrateApiTccCoreV1RegistryUpdateRequest,
+    TetrateApiTccCoreV1RegistryUpdateRequestFromJSON,
+    TetrateApiTccCoreV1RegistryUpdateRequestToJSON,
 } from '../models';
 
-export interface UploadRequest {
+export interface RegistryUpdateRequest {
     tenant: string;
-    registrytype: string;
+    environment: string;
     cluster: string;
-    body: TetrateApiTccCoreV1RegistryData;
+    registrytype: string;
+    body: TetrateApiTccCoreV1RegistryUpdateRequest;
 }
 
 /**
@@ -33,21 +34,25 @@ export class RegistryConsumerApi extends runtime.BaseAPI {
 
     /**
      */
-    async uploadRaw(requestParameters: UploadRequest): Promise<runtime.ApiResponse<any>> {
+    async registryUpdateRaw(requestParameters: RegistryUpdateRequest): Promise<runtime.ApiResponse<any>> {
         if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
-            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling upload.');
+            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling registryUpdate.');
         }
 
-        if (requestParameters.registrytype === null || requestParameters.registrytype === undefined) {
-            throw new runtime.RequiredError('registrytype','Required parameter requestParameters.registrytype was null or undefined when calling upload.');
+        if (requestParameters.environment === null || requestParameters.environment === undefined) {
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling registryUpdate.');
         }
 
         if (requestParameters.cluster === null || requestParameters.cluster === undefined) {
-            throw new runtime.RequiredError('cluster','Required parameter requestParameters.cluster was null or undefined when calling upload.');
+            throw new runtime.RequiredError('cluster','Required parameter requestParameters.cluster was null or undefined when calling registryUpdate.');
+        }
+
+        if (requestParameters.registrytype === null || requestParameters.registrytype === undefined) {
+            throw new runtime.RequiredError('registrytype','Required parameter requestParameters.registrytype was null or undefined when calling registryUpdate.');
         }
 
         if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling upload.');
+            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling registryUpdate.');
         }
 
         const queryParameters: runtime.HTTPQuery = {};
@@ -57,11 +62,11 @@ export class RegistryConsumerApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/registryconsumer/{registrytype}/{cluster}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"registrytype"}}`, encodeURIComponent(String(requestParameters.registrytype))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/registryconsumer/{registrytype}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))).replace(`{${"registrytype"}}`, encodeURIComponent(String(requestParameters.registrytype))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: TetrateApiTccCoreV1RegistryDataToJSON(requestParameters.body),
+            body: TetrateApiTccCoreV1RegistryUpdateRequestToJSON(requestParameters.body),
         });
 
         return new runtime.TextApiResponse(response);
@@ -69,8 +74,8 @@ export class RegistryConsumerApi extends runtime.BaseAPI {
 
     /**
      */
-    async upload(requestParameters: UploadRequest): Promise<object> {
-        const response = await this.uploadRaw(requestParameters);
+    async registryUpdate(requestParameters: RegistryUpdateRequest): Promise<object> {
+        const response = await this.registryUpdateRaw(requestParameters);
         return await response.value();
     }
 

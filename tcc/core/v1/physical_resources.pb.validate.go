@@ -54,16 +54,6 @@ func (m *Cluster) Validate() error {
 
 	// no validation rules for Labels
 
-	if v, ok := interface{}(m.GetClientSettings()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return ClusterValidationError{
-				field:  "ClientSettings",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
 	return nil
 }
 
@@ -529,16 +519,6 @@ func (m *Namespace) Validate() error {
 	// no validation rules for Id
 
 	// no validation rules for Description
-
-	if v, ok := interface{}(m.GetClientSettings()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return NamespaceValidationError{
-				field:  "ClientSettings",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
 
 	// no validation rules for Etag
 
@@ -1020,26 +1000,13 @@ func (m *Deployment) Validate() error {
 
 	// no validation rules for Labels
 
-	switch m.TypeInfo.(type) {
+	for idx, item := range m.GetPorts() {
+		_, _ = idx, item
 
-	case *Deployment_LoadBalancer:
-
-		if v, ok := interface{}(m.GetLoadBalancer()).(interface{ Validate() error }); ok {
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
 				return DeploymentValidationError{
-					field:  "LoadBalancer",
-					reason: "embedded message failed validation",
-					cause:  err,
-				}
-			}
-		}
-
-	case *Deployment_Service:
-
-		if v, ok := interface{}(m.GetService()).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return DeploymentValidationError{
-					field:  "Service",
+					field:  fmt.Sprintf("Ports[%v]", idx),
 					reason: "embedded message failed validation",
 					cause:  err,
 				}
@@ -1047,6 +1014,8 @@ func (m *Deployment) Validate() error {
 		}
 
 	}
+
+	// no validation rules for LbManagementIp
 
 	return nil
 }
@@ -1104,77 +1073,6 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = DeploymentValidationError{}
-
-// Validate checks the field values on LoadBalancerInfo with the rules defined
-// in the proto definition for this message. If any rules are violated, an
-// error is returned.
-func (m *LoadBalancerInfo) Validate() error {
-	if m == nil {
-		return nil
-	}
-
-	// no validation rules for LoadBalancerClass
-
-	// no validation rules for Services
-
-	// no validation rules for ManagementIp
-
-	return nil
-}
-
-// LoadBalancerInfoValidationError is the validation error returned by
-// LoadBalancerInfo.Validate if the designated constraints aren't met.
-type LoadBalancerInfoValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e LoadBalancerInfoValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e LoadBalancerInfoValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e LoadBalancerInfoValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e LoadBalancerInfoValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e LoadBalancerInfoValidationError) ErrorName() string { return "LoadBalancerInfoValidationError" }
-
-// Error satisfies the builtin error interface
-func (e LoadBalancerInfoValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sLoadBalancerInfo.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = LoadBalancerInfoValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = LoadBalancerInfoValidationError{}
 
 // Validate checks the field values on CreateDeploymentRequest with the rules
 // defined in the proto definition for this message. If any rules are
@@ -2083,3 +1981,123 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = DeleteEndpointRequestValidationError{}
+
+// Validate checks the field values on BulkUpdateClusterRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *BulkUpdateClusterRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Name
+
+	// no validation rules for Tenant
+
+	// no validation rules for Environment
+
+	// no validation rules for Cluster
+
+	for idx, item := range m.GetNamespaces() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return BulkUpdateClusterRequestValidationError{
+					field:  fmt.Sprintf("Namespaces[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	for idx, item := range m.GetDeployments() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return BulkUpdateClusterRequestValidationError{
+					field:  fmt.Sprintf("Deployments[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	for idx, item := range m.GetEndpoints() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return BulkUpdateClusterRequestValidationError{
+					field:  fmt.Sprintf("Endpoints[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// BulkUpdateClusterRequestValidationError is the validation error returned by
+// BulkUpdateClusterRequest.Validate if the designated constraints aren't met.
+type BulkUpdateClusterRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e BulkUpdateClusterRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e BulkUpdateClusterRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e BulkUpdateClusterRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e BulkUpdateClusterRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e BulkUpdateClusterRequestValidationError) ErrorName() string {
+	return "BulkUpdateClusterRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e BulkUpdateClusterRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sBulkUpdateClusterRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = BulkUpdateClusterRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = BulkUpdateClusterRequestValidationError{}

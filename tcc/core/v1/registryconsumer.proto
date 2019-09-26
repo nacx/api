@@ -13,9 +13,9 @@ import "google/protobuf/empty.proto";
 // and then push to the database.  Why is this a gRPC service? No
 // clue.
 service RegistryConsumer {
-  rpc Upload(RegistryData) returns (google.protobuf.Empty) {
+  rpc RegistryUpdate(RegistryUpdateRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      post: "/v1/tenants/{tenant}/registryconsumer/{registrytype}/{cluster}"
+      post: "/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/registryconsumer/{registrytype}"
       body: "*"
     };
   };
@@ -23,14 +23,15 @@ service RegistryConsumer {
 
 // Please do not over engineer this anything beyond a glorified
 // file copy.
-message RegistryData {
-  // currently accepted values are kubernetes or f5
+message RegistryUpdateRequest {
+  // currently accepted values are kubernetes or vm
   string registrytype = 1;
-  string tenant = 2;
-  // A unique identifier for the k8s/f5 cluster
+  string environment = 2;
+  // A unique identifier for the k8s/vm cluster
   string cluster = 3;
+  string tenant = 4;
   // A huge json dump of all services, endpoints.
   // For k8s, its literally kubectl get services --all-namespaces -o json
   // and kubectl get po --all-namespaces -o json
-  string payload = 4;
+  string payload = 5;
 }

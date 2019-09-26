@@ -62,6 +62,12 @@ export interface TetrateApiTccCoreV1Application {
     description?: string;
     /**
      * 
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1Application
+     */
+    hostname?: string;
+    /**
+     * 
      * @type {TetrateApiTccCoreV1RoutingInfo}
      * @memberof TetrateApiTccCoreV1Application
      */
@@ -87,6 +93,7 @@ export function TetrateApiTccCoreV1ApplicationFromJSON(json: any): TetrateApiTcc
         'environment': !exists(json, 'environment') ? undefined : json['environment'],
         'id': !exists(json, 'id') ? undefined : json['id'],
         'description': !exists(json, 'description') ? undefined : json['description'],
+        'hostname': !exists(json, 'hostname') ? undefined : json['hostname'],
         'routingInfo': !exists(json, 'routingInfo') ? undefined : TetrateApiTccCoreV1RoutingInfoFromJSON(json['routingInfo']),
         'clientSettings': !exists(json, 'clientSettings') ? undefined : TetrateApiTccCoreV1ClientSettingsFromJSON(json['clientSettings']),
         'appLb': !exists(json, 'appLb') ? undefined : TetrateApiTccCoreV1ApplicationApplicationSpecificLBFromJSON(json['appLb']),
@@ -103,6 +110,7 @@ export function TetrateApiTccCoreV1ApplicationToJSON(value?: TetrateApiTccCoreV1
         'environment': value.environment,
         'id': value.id,
         'description': value.description,
+        'hostname': value.hostname,
         'routingInfo': TetrateApiTccCoreV1RoutingInfoToJSON(value.routingInfo),
         'clientSettings': TetrateApiTccCoreV1ClientSettingsToJSON(value.clientSettings),
         'appLb': TetrateApiTccCoreV1ApplicationApplicationSpecificLBToJSON(value.appLb),

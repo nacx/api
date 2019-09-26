@@ -50,15 +50,15 @@ func request_ConfigProducer_Download_0(ctx context.Context, marshaler runtime.Ma
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
 	}
 
-	val, ok = pathParams["configtype"]
+	val, ok = pathParams["environment"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "configtype")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "environment")
 	}
 
-	protoReq.Configtype, err = runtime.String(val)
+	protoReq.Environment, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "configtype", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "environment", err)
 	}
 
 	val, ok = pathParams["cluster"]
@@ -70,6 +70,17 @@ func request_ConfigProducer_Download_0(ctx context.Context, marshaler runtime.Ma
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "cluster", err)
+	}
+
+	val, ok = pathParams["configtype"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "configtype")
+	}
+
+	protoReq.Configtype, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "configtype", err)
 	}
 
 	msg, err := client.Download(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -139,7 +150,7 @@ func RegisterConfigProducerHandlerClient(ctx context.Context, mux *runtime.Serve
 }
 
 var (
-	pattern_ConfigProducer_Download_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 1, 0, 4, 1, 5, 5}, []string{"v1", "tenants", "tenant", "configproducer", "configtype", "cluster"}, ""))
+	pattern_ConfigProducer_Download_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7, 1, 0, 4, 1, 5, 8}, []string{"v1", "tenants", "tenant", "environments", "environment", "clusters", "cluster", "configproducer", "configtype"}, ""))
 )
 
 var (

@@ -182,18 +182,20 @@ message Application {
   string environment = 3;
   string id = 4;
   string description = 5;
-  RoutingInfo routing_info = 6;
-  ClientSettings client_settings = 7;
+  string hostname = 6;
+  RoutingInfo routing_info = 7;
+  ClientSettings client_settings = 8;
 
   message ApplicationSpecificLB {
     // Labels that uniquely identify the load balancer in the application's namespace.
+    // If omitted, defaults to "app: <id>".
     map<string, string> labels = 1;
     TLSSettings tls = 2;
   }
 
   // If defined, the application is assumed to be exposed on the load balancer in
   // the application's own namespace instead of the cluster level load balancer.
-  ApplicationSpecificLB app_lb = 8;  
+  ApplicationSpecificLB app_lb = 9;
 }
 
 message CreateApplicationRequest {
@@ -237,8 +239,12 @@ message Service {
   string id = 5;
   string description = 6;
   string hostname = 7;
-  RoutingInfo routing_info = 8;
-  string etag = 9;
+  // User identifiable tags associated with this service.
+  map<string, string> labels = 8;
+
+  repeated Port ports = 9;
+  RoutingInfo routing_info = 10;
+  string etag = 11;
 }
 
 message CreateServiceRequest {
@@ -278,6 +284,12 @@ message DeleteServiceRequest {
   string id = 5;
 }
 
+enum LoadBalancerClass {
+  NONE = 0;
+  ENVOY = 1;
+  F5 = 2;
+}
+
 message LoadBalancer {
   string name = 1;
   string tenant = 2;
@@ -286,16 +298,19 @@ message LoadBalancer {
   string description = 5;
   bool enable_workflows = 6;
 
-  // The namespace where the load balancer is/will be deployed in a given cluster.
-  string cluster_namespace = 7;
+  LoadBalancerClass load_balancer_class = 7;
 
-  // Labels that uniquely identify the cluster loadbalancer
-  map<string, string> labels = 8;
+  // The namespace where the load balancer is/will be deployed in a given cluster.
+  string cluster_namespace = 8;
+
+  // Labels that uniquely identify the cluster loadbalancer.
+  // If omitted, defaults to "app: istio-ingressgateway"
+  map<string, string> labels = 9;
 
   // Map of applications attached to this loadbalancer in the form
   // applicationId: TLS credential information
-  map<string, TLSSettings> applications = 9;
-  string etag = 10;
+  map<string, TLSSettings> applications = 10;
+  string etag = 11;
 }
 
 message CreateLoadBalancerRequest {

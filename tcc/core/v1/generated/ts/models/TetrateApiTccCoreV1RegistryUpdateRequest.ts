@@ -15,52 +15,60 @@ import { exists, mapValues } from '../runtime';
 /**
  * Please do not over engineer this anything beyond a glorified file copy.
  * @export
- * @interface TetrateApiTccCoreV1RegistryData
+ * @interface TetrateApiTccCoreV1RegistryUpdateRequest
  */
-export interface TetrateApiTccCoreV1RegistryData {
+export interface TetrateApiTccCoreV1RegistryUpdateRequest {
     /**
      * 
      * @type {string}
-     * @memberof TetrateApiTccCoreV1RegistryData
+     * @memberof TetrateApiTccCoreV1RegistryUpdateRequest
      */
     registrytype?: string;
     /**
      * 
      * @type {string}
-     * @memberof TetrateApiTccCoreV1RegistryData
+     * @memberof TetrateApiTccCoreV1RegistryUpdateRequest
      */
-    tenant?: string;
+    environment?: string;
     /**
      * 
      * @type {string}
-     * @memberof TetrateApiTccCoreV1RegistryData
+     * @memberof TetrateApiTccCoreV1RegistryUpdateRequest
      */
     cluster?: string;
     /**
      * 
      * @type {string}
-     * @memberof TetrateApiTccCoreV1RegistryData
+     * @memberof TetrateApiTccCoreV1RegistryUpdateRequest
+     */
+    tenant?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1RegistryUpdateRequest
      */
     payload?: string;
 }
 
-export function TetrateApiTccCoreV1RegistryDataFromJSON(json: any): TetrateApiTccCoreV1RegistryData {
+export function TetrateApiTccCoreV1RegistryUpdateRequestFromJSON(json: any): TetrateApiTccCoreV1RegistryUpdateRequest {
     return {
         'registrytype': !exists(json, 'registrytype') ? undefined : json['registrytype'],
-        'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
+        'environment': !exists(json, 'environment') ? undefined : json['environment'],
         'cluster': !exists(json, 'cluster') ? undefined : json['cluster'],
+        'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
         'payload': !exists(json, 'payload') ? undefined : json['payload'],
     };
 }
 
-export function TetrateApiTccCoreV1RegistryDataToJSON(value?: TetrateApiTccCoreV1RegistryData): any {
+export function TetrateApiTccCoreV1RegistryUpdateRequestToJSON(value?: TetrateApiTccCoreV1RegistryUpdateRequest): any {
     if (value === undefined) {
         return undefined;
     }
     return {
         'registrytype': value.registrytype,
-        'tenant': value.tenant,
+        'environment': value.environment,
         'cluster': value.cluster,
+        'tenant': value.tenant,
         'payload': value.payload,
     };
 }

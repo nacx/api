@@ -35,6 +35,12 @@ export interface TetrateApiTccCoreV1ConfigData {
      * @type {string}
      * @memberof TetrateApiTccCoreV1ConfigData
      */
+    environment?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1ConfigData
+     */
     tenant?: string;
     /**
      * For istio, this is a huge YAML dump of all Istio artifacts like virtual services, destination rules, service entries, gateways, etc. in YAML form. For F5, its all f5 config artifacts.
@@ -48,6 +54,7 @@ export function TetrateApiTccCoreV1ConfigDataFromJSON(json: any): TetrateApiTccC
     return {
         'configtype': !exists(json, 'configtype') ? undefined : json['configtype'],
         'cluster': !exists(json, 'cluster') ? undefined : json['cluster'],
+        'environment': !exists(json, 'environment') ? undefined : json['environment'],
         'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
         'payload': !exists(json, 'payload') ? undefined : json['payload'],
     };
@@ -60,6 +67,7 @@ export function TetrateApiTccCoreV1ConfigDataToJSON(value?: TetrateApiTccCoreV1C
     return {
         'configtype': value.configtype,
         'cluster': value.cluster,
+        'environment': value.environment,
         'tenant': value.tenant,
         'payload': value.payload,
     };

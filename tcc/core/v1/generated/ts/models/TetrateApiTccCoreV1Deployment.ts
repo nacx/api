@@ -13,12 +13,9 @@
 
 import { exists, mapValues } from '../runtime';
 import {
-    TetrateApiTccCoreV1LoadBalancerInfo,
-    TetrateApiTccCoreV1LoadBalancerInfoFromJSON,
-    TetrateApiTccCoreV1LoadBalancerInfoToJSON,
-    TetrateApiTccCoreV1RoutingInfo,
-    TetrateApiTccCoreV1RoutingInfoFromJSON,
-    TetrateApiTccCoreV1RoutingInfoToJSON,
+    TetrateApiTccCoreV1Port,
+    TetrateApiTccCoreV1PortFromJSON,
+    TetrateApiTccCoreV1PortToJSON,
 } from './';
 
 /**
@@ -77,16 +74,16 @@ export interface TetrateApiTccCoreV1Deployment {
     labels?: { [key: string]: string; };
     /**
      * 
-     * @type {TetrateApiTccCoreV1LoadBalancerInfo}
+     * @type {Array<TetrateApiTccCoreV1Port>}
      * @memberof TetrateApiTccCoreV1Deployment
      */
-    loadBalancer?: TetrateApiTccCoreV1LoadBalancerInfo;
+    ports?: Array<TetrateApiTccCoreV1Port>;
     /**
      * 
-     * @type {TetrateApiTccCoreV1RoutingInfo}
+     * @type {string}
      * @memberof TetrateApiTccCoreV1Deployment
      */
-    service?: TetrateApiTccCoreV1RoutingInfo;
+    lbManagementIp?: string;
 }
 
 export function TetrateApiTccCoreV1DeploymentFromJSON(json: any): TetrateApiTccCoreV1Deployment {
@@ -99,8 +96,8 @@ export function TetrateApiTccCoreV1DeploymentFromJSON(json: any): TetrateApiTccC
         'id': !exists(json, 'id') ? undefined : json['id'],
         'hostname': !exists(json, 'hostname') ? undefined : json['hostname'],
         'labels': !exists(json, 'labels') ? undefined : json['labels'],
-        'loadBalancer': !exists(json, 'loadBalancer') ? undefined : TetrateApiTccCoreV1LoadBalancerInfoFromJSON(json['loadBalancer']),
-        'service': !exists(json, 'service') ? undefined : TetrateApiTccCoreV1RoutingInfoFromJSON(json['service']),
+        'ports': !exists(json, 'ports') ? undefined : (json['ports'] as Array<any>).map(TetrateApiTccCoreV1PortFromJSON),
+        'lbManagementIp': !exists(json, 'lbManagementIp') ? undefined : json['lbManagementIp'],
     };
 }
 
@@ -117,8 +114,8 @@ export function TetrateApiTccCoreV1DeploymentToJSON(value?: TetrateApiTccCoreV1D
         'id': value.id,
         'hostname': value.hostname,
         'labels': value.labels,
-        'loadBalancer': TetrateApiTccCoreV1LoadBalancerInfoToJSON(value.loadBalancer),
-        'service': TetrateApiTccCoreV1RoutingInfoToJSON(value.service),
+        'ports': value.ports === undefined ? undefined : (value.ports as Array<any>).map(TetrateApiTccCoreV1PortToJSON),
+        'lbManagementIp': value.lbManagementIp,
     };
 }
 

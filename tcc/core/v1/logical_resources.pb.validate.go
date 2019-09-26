@@ -516,6 +516,8 @@ func (m *Application) Validate() error {
 
 	// no validation rules for Description
 
+	// no validation rules for Hostname
+
 	if v, ok := interface{}(m.GetRoutingInfo()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
 			return ApplicationValidationError{
@@ -1014,6 +1016,23 @@ func (m *Service) Validate() error {
 
 	// no validation rules for Hostname
 
+	// no validation rules for Labels
+
+	for idx, item := range m.GetPorts() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ServiceValidationError{
+					field:  fmt.Sprintf("Ports[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
 	if v, ok := interface{}(m.GetRoutingInfo()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
 			return ServiceValidationError{
@@ -1500,6 +1519,8 @@ func (m *LoadBalancer) Validate() error {
 	// no validation rules for Description
 
 	// no validation rules for EnableWorkflows
+
+	// no validation rules for LoadBalancerClass
 
 	// no validation rules for ClusterNamespace
 

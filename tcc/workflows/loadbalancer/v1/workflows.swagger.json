@@ -20,7 +20,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{id}/attach": {
+    "/v1/tenants/{tenant}/environments/{environment}/workflows/loadbalancers/{id}/attach": {
       "post": {
         "operationId": "Attach",
         "responses": {
@@ -70,7 +70,7 @@
         ]
       }
     },
-    "/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{id}/detach": {
+    "/v1/tenants/{tenant}/environments/{environment}/workflows/loadbalancers/{id}/detach": {
       "post": {
         "operationId": "Detach",
         "responses": {
@@ -120,7 +120,7 @@
         ]
       }
     },
-    "/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{id}/pending": {
+    "/v1/tenants/{tenant}/environments/{environment}/workflows/loadbalancers/{id}/pending": {
       "get": {
         "operationId": "ListPendingTickets",
         "responses": {
@@ -168,7 +168,7 @@
         ]
       }
     },
-    "/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{loadbalancer}/requests/{id}/approve": {
+    "/v1/tenants/{tenant}/environments/{environment}/workflows/loadbalancers/{loadbalancer}/requests/{id}/approve": {
       "post": {
         "operationId": "Approve",
         "responses": {
@@ -224,7 +224,7 @@
         ]
       }
     },
-    "/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{loadbalancer}/requests/{id}/cancel": {
+    "/v1/tenants/{tenant}/environments/{environment}/workflows/loadbalancers/{loadbalancer}/requests/{id}/cancel": {
       "post": {
         "operationId": "Cancel",
         "responses": {
@@ -280,7 +280,7 @@
         ]
       }
     },
-    "/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{loadbalancer}/requests/{id}/deny": {
+    "/v1/tenants/{tenant}/environments/{environment}/workflows/loadbalancers/{loadbalancer}/requests/{id}/deny": {
       "post": {
         "operationId": "Deny",
         "responses": {
@@ -336,7 +336,7 @@
         ]
       }
     },
-    "/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{loadbalancer}/requests/{id}/publish": {
+    "/v1/tenants/{tenant}/environments/{environment}/workflows/loadbalancers/{loadbalancer}/requests/{id}/publish": {
       "post": {
         "summary": "LB owner calls this API with additional settings like TLS, to\nfinally expose the service on the load balancer or remove a detached service",
         "operationId": "Publish",
@@ -393,7 +393,7 @@
         ]
       }
     },
-    "/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{loadbalancer}/requests/{id}/status": {
+    "/v1/tenants/{tenant}/environments/{environment}/workflows/loadbalancers/{loadbalancer}/requests/{id}/status": {
       "get": {
         "operationId": "GetTicketStatus",
         "responses": {

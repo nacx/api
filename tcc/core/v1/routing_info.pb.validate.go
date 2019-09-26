@@ -41,23 +41,6 @@ func (m *RoutingInfo) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Labels
-
-	for idx, item := range m.GetPorts() {
-		_, _ = idx, item
-
-		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return RoutingInfoValidationError{
-					field:  fmt.Sprintf("Ports[%v]", idx),
-					reason: "embedded message failed validation",
-					cause:  err,
-				}
-			}
-		}
-
-	}
-
 	for idx, item := range m.GetSubsets() {
 		_, _ = idx, item
 
