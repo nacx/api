@@ -1,6 +1,6 @@
 # Copyright (c) Tetrate, Inc 2019 All Rights Reserved.
 
-APIS := audit/v1 test/v1 tcc/core/v1 tcc/workflows/loadbalancer/v1
+APIS := audit/v1 test/v1 tcc/core/v1 tcc/workflows/loadbalancer/v1 regsource/v1
 
 PROTOC_VERSION := 3.6.1
 PROTOC_GEN_GO_VERSION := v1.2.0
