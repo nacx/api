@@ -41,7 +41,7 @@ func (m *ConfigDownloadRequest) Reset()         { *m = ConfigDownloadRequest{} }
 func (m *ConfigDownloadRequest) String() string { return proto.CompactTextString(m) }
 func (*ConfigDownloadRequest) ProtoMessage()    {}
 func (*ConfigDownloadRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_configproducer_35f050630f841cdd, []int{0}
+	return fileDescriptor_configproducer_dbe2b93562daa905, []int{0}
 }
 func (m *ConfigDownloadRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ConfigDownloadRequest.Unmarshal(m, b)
@@ -113,7 +113,7 @@ func (m *ConfigData) Reset()         { *m = ConfigData{} }
 func (m *ConfigData) String() string { return proto.CompactTextString(m) }
 func (*ConfigData) ProtoMessage()    {}
 func (*ConfigData) Descriptor() ([]byte, []int) {
-	return fileDescriptor_configproducer_35f050630f841cdd, []int{1}
+	return fileDescriptor_configproducer_dbe2b93562daa905, []int{1}
 }
 func (m *ConfigData) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ConfigData.Unmarshal(m, b)
@@ -246,10 +246,10 @@ var _ConfigProducer_serviceDesc = grpc.ServiceDesc{
 }
 
 func init() {
-	proto.RegisterFile("configproducer.proto", fileDescriptor_configproducer_35f050630f841cdd)
+	proto.RegisterFile("configproducer.proto", fileDescriptor_configproducer_dbe2b93562daa905)
 }
 
-var fileDescriptor_configproducer_35f050630f841cdd = []byte{
+var fileDescriptor_configproducer_dbe2b93562daa905 = []byte{
 	// 410 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x52, 0x4d, 0x8e, 0xd3, 0x30,
 	0x14, 0x56, 0xd2, 0x3f, 0xea, 0x0a, 0x84, 0x2c, 0x68, 0xa3, 0x0a, 0xa1, 0xd2, 0x6e, 0x90, 0x40,

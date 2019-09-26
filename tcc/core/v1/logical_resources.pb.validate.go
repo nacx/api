@@ -299,6 +299,106 @@ var _ interface {
 	ErrorName() string
 } = GetEnvironmentRequestValidationError{}
 
+// Validate checks the field values on EnvironmentPolicyRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *EnvironmentPolicyRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Name
+
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return EnvironmentPolicyRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return EnvironmentPolicyRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if m.GetPolicy() == nil {
+		return EnvironmentPolicyRequestValidationError{
+			field:  "Policy",
+			reason: "value is required",
+		}
+	}
+
+	if v, ok := interface{}(m.GetPolicy()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return EnvironmentPolicyRequestValidationError{
+				field:  "Policy",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// EnvironmentPolicyRequestValidationError is the validation error returned by
+// EnvironmentPolicyRequest.Validate if the designated constraints aren't met.
+type EnvironmentPolicyRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e EnvironmentPolicyRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e EnvironmentPolicyRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e EnvironmentPolicyRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e EnvironmentPolicyRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e EnvironmentPolicyRequestValidationError) ErrorName() string {
+	return "EnvironmentPolicyRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e EnvironmentPolicyRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sEnvironmentPolicyRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = EnvironmentPolicyRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = EnvironmentPolicyRequestValidationError{}
+
 // Validate checks the field values on ListEnvironmentsRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
@@ -880,6 +980,113 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = GetApplicationRequestValidationError{}
+
+// Validate checks the field values on ApplicationPolicyRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *ApplicationPolicyRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Name
+
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return ApplicationPolicyRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return ApplicationPolicyRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return ApplicationPolicyRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if m.GetPolicy() == nil {
+		return ApplicationPolicyRequestValidationError{
+			field:  "Policy",
+			reason: "value is required",
+		}
+	}
+
+	if v, ok := interface{}(m.GetPolicy()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ApplicationPolicyRequestValidationError{
+				field:  "Policy",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// ApplicationPolicyRequestValidationError is the validation error returned by
+// ApplicationPolicyRequest.Validate if the designated constraints aren't met.
+type ApplicationPolicyRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ApplicationPolicyRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ApplicationPolicyRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ApplicationPolicyRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ApplicationPolicyRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ApplicationPolicyRequestValidationError) ErrorName() string {
+	return "ApplicationPolicyRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ApplicationPolicyRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sApplicationPolicyRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ApplicationPolicyRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ApplicationPolicyRequestValidationError{}
 
 // Validate checks the field values on ListApplicationsRequest with the rules
 // defined in the proto definition for this message. If any rules are
@@ -1497,6 +1704,120 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = GetServiceRequestValidationError{}
+
+// Validate checks the field values on ServicePolicyRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *ServicePolicyRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Name
+
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return ServicePolicyRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return ServicePolicyRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if utf8.RuneCountInString(m.GetApplication()) < 1 {
+		return ServicePolicyRequestValidationError{
+			field:  "Application",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return ServicePolicyRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if m.GetPolicy() == nil {
+		return ServicePolicyRequestValidationError{
+			field:  "Policy",
+			reason: "value is required",
+		}
+	}
+
+	if v, ok := interface{}(m.GetPolicy()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ServicePolicyRequestValidationError{
+				field:  "Policy",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// ServicePolicyRequestValidationError is the validation error returned by
+// ServicePolicyRequest.Validate if the designated constraints aren't met.
+type ServicePolicyRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ServicePolicyRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ServicePolicyRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ServicePolicyRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ServicePolicyRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ServicePolicyRequestValidationError) ErrorName() string {
+	return "ServicePolicyRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ServicePolicyRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sServicePolicyRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ServicePolicyRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ServicePolicyRequestValidationError{}
 
 // Validate checks the field values on ListServicesRequest with the rules
 // defined in the proto definition for this message. If any rules are
@@ -2212,6 +2533,113 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = GetLoadBalancerRequestValidationError{}
+
+// Validate checks the field values on LoadBalancerPolicyRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *LoadBalancerPolicyRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Name
+
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return LoadBalancerPolicyRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return LoadBalancerPolicyRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return LoadBalancerPolicyRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if m.GetPolicy() == nil {
+		return LoadBalancerPolicyRequestValidationError{
+			field:  "Policy",
+			reason: "value is required",
+		}
+	}
+
+	if v, ok := interface{}(m.GetPolicy()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return LoadBalancerPolicyRequestValidationError{
+				field:  "Policy",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// LoadBalancerPolicyRequestValidationError is the validation error returned by
+// LoadBalancerPolicyRequest.Validate if the designated constraints aren't met.
+type LoadBalancerPolicyRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e LoadBalancerPolicyRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e LoadBalancerPolicyRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e LoadBalancerPolicyRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e LoadBalancerPolicyRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e LoadBalancerPolicyRequestValidationError) ErrorName() string {
+	return "LoadBalancerPolicyRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e LoadBalancerPolicyRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sLoadBalancerPolicyRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = LoadBalancerPolicyRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = LoadBalancerPolicyRequestValidationError{}
 
 // Validate checks the field values on ListLoadBalancersRequest with the rules
 // defined in the proto definition for this message. If any rules are

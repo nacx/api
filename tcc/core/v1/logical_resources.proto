@@ -1,3 +1,5 @@
+// Copyright (c) Tetrate, Inc 2019 All Rights Reserved.
+
 syntax = "proto3";
 
 package tetrate.api.tcc.core.v1;
@@ -6,9 +8,11 @@ option go_package = "github.com/tetrateio/tetrate/api/tcc/core/v1";
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 import "validate/validate.proto";
+
 import "routing_info.proto";
 import "client_settings.proto";
 import "tlssettings.proto";
+import "policy.proto";
 
 service LogicalResourceModel {
   rpc CreateEnvironment(CreateEnvironmentRequest) returns (Environment) {
@@ -40,6 +44,19 @@ service LogicalResourceModel {
   rpc DeleteEnvironment(DeleteEnvironmentRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       delete: "/v1/tenants/{tenant}/environments/{id}"
+    };
+  };
+
+  rpc GetEnvironmentPolicy(GetEnvironmentRequest) returns (Policy) {
+    option (google.api.http) = {
+      get: "/v1/tenants/{tenant}/environments/{id}/policy"
+    };
+  };
+
+  rpc SetEnvironmentPolicy(EnvironmentPolicyRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      put: "/v1/tenants/{tenant}/environments/{id}/policy"
+      body: "policy"
     };
   };
 
@@ -75,6 +92,19 @@ service LogicalResourceModel {
     };
   };
 
+  rpc GetApplicationPolicy(GetApplicationRequest) returns (Policy) {
+    option (google.api.http) = {
+      get: "/v1/tenants/{tenant}/environments/{environment}/applications/{id}/policy"
+    };
+  };
+
+  rpc SetApplicationPolicy(ApplicationPolicyRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      put: "/v1/tenants/{tenant}/environments/{environment}/applications/{id}/policy"
+      body: "policy"
+    };
+  };
+
   rpc CreateService(CreateServiceRequest) returns (Service) {
     option (google.api.http) = {
       post: "/v1/tenants/{tenant}/environments/{environment}/applications/{application}/services"
@@ -107,6 +137,19 @@ service LogicalResourceModel {
     };
   };
 
+  rpc GetServicePolicy(GetServiceRequest) returns (Policy) {
+    option (google.api.http) = {
+      get: "/v1/tenants/{tenant}/environments/{environment}/applications/{application}/services/{id}/policy"
+    };
+  };
+
+  rpc SetServicePolicy(ServicePolicyRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      put: "/v1/tenants/{tenant}/environments/{environment}/applications/{application}/services/{id}/policy"
+      body: "policy"
+    };
+  };
+
   rpc CreateLoadBalancer(CreateLoadBalancerRequest) returns (LoadBalancer) {
     option (google.api.http) = {
       post: "/v1/tenants/{tenant}/environments/{environment}/loadbalancers"
@@ -136,6 +179,19 @@ service LogicalResourceModel {
   rpc DeleteLoadBalancer(DeleteLoadBalancerRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       delete: "/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{id}"
+    };
+  };
+
+  rpc GetLoadBalancerPolicy(GetLoadBalancerRequest) returns (Policy) {
+    option (google.api.http) = {
+      get: "/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{id}/policy"
+    };
+  };
+
+  rpc SetLoadBalancerPolicy(LoadBalancerPolicyRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      put: "/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{id}/policy"
+      body: "policy"
     };
   };
 }
@@ -173,6 +229,14 @@ message GetEnvironmentRequest {
   string name = 1;
   string tenant = 2 [(validate.rules).string.min_len = 1];
   string id = 3 [(validate.rules).string.min_len = 1];
+}
+
+message EnvironmentPolicyRequest {
+  // Internal use only. Auto populated field.
+  string name = 1;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string id = 3 [(validate.rules).string.min_len = 1];
+  Policy policy = 4 [(validate.rules).message.required = true];
 }
 
 message ListEnvironmentsRequest {
@@ -274,6 +338,15 @@ message GetApplicationRequest {
   string id = 4 [(validate.rules).string.min_len = 1];
 }
 
+message ApplicationPolicyRequest {
+  // Internal use only. Auto populated field.
+  string name = 1;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  string id = 4 [(validate.rules).string.min_len = 1];
+  Policy policy = 5 [(validate.rules).message.required = true];
+}
+
 message ListApplicationsRequest {
   // Internal use only. Auto populated field.
   string parent = 1;
@@ -347,6 +420,16 @@ message GetServiceRequest {
   string environment = 3 [(validate.rules).string.min_len = 1];
   string application = 4 [(validate.rules).string.min_len = 1];
   string id = 5 [(validate.rules).string.min_len = 1];
+}
+
+message ServicePolicyRequest {
+  // Internal use only. Auto populated field.
+  string name = 1;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  string application = 4 [(validate.rules).string.min_len = 1];
+  string id = 5 [(validate.rules).string.min_len = 1];
+  Policy policy = 6 [(validate.rules).message.required = true];
 }
 
 message ListServicesRequest {
@@ -441,6 +524,15 @@ message GetLoadBalancerRequest {
   string tenant = 2 [(validate.rules).string.min_len = 1];
   string environment = 3 [(validate.rules).string.min_len = 1];
   string id = 4 [(validate.rules).string.min_len = 1];
+}
+
+message LoadBalancerPolicyRequest {
+  // Internal use only. Auto populated field.
+  string name = 1;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  string id = 4 [(validate.rules).string.min_len = 1];
+  Policy policy = 5 [(validate.rules).message.required = true];
 }
 
 message ListLoadBalancersRequest {

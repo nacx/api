@@ -44,7 +44,7 @@ func (m *TLSSettings) Reset()         { *m = TLSSettings{} }
 func (m *TLSSettings) String() string { return proto.CompactTextString(m) }
 func (*TLSSettings) ProtoMessage()    {}
 func (*TLSSettings) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tlssettings_f4218b9b9860a9af, []int{0}
+	return fileDescriptor_tlssettings_3220f8f848f14ce6, []int{0}
 }
 func (m *TLSSettings) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TLSSettings.Unmarshal(m, b)
@@ -110,9 +110,9 @@ func init() {
 	proto.RegisterType((*TLSSettings)(nil), "tetrate.api.tcc.core.v1.TLSSettings")
 }
 
-func init() { proto.RegisterFile("tlssettings.proto", fileDescriptor_tlssettings_f4218b9b9860a9af) }
+func init() { proto.RegisterFile("tlssettings.proto", fileDescriptor_tlssettings_3220f8f848f14ce6) }
 
-var fileDescriptor_tlssettings_f4218b9b9860a9af = []byte{
+var fileDescriptor_tlssettings_3220f8f848f14ce6 = []byte{
 	// 259 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x4c, 0x90, 0xcd, 0x4a, 0x03, 0x31,
 	0x14, 0x85, 0x19, 0x7f, 0x8a, 0xa6, 0x60, 0x99, 0x6c, 0xcc, 0xce, 0xe2, 0xc6, 0x22, 0x9a, 0xa1,

@@ -32,6 +32,9 @@ import {
     TetrateApiTccCoreV1ListUsersResponse,
     TetrateApiTccCoreV1ListUsersResponseFromJSON,
     TetrateApiTccCoreV1ListUsersResponseToJSON,
+    TetrateApiTccCoreV1Policy,
+    TetrateApiTccCoreV1PolicyFromJSON,
+    TetrateApiTccCoreV1PolicyToJSON,
     TetrateApiTccCoreV1Team,
     TetrateApiTccCoreV1TeamFromJSON,
     TetrateApiTccCoreV1TeamToJSON,
@@ -80,12 +83,29 @@ export interface GetTeamRequest {
     name?: string;
 }
 
+export interface GetTeamPolicyRequest {
+    tenant: string;
+    id: string;
+    name?: string;
+}
+
 export interface GetTenantRequest {
     id: string;
     name?: string;
 }
 
+export interface GetTenantPolicyRequest {
+    id: string;
+    name?: string;
+}
+
 export interface GetUserRequest {
+    tenant: string;
+    id: string;
+    name?: string;
+}
+
+export interface GetUserPolicyRequest {
     tenant: string;
     id: string;
     name?: string;
@@ -99,6 +119,23 @@ export interface ListTeamsRequest {
 export interface ListUsersRequest {
     tenant: string;
     parent?: string;
+}
+
+export interface SetTeamPolicyRequest {
+    tenant: string;
+    id: string;
+    body: TetrateApiTccCoreV1Policy;
+}
+
+export interface SetTenantPolicyRequest {
+    id: string;
+    body: TetrateApiTccCoreV1Policy;
+}
+
+export interface SetUserPolicyRequest {
+    tenant: string;
+    id: string;
+    body: TetrateApiTccCoreV1Policy;
 }
 
 export interface UpdateTeamRequest {
@@ -366,6 +403,42 @@ export class OrganizationApi extends runtime.BaseAPI {
 
     /**
      */
+    async getTeamPolicyRaw(requestParameters: GetTeamPolicyRequest): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
+            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling getTeamPolicy.');
+        }
+
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getTeamPolicy.');
+        }
+
+        const queryParameters: runtime.HTTPQuery = {};
+
+        if (requestParameters.name !== undefined) {
+            queryParameters['name'] = requestParameters.name;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/v1/tenants/{tenant}/teams/{id}/policy`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccCoreV1PolicyFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async getTeamPolicy(requestParameters: GetTeamPolicyRequest): Promise<TetrateApiTccCoreV1Policy> {
+        const response = await this.getTeamPolicyRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     */
     async getTenantRaw(requestParameters: GetTenantRequest): Promise<runtime.ApiResponse<any>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getTenant.');
@@ -393,6 +466,38 @@ export class OrganizationApi extends runtime.BaseAPI {
      */
     async getTenant(requestParameters: GetTenantRequest): Promise<TetrateApiTccCoreV1Tenant> {
         const response = await this.getTenantRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     */
+    async getTenantPolicyRaw(requestParameters: GetTenantPolicyRequest): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getTenantPolicy.');
+        }
+
+        const queryParameters: runtime.HTTPQuery = {};
+
+        if (requestParameters.name !== undefined) {
+            queryParameters['name'] = requestParameters.name;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/v1/tenants/{id}/policy`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccCoreV1PolicyFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async getTenantPolicy(requestParameters: GetTenantPolicyRequest): Promise<TetrateApiTccCoreV1Policy> {
+        const response = await this.getTenantPolicyRaw(requestParameters);
         return await response.value();
     }
 
@@ -429,6 +534,42 @@ export class OrganizationApi extends runtime.BaseAPI {
      */
     async getUser(requestParameters: GetUserRequest): Promise<TetrateApiTccCoreV1User> {
         const response = await this.getUserRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     */
+    async getUserPolicyRaw(requestParameters: GetUserPolicyRequest): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
+            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling getUserPolicy.');
+        }
+
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getUserPolicy.');
+        }
+
+        const queryParameters: runtime.HTTPQuery = {};
+
+        if (requestParameters.name !== undefined) {
+            queryParameters['name'] = requestParameters.name;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/v1/tenants/{tenant}/users/{id}/policy`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccCoreV1PolicyFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async getUserPolicy(requestParameters: GetUserPolicyRequest): Promise<TetrateApiTccCoreV1Policy> {
+        const response = await this.getUserPolicyRaw(requestParameters);
         return await response.value();
     }
 
@@ -517,6 +658,119 @@ export class OrganizationApi extends runtime.BaseAPI {
      */
     async listUsers(requestParameters: ListUsersRequest): Promise<TetrateApiTccCoreV1ListUsersResponse> {
         const response = await this.listUsersRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     */
+    async setTeamPolicyRaw(requestParameters: SetTeamPolicyRequest): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
+            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling setTeamPolicy.');
+        }
+
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling setTeamPolicy.');
+        }
+
+        if (requestParameters.body === null || requestParameters.body === undefined) {
+            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling setTeamPolicy.');
+        }
+
+        const queryParameters: runtime.HTTPQuery = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/v1/tenants/{tenant}/teams/{id}/policy`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: TetrateApiTccCoreV1PolicyToJSON(requestParameters.body),
+        });
+
+        return new runtime.TextApiResponse(response);
+    }
+
+    /**
+     */
+    async setTeamPolicy(requestParameters: SetTeamPolicyRequest): Promise<object> {
+        const response = await this.setTeamPolicyRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     */
+    async setTenantPolicyRaw(requestParameters: SetTenantPolicyRequest): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling setTenantPolicy.');
+        }
+
+        if (requestParameters.body === null || requestParameters.body === undefined) {
+            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling setTenantPolicy.');
+        }
+
+        const queryParameters: runtime.HTTPQuery = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/v1/tenants/{id}/policy`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: TetrateApiTccCoreV1PolicyToJSON(requestParameters.body),
+        });
+
+        return new runtime.TextApiResponse(response);
+    }
+
+    /**
+     */
+    async setTenantPolicy(requestParameters: SetTenantPolicyRequest): Promise<object> {
+        const response = await this.setTenantPolicyRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     */
+    async setUserPolicyRaw(requestParameters: SetUserPolicyRequest): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
+            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling setUserPolicy.');
+        }
+
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling setUserPolicy.');
+        }
+
+        if (requestParameters.body === null || requestParameters.body === undefined) {
+            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling setUserPolicy.');
+        }
+
+        const queryParameters: runtime.HTTPQuery = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/v1/tenants/{tenant}/users/{id}/policy`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: TetrateApiTccCoreV1PolicyToJSON(requestParameters.body),
+        });
+
+        return new runtime.TextApiResponse(response);
+    }
+
+    /**
+     */
+    async setUserPolicy(requestParameters: SetUserPolicyRequest): Promise<object> {
+        const response = await this.setUserPolicyRaw(requestParameters);
         return await response.value();
     }
 

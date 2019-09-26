@@ -47,6 +47,9 @@ import {
     TetrateApiTccCoreV1LoadBalancer,
     TetrateApiTccCoreV1LoadBalancerFromJSON,
     TetrateApiTccCoreV1LoadBalancerToJSON,
+    TetrateApiTccCoreV1Policy,
+    TetrateApiTccCoreV1PolicyFromJSON,
+    TetrateApiTccCoreV1PolicyToJSON,
     TetrateApiTccCoreV1Service,
     TetrateApiTccCoreV1ServiceFromJSON,
     TetrateApiTccCoreV1ServiceToJSON,
@@ -111,7 +114,20 @@ export interface GetApplicationRequest {
     name?: string;
 }
 
+export interface GetApplicationPolicyRequest {
+    tenant: string;
+    environment: string;
+    id: string;
+    name?: string;
+}
+
 export interface GetEnvironmentRequest {
+    tenant: string;
+    id: string;
+    name?: string;
+}
+
+export interface GetEnvironmentPolicyRequest {
     tenant: string;
     id: string;
     name?: string;
@@ -124,7 +140,22 @@ export interface GetLoadBalancerRequest {
     name?: string;
 }
 
+export interface GetLoadBalancerPolicyRequest {
+    tenant: string;
+    environment: string;
+    id: string;
+    name?: string;
+}
+
 export interface GetServiceRequest {
+    tenant: string;
+    environment: string;
+    application: string;
+    id: string;
+    name?: string;
+}
+
+export interface GetServicePolicyRequest {
     tenant: string;
     environment: string;
     application: string;
@@ -154,6 +185,34 @@ export interface ListServicesRequest {
     environment: string;
     application: string;
     parent?: string;
+}
+
+export interface SetApplicationPolicyRequest {
+    tenant: string;
+    environment: string;
+    id: string;
+    body: TetrateApiTccCoreV1Policy;
+}
+
+export interface SetEnvironmentPolicyRequest {
+    tenant: string;
+    id: string;
+    body: TetrateApiTccCoreV1Policy;
+}
+
+export interface SetLoadBalancerPolicyRequest {
+    tenant: string;
+    environment: string;
+    id: string;
+    body: TetrateApiTccCoreV1Policy;
+}
+
+export interface SetServicePolicyRequest {
+    tenant: string;
+    environment: string;
+    application: string;
+    id: string;
+    body: TetrateApiTccCoreV1Policy;
 }
 
 export interface UpdateApplicationRequest {
@@ -547,6 +606,46 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
 
     /**
      */
+    async getApplicationPolicyRaw(requestParameters: GetApplicationPolicyRequest): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
+            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling getApplicationPolicy.');
+        }
+
+        if (requestParameters.environment === null || requestParameters.environment === undefined) {
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling getApplicationPolicy.');
+        }
+
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getApplicationPolicy.');
+        }
+
+        const queryParameters: runtime.HTTPQuery = {};
+
+        if (requestParameters.name !== undefined) {
+            queryParameters['name'] = requestParameters.name;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/v1/tenants/{tenant}/environments/{environment}/applications/{id}/policy`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccCoreV1PolicyFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async getApplicationPolicy(requestParameters: GetApplicationPolicyRequest): Promise<TetrateApiTccCoreV1Policy> {
+        const response = await this.getApplicationPolicyRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     */
     async getEnvironmentRaw(requestParameters: GetEnvironmentRequest): Promise<runtime.ApiResponse<any>> {
         if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling getEnvironment.');
@@ -578,6 +677,42 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
      */
     async getEnvironment(requestParameters: GetEnvironmentRequest): Promise<TetrateApiTccCoreV1Environment> {
         const response = await this.getEnvironmentRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     */
+    async getEnvironmentPolicyRaw(requestParameters: GetEnvironmentPolicyRequest): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
+            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling getEnvironmentPolicy.');
+        }
+
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getEnvironmentPolicy.');
+        }
+
+        const queryParameters: runtime.HTTPQuery = {};
+
+        if (requestParameters.name !== undefined) {
+            queryParameters['name'] = requestParameters.name;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/v1/tenants/{tenant}/environments/{id}/policy`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccCoreV1PolicyFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async getEnvironmentPolicy(requestParameters: GetEnvironmentPolicyRequest): Promise<TetrateApiTccCoreV1Policy> {
+        const response = await this.getEnvironmentPolicyRaw(requestParameters);
         return await response.value();
     }
 
@@ -623,6 +758,46 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
 
     /**
      */
+    async getLoadBalancerPolicyRaw(requestParameters: GetLoadBalancerPolicyRequest): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
+            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling getLoadBalancerPolicy.');
+        }
+
+        if (requestParameters.environment === null || requestParameters.environment === undefined) {
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling getLoadBalancerPolicy.');
+        }
+
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getLoadBalancerPolicy.');
+        }
+
+        const queryParameters: runtime.HTTPQuery = {};
+
+        if (requestParameters.name !== undefined) {
+            queryParameters['name'] = requestParameters.name;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{id}/policy`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccCoreV1PolicyFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async getLoadBalancerPolicy(requestParameters: GetLoadBalancerPolicyRequest): Promise<TetrateApiTccCoreV1Policy> {
+        const response = await this.getLoadBalancerPolicyRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     */
     async getServiceRaw(requestParameters: GetServiceRequest): Promise<runtime.ApiResponse<any>> {
         if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling getService.');
@@ -662,6 +837,50 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
      */
     async getService(requestParameters: GetServiceRequest): Promise<TetrateApiTccCoreV1Service> {
         const response = await this.getServiceRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     */
+    async getServicePolicyRaw(requestParameters: GetServicePolicyRequest): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
+            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling getServicePolicy.');
+        }
+
+        if (requestParameters.environment === null || requestParameters.environment === undefined) {
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling getServicePolicy.');
+        }
+
+        if (requestParameters.application === null || requestParameters.application === undefined) {
+            throw new runtime.RequiredError('application','Required parameter requestParameters.application was null or undefined when calling getServicePolicy.');
+        }
+
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getServicePolicy.');
+        }
+
+        const queryParameters: runtime.HTTPQuery = {};
+
+        if (requestParameters.name !== undefined) {
+            queryParameters['name'] = requestParameters.name;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/v1/tenants/{tenant}/environments/{environment}/applications/{application}/services/{id}/policy`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"application"}}`, encodeURIComponent(String(requestParameters.application))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccCoreV1PolicyFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async getServicePolicy(requestParameters: GetServicePolicyRequest): Promise<TetrateApiTccCoreV1Policy> {
+        const response = await this.getServicePolicyRaw(requestParameters);
         return await response.value();
     }
 
@@ -806,6 +1025,178 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
      */
     async listServices(requestParameters: ListServicesRequest): Promise<TetrateApiTccCoreV1ListServicesResponse> {
         const response = await this.listServicesRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     */
+    async setApplicationPolicyRaw(requestParameters: SetApplicationPolicyRequest): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
+            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling setApplicationPolicy.');
+        }
+
+        if (requestParameters.environment === null || requestParameters.environment === undefined) {
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling setApplicationPolicy.');
+        }
+
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling setApplicationPolicy.');
+        }
+
+        if (requestParameters.body === null || requestParameters.body === undefined) {
+            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling setApplicationPolicy.');
+        }
+
+        const queryParameters: runtime.HTTPQuery = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/v1/tenants/{tenant}/environments/{environment}/applications/{id}/policy`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: TetrateApiTccCoreV1PolicyToJSON(requestParameters.body),
+        });
+
+        return new runtime.TextApiResponse(response);
+    }
+
+    /**
+     */
+    async setApplicationPolicy(requestParameters: SetApplicationPolicyRequest): Promise<object> {
+        const response = await this.setApplicationPolicyRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     */
+    async setEnvironmentPolicyRaw(requestParameters: SetEnvironmentPolicyRequest): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
+            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling setEnvironmentPolicy.');
+        }
+
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling setEnvironmentPolicy.');
+        }
+
+        if (requestParameters.body === null || requestParameters.body === undefined) {
+            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling setEnvironmentPolicy.');
+        }
+
+        const queryParameters: runtime.HTTPQuery = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/v1/tenants/{tenant}/environments/{id}/policy`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: TetrateApiTccCoreV1PolicyToJSON(requestParameters.body),
+        });
+
+        return new runtime.TextApiResponse(response);
+    }
+
+    /**
+     */
+    async setEnvironmentPolicy(requestParameters: SetEnvironmentPolicyRequest): Promise<object> {
+        const response = await this.setEnvironmentPolicyRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     */
+    async setLoadBalancerPolicyRaw(requestParameters: SetLoadBalancerPolicyRequest): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
+            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling setLoadBalancerPolicy.');
+        }
+
+        if (requestParameters.environment === null || requestParameters.environment === undefined) {
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling setLoadBalancerPolicy.');
+        }
+
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling setLoadBalancerPolicy.');
+        }
+
+        if (requestParameters.body === null || requestParameters.body === undefined) {
+            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling setLoadBalancerPolicy.');
+        }
+
+        const queryParameters: runtime.HTTPQuery = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{id}/policy`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: TetrateApiTccCoreV1PolicyToJSON(requestParameters.body),
+        });
+
+        return new runtime.TextApiResponse(response);
+    }
+
+    /**
+     */
+    async setLoadBalancerPolicy(requestParameters: SetLoadBalancerPolicyRequest): Promise<object> {
+        const response = await this.setLoadBalancerPolicyRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     */
+    async setServicePolicyRaw(requestParameters: SetServicePolicyRequest): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
+            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling setServicePolicy.');
+        }
+
+        if (requestParameters.environment === null || requestParameters.environment === undefined) {
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling setServicePolicy.');
+        }
+
+        if (requestParameters.application === null || requestParameters.application === undefined) {
+            throw new runtime.RequiredError('application','Required parameter requestParameters.application was null or undefined when calling setServicePolicy.');
+        }
+
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling setServicePolicy.');
+        }
+
+        if (requestParameters.body === null || requestParameters.body === undefined) {
+            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling setServicePolicy.');
+        }
+
+        const queryParameters: runtime.HTTPQuery = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/v1/tenants/{tenant}/environments/{environment}/applications/{application}/services/{id}/policy`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"application"}}`, encodeURIComponent(String(requestParameters.application))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: TetrateApiTccCoreV1PolicyToJSON(requestParameters.body),
+        });
+
+        return new runtime.TextApiResponse(response);
+    }
+
+    /**
+     */
+    async setServicePolicy(requestParameters: SetServicePolicyRequest): Promise<object> {
+        const response = await this.setServicePolicyRaw(requestParameters);
         return await response.value();
     }
 

@@ -19,9 +19,9 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
-func init() { proto.RegisterFile("doc.proto", fileDescriptor_doc_73361febed144eb7) }
+func init() { proto.RegisterFile("doc.proto", fileDescriptor_doc_9676a6d9b5c5d789) }
 
-var fileDescriptor_doc_73361febed144eb7 = []byte{
+var fileDescriptor_doc_9676a6d9b5c5d789 = []byte{
 	// 283 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x64, 0x90, 0xb1, 0x4e, 0xf3, 0x30,
 	0x14, 0x85, 0x95, 0xfc, 0xbf, 0x5a, 0xe1, 0x85, 0x2a, 0x12, 0x20, 0x75, 0xb2, 0x18, 0xab, 0xd6,

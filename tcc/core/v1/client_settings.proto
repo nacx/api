@@ -1,3 +1,5 @@
+// Copyright (c) Tetrate, Inc 2019 All Rights Reserved.
+
 syntax = "proto3";
 
 package tetrate.api.tcc.core.v1;

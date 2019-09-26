@@ -1,3 +1,5 @@
+// Copyright (c) Tetrate, Inc 2019 All Rights Reserved.
+
 syntax = "proto3";
 
 package tetrate.api.tcc.core.v1;
@@ -6,6 +8,8 @@ option go_package = "github.com/tetrateio/tetrate/api/tcc/core/v1";
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 import "validate/validate.proto";
+
+import "policy.proto";
 
 service Organization {
   rpc CreateTenant(CreateTenantRequest) returns (Tenant) {
@@ -37,6 +41,19 @@ service Organization {
   rpc DeleteTenant(DeleteTenantRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       delete: "/v1/tenants/{id}"
+    };
+  };
+
+  rpc GetTenantPolicy(GetTenantRequest) returns (Policy) {
+    option (google.api.http) = {
+      get: "/v1/tenants/{id}/policy"
+    };
+  };
+
+  rpc SetTenantPolicy(TenantPolicyRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      put: "/v1/tenants/{id}/policy"
+      body: "policy"
     };
   };
 
@@ -72,6 +89,19 @@ service Organization {
     };
   };
 
+  rpc GetTeamPolicy(GetTeamRequest) returns (Policy) {
+    option (google.api.http) = {
+      get: "/v1/tenants/{tenant}/teams/{id}/policy"
+    };
+  };
+
+  rpc SetTeamPolicy(TeamPolicyRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      put: "/v1/tenants/{tenant}/teams/{id}/policy"
+      body: "policy"
+    };
+  };
+
   rpc CreateUser(CreateUserRequest) returns (User) {
     option (google.api.http) = {
       post: "/v1/tenants/{tenant}/users"
@@ -95,6 +125,19 @@ service Organization {
   rpc DeleteUser(DeleteUserRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       delete: "/v1/tenants/{tenant}/users/{id}"
+    };
+  };
+
+  rpc GetUserPolicy(GetUserRequest) returns (Policy) {
+    option (google.api.http) = {
+      get: "/v1/tenants/{tenant}/users/{id}/policy"
+    };
+  };
+
+  rpc SetUserPolicy(UserPolicyRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      put: "/v1/tenants/{tenant}/users/{id}/policy"
+      body: "policy"
     };
   };
 
@@ -122,6 +165,13 @@ message GetTenantRequest {
   // Internal use only. Auto populated field.
   string name = 1;
   string id = 2 [(validate.rules).string.min_len = 1];
+}
+
+message TenantPolicyRequest {
+  // Internal use only. Auto populated field.
+  string name = 1;
+  string id = 2 [(validate.rules).string.min_len = 1];
+  Policy policy = 3 [(validate.rules).message.required = true];
 }
 
 message ListTenantsRequest {}
@@ -165,6 +215,14 @@ message GetTeamRequest {
   string id = 3 [(validate.rules).string.min_len = 1];
 }
 
+message TeamPolicyRequest {
+  // Internal use only. Auto populated field.
+  string name = 1;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string id = 3 [(validate.rules).string.min_len = 1];
+  Policy policy = 4 [(validate.rules).message.required = true];
+}
+
 message ListTeamsRequest {
   // Internal use only. Auto populated field.
   string parent = 1;
@@ -206,6 +264,14 @@ message GetUserRequest {
   string name = 1;
   string tenant = 2 [(validate.rules).string.min_len = 1];
   string id = 3 [(validate.rules).string.min_len = 1];
+}
+
+message UserPolicyRequest {
+  // Internal use only. Auto populated field.
+  string name = 1;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string id = 3 [(validate.rules).string.min_len = 1];
+  Policy policy = 4 [(validate.rules).message.required = true];
 }
 
 message ListUsersRequest {
