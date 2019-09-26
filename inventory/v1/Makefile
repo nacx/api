@@ -3,23 +3,33 @@
 TOPDIR := ../../..
 VENDOR := $(TOPDIR)/third_party/protobuf/
 
-PROTO_SOURCES = $(wildcard *.proto)
-PROTO_GO_SOURCES = $(patsubst %.proto,%.pb.go,$(PROTO_SOURCES))
+PROTO_SOURCES := $(wildcard *.proto)
+PROTO_GO_SOURCES := $(patsubst %.proto,%.pb.go,$(PROTO_SOURCES))
 
-DESCRIPTOR = inventory.proto-descriptor
+DESCRIPTOR := inventory.proto-descriptor
+ENVOYFILTER := envoyfilter.yaml
 
 .PHONY: all
-all: $(PROTO_GO_SOURCES)
+all: $(PROTO_GO_SOURCES) $(ENVOYFILTER)
 	@echo "All protos done"
 
 $(DESCRIPTOR): $(PROTO_GO_SOURCES)
 $(PROTO_GO_SOURCES): $(PROTO_SOURCES)
+	@echo "building protos..."
 	@protoc -I ./ \
 		-I$(VENDOR) \
 		--go_out=paths=source_relative,plugins=grpc:. \
 		--descriptor_set_out=$(DESCRIPTOR) --include_imports \
 		$?
 
+$(ENVOYFILTER): $(DESCRIPTOR)
+	@echo "generating Envoy filter..."
+	@GO111MODULE=off go get -u github.com/tetratelabs/istio-tools/grpc-transcoder
+	@GO111MODULE=off go run github.com/tetratelabs/istio-tools/grpc-transcoder \
+		--descriptor $(DESCRIPTOR) \
+		--service inventory-server \
+		--port 9080 >$(ENVOYFILTER)
+
 clean:
-	@rm -f $(PROTO_GO_SOURCES) $(DESCRIPTOR)
-	@echo "Cleaned $(PROTO_GO_SOURCES) $(DESCRIPTOR)"
+	@rm -f $(PROTO_GO_SOURCES) $(DESCRIPTOR) $(ENVOYFILTER)
+	@echo "Cleaned $(PROTO_GO_SOURCES) $(DESCRIPTOR) $(ENVOYFILTER)"
