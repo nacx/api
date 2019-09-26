@@ -6,7 +6,6 @@ package v1 // import "github.com/tetrateio/tetrate/api/tcc/core/v1"
 import proto "github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
-import empty "github.com/golang/protobuf/ptypes/empty"
 import _ "google.golang.org/genproto/googleapis/api/annotations"
 
 import (
@@ -25,85 +24,124 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
-// Please do not over engineer this anything beyond a glorified
-// file copy.
-type RegistryUpdateRequest struct {
-	// currently accepted values are kubernetes or vm
-	Registrytype string `protobuf:"bytes,1,opt,name=registrytype,proto3" json:"registrytype,omitempty"`
-	Environment  string `protobuf:"bytes,2,opt,name=environment,proto3" json:"environment,omitempty"`
-	// A unique identifier for the k8s/vm cluster
+// RegistryUpdateResourcesRequest request object
+type RegistryUpdateResourcesRequest struct {
+	// Tenant where this service is residing e.g Tetrate
+	Tenant string `protobuf:"bytes,1,opt,name=tenant,proto3" json:"tenant,omitempty"`
+	// environment are higher-level isolations e.g. prod, staging, development, etc.
+	Environment string `protobuf:"bytes,2,opt,name=environment,proto3" json:"environment,omitempty"`
+	// Unique cluster acting as a source
 	Cluster string `protobuf:"bytes,3,opt,name=cluster,proto3" json:"cluster,omitempty"`
-	Tenant  string `protobuf:"bytes,4,opt,name=tenant,proto3" json:"tenant,omitempty"`
-	// A huge json dump of all services, endpoints.
-	// For k8s, its literally kubectl get services --all-namespaces -o json
-	// and kubectl get po --all-namespaces -o json
+	// registrytype indicates source of entry. Currently accepted values "kubernetes", "f5"
+	Registrytype string `protobuf:"bytes,4,opt,name=registrytype,proto3" json:"registrytype,omitempty"`
+	// JSON bulk payload of all physical resources
 	Payload              string   `protobuf:"bytes,5,opt,name=payload,proto3" json:"payload,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *RegistryUpdateRequest) Reset()         { *m = RegistryUpdateRequest{} }
-func (m *RegistryUpdateRequest) String() string { return proto.CompactTextString(m) }
-func (*RegistryUpdateRequest) ProtoMessage()    {}
-func (*RegistryUpdateRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_registryconsumer_28a507c37a8c1387, []int{0}
+func (m *RegistryUpdateResourcesRequest) Reset()         { *m = RegistryUpdateResourcesRequest{} }
+func (m *RegistryUpdateResourcesRequest) String() string { return proto.CompactTextString(m) }
+func (*RegistryUpdateResourcesRequest) ProtoMessage()    {}
+func (*RegistryUpdateResourcesRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_registryconsumer_6ad90bf51b4987d6, []int{0}
 }
-func (m *RegistryUpdateRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_RegistryUpdateRequest.Unmarshal(m, b)
+func (m *RegistryUpdateResourcesRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_RegistryUpdateResourcesRequest.Unmarshal(m, b)
 }
-func (m *RegistryUpdateRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_RegistryUpdateRequest.Marshal(b, m, deterministic)
+func (m *RegistryUpdateResourcesRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_RegistryUpdateResourcesRequest.Marshal(b, m, deterministic)
 }
-func (dst *RegistryUpdateRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_RegistryUpdateRequest.Merge(dst, src)
+func (dst *RegistryUpdateResourcesRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RegistryUpdateResourcesRequest.Merge(dst, src)
 }
-func (m *RegistryUpdateRequest) XXX_Size() int {
-	return xxx_messageInfo_RegistryUpdateRequest.Size(m)
+func (m *RegistryUpdateResourcesRequest) XXX_Size() int {
+	return xxx_messageInfo_RegistryUpdateResourcesRequest.Size(m)
 }
-func (m *RegistryUpdateRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_RegistryUpdateRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_RegistryUpdateRequest proto.InternalMessageInfo
-
-func (m *RegistryUpdateRequest) GetRegistrytype() string {
-	if m != nil {
-		return m.Registrytype
-	}
-	return ""
+func (m *RegistryUpdateResourcesRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_RegistryUpdateResourcesRequest.DiscardUnknown(m)
 }
 
-func (m *RegistryUpdateRequest) GetEnvironment() string {
-	if m != nil {
-		return m.Environment
-	}
-	return ""
-}
+var xxx_messageInfo_RegistryUpdateResourcesRequest proto.InternalMessageInfo
 
-func (m *RegistryUpdateRequest) GetCluster() string {
-	if m != nil {
-		return m.Cluster
-	}
-	return ""
-}
-
-func (m *RegistryUpdateRequest) GetTenant() string {
+func (m *RegistryUpdateResourcesRequest) GetTenant() string {
 	if m != nil {
 		return m.Tenant
 	}
 	return ""
 }
 
-func (m *RegistryUpdateRequest) GetPayload() string {
+func (m *RegistryUpdateResourcesRequest) GetEnvironment() string {
+	if m != nil {
+		return m.Environment
+	}
+	return ""
+}
+
+func (m *RegistryUpdateResourcesRequest) GetCluster() string {
+	if m != nil {
+		return m.Cluster
+	}
+	return ""
+}
+
+func (m *RegistryUpdateResourcesRequest) GetRegistrytype() string {
+	if m != nil {
+		return m.Registrytype
+	}
+	return ""
+}
+
+func (m *RegistryUpdateResourcesRequest) GetPayload() string {
 	if m != nil {
 		return m.Payload
 	}
 	return ""
 }
 
+// RegistryConsumerResponse response returned by server
+type RegistryConsumerResponse struct {
+	Status               string   `protobuf:"bytes,1,opt,name=status,proto3" json:"status,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *RegistryConsumerResponse) Reset()         { *m = RegistryConsumerResponse{} }
+func (m *RegistryConsumerResponse) String() string { return proto.CompactTextString(m) }
+func (*RegistryConsumerResponse) ProtoMessage()    {}
+func (*RegistryConsumerResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_registryconsumer_6ad90bf51b4987d6, []int{1}
+}
+func (m *RegistryConsumerResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_RegistryConsumerResponse.Unmarshal(m, b)
+}
+func (m *RegistryConsumerResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_RegistryConsumerResponse.Marshal(b, m, deterministic)
+}
+func (dst *RegistryConsumerResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RegistryConsumerResponse.Merge(dst, src)
+}
+func (m *RegistryConsumerResponse) XXX_Size() int {
+	return xxx_messageInfo_RegistryConsumerResponse.Size(m)
+}
+func (m *RegistryConsumerResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_RegistryConsumerResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_RegistryConsumerResponse proto.InternalMessageInfo
+
+func (m *RegistryConsumerResponse) GetStatus() string {
+	if m != nil {
+		return m.Status
+	}
+	return ""
+}
+
 func init() {
-	proto.RegisterType((*RegistryUpdateRequest)(nil), "tetrate.api.tcc.core.v1.RegistryUpdateRequest")
+	proto.RegisterType((*RegistryUpdateResourcesRequest)(nil), "tetrate.api.tcc.core.v1.RegistryUpdateResourcesRequest")
+	proto.RegisterType((*RegistryConsumerResponse)(nil), "tetrate.api.tcc.core.v1.RegistryConsumerResponse")
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -118,7 +156,9 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type RegistryConsumerClient interface {
-	RegistryUpdate(ctx context.Context, in *RegistryUpdateRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	// UpdateResources to be called periodically with a bulk payload. API detects the
+	// delta between last call, and determines resources to create, modify, delete
+	UpdateResources(ctx context.Context, in *RegistryUpdateResourcesRequest, opts ...grpc.CallOption) (*RegistryConsumerResponse, error)
 }
 
 type registryConsumerClient struct {
@@ -129,9 +169,9 @@ func NewRegistryConsumerClient(cc *grpc.ClientConn) RegistryConsumerClient {
 	return &registryConsumerClient{cc}
 }
 
-func (c *registryConsumerClient) RegistryUpdate(ctx context.Context, in *RegistryUpdateRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/tetrate.api.tcc.core.v1.RegistryConsumer/RegistryUpdate", in, out, opts...)
+func (c *registryConsumerClient) UpdateResources(ctx context.Context, in *RegistryUpdateResourcesRequest, opts ...grpc.CallOption) (*RegistryConsumerResponse, error) {
+	out := new(RegistryConsumerResponse)
+	err := c.cc.Invoke(ctx, "/tetrate.api.tcc.core.v1.RegistryConsumer/UpdateResources", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -140,27 +180,29 @@ func (c *registryConsumerClient) RegistryUpdate(ctx context.Context, in *Registr
 
 // RegistryConsumerServer is the server API for RegistryConsumer service.
 type RegistryConsumerServer interface {
-	RegistryUpdate(context.Context, *RegistryUpdateRequest) (*empty.Empty, error)
+	// UpdateResources to be called periodically with a bulk payload. API detects the
+	// delta between last call, and determines resources to create, modify, delete
+	UpdateResources(context.Context, *RegistryUpdateResourcesRequest) (*RegistryConsumerResponse, error)
 }
 
 func RegisterRegistryConsumerServer(s *grpc.Server, srv RegistryConsumerServer) {
 	s.RegisterService(&_RegistryConsumer_serviceDesc, srv)
 }
 
-func _RegistryConsumer_RegistryUpdate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RegistryUpdateRequest)
+func _RegistryConsumer_UpdateResources_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RegistryUpdateResourcesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RegistryConsumerServer).RegistryUpdate(ctx, in)
+		return srv.(RegistryConsumerServer).UpdateResources(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tetrate.api.tcc.core.v1.RegistryConsumer/RegistryUpdate",
+		FullMethod: "/tetrate.api.tcc.core.v1.RegistryConsumer/UpdateResources",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RegistryConsumerServer).RegistryUpdate(ctx, req.(*RegistryUpdateRequest))
+		return srv.(RegistryConsumerServer).UpdateResources(ctx, req.(*RegistryUpdateResourcesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -170,8 +212,8 @@ var _RegistryConsumer_serviceDesc = grpc.ServiceDesc{
 	HandlerType: (*RegistryConsumerServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "RegistryUpdate",
-			Handler:    _RegistryConsumer_RegistryUpdate_Handler,
+			MethodName: "UpdateResources",
+			Handler:    _RegistryConsumer_UpdateResources_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -179,30 +221,31 @@ var _RegistryConsumer_serviceDesc = grpc.ServiceDesc{
 }
 
 func init() {
-	proto.RegisterFile("registryconsumer.proto", fileDescriptor_registryconsumer_28a507c37a8c1387)
+	proto.RegisterFile("registryconsumer.proto", fileDescriptor_registryconsumer_6ad90bf51b4987d6)
 }
 
-var fileDescriptor_registryconsumer_28a507c37a8c1387 = []byte{
-	// 333 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x74, 0x51, 0x41, 0x4a, 0xc4, 0x30,
-	0x14, 0xa5, 0xa3, 0x8e, 0x18, 0x45, 0xa4, 0xe0, 0x58, 0x46, 0x17, 0x43, 0x57, 0x22, 0x92, 0xcf,
-	0xe8, 0xce, 0xa5, 0xe2, 0x05, 0x06, 0xdc, 0xb8, 0x4b, 0x33, 0xdf, 0x5a, 0x98, 0x26, 0x31, 0xf9,
-	0x2d, 0x94, 0xd2, 0x8d, 0x57, 0xf0, 0x14, 0x9e, 0xc4, 0x03, 0xb8, 0x75, 0xe9, 0x41, 0x64, 0xda,
-	0x14, 0x3a, 0xa2, 0xbb, 0xff, 0xfe, 0xcb, 0x23, 0xef, 0xbd, 0xcf, 0x26, 0x16, 0xd3, 0xcc, 0x91,
-	0xad, 0xa4, 0x56, 0xae, 0xc8, 0xd1, 0x72, 0x63, 0x35, 0xe9, 0xf0, 0x84, 0x90, 0xac, 0x20, 0xe4,
-	0xc2, 0x64, 0x9c, 0xa4, 0xe4, 0x52, 0x5b, 0xe4, 0xe5, 0x7c, 0x7a, 0x96, 0x6a, 0x9d, 0xae, 0x10,
-	0x84, 0xc9, 0x40, 0x28, 0xa5, 0x49, 0x50, 0xa6, 0x95, 0xeb, 0x64, 0xd3, 0x53, 0xcf, 0xb6, 0x28,
-	0x29, 0x9e, 0x00, 0x73, 0x43, 0x55, 0x47, 0xc6, 0xef, 0x01, 0x3b, 0x5e, 0xf8, 0xef, 0x1e, 0xcc,
-	0x52, 0x10, 0x2e, 0xf0, 0xa5, 0x40, 0x47, 0x61, 0xcc, 0x0e, 0x7a, 0x1f, 0x54, 0x19, 0x8c, 0x82,
-	0x59, 0x70, 0xbe, 0xb7, 0xd8, 0xd8, 0x85, 0x33, 0xb6, 0x8f, 0xaa, 0xcc, 0xac, 0x56, 0x39, 0x2a,
-	0x8a, 0x46, 0xed, 0x93, 0xe1, 0x2a, 0x8c, 0xd8, 0xae, 0x5c, 0x15, 0x8e, 0xd0, 0x46, 0x5b, 0x2d,
-	0xdb, 0xc3, 0x70, 0xc2, 0xc6, 0x84, 0x4a, 0x28, 0x8a, 0xb6, 0x5b, 0xc2, 0xa3, 0xb5, 0xc2, 0x88,
-	0x6a, 0xa5, 0xc5, 0x32, 0xda, 0xe9, 0x14, 0x1e, 0x5e, 0x7d, 0x05, 0xec, 0xa8, 0xf7, 0x7a, 0xe7,
-	0xab, 0x09, 0x3f, 0x02, 0x76, 0xb8, 0x19, 0x20, 0xe4, 0xfc, 0x9f, 0xa2, 0xf8, 0x9f, 0x49, 0xa7,
-	0x13, 0xde, 0x35, 0xc4, 0xfb, 0x86, 0xf8, 0xfd, 0xba, 0xa1, 0x38, 0x7f, 0xfd, 0xfc, 0x7e, 0x1b,
-	0xa5, 0x71, 0x02, 0xe5, 0x1c, 0x3a, 0x77, 0x0e, 0xea, 0x6e, 0x68, 0x60, 0x90, 0xd2, 0x41, 0x3d,
-	0x40, 0x0d, 0xf8, 0x88, 0x0e, 0x6a, 0x3f, 0x35, 0xf0, 0xfb, 0xa4, 0x50, 0x0f, 0x8b, 0x6c, 0x6e,
-	0x82, 0x8b, 0x5b, 0xfe, 0x78, 0x99, 0x66, 0xf4, 0x5c, 0x24, 0x5c, 0xea, 0x1c, 0x7c, 0x84, 0x4c,
-	0xf7, 0x53, 0x7b, 0x5d, 0x92, 0x12, 0xd6, 0x61, 0xa0, 0x9c, 0x27, 0xe3, 0xd6, 0xee, 0xf5, 0x4f,
-	0x00, 0x00, 0x00, 0xff, 0xff, 0x98, 0xde, 0xb8, 0xef, 0x2f, 0x02, 0x00, 0x00,
+var fileDescriptor_registryconsumer_6ad90bf51b4987d6 = []byte{
+	// 344 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x92, 0x4f, 0x4a, 0xec, 0x40,
+	0x10, 0xc6, 0xc9, 0xbc, 0xf7, 0xe6, 0x61, 0x2b, 0x28, 0x59, 0x8c, 0x61, 0x10, 0x19, 0xb2, 0x12,
+	0x91, 0x6e, 0x32, 0x2e, 0x04, 0x97, 0x7a, 0x83, 0x80, 0x1b, 0x77, 0x3d, 0x3d, 0x45, 0x0c, 0x4c,
+	0xba, 0x62, 0x57, 0x25, 0x30, 0x84, 0x2c, 0xf4, 0x0a, 0xde, 0xc4, 0xab, 0x78, 0x05, 0x97, 0x1e,
+	0x42, 0x26, 0x7f, 0x20, 0x06, 0xd4, 0x5d, 0x7d, 0x5d, 0x7c, 0xcd, 0x57, 0x3f, 0x3e, 0x31, 0x73,
+	0x90, 0xa4, 0xc4, 0x6e, 0x6b, 0xd0, 0x52, 0x91, 0x81, 0x93, 0xb9, 0x43, 0x46, 0xff, 0x98, 0x81,
+	0x9d, 0x66, 0x90, 0x3a, 0x4f, 0x25, 0x1b, 0x23, 0x0d, 0x3a, 0x90, 0x65, 0x34, 0x3f, 0x49, 0x10,
+	0x93, 0x0d, 0x28, 0x9d, 0xa7, 0x4a, 0x5b, 0x8b, 0xac, 0x39, 0x45, 0x4b, 0xad, 0x2d, 0x7c, 0xf5,
+	0xc4, 0x69, 0xdc, 0xfd, 0x78, 0x97, 0xaf, 0x35, 0x43, 0x0c, 0x84, 0x85, 0x33, 0x40, 0x31, 0x3c,
+	0x16, 0x40, 0xec, 0xcf, 0xc4, 0x94, 0xc1, 0x6a, 0xcb, 0x81, 0xb7, 0xf0, 0xce, 0xf6, 0xe2, 0x4e,
+	0xf9, 0x0b, 0xb1, 0x0f, 0xb6, 0x4c, 0x1d, 0xda, 0x0c, 0x2c, 0x07, 0x93, 0x66, 0x39, 0x7c, 0xf2,
+	0x03, 0xf1, 0xdf, 0x6c, 0x0a, 0x62, 0x70, 0xc1, 0x9f, 0x66, 0xdb, 0x4b, 0x3f, 0x14, 0x07, 0xfd,
+	0x1d, 0xbc, 0xcd, 0x21, 0xf8, 0xdb, 0xac, 0xbf, 0xbc, 0xed, 0xdc, 0xb9, 0xde, 0x6e, 0x50, 0xaf,
+	0x83, 0x7f, 0xad, 0xbb, 0x93, 0xe1, 0x52, 0x04, 0x7d, 0xe6, 0xdb, 0x8e, 0x42, 0x0c, 0x94, 0xa3,
+	0x25, 0xd8, 0xa5, 0x25, 0xd6, 0x5c, 0x50, 0x9f, 0xb6, 0x55, 0xcb, 0xa7, 0x89, 0x38, 0x1a, 0x9b,
+	0xfc, 0x0f, 0x4f, 0x1c, 0x8e, 0xae, 0xf6, 0xaf, 0xe4, 0x37, 0x24, 0xe5, 0xcf, 0x9c, 0xe6, 0xd1,
+	0xaf, 0xc6, 0x71, 0xd8, 0x30, 0x7b, 0x7e, 0x7b, 0x7f, 0x99, 0x24, 0xe1, 0x4a, 0x95, 0x91, 0x6a,
+	0xb1, 0x92, 0xaa, 0xda, 0xa1, 0x56, 0x03, 0x94, 0xa4, 0xaa, 0x81, 0xaa, 0x55, 0xc7, 0x91, 0x54,
+	0xd5, 0x4d, 0xb5, 0x1a, 0xf7, 0x42, 0x55, 0x43, 0x9a, 0xf5, 0xb5, 0x77, 0x7e, 0x23, 0xef, 0x2f,
+	0x92, 0x94, 0x1f, 0x8a, 0x95, 0x34, 0x98, 0xa9, 0x2e, 0x6d, 0x8a, 0xfd, 0xd4, 0x54, 0x84, 0x8d,
+	0x51, 0xbb, 0xdc, 0xaa, 0x8c, 0x56, 0xd3, 0xa6, 0x23, 0x97, 0x9f, 0x01, 0x00, 0x00, 0xff, 0xff,
+	0xe7, 0x86, 0x8e, 0xad, 0x74, 0x02, 0x00, 0x00,
 }

@@ -28,8 +28,8 @@ var _ status.Status
 var _ = runtime.String
 var _ = utilities.NewDoubleArray
 
-func request_RegistryConsumer_RegistryUpdate_0(ctx context.Context, marshaler runtime.Marshaler, client RegistryConsumerClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq RegistryUpdateRequest
+func request_RegistryConsumer_UpdateResources_0(ctx context.Context, marshaler runtime.Marshaler, client RegistryConsumerClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq RegistryUpdateResourcesRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -91,7 +91,7 @@ func request_RegistryConsumer_RegistryUpdate_0(ctx context.Context, marshaler ru
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "registrytype", err)
 	}
 
-	msg, err := client.RegistryUpdate(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.UpdateResources(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
@@ -134,7 +134,7 @@ func RegisterRegistryConsumerHandler(ctx context.Context, mux *runtime.ServeMux,
 // "RegistryConsumerClient" to call the correct interceptors.
 func RegisterRegistryConsumerHandlerClient(ctx context.Context, mux *runtime.ServeMux, client RegistryConsumerClient) error {
 
-	mux.Handle("POST", pattern_RegistryConsumer_RegistryUpdate_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_RegistryConsumer_UpdateResources_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -143,14 +143,14 @@ func RegisterRegistryConsumerHandlerClient(ctx context.Context, mux *runtime.Ser
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_RegistryConsumer_RegistryUpdate_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_RegistryConsumer_UpdateResources_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RegistryConsumer_RegistryUpdate_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RegistryConsumer_UpdateResources_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -158,9 +158,9 @@ func RegisterRegistryConsumerHandlerClient(ctx context.Context, mux *runtime.Ser
 }
 
 var (
-	pattern_RegistryConsumer_RegistryUpdate_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7, 1, 0, 4, 1, 5, 8}, []string{"v1", "tenants", "tenant", "environments", "environment", "clusters", "cluster", "registryconsumer", "registrytype"}, ""))
+	pattern_RegistryConsumer_UpdateResources_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7, 1, 0, 4, 1, 5, 8}, []string{"v1", "tenants", "tenant", "environments", "environment", "clusters", "cluster", "registryconsumer", "registrytype"}, ""))
 )
 
 var (
-	forward_RegistryConsumer_RegistryUpdate_0 = runtime.ForwardResponseMessage
+	forward_RegistryConsumer_UpdateResources_0 = runtime.ForwardResponseMessage
 )

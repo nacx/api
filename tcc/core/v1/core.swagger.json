@@ -1770,12 +1770,12 @@
     },
     "/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/registryconsumer/{registrytype}": {
       "post": {
-        "operationId": "RegistryUpdate",
+        "operationId": "UpdateResources",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "properties": {}
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.RegistryConsumerResponse"
             }
           },
           "404": {
@@ -1788,26 +1788,28 @@
         "parameters": [
           {
             "name": "tenant",
+            "description": "Tenant where this service is residing e.g Tetrate",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "environment",
+            "description": "environment are higher-level isolations e.g. prod, staging, development, etc.",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "cluster",
-            "description": "A unique identifier for the k8s/vm cluster",
+            "description": "Unique cluster acting as a source",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "registrytype",
-            "description": "currently accepted values are kubernetes or vm",
+            "description": "registrytype indicates source of entry. Currently accepted values \"kubernetes\", \"f5\"",
             "in": "path",
             "required": true,
             "type": "string"
@@ -1817,7 +1819,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.RegistryUpdateRequest"
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.RegistryUpdateResourcesRequest"
             }
           }
         ],
@@ -3712,6 +3714,12 @@
         },
         "etag": {
           "type": "string"
+        },
+        "labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
         }
       }
     },
@@ -3760,29 +3768,40 @@
       ],
       "default": "UNKNOWN"
     },
-    "tetrate.api.tcc.core.v1.RegistryUpdateRequest": {
+    "tetrate.api.tcc.core.v1.RegistryConsumerResponse": {
       "type": "object",
       "properties": {
-        "registrytype": {
+        "status": {
+          "type": "string"
+        }
+      },
+      "title": "RegistryConsumerResponse response returned by server"
+    },
+    "tetrate.api.tcc.core.v1.RegistryUpdateResourcesRequest": {
+      "type": "object",
+      "properties": {
+        "tenant": {
           "type": "string",
-          "title": "currently accepted values are kubernetes or vm"
+          "title": "Tenant where this service is residing e.g Tetrate"
         },
         "environment": {
-          "type": "string"
+          "type": "string",
+          "description": "environment are higher-level isolations e.g. prod, staging, development, etc."
         },
         "cluster": {
           "type": "string",
-          "title": "A unique identifier for the k8s/vm cluster"
+          "title": "Unique cluster acting as a source"
         },
-        "tenant": {
-          "type": "string"
+        "registrytype": {
+          "type": "string",
+          "title": "registrytype indicates source of entry. Currently accepted values \"kubernetes\", \"f5\""
         },
         "payload": {
           "type": "string",
-          "title": "A huge json dump of all services, endpoints.\nFor k8s, its literally kubectl get services --all-namespaces -o json\nand kubectl get po --all-namespaces -o json"
+          "title": "JSON bulk payload of all physical resources"
         }
       },
-      "description": "Please do not over engineer this anything beyond a glorified\nfile copy."
+      "title": "RegistryUpdateResourcesRequest request object"
     },
     "tetrate.api.tcc.core.v1.Route": {
       "type": "object",

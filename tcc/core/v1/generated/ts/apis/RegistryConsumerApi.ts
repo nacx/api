@@ -14,17 +14,20 @@
 
 import * as runtime from '../runtime';
 import {
-    TetrateApiTccCoreV1RegistryUpdateRequest,
-    TetrateApiTccCoreV1RegistryUpdateRequestFromJSON,
-    TetrateApiTccCoreV1RegistryUpdateRequestToJSON,
+    TetrateApiTccCoreV1RegistryConsumerResponse,
+    TetrateApiTccCoreV1RegistryConsumerResponseFromJSON,
+    TetrateApiTccCoreV1RegistryConsumerResponseToJSON,
+    TetrateApiTccCoreV1RegistryUpdateResourcesRequest,
+    TetrateApiTccCoreV1RegistryUpdateResourcesRequestFromJSON,
+    TetrateApiTccCoreV1RegistryUpdateResourcesRequestToJSON,
 } from '../models';
 
-export interface RegistryUpdateRequest {
+export interface UpdateResourcesRequest {
     tenant: string;
     environment: string;
     cluster: string;
     registrytype: string;
-    body: TetrateApiTccCoreV1RegistryUpdateRequest;
+    body: TetrateApiTccCoreV1RegistryUpdateResourcesRequest;
 }
 
 /**
@@ -34,25 +37,25 @@ export class RegistryConsumerApi extends runtime.BaseAPI {
 
     /**
      */
-    async registryUpdateRaw(requestParameters: RegistryUpdateRequest): Promise<runtime.ApiResponse<any>> {
+    async updateResourcesRaw(requestParameters: UpdateResourcesRequest): Promise<runtime.ApiResponse<any>> {
         if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
-            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling registryUpdate.');
+            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling updateResources.');
         }
 
         if (requestParameters.environment === null || requestParameters.environment === undefined) {
-            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling registryUpdate.');
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling updateResources.');
         }
 
         if (requestParameters.cluster === null || requestParameters.cluster === undefined) {
-            throw new runtime.RequiredError('cluster','Required parameter requestParameters.cluster was null or undefined when calling registryUpdate.');
+            throw new runtime.RequiredError('cluster','Required parameter requestParameters.cluster was null or undefined when calling updateResources.');
         }
 
         if (requestParameters.registrytype === null || requestParameters.registrytype === undefined) {
-            throw new runtime.RequiredError('registrytype','Required parameter requestParameters.registrytype was null or undefined when calling registryUpdate.');
+            throw new runtime.RequiredError('registrytype','Required parameter requestParameters.registrytype was null or undefined when calling updateResources.');
         }
 
         if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling registryUpdate.');
+            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling updateResources.');
         }
 
         const queryParameters: runtime.HTTPQuery = {};
@@ -66,16 +69,16 @@ export class RegistryConsumerApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: TetrateApiTccCoreV1RegistryUpdateRequestToJSON(requestParameters.body),
+            body: TetrateApiTccCoreV1RegistryUpdateResourcesRequestToJSON(requestParameters.body),
         });
 
-        return new runtime.TextApiResponse(response);
+        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccCoreV1RegistryConsumerResponseFromJSON(jsonValue));
     }
 
     /**
      */
-    async registryUpdate(requestParameters: RegistryUpdateRequest): Promise<object> {
-        const response = await this.registryUpdateRaw(requestParameters);
+    async updateResources(requestParameters: UpdateResourcesRequest): Promise<TetrateApiTccCoreV1RegistryConsumerResponse> {
+        const response = await this.updateResourcesRaw(requestParameters);
         return await response.value();
     }
 

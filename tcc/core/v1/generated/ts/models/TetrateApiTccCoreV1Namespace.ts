@@ -60,6 +60,12 @@ export interface TetrateApiTccCoreV1Namespace {
      * @memberof TetrateApiTccCoreV1Namespace
      */
     etag?: string;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof TetrateApiTccCoreV1Namespace
+     */
+    labels?: { [key: string]: string; };
 }
 
 export function TetrateApiTccCoreV1NamespaceFromJSON(json: any): TetrateApiTccCoreV1Namespace {
@@ -71,6 +77,7 @@ export function TetrateApiTccCoreV1NamespaceFromJSON(json: any): TetrateApiTccCo
         'id': !exists(json, 'id') ? undefined : json['id'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'etag': !exists(json, 'etag') ? undefined : json['etag'],
+        'labels': !exists(json, 'labels') ? undefined : json['labels'],
     };
 }
 
@@ -86,6 +93,7 @@ export function TetrateApiTccCoreV1NamespaceToJSON(value?: TetrateApiTccCoreV1Na
         'id': value.id,
         'description': value.description,
         'etag': value.etag,
+        'labels': value.labels,
     };
 }
 

@@ -1,19 +1,20 @@
+// Copyright (c) Tetrate, Inc 2019 All Rights Reserved.
+
 syntax = "proto3";
 
 package tetrate.api.tcc.core.v1;
 option go_package = "github.com/tetrateio/tetrate/api/tcc/core/v1";
 
 import "google/api/annotations.proto";
-import "google/protobuf/empty.proto";
 
-// One big giant bulk API. The k8s sync agent would call this API with
-// JSON form of k8s services, endpoints. Same goes for f5 sync
-// agent. They call this API periodically to update our internal data
-// model. Upon receiving the data, we will convert this into our model
-// and then push to the database.  Why is this a gRPC service? No
-// clue.
+// RegistryConsumer service accepts bulk JSON payload to update resources
+// into TCC data model. A sync agent calls this API periodically to create
+// or update deployments, namespaces, or endpoints. API converts resources into
+// appropriate TCC data model fields, and pushes to the database
 service RegistryConsumer {
-  rpc RegistryUpdate(RegistryUpdateRequest) returns (google.protobuf.Empty) {
+  // UpdateResources to be called periodically with a bulk payload. API detects the
+  // delta between last call, and determines resources to create, modify, delete
+  rpc UpdateResources(RegistryUpdateResourcesRequest) returns (RegistryConsumerResponse) {
     option (google.api.http) = {
       post: "/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/registryconsumer/{registrytype}"
       body: "*"
@@ -21,17 +22,25 @@ service RegistryConsumer {
   };
 }
 
-// Please do not over engineer this anything beyond a glorified
-// file copy.
-message RegistryUpdateRequest {
-  // currently accepted values are kubernetes or vm
-  string registrytype = 1;
+// RegistryUpdateResourcesRequest request object
+message RegistryUpdateResourcesRequest {
+  // Tenant where this service is residing e.g Tetrate
+  string tenant = 1;
+
+  // environment are higher-level isolations e.g. prod, staging, development, etc.
   string environment = 2;
-  // A unique identifier for the k8s/vm cluster
+
+  // Unique cluster acting as a source
   string cluster = 3;
-  string tenant = 4;
-  // A huge json dump of all services, endpoints.
-  // For k8s, its literally kubectl get services --all-namespaces -o json
-  // and kubectl get po --all-namespaces -o json
+
+  // registrytype indicates source of entry. Currently accepted values "kubernetes", "f5"
+  string registrytype = 4;
+
+  // JSON bulk payload of all physical resources
   string payload = 5;
+}
+
+// RegistryConsumerResponse response returned by server
+message RegistryConsumerResponse {
+  string status = 1;
 }

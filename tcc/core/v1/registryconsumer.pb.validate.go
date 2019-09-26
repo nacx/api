@@ -33,30 +33,31 @@ var (
 	_ = ptypes.DynamicAny{}
 )
 
-// Validate checks the field values on RegistryUpdateRequest with the rules
-// defined in the proto definition for this message. If any rules are
+// Validate checks the field values on RegistryUpdateResourcesRequest with the
+// rules defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
-func (m *RegistryUpdateRequest) Validate() error {
+func (m *RegistryUpdateResourcesRequest) Validate() error {
 	if m == nil {
 		return nil
 	}
 
-	// no validation rules for Registrytype
+	// no validation rules for Tenant
 
 	// no validation rules for Environment
 
 	// no validation rules for Cluster
 
-	// no validation rules for Tenant
+	// no validation rules for Registrytype
 
 	// no validation rules for Payload
 
 	return nil
 }
 
-// RegistryUpdateRequestValidationError is the validation error returned by
-// RegistryUpdateRequest.Validate if the designated constraints aren't met.
-type RegistryUpdateRequestValidationError struct {
+// RegistryUpdateResourcesRequestValidationError is the validation error
+// returned by RegistryUpdateResourcesRequest.Validate if the designated
+// constraints aren't met.
+type RegistryUpdateResourcesRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -64,24 +65,24 @@ type RegistryUpdateRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e RegistryUpdateRequestValidationError) Field() string { return e.field }
+func (e RegistryUpdateResourcesRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e RegistryUpdateRequestValidationError) Reason() string { return e.reason }
+func (e RegistryUpdateResourcesRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e RegistryUpdateRequestValidationError) Cause() error { return e.cause }
+func (e RegistryUpdateResourcesRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e RegistryUpdateRequestValidationError) Key() bool { return e.key }
+func (e RegistryUpdateResourcesRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e RegistryUpdateRequestValidationError) ErrorName() string {
-	return "RegistryUpdateRequestValidationError"
+func (e RegistryUpdateResourcesRequestValidationError) ErrorName() string {
+	return "RegistryUpdateResourcesRequestValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e RegistryUpdateRequestValidationError) Error() string {
+func (e RegistryUpdateResourcesRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -93,14 +94,14 @@ func (e RegistryUpdateRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sRegistryUpdateRequest.%s: %s%s",
+		"invalid %sRegistryUpdateResourcesRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = RegistryUpdateRequestValidationError{}
+var _ error = RegistryUpdateResourcesRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -108,4 +109,73 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = RegistryUpdateRequestValidationError{}
+} = RegistryUpdateResourcesRequestValidationError{}
+
+// Validate checks the field values on RegistryConsumerResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *RegistryConsumerResponse) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Status
+
+	return nil
+}
+
+// RegistryConsumerResponseValidationError is the validation error returned by
+// RegistryConsumerResponse.Validate if the designated constraints aren't met.
+type RegistryConsumerResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e RegistryConsumerResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e RegistryConsumerResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e RegistryConsumerResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e RegistryConsumerResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e RegistryConsumerResponseValidationError) ErrorName() string {
+	return "RegistryConsumerResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e RegistryConsumerResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sRegistryConsumerResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = RegistryConsumerResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = RegistryConsumerResponseValidationError{}

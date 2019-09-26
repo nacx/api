@@ -13,62 +13,62 @@
 
 import { exists, mapValues } from '../runtime';
 /**
- * Please do not over engineer this anything beyond a glorified file copy.
+ * 
  * @export
- * @interface TetrateApiTccCoreV1RegistryUpdateRequest
+ * @interface TetrateApiTccCoreV1RegistryUpdateResourcesRequest
  */
-export interface TetrateApiTccCoreV1RegistryUpdateRequest {
+export interface TetrateApiTccCoreV1RegistryUpdateResourcesRequest {
     /**
      * 
      * @type {string}
-     * @memberof TetrateApiTccCoreV1RegistryUpdateRequest
+     * @memberof TetrateApiTccCoreV1RegistryUpdateResourcesRequest
      */
-    registrytype?: string;
+    tenant?: string;
     /**
-     * 
+     * environment are higher-level isolations e.g. prod, staging, development, etc.
      * @type {string}
-     * @memberof TetrateApiTccCoreV1RegistryUpdateRequest
+     * @memberof TetrateApiTccCoreV1RegistryUpdateResourcesRequest
      */
     environment?: string;
     /**
      * 
      * @type {string}
-     * @memberof TetrateApiTccCoreV1RegistryUpdateRequest
+     * @memberof TetrateApiTccCoreV1RegistryUpdateResourcesRequest
      */
     cluster?: string;
     /**
      * 
      * @type {string}
-     * @memberof TetrateApiTccCoreV1RegistryUpdateRequest
+     * @memberof TetrateApiTccCoreV1RegistryUpdateResourcesRequest
      */
-    tenant?: string;
+    registrytype?: string;
     /**
      * 
      * @type {string}
-     * @memberof TetrateApiTccCoreV1RegistryUpdateRequest
+     * @memberof TetrateApiTccCoreV1RegistryUpdateResourcesRequest
      */
     payload?: string;
 }
 
-export function TetrateApiTccCoreV1RegistryUpdateRequestFromJSON(json: any): TetrateApiTccCoreV1RegistryUpdateRequest {
+export function TetrateApiTccCoreV1RegistryUpdateResourcesRequestFromJSON(json: any): TetrateApiTccCoreV1RegistryUpdateResourcesRequest {
     return {
-        'registrytype': !exists(json, 'registrytype') ? undefined : json['registrytype'],
+        'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
         'environment': !exists(json, 'environment') ? undefined : json['environment'],
         'cluster': !exists(json, 'cluster') ? undefined : json['cluster'],
-        'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
+        'registrytype': !exists(json, 'registrytype') ? undefined : json['registrytype'],
         'payload': !exists(json, 'payload') ? undefined : json['payload'],
     };
 }
 
-export function TetrateApiTccCoreV1RegistryUpdateRequestToJSON(value?: TetrateApiTccCoreV1RegistryUpdateRequest): any {
+export function TetrateApiTccCoreV1RegistryUpdateResourcesRequestToJSON(value?: TetrateApiTccCoreV1RegistryUpdateResourcesRequest): any {
     if (value === undefined) {
         return undefined;
     }
     return {
-        'registrytype': value.registrytype,
+        'tenant': value.tenant,
         'environment': value.environment,
         'cluster': value.cluster,
-        'tenant': value.tenant,
+        'registrytype': value.registrytype,
         'payload': value.payload,
     };
 }

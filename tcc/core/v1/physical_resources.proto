@@ -201,6 +201,7 @@ message Namespace {
   string id = 5;
   string description = 6;
   string etag = 7;
+  map<string, string> labels = 8;
 }
 
 message CreateNamespaceRequest {
