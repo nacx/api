@@ -3915,6 +3915,11 @@
         "routingInfo": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.RoutingInfo",
           "description": "HTTP Routing settings for the hostname. Note that subsets should not be defined at LB hostname level."
+        },
+        "isPrimary": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Indicator whether to use this LB as primary. This is used for Metrics reporting at the App level. If there are multiple dedicated load balancers in an App, only one and mandatorily one has to be marked primary. If there is only one dedicated load balancer in an app, it will be marked as primary by default"
         }
       }
     },

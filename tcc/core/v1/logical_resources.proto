@@ -358,6 +358,10 @@ message ApplicationSpecificLB {
   string hostname = 4 [(validate.rules).string.min_len = 1];
   // HTTP Routing settings for the hostname. Note that subsets should not be defined at LB hostname level.
   RoutingInfo routing_info = 5;
+  // Indicator whether to use this LB as primary. This is used for Metrics reporting at the App level. If there are
+  // multiple dedicated load balancers in an App, only one and mandatorily one has to be marked primary. If there
+  // is only one dedicated load balancer in an app, it will be marked as primary by default
+  bool is_primary = 6;
 }
 
 message Service {

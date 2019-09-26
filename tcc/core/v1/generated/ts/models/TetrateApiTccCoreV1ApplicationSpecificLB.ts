@@ -57,6 +57,12 @@ export interface TetrateApiTccCoreV1ApplicationSpecificLB {
      * @memberof TetrateApiTccCoreV1ApplicationSpecificLB
      */
     routingInfo?: TetrateApiTccCoreV1RoutingInfo;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TetrateApiTccCoreV1ApplicationSpecificLB
+     */
+    isPrimary?: boolean;
 }
 
 export function TetrateApiTccCoreV1ApplicationSpecificLBFromJSON(json: any): TetrateApiTccCoreV1ApplicationSpecificLB {
@@ -66,6 +72,7 @@ export function TetrateApiTccCoreV1ApplicationSpecificLBFromJSON(json: any): Tet
         'namespace': !exists(json, 'namespace') ? undefined : json['namespace'],
         'hostname': !exists(json, 'hostname') ? undefined : json['hostname'],
         'routingInfo': !exists(json, 'routingInfo') ? undefined : TetrateApiTccCoreV1RoutingInfoFromJSON(json['routingInfo']),
+        'isPrimary': !exists(json, 'isPrimary') ? undefined : json['isPrimary'],
     };
 }
 
@@ -79,6 +86,7 @@ export function TetrateApiTccCoreV1ApplicationSpecificLBToJSON(value?: TetrateAp
         'namespace': value.namespace,
         'hostname': value.hostname,
         'routingInfo': TetrateApiTccCoreV1RoutingInfoToJSON(value.routingInfo),
+        'isPrimary': value.isPrimary,
     };
 }
 

@@ -1363,6 +1363,8 @@ func (m *ApplicationSpecificLB) Validate() error {
 		}
 	}
 
+	// no validation rules for IsPrimary
+
 	return nil
 }
 
