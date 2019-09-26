@@ -38,7 +38,7 @@ export interface TetrateApiTccWorkflowsV1LBTicketStatus {
      * @type {string}
      * @memberof TetrateApiTccWorkflowsV1LBTicketStatus
      */
-    cluster?: string;
+    workspace?: string;
     /**
      * 
      * @type {string}
@@ -68,7 +68,7 @@ export interface TetrateApiTccWorkflowsV1LBTicketStatus {
 export function TetrateApiTccWorkflowsV1LBTicketStatusFromJSON(json: any): TetrateApiTccWorkflowsV1LBTicketStatus {
     return {
         'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
-        'cluster': !exists(json, 'cluster') ? undefined : json['cluster'],
+        'workspace': !exists(json, 'workspace') ? undefined : json['workspace'],
         'requestid': !exists(json, 'requestid') ? undefined : json['requestid'],
         'operation': !exists(json, 'operation') ? undefined : TetrateApiTccWorkflowsV1LBOperationFromJSON(json['operation']),
         'state': !exists(json, 'state') ? undefined : TetrateApiTccWorkflowsV1LBTicketStatusRequestStateFromJSON(json['state']),
@@ -82,7 +82,7 @@ export function TetrateApiTccWorkflowsV1LBTicketStatusToJSON(value?: TetrateApiT
     }
     return {
         'tenant': value.tenant,
-        'cluster': value.cluster,
+        'workspace': value.workspace,
         'requestid': value.requestid,
         'operation': TetrateApiTccWorkflowsV1LBOperationToJSON(value.operation),
         'state': TetrateApiTccWorkflowsV1LBTicketStatusRequestStateToJSON(value.state),

@@ -23,26 +23,26 @@ export interface TetrateApiTccWorkflowsV1LBTicketId {
      * @type {string}
      * @memberof TetrateApiTccWorkflowsV1LBTicketId
      */
-    requestid?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TetrateApiTccWorkflowsV1LBTicketId
-     */
-    cluster?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TetrateApiTccWorkflowsV1LBTicketId
-     */
     tenant?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccWorkflowsV1LBTicketId
+     */
+    workspace?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccWorkflowsV1LBTicketId
+     */
+    requestid?: string;
 }
 
 export function TetrateApiTccWorkflowsV1LBTicketIdFromJSON(json: any): TetrateApiTccWorkflowsV1LBTicketId {
     return {
-        'requestid': !exists(json, 'requestid') ? undefined : json['requestid'],
-        'cluster': !exists(json, 'cluster') ? undefined : json['cluster'],
         'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
+        'workspace': !exists(json, 'workspace') ? undefined : json['workspace'],
+        'requestid': !exists(json, 'requestid') ? undefined : json['requestid'],
     };
 }
 
@@ -51,9 +51,9 @@ export function TetrateApiTccWorkflowsV1LBTicketIdToJSON(value?: TetrateApiTccWo
         return undefined;
     }
     return {
-        'requestid': value.requestid,
-        'cluster': value.cluster,
         'tenant': value.tenant,
+        'workspace': value.workspace,
+        'requestid': value.requestid,
     };
 }
 

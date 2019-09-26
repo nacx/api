@@ -34,7 +34,7 @@ ${DESCRIPTOR}:
 		-I $(VENDOR) \
 		-I $(APIS) \
 		-I $(GOSRCDIR)/github.com/envoyproxy/protoc-gen-validate \
-		--grpc-gateway_out=paths=source_relative:. \
+		--grpc-gateway_out=allow_delete_body=true,paths=source_relative:. \
 		--go_out=paths=source_relative,plugins=grpc:. \
 		--validate_out=paths=source_relative,lang=go:. \
 		--descriptor_set_out=$(DESCRIPTOR) --include_imports \
@@ -48,7 +48,7 @@ $(SWAGGER):
 	protoc -I ./ \
 		-I $(VENDOR) \
 		-I $(APIS) \
-		--swagger_out=json_names_for_fields=true,allow_merge=true,merge_file_name=core,fqn_for_swagger_name=true:. \
+		--swagger_out=allow_delete_body=true,json_names_for_fields=true,allow_merge=true,merge_file_name=core,fqn_for_swagger_name=true:. \
 		$(PROTO_SOURCES)
 	@echo "done building swagger"
 

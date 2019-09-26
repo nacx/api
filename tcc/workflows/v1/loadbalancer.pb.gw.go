@@ -58,15 +58,15 @@ func request_LoadBalancerWorkflow_Attach_0(ctx context.Context, marshaler runtim
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
 	}
 
-	val, ok = pathParams["cluster"]
+	val, ok = pathParams["workspace"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "cluster")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "workspace")
 	}
 
-	protoReq.Cluster, err = runtime.String(val)
+	protoReq.Workspace, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "cluster", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "workspace", err)
 	}
 
 	msg, err := client.Attach(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -104,15 +104,15 @@ func request_LoadBalancerWorkflow_Detach_0(ctx context.Context, marshaler runtim
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
 	}
 
-	val, ok = pathParams["cluster"]
+	val, ok = pathParams["workspace"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "cluster")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "workspace")
 	}
 
-	protoReq.Cluster, err = runtime.String(val)
+	protoReq.Workspace, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "cluster", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "workspace", err)
 	}
 
 	msg, err := client.Detach(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -142,15 +142,15 @@ func request_LoadBalancerWorkflow_GetTicketStatus_0(ctx context.Context, marshal
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
 	}
 
-	val, ok = pathParams["cluster"]
+	val, ok = pathParams["workspace"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "cluster")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "workspace")
 	}
 
-	protoReq.Cluster, err = runtime.String(val)
+	protoReq.Workspace, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "cluster", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "workspace", err)
 	}
 
 	val, ok = pathParams["requestid"]
@@ -199,15 +199,15 @@ func request_LoadBalancerWorkflow_Cancel_0(ctx context.Context, marshaler runtim
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
 	}
 
-	val, ok = pathParams["cluster"]
+	val, ok = pathParams["workspace"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "cluster")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "workspace")
 	}
 
-	protoReq.Cluster, err = runtime.String(val)
+	protoReq.Workspace, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "cluster", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "workspace", err)
 	}
 
 	val, ok = pathParams["requestid"]
@@ -256,15 +256,15 @@ func request_LoadBalancerWorkflow_Publish_0(ctx context.Context, marshaler runti
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
 	}
 
-	val, ok = pathParams["cluster"]
+	val, ok = pathParams["workspace"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "cluster")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "workspace")
 	}
 
-	protoReq.Cluster, err = runtime.String(val)
+	protoReq.Workspace, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "cluster", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "workspace", err)
 	}
 
 	msg, err := client.Publish(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -294,15 +294,15 @@ func request_LoadBalancerWorkflow_ListPendingTickets_0(ctx context.Context, mars
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
 	}
 
-	val, ok = pathParams["cluster"]
+	val, ok = pathParams["workspace"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "cluster")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "workspace")
 	}
 
-	protoReq.Cluster, err = runtime.String(val)
+	protoReq.Workspace, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "cluster", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "workspace", err)
 	}
 
 	msg, err := client.ListPendingTickets(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -340,15 +340,15 @@ func request_LoadBalancerWorkflow_Approve_0(ctx context.Context, marshaler runti
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
 	}
 
-	val, ok = pathParams["cluster"]
+	val, ok = pathParams["workspace"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "cluster")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "workspace")
 	}
 
-	protoReq.Cluster, err = runtime.String(val)
+	protoReq.Workspace, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "cluster", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "workspace", err)
 	}
 
 	val, ok = pathParams["requestid"]
@@ -397,15 +397,15 @@ func request_LoadBalancerWorkflow_Deny_0(ctx context.Context, marshaler runtime.
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
 	}
 
-	val, ok = pathParams["cluster"]
+	val, ok = pathParams["workspace"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "cluster")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "workspace")
 	}
 
-	protoReq.Cluster, err = runtime.String(val)
+	protoReq.Workspace, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "cluster", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "workspace", err)
 	}
 
 	val, ok = pathParams["requestid"]
@@ -626,21 +626,21 @@ func RegisterLoadBalancerWorkflowHandlerClient(ctx context.Context, mux *runtime
 }
 
 var (
-	pattern_LoadBalancerWorkflow_Attach_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 2, 7}, []string{"v1", "tenants", "tenant", "workflows", "clusters", "cluster", "loadbalancer", "attach"}, ""))
+	pattern_LoadBalancerWorkflow_Attach_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 2, 7}, []string{"v1", "tenants", "tenant", "workflows", "workspaces", "workspace", "loadbalancer", "attach"}, ""))
 
-	pattern_LoadBalancerWorkflow_Detach_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 2, 7}, []string{"v1", "tenants", "tenant", "workflows", "clusters", "cluster", "loadbalancer", "detach"}, ""))
+	pattern_LoadBalancerWorkflow_Detach_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 2, 7}, []string{"v1", "tenants", "tenant", "workflows", "workspaces", "workspace", "loadbalancer", "detach"}, ""))
 
-	pattern_LoadBalancerWorkflow_GetTicketStatus_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 2, 7, 1, 0, 4, 1, 5, 8, 2, 9}, []string{"v1", "tenants", "tenant", "workflows", "clusters", "cluster", "loadbalancer", "request", "requestid", "status"}, ""))
+	pattern_LoadBalancerWorkflow_GetTicketStatus_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 2, 7, 1, 0, 4, 1, 5, 8, 2, 9}, []string{"v1", "tenants", "tenant", "workflows", "workspaces", "workspace", "loadbalancer", "request", "requestid", "status"}, ""))
 
-	pattern_LoadBalancerWorkflow_Cancel_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 2, 7, 1, 0, 4, 1, 5, 8, 2, 9}, []string{"v1", "tenants", "tenant", "workflows", "clusters", "cluster", "loadbalancer", "request", "requestid", "cancel"}, ""))
+	pattern_LoadBalancerWorkflow_Cancel_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 2, 7, 1, 0, 4, 1, 5, 8, 2, 9}, []string{"v1", "tenants", "tenant", "workflows", "workspaces", "workspace", "loadbalancer", "request", "requestid", "cancel"}, ""))
 
-	pattern_LoadBalancerWorkflow_Publish_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 2, 7}, []string{"v1", "tenants", "tenant", "workflows", "clusters", "cluster", "loadbalancer", "publish"}, ""))
+	pattern_LoadBalancerWorkflow_Publish_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 2, 7}, []string{"v1", "tenants", "tenant", "workflows", "workspaces", "workspace", "loadbalancer", "publish"}, ""))
 
-	pattern_LoadBalancerWorkflow_ListPendingTickets_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 2, 7}, []string{"v1", "tenants", "tenant", "workflows", "clusters", "cluster", "loadbalancer", "pending"}, ""))
+	pattern_LoadBalancerWorkflow_ListPendingTickets_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 2, 7}, []string{"v1", "tenants", "tenant", "workflows", "workspaces", "workspace", "loadbalancer", "pending"}, ""))
 
-	pattern_LoadBalancerWorkflow_Approve_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 2, 7, 1, 0, 4, 1, 5, 8, 2, 9}, []string{"v1", "tenants", "tenant", "workflows", "clusters", "cluster", "loadbalancer", "request", "requestid", "approve"}, ""))
+	pattern_LoadBalancerWorkflow_Approve_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 2, 7, 1, 0, 4, 1, 5, 8, 2, 9}, []string{"v1", "tenants", "tenant", "workflows", "workspaces", "workspace", "loadbalancer", "request", "requestid", "approve"}, ""))
 
-	pattern_LoadBalancerWorkflow_Deny_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 2, 7, 1, 0, 4, 1, 5, 8, 2, 9}, []string{"v1", "tenants", "tenant", "workflows", "clusters", "cluster", "loadbalancer", "request", "requestid", "deny"}, ""))
+	pattern_LoadBalancerWorkflow_Deny_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 2, 7, 1, 0, 4, 1, 5, 8, 2, 9}, []string{"v1", "tenants", "tenant", "workflows", "workspaces", "workspace", "loadbalancer", "request", "requestid", "deny"}, ""))
 )
 
 var (

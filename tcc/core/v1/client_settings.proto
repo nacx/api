@@ -17,24 +17,26 @@ import "google/protobuf/duration.proto";
 // will make Pilot apply these customizations only to the namespace
 // concerned without leaking it to all other namespaces.
 message ClientSettings {
-  // empty if this is applicable to entire namespace
-  string service = 1;
+  string name = 1;
+  string tenant = 2;
   // empty if this is applicable to entire cluster
-  string namespace = 2;
   string cluster = 3;
+  // empty if this is applicable to entire namespace
+  string namespace = 4;
+  string deployment = 5;
 
   // Timeout for HTTP requests.
-  google.protobuf.Duration http_request_timeout = 4;
+  google.protobuf.Duration http_request_timeout = 6;
 
   // Retry policy for HTTP requests.
-  HTTPRetry http_retries = 5;
+  HTTPRetry http_retries = 7;
 
   // These two settings will go to dest rule
   // TCP connection timeout.
-  google.protobuf.Duration tcp_connect_timeout = 6;
+  google.protobuf.Duration tcp_connect_timeout = 8;
 
   // If set then set SO_KEEPALIVE on the socket to enable TCP Keepalives.
-  bool tcp_keepalive = 7;
+  bool tcp_keepalive = 9;
 
   enum Sensitivity {
     LOW = 0;
@@ -43,7 +45,7 @@ message ClientSettings {
   }
   // the sensitivity levels will translate to specific values of
   // dest rule outlier detection.
-  Sensitivity circuit_breaker_sensitivity = 8;
+  Sensitivity circuit_breaker_sensitivity = 10;
 }
 
 message HTTPRetry {

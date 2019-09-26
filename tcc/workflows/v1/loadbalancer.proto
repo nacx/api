@@ -23,27 +23,27 @@ import "tcc/core/v1/tlssettings.proto";
 service LoadBalancerWorkflow {
   rpc Attach(LBTicketDetails) returns (LBTicketId) {
     option (google.api.http) = {
-      post: "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/attach"
+      post: "/v1/tenants/{tenant}/workflows/workspaces/{workspace}/loadbalancer/attach"
       body: "*"
     };
   };
 
   rpc Detach(LBTicketDetails) returns (LBTicketId) {
     option (google.api.http) = {
-      post: "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/detach"
+      post: "/v1/tenants/{tenant}/workflows/workspaces/{workspace}/loadbalancer/detach"
       body: "*"
     };
   };
 
   rpc GetTicketStatus(LBTicketId) returns (LBTicketStatus) {
     option (google.api.http) = {
-      get: "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/request/{requestid}/status"
+      get: "/v1/tenants/{tenant}/workflows/workspaces/{workspace}/loadbalancer/request/{requestid}/status"
     };
   }
 
   rpc Cancel(LBTicketId) returns (LBTicketStatus) {
     option (google.api.http) = {
-      post: "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/request/{requestid}/cancel"
+      post: "/v1/tenants/{tenant}/workflows/workspaces/{workspace}/loadbalancer/request/{requestid}/cancel"
       body: "*"
     };
   };
@@ -52,27 +52,27 @@ service LoadBalancerWorkflow {
   // finally expose the service on the load balancer or remove a detached service
   rpc Publish(LBPublishAction) returns (LBTicketStatus) {
     option (google.api.http) = {
-      post: "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/publish"
+      post: "/v1/tenants/{tenant}/workflows/workspaces/{workspace}/loadbalancer/publish"
       body: "*"
     };
   };
 
   rpc ListPendingTickets(ListTicketsRequest) returns (ListTicketsResponse) {
     option (google.api.http) = {
-      get: "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/pending"
+      get: "/v1/tenants/{tenant}/workflows/workspaces/{workspace}/loadbalancer/pending"
     };
   };
 
   rpc Approve(LBTicketResolution) returns (LBTicketStatus) {
     option (google.api.http) = {
-      post: "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/request/{requestid}/approve"
+      post: "/v1/tenants/{tenant}/workflows/workspaces/{workspace}/loadbalancer/request/{requestid}/approve"
       body: "*"
     };
   };
 
   rpc Deny(LBTicketResolution) returns (LBTicketStatus) {
     option (google.api.http) = {
-      post: "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/request/{requestid}/deny"
+      post: "/v1/tenants/{tenant}/workflows/workspaces/{workspace}/loadbalancer/request/{requestid}/deny"
       body: "*"
     };
   };
@@ -80,14 +80,20 @@ service LoadBalancerWorkflow {
 }
 
 message LBTicketDetails {
-  string loadbalancer_name = 1;
-  string loadbalancer_namespace = 2;
+  string tenant = 1;
+  string workspace = 2;
+  
+  string loadbalancer_name = 3;
 
-  string service_hostname = 3;
-  string service_namespace = 4;
+  // We need to allow both logical services as well as physical
+  // deployments to be attached to a load balancer.  the physical
+  // deployment piece is the essential backdoor to capture the common
+  // use cases that a logical service does not address.
 
-  string cluster = 5;
-  string tenant = 6;
+  oneof target {
+    string service_name = 4;
+    string deployment_name = 5;
+  }
 }
 
 enum LBOperation {
@@ -97,7 +103,7 @@ enum LBOperation {
 
 message LBTicketStatus {
   string tenant = 1;
-  string cluster = 2;
+  string workspace = 2;
   // e.g. attach-789
   string requestid = 3;
   LBOperation operation = 4;
@@ -113,42 +119,43 @@ message LBTicketStatus {
 }
 
 message ListTicketsRequest {
-  string cluster = 1;
-  string tenant = 2;
+  string tenant = 1;
+  string workspace = 2;
 }
 
 message ListTicketsResponse {
   message PendingTickets {
     string requestid = 1;
     string loadbalancer_name = 2;
-    string loadbalancer_namespace = 3;
-    string service_hostname = 4;
-    string service_namespace = 5;
-    LBOperation operation = 6;
+    oneof target {
+      string service_name = 3;
+      string deployment_name = 4;
+    }
+    LBOperation operation = 5;
   }
 
-  string cluster = 1;
-  repeated PendingTickets pending_tickets = 2;
+  string tenant = 1;
+  string workspace = 2;
+  repeated PendingTickets pending_tickets = 3;
 }
 
 message LBTicketId {
-  string requestid = 1;
-  string cluster = 2;
-  string tenant = 3;
+  string tenant = 1;
+  string workspace = 2;
+  string requestid = 3;
 }
 
 message LBTicketResolution {
   string tenant = 1;
-  string cluster = 2;
+  string workspace = 2;
   string requestid = 3;
   // optional description (e.g. to be recorded in audit logs)
   string note = 4;
 }
 
 message LBPublishAction {
-  string requestid = 1;
-  string cluster = 2;
-  string tenant = 3;
+  string tenant = 1;
+  string workspace = 2;
+  string requestid = 3;
   tetrate.api.tcc.core.v1.TLSSettings tls = 4;
 }
-

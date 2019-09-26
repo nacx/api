@@ -13,22 +13,13 @@
 
 import { exists, mapValues } from '../runtime';
 import {
-    TetrateApiTccCoreV1HttpSettings,
-    TetrateApiTccCoreV1HttpSettingsFromJSON,
-    TetrateApiTccCoreV1HttpSettingsToJSON,
-    TetrateApiTccCoreV1Port,
-    TetrateApiTccCoreV1PortFromJSON,
-    TetrateApiTccCoreV1PortToJSON,
-    TetrateApiTccCoreV1Subset,
-    TetrateApiTccCoreV1SubsetFromJSON,
-    TetrateApiTccCoreV1SubsetToJSON,
-    TetrateApiTccCoreV1TcpSettings,
-    TetrateApiTccCoreV1TcpSettingsFromJSON,
-    TetrateApiTccCoreV1TcpSettingsToJSON,
+    TetrateApiTccCoreV1RoutingInfo,
+    TetrateApiTccCoreV1RoutingInfoFromJSON,
+    TetrateApiTccCoreV1RoutingInfoToJSON,
 } from './';
 
 /**
- * This is roughly equivalent to Istio service entry + virtual service + destination rule or the equivalent of Istio gateway\'s server [without TLS] + virtual service + dest rule TLS is omitted from here because usually, the secOps team in the enterprise determines the certs, the mount points, etc. The service owner should not care about it.
+ * 
  * @export
  * @interface TetrateApiTccCoreV1Service
  */
@@ -38,19 +29,7 @@ export interface TetrateApiTccCoreV1Service {
      * @type {string}
      * @memberof TetrateApiTccCoreV1Service
      */
-    hostname?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TetrateApiTccCoreV1Service
-     */
-    namespace?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TetrateApiTccCoreV1Service
-     */
-    cluster?: string;
+    name?: string;
     /**
      * 
      * @type {string}
@@ -58,48 +37,53 @@ export interface TetrateApiTccCoreV1Service {
      */
     tenant?: string;
     /**
-     * User identifiable tags associated with this service.
-     * @type {{ [key: string]: string; }}
+     * 
+     * @type {string}
      * @memberof TetrateApiTccCoreV1Service
      */
-    labels?: { [key: string]: string; };
+    workspace?: string;
     /**
      * 
-     * @type {Array<TetrateApiTccCoreV1Port>}
+     * @type {string}
      * @memberof TetrateApiTccCoreV1Service
      */
-    ports?: Array<TetrateApiTccCoreV1Port>;
+    application?: string;
     /**
      * 
-     * @type {Array<TetrateApiTccCoreV1Subset>}
+     * @type {string}
      * @memberof TetrateApiTccCoreV1Service
      */
-    subsets?: Array<TetrateApiTccCoreV1Subset>;
+    id?: string;
     /**
      * 
-     * @type {TetrateApiTccCoreV1HttpSettings}
+     * @type {string}
      * @memberof TetrateApiTccCoreV1Service
      */
-    httpSettings?: TetrateApiTccCoreV1HttpSettings;
+    description?: string;
     /**
      * 
-     * @type {TetrateApiTccCoreV1TcpSettings}
+     * @type {TetrateApiTccCoreV1RoutingInfo}
      * @memberof TetrateApiTccCoreV1Service
      */
-    tcpSettings?: TetrateApiTccCoreV1TcpSettings;
+    routingInfo?: TetrateApiTccCoreV1RoutingInfo;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof TetrateApiTccCoreV1Service
+     */
+    serviceDeployments?: Array<string>;
 }
 
 export function TetrateApiTccCoreV1ServiceFromJSON(json: any): TetrateApiTccCoreV1Service {
     return {
-        'hostname': !exists(json, 'hostname') ? undefined : json['hostname'],
-        'namespace': !exists(json, 'namespace') ? undefined : json['namespace'],
-        'cluster': !exists(json, 'cluster') ? undefined : json['cluster'],
+        'name': !exists(json, 'name') ? undefined : json['name'],
         'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
-        'labels': !exists(json, 'labels') ? undefined : json['labels'],
-        'ports': !exists(json, 'ports') ? undefined : (json['ports'] as Array<any>).map(TetrateApiTccCoreV1PortFromJSON),
-        'subsets': !exists(json, 'subsets') ? undefined : (json['subsets'] as Array<any>).map(TetrateApiTccCoreV1SubsetFromJSON),
-        'httpSettings': !exists(json, 'httpSettings') ? undefined : TetrateApiTccCoreV1HttpSettingsFromJSON(json['httpSettings']),
-        'tcpSettings': !exists(json, 'tcpSettings') ? undefined : TetrateApiTccCoreV1TcpSettingsFromJSON(json['tcpSettings']),
+        'workspace': !exists(json, 'workspace') ? undefined : json['workspace'],
+        'application': !exists(json, 'application') ? undefined : json['application'],
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'description': !exists(json, 'description') ? undefined : json['description'],
+        'routingInfo': !exists(json, 'routingInfo') ? undefined : TetrateApiTccCoreV1RoutingInfoFromJSON(json['routingInfo']),
+        'serviceDeployments': !exists(json, 'serviceDeployments') ? undefined : json['serviceDeployments'],
     };
 }
 
@@ -108,15 +92,14 @@ export function TetrateApiTccCoreV1ServiceToJSON(value?: TetrateApiTccCoreV1Serv
         return undefined;
     }
     return {
-        'hostname': value.hostname,
-        'namespace': value.namespace,
-        'cluster': value.cluster,
+        'name': value.name,
         'tenant': value.tenant,
-        'labels': value.labels,
-        'ports': value.ports === undefined ? undefined : (value.ports as Array<any>).map(TetrateApiTccCoreV1PortToJSON),
-        'subsets': value.subsets === undefined ? undefined : (value.subsets as Array<any>).map(TetrateApiTccCoreV1SubsetToJSON),
-        'httpSettings': TetrateApiTccCoreV1HttpSettingsToJSON(value.httpSettings),
-        'tcpSettings': TetrateApiTccCoreV1TcpSettingsToJSON(value.tcpSettings),
+        'workspace': value.workspace,
+        'application': value.application,
+        'id': value.id,
+        'description': value.description,
+        'routingInfo': TetrateApiTccCoreV1RoutingInfoToJSON(value.routingInfo),
+        'serviceDeployments': value.serviceDeployments,
     };
 }
 

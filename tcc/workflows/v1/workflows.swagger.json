@@ -20,7 +20,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/attach": {
+    "/v1/tenants/{tenant}/workflows/workspaces/{workspace}/loadbalancer/attach": {
       "post": {
         "operationId": "Attach",
         "responses": {
@@ -45,7 +45,7 @@
             "type": "string"
           },
           {
-            "name": "cluster",
+            "name": "workspace",
             "in": "path",
             "required": true,
             "type": "string"
@@ -64,7 +64,7 @@
         ]
       }
     },
-    "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/detach": {
+    "/v1/tenants/{tenant}/workflows/workspaces/{workspace}/loadbalancer/detach": {
       "post": {
         "operationId": "Detach",
         "responses": {
@@ -89,7 +89,7 @@
             "type": "string"
           },
           {
-            "name": "cluster",
+            "name": "workspace",
             "in": "path",
             "required": true,
             "type": "string"
@@ -108,7 +108,7 @@
         ]
       }
     },
-    "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/pending": {
+    "/v1/tenants/{tenant}/workflows/workspaces/{workspace}/loadbalancer/pending": {
       "get": {
         "operationId": "ListPendingTickets",
         "responses": {
@@ -133,7 +133,7 @@
             "type": "string"
           },
           {
-            "name": "cluster",
+            "name": "workspace",
             "in": "path",
             "required": true,
             "type": "string"
@@ -144,7 +144,7 @@
         ]
       }
     },
-    "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/publish": {
+    "/v1/tenants/{tenant}/workflows/workspaces/{workspace}/loadbalancer/publish": {
       "post": {
         "summary": "LB owner calls this API with additional settings like TLS, to\nfinally expose the service on the load balancer or remove a detached service",
         "operationId": "Publish",
@@ -170,7 +170,7 @@
             "type": "string"
           },
           {
-            "name": "cluster",
+            "name": "workspace",
             "in": "path",
             "required": true,
             "type": "string"
@@ -189,7 +189,7 @@
         ]
       }
     },
-    "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/request/{requestid}/approve": {
+    "/v1/tenants/{tenant}/workflows/workspaces/{workspace}/loadbalancer/request/{requestid}/approve": {
       "post": {
         "operationId": "Approve",
         "responses": {
@@ -214,7 +214,7 @@
             "type": "string"
           },
           {
-            "name": "cluster",
+            "name": "workspace",
             "in": "path",
             "required": true,
             "type": "string"
@@ -239,7 +239,7 @@
         ]
       }
     },
-    "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/request/{requestid}/cancel": {
+    "/v1/tenants/{tenant}/workflows/workspaces/{workspace}/loadbalancer/request/{requestid}/cancel": {
       "post": {
         "operationId": "Cancel",
         "responses": {
@@ -264,7 +264,7 @@
             "type": "string"
           },
           {
-            "name": "cluster",
+            "name": "workspace",
             "in": "path",
             "required": true,
             "type": "string"
@@ -289,7 +289,7 @@
         ]
       }
     },
-    "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/request/{requestid}/deny": {
+    "/v1/tenants/{tenant}/workflows/workspaces/{workspace}/loadbalancer/request/{requestid}/deny": {
       "post": {
         "operationId": "Deny",
         "responses": {
@@ -314,7 +314,7 @@
             "type": "string"
           },
           {
-            "name": "cluster",
+            "name": "workspace",
             "in": "path",
             "required": true,
             "type": "string"
@@ -339,7 +339,7 @@
         ]
       }
     },
-    "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/request/{requestid}/status": {
+    "/v1/tenants/{tenant}/workflows/workspaces/{workspace}/loadbalancer/request/{requestid}/status": {
       "get": {
         "operationId": "GetTicketStatus",
         "responses": {
@@ -364,7 +364,7 @@
             "type": "string"
           },
           {
-            "name": "cluster",
+            "name": "workspace",
             "in": "path",
             "required": true,
             "type": "string"
@@ -406,7 +406,8 @@
           "type": "string",
           "description": "For proxies running on Kubernetes, the name of the secret that\nholds the TLS certs. Currently applicable only on Kubernetes.\nThe secret should contain the server certificate and the private\nkey. If mutual TLS is being used, an additional secret with name\nsecretName-cacert should be created with the CaCertificates that\nthe server will use to verify client side certificates. If the\nservice is exposed via a load balancer, the secret must be\naccessible to it."
         }
-      }
+      },
+      "title": "TODO: This must become some form of a meta API such that it can be reused across LBs"
     },
     "tetrate.api.tcc.workflows.v1.LBOperation": {
       "type": "string",
@@ -419,13 +420,13 @@
     "tetrate.api.tcc.workflows.v1.LBPublishAction": {
       "type": "object",
       "properties": {
-        "requestid": {
-          "type": "string"
-        },
-        "cluster": {
-          "type": "string"
-        },
         "tenant": {
+          "type": "string"
+        },
+        "workspace": {
+          "type": "string"
+        },
+        "requestid": {
           "type": "string"
         },
         "tls": {
@@ -436,22 +437,19 @@
     "tetrate.api.tcc.workflows.v1.LBTicketDetails": {
       "type": "object",
       "properties": {
+        "tenant": {
+          "type": "string"
+        },
+        "workspace": {
+          "type": "string"
+        },
         "loadbalancerName": {
           "type": "string"
         },
-        "loadbalancerNamespace": {
+        "serviceName": {
           "type": "string"
         },
-        "serviceHostname": {
-          "type": "string"
-        },
-        "serviceNamespace": {
-          "type": "string"
-        },
-        "cluster": {
-          "type": "string"
-        },
-        "tenant": {
+        "deploymentName": {
           "type": "string"
         }
       }
@@ -459,13 +457,13 @@
     "tetrate.api.tcc.workflows.v1.LBTicketId": {
       "type": "object",
       "properties": {
-        "requestid": {
-          "type": "string"
-        },
-        "cluster": {
-          "type": "string"
-        },
         "tenant": {
+          "type": "string"
+        },
+        "workspace": {
+          "type": "string"
+        },
+        "requestid": {
           "type": "string"
         }
       }
@@ -476,7 +474,7 @@
         "tenant": {
           "type": "string"
         },
-        "cluster": {
+        "workspace": {
           "type": "string"
         },
         "requestid": {
@@ -494,7 +492,7 @@
         "tenant": {
           "type": "string"
         },
-        "cluster": {
+        "workspace": {
           "type": "string"
         },
         "requestid": {
@@ -526,7 +524,10 @@
     "tetrate.api.tcc.workflows.v1.ListTicketsResponse": {
       "type": "object",
       "properties": {
-        "cluster": {
+        "tenant": {
+          "type": "string"
+        },
+        "workspace": {
           "type": "string"
         },
         "pendingTickets": {
@@ -546,13 +547,10 @@
         "loadbalancerName": {
           "type": "string"
         },
-        "loadbalancerNamespace": {
+        "serviceName": {
           "type": "string"
         },
-        "serviceHostname": {
-          "type": "string"
-        },
-        "serviceNamespace": {
+        "deploymentName": {
           "type": "string"
         },
         "operation": {

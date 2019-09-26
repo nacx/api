@@ -29,7 +29,13 @@ export interface TetrateApiTccWorkflowsV1ListTicketsResponse {
      * @type {string}
      * @memberof TetrateApiTccWorkflowsV1ListTicketsResponse
      */
-    cluster?: string;
+    tenant?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccWorkflowsV1ListTicketsResponse
+     */
+    workspace?: string;
     /**
      * 
      * @type {Array<TetrateApiTccWorkflowsV1ListTicketsResponsePendingTickets>}
@@ -40,7 +46,8 @@ export interface TetrateApiTccWorkflowsV1ListTicketsResponse {
 
 export function TetrateApiTccWorkflowsV1ListTicketsResponseFromJSON(json: any): TetrateApiTccWorkflowsV1ListTicketsResponse {
     return {
-        'cluster': !exists(json, 'cluster') ? undefined : json['cluster'],
+        'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
+        'workspace': !exists(json, 'workspace') ? undefined : json['workspace'],
         'pendingTickets': !exists(json, 'pendingTickets') ? undefined : (json['pendingTickets'] as Array<any>).map(TetrateApiTccWorkflowsV1ListTicketsResponsePendingTicketsFromJSON),
     };
 }
@@ -50,7 +57,8 @@ export function TetrateApiTccWorkflowsV1ListTicketsResponseToJSON(value?: Tetrat
         return undefined;
     }
     return {
-        'cluster': value.cluster,
+        'tenant': value.tenant,
+        'workspace': value.workspace,
         'pendingTickets': value.pendingTickets === undefined ? undefined : (value.pendingTickets as Array<any>).map(TetrateApiTccWorkflowsV1ListTicketsResponsePendingTicketsToJSON),
     };
 }

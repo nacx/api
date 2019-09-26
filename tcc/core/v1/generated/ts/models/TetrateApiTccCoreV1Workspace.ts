@@ -35,13 +35,19 @@ export interface TetrateApiTccCoreV1Workspace {
      * @type {string}
      * @memberof TetrateApiTccCoreV1Workspace
      */
-    displayName?: string;
+    tenant?: string;
     /**
      * 
      * @type {string}
      * @memberof TetrateApiTccCoreV1Workspace
      */
-    tenant?: string;
+    id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1Workspace
+     */
+    description?: string;
     /**
      * 
      * @type {TetrateApiTccCoreV1Permissions}
@@ -53,8 +59,9 @@ export interface TetrateApiTccCoreV1Workspace {
 export function TetrateApiTccCoreV1WorkspaceFromJSON(json: any): TetrateApiTccCoreV1Workspace {
     return {
         'name': !exists(json, 'name') ? undefined : json['name'],
-        'displayName': !exists(json, 'displayName') ? undefined : json['displayName'],
         'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'description': !exists(json, 'description') ? undefined : json['description'],
         'permissions': !exists(json, 'permissions') ? undefined : TetrateApiTccCoreV1PermissionsFromJSON(json['permissions']),
     };
 }
@@ -65,8 +72,9 @@ export function TetrateApiTccCoreV1WorkspaceToJSON(value?: TetrateApiTccCoreV1Wo
     }
     return {
         'name': value.name,
-        'displayName': value.displayName,
         'tenant': value.tenant,
+        'id': value.id,
+        'description': value.description,
         'permissions': TetrateApiTccCoreV1PermissionsToJSON(value.permissions),
     };
 }

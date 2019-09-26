@@ -29,13 +29,20 @@ export interface TetrateApiTccCoreV1Tenant {
      * @type {string}
      * @memberof TetrateApiTccCoreV1Tenant
      */
-    displayName?: string;
+    id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1Tenant
+     */
+    description?: string;
 }
 
 export function TetrateApiTccCoreV1TenantFromJSON(json: any): TetrateApiTccCoreV1Tenant {
     return {
         'name': !exists(json, 'name') ? undefined : json['name'],
-        'displayName': !exists(json, 'displayName') ? undefined : json['displayName'],
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'description': !exists(json, 'description') ? undefined : json['description'],
     };
 }
 
@@ -45,7 +52,8 @@ export function TetrateApiTccCoreV1TenantToJSON(value?: TetrateApiTccCoreV1Tenan
     }
     return {
         'name': value.name,
-        'displayName': value.displayName,
+        'id': value.id,
+        'description': value.description,
     };
 }
 

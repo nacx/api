@@ -5,7 +5,6 @@ package tetrate.api.inventory.v1;
 option go_package = "github.com/tetrateio/tetrate/api/inventory/v1;invv1";
 
 import "google/api/annotations.proto";
-import "google/protobuf/timestamp.proto";
 import "validate/validate.proto";
 
 import "audit/v1/audit.proto";

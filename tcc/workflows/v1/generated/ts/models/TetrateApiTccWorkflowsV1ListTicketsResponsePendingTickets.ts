@@ -41,19 +41,13 @@ export interface TetrateApiTccWorkflowsV1ListTicketsResponsePendingTickets {
      * @type {string}
      * @memberof TetrateApiTccWorkflowsV1ListTicketsResponsePendingTickets
      */
-    loadbalancerNamespace?: string;
+    serviceName?: string;
     /**
      * 
      * @type {string}
      * @memberof TetrateApiTccWorkflowsV1ListTicketsResponsePendingTickets
      */
-    serviceHostname?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TetrateApiTccWorkflowsV1ListTicketsResponsePendingTickets
-     */
-    serviceNamespace?: string;
+    deploymentName?: string;
     /**
      * 
      * @type {TetrateApiTccWorkflowsV1LBOperation}
@@ -66,9 +60,8 @@ export function TetrateApiTccWorkflowsV1ListTicketsResponsePendingTicketsFromJSO
     return {
         'requestid': !exists(json, 'requestid') ? undefined : json['requestid'],
         'loadbalancerName': !exists(json, 'loadbalancerName') ? undefined : json['loadbalancerName'],
-        'loadbalancerNamespace': !exists(json, 'loadbalancerNamespace') ? undefined : json['loadbalancerNamespace'],
-        'serviceHostname': !exists(json, 'serviceHostname') ? undefined : json['serviceHostname'],
-        'serviceNamespace': !exists(json, 'serviceNamespace') ? undefined : json['serviceNamespace'],
+        'serviceName': !exists(json, 'serviceName') ? undefined : json['serviceName'],
+        'deploymentName': !exists(json, 'deploymentName') ? undefined : json['deploymentName'],
         'operation': !exists(json, 'operation') ? undefined : TetrateApiTccWorkflowsV1LBOperationFromJSON(json['operation']),
     };
 }
@@ -80,9 +73,8 @@ export function TetrateApiTccWorkflowsV1ListTicketsResponsePendingTicketsToJSON(
     return {
         'requestid': value.requestid,
         'loadbalancerName': value.loadbalancerName,
-        'loadbalancerNamespace': value.loadbalancerNamespace,
-        'serviceHostname': value.serviceHostname,
-        'serviceNamespace': value.serviceNamespace,
+        'serviceName': value.serviceName,
+        'deploymentName': value.deploymentName,
         'operation': TetrateApiTccWorkflowsV1LBOperationToJSON(value.operation),
     };
 }

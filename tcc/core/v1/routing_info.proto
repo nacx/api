@@ -1,0 +1,221 @@
+syntax = "proto3";
+
+package tetrate.api.tcc.core.v1;
+option go_package = "github.com/tetrateio/tetrate/api/tcc/core/v1";
+
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/duration.proto";
+
+// Part of the Deployment type_info oneof
+message RoutingInfo {
+  // User identifiable tags associated with this service.
+  map<string, string> labels = 1;
+
+  repeated Port ports = 2;
+  repeated Subset subsets = 3;
+
+  // HTTP specific settings, transformations and routing rules
+  // associated with HTTP traffic to this service.
+  HttpSettings http_settings = 4;
+
+  // TCP specific settings, transformations and routing rules
+  // associated with non-HTTP traffic to this service.
+  TcpSettings tcp_settings = 5;
+}
+
+message Port {
+  // REQUIRED: A valid non-negative integer port number.
+  uint32 number = 1;
+
+  // The protocol exposed on the port.
+  // MUST BE one of HTTP|GRPC|HTTP2|TCP|TLS.
+  // TLS implies the connection will be routed based on the SNI header to
+  // the destination without terminating the TLS connection.
+  string protocol = 2;
+
+  // Label assigned to the port.
+  string name = 3;
+
+  // The endpoint port to which this service port maps to. For example, service port 80
+  // exposed on the load balancer could map to an endpoint port 9080 on a VM.
+  uint32 endpoint_port = 4;
+}
+
+message Subset {
+  string name = 1;
+  // Labels apply a filter over the endpoints of a service in the
+  // service registry.
+  map<string, string> labels = 2;
+}
+
+// HTTP settings for a service. Applicable to ports receiving HTTP traffic.
+message HttpSettings {
+  // Describes a HTTP cookie that will be used for sticky sessions. If
+  // the cookie is not present, it will be generated.
+  message HTTPCookie {
+    // REQUIRED. Name of the cookie.
+    string name = 1;
+    // Path to set for the cookie.
+    string path = 2;
+    // REQUIRED. Lifetime of the cookie.
+    google.protobuf.Duration ttl = 3;
+  }
+
+  // If set, the load balancer will route all requests from a
+  // particular client to the same backend of the service.
+  // TODO (@lizan): this is incomplete in envoy. It still uses ketama hash
+  // which changes the mapping when more endpoints are added to LB pool
+  message StickySession {
+    // REQUIRED: The hash key to use.
+    oneof hash_key {
+      // Hash based on a specific HTTP header.
+      string header = 1;
+
+      // Hash based on HTTP cookie.
+      HTTPCookie cookie = 2;
+
+      // Hash based on the source IP address.
+      bool use_source_ip = 3;
+    }
+  }
+
+  StickySession sticky_session = 1;
+  CorsPolicy cors_policy = 2;
+  repeated HttpRule route_rules = 3;
+}
+
+// TCP settings for a service. Applicable to ports receiving non-HTTP traffic.
+message TcpSettings {
+  // The destination to which the connection should be forwarded to.
+  Route route = 1;
+}
+
+// A single HTTP rule
+message HttpRule {
+  // one or more match conditions (OR-ed)
+  repeated HttpMatchCondition match_conditions = 1;
+  // one or more mutations to be performed before forwarding.
+  // Includes typical modifications to be done on a single request
+  // like URL rewrite, host rewrite, headers to add/remove/append
+  repeated HttpModifyAction modify_actions = 2;
+
+  oneof route_or_redirect {
+    Route route = 4;
+    Redirect redirect = 5;
+  }
+}
+
+// A single match clause to match all aspects of a request
+message HttpMatchCondition {
+  // URI to match
+  StringMatch uri = 1;
+
+  // URI Scheme
+  StringMatch scheme = 2;
+
+  // HTTP Method
+  StringMatch method = 3;
+
+  // HTTP Authority
+  StringMatch authority = 4;
+
+  // The header keys must be lowercase and use hyphen as the separator,
+  // e.g. _x-request-id_.
+  map<string, StringMatch> headers = 5;
+}
+
+// Describes how to match a given string in HTTP headers. Match is
+// case-sensitive.
+message StringMatch {
+  oneof match_type {
+    // exact string match
+    string exact = 1;
+
+    // prefix-based match
+    string prefix = 2;
+
+    // ECMAscript style regex-based match
+    string regex = 3;
+  }
+}
+
+// A single modification for a part of a request
+message HttpModifyAction {
+  enum What {
+    URI = 0;
+    AUTHORITY = 1;
+    HEADER = 2;
+  }
+
+  enum How {
+    // this is the only value allowed for uri and authority rewrite
+    SET = 0;
+    // append and delete are applicable only for headers
+    APPEND = 1;
+    DELETE = 2;
+  }
+
+  What what = 1;
+  How how = 2;
+  // used only if what is a Header
+  string header_name = 3;
+  // string to use as replacement for url rewrite/host rewrite or setting headers
+  // no value is necessary when deleting the header
+  string value = 4;
+}
+
+// One or more destinations for the given request
+message Route {
+  message Destination {
+    string subset = 1;
+    // 100 if omitted. sum of all weights should add up to 100
+    uint32 weight = 2;
+    // Optional:
+    uint32 port = 3;
+
+    // Must be of form cluster/123/namespace/456/service/blah.com. If specified, incoming traffic
+    // for the service will be forwarded to the service
+    // specified. Typically used on ingress gateways on kubernetes
+    // clusters.
+    string svc = 4;
+  }
+  repeated Destination destinations = 1;
+}
+
+message Redirect {
+  // On a redirect, overwrite the Path portion of the URL with this
+  // value.
+  string uri = 1;
+
+  // On a redirect, overwrite the Authority/Host portion of the URL with
+  // this value.
+  string authority = 2;
+}
+
+message CorsPolicy {
+  // The list of origins that are allowed to perform CORS requests. The
+  // content will be serialized into the Access-Control-Allow-Origin
+  // header. Wildcard * will allow all origins.
+  repeated string allow_origin = 1;
+
+  // List of HTTP methods allowed to access the resource. The content will
+  // be serialized into the Access-Control-Allow-Methods header.
+  repeated string allow_methods = 2;
+
+  // List of HTTP headers that can be used when requesting the
+  // resource. Serialized to Access-Control-Allow-Headers header.
+  repeated string allow_headers = 3;
+
+  // A white list of HTTP headers that the browsers are allowed to
+  // access. Serialized into Access-Control-Expose-Headers header.
+  repeated string expose_headers = 4;
+
+  // Specifies how long the results of a preflight request can be
+  // cached. Translates to the `Access-Control-Max-Age` header.
+  google.protobuf.Duration max_age = 5;
+
+  // Indicates whether the caller is allowed to send the actual request
+  // (not the preflight) using credentials. Translates to
+  // `Access-Control-Allow-Credentials` header.
+  google.protobuf.BoolValue allow_credentials = 6;
+}

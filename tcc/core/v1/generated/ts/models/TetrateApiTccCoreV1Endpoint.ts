@@ -29,13 +29,7 @@ export interface TetrateApiTccCoreV1Endpoint {
      * @type {string}
      * @memberof TetrateApiTccCoreV1Endpoint
      */
-    service?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TetrateApiTccCoreV1Endpoint
-     */
-    namespace?: string;
+    tenant?: string;
     /**
      * 
      * @type {string}
@@ -47,9 +41,21 @@ export interface TetrateApiTccCoreV1Endpoint {
      * @type {string}
      * @memberof TetrateApiTccCoreV1Endpoint
      */
-    tenant?: string;
+    namespace?: string;
     /**
-     * REQUIRED: Address associated with the network endpoint without the port.  Domain names can be used and must be fully-qualified without wildcards.
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1Endpoint
+     */
+    deployment?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1Endpoint
+     */
+    id?: string;
+    /**
+     * Address associated with the network endpoint without the port. Domain names can be used and must be fully-qualified without wildcards.
      * @type {string}
      * @memberof TetrateApiTccCoreV1Endpoint
      */
@@ -83,10 +89,11 @@ export interface TetrateApiTccCoreV1Endpoint {
 export function TetrateApiTccCoreV1EndpointFromJSON(json: any): TetrateApiTccCoreV1Endpoint {
     return {
         'name': !exists(json, 'name') ? undefined : json['name'],
-        'service': !exists(json, 'service') ? undefined : json['service'],
-        'namespace': !exists(json, 'namespace') ? undefined : json['namespace'],
-        'cluster': !exists(json, 'cluster') ? undefined : json['cluster'],
         'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
+        'cluster': !exists(json, 'cluster') ? undefined : json['cluster'],
+        'namespace': !exists(json, 'namespace') ? undefined : json['namespace'],
+        'deployment': !exists(json, 'deployment') ? undefined : json['deployment'],
+        'id': !exists(json, 'id') ? undefined : json['id'],
         'address': !exists(json, 'address') ? undefined : json['address'],
         'ports': !exists(json, 'ports') ? undefined : json['ports'],
         'labels': !exists(json, 'labels') ? undefined : json['labels'],
@@ -101,10 +108,11 @@ export function TetrateApiTccCoreV1EndpointToJSON(value?: TetrateApiTccCoreV1End
     }
     return {
         'name': value.name,
-        'service': value.service,
-        'namespace': value.namespace,
-        'cluster': value.cluster,
         'tenant': value.tenant,
+        'cluster': value.cluster,
+        'namespace': value.namespace,
+        'deployment': value.deployment,
+        'id': value.id,
         'address': value.address,
         'ports': value.ports,
         'labels': value.labels,

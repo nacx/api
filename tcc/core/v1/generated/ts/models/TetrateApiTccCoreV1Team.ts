@@ -23,26 +23,40 @@ export interface TetrateApiTccCoreV1Team {
      * @type {string}
      * @memberof TetrateApiTccCoreV1Team
      */
-    tenant?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TetrateApiTccCoreV1Team
-     */
     name?: string;
     /**
      * 
      * @type {string}
      * @memberof TetrateApiTccCoreV1Team
      */
-    displayName?: string;
+    tenant?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1Team
+     */
+    id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1Team
+     */
+    description?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof TetrateApiTccCoreV1Team
+     */
+    members?: Array<string>;
 }
 
 export function TetrateApiTccCoreV1TeamFromJSON(json: any): TetrateApiTccCoreV1Team {
     return {
-        'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
         'name': !exists(json, 'name') ? undefined : json['name'],
-        'displayName': !exists(json, 'displayName') ? undefined : json['displayName'],
+        'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'description': !exists(json, 'description') ? undefined : json['description'],
+        'members': !exists(json, 'members') ? undefined : json['members'],
     };
 }
 
@@ -51,9 +65,11 @@ export function TetrateApiTccCoreV1TeamToJSON(value?: TetrateApiTccCoreV1Team): 
         return undefined;
     }
     return {
-        'tenant': value.tenant,
         'name': value.name,
-        'displayName': value.displayName,
+        'tenant': value.tenant,
+        'id': value.id,
+        'description': value.description,
+        'members': value.members,
     };
 }
 

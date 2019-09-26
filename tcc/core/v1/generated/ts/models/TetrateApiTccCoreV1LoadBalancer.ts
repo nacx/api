@@ -13,9 +13,6 @@
 
 import { exists, mapValues } from '../runtime';
 import {
-    TetrateApiTccCoreV1LBClass,
-    TetrateApiTccCoreV1LBClassFromJSON,
-    TetrateApiTccCoreV1LBClassToJSON,
     TetrateApiTccCoreV1TLSSettings,
     TetrateApiTccCoreV1TLSSettingsFromJSON,
     TetrateApiTccCoreV1TLSSettingsToJSON,
@@ -38,62 +35,48 @@ export interface TetrateApiTccCoreV1LoadBalancer {
      * @type {string}
      * @memberof TetrateApiTccCoreV1LoadBalancer
      */
-    namespace?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TetrateApiTccCoreV1LoadBalancer
-     */
-    cluster?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TetrateApiTccCoreV1LoadBalancer
-     */
     tenant?: string;
     /**
      * 
-     * @type {TetrateApiTccCoreV1LBClass}
-     * @memberof TetrateApiTccCoreV1LoadBalancer
-     */
-    _class?: TetrateApiTccCoreV1LBClass;
-    /**
-     * If its a hardware load balancer like F5, we need its management IP to talk to it.
      * @type {string}
      * @memberof TetrateApiTccCoreV1LoadBalancer
      */
-    managementIp?: string;
-    /**
-     * The namespace/hostname of the service in this cluster that implements this load balancer.
-     * @type {string}
-     * @memberof TetrateApiTccCoreV1LoadBalancer
-     */
-    serviceName?: string;
+    workspace?: string;
     /**
      * 
-     * @type {{ [key: string]: string; }}
+     * @type {string}
      * @memberof TetrateApiTccCoreV1LoadBalancer
      */
-    labels?: { [key: string]: string; };
+    id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1LoadBalancer
+     */
+    description?: string;
     /**
      * 
      * @type {{ [key: string]: TetrateApiTccCoreV1TLSSettings; }}
      * @memberof TetrateApiTccCoreV1LoadBalancer
      */
     services?: { [key: string]: TetrateApiTccCoreV1TLSSettings; };
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof TetrateApiTccCoreV1LoadBalancer
+     */
+    loadbalancerDeployments?: Array<string>;
 }
 
 export function TetrateApiTccCoreV1LoadBalancerFromJSON(json: any): TetrateApiTccCoreV1LoadBalancer {
     return {
         'name': !exists(json, 'name') ? undefined : json['name'],
-        'namespace': !exists(json, 'namespace') ? undefined : json['namespace'],
-        'cluster': !exists(json, 'cluster') ? undefined : json['cluster'],
         'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
-        '_class': !exists(json, 'class') ? undefined : TetrateApiTccCoreV1LBClassFromJSON(json['class']),
-        'managementIp': !exists(json, 'managementIp') ? undefined : json['managementIp'],
-        'serviceName': !exists(json, 'serviceName') ? undefined : json['serviceName'],
-        'labels': !exists(json, 'labels') ? undefined : json['labels'],
+        'workspace': !exists(json, 'workspace') ? undefined : json['workspace'],
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'description': !exists(json, 'description') ? undefined : json['description'],
         'services': !exists(json, 'services') ? undefined : mapValues(json['services'], TetrateApiTccCoreV1TLSSettingsFromJSON),
+        'loadbalancerDeployments': !exists(json, 'loadbalancerDeployments') ? undefined : json['loadbalancerDeployments'],
     };
 }
 
@@ -103,14 +86,12 @@ export function TetrateApiTccCoreV1LoadBalancerToJSON(value?: TetrateApiTccCoreV
     }
     return {
         'name': value.name,
-        'namespace': value.namespace,
-        'cluster': value.cluster,
         'tenant': value.tenant,
-        'class': TetrateApiTccCoreV1LBClassToJSON(value._class),
-        'managementIp': value.managementIp,
-        'serviceName': value.serviceName,
-        'labels': value.labels,
+        'workspace': value.workspace,
+        'id': value.id,
+        'description': value.description,
         'services': value.services === undefined ? undefined : mapValues(value.services, TetrateApiTccCoreV1TLSSettingsToJSON),
+        'loadbalancerDeployments': value.loadbalancerDeployments,
     };
 }
 

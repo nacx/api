@@ -3,6 +3,7 @@ syntax = "proto3";
 package tetrate.api.tcc.core.v1;
 option go_package = "github.com/tetrateio/tetrate/api/tcc/core/v1";
 
+// TODO: This must become some form of a meta API such that it can be reused across LBs
 message TLSSettings {
   // If specified, only allow requests that match the SNI value.
   string sni = 1;

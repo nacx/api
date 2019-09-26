@@ -36,51 +36,51 @@ import {
 
 export interface ApproveRequest {
     tenant: string;
-    cluster: string;
+    workspace: string;
     requestid: string;
     body: TetrateApiTccWorkflowsV1LBTicketResolution;
 }
 
 export interface AttachRequest {
     tenant: string;
-    cluster: string;
+    workspace: string;
     body: TetrateApiTccWorkflowsV1LBTicketDetails;
 }
 
 export interface CancelRequest {
     tenant: string;
-    cluster: string;
+    workspace: string;
     requestid: string;
     body: TetrateApiTccWorkflowsV1LBTicketId;
 }
 
 export interface DenyRequest {
     tenant: string;
-    cluster: string;
+    workspace: string;
     requestid: string;
     body: TetrateApiTccWorkflowsV1LBTicketResolution;
 }
 
 export interface DetachRequest {
     tenant: string;
-    cluster: string;
+    workspace: string;
     body: TetrateApiTccWorkflowsV1LBTicketDetails;
 }
 
 export interface GetTicketStatusRequest {
     tenant: string;
-    cluster: string;
+    workspace: string;
     requestid: string;
 }
 
 export interface ListPendingTicketsRequest {
     tenant: string;
-    cluster: string;
+    workspace: string;
 }
 
 export interface PublishRequest {
     tenant: string;
-    cluster: string;
+    workspace: string;
     body: TetrateApiTccWorkflowsV1LBPublishAction;
 }
 
@@ -96,8 +96,8 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling approve.');
         }
 
-        if (requestParameters.cluster === null || requestParameters.cluster === undefined) {
-            throw new runtime.RequiredError('cluster','Required parameter requestParameters.cluster was null or undefined when calling approve.');
+        if (requestParameters.workspace === null || requestParameters.workspace === undefined) {
+            throw new runtime.RequiredError('workspace','Required parameter requestParameters.workspace was null or undefined when calling approve.');
         }
 
         if (requestParameters.requestid === null || requestParameters.requestid === undefined) {
@@ -115,7 +115,7 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/request/{requestid}/approve`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))).replace(`{${"requestid"}}`, encodeURIComponent(String(requestParameters.requestid))),
+            path: `/v1/tenants/{tenant}/workflows/workspaces/{workspace}/loadbalancer/request/{requestid}/approve`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters.workspace))).replace(`{${"requestid"}}`, encodeURIComponent(String(requestParameters.requestid))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -139,8 +139,8 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling attach.');
         }
 
-        if (requestParameters.cluster === null || requestParameters.cluster === undefined) {
-            throw new runtime.RequiredError('cluster','Required parameter requestParameters.cluster was null or undefined when calling attach.');
+        if (requestParameters.workspace === null || requestParameters.workspace === undefined) {
+            throw new runtime.RequiredError('workspace','Required parameter requestParameters.workspace was null or undefined when calling attach.');
         }
 
         if (requestParameters.body === null || requestParameters.body === undefined) {
@@ -154,7 +154,7 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/attach`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))),
+            path: `/v1/tenants/{tenant}/workflows/workspaces/{workspace}/loadbalancer/attach`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters.workspace))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -178,8 +178,8 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling cancel.');
         }
 
-        if (requestParameters.cluster === null || requestParameters.cluster === undefined) {
-            throw new runtime.RequiredError('cluster','Required parameter requestParameters.cluster was null or undefined when calling cancel.');
+        if (requestParameters.workspace === null || requestParameters.workspace === undefined) {
+            throw new runtime.RequiredError('workspace','Required parameter requestParameters.workspace was null or undefined when calling cancel.');
         }
 
         if (requestParameters.requestid === null || requestParameters.requestid === undefined) {
@@ -197,7 +197,7 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/request/{requestid}/cancel`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))).replace(`{${"requestid"}}`, encodeURIComponent(String(requestParameters.requestid))),
+            path: `/v1/tenants/{tenant}/workflows/workspaces/{workspace}/loadbalancer/request/{requestid}/cancel`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters.workspace))).replace(`{${"requestid"}}`, encodeURIComponent(String(requestParameters.requestid))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -221,8 +221,8 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling deny.');
         }
 
-        if (requestParameters.cluster === null || requestParameters.cluster === undefined) {
-            throw new runtime.RequiredError('cluster','Required parameter requestParameters.cluster was null or undefined when calling deny.');
+        if (requestParameters.workspace === null || requestParameters.workspace === undefined) {
+            throw new runtime.RequiredError('workspace','Required parameter requestParameters.workspace was null or undefined when calling deny.');
         }
 
         if (requestParameters.requestid === null || requestParameters.requestid === undefined) {
@@ -240,7 +240,7 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/request/{requestid}/deny`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))).replace(`{${"requestid"}}`, encodeURIComponent(String(requestParameters.requestid))),
+            path: `/v1/tenants/{tenant}/workflows/workspaces/{workspace}/loadbalancer/request/{requestid}/deny`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters.workspace))).replace(`{${"requestid"}}`, encodeURIComponent(String(requestParameters.requestid))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -264,8 +264,8 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling detach.');
         }
 
-        if (requestParameters.cluster === null || requestParameters.cluster === undefined) {
-            throw new runtime.RequiredError('cluster','Required parameter requestParameters.cluster was null or undefined when calling detach.');
+        if (requestParameters.workspace === null || requestParameters.workspace === undefined) {
+            throw new runtime.RequiredError('workspace','Required parameter requestParameters.workspace was null or undefined when calling detach.');
         }
 
         if (requestParameters.body === null || requestParameters.body === undefined) {
@@ -279,7 +279,7 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/detach`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))),
+            path: `/v1/tenants/{tenant}/workflows/workspaces/{workspace}/loadbalancer/detach`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters.workspace))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -303,8 +303,8 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling getTicketStatus.');
         }
 
-        if (requestParameters.cluster === null || requestParameters.cluster === undefined) {
-            throw new runtime.RequiredError('cluster','Required parameter requestParameters.cluster was null or undefined when calling getTicketStatus.');
+        if (requestParameters.workspace === null || requestParameters.workspace === undefined) {
+            throw new runtime.RequiredError('workspace','Required parameter requestParameters.workspace was null or undefined when calling getTicketStatus.');
         }
 
         if (requestParameters.requestid === null || requestParameters.requestid === undefined) {
@@ -316,7 +316,7 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/request/{requestid}/status`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))).replace(`{${"requestid"}}`, encodeURIComponent(String(requestParameters.requestid))),
+            path: `/v1/tenants/{tenant}/workflows/workspaces/{workspace}/loadbalancer/request/{requestid}/status`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters.workspace))).replace(`{${"requestid"}}`, encodeURIComponent(String(requestParameters.requestid))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -339,8 +339,8 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling listPendingTickets.');
         }
 
-        if (requestParameters.cluster === null || requestParameters.cluster === undefined) {
-            throw new runtime.RequiredError('cluster','Required parameter requestParameters.cluster was null or undefined when calling listPendingTickets.');
+        if (requestParameters.workspace === null || requestParameters.workspace === undefined) {
+            throw new runtime.RequiredError('workspace','Required parameter requestParameters.workspace was null or undefined when calling listPendingTickets.');
         }
 
         const queryParameters: runtime.HTTPQuery = {};
@@ -348,7 +348,7 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/pending`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))),
+            path: `/v1/tenants/{tenant}/workflows/workspaces/{workspace}/loadbalancer/pending`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters.workspace))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -372,8 +372,8 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling publish.');
         }
 
-        if (requestParameters.cluster === null || requestParameters.cluster === undefined) {
-            throw new runtime.RequiredError('cluster','Required parameter requestParameters.cluster was null or undefined when calling publish.');
+        if (requestParameters.workspace === null || requestParameters.workspace === undefined) {
+            throw new runtime.RequiredError('workspace','Required parameter requestParameters.workspace was null or undefined when calling publish.');
         }
 
         if (requestParameters.body === null || requestParameters.body === undefined) {
@@ -387,7 +387,7 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/publish`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))),
+            path: `/v1/tenants/{tenant}/workflows/workspaces/{workspace}/loadbalancer/publish`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters.workspace))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,

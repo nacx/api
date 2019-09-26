@@ -18,6 +18,7 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
+// TODO: This must become some form of a meta API such that it can be reused across LBs
 type TLSSettings struct {
 	// If specified, only allow requests that match the SNI value.
 	Sni string `protobuf:"bytes,1,opt,name=sni,proto3" json:"sni,omitempty"`
@@ -49,7 +50,7 @@ func (m *TLSSettings) Reset()         { *m = TLSSettings{} }
 func (m *TLSSettings) String() string { return proto.CompactTextString(m) }
 func (*TLSSettings) ProtoMessage()    {}
 func (*TLSSettings) Descriptor() ([]byte, []int) {
-	return fileDescriptor_tlssettings_5815565ff025abe1, []int{0}
+	return fileDescriptor_tlssettings_4b3c03268adf9202, []int{0}
 }
 func (m *TLSSettings) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_TLSSettings.Unmarshal(m, b)
@@ -108,9 +109,9 @@ func init() {
 	proto.RegisterType((*TLSSettings)(nil), "tetrate.api.tcc.core.v1.TLSSettings")
 }
 
-func init() { proto.RegisterFile("tlssettings.proto", fileDescriptor_tlssettings_5815565ff025abe1) }
+func init() { proto.RegisterFile("tlssettings.proto", fileDescriptor_tlssettings_4b3c03268adf9202) }
 
-var fileDescriptor_tlssettings_5815565ff025abe1 = []byte{
+var fileDescriptor_tlssettings_4b3c03268adf9202 = []byte{
 	// 223 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x4c, 0x90, 0xb1, 0x4a, 0x03, 0x41,
 	0x10, 0x86, 0x39, 0xa3, 0x82, 0x1b, 0x50, 0xb3, 0x8d, 0xdb, 0x29, 0x36, 0x5a, 0xe8, 0x2e, 0xc1,

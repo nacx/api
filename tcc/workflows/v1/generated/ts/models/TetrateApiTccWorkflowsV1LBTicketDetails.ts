@@ -23,47 +23,40 @@ export interface TetrateApiTccWorkflowsV1LBTicketDetails {
      * @type {string}
      * @memberof TetrateApiTccWorkflowsV1LBTicketDetails
      */
+    tenant?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccWorkflowsV1LBTicketDetails
+     */
+    workspace?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccWorkflowsV1LBTicketDetails
+     */
     loadbalancerName?: string;
     /**
      * 
      * @type {string}
      * @memberof TetrateApiTccWorkflowsV1LBTicketDetails
      */
-    loadbalancerNamespace?: string;
+    serviceName?: string;
     /**
      * 
      * @type {string}
      * @memberof TetrateApiTccWorkflowsV1LBTicketDetails
      */
-    serviceHostname?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TetrateApiTccWorkflowsV1LBTicketDetails
-     */
-    serviceNamespace?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TetrateApiTccWorkflowsV1LBTicketDetails
-     */
-    cluster?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TetrateApiTccWorkflowsV1LBTicketDetails
-     */
-    tenant?: string;
+    deploymentName?: string;
 }
 
 export function TetrateApiTccWorkflowsV1LBTicketDetailsFromJSON(json: any): TetrateApiTccWorkflowsV1LBTicketDetails {
     return {
-        'loadbalancerName': !exists(json, 'loadbalancerName') ? undefined : json['loadbalancerName'],
-        'loadbalancerNamespace': !exists(json, 'loadbalancerNamespace') ? undefined : json['loadbalancerNamespace'],
-        'serviceHostname': !exists(json, 'serviceHostname') ? undefined : json['serviceHostname'],
-        'serviceNamespace': !exists(json, 'serviceNamespace') ? undefined : json['serviceNamespace'],
-        'cluster': !exists(json, 'cluster') ? undefined : json['cluster'],
         'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
+        'workspace': !exists(json, 'workspace') ? undefined : json['workspace'],
+        'loadbalancerName': !exists(json, 'loadbalancerName') ? undefined : json['loadbalancerName'],
+        'serviceName': !exists(json, 'serviceName') ? undefined : json['serviceName'],
+        'deploymentName': !exists(json, 'deploymentName') ? undefined : json['deploymentName'],
     };
 }
 
@@ -72,12 +65,11 @@ export function TetrateApiTccWorkflowsV1LBTicketDetailsToJSON(value?: TetrateApi
         return undefined;
     }
     return {
-        'loadbalancerName': value.loadbalancerName,
-        'loadbalancerNamespace': value.loadbalancerNamespace,
-        'serviceHostname': value.serviceHostname,
-        'serviceNamespace': value.serviceNamespace,
-        'cluster': value.cluster,
         'tenant': value.tenant,
+        'workspace': value.workspace,
+        'loadbalancerName': value.loadbalancerName,
+        'serviceName': value.serviceName,
+        'deploymentName': value.deploymentName,
     };
 }
 

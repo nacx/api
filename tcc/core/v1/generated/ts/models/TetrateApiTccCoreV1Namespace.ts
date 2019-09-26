@@ -38,15 +38,27 @@ export interface TetrateApiTccCoreV1Namespace {
      * @type {string}
      * @memberof TetrateApiTccCoreV1Namespace
      */
+    tenant?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1Namespace
+     */
     cluster?: string;
     /**
      * 
      * @type {string}
      * @memberof TetrateApiTccCoreV1Namespace
      */
-    tenant?: string;
+    id?: string;
     /**
-     * The services (or namespaces) that endpoints in this namespace depend upon for proper operation. Must be of the form ns1/foo.com, or ns1/. If omitted, its assumed that endpoints in this namespace depend only on other services in the same namespace as the endpoint.
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1Namespace
+     */
+    description?: string;
+    /**
+     * The deployments (or namespaces) that endpoints in this namespace depend upon for proper operation by name. If omitted, it\'s assumed that endpoints in this namespace depend only on other services in the same namespace as the endpoint.
      * @type {Array<string>}
      * @memberof TetrateApiTccCoreV1Namespace
      */
@@ -68,8 +80,10 @@ export interface TetrateApiTccCoreV1Namespace {
 export function TetrateApiTccCoreV1NamespaceFromJSON(json: any): TetrateApiTccCoreV1Namespace {
     return {
         'name': !exists(json, 'name') ? undefined : json['name'],
-        'cluster': !exists(json, 'cluster') ? undefined : json['cluster'],
         'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
+        'cluster': !exists(json, 'cluster') ? undefined : json['cluster'],
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'description': !exists(json, 'description') ? undefined : json['description'],
         'dependencies': !exists(json, 'dependencies') ? undefined : json['dependencies'],
         'clientSettings': !exists(json, 'clientSettings') ? undefined : TetrateApiTccCoreV1ClientSettingsFromJSON(json['clientSettings']),
         'permissions': !exists(json, 'permissions') ? undefined : TetrateApiTccCoreV1PermissionsFromJSON(json['permissions']),
@@ -82,8 +96,10 @@ export function TetrateApiTccCoreV1NamespaceToJSON(value?: TetrateApiTccCoreV1Na
     }
     return {
         'name': value.name,
-        'cluster': value.cluster,
         'tenant': value.tenant,
+        'cluster': value.cluster,
+        'id': value.id,
+        'description': value.description,
         'dependencies': value.dependencies,
         'clientSettings': TetrateApiTccCoreV1ClientSettingsToJSON(value.clientSettings),
         'permissions': TetrateApiTccCoreV1PermissionsToJSON(value.permissions),

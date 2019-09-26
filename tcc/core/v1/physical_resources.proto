@@ -1,0 +1,377 @@
+syntax = "proto3";
+
+package tetrate.api.tcc.core.v1;
+option go_package = "github.com/tetrateio/tetrate/api/tcc/core/v1";
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "routing_info.proto";
+import "client_settings.proto";
+import "permissions.proto";
+import "tlssettings.proto";
+import "organization.proto";
+
+service PhysicalResourceModel {
+  rpc CreateCluster(CreateClusterRequest) returns (Cluster) {
+    option (google.api.http) = {
+      post: "/v1/tenants/{tenant}/clusters"
+      body: "cluster"
+    };
+  };
+
+  rpc UpdateCluster(Cluster) returns (Cluster) {
+    option (google.api.http) = {
+      put: "/v1/tenants/{tenant}/clusters/{id}"
+      body: "*"
+    };
+  };
+
+  rpc GetCluster(GetClusterRequest) returns (Cluster) {
+    option (google.api.http) = {
+      get: "/v1/tenants/{tenant}/clusters/{id}"
+    };
+  };
+
+  rpc ListClusters(ListClustersRequest) returns (ListClustersResponse) {
+    option (google.api.http) = {
+      get: "/v1/tenants/{tenant}/clusters"
+    };
+  }
+
+  rpc DeleteCluster(DeleteClusterRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/v1/tenants/{tenant}/clusters/{id}"
+    };
+  };
+
+
+  rpc CreateNamespace(CreateNamespaceRequest) returns (Namespace) {
+    option (google.api.http) = {
+      post: "/v1/tenants/{tenant}/clusters/{cluster}/namespaces"
+      body: "namespace"
+    };
+  };
+
+  rpc GetNamespace(GetNamespaceRequest) returns (Namespace) {
+    option (google.api.http) = {
+      get: "/v1/tenants/{tenant}/clusters/{cluster}/namespaces/{id}"
+    };
+  };
+
+  rpc UpdateNamespace(Namespace) returns (Namespace) {
+    option (google.api.http) = {
+      put: "/v1/tenants/{tenant}/clusters/{cluster}/namespaces/{id}"
+      body: "*"
+    };
+  };
+
+  rpc ListNamespaces(ListNamespacesRequest) returns (ListNamespacesResponse) {
+    option (google.api.http) = {
+      get: "/v1/tenants/{tenant}/clusters/{cluster}/namespaces"
+    };
+  }
+
+  rpc DeleteNamespace(DeleteNamespaceRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/v1/tenants/{tenant}/clusters/{cluster}/namespaces/{id}"
+    };
+  };
+
+  rpc CreateDeployment(CreateDeploymentRequest) returns (Deployment) {
+    option (google.api.http) = {
+      post: "/v1/tenants/{tenant}/clusters/{cluster}/namespaces/{namespace}/deployments"
+      body: "deployment"
+    };
+  };
+
+  rpc GetDeployment(GetDeploymentRequest) returns (Deployment) {
+    option (google.api.http) = {
+      get: "/v1/tenants/{tenant}/clusters/{cluster}/namespaces/{namespace}/deployments/{id}"
+    };
+  };
+
+  rpc ListDeployments(ListDeploymentsRequest) returns (ListDeploymentsResponse) {
+    option (google.api.http) = {
+      get: "/v1/tenants/{tenant}/clusters/{cluster}/namespaces/{namespace}/deployments"
+    };
+  };
+
+  rpc UpdateDeployment(Deployment) returns (Deployment) {
+    option (google.api.http) = {
+      put: "/v1/tenants/{tenant}/clusters/{cluster}/namespaces/{namespace}/deployments/{id}"
+      body: "*"
+    };
+  };
+
+  rpc DeleteDeployment(DeleteDeploymentRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/v1/tenants/{tenant}/clusters/{cluster}/namespaces/{namespace}/deployments/{id}"
+    };
+  };
+
+  rpc CreateEndpoint(CreateEndpointRequest) returns (Endpoint) {
+    option (google.api.http) = {
+      post: "/v1/tenants/{tenant}/clusters/{cluster}/namespaces/{namespace}/deployments/{deployment}/endpoints"
+      body: "endpoint"
+    };
+  };
+
+  rpc GetEndpoint(GetEndpointRequest) returns (Endpoint) {
+    option (google.api.http) = {
+      get: "/v1/tenants/{tenant}/clusters/{cluster}/namespaces/{namespace}/deployments/{deployment}/endpoints/{id}"
+    };
+  };
+
+  rpc ListEndpoints(ListEndpointsRequest) returns (ListEndpointsResponse) {
+    option (google.api.http) = {
+      get: "/v1/tenants/{tenant}/clusters/{cluster}/namespaces/{namespace}/deployments/{deployment}/endpoints"
+    };
+  };
+
+  rpc UpdateEndpoint(Endpoint) returns (Endpoint) {
+    option (google.api.http) = {
+      put: "/v1/tenants/{tenant}/clusters/{cluster}/namespaces/{namespace}/deployments/{deployment}/endpoints/{id}"
+      body: "*"
+    };
+  };
+
+  rpc DeleteEndpoint(DeleteEndpointRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/v1/tenants/{tenant}/clusters/{cluster}/namespaces/{namespace}/deployments/{deployment}/endpoints/{id}"
+    };
+  };
+}
+
+enum Registry {
+  UNKNOWN = 0;
+  KUBERNETES = 1;
+  F5 = 2;
+}
+
+message Cluster {
+  string name = 1;
+  string tenant = 2;
+  string id = 3;
+  string description = 4;
+  Registry registry = 5;
+
+  // Information like datacenter where the cluster is present
+  map<string, string> labels = 6;
+  ClientSettings client_settings = 7;
+  Permissions permissions = 8;
+}
+
+message CreateClusterRequest {
+  string parent = 1;
+  string tenant = 2;
+  Cluster cluster = 3;
+}
+
+message GetClusterRequest {
+  string name = 1;
+  string tenant = 2;
+  string id = 3;
+}
+
+message ListClustersRequest {
+  string parent = 1;
+  string tenant = 2;
+}
+
+message ListClustersResponse {
+  repeated Cluster clusters = 1;
+}
+
+message DeleteClusterRequest {
+  string name = 1;
+  string tenant = 2;
+  string id = 3;
+}
+
+message Namespace {
+  string name = 1;
+  string tenant = 2;
+  string cluster = 3;
+  string id = 4;
+  string description = 5;
+
+  // The deployments (or namespaces) that endpoints in this namespace depend upon
+  // for proper operation by name. If omitted, it's assumed that endpoints in
+  // this namespace depend only on other services in the same namespace as the
+  // endpoint.
+  repeated string dependencies = 6;
+  ClientSettings client_settings = 7;
+  Permissions permissions = 8;
+}
+
+message CreateNamespaceRequest {
+  string parent = 1;
+  string tenant = 2;
+  string cluster = 3;
+  Namespace namespace = 4;
+}
+
+message GetNamespaceRequest {
+  string name = 1;
+  string tenant = 2;
+  string cluster = 3;
+  string id = 4;
+}
+
+message ListNamespacesRequest {
+  string parent = 1;
+  string tenant = 2;
+  string cluster = 3;
+}
+
+message ListNamespacesResponse {
+  repeated Namespace namespaces = 1;
+}
+
+message DeleteNamespaceRequest {
+  string name = 1;
+  string tenant = 2;
+  string cluster = 3;
+  string id = 4;
+}
+
+message Deployment {
+  string name = 1;
+  string tenant = 2;
+  string cluster = 3;
+  string namespace = 4;
+  string id = 5;
+  string hostname = 6;
+  map<string, string> labels = 7;
+
+  oneof type_info {
+    LoadBalancerInfo load_balancer = 8;
+    RoutingInfo service = 9;
+  }
+}
+
+message LoadBalancerInfo {
+  // If Class is NONE, none of the information in this message will be populated.
+  enum Class {
+    NONE = 0;
+    ENVOY = 1;
+    F5 = 2;
+  }
+  Class load_balancer_class = 1;
+
+  // Map of service deployments (in the cluster) attached to this loadbalancer deployment
+  // with their TLS credential information in the form:
+  // clusters/<cluster>/namespaces/<namespace>/deployments/<deployment>: TLS settings
+  map<string, TLSSettings> services = 2;
+
+  // information specific to F5 load balancers if load balancer class is F5
+  string management_ip = 3;
+}
+
+message CreateDeploymentRequest {
+  string parent = 1;
+  string tenant = 2;
+  string cluster = 3;
+  string namespace = 4;
+  Deployment deployment = 5;
+}
+
+message GetDeploymentRequest {
+  string name = 1;
+  string tenant = 2;
+  string cluster = 3;
+  string namespace = 4;
+  string id = 5;
+}
+
+message ListDeploymentsRequest {
+  string parent = 1;
+  string tenant = 2;
+  string cluster = 3;
+  string namespace = 4;
+}
+
+message ListDeploymentsResponse {
+  repeated Deployment deployments = 1;
+}
+
+message DeleteDeploymentRequest {
+  string name = 1;
+  string tenant = 2;
+  string cluster = 3;
+  string namespace = 4;
+  string id = 5;
+}
+
+// Endpoint defines a network address (IP or hostname) associated with
+// the service.
+message Endpoint {
+  string name = 1;
+  string tenant = 2;
+  string cluster = 3;
+  string namespace = 4;
+  string deployment = 5;
+  string id = 6;
+
+  // Address associated with the network endpoint without the port.
+  // Domain names can be used and must be fully-qualified without
+  // wildcards.
+  string address = 7;
+
+  // Set of inbound traffic ports associated with the endpoint. The
+  // ports must be associated with a port number that was declared
+  // as part of the service.
+  map<uint32, uint32> ports = 8;
+
+  // One or more labels associated with the endpoint.
+  map<string, string> labels = 9;
+
+  // The locality associated with the endpoint, in the form
+  // country/region/zone. A locality corresponds to a failure domain
+  // (country/region/zone).
+  string locality = 10;
+
+  // The load balancing weight associated with the endpoint. Endpoints
+  // with higher weights in a pool will receive proportionally higher
+  // traffic.
+  uint32 weight = 11;
+}
+
+message CreateEndpointRequest {
+  string parent = 1;
+  string tenant = 2;
+  string cluster = 3;
+  string namespace = 4;
+  string deployment = 5;
+  Endpoint endpoint = 6;
+}
+
+message GetEndpointRequest {
+  string name = 1;
+  string tenant = 2;
+  string cluster = 3;
+  string namespace = 4;
+  string deployment = 5;
+  string id = 6;
+}
+
+message ListEndpointsRequest {
+  string parent = 1;
+  string tenant = 2;
+  string cluster = 3;
+  string namespace = 4;
+  string deployment = 5;
+}
+
+message ListEndpointsResponse {
+  repeated Endpoint endpoints = 1;
+}
+
+message DeleteEndpointRequest {
+  string name = 1;
+  string tenant = 2;
+  string cluster = 3;
+  string namespace = 4;
+  string deployment = 5;
+  string id = 6;
+}

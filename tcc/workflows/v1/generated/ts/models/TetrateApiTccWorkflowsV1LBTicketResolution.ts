@@ -29,7 +29,7 @@ export interface TetrateApiTccWorkflowsV1LBTicketResolution {
      * @type {string}
      * @memberof TetrateApiTccWorkflowsV1LBTicketResolution
      */
-    cluster?: string;
+    workspace?: string;
     /**
      * 
      * @type {string}
@@ -47,7 +47,7 @@ export interface TetrateApiTccWorkflowsV1LBTicketResolution {
 export function TetrateApiTccWorkflowsV1LBTicketResolutionFromJSON(json: any): TetrateApiTccWorkflowsV1LBTicketResolution {
     return {
         'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
-        'cluster': !exists(json, 'cluster') ? undefined : json['cluster'],
+        'workspace': !exists(json, 'workspace') ? undefined : json['workspace'],
         'requestid': !exists(json, 'requestid') ? undefined : json['requestid'],
         'note': !exists(json, 'note') ? undefined : json['note'],
     };
@@ -59,7 +59,7 @@ export function TetrateApiTccWorkflowsV1LBTicketResolutionToJSON(value?: Tetrate
     }
     return {
         'tenant': value.tenant,
-        'cluster': value.cluster,
+        'workspace': value.workspace,
         'requestid': value.requestid,
         'note': value.note,
     };

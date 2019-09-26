@@ -41,11 +41,15 @@ func (m *ClientSettings) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Service
+	// no validation rules for Name
+
+	// no validation rules for Tenant
+
+	// no validation rules for Cluster
 
 	// no validation rules for Namespace
 
-	// no validation rules for Cluster
+	// no validation rules for Deployment
 
 	if v, ok := interface{}(m.GetHttpRequestTimeout()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {

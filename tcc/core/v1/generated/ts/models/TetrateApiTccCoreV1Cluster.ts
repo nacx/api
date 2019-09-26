@@ -19,6 +19,9 @@ import {
     TetrateApiTccCoreV1Permissions,
     TetrateApiTccCoreV1PermissionsFromJSON,
     TetrateApiTccCoreV1PermissionsToJSON,
+    TetrateApiTccCoreV1Registry,
+    TetrateApiTccCoreV1RegistryFromJSON,
+    TetrateApiTccCoreV1RegistryToJSON,
 } from './';
 
 /**
@@ -38,25 +41,31 @@ export interface TetrateApiTccCoreV1Cluster {
      * @type {string}
      * @memberof TetrateApiTccCoreV1Cluster
      */
-    displayName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TetrateApiTccCoreV1Cluster
-     */
     tenant?: string;
     /**
      * 
      * @type {string}
      * @memberof TetrateApiTccCoreV1Cluster
      */
-    registrytype?: string;
+    id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1Cluster
+     */
+    description?: string;
+    /**
+     * 
+     * @type {TetrateApiTccCoreV1Registry}
+     * @memberof TetrateApiTccCoreV1Cluster
+     */
+    registry?: TetrateApiTccCoreV1Registry;
     /**
      * 
      * @type {{ [key: string]: string; }}
      * @memberof TetrateApiTccCoreV1Cluster
      */
-    attributes?: { [key: string]: string; };
+    labels?: { [key: string]: string; };
     /**
      * 
      * @type {TetrateApiTccCoreV1ClientSettings}
@@ -74,10 +83,11 @@ export interface TetrateApiTccCoreV1Cluster {
 export function TetrateApiTccCoreV1ClusterFromJSON(json: any): TetrateApiTccCoreV1Cluster {
     return {
         'name': !exists(json, 'name') ? undefined : json['name'],
-        'displayName': !exists(json, 'displayName') ? undefined : json['displayName'],
         'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
-        'registrytype': !exists(json, 'registrytype') ? undefined : json['registrytype'],
-        'attributes': !exists(json, 'attributes') ? undefined : json['attributes'],
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'description': !exists(json, 'description') ? undefined : json['description'],
+        'registry': !exists(json, 'registry') ? undefined : TetrateApiTccCoreV1RegistryFromJSON(json['registry']),
+        'labels': !exists(json, 'labels') ? undefined : json['labels'],
         'clientSettings': !exists(json, 'clientSettings') ? undefined : TetrateApiTccCoreV1ClientSettingsFromJSON(json['clientSettings']),
         'permissions': !exists(json, 'permissions') ? undefined : TetrateApiTccCoreV1PermissionsFromJSON(json['permissions']),
     };
@@ -89,10 +99,11 @@ export function TetrateApiTccCoreV1ClusterToJSON(value?: TetrateApiTccCoreV1Clus
     }
     return {
         'name': value.name,
-        'displayName': value.displayName,
         'tenant': value.tenant,
-        'registrytype': value.registrytype,
-        'attributes': value.attributes,
+        'id': value.id,
+        'description': value.description,
+        'registry': TetrateApiTccCoreV1RegistryToJSON(value.registry),
+        'labels': value.labels,
         'clientSettings': TetrateApiTccCoreV1ClientSettingsToJSON(value.clientSettings),
         'permissions': TetrateApiTccCoreV1PermissionsToJSON(value.permissions),
     };

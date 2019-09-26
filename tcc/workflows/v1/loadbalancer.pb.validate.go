@@ -41,17 +41,21 @@ func (m *LBTicketDetails) Validate() error {
 		return nil
 	}
 
+	// no validation rules for Tenant
+
+	// no validation rules for Workspace
+
 	// no validation rules for LoadbalancerName
 
-	// no validation rules for LoadbalancerNamespace
+	switch m.Target.(type) {
 
-	// no validation rules for ServiceHostname
+	case *LBTicketDetails_ServiceName:
+		// no validation rules for ServiceName
 
-	// no validation rules for ServiceNamespace
+	case *LBTicketDetails_DeploymentName:
+		// no validation rules for DeploymentName
 
-	// no validation rules for Cluster
-
-	// no validation rules for Tenant
+	}
 
 	return nil
 }
@@ -120,7 +124,7 @@ func (m *LBTicketStatus) Validate() error {
 
 	// no validation rules for Tenant
 
-	// no validation rules for Cluster
+	// no validation rules for Workspace
 
 	// no validation rules for Requestid
 
@@ -195,9 +199,9 @@ func (m *ListTicketsRequest) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Cluster
-
 	// no validation rules for Tenant
+
+	// no validation rules for Workspace
 
 	return nil
 }
@@ -266,7 +270,9 @@ func (m *ListTicketsResponse) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Cluster
+	// no validation rules for Tenant
+
+	// no validation rules for Workspace
 
 	for idx, item := range m.GetPendingTickets() {
 		_, _ = idx, item
@@ -349,11 +355,11 @@ func (m *LBTicketId) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Requestid
-
-	// no validation rules for Cluster
-
 	// no validation rules for Tenant
+
+	// no validation rules for Workspace
+
+	// no validation rules for Requestid
 
 	return nil
 }
@@ -422,7 +428,7 @@ func (m *LBTicketResolution) Validate() error {
 
 	// no validation rules for Tenant
 
-	// no validation rules for Cluster
+	// no validation rules for Workspace
 
 	// no validation rules for Requestid
 
@@ -495,11 +501,11 @@ func (m *LBPublishAction) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Requestid
-
-	// no validation rules for Cluster
-
 	// no validation rules for Tenant
+
+	// no validation rules for Workspace
+
+	// no validation rules for Requestid
 
 	if v, ok := interface{}(m.GetTls()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
@@ -580,13 +586,17 @@ func (m *ListTicketsResponse_PendingTickets) Validate() error {
 
 	// no validation rules for LoadbalancerName
 
-	// no validation rules for LoadbalancerNamespace
-
-	// no validation rules for ServiceHostname
-
-	// no validation rules for ServiceNamespace
-
 	// no validation rules for Operation
+
+	switch m.Target.(type) {
+
+	case *ListTicketsResponse_PendingTickets_ServiceName:
+		// no validation rules for ServiceName
+
+	case *ListTicketsResponse_PendingTickets_DeploymentName:
+		// no validation rules for DeploymentName
+
+	}
 
 	return nil
 }
