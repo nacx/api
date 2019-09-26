@@ -48,6 +48,24 @@ export interface TetrateApiTccCoreV1BulkLoadClusterRequest {
      * @memberof TetrateApiTccCoreV1BulkLoadClusterRequest
      */
     clusters?: Array<TetrateApiTccCoreV1BulkLoadClusterRequestClusterWithNamespaces>;
+    /**
+     * 
+     * @type {TetrateApiTccCoreV1BulkLoadClusterRequestClusterWithNamespaces}
+     * @memberof TetrateApiTccCoreV1BulkLoadClusterRequest
+     */
+    clusterWithNamespaces?: TetrateApiTccCoreV1BulkLoadClusterRequestClusterWithNamespaces;
+    /**
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1BulkLoadClusterRequest
+     */
+    id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1BulkLoadClusterRequest
+     */
+    name?: string;
 }
 
 export function TetrateApiTccCoreV1BulkLoadClusterRequestFromJSON(json: any): TetrateApiTccCoreV1BulkLoadClusterRequest {
@@ -56,6 +74,9 @@ export function TetrateApiTccCoreV1BulkLoadClusterRequestFromJSON(json: any): Te
         'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
         'environment': !exists(json, 'environment') ? undefined : json['environment'],
         'clusters': !exists(json, 'clusters') ? undefined : (json['clusters'] as Array<any>).map(TetrateApiTccCoreV1BulkLoadClusterRequestClusterWithNamespacesFromJSON),
+        'clusterWithNamespaces': !exists(json, 'clusterWithNamespaces') ? undefined : TetrateApiTccCoreV1BulkLoadClusterRequestClusterWithNamespacesFromJSON(json['clusterWithNamespaces']),
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'name': !exists(json, 'name') ? undefined : json['name'],
     };
 }
 
@@ -68,6 +89,9 @@ export function TetrateApiTccCoreV1BulkLoadClusterRequestToJSON(value?: TetrateA
         'tenant': value.tenant,
         'environment': value.environment,
         'clusters': value.clusters === undefined ? undefined : (value.clusters as Array<any>).map(TetrateApiTccCoreV1BulkLoadClusterRequestClusterWithNamespacesToJSON),
+        'clusterWithNamespaces': TetrateApiTccCoreV1BulkLoadClusterRequestClusterWithNamespacesToJSON(value.clusterWithNamespaces),
+        'id': value.id,
+        'name': value.name,
     };
 }
 

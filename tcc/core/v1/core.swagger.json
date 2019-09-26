@@ -924,50 +924,6 @@
         ]
       }
     },
-    "/v1/tenants/{tenant}/environments/{environment}/bulkloadcluster": {
-      "post": {
-        "operationId": "BulkLoadCluster",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
-          },
-          "404": {
-            "description": "Returned when the resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "tenant",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "environment",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.BulkLoadClusterRequest"
-            }
-          }
-        ],
-        "tags": [
-          "PhysicalResourceModel"
-        ]
-      }
-    },
     "/v1/tenants/{tenant}/environments/{environment}/clusters": {
       "get": {
         "operationId": "ListClusters",
@@ -2167,6 +2123,56 @@
         ]
       }
     },
+    "/v1/tenants/{tenant}/environments/{environment}/clusters/{id}/bulkloadcluster": {
+      "post": {
+        "operationId": "BulkLoadCluster",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "environment",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.BulkLoadClusterRequest"
+            }
+          }
+        ],
+        "tags": [
+          "PhysicalResourceModel"
+        ]
+      }
+    },
     "/v1/tenants/{tenant}/environments/{id}": {
       "get": {
         "operationId": "GetEnvironment",
@@ -2945,6 +2951,15 @@
           "items": {
             "$ref": "#/definitions/tetrate.api.tcc.core.v1.BulkLoadClusterRequest.ClusterWithNamespaces"
           }
+        },
+        "clusterWithNamespaces": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.BulkLoadClusterRequest.ClusterWithNamespaces"
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
         }
       },
       "description": "Cluster, Namespaces, deployments, and endpoints in this request will replace the existing contents of a cluster."

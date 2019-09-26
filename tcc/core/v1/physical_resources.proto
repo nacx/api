@@ -47,7 +47,7 @@ service PhysicalResourceModel {
 
   rpc BulkLoadCluster(BulkLoadClusterRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      post: "/v1/tenants/{tenant}/environments/{environment}/bulkloadcluster"
+      post: "/v1/tenants/{tenant}/environments/{environment}/clusters/{id}/bulkloadcluster"
       body: "*"
     };
   };
@@ -426,10 +426,14 @@ message DeleteEndpointRequest {
 // Cluster, Namespaces, deployments, and endpoints in this request will replace the existing
 // contents of a cluster.
 message BulkLoadClusterRequest {
-  string parent = 1;
+  string parent = 1 [deprecated = true];
   string tenant = 2 [(validate.rules).string.min_len = 1];
   string environment = 3 [(validate.rules).string.min_len = 1];
-  repeated ClusterWithNamespaces clusters = 4 [(validate.rules).repeated = {min_items: 1}];
+  repeated ClusterWithNamespaces clusters = 4 [deprecated = true];
+
+  ClusterWithNamespaces cluster_with_namespaces = 5 [(validate.rules).message.required = true];
+  string id = 6 [(validate.rules).string.min_len = 1];
+  string name = 7;
 
   message ClusterWithNamespaces {
     Cluster cluster = 1 [(validate.rules).message.required = true];

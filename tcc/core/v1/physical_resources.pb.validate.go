@@ -2545,13 +2545,6 @@ func (m *BulkLoadClusterRequest) Validate() error {
 		}
 	}
 
-	if len(m.GetClusters()) < 1 {
-		return BulkLoadClusterRequestValidationError{
-			field:  "Clusters",
-			reason: "value must contain at least 1 item(s)",
-		}
-	}
-
 	for idx, item := range m.GetClusters() {
 		_, _ = idx, item
 
@@ -2571,6 +2564,37 @@ func (m *BulkLoadClusterRequest) Validate() error {
 		}
 
 	}
+
+	if m.GetClusterWithNamespaces() == nil {
+		return BulkLoadClusterRequestValidationError{
+			field:  "ClusterWithNamespaces",
+			reason: "value is required",
+		}
+	}
+
+	{
+		tmp := m.GetClusterWithNamespaces()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return BulkLoadClusterRequestValidationError{
+					field:  "ClusterWithNamespaces",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+	}
+
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return BulkLoadClusterRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	// no validation rules for Name
 
 	return nil
 }

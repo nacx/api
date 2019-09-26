@@ -58,6 +58,7 @@ import {
 export interface BulkLoadClusterRequest {
     tenant: string;
     environment: string;
+    id: string;
     body: TetrateApiTccCoreV1BulkLoadClusterRequest;
 }
 
@@ -239,6 +240,10 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling bulkLoadCluster.');
         }
 
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling bulkLoadCluster.');
+        }
+
         if (requestParameters.body === null || requestParameters.body === undefined) {
             throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling bulkLoadCluster.');
         }
@@ -250,7 +255,7 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/environments/{environment}/bulkloadcluster`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/clusters/{id}/bulkloadcluster`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
