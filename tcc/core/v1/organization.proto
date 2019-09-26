@@ -5,6 +5,7 @@ option go_package = "github.com/tetrateio/tetrate/api/tcc/core/v1";
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
+import "validate/validate.proto";
 
 service Organization {
   rpc CreateTenant(CreateTenantRequest) returns (Tenant) {
@@ -106,19 +107,19 @@ service Organization {
 
 message Tenant {
   string name = 1;
-  string id = 2;
+  string id = 2 [(validate.rules).string.min_len = 1];
   string description = 3;
 }
 
 message CreateTenantRequest {
   // if present, this will be used as the id for the created object
   string id = 1;
-  Tenant tenant = 2;
+  Tenant tenant = 2 [(validate.rules).message.required = true];
 }
 
 message GetTenantRequest {
   string name = 1;
-  string id = 2;
+  string id = 2 [(validate.rules).string.min_len = 1];
 }
 
 message ListTenantsRequest {}
@@ -129,35 +130,35 @@ message ListTenantsResponse {
 
 message DeleteTenantRequest {
   string name = 1;
-  string id = 2;
+  string id = 2 [(validate.rules).string.min_len = 1];
 }
 
 message Team {
   string name = 1;
-  string tenant = 2;
-  string id = 3;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string id = 3 [(validate.rules).string.min_len = 1];
   string description = 4;
   repeated string members = 5;
-  string etag = 6;
+  string etag = 6 [(validate.rules).string.min_len = 1];
 }
 
 message CreateTeamRequest {
   string parent = 1;
   // if present, this will be used as the id for the created object
   string id = 2;
-  string tenant = 3;
-  Team team = 4;
+  string tenant = 3 [(validate.rules).string.min_len = 1];
+  Team team = 4 [(validate.rules).message.required = true];
 }
 
 message GetTeamRequest {
   string name = 1;
-  string tenant = 2;
-  string id = 3;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string id = 3 [(validate.rules).string.min_len = 1];
 }
 
 message ListTeamsRequest {
   string parent = 1;
-  string tenant = 2;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
 }
 
 message ListTeamsResponse {
@@ -166,14 +167,14 @@ message ListTeamsResponse {
 
 message DeleteTeamRequest {
   string name = 1;
-  string tenant = 2;
-  string id = 3;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string id = 3 [(validate.rules).string.min_len = 1];
 }
 
 message User {
   string name = 1;
-  string tenant = 2;
-  string id = 3;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string id = 3 [(validate.rules).string.min_len = 1];
   string description = 4;
 }
 
@@ -181,19 +182,19 @@ message CreateUserRequest {
   string parent = 1;
   // if present, this will be used as the id for the created object
   string id = 2;
-  string tenant = 3;
-  User user = 4;
+  string tenant = 3 [(validate.rules).string.min_len = 1];
+  User user = 4 [(validate.rules).message.required = true];
 }
 
 message GetUserRequest {
   string name = 1;
-  string tenant = 2;
-  string id = 3;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string id = 3 [(validate.rules).string.min_len = 1];
 }
 
 message ListUsersRequest {
   string parent = 1;
-  string tenant = 2;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
 }
 
 message ListUsersResponse {
@@ -202,6 +203,6 @@ message ListUsersResponse {
 
 message DeleteUserRequest {
   string name = 1;
-  string tenant = 2;
-  string id = 3;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string id = 3 [(validate.rules).string.min_len = 1];
 }

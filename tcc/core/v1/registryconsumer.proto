@@ -6,6 +6,7 @@ package tetrate.api.tcc.core.v1;
 option go_package = "github.com/tetrateio/tetrate/api/tcc/core/v1";
 
 import "google/api/annotations.proto";
+import "validate/validate.proto";
 
 // RegistryConsumer service accepts bulk JSON payload to update resources
 // into TCC data model. A sync agent calls this API periodically to create
@@ -25,19 +26,19 @@ service RegistryConsumer {
 // RegistryUpdateResourcesRequest request object
 message RegistryUpdateResourcesRequest {
   // Tenant where this service is residing e.g Tetrate
-  string tenant = 1;
+  string tenant = 1 [(validate.rules).string.min_len = 1];
 
   // environment are higher-level isolations e.g. prod, staging, development, etc.
-  string environment = 2;
+  string environment = 2 [(validate.rules).string.min_len = 1];
 
   // Unique cluster acting as a source
-  string cluster = 3;
+  string cluster = 3 [(validate.rules).string.min_len = 1];
 
   // registrytype indicates source of entry. Currently accepted values "kubernetes", "f5"
-  string registrytype = 4;
+  string registrytype = 4  [(validate.rules).string = {in: ["k8s", "vm"]}];
 
   // JSON bulk payload of all physical resources
-  string payload = 5;
+  string payload = 5 [(validate.rules).string.min_len = 1];
 }
 
 // RegistryConsumerResponse response returned by server

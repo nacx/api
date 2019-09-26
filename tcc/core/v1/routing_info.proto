@@ -3,8 +3,9 @@ syntax = "proto3";
 package tetrate.api.tcc.core.v1;
 option go_package = "github.com/tetrateio/tetrate/api/tcc/core/v1";
 
-import "google/protobuf/wrappers.proto";
 import "google/protobuf/duration.proto";
+import "google/protobuf/wrappers.proto";
+import "validate/validate.proto";
 
 // Part of the Deployment type_info oneof
 message RoutingInfo {
@@ -33,7 +34,7 @@ message Port {
   // MUST BE one of HTTP|GRPC|HTTP2|HTTPS|TCP|TLS.
   // TLS implies the connection will be routed based on the SNI header to
   // the destination without terminating the TLS connection.
-  string protocol = 2;
+  string protocol = 2 [(validate.rules).string = {in: ["HTTP", "GRPC", "HTTP2", "TCP", "TLS"]}];
 
   // Label assigned to the port.
   string name = 3;
@@ -44,10 +45,10 @@ message Port {
 }
 
 message Subset {
-  string name = 1;
+  string name = 1 [(validate.rules).string.min_len = 1];
   // Labels apply a filter over the endpoints of a service in the
   // service registry.
-  map<string, string> labels = 2;
+  map<string, string> labels = 2 [(validate.rules).map.min_pairs = 1];
 }
 
 // HTTP settings for a service. Applicable to ports receiving HTTP traffic.
@@ -56,11 +57,11 @@ message HttpSettings {
   // the cookie is not present, it will be generated.
   message HTTPCookie {
     // REQUIRED. Name of the cookie.
-    string name = 1;
+    string name = 1 [(validate.rules).string.min_len = 1];
     // Path to set for the cookie.
-    string path = 2;
+    string path = 2 [(validate.rules).string.min_len = 1];
     // REQUIRED. Lifetime of the cookie.
-    google.protobuf.Duration ttl = 3;
+    google.protobuf.Duration ttl = 3 [(validate.rules).message.required = true];
   }
 
   // If set, the load balancer will route all requests from a
@@ -71,7 +72,7 @@ message HttpSettings {
     // REQUIRED: The hash key to use.
     oneof hash_key {
       // Hash based on a specific HTTP header.
-      string header = 1;
+      string header = 1 [(validate.rules).string.min_len = 1];
 
       // Hash based on HTTP cookie.
       HTTPCookie cookie = 2;
@@ -89,7 +90,7 @@ message HttpSettings {
 // TCP settings for a service. Applicable to ports receiving non-HTTP traffic.
 message TcpSettings {
   // The destination to which the connection should be forwarded to.
-  Route route = 1;
+  Route route = 1 [(validate.rules).message.required = true];
 }
 
 // A single HTTP rule
@@ -189,7 +190,7 @@ message Route {
     // optional
     uint32 port = 4;
   }
-  repeated Destination destinations = 1;
+  repeated Destination destinations = 1 [(validate.rules).repeated.min_items = 1];
 }
 
 message Redirect {

@@ -42,7 +42,12 @@ func (m *Tenant) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return TenantValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	// no validation rules for Description
 
@@ -112,6 +117,13 @@ func (m *CreateTenantRequest) Validate() error {
 	}
 
 	// no validation rules for Id
+
+	if m.GetTenant() == nil {
+		return CreateTenantRequestValidationError{
+			field:  "Tenant",
+			reason: "value is required",
+		}
+	}
 
 	if v, ok := interface{}(m.GetTenant()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
@@ -192,7 +204,12 @@ func (m *GetTenantRequest) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return GetTenantRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -410,7 +427,12 @@ func (m *DeleteTenantRequest) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return DeleteTenantRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -480,13 +502,28 @@ func (m *Team) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return TeamValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return TeamValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	// no validation rules for Description
 
-	// no validation rules for Etag
+	if utf8.RuneCountInString(m.GetEtag()) < 1 {
+		return TeamValidationError{
+			field:  "Etag",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -557,7 +594,19 @@ func (m *CreateTeamRequest) Validate() error {
 
 	// no validation rules for Id
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return CreateTeamRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if m.GetTeam() == nil {
+		return CreateTeamRequestValidationError{
+			field:  "Team",
+			reason: "value is required",
+		}
+	}
 
 	if v, ok := interface{}(m.GetTeam()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
@@ -638,9 +687,19 @@ func (m *GetTeamRequest) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return GetTeamRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return GetTeamRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -709,7 +768,12 @@ func (m *ListTeamsRequest) Validate() error {
 
 	// no validation rules for Parent
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return ListTeamsRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -860,9 +924,19 @@ func (m *DeleteTeamRequest) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return DeleteTeamRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return DeleteTeamRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -932,9 +1006,19 @@ func (m *User) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return UserValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return UserValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	// no validation rules for Description
 
@@ -1007,7 +1091,19 @@ func (m *CreateUserRequest) Validate() error {
 
 	// no validation rules for Id
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return CreateUserRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if m.GetUser() == nil {
+		return CreateUserRequestValidationError{
+			field:  "User",
+			reason: "value is required",
+		}
+	}
 
 	if v, ok := interface{}(m.GetUser()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
@@ -1088,9 +1184,19 @@ func (m *GetUserRequest) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return GetUserRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return GetUserRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -1159,7 +1265,12 @@ func (m *ListUsersRequest) Validate() error {
 
 	// no validation rules for Parent
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return ListUsersRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -1310,9 +1421,19 @@ func (m *DeleteUserRequest) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return DeleteUserRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return DeleteUserRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }

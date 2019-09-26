@@ -43,13 +43,28 @@ func (m *CreateTicketRequest) Validate() error {
 
 	// no validation rules for Parent
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return CreateTicketRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Environment
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return CreateTicketRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	// no validation rules for Id
 
-	// no validation rules for Application
+	if utf8.RuneCountInString(m.GetApplication()) < 1 {
+		return CreateTicketRequestValidationError{
+			field:  "Application",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -120,13 +135,33 @@ func (m *GetTicketStatusRequest) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return GetTicketStatusRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Environment
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return GetTicketStatusRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Loadbalancer
+	if utf8.RuneCountInString(m.GetLoadbalancer()) < 1 {
+		return GetTicketStatusRequestValidationError{
+			field:  "Loadbalancer",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return GetTicketStatusRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -197,13 +232,33 @@ func (m *CancelTicketRequest) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return CancelTicketRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Environment
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return CancelTicketRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Loadbalancer
+	if utf8.RuneCountInString(m.GetLoadbalancer()) < 1 {
+		return CancelTicketRequestValidationError{
+			field:  "Loadbalancer",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return CancelTicketRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -357,11 +412,26 @@ func (m *ListTicketsRequest) Validate() error {
 
 	// no validation rules for Parent
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return ListTicketsRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Environment
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return ListTicketsRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Loadbalancer
+	if utf8.RuneCountInString(m.GetLoadbalancer()) < 1 {
+		return ListTicketsRequestValidationError{
+			field:  "Loadbalancer",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -514,13 +584,33 @@ func (m *ResolveTicketRequest) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return ResolveTicketRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Environment
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return ResolveTicketRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Loadbalancer
+	if utf8.RuneCountInString(m.GetLoadbalancer()) < 1 {
+		return ResolveTicketRequestValidationError{
+			field:  "Loadbalancer",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return ResolveTicketRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	// no validation rules for Note
 
@@ -593,13 +683,40 @@ func (m *PublishTicketRequest) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return PublishTicketRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Environment
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return PublishTicketRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Loadbalancer
+	if utf8.RuneCountInString(m.GetLoadbalancer()) < 1 {
+		return PublishTicketRequestValidationError{
+			field:  "Loadbalancer",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return PublishTicketRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if m.GetTls() == nil {
+		return PublishTicketRequestValidationError{
+			field:  "Tls",
+			reason: "value is required",
+		}
+	}
 
 	if v, ok := interface{}(m.GetTls()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {

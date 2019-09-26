@@ -41,13 +41,33 @@ func (m *ConfigDownloadRequest) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Configtype
+	if _, ok := _ConfigDownloadRequest_Configtype_InLookup[m.GetConfigtype()]; !ok {
+		return ConfigDownloadRequestValidationError{
+			field:  "Configtype",
+			reason: "value must be in list [istio f5]",
+		}
+	}
 
-	// no validation rules for Cluster
+	if utf8.RuneCountInString(m.GetCluster()) < 1 {
+		return ConfigDownloadRequestValidationError{
+			field:  "Cluster",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Environment
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return ConfigDownloadRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return ConfigDownloadRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -107,6 +127,11 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = ConfigDownloadRequestValidationError{}
+
+var _ConfigDownloadRequest_Configtype_InLookup = map[string]struct{}{
+	"istio": {},
+	"f5":    {},
+}
 
 // Validate checks the field values on ConfigData with the rules defined in the
 // proto definition for this message. If any rules are violated, an error is returned.

@@ -5,6 +5,7 @@ option go_package = "github.com/tetrateio/tetrate/api/tcc/core/v1";
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
+import "validate/validate.proto";
 import "routing_info.proto";
 import "client_settings.proto";
 import "tlssettings.proto";
@@ -141,8 +142,8 @@ service LogicalResourceModel {
 
 message Environment {
   string name = 1;
-  string tenant = 2;
-  string id = 3;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string id = 3 [(validate.rules).string.min_len = 1];
   string description = 4;
   ClientSettings client_settings = 5;
 }
@@ -151,19 +152,19 @@ message CreateEnvironmentRequest {
   string parent = 1;
   // if present, this will be used as the id for the created object
   string id = 2;
-  string tenant = 3;
-  Environment environment = 4;
+  string tenant = 3 [(validate.rules).string.min_len = 1];
+  Environment environment = 4 [(validate.rules).message.required = true];
 }
 
 message GetEnvironmentRequest {
   string name = 1;
-  string tenant = 2;
-  string id = 3;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string id = 3 [(validate.rules).string.min_len = 1];
 }
 
 message ListEnvironmentsRequest {
   string parent = 1;
-  string tenant = 2;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
 }
 
 message ListEnvironmentsResponse {
@@ -172,17 +173,17 @@ message ListEnvironmentsResponse {
 
 message DeleteEnvironmentRequest {
   string name = 1;
-  string tenant = 2;
-  string id = 3;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string id = 3 [(validate.rules).string.min_len = 1];
 }
 
 message Application {
   string name = 1;
-  string tenant = 2;
-  string environment = 3;
-  string id = 4;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  string id = 4 [(validate.rules).string.min_len = 1];
   string description = 5;
-  string hostname = 6;
+  string hostname = 6 [(validate.rules).string.min_len = 1];
   RoutingInfo routing_info = 7;
   ClientSettings client_settings = 8;
 
@@ -202,22 +203,22 @@ message CreateApplicationRequest {
   string parent = 1;
   // if present, this will be used as the id for the created object
   string id = 2;
-  string tenant = 3;
-  string environment = 4;
-  Application application = 5;
+  string tenant = 3 [(validate.rules).string.min_len = 1];
+  string environment = 4 [(validate.rules).string.min_len = 1];
+  Application application = 5 [(validate.rules).message.required = true];
 }
 
 message GetApplicationRequest {
   string name = 1;
-  string tenant = 2;
-  string environment = 3;
-  string id = 4;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  string id = 4 [(validate.rules).string.min_len = 1];
 }
 
 message ListApplicationsRequest {
   string parent = 1;
-  string tenant = 2;
-  string environment = 3;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
 }
 
 message ListApplicationsResponse {
@@ -226,50 +227,50 @@ message ListApplicationsResponse {
 
 message DeleteApplicationRequest {
   string name = 1;
-  string tenant = 2;
-  string environment = 3;
-  string id = 4;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  string id = 4 [(validate.rules).string.min_len = 1];
 }
 
 message Service {
   string name = 1;
-  string tenant = 2;
-  string environment = 3;
-  string application = 4;
-  string id = 5;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  string application = 4 [(validate.rules).string.min_len = 1];
+  string id = 5 [(validate.rules).string.min_len = 1];
   string description = 6;
-  string hostname = 7;
+  string hostname = 7 [(validate.rules).string.min_len = 1];
   // User identifiable tags associated with this service.
   map<string, string> labels = 8;
 
-  repeated Port ports = 9;
+  repeated Port ports = 9 [(validate.rules).repeated.min_items = 1];
   RoutingInfo routing_info = 10;
-  string etag = 11;
+  string etag = 11 [(validate.rules).string.min_len = 1];
 }
 
 message CreateServiceRequest {
   string parent = 1;
   // if present, this will be used as the id for the created object
   string id = 2;
-  string tenant = 3;
-  string environment = 4;
-  string application = 5;
-  Service service = 6;
+  string tenant = 3 [(validate.rules).string.min_len = 1];
+  string environment = 4 [(validate.rules).string.min_len = 1];
+  string application = 5 [(validate.rules).string.min_len = 1];
+  Service service = 6 [(validate.rules).message.required = true];
 }
 
 message GetServiceRequest {
   string name = 1;
-  string tenant = 2;
-  string environment = 3;
-  string application = 4;
-  string id = 5;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  string application = 4 [(validate.rules).string.min_len = 1];
+  string id = 5 [(validate.rules).string.min_len = 1];
 }
 
 message ListServicesRequest {
   string parent = 1;
-  string tenant = 2;
-  string environment = 3;
-  string application = 4;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  string application = 4 [(validate.rules).string.min_len = 1];
 }
 
 message ListServicesResponse {
@@ -278,10 +279,10 @@ message ListServicesResponse {
 
 message DeleteServiceRequest {
   string name = 1;
-  string tenant = 2;
-  string environment = 3;
-  string application = 4;
-  string id = 5;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  string application = 4 [(validate.rules).string.min_len = 1];
+  string id = 5 [(validate.rules).string.min_len = 1];
 }
 
 enum LoadBalancerClass {
@@ -292,17 +293,17 @@ enum LoadBalancerClass {
 
 message LoadBalancer {
   string name = 1;
-  string tenant = 2;
-  string environment = 3;
-  string id = 4;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  string id = 4 [(validate.rules).string.min_len = 1];
   string description = 5;
   bool enable_workflows = 6;
 
-  LoadBalancerClass load_balancer_class = 7;
-  Registry registry = 8;
+  LoadBalancerClass load_balancer_class = 7 [(validate.rules).enum.defined_only = true];
+  Registry registry = 8 [(validate.rules).enum.defined_only = true];
 
   // The namespace where the load balancer is/will be deployed in a given cluster.
-  string cluster_namespace = 9;
+  string cluster_namespace = 9 [(validate.rules).string.min_len = 1];
 
   // Labels that uniquely identify the cluster loadbalancer.
   // If omitted, defaults to "app: istio-ingressgateway"
@@ -315,29 +316,29 @@ message LoadBalancer {
   // Client settings are applicable for traffic from the load
   // balancer's cluster namespace to the application's namespaces.
   ClientSettings client_settings = 12;
-  string etag = 13;
+  string etag = 13 [(validate.rules).string.min_len = 1];
 }
 
 message CreateLoadBalancerRequest {
   string parent = 1;
   // if present, this will be used as the id for the created object
   string id = 2;
-  string tenant = 3;
-  string environment = 4;
-  LoadBalancer loadbalancer = 5;
+  string tenant = 3 [(validate.rules).string.min_len = 1];
+  string environment = 4 [(validate.rules).string.min_len = 1];
+  LoadBalancer loadbalancer = 5 [(validate.rules).message.required = true];
 }
 
 message GetLoadBalancerRequest {
   string name = 1;
-  string tenant = 2;
-  string environment = 3;
-  string id = 4;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  string id = 4 [(validate.rules).string.min_len = 1];
 }
 
 message ListLoadBalancersRequest {
   string parent = 1;
-  string tenant = 2;
-  string environment = 3;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
 }
 
 message ListLoadBalancersResponse {
@@ -346,7 +347,7 @@ message ListLoadBalancersResponse {
 
 message DeleteLoadBalancerRequest {
   string name = 1;
-  string tenant = 2;
-  string environment = 3;
-  string id = 4;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  string id = 4 [(validate.rules).string.min_len = 1];
 }

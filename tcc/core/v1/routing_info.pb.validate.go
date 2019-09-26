@@ -142,7 +142,12 @@ func (m *Port) Validate() error {
 
 	// no validation rules for Number
 
-	// no validation rules for Protocol
+	if _, ok := _Port_Protocol_InLookup[m.GetProtocol()]; !ok {
+		return PortValidationError{
+			field:  "Protocol",
+			reason: "value must be in list [HTTP GRPC HTTP2 TCP TLS]",
+		}
+	}
 
 	// no validation rules for Name
 
@@ -205,6 +210,14 @@ var _ interface {
 	ErrorName() string
 } = PortValidationError{}
 
+var _Port_Protocol_InLookup = map[string]struct{}{
+	"HTTP":  {},
+	"GRPC":  {},
+	"HTTP2": {},
+	"TCP":   {},
+	"TLS":   {},
+}
+
 // Validate checks the field values on Subset with the rules defined in the
 // proto definition for this message. If any rules are violated, an error is returned.
 func (m *Subset) Validate() error {
@@ -212,9 +225,19 @@ func (m *Subset) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Name
+	if utf8.RuneCountInString(m.GetName()) < 1 {
+		return SubsetValidationError{
+			field:  "Name",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Labels
+	if len(m.GetLabels()) < 1 {
+		return SubsetValidationError{
+			field:  "Labels",
+			reason: "value must contain at least 1 pair(s)",
+		}
+	}
 
 	return nil
 }
@@ -379,6 +402,13 @@ var _ interface {
 func (m *TcpSettings) Validate() error {
 	if m == nil {
 		return nil
+	}
+
+	if m.GetRoute() == nil {
+		return TcpSettingsValidationError{
+			field:  "Route",
+			reason: "value is required",
+		}
 	}
 
 	if v, ok := interface{}(m.GetRoute()).(interface{ Validate() error }); ok {
@@ -997,6 +1027,13 @@ func (m *Route) Validate() error {
 		return nil
 	}
 
+	if len(m.GetDestinations()) < 1 {
+		return RouteValidationError{
+			field:  "Destinations",
+			reason: "value must contain at least 1 item(s)",
+		}
+	}
+
 	for idx, item := range m.GetDestinations() {
 		_, _ = idx, item
 
@@ -1229,9 +1266,26 @@ func (m *HttpSettings_HTTPCookie) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Name
+	if utf8.RuneCountInString(m.GetName()) < 1 {
+		return HttpSettings_HTTPCookieValidationError{
+			field:  "Name",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Path
+	if utf8.RuneCountInString(m.GetPath()) < 1 {
+		return HttpSettings_HTTPCookieValidationError{
+			field:  "Path",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if m.GetTtl() == nil {
+		return HttpSettings_HTTPCookieValidationError{
+			field:  "Ttl",
+			reason: "value is required",
+		}
+	}
 
 	if v, ok := interface{}(m.GetTtl()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
@@ -1313,7 +1367,13 @@ func (m *HttpSettings_StickySession) Validate() error {
 	switch m.HashKey.(type) {
 
 	case *HttpSettings_StickySession_Header:
-		// no validation rules for Header
+
+		if utf8.RuneCountInString(m.GetHeader()) < 1 {
+			return HttpSettings_StickySessionValidationError{
+				field:  "Header",
+				reason: "value length must be at least 1 runes",
+			}
+		}
 
 	case *HttpSettings_StickySession_Cookie:
 

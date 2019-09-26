@@ -42,15 +42,35 @@ func (m *Cluster) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return ClusterValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Environment
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return ClusterValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return ClusterValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	// no validation rules for Description
 
-	// no validation rules for Registry
+	if _, ok := Registry_name[int32(m.GetRegistry())]; !ok {
+		return ClusterValidationError{
+			field:  "Registry",
+			reason: "value must be one of the defined enum values",
+		}
+	}
 
 	// no validation rules for Country
 
@@ -129,9 +149,26 @@ func (m *CreateClusterRequest) Validate() error {
 
 	// no validation rules for Id
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return CreateClusterRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Environment
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return CreateClusterRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if m.GetCluster() == nil {
+		return CreateClusterRequestValidationError{
+			field:  "Cluster",
+			reason: "value is required",
+		}
+	}
 
 	if v, ok := interface{}(m.GetCluster()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
@@ -212,11 +249,26 @@ func (m *GetClusterRequest) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return GetClusterRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Environment
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return GetClusterRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return GetClusterRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -287,9 +339,19 @@ func (m *ListClustersRequest) Validate() error {
 
 	// no validation rules for Parent
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return ListClustersRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Environment
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return ListClustersRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -442,11 +504,26 @@ func (m *DeleteClusterRequest) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return DeleteClusterRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Environment
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return DeleteClusterRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return DeleteClusterRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -516,17 +593,42 @@ func (m *Namespace) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return NamespaceValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Environment
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return NamespaceValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Cluster
+	if utf8.RuneCountInString(m.GetCluster()) < 1 {
+		return NamespaceValidationError{
+			field:  "Cluster",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return NamespaceValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	// no validation rules for Description
 
-	// no validation rules for Etag
+	if utf8.RuneCountInString(m.GetEtag()) < 1 {
+		return NamespaceValidationError{
+			field:  "Etag",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	// no validation rules for Labels
 
@@ -599,11 +701,33 @@ func (m *CreateNamespaceRequest) Validate() error {
 
 	// no validation rules for Id
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return CreateNamespaceRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Environment
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return CreateNamespaceRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Cluster
+	if utf8.RuneCountInString(m.GetCluster()) < 1 {
+		return CreateNamespaceRequestValidationError{
+			field:  "Cluster",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if m.GetNamespace() == nil {
+		return CreateNamespaceRequestValidationError{
+			field:  "Namespace",
+			reason: "value is required",
+		}
+	}
 
 	if v, ok := interface{}(m.GetNamespace()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
@@ -684,13 +808,33 @@ func (m *GetNamespaceRequest) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return GetNamespaceRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Environment
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return GetNamespaceRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Cluster
+	if utf8.RuneCountInString(m.GetCluster()) < 1 {
+		return GetNamespaceRequestValidationError{
+			field:  "Cluster",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return GetNamespaceRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -761,11 +905,26 @@ func (m *ListNamespacesRequest) Validate() error {
 
 	// no validation rules for Parent
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return ListNamespacesRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Environment
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return ListNamespacesRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Cluster
+	if utf8.RuneCountInString(m.GetCluster()) < 1 {
+		return ListNamespacesRequestValidationError{
+			field:  "Cluster",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -918,13 +1077,33 @@ func (m *DeleteNamespaceRequest) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return DeleteNamespaceRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Environment
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return DeleteNamespaceRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Cluster
+	if utf8.RuneCountInString(m.GetCluster()) < 1 {
+		return DeleteNamespaceRequestValidationError{
+			field:  "Cluster",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return DeleteNamespaceRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -994,19 +1173,56 @@ func (m *Deployment) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return DeploymentValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Environment
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return DeploymentValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Cluster
+	if utf8.RuneCountInString(m.GetCluster()) < 1 {
+		return DeploymentValidationError{
+			field:  "Cluster",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Namespace
+	if utf8.RuneCountInString(m.GetNamespace()) < 1 {
+		return DeploymentValidationError{
+			field:  "Namespace",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return DeploymentValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Hostname
+	if utf8.RuneCountInString(m.GetHostname()) < 1 {
+		return DeploymentValidationError{
+			field:  "Hostname",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	// no validation rules for Labels
+
+	if len(m.GetPorts()) < 1 {
+		return DeploymentValidationError{
+			field:  "Ports",
+			reason: "value must contain at least 1 item(s)",
+		}
+	}
 
 	for idx, item := range m.GetPorts() {
 		_, _ = idx, item
@@ -1094,13 +1310,40 @@ func (m *CreateDeploymentRequest) Validate() error {
 
 	// no validation rules for Id
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return CreateDeploymentRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Environment
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return CreateDeploymentRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Cluster
+	if utf8.RuneCountInString(m.GetCluster()) < 1 {
+		return CreateDeploymentRequestValidationError{
+			field:  "Cluster",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Namespace
+	if utf8.RuneCountInString(m.GetNamespace()) < 1 {
+		return CreateDeploymentRequestValidationError{
+			field:  "Namespace",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if m.GetDeployment() == nil {
+		return CreateDeploymentRequestValidationError{
+			field:  "Deployment",
+			reason: "value is required",
+		}
+	}
 
 	if v, ok := interface{}(m.GetDeployment()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
@@ -1181,15 +1424,40 @@ func (m *GetDeploymentRequest) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return GetDeploymentRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Environment
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return GetDeploymentRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Cluster
+	if utf8.RuneCountInString(m.GetCluster()) < 1 {
+		return GetDeploymentRequestValidationError{
+			field:  "Cluster",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Namespace
+	if utf8.RuneCountInString(m.GetNamespace()) < 1 {
+		return GetDeploymentRequestValidationError{
+			field:  "Namespace",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return GetDeploymentRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -1260,13 +1528,33 @@ func (m *ListDeploymentsRequest) Validate() error {
 
 	// no validation rules for Parent
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return ListDeploymentsRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Environment
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return ListDeploymentsRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Cluster
+	if utf8.RuneCountInString(m.GetCluster()) < 1 {
+		return ListDeploymentsRequestValidationError{
+			field:  "Cluster",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Namespace
+	if utf8.RuneCountInString(m.GetNamespace()) < 1 {
+		return ListDeploymentsRequestValidationError{
+			field:  "Namespace",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -1419,15 +1707,40 @@ func (m *DeleteDeploymentRequest) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return DeleteDeploymentRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Environment
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return DeleteDeploymentRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Cluster
+	if utf8.RuneCountInString(m.GetCluster()) < 1 {
+		return DeleteDeploymentRequestValidationError{
+			field:  "Cluster",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Namespace
+	if utf8.RuneCountInString(m.GetNamespace()) < 1 {
+		return DeleteDeploymentRequestValidationError{
+			field:  "Namespace",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return DeleteDeploymentRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -1497,21 +1810,61 @@ func (m *Endpoint) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return EndpointValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Environment
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return EndpointValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Cluster
+	if utf8.RuneCountInString(m.GetCluster()) < 1 {
+		return EndpointValidationError{
+			field:  "Cluster",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Namespace
+	if utf8.RuneCountInString(m.GetNamespace()) < 1 {
+		return EndpointValidationError{
+			field:  "Namespace",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Deployment
+	if utf8.RuneCountInString(m.GetDeployment()) < 1 {
+		return EndpointValidationError{
+			field:  "Deployment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return EndpointValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Address
+	if utf8.RuneCountInString(m.GetAddress()) < 1 {
+		return EndpointValidationError{
+			field:  "Address",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Ports
+	if len(m.GetPorts()) < 1 {
+		return EndpointValidationError{
+			field:  "Ports",
+			reason: "value must contain at least 1 pair(s)",
+		}
+	}
 
 	// no validation rules for Labels
 
@@ -1588,15 +1941,47 @@ func (m *CreateEndpointRequest) Validate() error {
 
 	// no validation rules for Id
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return CreateEndpointRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Environment
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return CreateEndpointRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Cluster
+	if utf8.RuneCountInString(m.GetCluster()) < 1 {
+		return CreateEndpointRequestValidationError{
+			field:  "Cluster",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Namespace
+	if utf8.RuneCountInString(m.GetNamespace()) < 1 {
+		return CreateEndpointRequestValidationError{
+			field:  "Namespace",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Deployment
+	if utf8.RuneCountInString(m.GetDeployment()) < 1 {
+		return CreateEndpointRequestValidationError{
+			field:  "Deployment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if m.GetEndpoint() == nil {
+		return CreateEndpointRequestValidationError{
+			field:  "Endpoint",
+			reason: "value is required",
+		}
+	}
 
 	if v, ok := interface{}(m.GetEndpoint()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
@@ -1677,17 +2062,47 @@ func (m *GetEndpointRequest) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return GetEndpointRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Environment
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return GetEndpointRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Cluster
+	if utf8.RuneCountInString(m.GetCluster()) < 1 {
+		return GetEndpointRequestValidationError{
+			field:  "Cluster",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Namespace
+	if utf8.RuneCountInString(m.GetNamespace()) < 1 {
+		return GetEndpointRequestValidationError{
+			field:  "Namespace",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Deployment
+	if utf8.RuneCountInString(m.GetDeployment()) < 1 {
+		return GetEndpointRequestValidationError{
+			field:  "Deployment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return GetEndpointRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -1758,15 +2173,40 @@ func (m *ListEndpointsRequest) Validate() error {
 
 	// no validation rules for Parent
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return ListEndpointsRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Environment
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return ListEndpointsRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Cluster
+	if utf8.RuneCountInString(m.GetCluster()) < 1 {
+		return ListEndpointsRequestValidationError{
+			field:  "Cluster",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Namespace
+	if utf8.RuneCountInString(m.GetNamespace()) < 1 {
+		return ListEndpointsRequestValidationError{
+			field:  "Namespace",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Deployment
+	if utf8.RuneCountInString(m.GetDeployment()) < 1 {
+		return ListEndpointsRequestValidationError{
+			field:  "Deployment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -1919,17 +2359,47 @@ func (m *DeleteEndpointRequest) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return DeleteEndpointRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Environment
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return DeleteEndpointRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Cluster
+	if utf8.RuneCountInString(m.GetCluster()) < 1 {
+		return DeleteEndpointRequestValidationError{
+			field:  "Cluster",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Namespace
+	if utf8.RuneCountInString(m.GetNamespace()) < 1 {
+		return DeleteEndpointRequestValidationError{
+			field:  "Namespace",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Deployment
+	if utf8.RuneCountInString(m.GetDeployment()) < 1 {
+		return DeleteEndpointRequestValidationError{
+			field:  "Deployment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return DeleteEndpointRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -2000,9 +2470,26 @@ func (m *BulkLoadClusterRequest) Validate() error {
 
 	// no validation rules for Parent
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return BulkLoadClusterRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Environment
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return BulkLoadClusterRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if len(m.GetClusters()) < 1 {
+		return BulkLoadClusterRequestValidationError{
+			field:  "Clusters",
+			reason: "value must contain at least 1 item(s)",
+		}
+	}
 
 	for idx, item := range m.GetClusters() {
 		_, _ = idx, item
@@ -2084,6 +2571,13 @@ var _ interface {
 func (m *BulkLoadClusterRequest_ClusterWithNamespaces) Validate() error {
 	if m == nil {
 		return nil
+	}
+
+	if m.GetCluster() == nil {
+		return BulkLoadClusterRequest_ClusterWithNamespacesValidationError{
+			field:  "Cluster",
+			reason: "value is required",
+		}
 	}
 
 	if v, ok := interface{}(m.GetCluster()).(interface{ Validate() error }); ok {
@@ -2181,6 +2675,13 @@ func (m *BulkLoadClusterRequest_NamespaceWithDeployments) Validate() error {
 		return nil
 	}
 
+	if m.GetNamespace() == nil {
+		return BulkLoadClusterRequest_NamespaceWithDeploymentsValidationError{
+			field:  "Namespace",
+			reason: "value is required",
+		}
+	}
+
 	if v, ok := interface{}(m.GetNamespace()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
 			return BulkLoadClusterRequest_NamespaceWithDeploymentsValidationError{
@@ -2276,6 +2777,13 @@ var _ interface {
 func (m *BulkLoadClusterRequest_DeploymentWithEndpoints) Validate() error {
 	if m == nil {
 		return nil
+	}
+
+	if m.GetDeployment() == nil {
+		return BulkLoadClusterRequest_DeploymentWithEndpointsValidationError{
+			field:  "Deployment",
+			reason: "value is required",
+		}
 	}
 
 	if v, ok := interface{}(m.GetDeployment()).(interface{ Validate() error }); ok {

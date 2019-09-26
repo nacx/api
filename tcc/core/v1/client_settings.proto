@@ -5,6 +5,7 @@ option go_package = "github.com/tetrateio/tetrate/api/tcc/core/v1";
 
 import "google/protobuf/duration.proto";
 import "google/protobuf/wrappers.proto";
+import "validate/validate.proto";
 
 // All the timeouts, retries, circuit breakers etc. that consumers
 // want to set to gaurd against failures of their dependencies. These

@@ -48,6 +48,7 @@ $(SWAGGER):
 	protoc -I ./ \
 		-I $(VENDOR) \
 		-I $(APIS) \
+		-I $(GOSRCDIR)/github.com/envoyproxy/protoc-gen-validate \
 		--swagger_out=allow_delete_body=true,json_names_for_fields=true,allow_merge=true,merge_file_name=core,fqn_for_swagger_name=true:. \
 		$(PROTO_SOURCES)
 	@echo "done building swagger"

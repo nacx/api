@@ -5,6 +5,7 @@ option go_package = "github.com/tetrateio/tetrate/api/tcc/core/v1";
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
+import "validate/validate.proto";
 import "routing_info.proto";
 
 service PhysicalResourceModel {
@@ -147,11 +148,11 @@ service PhysicalResourceModel {
 
 message Cluster {
   string name = 1;
-  string tenant = 2;
-  string environment = 3;
-  string id = 4;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  string id = 4 [(validate.rules).string.min_len = 1];
   string description = 5;
-  Registry registry = 6;
+  Registry registry = 6 [(validate.rules).enum.defined_only = true];
 
   // Information like datacenter where the cluster is present
   string country = 7;
@@ -164,22 +165,22 @@ message CreateClusterRequest {
   string parent = 1;
   // if present, this will be used as the id for the created object
   string id = 2;
-  string tenant = 3;
-  string environment = 4;
-  Cluster cluster = 5;
+  string tenant = 3 [(validate.rules).string.min_len = 1];
+  string environment = 4 [(validate.rules).string.min_len = 1];
+  Cluster cluster = 5 [(validate.rules).message.required = true];
 }
 
 message GetClusterRequest {
   string name = 1;
-  string tenant = 2;
-  string environment = 3;
-  string id = 4;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  string id = 4 [(validate.rules).string.min_len = 1];
 }
 
 message ListClustersRequest {
   string parent = 1;
-  string tenant = 2;
-  string environment = 3;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
 }
 
 message ListClustersResponse {
@@ -188,19 +189,19 @@ message ListClustersResponse {
 
 message DeleteClusterRequest {
   string name = 1;
-  string tenant = 2;
-  string environment = 3;
-  string id = 4;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  string id = 4 [(validate.rules).string.min_len = 1];
 }
 
 message Namespace {
   string name = 1;
-  string tenant = 2;
-  string environment = 3;
-  string cluster = 4;
-  string id = 5;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  string cluster = 4 [(validate.rules).string.min_len = 1];
+  string id = 5 [(validate.rules).string.min_len = 1];
   string description = 6;
-  string etag = 7;
+  string etag = 7 [(validate.rules).string.min_len = 1];
   map<string, string> labels = 8;
 }
 
@@ -208,25 +209,25 @@ message CreateNamespaceRequest {
   string parent = 1;
   // if present, this will be used as the id for the created object
   string id = 2;
-  string tenant = 3;
-  string environment = 4;
-  string cluster = 5;
-  Namespace namespace = 6;
+  string tenant = 3 [(validate.rules).string.min_len = 1];
+  string environment = 4 [(validate.rules).string.min_len = 1];
+  string cluster = 5 [(validate.rules).string.min_len = 1];
+  Namespace namespace = 6 [(validate.rules).message.required = true];
 }
 
 message GetNamespaceRequest {
   string name = 1;
-  string tenant = 2;
-  string environment = 3;
-  string cluster = 4;
-  string id = 5;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  string cluster = 4 [(validate.rules).string.min_len = 1];
+  string id = 5 [(validate.rules).string.min_len = 1];
 }
 
 message ListNamespacesRequest {
   string parent = 1;
-  string tenant = 2;
-  string environment = 3;
-  string cluster = 4;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  string cluster = 4 [(validate.rules).string.min_len = 1];
 }
 
 message ListNamespacesResponse {
@@ -235,22 +236,22 @@ message ListNamespacesResponse {
 
 message DeleteNamespaceRequest {
   string name = 1;
-  string tenant = 2;
-  string environment = 3;
-  string cluster = 4;
-  string id = 5;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  string cluster = 4 [(validate.rules).string.min_len = 1];
+  string id = 5 [(validate.rules).string.min_len = 1];
 }
 
 message Deployment {
   string name = 1;
-  string tenant = 2;
-  string environment = 3;
-  string cluster = 4;
-  string namespace = 5;
-  string id = 6;
-  string hostname = 7;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  string cluster = 4 [(validate.rules).string.min_len = 1];
+  string namespace = 5 [(validate.rules).string.min_len = 1];
+  string id = 6 [(validate.rules).string.min_len = 1];
+  string hostname = 7 [(validate.rules).string.min_len = 1];
   map<string, string> labels = 8;
-  repeated Port ports = 9;
+  repeated Port ports = 9 [(validate.rules).repeated.min_items = 1];
   // information specific to F5 load balancers if deployment refers to F5
   string lb_management_ip = 10;
 }
@@ -259,28 +260,28 @@ message CreateDeploymentRequest {
   string parent = 1;
   // if present, this will be used as the id for the created object
   string id = 2;
-  string tenant = 3;
-  string environment = 4;
-  string cluster = 5;
-  string namespace = 6;
-  Deployment deployment = 7;
+  string tenant = 3 [(validate.rules).string.min_len = 1];
+  string environment = 4 [(validate.rules).string.min_len = 1];
+  string cluster = 5 [(validate.rules).string.min_len = 1];
+  string namespace = 6 [(validate.rules).string.min_len = 1];
+  Deployment deployment = 7 [(validate.rules).message.required = true];
 }
 
 message GetDeploymentRequest {
   string name = 1;
-  string tenant = 2;
-  string environment = 3;
-  string cluster = 4;
-  string namespace = 5;
-  string id = 6;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  string cluster = 4 [(validate.rules).string.min_len = 1];
+  string namespace = 5 [(validate.rules).string.min_len = 1];
+  string id = 6 [(validate.rules).string.min_len = 1];
 }
 
 message ListDeploymentsRequest {
   string parent = 1;
-  string tenant = 2;
-  string environment = 3;
-  string cluster = 4;
-  string namespace = 5;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  string cluster = 4 [(validate.rules).string.min_len = 1];
+  string namespace = 5 [(validate.rules).string.min_len = 1];
 }
 
 message ListDeploymentsResponse {
@@ -289,33 +290,33 @@ message ListDeploymentsResponse {
 
 message DeleteDeploymentRequest {
   string name = 1;
-  string tenant = 2;
-  string environment = 3;
-  string cluster = 4;
-  string namespace = 5;
-  string id = 6;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  string cluster = 4 [(validate.rules).string.min_len = 1];
+  string namespace = 5 [(validate.rules).string.min_len = 1];
+  string id = 6 [(validate.rules).string.min_len = 1];
 }
 
 // Endpoint defines a network address (IP or hostname) associated with
 // the service.
 message Endpoint {
   string name = 1;
-  string tenant = 2;
-  string environment = 3;
-  string cluster = 4;
-  string namespace = 5;
-  string deployment = 6;
-  string id = 7;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  string cluster = 4 [(validate.rules).string.min_len = 1];
+  string namespace = 5 [(validate.rules).string.min_len = 1];
+  string deployment = 6 [(validate.rules).string.min_len = 1];
+  string id = 7 [(validate.rules).string.min_len = 1];
 
   // Address associated with the network endpoint without the port.
   // Domain names can be used and must be fully-qualified without
   // wildcards.
-  string address = 8;
+  string address = 8 [(validate.rules).string.min_len = 1];
 
   // Set of inbound traffic ports associated with the endpoint. The
   // ports must be associated with a port number that was declared
   // as part of the service.
-  map<uint32, uint32> ports = 9;
+  map<uint32, uint32> ports = 9 [(validate.rules).map.min_pairs = 1];
 
   // One or more labels associated with the endpoint.
   map<string, string> labels = 10;
@@ -335,31 +336,31 @@ message CreateEndpointRequest {
   string parent = 1;
   // if present, this will be used as the id for the created object
   string id = 2;
-  string tenant = 3;
-  string environment = 4;
-  string cluster = 5;
-  string namespace = 6;
-  string deployment = 7;
-  Endpoint endpoint = 8;
+  string tenant = 3 [(validate.rules).string.min_len = 1];
+  string environment = 4 [(validate.rules).string.min_len = 1];
+  string cluster = 5 [(validate.rules).string.min_len = 1];
+  string namespace = 6 [(validate.rules).string.min_len = 1];
+  string deployment = 7 [(validate.rules).string.min_len = 1];
+  Endpoint endpoint = 8 [(validate.rules).message.required = true];
 }
 
 message GetEndpointRequest {
   string name = 1;
-  string tenant = 2;
-  string environment = 3;
-  string cluster = 4;
-  string namespace = 5;
-  string deployment = 6;
-  string id = 7;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  string cluster = 4 [(validate.rules).string.min_len = 1];
+  string namespace = 5 [(validate.rules).string.min_len = 1];
+  string deployment = 6 [(validate.rules).string.min_len = 1];
+  string id = 7 [(validate.rules).string.min_len = 1];
 }
 
 message ListEndpointsRequest {
   string parent = 1;
-  string tenant = 2;
-  string environment = 3;
-  string cluster = 4;
-  string namespace = 5;
-  string deployment = 6;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  string cluster = 4 [(validate.rules).string.min_len = 1];
+  string namespace = 5 [(validate.rules).string.min_len = 1];
+  string deployment = 6 [(validate.rules).string.min_len = 1];
 }
 
 message ListEndpointsResponse {
@@ -368,33 +369,33 @@ message ListEndpointsResponse {
 
 message DeleteEndpointRequest {
   string name = 1;
-  string tenant = 2;
-  string environment = 3;
-  string cluster = 4;
-  string namespace = 5;
-  string deployment = 6;
-  string id = 7;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  string cluster = 4 [(validate.rules).string.min_len = 1];
+  string namespace = 5 [(validate.rules).string.min_len = 1];
+  string deployment = 6 [(validate.rules).string.min_len = 1];
+  string id = 7 [(validate.rules).string.min_len = 1];
 }
 
 // Cluster, Namespaces, deployments, and endpoints in this request will replace the existing contents of a cluster
 message BulkLoadClusterRequest {
   string parent = 1;
-  string tenant = 2;
-  string environment = 3;
-  repeated ClusterWithNamespaces clusters = 4;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  repeated ClusterWithNamespaces clusters = 4 [(validate.rules).repeated.min_items = 1];
 
   message ClusterWithNamespaces {
-    Cluster cluster = 1;
+    Cluster cluster = 1 [(validate.rules).message.required = true];
     repeated NamespaceWithDeployments namespaces = 2;
   };
 
   message NamespaceWithDeployments {
-    Namespace namespace = 1;
+    Namespace namespace = 1 [(validate.rules).message.required = true];
     repeated DeploymentWithEndpoints deployments = 2;
   };
 
   message DeploymentWithEndpoints {
-    Deployment deployment = 1;
+    Deployment deployment = 1 [(validate.rules).message.required = true];
     repeated Endpoint endpoints = 2;
   };
 }

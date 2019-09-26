@@ -5,6 +5,7 @@ option go_package = "github.com/tetrateio/tetrate/api/tcc/workflows/loadbalancer
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
+import "validate/validate.proto";
 import "tcc/core/v1/tlssettings.proto";
 
 //    service owner   |  network admin
@@ -82,10 +83,10 @@ service LoadBalancerWorkflow {
 
 message CreateTicketRequest {
   string parent = 1;
-  string tenant = 2;
-  string environment = 3;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
   string id = 4;
-  string application = 5;
+  string application = 5 [(validate.rules).string.min_len = 1];
 }
 
 enum Action {
@@ -95,18 +96,18 @@ enum Action {
 
 message GetTicketStatusRequest {
   string name = 1;
-  string tenant = 2;
-  string environment = 3;
-  string loadbalancer = 4;
-  string id = 5;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  string loadbalancer = 4 [(validate.rules).string.min_len = 1];
+  string id = 5 [(validate.rules).string.min_len = 1];
 }
 
 message CancelTicketRequest {
   string name = 1;
-  string tenant = 2;
-  string environment = 3;
-  string loadbalancer = 4;
-  string id = 5;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  string loadbalancer = 4 [(validate.rules).string.min_len = 1];
+  string id = 5 [(validate.rules).string.min_len = 1];
 }
 
 message TicketStatus {
@@ -131,9 +132,9 @@ message TicketStatus {
 
 message ListTicketsRequest {
   string parent = 1;
-  string tenant = 2;
-  string environment = 3;
-  string loadbalancer = 4;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  string loadbalancer = 4 [(validate.rules).string.min_len = 1];
 }
 
 message ListTicketsResponse {
@@ -142,10 +143,10 @@ message ListTicketsResponse {
 
 message ResolveTicketRequest {
   string name = 1;
-  string tenant = 2;
-  string environment = 3;
-  string loadbalancer = 4;
-  string id = 5;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  string loadbalancer = 4 [(validate.rules).string.min_len = 1];
+  string id = 5 [(validate.rules).string.min_len = 1];
 
   // optional description (e.g. to be recorded in audit logs)
   string note = 6;
@@ -153,10 +154,10 @@ message ResolveTicketRequest {
 
 message PublishTicketRequest {
   string name = 1;
-  string tenant = 2;
-  string environment = 3;
-  string loadbalancer = 4;
-  string id = 5;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  string loadbalancer = 4 [(validate.rules).string.min_len = 1];
+  string id = 5 [(validate.rules).string.min_len = 1];
 
-  tetrate.api.tcc.core.v1.TLSSettings tls = 6;
+  tetrate.api.tcc.core.v1.TLSSettings tls = 6  [(validate.rules).message.required = true];
 }

@@ -4,6 +4,7 @@ package tetrate.api.tcc.core.v1;
 option go_package = "github.com/tetrateio/tetrate/api/tcc/core/v1";
 
 import "google/api/annotations.proto";
+import "validate/validate.proto";
 
 // API that returns all istio/f5 configs for a VM or k8s cluster.  The
 // sync agent running next to a VM galley or k8s galley or f5 BIGIP
@@ -23,13 +24,14 @@ service ConfigProducer {
 
 message ConfigDownloadRequest {
   // currently accepted values are istio or f5
-  string configtype = 1;
-  // A unique identifier for the k8s cluster or VM cluster
+  string configtype = 1 [(validate.rules).string = {in: ["istio", "f5"]}];
+
+// A unique identifier for the k8s cluster or VM cluster
   // Typically we have multiple k8s clusters and one big giant VM cluster
   // in a DC.
-  string cluster = 2;
-  string environment = 3;
-  string tenant = 4;
+  string cluster = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  string tenant = 4 [(validate.rules).string.min_len = 1];
 }
 
 message ConfigData {
