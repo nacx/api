@@ -1,0 +1,99 @@
+// Copyright (c) Tetrate, Inc 2018 All Rights Reserved.
+syntax = "proto3";
+
+package tetrate.api.inventory.v1;
+option go_package = "github.com/tetrateio/tetrate/api/inventory/v1;invv1";
+
+import "google/api/annotations.proto";
+import "team.proto";
+
+// The Onboarding Service provides access to onboarding features.
+// It fetches the team information from a cloud account (users, groups,
+// service accounts, etc) and the existing permissions such as roles, bindings
+// between roles, resources, and principals, etc.
+service OnboardingService {
+  // Gets the groups in the given cloud account
+  rpc ListCloudGroups(ListCloudGroupsRequest) returns (ListGroupsResponse) {
+    option (google.api.http).get = "/v1/onboarding/{cloud.account}/groups";
+  };
+
+  // Gets the users in the given cloud account
+  rpc ListCloudUsers(ListCloudUsersRequest) returns (ListUsersResponse) {
+    option (google.api.http).get = "/v1/onboarding/{cloud.account}/users";
+  };
+
+  // Gets the roles in the given cloud account
+  rpc ListCloudRoles(ListCloudRolesRequest) returns (ListRolesResponse) {
+    option (google.api.http).get = "/v1/onboarding/{cloud.account}/roles";
+  };
+
+  // Returns all bindings for the given resource in the given cloud account
+  rpc ListCloudRoleBindings(ListCloudRoleBindingsRequest) returns (ListRoleBindingsResponse) {
+    option (google.api.http).get = "/v1/onboarding/{cloud.account}/bindings/{name}";
+  };
+
+  // Imports the given groups to the inventory service. Groups are imported recursively
+  // so for every group passed as an argument, all its child group tree will be imported
+  // as well.
+  // Note this method will only import groups, not the users.
+  rpc ImportGroups(ImportGroupsRequest) returns (ImportGroupsResponse) {
+    option (google.api.http).post = "/v1/onboarding/{cloud.account}/groups";
+  };
+
+  // Imports the given users to the inventory service, and assigns them to the existing groups.
+  rpc ImportUsers(ImportUsersRequest) returns (ImportUsersResponse) {
+    option (google.api.http) = {
+      post: "/v1/onboarding/{cloud.account}/users"
+      body: "*"
+    };
+  };
+}
+
+// Reference to a cloud account to be used in an onboarding request
+message CloudRequest {
+  // Identifier of the cloud account to connect to
+  string account = 1;
+}
+
+// Requests all existing users in the given cloud account
+message ListCloudUsersRequest {
+  CloudRequest cloud = 1;
+}
+
+// Requests all existing groups in the given cloud account
+message ListCloudGroupsRequest {
+  CloudRequest cloud = 1;
+}
+
+// Requests all existing roles in the given cloud account
+message ListCloudRolesRequest {
+  CloudRequest cloud = 1;
+}
+
+// Requests all existing roles in the given cloud account
+message ListCloudRoleBindingsRequest {
+  CloudRequest cloud = 1;
+  // Identifier of the resource to get the bindings for
+  string name = 2;
+}
+
+// Imports the given groups (and their child groups) from the given cloud account
+message ImportGroupsRequest {
+  CloudRequest cloud = 1;
+}
+
+message ImportGroupsResponse {
+  // The imported groups
+  repeated Group groups = 1;
+}
+
+// Imports the given users from the given cloud account
+message ImportUsersRequest {
+  CloudRequest cloud = 1;
+  repeated string names = 2;
+}
+
+message ImportUsersResponse {
+  // The imported users
+  repeated User users = 1;
+}

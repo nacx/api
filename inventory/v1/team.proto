@@ -7,37 +7,30 @@ option go_package = "github.com/tetrateio/tetrate/api/inventory/v1;invv1";
 import "google/api/annotations.proto";
 
 
-// Tetrate Team Service
+// The Team Service provides access to team management features
 service TeamService {
-  // Not all users may belong to a group, so they have to be retrieved separately
-  // and correlated afterwards.
-
-  // Gets the existing groups in the target cloud provider
+  // Lists all groups in the team catalog
   rpc ListGroups(ListGroupsRequest) returns (ListGroupsResponse) {
     option (google.api.http).get = "/v1/groups";
   };
   
-  
-  // Gets the existing users in hte target cloud provider
+  // Lists all usres in the team catalog
   rpc ListUsers(ListUsersRequest) returns (ListUsersResponse) {
     option (google.api.http).get = "/v1/users";
   };
 
-  // Get the roles and their bindings
-  // Roles can be global or scoped to certaing groups/IAM entities.
+  // Lists all existing roles and their permissions in the team catalog
   rpc ListRoles(ListRolesRequest) returns (ListRolesResponse) {
     option (google.api.http).get = "/v1/roles";
   };
 
-  // Returns all bindings for the given resource
+  // Lists all existing bindings betwrrn a role a resource, and a group or user.
   rpc ListRoleBindings(ListRoleBindingsRequest) returns (ListRoleBindingsResponse) {
     option (google.api.http).get = "/v1/bindings/{name}";
   };
 }
 
-// User represents a cloud principal
-// TODO: Are we going to support here just user accounts, or do we want to support
-// other types such as service accounts, applications or other "cloud consumers" ?
+// A cloud principal. It can be a human user or a service account.
 message User {
   // Unique Identifier of the user across clouds
   string name = 1;
@@ -61,7 +54,7 @@ message User {
   string email = 5;
 }
 
-// Group represents a logical grouping of entities in a hierarchy.
+// A group represents a logical grouping of entities in a hierarchy.
 // Groups can contain users or other groups. Each group has a parent
 // except th root group.
 message Group {
@@ -78,7 +71,7 @@ message Group {
   repeated ResourceRef users = 5;
 }
 
-// Role is a grouping of permissions that can be assigned to groups and users
+// A Role is a grouping of permissions that can be assigned to groups and users
 message Role {
   // Unique Identifier of the role across clouds
   string name = 1;
@@ -90,7 +83,7 @@ message Role {
   repeated string permissions = 3;
 }
 
-// RoleBinding represents a grant of permissions to a user on certain resources
+// A RoleBinding represents a grant of permissions to a user on certain resources
 message RoleBinding {
   // Represents the resource where the role permissions are applied
   // to the target entity
@@ -104,7 +97,7 @@ message RoleBinding {
   repeated ResourceRef principals = 3;
 }
 
-// ResourceRef represents a reference to a cloud resource
+// A ResourceRef represents a reference to a cloud resource
 message ResourceRef {
   // Unique Identifier of the resource across clouds
   string name = 1;
@@ -116,40 +109,40 @@ message ResourceRef {
   string type = 3;
 }
 
-// ListGroupsRequest requests all existing groups
+// Requests all existing groups
 message ListGroupsRequest { }
 
-// ListGroupsResponse represents a response to the list groups service call
+// Represents a response to the list groups service call
 message ListGroupsResponse {
   // The list of groups
   repeated Group groups = 1;
 }
 
-// istUsersRequest requests all existing users
+// Requests all existing users
 message ListUsersRequest { }
 
-// ListUsersResponse represents a response to the list users service call
+// Represents a response to the list users service call
 message ListUsersResponse {
   // The list of users
   repeated User users = 1;
 }
 
-// ListRolesRequest requests all existing roles
+// Requests all existing roles
 message ListRolesRequest { }
 
-// ListRolesResponse represents a response to the list roles service call
+// Represents a response to the list roles service call
 message ListRolesResponse {
   // The list of existing roles
   repeated Role roles = 1;
 }
 
-// ListRoleBindingsRequest requests all existing role bindings for hte given role across all resources
+// Requests all existing role bindings for hte given role across all resources
 message ListRoleBindingsRequest {
   // Identifier of the resource to get the bindings for
   string name = 1;
 }
 
-// ListRoleBindingsResponse represents a response to the list role bindings service call
+// Represents a response to the list role bindings service call
 message ListRoleBindingsResponse {
   // Existing bindings for the requested resource
   repeated RoleBinding bindings = 1;

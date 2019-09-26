@@ -47,12 +47,10 @@ func (x User_Kind) String() string {
 	return proto.EnumName(User_Kind_name, int32(x))
 }
 func (User_Kind) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_team_2d23e113089f8392, []int{0, 0}
+	return fileDescriptor_team_ba8ca3e5e2732858, []int{0, 0}
 }
 
-// User represents a cloud principal
-// TODO: Are we going to support here just user accounts, or do we want to support
-// other types such as service accounts, applications or other "cloud consumers" ?
+// A cloud principal. It can be a human user or a service account.
 type User struct {
 	// Unique Identifier of the user across clouds
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
@@ -72,7 +70,7 @@ func (m *User) Reset()         { *m = User{} }
 func (m *User) String() string { return proto.CompactTextString(m) }
 func (*User) ProtoMessage()    {}
 func (*User) Descriptor() ([]byte, []int) {
-	return fileDescriptor_team_2d23e113089f8392, []int{0}
+	return fileDescriptor_team_ba8ca3e5e2732858, []int{0}
 }
 func (m *User) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_User.Unmarshal(m, b)
@@ -127,7 +125,7 @@ func (m *User) GetEmail() string {
 	return ""
 }
 
-// Group represents a logical grouping of entities in a hierarchy.
+// A group represents a logical grouping of entities in a hierarchy.
 // Groups can contain users or other groups. Each group has a parent
 // except th root group.
 type Group struct {
@@ -148,7 +146,7 @@ func (m *Group) Reset()         { *m = Group{} }
 func (m *Group) String() string { return proto.CompactTextString(m) }
 func (*Group) ProtoMessage()    {}
 func (*Group) Descriptor() ([]byte, []int) {
-	return fileDescriptor_team_2d23e113089f8392, []int{1}
+	return fileDescriptor_team_ba8ca3e5e2732858, []int{1}
 }
 func (m *Group) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Group.Unmarshal(m, b)
@@ -196,7 +194,7 @@ func (m *Group) GetUsers() []*ResourceRef {
 	return nil
 }
 
-// Role is a grouping of permissions that can be assigned to groups and users
+// A Role is a grouping of permissions that can be assigned to groups and users
 type Role struct {
 	// Unique Identifier of the role across clouds
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
@@ -213,7 +211,7 @@ func (m *Role) Reset()         { *m = Role{} }
 func (m *Role) String() string { return proto.CompactTextString(m) }
 func (*Role) ProtoMessage()    {}
 func (*Role) Descriptor() ([]byte, []int) {
-	return fileDescriptor_team_2d23e113089f8392, []int{2}
+	return fileDescriptor_team_ba8ca3e5e2732858, []int{2}
 }
 func (m *Role) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Role.Unmarshal(m, b)
@@ -254,7 +252,7 @@ func (m *Role) GetPermissions() []string {
 	return nil
 }
 
-// RoleBinding represents a grant of permissions to a user on certain resources
+// A RoleBinding represents a grant of permissions to a user on certain resources
 type RoleBinding struct {
 	// Represents the resource where the role permissions are applied
 	// to the target entity
@@ -273,7 +271,7 @@ func (m *RoleBinding) Reset()         { *m = RoleBinding{} }
 func (m *RoleBinding) String() string { return proto.CompactTextString(m) }
 func (*RoleBinding) ProtoMessage()    {}
 func (*RoleBinding) Descriptor() ([]byte, []int) {
-	return fileDescriptor_team_2d23e113089f8392, []int{3}
+	return fileDescriptor_team_ba8ca3e5e2732858, []int{3}
 }
 func (m *RoleBinding) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_RoleBinding.Unmarshal(m, b)
@@ -314,7 +312,7 @@ func (m *RoleBinding) GetPrincipals() []*ResourceRef {
 	return nil
 }
 
-// ResourceRef represents a reference to a cloud resource
+// A ResourceRef represents a reference to a cloud resource
 type ResourceRef struct {
 	// Unique Identifier of the resource across clouds
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
@@ -331,7 +329,7 @@ func (m *ResourceRef) Reset()         { *m = ResourceRef{} }
 func (m *ResourceRef) String() string { return proto.CompactTextString(m) }
 func (*ResourceRef) ProtoMessage()    {}
 func (*ResourceRef) Descriptor() ([]byte, []int) {
-	return fileDescriptor_team_2d23e113089f8392, []int{4}
+	return fileDescriptor_team_ba8ca3e5e2732858, []int{4}
 }
 func (m *ResourceRef) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ResourceRef.Unmarshal(m, b)
@@ -372,7 +370,7 @@ func (m *ResourceRef) GetType() string {
 	return ""
 }
 
-// ListGroupsRequest requests all existing groups
+// Requests all existing groups
 type ListGroupsRequest struct {
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -383,7 +381,7 @@ func (m *ListGroupsRequest) Reset()         { *m = ListGroupsRequest{} }
 func (m *ListGroupsRequest) String() string { return proto.CompactTextString(m) }
 func (*ListGroupsRequest) ProtoMessage()    {}
 func (*ListGroupsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_team_2d23e113089f8392, []int{5}
+	return fileDescriptor_team_ba8ca3e5e2732858, []int{5}
 }
 func (m *ListGroupsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListGroupsRequest.Unmarshal(m, b)
@@ -403,7 +401,7 @@ func (m *ListGroupsRequest) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_ListGroupsRequest proto.InternalMessageInfo
 
-// ListGroupsResponse represents a response to the list groups service call
+// Represents a response to the list groups service call
 type ListGroupsResponse struct {
 	// The list of groups
 	Groups               []*Group `protobuf:"bytes,1,rep,name=groups,proto3" json:"groups,omitempty"`
@@ -416,7 +414,7 @@ func (m *ListGroupsResponse) Reset()         { *m = ListGroupsResponse{} }
 func (m *ListGroupsResponse) String() string { return proto.CompactTextString(m) }
 func (*ListGroupsResponse) ProtoMessage()    {}
 func (*ListGroupsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_team_2d23e113089f8392, []int{6}
+	return fileDescriptor_team_ba8ca3e5e2732858, []int{6}
 }
 func (m *ListGroupsResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListGroupsResponse.Unmarshal(m, b)
@@ -443,7 +441,7 @@ func (m *ListGroupsResponse) GetGroups() []*Group {
 	return nil
 }
 
-// istUsersRequest requests all existing users
+// Requests all existing users
 type ListUsersRequest struct {
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -454,7 +452,7 @@ func (m *ListUsersRequest) Reset()         { *m = ListUsersRequest{} }
 func (m *ListUsersRequest) String() string { return proto.CompactTextString(m) }
 func (*ListUsersRequest) ProtoMessage()    {}
 func (*ListUsersRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_team_2d23e113089f8392, []int{7}
+	return fileDescriptor_team_ba8ca3e5e2732858, []int{7}
 }
 func (m *ListUsersRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListUsersRequest.Unmarshal(m, b)
@@ -474,7 +472,7 @@ func (m *ListUsersRequest) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_ListUsersRequest proto.InternalMessageInfo
 
-// ListUsersResponse represents a response to the list users service call
+// Represents a response to the list users service call
 type ListUsersResponse struct {
 	// The list of users
 	Users                []*User  `protobuf:"bytes,1,rep,name=users,proto3" json:"users,omitempty"`
@@ -487,7 +485,7 @@ func (m *ListUsersResponse) Reset()         { *m = ListUsersResponse{} }
 func (m *ListUsersResponse) String() string { return proto.CompactTextString(m) }
 func (*ListUsersResponse) ProtoMessage()    {}
 func (*ListUsersResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_team_2d23e113089f8392, []int{8}
+	return fileDescriptor_team_ba8ca3e5e2732858, []int{8}
 }
 func (m *ListUsersResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListUsersResponse.Unmarshal(m, b)
@@ -514,7 +512,7 @@ func (m *ListUsersResponse) GetUsers() []*User {
 	return nil
 }
 
-// ListRolesRequest requests all existing roles
+// Requests all existing roles
 type ListRolesRequest struct {
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -525,7 +523,7 @@ func (m *ListRolesRequest) Reset()         { *m = ListRolesRequest{} }
 func (m *ListRolesRequest) String() string { return proto.CompactTextString(m) }
 func (*ListRolesRequest) ProtoMessage()    {}
 func (*ListRolesRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_team_2d23e113089f8392, []int{9}
+	return fileDescriptor_team_ba8ca3e5e2732858, []int{9}
 }
 func (m *ListRolesRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListRolesRequest.Unmarshal(m, b)
@@ -545,7 +543,7 @@ func (m *ListRolesRequest) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_ListRolesRequest proto.InternalMessageInfo
 
-// ListRolesResponse represents a response to the list roles service call
+// Represents a response to the list roles service call
 type ListRolesResponse struct {
 	// The list of existing roles
 	Roles                []*Role  `protobuf:"bytes,1,rep,name=roles,proto3" json:"roles,omitempty"`
@@ -558,7 +556,7 @@ func (m *ListRolesResponse) Reset()         { *m = ListRolesResponse{} }
 func (m *ListRolesResponse) String() string { return proto.CompactTextString(m) }
 func (*ListRolesResponse) ProtoMessage()    {}
 func (*ListRolesResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_team_2d23e113089f8392, []int{10}
+	return fileDescriptor_team_ba8ca3e5e2732858, []int{10}
 }
 func (m *ListRolesResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListRolesResponse.Unmarshal(m, b)
@@ -585,7 +583,7 @@ func (m *ListRolesResponse) GetRoles() []*Role {
 	return nil
 }
 
-// ListRoleBindingsRequest requests all existing role bindings for hte given role across all resources
+// Requests all existing role bindings for hte given role across all resources
 type ListRoleBindingsRequest struct {
 	// Identifier of the resource to get the bindings for
 	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
@@ -598,7 +596,7 @@ func (m *ListRoleBindingsRequest) Reset()         { *m = ListRoleBindingsRequest
 func (m *ListRoleBindingsRequest) String() string { return proto.CompactTextString(m) }
 func (*ListRoleBindingsRequest) ProtoMessage()    {}
 func (*ListRoleBindingsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_team_2d23e113089f8392, []int{11}
+	return fileDescriptor_team_ba8ca3e5e2732858, []int{11}
 }
 func (m *ListRoleBindingsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListRoleBindingsRequest.Unmarshal(m, b)
@@ -625,7 +623,7 @@ func (m *ListRoleBindingsRequest) GetName() string {
 	return ""
 }
 
-// ListRoleBindingsResponse represents a response to the list role bindings service call
+// Represents a response to the list role bindings service call
 type ListRoleBindingsResponse struct {
 	// Existing bindings for the requested resource
 	Bindings             []*RoleBinding `protobuf:"bytes,1,rep,name=bindings,proto3" json:"bindings,omitempty"`
@@ -638,7 +636,7 @@ func (m *ListRoleBindingsResponse) Reset()         { *m = ListRoleBindingsRespon
 func (m *ListRoleBindingsResponse) String() string { return proto.CompactTextString(m) }
 func (*ListRoleBindingsResponse) ProtoMessage()    {}
 func (*ListRoleBindingsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_team_2d23e113089f8392, []int{12}
+	return fileDescriptor_team_ba8ca3e5e2732858, []int{12}
 }
 func (m *ListRoleBindingsResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListRoleBindingsResponse.Unmarshal(m, b)
@@ -694,14 +692,13 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type TeamServiceClient interface {
-	// Gets the existing groups in the target cloud provider
+	// Lists all groups in the team catalog
 	ListGroups(ctx context.Context, in *ListGroupsRequest, opts ...grpc.CallOption) (*ListGroupsResponse, error)
-	// Gets the existing users in hte target cloud provider
+	// Lists all usres in the team catalog
 	ListUsers(ctx context.Context, in *ListUsersRequest, opts ...grpc.CallOption) (*ListUsersResponse, error)
-	// Get the roles and their bindings
-	// Roles can be global or scoped to certaing groups/IAM entities.
+	// Lists all existing roles and their permissions in the team catalog
 	ListRoles(ctx context.Context, in *ListRolesRequest, opts ...grpc.CallOption) (*ListRolesResponse, error)
-	// Returns all bindings for the given resource
+	// Lists all existing bindings betwrrn a role a resource, and a group or user.
 	ListRoleBindings(ctx context.Context, in *ListRoleBindingsRequest, opts ...grpc.CallOption) (*ListRoleBindingsResponse, error)
 }
 
@@ -751,14 +748,13 @@ func (c *teamServiceClient) ListRoleBindings(ctx context.Context, in *ListRoleBi
 
 // TeamServiceServer is the server API for TeamService service.
 type TeamServiceServer interface {
-	// Gets the existing groups in the target cloud provider
+	// Lists all groups in the team catalog
 	ListGroups(context.Context, *ListGroupsRequest) (*ListGroupsResponse, error)
-	// Gets the existing users in hte target cloud provider
+	// Lists all usres in the team catalog
 	ListUsers(context.Context, *ListUsersRequest) (*ListUsersResponse, error)
-	// Get the roles and their bindings
-	// Roles can be global or scoped to certaing groups/IAM entities.
+	// Lists all existing roles and their permissions in the team catalog
 	ListRoles(context.Context, *ListRolesRequest) (*ListRolesResponse, error)
-	// Returns all bindings for the given resource
+	// Lists all existing bindings betwrrn a role a resource, and a group or user.
 	ListRoleBindings(context.Context, *ListRoleBindingsRequest) (*ListRoleBindingsResponse, error)
 }
 
@@ -863,9 +859,9 @@ var _TeamService_serviceDesc = grpc.ServiceDesc{
 	Metadata: "team.proto",
 }
 
-func init() { proto.RegisterFile("team.proto", fileDescriptor_team_2d23e113089f8392) }
+func init() { proto.RegisterFile("team.proto", fileDescriptor_team_ba8ca3e5e2732858) }
 
-var fileDescriptor_team_2d23e113089f8392 = []byte{
+var fileDescriptor_team_ba8ca3e5e2732858 = []byte{
 	// 669 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x55, 0xff, 0x4e, 0x13, 0x4b,
 	0x14, 0xbe, 0x0b, 0x5b, 0x2e, 0x3d, 0x4b, 0x08, 0x1c, 0xee, 0x8d, 0x9b, 0x6a, 0xb4, 0xae, 0x92,

@@ -13,6 +13,14 @@ service InventoryService {
   rpc ListServices(ListServicesRequest) returns (ListServicesResponse) {
     option (google.api.http).get = "/v1/services";
   };
+
+  // ImpoBindServicertUsers binds a service to a given policy
+  rpc BindService(BindServicesRequest) returns (BindServicesResponse) {
+    option (google.api.http) = {
+      post: "/v1/services/{service}/{binding}"
+      body: "*"
+    };
+  };
 }
 
 // Tetrate service definition that uniquely identifies services
@@ -152,3 +160,14 @@ message PortSpec {
   // Container port that services this request
   int32 container_port = 5;
 }
+
+// BindServicesRequest is a request to bind a service to a given policy
+message BindServicesRequest {
+  // The service to bind
+  string service = 1;
+  // The name of the policy to bind the service to
+  string binding = 2;
+}
+
+// ListServicesResponse is a collection of Tetrate-discovered services
+message BindServicesResponse { }
