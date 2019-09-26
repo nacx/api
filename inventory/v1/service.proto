@@ -3,7 +3,7 @@
 syntax = "proto3";
 
 package tetrate.api.inventory.v1;
-option go_package = "github.com/tetatrateio/tetrate/api/inventory/v1;invv1";
+option go_package = "github.com/tetrateio/tetrate/api/inventory/v1;invv1";
 
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
