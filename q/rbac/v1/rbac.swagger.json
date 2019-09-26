@@ -1,9 +1,15 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "rbac.proto",
-    "version": "version not set"
+    "title": "Q RBAC API",
+    "version": "v1",
+    "contact": {
+      "name": "Tetrate.io, Inc.",
+      "url": "https://www.tetrate.io",
+      "email": "info@tetrate.io"
+    }
   },
+  "host": "TCCHOST",
   "schemes": [
     "http",
     "https"
@@ -17,13 +23,18 @@
   "paths": {
     "/v1/roles": {
       "get": {
-        "summary": "List all existing roles in the system",
         "operationId": "ListRoles",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/tetrate.api.q.rbac.v1.ListRolesResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
             }
           }
         },
@@ -32,13 +43,18 @@
         ]
       },
       "post": {
-        "summary": "Creates a Role in the system",
         "operationId": "CreateRole",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/tetrate.api.q.rbac.v1.Role"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
             }
           }
         },
@@ -59,13 +75,18 @@
     },
     "/v1/roles/{name}": {
       "get": {
-        "summary": "Get the details of teh role with the given name",
         "operationId": "GetRole",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/tetrate.api.q.rbac.v1.Role"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
             }
           }
         },
@@ -82,13 +103,18 @@
         ]
       },
       "delete": {
-        "summary": "Delete the role with the given name. Roles that are assigned to policies cannot be deleted. Policies need to be deleted first",
         "operationId": "DeleteRole",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
               "properties": {}
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
             }
           }
         },
