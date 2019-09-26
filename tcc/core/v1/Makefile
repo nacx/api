@@ -25,10 +25,7 @@ SWAGGER := core.swagger.json
 GOPATH := $(shell go env GOPATH)
 GOSRCDIR := $(GOPATH)/src
 
-.PHONY: all
-# TODO(aji): generate-ts isn't included here, because it breaks in CI.
-# To not break `make check` in CI, we need to have JVM running.
-all: $(DESCRIPTOR)
+all: $(DESCRIPTOR) $(SWAGGER) generate-ts
 	@echo "all protos done"
 
 ${DESCRIPTOR}:
@@ -37,7 +34,6 @@ ${DESCRIPTOR}:
 		-I $(VENDOR) \
 		-I $(APIS) \
 		-I $(GOSRCDIR)/github.com/envoyproxy/protoc-gen-validate \
-		--swagger_out=json_names_for_fields=true,allow_merge=true,merge_file_name=core,fqn_for_swagger_name=true:. \
 		--grpc-gateway_out=paths=source_relative:. \
 		--go_out=paths=source_relative,plugins=grpc:. \
 		--validate_out=paths=source_relative,lang=go:. \
@@ -45,14 +41,25 @@ ${DESCRIPTOR}:
 		$(PROTO_SOURCES)
 	@echo "done building protos"
 
+# Generates swagger separately since we need to go on templating mechanism to potentially
+# fill up host and base path differently between deployment.
+$(SWAGGER):
+	@echo "building protos"
+	protoc -I ./ \
+		-I $(VENDOR) \
+		-I $(APIS) \
+		--swagger_out=json_names_for_fields=true,allow_merge=true,merge_file_name=core,fqn_for_swagger_name=true:. \
+		$(PROTO_SOURCES)
+	@echo "done building swagger"
+
 clean:
 	rm -f $(PROTO_GO_SOURCES) $(DESCRIPTOR) $(PROTO_GO_VALIDATE_SOURCES) $(PROTO_GO_GW_SOURCES) $(SWAGGER)
 	@echo "cleaned ${PROTO_GO_SOURCES} $(PROTO_GO_VALIDATE_SOURCES) $(PROTO_GO_GW_SOURCES) $(SWAGGER) $(DESCRIPTOR)"
-	# TODO(aji): uncomment when generate-ts is included in `make all`.
-	# rm -f $(TS_APIS) $(TS_MODELS) $(TS_INDEX) $(TS_RUNTIME)
-	# @echo "cleaned $(TS_APIS) $(TS_MODELS) $(TS_INDEX) $(TS_RUNTIME)"
+	rm -f $(TS_APIS) $(TS_MODELS) $(TS_INDEX) $(TS_RUNTIME)
+	@echo "cleaned $(TS_APIS) $(TS_MODELS) $(TS_INDEX) $(TS_RUNTIME)"
 
-generate-ts: $(OPENAPI_GEN)
+# TODO(dio): Can we cache this? e.g. generated/ts/index.ts.
+generate-ts: $(OPENAPI_GEN) $(SWAGGER)
 	@echo "generating typescript-fetch from swagger"
 	$(OPENAPI_GEN) generate -i ${SWAGGER} -g typescript-fetch -o ${TS_OUTPUT_GEN}
 	@echo "done generating typescript files"
@@ -69,4 +76,6 @@ $(YARN): $(NPM)
 
 $(OPENAPI_GEN): $(YARN)
 	@echo installing openapi-generator
-	yarn global add @openapitools/openapi-generator-cli@0.0.9-4.0.0-beta3
+	yarn global add gen8
+
+.PHONY: all clean generate-ts

@@ -1,0 +1,42 @@
+// Copyright (c) Tetrate, Inc 2019 All Rights Reserved.
+syntax = "proto3";
+
+package tetrate.api.tcc.core.v1;
+option go_package = "github.com/tetrateio/tetrate/api/tcc/core/v1";
+import "protoc-gen-swagger/options/annotations.proto";
+
+option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
+    info: {
+		title: "TCC Core API";
+		version: "v1";
+		contact: {
+			name: "Tetrate.io, Inc.";
+			url: "https://www.tetrate.io";
+			email: "info@tetrate.io";
+        };
+    };
+
+    // TODO(dio): Seems like we need to have a templating mechanism for this proto to update host
+    // and schemes.
+    // Should be changed for PROD.
+    host: "localhost:8000";
+    // HTTP should be disabled when we release this in PROD.
+    schemes: HTTP;
+    // HTTPS-only should be enabled when we release this in PROD.
+	// schemes: HTTPS;
+    consumes: "application/json";
+    produces: "application/json";
+
+    responses: {
+		key: "404";
+		value: {
+			description: "Returned when the resource does not exist.";
+			schema: {
+				json_schema: {
+					type: STRING;
+				}
+			}
+		}
+    }
+    // TODO(dio): Add auth mechanisms annotation here.
+};

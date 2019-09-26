@@ -1,12 +1,17 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "loadbalancer.proto",
-    "version": "version not set"
+    "title": "TCC Workflows API",
+    "version": "v1",
+    "contact": {
+      "name": "Tetrate.io, Inc.",
+      "url": "https://www.tetrate.io",
+      "email": "info@tetrate.io"
+    }
   },
+  "host": "localhost:8000",
   "schemes": [
-    "http",
-    "https"
+    "http"
   ],
   "consumes": [
     "application/json"
@@ -24,6 +29,12 @@
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.Status"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
             }
           }
         },
@@ -63,6 +74,12 @@
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.Status"
             }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
           }
         },
         "parameters": [
@@ -101,6 +118,12 @@
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.ListPendingResponse"
             }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
           }
         },
         "parameters": [
@@ -131,6 +154,12 @@
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.Status"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
             }
           }
         },
@@ -169,6 +198,12 @@
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.ApproveResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
             }
           }
         },
@@ -214,6 +249,12 @@
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.CancelResponse"
             }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
           }
         },
         "parameters": [
@@ -258,6 +299,12 @@
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.DenyResponse"
             }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
           }
         },
         "parameters": [
@@ -301,6 +348,12 @@
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.Status"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
             }
           }
         },

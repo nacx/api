@@ -1,12 +1,17 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "configproducer.proto",
-    "version": "version not set"
+    "title": "TCC Core API",
+    "version": "v1",
+    "contact": {
+      "name": "Tetrate.io, Inc.",
+      "url": "https://www.tetrate.io",
+      "email": "info@tetrate.io"
+    }
   },
+  "host": "localhost:8000",
   "schemes": [
-    "http",
-    "https"
+    "http"
   ],
   "consumes": [
     "application/json"
@@ -24,6 +29,12 @@
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.ListTenantsResponse"
             }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
           }
         },
         "tags": [
@@ -39,6 +50,12 @@
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.Tenant"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
             }
           }
         },
@@ -62,6 +79,12 @@
             "schema": {
               "properties": {}
             }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
           }
         },
         "parameters": [
@@ -83,6 +106,12 @@
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.Tenant"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
             }
           }
         },
@@ -113,6 +142,12 @@
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.Tenant"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
             }
           }
         },
@@ -146,6 +181,12 @@
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.ListClustersResponse"
             }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
           }
         },
         "parameters": [
@@ -169,6 +210,12 @@
             "description": "A successful response.",
             "schema": {
               "properties": {}
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
             }
           }
         },
@@ -208,6 +255,12 @@
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.ListNamespacesResponse"
             }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
           }
         },
         "parameters": [
@@ -237,6 +290,12 @@
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.ListEndpointResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
             }
           }
         },
@@ -273,6 +332,12 @@
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.Endpoint"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
             }
           }
         },
@@ -314,6 +379,12 @@
             "schema": {
               "properties": {}
             }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
           }
         },
         "parameters": [
@@ -353,6 +424,12 @@
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.Endpoint"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
             }
           }
         },
@@ -401,6 +478,12 @@
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.Endpoint"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
             }
           }
         },
@@ -452,6 +535,12 @@
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.ListLoadBalancersResponse"
             }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
           }
         },
         "parameters": [
@@ -487,6 +576,12 @@
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.LoadBalancer"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
             }
           }
         },
@@ -528,6 +623,12 @@
             "schema": {
               "properties": {}
             }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
           }
         },
         "parameters": [
@@ -567,6 +668,12 @@
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.LoadBalancer"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
             }
           }
         },
@@ -615,6 +722,12 @@
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.LoadBalancer"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
             }
           }
         },
@@ -666,6 +779,12 @@
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.ListServiceResponse"
             }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
           }
         },
         "parameters": [
@@ -701,6 +820,12 @@
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.Service"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
             }
           }
         },
@@ -742,6 +867,12 @@
             "schema": {
               "properties": {}
             }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
           }
         },
         "parameters": [
@@ -781,6 +912,12 @@
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.Service"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
             }
           }
         },
@@ -829,6 +966,12 @@
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.Service"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
             }
           }
         },
@@ -880,6 +1023,12 @@
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.ListEndpointResponse"
             }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
           }
         },
         "parameters": [
@@ -921,6 +1070,12 @@
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.ListEndpointResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
             }
           }
         },
@@ -970,6 +1125,12 @@
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.Namespace"
             }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
           }
         },
         "parameters": [
@@ -1004,6 +1165,12 @@
             "schema": {
               "properties": {}
             }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
           }
         },
         "parameters": [
@@ -1037,6 +1204,12 @@
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.Namespace"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
             }
           }
         },
@@ -1079,6 +1252,12 @@
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.Namespace"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
             }
           }
         },
@@ -1124,6 +1303,12 @@
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.Cluster"
             }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
           }
         },
         "parameters": [
@@ -1152,6 +1337,12 @@
             "schema": {
               "properties": {}
             }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
           }
         },
         "parameters": [
@@ -1179,6 +1370,12 @@
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.Cluster"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
             }
           }
         },
@@ -1215,6 +1412,12 @@
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.Cluster"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
             }
           }
         },
@@ -1254,6 +1457,12 @@
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.ConfigData"
             }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
           }
         },
         "parameters": [
@@ -1291,6 +1500,12 @@
             "description": "A successful response.",
             "schema": {
               "properties": {}
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
             }
           }
         },
@@ -1338,6 +1553,12 @@
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.ListTeamsResponse"
             }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
           }
         },
         "parameters": [
@@ -1361,6 +1582,12 @@
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.Team"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
             }
           }
         },
@@ -1390,6 +1617,12 @@
             "schema": {
               "properties": {}
             }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
           }
         },
         "parameters": [
@@ -1417,6 +1650,12 @@
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.Team"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
             }
           }
         },
@@ -1453,6 +1692,12 @@
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.Team"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
             }
           }
         },
@@ -1492,6 +1737,12 @@
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.ListUsersResponse"
             }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
           }
         },
         "parameters": [
@@ -1521,6 +1772,12 @@
             "description": "A successful response.",
             "schema": {
               "properties": {}
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
             }
           }
         },
@@ -1560,6 +1817,12 @@
             "schema": {
               "properties": {}
             }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
           }
         },
         "parameters": [
@@ -1598,6 +1861,12 @@
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.ListUsersResponse"
             }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
           }
         },
         "parameters": [
@@ -1621,6 +1890,12 @@
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.User"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
             }
           }
         },
@@ -1650,6 +1925,12 @@
             "schema": {
               "properties": {}
             }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
           }
         },
         "parameters": [
@@ -1677,6 +1958,12 @@
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.User"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
             }
           }
         },
@@ -1713,6 +2000,12 @@
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.User"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
             }
           }
         },
@@ -1752,6 +2045,12 @@
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.ListWorkspacesResponse"
             }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
           }
         },
         "parameters": [
@@ -1775,6 +2074,12 @@
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.Workspace"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
             }
           }
         },
@@ -1804,6 +2109,12 @@
             "schema": {
               "properties": {}
             }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
           }
         },
         "parameters": [
@@ -1831,6 +2142,12 @@
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.Workspace"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
             }
           }
         },
@@ -1867,6 +2184,12 @@
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.Workspace"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
             }
           }
         },
@@ -1906,6 +2229,12 @@
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.ListApplicationsResponse"
             }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
           }
         },
         "parameters": [
@@ -1935,6 +2264,12 @@
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.ListApplicationServicesResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
             }
           }
         },
@@ -1971,6 +2306,12 @@
             "description": "A successful response.",
             "schema": {
               "properties": {}
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
             }
           }
         },
@@ -2011,6 +2352,12 @@
             "description": "A successful response.",
             "schema": {
               "properties": {}
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
             }
           }
         },
@@ -2062,6 +2409,12 @@
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.Application"
             }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
           }
         },
         "parameters": [
@@ -2096,6 +2449,12 @@
             "schema": {
               "properties": {}
             }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
           }
         },
         "parameters": [
@@ -2129,6 +2488,12 @@
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.Application"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
             }
           }
         },
@@ -2171,6 +2536,12 @@
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/tetrate.api.tcc.core.v1.Application"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
             }
           }
         },
