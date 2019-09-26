@@ -1,0 +1,193 @@
+syntax = "proto3";
+
+package tetrate.api.tcc.v1.workflows;
+option go_package = "github.com/tetrateio/tetrate/api/tcc/v1/workflows";
+
+import "google/api/annotations.proto";
+
+service LoadBalancerWorkflow {
+  //    service owner   |  network admin
+  // -------------------|-----------------
+  // REQUESTED -> PENDING_APPROVAL -> APPROVED -> PUBLISHED
+  //     V                       | -> DENIED
+  //  REJECTED                   | -> CANCEL
+
+  // namespace members of the service being requested & admins.
+  // The API call must be made either by the admin or by owners of the
+  // namespaces whose services are being exposed. It is assumed that
+  // the load balancer has been created, deployed and imported into TCC
+  // through out of band mechanisms [for F5] or through service registry
+  // imports. The parameters should list the set of services that need
+  // to be exposed. Services will not be exposed until its approved by
+  // the namespace owner where the load balancer resides.
+  rpc Attach(LoadBalancerWorkflowUserRequest) returns (Status) {
+    option (google.api.http) = {
+      post: "/v1/workflows/loadbalancer/attach"
+      body: "*"
+    };
+  };
+
+  rpc Detach(LoadBalancerWorkflowUserRequest) returns (Status) {
+    option (google.api.http) = {
+      post: "/v1/workflows/loadbalancer/detach"
+      body: "*"
+    };
+  };
+
+  // LB owner calls this API with additional settings like TLS, to
+  // finally expose the service on the load balancer
+  rpc Publish(LoadBalancerWorkflowOwnerRequest) returns (Status) {
+    option (google.api.http) = {
+      post: "/v1/workflows/loadbalancer/publish"
+      body: "*"
+    };
+  };
+
+  rpc ListPendingRequests(ListRequests) returns (ListPendingResponse) {
+    option (google.api.http) = {
+      get: "/v1/workflows/loadbalancer/pending"
+    };
+  };
+
+  rpc GetRequestStatus(GetStatus) returns (Status) {
+    option (google.api.http) = {
+      get: "/v1/workflows/loadbalancer/request/{requestid}/status"
+    };
+  }
+
+  // namespace members who own the load balancer & admins.
+  rpc Approve(ApproveRequest) returns (ApproveResponse) {
+    option (google.api.http) = {
+      post: "/v1/workflows/loadbalancer/request/{requestid}/approve"
+      body: "*"
+    };
+  };
+
+  // namespace members who own the load balancer & admins.
+  rpc Deny(DenyRequest) returns (DenyResponse) {
+    option (google.api.http) = {
+      post: "/v1/workflows/loadbalancer/request/{requestid}/deny"
+      body: "*"
+    };
+  };
+
+  // namespace members who own the load balancer & admins.
+  rpc Cancel(CancelRequest) returns (CancelResponse) {
+    option (google.api.http) = {
+      post: "/v1/workflows/loadbalancer/request/{requestid}/cancel"
+      body: "*"
+    };
+  };
+}
+
+message LoadBalancerWorkflowUserRequest {
+  // The load balancer where the service should be attached/detached from
+  // of form tenant/123/workspace/345/loadbalancer/blah
+  string loadbalancer = 1;
+
+  // the name of the service to attach/detach; `tenant/123/workspace/456/service/foo.com`
+  string service = 2;
+}
+
+message Status {
+  // e.g. `attach-789`
+  string requestid = 1;
+
+  bool approved = 2;
+  bool published = 3;
+  string note = 4;
+}
+
+message GetStatus {
+  // e.g. `attach-789`
+  string requestid = 1;
+}
+
+message ListRequests {}
+
+message ListPendingResponse {
+  message PendingRequest {
+    string loadbalancer = 1;
+    string service = 2;
+    enum OP {
+      ATTACH = 0;
+      DETACH = 1;
+    }
+    OP operation = 3;
+  }
+
+  repeated PendingRequest pending_requests = 1;
+}
+
+message ApproveRequest {
+  string requestid = 1;
+}
+
+message DenyRequest {
+  string requestid = 1;
+}
+
+message CancelRequest {
+  string requestid = 1;
+}
+
+message ApproveResponse {
+  string requestid = 1;
+
+  // optional description of the approval (e.g. to be recorded in audit logs)
+  string note = 2;
+}
+
+message DenyResponse {
+  string requestid = 1;
+
+  // optional description of the denial (e.g. to be recorded in audit logs)
+  string note = 2;
+}
+
+message CancelResponse {
+  string requestid = 1;
+
+  // optional description of the cancelation (e.g. to be recorded in audit logs)
+  string note = 2;
+}
+
+message LoadBalancerWorkflowOwnerRequest {
+  // The load balancer where the service should be published
+  // of form tenant/123/workspace/345/loadbalancer/blah
+  string loadbalancer = 1;
+
+  // the name of the service to publish. `tenant/123/workspace/456/service/foo.com`
+  string service = 2;
+
+  // TLS settings for the service to be published.
+  TLSSettings tls = 3;
+}
+
+message TLSSettings {
+  // If specified, only allow requests that match the SNI value.
+  string sni = 1;
+
+  // For proxies running on VMs, the path to the file holding the
+  // server-side TLS certificate to use.
+  string server_certificate = 2;
+
+  // For proxies running on VMs, the path to the file holding the
+  // server's private key.
+  string private_key = 3;
+
+  // For proxies running on VMs, the path to a file containing
+  // certificate authority certificates to use in verifying a
+  // presented client side certificate for mutual TLS connections.
+  string ca_certificates = 4;
+
+  // For proxies running on Kubernetes, the name of the secret that
+  // holds the TLS certs. Currently applicable only on Kubernetes.
+  // The secret should contain the server certificate and the private
+  // key. If mutual TLS is being used, an additional secret with name
+  // secretName-cacert should be created with the CaCertificates that
+  // the server will use to verify client side certificates. If the
+  // service is exposed via a load balancer, the secret must be
+  // accessible to it.
+  string secret_name = 5;
+}

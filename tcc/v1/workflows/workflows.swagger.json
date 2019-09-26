@@ -1,0 +1,409 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "loadbalancer.proto",
+    "version": "version not set"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/workflows/loadbalancer/attach": {
+      "post": {
+        "summary": "namespace members of the service being requested \u0026 admins.\nThe API call must be made either by the admin or by owners of the\nnamespaces whose services are being exposed. It is assumed that\nthe load balancer has been created, deployed and imported into TCC\nthrough out of band mechanisms [for F5] or through service registry\nimports. The parameters should list the set of services that need\nto be exposed. Services will not be exposed until its approved by\nthe namespace owner where the load balancer resides.",
+        "operationId": "Attach",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.workflows.Status"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.workflows.LoadBalancerWorkflowUserRequest"
+            }
+          }
+        ],
+        "tags": [
+          "LoadBalancerWorkflow"
+        ]
+      }
+    },
+    "/v1/workflows/loadbalancer/detach": {
+      "post": {
+        "operationId": "Detach",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.workflows.Status"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.workflows.LoadBalancerWorkflowUserRequest"
+            }
+          }
+        ],
+        "tags": [
+          "LoadBalancerWorkflow"
+        ]
+      }
+    },
+    "/v1/workflows/loadbalancer/pending": {
+      "get": {
+        "operationId": "ListPendingRequests",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.workflows.ListPendingResponse"
+            }
+          }
+        },
+        "tags": [
+          "LoadBalancerWorkflow"
+        ]
+      }
+    },
+    "/v1/workflows/loadbalancer/publish": {
+      "post": {
+        "summary": "LB owner calls this API with additional settings like TLS, to\nfinally expose the service on the load balancer",
+        "operationId": "Publish",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.workflows.Status"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.workflows.LoadBalancerWorkflowOwnerRequest"
+            }
+          }
+        ],
+        "tags": [
+          "LoadBalancerWorkflow"
+        ]
+      }
+    },
+    "/v1/workflows/loadbalancer/request/{requestid}/approve": {
+      "post": {
+        "summary": "namespace members who own the load balancer \u0026 admins.",
+        "operationId": "Approve",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.workflows.ApproveResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "requestid",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.workflows.ApproveRequest"
+            }
+          }
+        ],
+        "tags": [
+          "LoadBalancerWorkflow"
+        ]
+      }
+    },
+    "/v1/workflows/loadbalancer/request/{requestid}/cancel": {
+      "post": {
+        "summary": "namespace members who own the load balancer \u0026 admins.",
+        "operationId": "Cancel",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.workflows.CancelResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "requestid",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.workflows.CancelRequest"
+            }
+          }
+        ],
+        "tags": [
+          "LoadBalancerWorkflow"
+        ]
+      }
+    },
+    "/v1/workflows/loadbalancer/request/{requestid}/deny": {
+      "post": {
+        "summary": "namespace members who own the load balancer \u0026 admins.",
+        "operationId": "Deny",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.workflows.DenyResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "requestid",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.workflows.DenyRequest"
+            }
+          }
+        ],
+        "tags": [
+          "LoadBalancerWorkflow"
+        ]
+      }
+    },
+    "/v1/workflows/loadbalancer/request/{requestid}/status": {
+      "get": {
+        "operationId": "GetRequestStatus",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.workflows.Status"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "requestid",
+            "description": "e.g. `attach-789`",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "LoadBalancerWorkflow"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "tetrate.api.tcc.v1.workflows.ApproveRequest": {
+      "type": "object",
+      "properties": {
+        "requestid": {
+          "type": "string"
+        }
+      }
+    },
+    "tetrate.api.tcc.v1.workflows.ApproveResponse": {
+      "type": "object",
+      "properties": {
+        "requestid": {
+          "type": "string"
+        },
+        "note": {
+          "type": "string",
+          "title": "optional description of the approval (e.g. to be recorded in audit logs)"
+        }
+      }
+    },
+    "tetrate.api.tcc.v1.workflows.CancelRequest": {
+      "type": "object",
+      "properties": {
+        "requestid": {
+          "type": "string"
+        }
+      }
+    },
+    "tetrate.api.tcc.v1.workflows.CancelResponse": {
+      "type": "object",
+      "properties": {
+        "requestid": {
+          "type": "string"
+        },
+        "note": {
+          "type": "string",
+          "title": "optional description of the cancelation (e.g. to be recorded in audit logs)"
+        }
+      }
+    },
+    "tetrate.api.tcc.v1.workflows.DenyRequest": {
+      "type": "object",
+      "properties": {
+        "requestid": {
+          "type": "string"
+        }
+      }
+    },
+    "tetrate.api.tcc.v1.workflows.DenyResponse": {
+      "type": "object",
+      "properties": {
+        "requestid": {
+          "type": "string"
+        },
+        "note": {
+          "type": "string",
+          "title": "optional description of the denial (e.g. to be recorded in audit logs)"
+        }
+      }
+    },
+    "tetrate.api.tcc.v1.workflows.ListPendingResponse": {
+      "type": "object",
+      "properties": {
+        "pendingRequests": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.v1.workflows.ListPendingResponse.PendingRequest"
+          }
+        }
+      }
+    },
+    "tetrate.api.tcc.v1.workflows.ListPendingResponse.PendingRequest": {
+      "type": "object",
+      "properties": {
+        "loadbalancer": {
+          "type": "string"
+        },
+        "service": {
+          "type": "string"
+        },
+        "operation": {
+          "$ref": "#/definitions/tetrate.api.tcc.v1.workflows.ListPendingResponse.PendingRequest.OP"
+        }
+      }
+    },
+    "tetrate.api.tcc.v1.workflows.ListPendingResponse.PendingRequest.OP": {
+      "type": "string",
+      "enum": [
+        "ATTACH",
+        "DETACH"
+      ],
+      "default": "ATTACH"
+    },
+    "tetrate.api.tcc.v1.workflows.LoadBalancerWorkflowOwnerRequest": {
+      "type": "object",
+      "properties": {
+        "loadbalancer": {
+          "type": "string",
+          "title": "The load balancer where the service should be published\nof form tenant/123/workspace/345/loadbalancer/blah"
+        },
+        "service": {
+          "type": "string",
+          "title": "the name of the service to publish. `tenant/123/workspace/456/service/foo.com`"
+        },
+        "tls": {
+          "$ref": "#/definitions/tetrate.api.tcc.v1.workflows.TLSSettings",
+          "description": "TLS settings for the service to be published."
+        }
+      }
+    },
+    "tetrate.api.tcc.v1.workflows.LoadBalancerWorkflowUserRequest": {
+      "type": "object",
+      "properties": {
+        "loadbalancer": {
+          "type": "string",
+          "title": "The load balancer where the service should be attached/detached from\nof form tenant/123/workspace/345/loadbalancer/blah"
+        },
+        "service": {
+          "type": "string",
+          "title": "the name of the service to attach/detach; `tenant/123/workspace/456/service/foo.com`"
+        }
+      }
+    },
+    "tetrate.api.tcc.v1.workflows.Status": {
+      "type": "object",
+      "properties": {
+        "requestid": {
+          "type": "string",
+          "title": "e.g. `attach-789`"
+        },
+        "approved": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "published": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "note": {
+          "type": "string"
+        }
+      }
+    },
+    "tetrate.api.tcc.v1.workflows.TLSSettings": {
+      "type": "object",
+      "properties": {
+        "sni": {
+          "type": "string",
+          "description": "If specified, only allow requests that match the SNI value."
+        },
+        "serverCertificate": {
+          "type": "string",
+          "description": "For proxies running on VMs, the path to the file holding the\nserver-side TLS certificate to use."
+        },
+        "privateKey": {
+          "type": "string",
+          "description": "For proxies running on VMs, the path to the file holding the\nserver's private key."
+        },
+        "caCertificates": {
+          "type": "string",
+          "description": "For proxies running on VMs, the path to a file containing\ncertificate authority certificates to use in verifying a\npresented client side certificate for mutual TLS connections."
+        },
+        "secretName": {
+          "type": "string",
+          "description": "For proxies running on Kubernetes, the name of the secret that\nholds the TLS certs. Currently applicable only on Kubernetes.\nThe secret should contain the server certificate and the private\nkey. If mutual TLS is being used, an additional secret with name\nsecretName-cacert should be created with the CaCertificates that\nthe server will use to verify client side certificates. If the\nservice is exposed via a load balancer, the secret must be\naccessible to it."
+        }
+      }
+    }
+  }
+}

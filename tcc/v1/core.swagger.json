@@ -1,0 +1,2440 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "configproducer.proto",
+    "version": "version not set"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/clientsettings/tenant/{tenant}": {
+      "get": {
+        "operationId": "GetClientSettingsForTenant",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.ClientSettings"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "workspace",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "service",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ClientSettingsService"
+        ]
+      },
+      "put": {
+        "operationId": "UpdateClientSettingsForTenant",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.ClientSettings"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.UpdateClientSettingsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ClientSettingsService"
+        ]
+      }
+    },
+    "/v1/clientsettings/tenant/{tenant}/workspace/{workspace}": {
+      "get": {
+        "operationId": "GetClientSettingsForWorkspace",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.ClientSettings"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "workspace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "service",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ClientSettingsService"
+        ]
+      },
+      "delete": {
+        "operationId": "DeleteClientSettingsForWorkspace",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "workspace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "service",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ClientSettingsService"
+        ]
+      },
+      "put": {
+        "operationId": "UpdateClientSettingsForWorkspace",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.ClientSettings"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "workspace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.UpdateClientSettingsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ClientSettingsService"
+        ]
+      }
+    },
+    "/v1/clientsettings/tenant/{tenant}/workspace/{workspace}/service/{service}": {
+      "get": {
+        "operationId": "GetClientSettingsForService",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.ClientSettings"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "workspace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "service",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ClientSettingsService"
+        ]
+      },
+      "delete": {
+        "operationId": "DeleteClientSettingsForService",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "workspace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "service",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ClientSettingsService"
+        ]
+      },
+      "put": {
+        "operationId": "UpdateClientSettingsForService",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.ClientSettings"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "workspace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "service",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.UpdateClientSettingsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ClientSettingsService"
+        ]
+      }
+    },
+    "/v1/configproducer/{configtype}/{cluster}": {
+      "get": {
+        "operationId": "Download",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.ConfigData"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "configtype",
+            "description": "currently accepted values are istio or f5",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "cluster",
+            "description": "A unique identifier for the k8s cluster or VM cluster\nTypically we have multiple k8s clusters and one big giant VM cluster\nin a DC.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ConfigProducer"
+        ]
+      }
+    },
+    "/v1/endpoints/tenant/{tenant}/workspace/{workspace}": {
+      "get": {
+        "operationId": "ListWorkspaceEndpoint",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.ListEndpointResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "workspace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Endpoints"
+        ]
+      }
+    },
+    "/v1/endpoints/tenant/{tenant}/workspace/{workspace}/service/{service}": {
+      "get": {
+        "operationId": "ListServiceEndpoint",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.ListEndpointResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "workspace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "service",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Endpoints"
+        ]
+      }
+    },
+    "/v1/endpoints/tenant/{tenant}/workspace/{workspace}/service/{service}/subset/{subset}": {
+      "get": {
+        "operationId": "ListServiceSubsetEndpoint",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.ListEndpointResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "workspace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "service",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "subset",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Endpoints"
+        ]
+      }
+    },
+    "/v1/endpoints/tenant/{tenant}/workspace/{workspace}/{name}": {
+      "get": {
+        "operationId": "GetEndpoint",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.Endpoint"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "workspace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Endpoints"
+        ]
+      },
+      "delete": {
+        "operationId": "DeleteEndpoint",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "workspace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Endpoints"
+        ]
+      },
+      "post": {
+        "operationId": "CreateEndpoint",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.Endpoint"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "workspace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "description": "Short name of the endpoint, e.g. \"1.2.3.4\". TODO: other name reqs/restrictions",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.CreateEndpointRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Endpoints"
+        ]
+      },
+      "put": {
+        "operationId": "UpdateEndpoint",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.Endpoint"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "workspace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.UpdateEndpointRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Endpoints"
+        ]
+      }
+    },
+    "/v1/loadbalancers/tenant/{tenant}": {
+      "get": {
+        "operationId": "ListTenantLoadBalancer",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.workflows.ListLoadBalancerResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "LoadBalancers"
+        ]
+      }
+    },
+    "/v1/loadbalancers/tenant/{tenant}/workspace/{workspace}": {
+      "get": {
+        "operationId": "ListWorkspaceLoadBalancer",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.workflows.ListLoadBalancerResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "workspace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "LoadBalancers"
+        ]
+      }
+    },
+    "/v1/loadbalancers/tenant/{tenant}/workspace/{workspace}/{name}": {
+      "get": {
+        "operationId": "GetLoadBalancer",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.workflows.LoadBalancer"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "workspace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "LoadBalancers"
+        ]
+      },
+      "delete": {
+        "operationId": "DeleteLoadBalancer",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "workspace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "LoadBalancers"
+        ]
+      },
+      "post": {
+        "operationId": "CreateLoadBalancer",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.workflows.LoadBalancer"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "workspace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "description": "e.g. \"f5-ltm\"",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.workflows.CreateLoadBalancerRequest"
+            }
+          }
+        ],
+        "tags": [
+          "LoadBalancers"
+        ]
+      },
+      "put": {
+        "operationId": "UpdateLoadBalancer",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.workflows.LoadBalancer"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "workspace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "description": "Immutable, name of the load balancer being updated. e.g. \"zone-3-ingress\"",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.workflows.UpdateLoadBalancerRequest"
+            }
+          }
+        ],
+        "tags": [
+          "LoadBalancers"
+        ]
+      }
+    },
+    "/v1/registryconsumer/{registrytype}/{cluster}": {
+      "post": {
+        "operationId": "Upload",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "registrytype",
+            "description": "currently accepted values are kubernetes or f5",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "cluster",
+            "description": "A unique identifier for the k8s/f5 cluster",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.RegistryData"
+            }
+          }
+        ],
+        "tags": [
+          "RegistryConsumer"
+        ]
+      }
+    },
+    "/v1/services/tenant/{tenant}/workspace/{workspace}": {
+      "get": {
+        "operationId": "ListService",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.ListServiceResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "workspace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Services"
+        ]
+      }
+    },
+    "/v1/services/tenant/{tenant}/workspace/{workspace}/{name}": {
+      "get": {
+        "operationId": "GetService",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.Service"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "workspace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Services"
+        ]
+      },
+      "delete": {
+        "operationId": "DeleteService",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "workspace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Services"
+        ]
+      },
+      "post": {
+        "operationId": "CreateService",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.Service"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "workspace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "description": "fqdn",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.CreateServiceRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Services"
+        ]
+      },
+      "put": {
+        "operationId": "UpdateService",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.Service"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "workspace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "description": "immutable",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.UpdateServiceRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Services"
+        ]
+      }
+    },
+    "/v1/tenants": {
+      "get": {
+        "operationId": "ListTenants",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.ListTenantsResponse"
+            }
+          }
+        },
+        "tags": [
+          "Tenants"
+        ]
+      }
+    },
+    "/v1/tenants/{name}": {
+      "get": {
+        "operationId": "GetTenant",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.Tenant"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Tenants"
+        ]
+      },
+      "delete": {
+        "operationId": "DeleteTenant",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Tenants"
+        ]
+      },
+      "post": {
+        "operationId": "CreateTenant",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.Tenant"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "name",
+            "description": "TODO: down the line we'll need to gather initial info here. Till then, these will\nbe created by hand.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.CreateTenantRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Tenants"
+        ]
+      }
+    },
+    "/v1/users/tenant/{tenant}": {
+      "get": {
+        "operationId": "ListUsers",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.ListUsersResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/v1/users/tenant/{tenant}/{name}": {
+      "get": {
+        "operationId": "GetUser",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.User"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Users"
+        ]
+      },
+      "delete": {
+        "operationId": "DeleteUser",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Users"
+        ]
+      },
+      "post": {
+        "operationId": "CreateUser",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.User"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "description": "this would be `bob`; the returned user resource would have name=`tenant/123/user/bob`",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.CreateUserRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Users"
+        ]
+      },
+      "put": {
+        "operationId": "UpdateUser",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.User"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "description": "this would be `bob`; the returned user resource would have name=`tenant/123/user/bob`",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.UpdateUserRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/v1/workspaces/tenant/{tenant}": {
+      "get": {
+        "operationId": "ListWorkspaces",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.ListWorkspacesResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Workspaces"
+        ]
+      }
+    },
+    "/v1/workspaces/tenant/{tenant}/{name}": {
+      "get": {
+        "operationId": "GetWorkspace",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.Workspace"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Workspaces"
+        ]
+      },
+      "delete": {
+        "operationId": "DeleteWorkspace",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Workspaces"
+        ]
+      },
+      "post": {
+        "operationId": "CreateWorkspace",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.Workspace"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.CreateWorkspaceRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Workspaces"
+        ]
+      },
+      "put": {
+        "operationId": "UpdateWorkspace",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.Workspace"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.v1.UpdateWorkspaceRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Workspaces"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "tetrate.api.tcc.v1.ClientSettings": {
+      "type": "object",
+      "properties": {
+        "service": {
+          "type": "string",
+          "title": "empty if this is applicable to entire workspace"
+        },
+        "workspace": {
+          "type": "string",
+          "title": "empty if this is applicable to entire tenant"
+        },
+        "tenant": {
+          "type": "string"
+        },
+        "httpRequestTimeout": {
+          "type": "string",
+          "description": "Timeout for HTTP requests."
+        },
+        "httpRetries": {
+          "$ref": "#/definitions/tetrate.api.tcc.v1.HTTPRetry",
+          "description": "Retry policy for HTTP requests."
+        },
+        "tcpConnectTimeout": {
+          "type": "string",
+          "description": "These two settings will go to dest rule\nTCP connection timeout."
+        },
+        "tcpKeepalive": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": "If set then set SO_KEEPALIVE on the socket to enable TCP Keepalives."
+        },
+        "circuitBreakerSensitivity": {
+          "$ref": "#/definitions/tetrate.api.tcc.v1.ClientSettings.Sensitivity",
+          "description": "the sensitivity levels will translate to specific values of\ndest rule outlier detection."
+        }
+      }
+    },
+    "tetrate.api.tcc.v1.ClientSettings.Sensitivity": {
+      "type": "string",
+      "enum": [
+        "LOW",
+        "MEDIUM",
+        "HIGH"
+      ],
+      "default": "LOW"
+    },
+    "tetrate.api.tcc.v1.ConfigData": {
+      "type": "object",
+      "properties": {
+        "configtype": {
+          "type": "string"
+        },
+        "cluster": {
+          "type": "string"
+        },
+        "payload": {
+          "type": "string",
+          "description": "For istio, this is a huge YAML dump of all Istio artifacts like\nvirtual services, destination rules, service entries, gateways,\netc. in YAML form. For F5, its all f5 config artifacts."
+        }
+      }
+    },
+    "tetrate.api.tcc.v1.CorsPolicy": {
+      "type": "object",
+      "properties": {
+        "allowOrigin": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The list of origins that are allowed to perform CORS requests. The\ncontent will be serialized into the Access-Control-Allow-Origin\nheader. Wildcard * will allow all origins."
+        },
+        "allowMethods": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of HTTP methods allowed to access the resource. The content will\nbe serialized into the Access-Control-Allow-Methods header."
+        },
+        "allowHeaders": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of HTTP headers that can be used when requesting the\nresource. Serialized to Access-Control-Allow-Headers header."
+        },
+        "exposeHeaders": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "A white list of HTTP headers that the browsers are allowed to\naccess. Serialized into Access-Control-Expose-Headers header."
+        },
+        "maxAge": {
+          "type": "string",
+          "description": "Specifies how long the results of a preflight request can be\ncached. Translates to the `Access-Control-Max-Age` header."
+        },
+        "allowCredentials": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": "Indicates whether the caller is allowed to send the actual request\n(not the preflight) using credentials. Translates to\n`Access-Control-Allow-Credentials` header."
+        }
+      }
+    },
+    "tetrate.api.tcc.v1.CreateEndpointRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "Short name of the endpoint, e.g. \"1.2.3.4\". TODO: other name reqs/restrictions"
+        },
+        "service": {
+          "type": "string",
+          "title": "optional"
+        },
+        "tenant": {
+          "type": "string"
+        },
+        "workspace": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string",
+          "description": "REQUIRED: Address associated with the network endpoint without\nthe port.  Domain names can be used and must be fully-qualified\nwithout wildcards."
+        },
+        "ports": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "description": "Set of ports associated with the endpoint. The ports must be\nassociated with a port name that was declared as part of the\nservice."
+        },
+        "labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "One or more labels associated with the endpoint."
+        },
+        "locality": {
+          "type": "string",
+          "description": "The locality associated with the endpoint, in the form\ncountry/region/zone. A locality corresponds to a failure domain\n(country/region/zone)."
+        },
+        "weight": {
+          "type": "integer",
+          "format": "int64",
+          "description": "The load balancing weight associated with the endpoint. Endpoints\nwith higher weights in a pool will receive proportionally higher\ntraffic."
+        }
+      }
+    },
+    "tetrate.api.tcc.v1.CreateServiceRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "fqdn"
+        },
+        "workspace": {
+          "type": "string"
+        },
+        "tenant": {
+          "type": "string"
+        },
+        "labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "ports": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.v1.Port"
+          }
+        },
+        "subsets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.v1.Subset"
+          }
+        },
+        "httpSettings": {
+          "$ref": "#/definitions/tetrate.api.tcc.v1.HttpSettings"
+        },
+        "tcpSettings": {
+          "$ref": "#/definitions/tetrate.api.tcc.v1.TcpSettings"
+        }
+      }
+    },
+    "tetrate.api.tcc.v1.CreateTenantRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "TODO: down the line we'll need to gather initial info here. Till then, these will\nbe created by hand."
+        },
+        "displayName": {
+          "type": "string"
+        }
+      }
+    },
+    "tetrate.api.tcc.v1.CreateUserRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "this would be `bob`; the returned user resource would have name=`tenant/123/user/bob`"
+        },
+        "tenant": {
+          "type": "string"
+        }
+      }
+    },
+    "tetrate.api.tcc.v1.CreateWorkspaceRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "tenant": {
+          "type": "string"
+        },
+        "dependencies": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The services (or namespaces) that this endpoints in this\nworkspace depend upon for proper operation. Must be of the form\n`tenant/123/workspace/456/service/foo.com`, or\n`tenant/123/workspace/456` . If omitted, its assumed that\nendpoints in this workspace depend only on other services in the\nsame workspace as the endpoint."
+        }
+      }
+    },
+    "tetrate.api.tcc.v1.Endpoint": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "read-only e.g. 1.2.3.4"
+        },
+        "service": {
+          "type": "string",
+          "title": "empty if not associated with a service"
+        },
+        "tenant": {
+          "type": "string"
+        },
+        "workspace": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string",
+          "description": "REQUIRED: Address associated with the network endpoint without\nthe port.  Domain names can be used and must be fully-qualified\nwithout wildcards."
+        },
+        "ports": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "description": "Set of inbound traffic ports associated with the endpoint. The\nports must be associated with a port number that was declared\nas part of the service."
+        },
+        "labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "One or more labels associated with the endpoint."
+        },
+        "locality": {
+          "type": "string",
+          "description": "The locality associated with the endpoint, in the form\ncountry/region/zone. A locality corresponds to a failure domain\n(country/region/zone)."
+        },
+        "weight": {
+          "type": "integer",
+          "format": "int64",
+          "description": "The load balancing weight associated with the endpoint. Endpoints\nwith higher weights in a pool will receive proportionally higher\ntraffic."
+        }
+      },
+      "description": "Endpoint defines a network address (IP or hostname) associated with\nthe service."
+    },
+    "tetrate.api.tcc.v1.HTTPRetry": {
+      "type": "object",
+      "properties": {
+        "attempts": {
+          "type": "integer",
+          "format": "int32",
+          "description": "REQUIRED. Number of retries for a given request. The interval\nbetween retries will be determined automatically (25ms+). Actual\nnumber of retries attempted depends on the httpReqTimeout."
+        },
+        "perTryTimeout": {
+          "type": "string",
+          "description": "Timeout per retry attempt for a given request. format: 1h/1m/1s/1ms. MUST BE \u003e=1ms."
+        },
+        "retryOn": {
+          "type": "string",
+          "description": "Specifies the conditions under which retry takes place.\nOne or more policies can be specified using a ‘,’ delimited list.\nSee the [supported\npolicies](https://www.envoyproxy.io/docs/envoy/latest/configuration/http_filters/router_filter#x-envoy-retry-on)\nand\n[here](https://www.envoyproxy.io/docs/envoy/latest/configuration/http_filters/router_filter#x-envoy-retry-grpc-on)\nfor more details."
+        }
+      }
+    },
+    "tetrate.api.tcc.v1.HttpMatchCondition": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "$ref": "#/definitions/tetrate.api.tcc.v1.StringMatch",
+          "title": "URI to match"
+        },
+        "scheme": {
+          "$ref": "#/definitions/tetrate.api.tcc.v1.StringMatch",
+          "title": "URI Scheme"
+        },
+        "method": {
+          "$ref": "#/definitions/tetrate.api.tcc.v1.StringMatch",
+          "title": "HTTP Method"
+        },
+        "authority": {
+          "$ref": "#/definitions/tetrate.api.tcc.v1.StringMatch",
+          "title": "HTTP Authority"
+        },
+        "headers": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/tetrate.api.tcc.v1.StringMatch"
+          },
+          "description": "The header keys must be lowercase and use hyphen as the separator,\ne.g. _x-request-id_."
+        }
+      },
+      "title": "A single match clause to match all aspects of a request"
+    },
+    "tetrate.api.tcc.v1.HttpModifyAction": {
+      "type": "object",
+      "properties": {
+        "what": {
+          "$ref": "#/definitions/tetrate.api.tcc.v1.HttpModifyAction.What"
+        },
+        "how": {
+          "$ref": "#/definitions/tetrate.api.tcc.v1.HttpModifyAction.How"
+        },
+        "headerName": {
+          "type": "string",
+          "title": "used only if what is a Header"
+        },
+        "value": {
+          "type": "string",
+          "title": "string to use as replacement for url rewrite/host rewrite or setting headers\nno value is necessary when deleting the header"
+        }
+      },
+      "title": "A single modification for a part of a request"
+    },
+    "tetrate.api.tcc.v1.HttpModifyAction.How": {
+      "type": "string",
+      "enum": [
+        "SET",
+        "APPEND",
+        "DELETE"
+      ],
+      "default": "SET",
+      "title": "- SET: this is the only value allowed for uri and authority rewrite\n - APPEND: append and delete are applicable only for headers"
+    },
+    "tetrate.api.tcc.v1.HttpModifyAction.What": {
+      "type": "string",
+      "enum": [
+        "URI",
+        "AUTHORITY",
+        "HEADER"
+      ],
+      "default": "URI"
+    },
+    "tetrate.api.tcc.v1.HttpRule": {
+      "type": "object",
+      "properties": {
+        "matchConditions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.v1.HttpMatchCondition"
+          },
+          "title": "one or more match conditions (OR-ed)"
+        },
+        "modifyActions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.v1.HttpModifyAction"
+          },
+          "title": "one or more mutations to be performed before forwarding.\nIncludes typical modifications to be done on a single request\nlike URL rewrite, host rewrite, headers to add/remove/append"
+        },
+        "route": {
+          "$ref": "#/definitions/tetrate.api.tcc.v1.Route"
+        },
+        "redirect": {
+          "$ref": "#/definitions/tetrate.api.tcc.v1.Redirect"
+        }
+      },
+      "title": "A single HTTP rule"
+    },
+    "tetrate.api.tcc.v1.HttpSettings": {
+      "type": "object",
+      "properties": {
+        "stickySession": {
+          "$ref": "#/definitions/tetrate.api.tcc.v1.HttpSettings.StickySession"
+        },
+        "corsPolicy": {
+          "$ref": "#/definitions/tetrate.api.tcc.v1.CorsPolicy"
+        },
+        "routeRules": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.v1.HttpRule"
+          }
+        }
+      },
+      "description": "HTTP settings for a service. Applicable to ports receiving HTTP traffic."
+    },
+    "tetrate.api.tcc.v1.HttpSettings.HTTPCookie": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "REQUIRED. Name of the cookie."
+        },
+        "path": {
+          "type": "string",
+          "description": "Path to set for the cookie."
+        },
+        "ttl": {
+          "type": "string",
+          "description": "REQUIRED. Lifetime of the cookie."
+        }
+      },
+      "description": "Describes a HTTP cookie that will be used for sticky sessions. If\nthe cookie is not present, it will be generated."
+    },
+    "tetrate.api.tcc.v1.HttpSettings.StickySession": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "string",
+          "description": "Hash based on a specific HTTP header."
+        },
+        "cookie": {
+          "$ref": "#/definitions/tetrate.api.tcc.v1.HttpSettings.HTTPCookie",
+          "description": "Hash based on HTTP cookie."
+        },
+        "useSourceIp": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": "Hash based on the source IP address."
+        }
+      },
+      "title": "If set, the load balancer will route all requests from a\nparticular client to the same backend of the service.\nTODO (@lizan): this is incomplete in envoy. It still uses ketama hash\nwhich changes the mapping when more endpoints are added to LB pool"
+    },
+    "tetrate.api.tcc.v1.ListEndpointResponse": {
+      "type": "object",
+      "properties": {
+        "endpoints": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.v1.Endpoint"
+          }
+        }
+      }
+    },
+    "tetrate.api.tcc.v1.ListServiceResponse": {
+      "type": "object",
+      "properties": {
+        "services": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.v1.Service"
+          }
+        }
+      }
+    },
+    "tetrate.api.tcc.v1.ListTenantsResponse": {
+      "type": "object",
+      "properties": {
+        "tenants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.v1.Tenant"
+          }
+        }
+      }
+    },
+    "tetrate.api.tcc.v1.ListUsersResponse": {
+      "type": "object",
+      "properties": {
+        "users": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.v1.User"
+          }
+        }
+      }
+    },
+    "tetrate.api.tcc.v1.ListWorkspacesResponse": {
+      "type": "object",
+      "properties": {
+        "workspaces": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.v1.Workspace"
+          }
+        }
+      }
+    },
+    "tetrate.api.tcc.v1.Port": {
+      "type": "object",
+      "properties": {
+        "number": {
+          "type": "integer",
+          "format": "int64",
+          "description": "REQUIRED: A valid non-negative integer port number."
+        },
+        "protocol": {
+          "type": "string",
+          "description": "The protocol exposed on the port.\nMUST BE one of HTTP|GRPC|HTTP2|TCP|TLS.\nTLS implies the connection will be routed based on the SNI header to\nthe destination without terminating the TLS connection."
+        },
+        "name": {
+          "type": "string",
+          "description": "Label assigned to the port."
+        },
+        "endpointPort": {
+          "type": "integer",
+          "format": "int64",
+          "description": "The endpoint port to which this service port maps to. For example, service port 80\nexposed on the load balancer could map to an endpoint port 9080 on a VM."
+        }
+      },
+      "description": "Port describes the properties of a specific port of a service on a VM or k8s."
+    },
+    "tetrate.api.tcc.v1.Redirect": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "On a redirect, overwrite the Path portion of the URL with this\nvalue."
+        },
+        "authority": {
+          "type": "string",
+          "description": "On a redirect, overwrite the Authority/Host portion of the URL with\nthis value."
+        }
+      }
+    },
+    "tetrate.api.tcc.v1.RegistryData": {
+      "type": "object",
+      "properties": {
+        "registrytype": {
+          "type": "string",
+          "title": "currently accepted values are kubernetes or f5"
+        },
+        "cluster": {
+          "type": "string",
+          "title": "A unique identifier for the k8s/f5 cluster"
+        },
+        "payload": {
+          "type": "string",
+          "title": "A huge json dump of all services, endpoints.\nFor k8s, its literally kubectl get services --all-namespaces -o json\nand kubectl get po --all-namespaces -o json"
+        }
+      },
+      "description": "Please do not over engineer this anything beyond a glorified\nfile copy."
+    },
+    "tetrate.api.tcc.v1.Route": {
+      "type": "object",
+      "properties": {
+        "destinations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.v1.Route.Destination"
+          }
+        }
+      },
+      "title": "One or more destinations for the given request"
+    },
+    "tetrate.api.tcc.v1.Route.Destination": {
+      "type": "object",
+      "properties": {
+        "subset": {
+          "type": "string"
+        },
+        "weight": {
+          "type": "integer",
+          "format": "int64",
+          "title": "100 if omitted. sum of all weights should add up to 100"
+        },
+        "port": {
+          "type": "integer",
+          "format": "int64",
+          "title": "Optional:"
+        },
+        "svc": {
+          "type": "string",
+          "description": "Must be of form tenant/123/workspace/456/service/blah.com. If specified, incoming traffic\nfor the service will be forwarded to the service\nspecified. Typically used on ingress gateways on kubernetes\nclusters."
+        }
+      }
+    },
+    "tetrate.api.tcc.v1.Service": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "The FQDN of the service"
+        },
+        "workspace": {
+          "type": "string",
+          "title": "equivalent to k8s namespace"
+        },
+        "tenant": {
+          "type": "string"
+        },
+        "labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "User identifiable tags associated with this service."
+        },
+        "ports": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.v1.Port"
+          }
+        },
+        "subsets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.v1.Subset"
+          }
+        },
+        "httpSettings": {
+          "$ref": "#/definitions/tetrate.api.tcc.v1.HttpSettings",
+          "description": "HTTP specific settings, transformations and routing rules\nassociated with HTTP traffic to this service."
+        },
+        "tcpSettings": {
+          "$ref": "#/definitions/tetrate.api.tcc.v1.TcpSettings",
+          "description": "TCP specific settings, transformations and routing rules\nassociated with non-HTTP traffic to this service."
+        }
+      },
+      "description": "This is roughly equivalent to Istio service entry + virtual service + destination rule\nor the equivalent of Istio gateway's server [without TLS] + virtual service + dest rule\nTLS is omitted from here because usually, the secOps team in the enterprise determines the\ncerts, the mount points, etc. The service owner should not care about it."
+    },
+    "tetrate.api.tcc.v1.StringMatch": {
+      "type": "object",
+      "properties": {
+        "exact": {
+          "type": "string",
+          "title": "exact string match"
+        },
+        "prefix": {
+          "type": "string",
+          "title": "prefix-based match"
+        },
+        "regex": {
+          "type": "string",
+          "title": "ECMAscript style regex-based match"
+        }
+      },
+      "description": "Describes how to match a given string in HTTP headers. Match is\ncase-sensitive."
+    },
+    "tetrate.api.tcc.v1.Subset": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Labels apply a filter over the endpoints of a service in the\nservice registry."
+        }
+      }
+    },
+    "tetrate.api.tcc.v1.TcpSettings": {
+      "type": "object",
+      "properties": {
+        "route": {
+          "$ref": "#/definitions/tetrate.api.tcc.v1.Route",
+          "description": "The destination to which the connection should be forwarded to."
+        }
+      },
+      "description": "TCP settings for a service. Applicable to ports receiving non-HTTP traffic."
+    },
+    "tetrate.api.tcc.v1.Tenant": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "displayName": {
+          "type": "string",
+          "title": "TODO: what other info?"
+        }
+      }
+    },
+    "tetrate.api.tcc.v1.UpdateClientSettingsRequest": {
+      "type": "object",
+      "properties": {
+        "tenant": {
+          "type": "string"
+        },
+        "workspace": {
+          "type": "string"
+        },
+        "service": {
+          "type": "string"
+        },
+        "httpRequestTimeout": {
+          "type": "string",
+          "description": "Timeout for HTTP requests."
+        },
+        "httpRetries": {
+          "$ref": "#/definitions/tetrate.api.tcc.v1.HTTPRetry",
+          "description": "Retry policy for HTTP requests."
+        },
+        "tcpConnectTimeout": {
+          "type": "string",
+          "description": "These two settings will go to dest rule\nTCP connection timeout."
+        },
+        "tcpKeepalive": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": "If set then set SO_KEEPALIVE on the socket to enable TCP Keepalives."
+        },
+        "circuitBreakerSensitivity": {
+          "$ref": "#/definitions/tetrate.api.tcc.v1.UpdateClientSettingsRequest.Sensitivity",
+          "description": "the sensitivity levels will translate to specific values of\ndest rule outlier detection."
+        }
+      }
+    },
+    "tetrate.api.tcc.v1.UpdateClientSettingsRequest.Sensitivity": {
+      "type": "string",
+      "enum": [
+        "LOW",
+        "MEDIUM",
+        "HIGH"
+      ],
+      "default": "LOW"
+    },
+    "tetrate.api.tcc.v1.UpdateEndpointRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "workspace": {
+          "type": "string"
+        },
+        "tenant": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string",
+          "description": "REQUIRED: Address associated with the network endpoint without\nthe port.  Domain names can be used and must be fully-qualified\nwithout wildcards."
+        },
+        "ports": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "description": "Set of ports associated with the endpoint. The ports must be\nassociated with a port name that was declared as part of the\nservice."
+        },
+        "labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "One or more labels associated with the endpoint."
+        },
+        "locality": {
+          "type": "string",
+          "description": "The locality associated with the endpoint, in the form\ncountry/region/zone. A locality corresponds to a failure domain\n(country/region/zone)."
+        },
+        "weight": {
+          "type": "integer",
+          "format": "int64",
+          "description": "The load balancing weight associated with the endpoint. Endpoints\nwith higher weights in a pool will receive proportionally higher\ntraffic."
+        }
+      }
+    },
+    "tetrate.api.tcc.v1.UpdateServiceRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "immutable"
+        },
+        "workspace": {
+          "type": "string"
+        },
+        "tenant": {
+          "type": "string"
+        },
+        "labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "If provided, will overwrite existing labels."
+        },
+        "ports": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.v1.Port"
+          },
+          "title": "if specified, overwrites existing port list"
+        },
+        "subsets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.v1.Subset"
+          },
+          "title": "if specified, overwrites the existing list of subsets"
+        },
+        "httpSettings": {
+          "$ref": "#/definitions/tetrate.api.tcc.v1.HttpSettings"
+        },
+        "tcpSettings": {
+          "$ref": "#/definitions/tetrate.api.tcc.v1.TcpSettings"
+        }
+      }
+    },
+    "tetrate.api.tcc.v1.UpdateUserRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "this would be `bob`; the returned user resource would have name=`tenant/123/user/bob`"
+        },
+        "tenant": {
+          "type": "string"
+        }
+      }
+    },
+    "tetrate.api.tcc.v1.UpdateWorkspaceRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "tenant": {
+          "type": "string"
+        },
+        "dependencies": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The services (or namespaces) that this endpoints in this\nworkspace depend upon for proper operation. Must be of the form\n`tenant/123/workspace/456/service/foo.com`, or\n`tenant/123/workspace/456` . If omitted, its assumed that\nendpoints in this workspace depend only on other services in the\nsame workspace as the endpoint."
+        }
+      }
+    },
+    "tetrate.api.tcc.v1.User": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "tenant": {
+          "type": "string"
+        }
+      }
+    },
+    "tetrate.api.tcc.v1.Workspace": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "tenant": {
+          "type": "string"
+        },
+        "dependencies": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The services (or namespaces) that this endpoints in this\nworkspace depend upon for proper operation. Must be of the form\n`tenant/123/workspace/456/service/foo.com`, or\n`tenant/123/workspace/456` . If omitted, its assumed that\nendpoints in this workspace depend only on other services in the\nsame workspace as the endpoint."
+        }
+      }
+    },
+    "tetrate.api.tcc.v1.workflows.CreateLoadBalancerRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "e.g. \"f5-ltm\""
+        },
+        "workspace": {
+          "type": "string"
+        },
+        "tenant": {
+          "type": "string"
+        },
+        "class": {
+          "$ref": "#/definitions/tetrate.api.tcc.v1.workflows.LBClass",
+          "title": "f5 or envoy"
+        },
+        "managementIp": {
+          "type": "string",
+          "title": "If its a hardware load balancer like F5, we need its management\nIP to talk to it. TODO(@rshriram): we need some credentials, or\nwhat not to talk to F5. Those should be part of this call?"
+        },
+        "serviceName": {
+          "type": "string",
+          "description": "The name of the service that implements this load balancer behavior (i.e. the set of Envoys)\ne.g. tenant/123/workspace/456/service/ingress-envoys.foo.com."
+        },
+        "labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "tetrate.api.tcc.v1.workflows.LBClass": {
+      "type": "string",
+      "enum": [
+        "Envoy",
+        "F5"
+      ],
+      "default": "Envoy"
+    },
+    "tetrate.api.tcc.v1.workflows.ListLoadBalancerResponse": {
+      "type": "object",
+      "properties": {
+        "loadbalancers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.v1.workflows.LoadBalancer"
+          }
+        }
+      }
+    },
+    "tetrate.api.tcc.v1.workflows.LoadBalancer": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "The name of the service that implements this load balancer"
+        },
+        "workspace": {
+          "type": "string"
+        },
+        "tenant": {
+          "type": "string"
+        },
+        "class": {
+          "$ref": "#/definitions/tetrate.api.tcc.v1.workflows.LBClass",
+          "title": "f5 or envoy"
+        },
+        "managementIp": {
+          "type": "string",
+          "title": "If its a hardware load balancer like F5, we need its management\nIP to talk to it. TODO(@rshriram): we need some credentials, or\nwhat not to talk to F5. Those should be part of this call?"
+        },
+        "serviceName": {
+          "type": "string",
+          "description": "The name of the service that implements this load balancer behavior (i.e. the set of Envoys)\ne.g. tenant/123/workspace/456/service/ingress-envoys.foo.com."
+        },
+        "labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "services": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "List of services attached to this loadbalancer in the form\n`tenant/123/workspace/456/service/foo.com`"
+        }
+      }
+    },
+    "tetrate.api.tcc.v1.workflows.UpdateLoadBalancerRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "Immutable, name of the load balancer being updated. e.g. \"zone-3-ingress\""
+        },
+        "workspace": {
+          "type": "string"
+        },
+        "tenant": {
+          "type": "string"
+        },
+        "class": {
+          "$ref": "#/definitions/tetrate.api.tcc.v1.workflows.LBClass",
+          "title": "f5 or envoy"
+        },
+        "managementIp": {
+          "type": "string",
+          "title": "If its a hardware load balancer like F5, we need its management\nIP to talk to it. TODO(@rshriram): we need some credentials, or\nwhat not to talk to F5. Those should be part of this call?"
+        },
+        "serviceName": {
+          "type": "string",
+          "description": "The name of the service that implements this load balancer behavior (i.e. the set of Envoys)\ne.g. tenant/123/workspace/456/service/ingress-envoys.foo.com."
+        },
+        "labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

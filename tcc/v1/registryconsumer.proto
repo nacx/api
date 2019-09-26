@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package tetrate.api.tcc.v1;
+option go_package = "github.com/tetrateio/tetrate/api/tcc/v1";
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+// One big giant bulk API. The k8s sync agent would call this API with
+// JSON form of k8s services, endpoints. Same goes for f5 sync
+// agent. They call this API periodically to update our internal data
+// model. Upon receiving the data, we will convert this into our model
+// and then push to the database.  Why is this a gRPC service? No
+// clue.
+service RegistryConsumer {
+  rpc Upload(RegistryData) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/v1/registryconsumer/{registrytype}/{cluster}"
+      body: "*"
+    };
+  };
+}
+
+// Please do not over engineer this anything beyond a glorified
+// file copy.
+message RegistryData {
+  // currently accepted values are kubernetes or f5
+  string registrytype = 1;
+  // A unique identifier for the k8s/f5 cluster
+  string cluster = 2;
+  // A huge json dump of all services, endpoints.
+  // For k8s, its literally kubectl get services --all-namespaces -o json
+  // and kubectl get po --all-namespaces -o json
+  string payload = 3;
+}
