@@ -452,6 +452,16 @@
     "tetrate.api.tcc.core.v1.TLSSettings": {
       "type": "object",
       "properties": {
+        "enabled": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": "enable TLS settings for the application."
+        },
+        "redirectToHttps": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": "If set, the load balancer will redirect HTTP connections on port 80 to HTTPS port 443."
+        },
         "serverCertificate": {
           "type": "string",
           "description": "For proxies running on VMs, the path to the file holding the server-side TLS certificate to use."

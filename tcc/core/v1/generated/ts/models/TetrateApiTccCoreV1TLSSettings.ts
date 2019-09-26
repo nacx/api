@@ -19,6 +19,18 @@ import { exists, mapValues } from '../runtime';
  */
 export interface TetrateApiTccCoreV1TLSSettings {
     /**
+     * enable TLS settings for the application.
+     * @type {boolean}
+     * @memberof TetrateApiTccCoreV1TLSSettings
+     */
+    enabled?: boolean;
+    /**
+     * If set, the load balancer will redirect HTTP connections on port 80 to HTTPS port 443.
+     * @type {boolean}
+     * @memberof TetrateApiTccCoreV1TLSSettings
+     */
+    redirectToHttps?: boolean;
+    /**
      * For proxies running on VMs, the path to the file holding the server-side TLS certificate to use.
      * @type {string}
      * @memberof TetrateApiTccCoreV1TLSSettings
@@ -46,6 +58,8 @@ export interface TetrateApiTccCoreV1TLSSettings {
 
 export function TetrateApiTccCoreV1TLSSettingsFromJSON(json: any): TetrateApiTccCoreV1TLSSettings {
     return {
+        'enabled': !exists(json, 'enabled') ? undefined : json['enabled'],
+        'redirectToHttps': !exists(json, 'redirectToHttps') ? undefined : json['redirectToHttps'],
         'serverCertificate': !exists(json, 'serverCertificate') ? undefined : json['serverCertificate'],
         'privateKey': !exists(json, 'privateKey') ? undefined : json['privateKey'],
         'caCertificates': !exists(json, 'caCertificates') ? undefined : json['caCertificates'],
@@ -58,6 +72,8 @@ export function TetrateApiTccCoreV1TLSSettingsToJSON(value?: TetrateApiTccCoreV1
         return undefined;
     }
     return {
+        'enabled': value.enabled,
+        'redirectToHttps': value.redirectToHttps,
         'serverCertificate': value.serverCertificate,
         'privateKey': value.privateKey,
         'caCertificates': value.caCertificates,

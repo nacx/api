@@ -41,6 +41,10 @@ func (m *TLSSettings) Validate() error {
 		return nil
 	}
 
+	// no validation rules for Enabled
+
+	// no validation rules for RedirectToHttps
+
 	// no validation rules for ServerCertificate
 
 	// no validation rules for PrivateKey
