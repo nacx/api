@@ -413,9 +413,9 @@ message Endpoint {
   string address = 8 [(validate.rules).string.min_len = 1];
 
   // Set of inbound traffic ports associated with the endpoint. The
-  // ports must be associated with a port number that was declared
-  // as part of the service.
-  map<uint32, uint32> ports = 9 [(validate.rules).map.min_pairs = 1];
+  // ports must be associated with a port name that was declared
+  // as part of the deployment.
+  map<string, uint32> ports = 9 [(validate.rules).map.min_pairs = 1];
 
   // One or more labels associated with the endpoint.
   map<string, string> labels = 10;
@@ -449,9 +449,9 @@ message CreateEndpointRequest {
   string address = 8 [(validate.rules).string.min_len = 1];
 
   // Set of inbound traffic ports associated with the endpoint. The
-  // ports must be associated with a port number that was declared
-  // as part of the service.
-  map<uint32, uint32> ports = 9 [(validate.rules).map.min_pairs = 1];
+  // ports must be associated with a port name that was declared
+  // as part of the deployment.
+  map<string, uint32> ports = 9 [(validate.rules).map.min_pairs = 1];
 
   // One or more labels associated with the endpoint.
   map<string, string> labels = 10;

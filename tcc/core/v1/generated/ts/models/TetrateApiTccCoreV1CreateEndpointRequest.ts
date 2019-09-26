@@ -67,7 +67,7 @@ export interface TetrateApiTccCoreV1CreateEndpointRequest {
      */
     address?: string;
     /**
-     * Set of inbound traffic ports associated with the endpoint. The ports must be associated with a port number that was declared as part of the service.
+     * Set of inbound traffic ports associated with the endpoint. The ports must be associated with a port name that was declared as part of the deployment.
      * @type {{ [key: string]: number; }}
      * @memberof TetrateApiTccCoreV1CreateEndpointRequest
      */
