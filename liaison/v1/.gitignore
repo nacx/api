@@ -1,0 +1,10 @@
+envoyfilter.yaml
+*.log
+
+api-*
+
+# descriptor.
+liaison.proto-descriptor
+
+# Old merging files.
+.orig

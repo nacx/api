@@ -66,6 +66,10 @@ func (m *Service) Validate() error {
 
 	}
 
+	// no validation rules for Labels
+
+	// no validation rules for Annotations
+
 	return nil
 }
 

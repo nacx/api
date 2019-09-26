@@ -21,6 +21,10 @@ message Service {
   string namespace = 3;
 
   repeated Port ports = 4;
+
+  map<string, string> labels = 5;
+
+  map<string, string> annotations = 6;
 }
 
 message Port {
