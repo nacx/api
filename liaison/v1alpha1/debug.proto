@@ -1,0 +1,24 @@
+// Copyright (c) Tetrate, Inc 2018 All Rights Reserved.
+syntax = "proto3";
+
+package tetrate.api.liaison.v1alpha1;
+option go_package = "github.com/tetrateio/tetrate/api/liaison/v1alpha1;liav1alpha1";
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+// A service for debugging end-to-end integration.
+service DebugService {
+  rpc AddResource(AddResourceRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post : "/v1alpha1/liaison/debug"
+      body : "*"
+    };
+  };
+}
+
+// Request to upload a resource in a .yaml format.
+message AddResourceRequest {
+  // The resource in yaml string.
+  string yaml = 1;
+}
