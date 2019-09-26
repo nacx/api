@@ -1,0 +1,88 @@
+syntax = "proto3";
+
+package tetrate.api.inventory.v1alpha1;
+option go_package = "v1alpha1";
+
+// Protocols supported
+enum Protocol {
+    NONE  = 0;
+    HTTP  = 1;
+    GRPC  = 2;
+    REDIS = 3;
+}
+
+// Protocol Specifications that defines services or endpoints
+message ProtocolSpec {
+	Protocol proto = 1;
+	int32    port = 2;
+	int32    targetPort = 3;
+	int32    containerPort = 4;
+}
+
+// Generic Spec
+message GenericSpec {
+	// Spec name
+	string name = 1;
+
+	// Supported Protocol spec
+	ProtocolSpec spec = 2;
+}
+
+// Workload e.g. region, node, OU
+message Workload {
+	// Workload name
+	string name = 1;
+
+	// Workload provider e.g. AWS, GCP, Azure
+	string provider = 2;
+
+	// Region
+	string region = 3;
+
+	// Node, Pod
+	string node = 4;
+
+	// Organizational Unit
+	// TBD - could this be moved 
+	string ou = 5;
+}
+
+// Extended object metadata definitions
+message Metadata {
+	// Metadata namespace, version, spec
+	string namespace = 1;
+	string version = 2;
+	GenericSpec spec = 3;
+
+	// Domain associated
+	string domain = 4;
+
+	// Labels, annotations
+	map<string, string> labels = 5;
+	map<string, string> annotation = 6;
+}
+
+// Endpoint, IP or DNS, orts
+message Endpoint {
+	oneof ip {
+		bytes ipv4 = 1;
+		bytes ipv6 = 2;
+		string dnsName = 3;
+	}
+	int32 port = 5;
+}
+
+// Service status
+enum ServiceStatus {
+	UNHEALTHY = 0;
+	HEALTHY = 1;
+}
+
+// Service types supported to gather inventory
+// TBD: what other services kinds do we support: Deployment, Job, DaemonSet?
+enum ServiceKind {
+	SERVICE = 0;
+	JOB = 1;
+	VIRTUALSERVICE = 2;
+}
+

@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package tetrate.api.inventory.v1alpha1;
+option go_package = "v1alpha1";
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "common.proto";
+import "cluster.proto";
+
+// Tetrate Service definition
+message ServiceMessage {
+	// Service FQDN, kind
+	string name = 1;
+	ServiceKind kind = 2;
+
+	// Service specific metadata
+	Metadata metadata = 3;
+
+	// Status
+	ServiceStatus status = 4;
+
+	// Cluster information, endpoints
+	repeated Cluster cluster = 5;
+
+	// Cloud workload information
+	Workload workload = 6;
+
+	// last modified
+	google.protobuf.Timestamp last_modified = 7;
+}
+
+message ServiceResponse {
+	repeated ServiceMessage respMsg = 1;
+}
+
+// Tetrate Service inventory
+service Service {
+	rpc getServices(ServiceMessage) returns (ServiceResponse) {
+		option (google.api.http) = {
+			get: "/v1/service"
+			//body: "*"
+		};
+	};
+}

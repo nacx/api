@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package tetrate.api.inventory.v1alpha1;
+option go_package = "v1alpha1";
+
+import "google/protobuf/timestamp.proto";
+//import "tetrate/inventory/proto/v1/common.proto";
+import "common.proto";
+
+// Cluster is a collection of endpoints that servers
+// one or more services
+message Cluster {
+	// Cluster FQDN
+	string name = 1;
+
+	// Collection of endponts
+	repeated Endpoint endpoints = 2;
+
+	// last modified
+	google.protobuf.Timestamp last_modified = 3;
+}
