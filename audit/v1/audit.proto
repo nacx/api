@@ -1,0 +1,45 @@
+// Copyright (c) Tetrate, Inc 2018 All Rights Reserved.
+syntax = "proto3";
+
+package tetrate.api.audit.v1;
+option go_package = "github.com/tetrateio/tetrate/api/audit/v1;auditv1";
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+// The audit service provides access to the system events
+service AuditService {
+    // List audit logs. If no 'count' parameter has been specified, the last 25
+    // audit logs are returned
+    rpc ListAuditLogs(ListAuditLogsRequest) returns (ListAuditLogsResponse) {
+        option (google.api.http).get = "/v1/logs/audit";
+    };
+}
+
+// A system log describing something that happened in the system
+message AuditLog {
+    // Time when the audit log was generated
+    google.protobuf.Timestamp create_time = 1;
+    // Log severity (INFO, WARN, ERROR...)
+    string severity = 2;
+    // The kind of the audit log (PolicyAssigned, ServiceOrphaned, etc)
+    string kind = 3;
+    // Audit log details
+    string message = 4;
+    // Person who triggered the audit log, or "SYSTEM" if the log was automatically
+    // triggered by the system
+    string triggered_by = 5;
+    // Key value pairs with additional information for the audit log
+    map<string, string> properties = 6;
+}
+
+// Request to get the audit logs
+message ListAuditLogsRequest {
+    // Number of audit logs to retrieve. By default is 25.
+    int32 count = 1;
+}
+
+// The list of audit logs
+message ListAuditLogsResponse {
+    repeated AuditLog audit_logs = 1;
+}
