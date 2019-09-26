@@ -220,14 +220,6 @@ export interface ListServiceEndpointRequest {
     service: string;
 }
 
-export interface ListServiceSubsetEndpointRequest {
-    tenant: string;
-    cluster: string;
-    namespace: string;
-    service: string;
-    subset: string;
-}
-
 export interface UpdateClusterRequest {
     tenant: string;
     name: string;
@@ -1113,50 +1105,6 @@ export class PhysicalTopologyApi extends runtime.BaseAPI {
      */
     async listServiceEndpoint(requestParameters: ListServiceEndpointRequest): Promise<TetrateApiTccCoreV1ListEndpointResponse> {
         const response = await this.listServiceEndpointRaw(requestParameters);
-        return await response.value();
-    }
-
-    /**
-     */
-    async listServiceSubsetEndpointRaw(requestParameters: ListServiceSubsetEndpointRequest): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
-            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling listServiceSubsetEndpoint.');
-        }
-
-        if (requestParameters.cluster === null || requestParameters.cluster === undefined) {
-            throw new runtime.RequiredError('cluster','Required parameter requestParameters.cluster was null or undefined when calling listServiceSubsetEndpoint.');
-        }
-
-        if (requestParameters.namespace === null || requestParameters.namespace === undefined) {
-            throw new runtime.RequiredError('namespace','Required parameter requestParameters.namespace was null or undefined when calling listServiceSubsetEndpoint.');
-        }
-
-        if (requestParameters.service === null || requestParameters.service === undefined) {
-            throw new runtime.RequiredError('service','Required parameter requestParameters.service was null or undefined when calling listServiceSubsetEndpoint.');
-        }
-
-        if (requestParameters.subset === null || requestParameters.subset === undefined) {
-            throw new runtime.RequiredError('subset','Required parameter requestParameters.subset was null or undefined when calling listServiceSubsetEndpoint.');
-        }
-
-        const queryParameters: runtime.HTTPQuery = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        const response = await this.request({
-            path: `/v1/tenants/{tenant}/clusters/{cluster}/namespaces/{namespace}/services/{service}/subsets/{subset}/endpoints`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))).replace(`{${"namespace"}}`, encodeURIComponent(String(requestParameters.namespace))).replace(`{${"service"}}`, encodeURIComponent(String(requestParameters.service))).replace(`{${"subset"}}`, encodeURIComponent(String(requestParameters.subset))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        });
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccCoreV1ListEndpointResponseFromJSON(jsonValue));
-    }
-
-    /**
-     */
-    async listServiceSubsetEndpoint(requestParameters: ListServiceSubsetEndpointRequest): Promise<TetrateApiTccCoreV1ListEndpointResponse> {
-        const response = await this.listServiceSubsetEndpointRaw(requestParameters);
         return await response.value();
     }
 

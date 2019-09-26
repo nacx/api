@@ -16,6 +16,9 @@ import {
     TetrateApiTccCoreV1LBClass,
     TetrateApiTccCoreV1LBClassFromJSON,
     TetrateApiTccCoreV1LBClassToJSON,
+    TetrateApiTccCoreV1TLSSettings,
+    TetrateApiTccCoreV1TLSSettingsFromJSON,
+    TetrateApiTccCoreV1TLSSettingsToJSON,
 } from './';
 
 /**
@@ -74,10 +77,10 @@ export interface TetrateApiTccCoreV1LoadBalancer {
     labels?: { [key: string]: string; };
     /**
      * 
-     * @type {Array<string>}
+     * @type {{ [key: string]: TetrateApiTccCoreV1TLSSettings; }}
      * @memberof TetrateApiTccCoreV1LoadBalancer
      */
-    services?: Array<string>;
+    services?: { [key: string]: TetrateApiTccCoreV1TLSSettings; };
 }
 
 export function TetrateApiTccCoreV1LoadBalancerFromJSON(json: any): TetrateApiTccCoreV1LoadBalancer {
@@ -90,7 +93,7 @@ export function TetrateApiTccCoreV1LoadBalancerFromJSON(json: any): TetrateApiTc
         'managementIp': !exists(json, 'managementIp') ? undefined : json['managementIp'],
         'serviceName': !exists(json, 'serviceName') ? undefined : json['serviceName'],
         'labels': !exists(json, 'labels') ? undefined : json['labels'],
-        'services': !exists(json, 'services') ? undefined : json['services'],
+        'services': !exists(json, 'services') ? undefined : mapValues(json['services'], TetrateApiTccCoreV1TLSSettingsFromJSON),
     };
 }
 
@@ -107,7 +110,7 @@ export function TetrateApiTccCoreV1LoadBalancerToJSON(value?: TetrateApiTccCoreV
         'managementIp': value.managementIp,
         'serviceName': value.serviceName,
         'labels': value.labels,
-        'services': value.services,
+        'services': value.services === undefined ? undefined : mapValues(value.services, TetrateApiTccCoreV1TLSSettingsToJSON),
     };
 }
 

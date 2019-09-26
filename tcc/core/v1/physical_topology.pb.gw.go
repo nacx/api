@@ -1320,77 +1320,6 @@ func request_PhysicalTopology_ListServiceEndpoint_0(ctx context.Context, marshal
 
 }
 
-func request_PhysicalTopology_ListServiceSubsetEndpoint_0(ctx context.Context, marshaler runtime.Marshaler, client PhysicalTopologyClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ListServiceSubsetEndpointRequest
-	var metadata runtime.ServerMetadata
-
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["tenant"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "tenant")
-	}
-
-	protoReq.Tenant, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
-	}
-
-	val, ok = pathParams["cluster"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "cluster")
-	}
-
-	protoReq.Cluster, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "cluster", err)
-	}
-
-	val, ok = pathParams["namespace"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "namespace")
-	}
-
-	protoReq.Namespace, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "namespace", err)
-	}
-
-	val, ok = pathParams["service"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "service")
-	}
-
-	protoReq.Service, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "service", err)
-	}
-
-	val, ok = pathParams["subset"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "subset")
-	}
-
-	protoReq.Subset, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "subset", err)
-	}
-
-	msg, err := client.ListServiceSubsetEndpoint(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
-	return msg, metadata, err
-
-}
-
 func request_PhysicalTopology_UpdateEndpoint_0(ctx context.Context, marshaler runtime.Marshaler, client PhysicalTopologyClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq UpdateEndpointRequest
 	var metadata runtime.ServerMetadata
@@ -2083,26 +2012,6 @@ func RegisterPhysicalTopologyHandlerClient(ctx context.Context, mux *runtime.Ser
 
 	})
 
-	mux.Handle("GET", pattern_PhysicalTopology_ListServiceSubsetEndpoint_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := request_PhysicalTopology_ListServiceSubsetEndpoint_0(rctx, inboundMarshaler, client, req, pathParams)
-		ctx = runtime.NewServerMetadataContext(ctx, md)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-
-		forward_PhysicalTopology_ListServiceSubsetEndpoint_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-
-	})
-
 	mux.Handle("PUT", pattern_PhysicalTopology_UpdateEndpoint_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
@@ -2215,8 +2124,6 @@ var (
 
 	pattern_PhysicalTopology_ListServiceEndpoint_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7, 1, 0, 4, 1, 5, 8, 2, 9}, []string{"v1", "tenants", "tenant", "clusters", "cluster", "namespaces", "namespace", "services", "service", "endpoints"}, ""))
 
-	pattern_PhysicalTopology_ListServiceSubsetEndpoint_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7, 1, 0, 4, 1, 5, 8, 2, 9, 1, 0, 4, 1, 5, 10, 2, 11}, []string{"v1", "tenants", "tenant", "clusters", "cluster", "namespaces", "namespace", "services", "service", "subsets", "subset", "endpoints"}, ""))
-
 	pattern_PhysicalTopology_UpdateEndpoint_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7, 1, 0, 4, 1, 5, 8}, []string{"v1", "tenants", "tenant", "clusters", "cluster", "namespaces", "namespace", "endpoints", "name"}, ""))
 
 	pattern_PhysicalTopology_DeleteEndpoint_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7, 1, 0, 4, 1, 5, 8}, []string{"v1", "tenants", "tenant", "clusters", "cluster", "namespaces", "namespace", "endpoints", "name"}, ""))
@@ -2272,8 +2179,6 @@ var (
 	forward_PhysicalTopology_ListNamespaceEndpoint_0 = runtime.ForwardResponseMessage
 
 	forward_PhysicalTopology_ListServiceEndpoint_0 = runtime.ForwardResponseMessage
-
-	forward_PhysicalTopology_ListServiceSubsetEndpoint_0 = runtime.ForwardResponseMessage
 
 	forward_PhysicalTopology_UpdateEndpoint_0 = runtime.ForwardResponseMessage
 

@@ -124,6 +124,10 @@ func (m *LBTicketStatus) Validate() error {
 
 	// no validation rules for Requestid
 
+	// no validation rules for Operation
+
+	// no validation rules for State
+
 	// no validation rules for Note
 
 	return nil
@@ -491,13 +495,7 @@ func (m *LBPublishAction) Validate() error {
 		return nil
 	}
 
-	// no validation rules for LoadbalancerName
-
-	// no validation rules for LoadbalancerNamespace
-
-	// no validation rules for ServiceName
-
-	// no validation rules for ServiceNamespace
+	// no validation rules for Requestid
 
 	// no validation rules for Cluster
 
@@ -570,81 +568,6 @@ var _ interface {
 	ErrorName() string
 } = LBPublishActionValidationError{}
 
-// Validate checks the field values on TLSSettings with the rules defined in
-// the proto definition for this message. If any rules are violated, an error
-// is returned.
-func (m *TLSSettings) Validate() error {
-	if m == nil {
-		return nil
-	}
-
-	// no validation rules for Sni
-
-	// no validation rules for ServerCertificate
-
-	// no validation rules for PrivateKey
-
-	// no validation rules for CaCertificates
-
-	// no validation rules for SecretName
-
-	return nil
-}
-
-// TLSSettingsValidationError is the validation error returned by
-// TLSSettings.Validate if the designated constraints aren't met.
-type TLSSettingsValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e TLSSettingsValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e TLSSettingsValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e TLSSettingsValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e TLSSettingsValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e TLSSettingsValidationError) ErrorName() string { return "TLSSettingsValidationError" }
-
-// Error satisfies the builtin error interface
-func (e TLSSettingsValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sTLSSettings.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = TLSSettingsValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = TLSSettingsValidationError{}
-
 // Validate checks the field values on ListTicketsResponse_PendingTickets with
 // the rules defined in the proto definition for this message. If any rules
 // are violated, an error is returned.
@@ -652,6 +575,8 @@ func (m *ListTicketsResponse_PendingTickets) Validate() error {
 	if m == nil {
 		return nil
 	}
+
+	// no validation rules for Requestid
 
 	// no validation rules for LoadbalancerName
 

@@ -12,6 +12,15 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import {
+    TetrateApiTccWorkflowsV1LBOperation,
+    TetrateApiTccWorkflowsV1LBOperationFromJSON,
+    TetrateApiTccWorkflowsV1LBOperationToJSON,
+    TetrateApiTccWorkflowsV1LBTicketStatusRequestState,
+    TetrateApiTccWorkflowsV1LBTicketStatusRequestStateFromJSON,
+    TetrateApiTccWorkflowsV1LBTicketStatusRequestStateToJSON,
+} from './';
+
 /**
  * 
  * @export
@@ -38,6 +47,18 @@ export interface TetrateApiTccWorkflowsV1LBTicketStatus {
     requestid?: string;
     /**
      * 
+     * @type {TetrateApiTccWorkflowsV1LBOperation}
+     * @memberof TetrateApiTccWorkflowsV1LBTicketStatus
+     */
+    operation?: TetrateApiTccWorkflowsV1LBOperation;
+    /**
+     * 
+     * @type {TetrateApiTccWorkflowsV1LBTicketStatusRequestState}
+     * @memberof TetrateApiTccWorkflowsV1LBTicketStatus
+     */
+    state?: TetrateApiTccWorkflowsV1LBTicketStatusRequestState;
+    /**
+     * 
      * @type {string}
      * @memberof TetrateApiTccWorkflowsV1LBTicketStatus
      */
@@ -49,6 +70,8 @@ export function TetrateApiTccWorkflowsV1LBTicketStatusFromJSON(json: any): Tetra
         'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
         'cluster': !exists(json, 'cluster') ? undefined : json['cluster'],
         'requestid': !exists(json, 'requestid') ? undefined : json['requestid'],
+        'operation': !exists(json, 'operation') ? undefined : TetrateApiTccWorkflowsV1LBOperationFromJSON(json['operation']),
+        'state': !exists(json, 'state') ? undefined : TetrateApiTccWorkflowsV1LBTicketStatusRequestStateFromJSON(json['state']),
         'note': !exists(json, 'note') ? undefined : json['note'],
     };
 }
@@ -61,6 +84,8 @@ export function TetrateApiTccWorkflowsV1LBTicketStatusToJSON(value?: TetrateApiT
         'tenant': value.tenant,
         'cluster': value.cluster,
         'requestid': value.requestid,
+        'operation': TetrateApiTccWorkflowsV1LBOperationToJSON(value.operation),
+        'state': TetrateApiTccWorkflowsV1LBTicketStatusRequestStateToJSON(value.state),
         'note': value.note,
     };
 }

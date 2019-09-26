@@ -13,9 +13,9 @@
 
 import { exists, mapValues } from '../runtime';
 import {
-    TetrateApiTccWorkflowsV1ListTicketsResponsePendingTicketsOP,
-    TetrateApiTccWorkflowsV1ListTicketsResponsePendingTicketsOPFromJSON,
-    TetrateApiTccWorkflowsV1ListTicketsResponsePendingTicketsOPToJSON,
+    TetrateApiTccWorkflowsV1LBOperation,
+    TetrateApiTccWorkflowsV1LBOperationFromJSON,
+    TetrateApiTccWorkflowsV1LBOperationToJSON,
 } from './';
 
 /**
@@ -24,6 +24,12 @@ import {
  * @interface TetrateApiTccWorkflowsV1ListTicketsResponsePendingTickets
  */
 export interface TetrateApiTccWorkflowsV1ListTicketsResponsePendingTickets {
+    /**
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccWorkflowsV1ListTicketsResponsePendingTickets
+     */
+    requestid?: string;
     /**
      * 
      * @type {string}
@@ -50,19 +56,20 @@ export interface TetrateApiTccWorkflowsV1ListTicketsResponsePendingTickets {
     serviceNamespace?: string;
     /**
      * 
-     * @type {TetrateApiTccWorkflowsV1ListTicketsResponsePendingTicketsOP}
+     * @type {TetrateApiTccWorkflowsV1LBOperation}
      * @memberof TetrateApiTccWorkflowsV1ListTicketsResponsePendingTickets
      */
-    operation?: TetrateApiTccWorkflowsV1ListTicketsResponsePendingTicketsOP;
+    operation?: TetrateApiTccWorkflowsV1LBOperation;
 }
 
 export function TetrateApiTccWorkflowsV1ListTicketsResponsePendingTicketsFromJSON(json: any): TetrateApiTccWorkflowsV1ListTicketsResponsePendingTickets {
     return {
+        'requestid': !exists(json, 'requestid') ? undefined : json['requestid'],
         'loadbalancerName': !exists(json, 'loadbalancerName') ? undefined : json['loadbalancerName'],
         'loadbalancerNamespace': !exists(json, 'loadbalancerNamespace') ? undefined : json['loadbalancerNamespace'],
         'serviceHostname': !exists(json, 'serviceHostname') ? undefined : json['serviceHostname'],
         'serviceNamespace': !exists(json, 'serviceNamespace') ? undefined : json['serviceNamespace'],
-        'operation': !exists(json, 'operation') ? undefined : TetrateApiTccWorkflowsV1ListTicketsResponsePendingTicketsOPFromJSON(json['operation']),
+        'operation': !exists(json, 'operation') ? undefined : TetrateApiTccWorkflowsV1LBOperationFromJSON(json['operation']),
     };
 }
 
@@ -71,11 +78,12 @@ export function TetrateApiTccWorkflowsV1ListTicketsResponsePendingTicketsToJSON(
         return undefined;
     }
     return {
+        'requestid': value.requestid,
         'loadbalancerName': value.loadbalancerName,
         'loadbalancerNamespace': value.loadbalancerNamespace,
         'serviceHostname': value.serviceHostname,
         'serviceNamespace': value.serviceNamespace,
-        'operation': TetrateApiTccWorkflowsV1ListTicketsResponsePendingTicketsOPToJSON(value.operation),
+        'operation': TetrateApiTccWorkflowsV1LBOperationToJSON(value.operation),
     };
 }
 

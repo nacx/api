@@ -1209,6 +1209,8 @@ func (m *LoadBalancer) Validate() error {
 
 	// no validation rules for Labels
 
+	// no validation rules for Services
+
 	switch m.ClassInfo.(type) {
 
 	case *LoadBalancer_ManagementIp:

@@ -55,6 +55,7 @@ export * from './TetrateApiTccCoreV1RouteDestination';
 export * from './TetrateApiTccCoreV1Service';
 export * from './TetrateApiTccCoreV1StringMatch';
 export * from './TetrateApiTccCoreV1Subset';
+export * from './TetrateApiTccCoreV1TLSSettings';
 export * from './TetrateApiTccCoreV1TcpSettings';
 export * from './TetrateApiTccCoreV1Team';
 export * from './TetrateApiTccCoreV1TeamMembershipRequest';

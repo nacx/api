@@ -75,6 +75,6 @@ $(YARN): $(NPM)
 
 $(OPENAPI_GEN): $(YARN)
 	@echo installing openapi-generator
-	yarn global add @openapitools/openapi-generator-cli@0.0.9-4.0.0-beta3
+	yarn global add gen8
 
 .PHONY: all clean generate-ts

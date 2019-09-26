@@ -4,6 +4,7 @@ package tetrate.api.tcc.workflows.v1;
 option go_package = "github.com/tetrateio/tetrate/api/tcc/workflows/v1";
 
 import "google/api/annotations.proto";
+import "tcc/core/v1/tlssettings.proto";
 
 //    service owner   |  network admin
 // -------------------|-----------------
@@ -48,7 +49,7 @@ service LoadBalancerWorkflow {
   };
 
   // LB owner calls this API with additional settings like TLS, to
-  // finally expose the service on the load balancer
+  // finally expose the service on the load balancer or remove a detached service
   rpc Publish(LBPublishAction) returns (LBTicketStatus) {
     option (google.api.http) = {
       post: "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/publish"
@@ -89,12 +90,17 @@ message LBTicketDetails {
   string tenant = 6;
 }
 
+enum LBOperation {
+  ATTACH = 0;
+  DETACH = 1;
+}
+
 message LBTicketStatus {
   string tenant = 1;
   string cluster = 2;
   // e.g. attach-789
   string requestid = 3;
-
+  LBOperation operation = 4;
   enum RequestState {
     PENDING = 0;
     APPROVED = 1;
@@ -102,6 +108,7 @@ message LBTicketStatus {
     PUBLISHED = 3;
     CANCELED = 4;
   }
+  RequestState state = 5;
   string note = 6;
 }
 
@@ -112,15 +119,12 @@ message ListTicketsRequest {
 
 message ListTicketsResponse {
   message PendingTickets {
-    string loadbalancer_name = 1;
-    string loadbalancer_namespace = 2;
-    string service_hostname = 3;
-    string service_namespace = 4;
-    enum OP {
-      ATTACH = 0;
-      DETACH = 1;
-    }
-    OP operation = 5;
+    string requestid = 1;
+    string loadbalancer_name = 2;
+    string loadbalancer_namespace = 3;
+    string service_hostname = 4;
+    string service_namespace = 5;
+    LBOperation operation = 6;
   }
 
   string cluster = 1;
@@ -142,39 +146,9 @@ message LBTicketResolution {
 }
 
 message LBPublishAction {
-  string loadbalancer_name = 1;
-  string loadbalancer_namespace = 2;
-  string service_name = 3;
-  string service_namespace = 4;
-  string cluster = 5;
-  string tenant = 6;
-  TLSSettings tls = 7;
+  string requestid = 1;
+  string cluster = 2;
+  string tenant = 3;
+  tetrate.api.tcc.core.v1.TLSSettings tls = 4;
 }
 
-message TLSSettings {
-  // If specified, only allow requests that match the SNI value.
-  string sni = 1;
-
-  // For proxies running on VMs, the path to the file holding the
-  // server-side TLS certificate to use.
-  string server_certificate = 2;
-
-  // For proxies running on VMs, the path to the file holding the
-  // server's private key.
-  string private_key = 3;
-
-  // For proxies running on VMs, the path to a file containing
-  // certificate authority certificates to use in verifying a
-  // presented client side certificate for mutual TLS connections.
-  string ca_certificates = 4;
-
-  // For proxies running on Kubernetes, the name of the secret that
-  // holds the TLS certs. Currently applicable only on Kubernetes.
-  // The secret should contain the server certificate and the private
-  // key. If mutual TLS is being used, an additional secret with name
-  // secretName-cacert should be created with the CaCertificates that
-  // the server will use to verify client side certificates. If the
-  // service is exposed via a load balancer, the secret must be
-  // accessible to it.
-  string secret_name = 5;
-}

@@ -9,6 +9,7 @@ import "endpoint.proto";
 import "service.proto";
 import "client_settings.proto";
 import "permissions.proto";
+import "tlssettings.proto";
 
 // Physical resource hierarchy - clusters, namespaces, services,
 // endpoints, and load balancers.  For kubernetes, the namesapce
@@ -171,12 +172,6 @@ service PhysicalTopology {
     };
   };
 
-  rpc ListServiceSubsetEndpoint(ListServiceSubsetEndpointRequest) returns (ListEndpointResponse) {
-    option (google.api.http) = {
-      get: "/v1/tenants/{tenant}/clusters/{cluster}/namespaces/{namespace}/services/{service}/subsets/{subset}/endpoints"
-    };
-  };
-
   rpc UpdateEndpoint(UpdateEndpointRequest) returns (Endpoint) {
     option (google.api.http) = {
       put: "/v1/tenants/{tenant}/clusters/{cluster}/namespaces/{namespace}/endpoints/{name}"
@@ -324,9 +319,9 @@ message LoadBalancer {
 
   map<string, string> labels = 8;
 
-  // List of services (in cluster) attached to this loadbalancer in the form
-  // namespace/hostname
-  repeated string services = 9;
+  // Map of services (in cluster) attached to this loadbalancer in the form
+  // namespace/hostname, with their TLS credential information
+  map<string, TLSSettings> services = 9;
 }
 
 message CreateLoadBalancerRequest {

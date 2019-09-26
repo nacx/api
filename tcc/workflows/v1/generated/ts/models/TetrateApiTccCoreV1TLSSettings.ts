@@ -15,42 +15,42 @@ import { exists, mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface TetrateApiTccWorkflowsV1TLSSettings
+ * @interface TetrateApiTccCoreV1TLSSettings
  */
-export interface TetrateApiTccWorkflowsV1TLSSettings {
+export interface TetrateApiTccCoreV1TLSSettings {
     /**
      * If specified, only allow requests that match the SNI value.
      * @type {string}
-     * @memberof TetrateApiTccWorkflowsV1TLSSettings
+     * @memberof TetrateApiTccCoreV1TLSSettings
      */
     sni?: string;
     /**
      * For proxies running on VMs, the path to the file holding the server-side TLS certificate to use.
      * @type {string}
-     * @memberof TetrateApiTccWorkflowsV1TLSSettings
+     * @memberof TetrateApiTccCoreV1TLSSettings
      */
     serverCertificate?: string;
     /**
      * For proxies running on VMs, the path to the file holding the server\'s private key.
      * @type {string}
-     * @memberof TetrateApiTccWorkflowsV1TLSSettings
+     * @memberof TetrateApiTccCoreV1TLSSettings
      */
     privateKey?: string;
     /**
      * For proxies running on VMs, the path to a file containing certificate authority certificates to use in verifying a presented client side certificate for mutual TLS connections.
      * @type {string}
-     * @memberof TetrateApiTccWorkflowsV1TLSSettings
+     * @memberof TetrateApiTccCoreV1TLSSettings
      */
     caCertificates?: string;
     /**
      * For proxies running on Kubernetes, the name of the secret that holds the TLS certs. Currently applicable only on Kubernetes. The secret should contain the server certificate and the private key. If mutual TLS is being used, an additional secret with name secretName-cacert should be created with the CaCertificates that the server will use to verify client side certificates. If the service is exposed via a load balancer, the secret must be accessible to it.
      * @type {string}
-     * @memberof TetrateApiTccWorkflowsV1TLSSettings
+     * @memberof TetrateApiTccCoreV1TLSSettings
      */
     secretName?: string;
 }
 
-export function TetrateApiTccWorkflowsV1TLSSettingsFromJSON(json: any): TetrateApiTccWorkflowsV1TLSSettings {
+export function TetrateApiTccCoreV1TLSSettingsFromJSON(json: any): TetrateApiTccCoreV1TLSSettings {
     return {
         'sni': !exists(json, 'sni') ? undefined : json['sni'],
         'serverCertificate': !exists(json, 'serverCertificate') ? undefined : json['serverCertificate'],
@@ -60,7 +60,7 @@ export function TetrateApiTccWorkflowsV1TLSSettingsFromJSON(json: any): TetrateA
     };
 }
 
-export function TetrateApiTccWorkflowsV1TLSSettingsToJSON(value?: TetrateApiTccWorkflowsV1TLSSettings): any {
+export function TetrateApiTccCoreV1TLSSettingsToJSON(value?: TetrateApiTccCoreV1TLSSettings): any {
     if (value === undefined) {
         return undefined;
     }

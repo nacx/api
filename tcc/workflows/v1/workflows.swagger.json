@@ -146,7 +146,7 @@
     },
     "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/publish": {
       "post": {
-        "summary": "LB owner calls this API with additional settings like TLS, to\nfinally expose the service on the load balancer",
+        "summary": "LB owner calls this API with additional settings like TLS, to\nfinally expose the service on the load balancer or remove a detached service",
         "operationId": "Publish",
         "responses": {
           "200": {
@@ -383,19 +383,43 @@
     }
   },
   "definitions": {
+    "tetrate.api.tcc.core.v1.TLSSettings": {
+      "type": "object",
+      "properties": {
+        "sni": {
+          "type": "string",
+          "description": "If specified, only allow requests that match the SNI value."
+        },
+        "serverCertificate": {
+          "type": "string",
+          "description": "For proxies running on VMs, the path to the file holding the\nserver-side TLS certificate to use."
+        },
+        "privateKey": {
+          "type": "string",
+          "description": "For proxies running on VMs, the path to the file holding the\nserver's private key."
+        },
+        "caCertificates": {
+          "type": "string",
+          "description": "For proxies running on VMs, the path to a file containing\ncertificate authority certificates to use in verifying a\npresented client side certificate for mutual TLS connections."
+        },
+        "secretName": {
+          "type": "string",
+          "description": "For proxies running on Kubernetes, the name of the secret that\nholds the TLS certs. Currently applicable only on Kubernetes.\nThe secret should contain the server certificate and the private\nkey. If mutual TLS is being used, an additional secret with name\nsecretName-cacert should be created with the CaCertificates that\nthe server will use to verify client side certificates. If the\nservice is exposed via a load balancer, the secret must be\naccessible to it."
+        }
+      }
+    },
+    "tetrate.api.tcc.workflows.v1.LBOperation": {
+      "type": "string",
+      "enum": [
+        "ATTACH",
+        "DETACH"
+      ],
+      "default": "ATTACH"
+    },
     "tetrate.api.tcc.workflows.v1.LBPublishAction": {
       "type": "object",
       "properties": {
-        "loadbalancerName": {
-          "type": "string"
-        },
-        "loadbalancerNamespace": {
-          "type": "string"
-        },
-        "serviceName": {
-          "type": "string"
-        },
-        "serviceNamespace": {
+        "requestid": {
           "type": "string"
         },
         "cluster": {
@@ -405,7 +429,7 @@
           "type": "string"
         },
         "tls": {
-          "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.TLSSettings"
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.TLSSettings"
         }
       }
     },
@@ -477,10 +501,27 @@
           "type": "string",
           "title": "e.g. attach-789"
         },
+        "operation": {
+          "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.LBOperation"
+        },
+        "state": {
+          "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.LBTicketStatus.RequestState"
+        },
         "note": {
           "type": "string"
         }
       }
+    },
+    "tetrate.api.tcc.workflows.v1.LBTicketStatus.RequestState": {
+      "type": "string",
+      "enum": [
+        "PENDING",
+        "APPROVED",
+        "DENIED",
+        "PUBLISHED",
+        "CANCELED"
+      ],
+      "default": "PENDING"
     },
     "tetrate.api.tcc.workflows.v1.ListTicketsResponse": {
       "type": "object",
@@ -499,6 +540,9 @@
     "tetrate.api.tcc.workflows.v1.ListTicketsResponse.PendingTickets": {
       "type": "object",
       "properties": {
+        "requestid": {
+          "type": "string"
+        },
         "loadbalancerName": {
           "type": "string"
         },
@@ -512,40 +556,7 @@
           "type": "string"
         },
         "operation": {
-          "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.ListTicketsResponse.PendingTickets.OP"
-        }
-      }
-    },
-    "tetrate.api.tcc.workflows.v1.ListTicketsResponse.PendingTickets.OP": {
-      "type": "string",
-      "enum": [
-        "ATTACH",
-        "DETACH"
-      ],
-      "default": "ATTACH"
-    },
-    "tetrate.api.tcc.workflows.v1.TLSSettings": {
-      "type": "object",
-      "properties": {
-        "sni": {
-          "type": "string",
-          "description": "If specified, only allow requests that match the SNI value."
-        },
-        "serverCertificate": {
-          "type": "string",
-          "description": "For proxies running on VMs, the path to the file holding the\nserver-side TLS certificate to use."
-        },
-        "privateKey": {
-          "type": "string",
-          "description": "For proxies running on VMs, the path to the file holding the\nserver's private key."
-        },
-        "caCertificates": {
-          "type": "string",
-          "description": "For proxies running on VMs, the path to a file containing\ncertificate authority certificates to use in verifying a\npresented client side certificate for mutual TLS connections."
-        },
-        "secretName": {
-          "type": "string",
-          "description": "For proxies running on Kubernetes, the name of the secret that\nholds the TLS certs. Currently applicable only on Kubernetes.\nThe secret should contain the server certificate and the private\nkey. If mutual TLS is being used, an additional secret with name\nsecretName-cacert should be created with the CaCertificates that\nthe server will use to verify client side certificates. If the\nservice is exposed via a load balancer, the secret must be\naccessible to it."
+          "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.LBOperation"
         }
       }
     }

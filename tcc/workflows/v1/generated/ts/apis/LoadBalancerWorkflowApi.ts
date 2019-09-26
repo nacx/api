@@ -365,7 +365,7 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
     }
 
     /**
-     * LB owner calls this API with additional settings like TLS, to finally expose the service on the load balancer
+     * LB owner calls this API with additional settings like TLS, to finally expose the service on the load balancer or remove a detached service
      */
     async publishRaw(requestParameters: PublishRequest): Promise<runtime.ApiResponse<any>> {
         if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
@@ -398,7 +398,7 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
     }
 
     /**
-     * LB owner calls this API with additional settings like TLS, to finally expose the service on the load balancer
+     * LB owner calls this API with additional settings like TLS, to finally expose the service on the load balancer or remove a detached service
      */
     async publish(requestParameters: PublishRequest): Promise<TetrateApiTccWorkflowsV1LBTicketStatus> {
         const response = await this.publishRaw(requestParameters);

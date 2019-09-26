@@ -16,16 +16,16 @@
  * @export
  * @enum {string}
  */
-export enum TetrateApiTccWorkflowsV1ListTicketsResponsePendingTicketsOP {
+export enum TetrateApiTccWorkflowsV1LBOperation {
     ATTACH = 'ATTACH',
     DETACH = 'DETACH'
 }
 
-export function TetrateApiTccWorkflowsV1ListTicketsResponsePendingTicketsOPFromJSON(json: any): TetrateApiTccWorkflowsV1ListTicketsResponsePendingTicketsOP {
-    return json as TetrateApiTccWorkflowsV1ListTicketsResponsePendingTicketsOP;
+export function TetrateApiTccWorkflowsV1LBOperationFromJSON(json: any): TetrateApiTccWorkflowsV1LBOperation {
+    return json as TetrateApiTccWorkflowsV1LBOperation;
 }
 
-export function TetrateApiTccWorkflowsV1ListTicketsResponsePendingTicketsOPToJSON(value?: TetrateApiTccWorkflowsV1ListTicketsResponsePendingTicketsOP): any {
+export function TetrateApiTccWorkflowsV1LBOperationToJSON(value?: TetrateApiTccWorkflowsV1LBOperation): any {
     return value as any;
 }
 

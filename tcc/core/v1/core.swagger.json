@@ -1062,60 +1062,6 @@
         ]
       }
     },
-    "/v1/tenants/{tenant}/clusters/{cluster}/namespaces/{namespace}/services/{service}/subsets/{subset}/endpoints": {
-      "get": {
-        "operationId": "ListServiceSubsetEndpoint",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.ListEndpointResponse"
-            }
-          },
-          "404": {
-            "description": "Returned when the resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "tenant",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "cluster",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "service",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "subset",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "PhysicalTopology"
-        ]
-      }
-    },
     "/v1/tenants/{tenant}/clusters/{cluster}/namespaces/{name}": {
       "get": {
         "operationId": "GetNamespace",
@@ -3547,11 +3493,11 @@
           }
         },
         "services": {
-          "type": "array",
-          "items": {
-            "type": "string"
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/tetrate.api.tcc.core.v1.TLSSettings"
           },
-          "title": "List of services (in cluster) attached to this loadbalancer in the form\nnamespace/hostname"
+          "title": "Map of services (in cluster) attached to this loadbalancer in the form\nnamespace/hostname, with their TLS credential information"
         }
       }
     },
@@ -3768,6 +3714,31 @@
             "type": "string"
           },
           "description": "Labels apply a filter over the endpoints of a service in the\nservice registry."
+        }
+      }
+    },
+    "tetrate.api.tcc.core.v1.TLSSettings": {
+      "type": "object",
+      "properties": {
+        "sni": {
+          "type": "string",
+          "description": "If specified, only allow requests that match the SNI value."
+        },
+        "serverCertificate": {
+          "type": "string",
+          "description": "For proxies running on VMs, the path to the file holding the\nserver-side TLS certificate to use."
+        },
+        "privateKey": {
+          "type": "string",
+          "description": "For proxies running on VMs, the path to the file holding the\nserver's private key."
+        },
+        "caCertificates": {
+          "type": "string",
+          "description": "For proxies running on VMs, the path to a file containing\ncertificate authority certificates to use in verifying a\npresented client side certificate for mutual TLS connections."
+        },
+        "secretName": {
+          "type": "string",
+          "description": "For proxies running on Kubernetes, the name of the secret that\nholds the TLS certs. Currently applicable only on Kubernetes.\nThe secret should contain the server certificate and the private\nkey. If mutual TLS is being used, an additional secret with name\nsecretName-cacert should be created with the CaCertificates that\nthe server will use to verify client side certificates. If the\nservice is exposed via a load balancer, the secret must be\naccessible to it."
         }
       }
     },
