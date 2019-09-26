@@ -62,7 +62,7 @@ clean:
 # TODO(dio): Can we cache this? e.g. generated/ts/index.ts.
 generate-ts: $(OPENAPI_GEN) $(SWAGGER)
 	@echo "generating typescript-fetch from swagger"
-	$(OPENAPI_GEN) generate -i ${SWAGGER} -g typescript-fetch -o ${TS_OUTPUT_GEN} -c generated/ts/config.json
+	$(OPENAPI_GEN) generate -i ${SWAGGER} -g typescript-fetch -o ${TS_OUTPUT_GEN}
 	@echo "done generating typescript files"
 
 $(NPM):

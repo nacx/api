@@ -41,20 +41,20 @@ export interface TetrateApiTccCoreV1RoutingInfo {
      * @type {TetrateApiTccCoreV1HttpSettings}
      * @memberof TetrateApiTccCoreV1RoutingInfo
      */
-    http_settings?: TetrateApiTccCoreV1HttpSettings;
+    httpSettings?: TetrateApiTccCoreV1HttpSettings;
     /**
      * 
      * @type {TetrateApiTccCoreV1TcpSettings}
      * @memberof TetrateApiTccCoreV1RoutingInfo
      */
-    tcp_settings?: TetrateApiTccCoreV1TcpSettings;
+    tcpSettings?: TetrateApiTccCoreV1TcpSettings;
 }
 
 export function TetrateApiTccCoreV1RoutingInfoFromJSON(json: any): TetrateApiTccCoreV1RoutingInfo {
     return {
         'subsets': !exists(json, 'subsets') ? undefined : (json['subsets'] as Array<any>).map(TetrateApiTccCoreV1SubsetFromJSON),
-        'http_settings': !exists(json, 'httpSettings') ? undefined : TetrateApiTccCoreV1HttpSettingsFromJSON(json['httpSettings']),
-        'tcp_settings': !exists(json, 'tcpSettings') ? undefined : TetrateApiTccCoreV1TcpSettingsFromJSON(json['tcpSettings']),
+        'httpSettings': !exists(json, 'httpSettings') ? undefined : TetrateApiTccCoreV1HttpSettingsFromJSON(json['httpSettings']),
+        'tcpSettings': !exists(json, 'tcpSettings') ? undefined : TetrateApiTccCoreV1TcpSettingsFromJSON(json['tcpSettings']),
     };
 }
 
@@ -64,8 +64,8 @@ export function TetrateApiTccCoreV1RoutingInfoToJSON(value?: TetrateApiTccCoreV1
     }
     return {
         'subsets': value.subsets === undefined ? undefined : (value.subsets as Array<any>).map(TetrateApiTccCoreV1SubsetToJSON),
-        'httpSettings': TetrateApiTccCoreV1HttpSettingsToJSON(value.http_settings),
-        'tcpSettings': TetrateApiTccCoreV1TcpSettingsToJSON(value.tcp_settings),
+        'httpSettings': TetrateApiTccCoreV1HttpSettingsToJSON(value.httpSettings),
+        'tcpSettings': TetrateApiTccCoreV1TcpSettingsToJSON(value.tcpSettings),
     };
 }
 

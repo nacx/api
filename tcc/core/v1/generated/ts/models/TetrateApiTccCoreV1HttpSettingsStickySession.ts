@@ -41,14 +41,14 @@ export interface TetrateApiTccCoreV1HttpSettingsStickySession {
      * @type {boolean}
      * @memberof TetrateApiTccCoreV1HttpSettingsStickySession
      */
-    use_source_ip?: boolean;
+    useSourceIp?: boolean;
 }
 
 export function TetrateApiTccCoreV1HttpSettingsStickySessionFromJSON(json: any): TetrateApiTccCoreV1HttpSettingsStickySession {
     return {
         'header': !exists(json, 'header') ? undefined : json['header'],
         'cookie': !exists(json, 'cookie') ? undefined : TetrateApiTccCoreV1HttpSettingsHTTPCookieFromJSON(json['cookie']),
-        'use_source_ip': !exists(json, 'useSourceIp') ? undefined : json['useSourceIp'],
+        'useSourceIp': !exists(json, 'useSourceIp') ? undefined : json['useSourceIp'],
     };
 }
 
@@ -59,7 +59,7 @@ export function TetrateApiTccCoreV1HttpSettingsStickySessionToJSON(value?: Tetra
     return {
         'header': value.header,
         'cookie': TetrateApiTccCoreV1HttpSettingsHTTPCookieToJSON(value.cookie),
-        'useSourceIp': value.use_source_ip,
+        'useSourceIp': value.useSourceIp,
     };
 }
 

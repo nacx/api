@@ -86,7 +86,7 @@ export interface TetrateApiTccCoreV1CreateServiceRequest {
      * @type {TetrateApiTccCoreV1RoutingInfo}
      * @memberof TetrateApiTccCoreV1CreateServiceRequest
      */
-    routing_info?: TetrateApiTccCoreV1RoutingInfo;
+    routingInfo?: TetrateApiTccCoreV1RoutingInfo;
 }
 
 export function TetrateApiTccCoreV1CreateServiceRequestFromJSON(json: any): TetrateApiTccCoreV1CreateServiceRequest {
@@ -100,7 +100,7 @@ export function TetrateApiTccCoreV1CreateServiceRequestFromJSON(json: any): Tetr
         'hostname': !exists(json, 'hostname') ? undefined : json['hostname'],
         'labels': !exists(json, 'labels') ? undefined : json['labels'],
         'ports': !exists(json, 'ports') ? undefined : (json['ports'] as Array<any>).map(TetrateApiTccCoreV1PortFromJSON),
-        'routing_info': !exists(json, 'routingInfo') ? undefined : TetrateApiTccCoreV1RoutingInfoFromJSON(json['routingInfo']),
+        'routingInfo': !exists(json, 'routingInfo') ? undefined : TetrateApiTccCoreV1RoutingInfoFromJSON(json['routingInfo']),
     };
 }
 
@@ -118,7 +118,7 @@ export function TetrateApiTccCoreV1CreateServiceRequestToJSON(value?: TetrateApi
         'hostname': value.hostname,
         'labels': value.labels,
         'ports': value.ports === undefined ? undefined : (value.ports as Array<any>).map(TetrateApiTccCoreV1PortToJSON),
-        'routingInfo': TetrateApiTccCoreV1RoutingInfoToJSON(value.routing_info),
+        'routingInfo': TetrateApiTccCoreV1RoutingInfoToJSON(value.routingInfo),
     };
 }
 
