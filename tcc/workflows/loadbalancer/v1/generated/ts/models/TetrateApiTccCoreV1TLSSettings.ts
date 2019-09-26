@@ -23,7 +23,7 @@ export interface TetrateApiTccCoreV1TLSSettings {
      * @type {boolean}
      * @memberof TetrateApiTccCoreV1TLSSettings
      */
-    enabled?: boolean;
+    tlsEnabled?: boolean;
     /**
      * If set, the load balancer will redirect HTTP connections on port 80 to HTTPS port 443.
      * @type {boolean}
@@ -58,7 +58,7 @@ export interface TetrateApiTccCoreV1TLSSettings {
 
 export function TetrateApiTccCoreV1TLSSettingsFromJSON(json: any): TetrateApiTccCoreV1TLSSettings {
     return {
-        'enabled': !exists(json, 'enabled') ? undefined : json['enabled'],
+        'tlsEnabled': !exists(json, 'tlsEnabled') ? undefined : json['tlsEnabled'],
         'redirectToHttps': !exists(json, 'redirectToHttps') ? undefined : json['redirectToHttps'],
         'serverCertificate': !exists(json, 'serverCertificate') ? undefined : json['serverCertificate'],
         'privateKey': !exists(json, 'privateKey') ? undefined : json['privateKey'],
@@ -72,7 +72,7 @@ export function TetrateApiTccCoreV1TLSSettingsToJSON(value?: TetrateApiTccCoreV1
         return undefined;
     }
     return {
-        'enabled': value.enabled,
+        'tlsEnabled': value.tlsEnabled,
         'redirectToHttps': value.redirectToHttps,
         'serverCertificate': value.serverCertificate,
         'privateKey': value.privateKey,

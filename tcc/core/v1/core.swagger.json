@@ -4201,7 +4201,7 @@
     "tetrate.api.tcc.core.v1.TLSSettings": {
       "type": "object",
       "properties": {
-        "enabled": {
+        "tlsEnabled": {
           "type": "boolean",
           "format": "boolean",
           "description": "enable TLS settings for the application."

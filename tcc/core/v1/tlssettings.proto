@@ -5,7 +5,7 @@ option go_package = "github.com/tetrateio/tetrate/api/tcc/core/v1";
 
 message TLSSettings {
   // enable TLS settings for the application.
-  bool enabled = 1;
+  bool tls_enabled = 1;
 
   // If set, the load balancer will redirect HTTP connections on port 80 to HTTPS port 443.
   bool redirect_to_https = 2;
