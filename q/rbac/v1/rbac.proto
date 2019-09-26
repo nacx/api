@@ -126,6 +126,10 @@ message CreateRoleRequest {
     (validate.rules).repeated = {
       min_items: 1,
       items: { enum: { defined_only: true } },
+      // TODO(nacx); Investigate why the following (to blacklist the INVALID value) does not work:
+      //    items: { enum: { defined_only: true, not_in: [0] } }
+      // The generated proto does not compile and presents this error:
+      //    /rbac.pb.validate.go:336:15: undefined: _CreateRoleRequest_Permissions_NotInLookup
   }];
   repeated string resources = 4;
 }
