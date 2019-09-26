@@ -2897,37 +2897,6 @@
         }
       }
     },
-    "tetrate.api.tcc.core.v1.BasicAuthSettings": {
-      "type": "object",
-      "properties": {
-        "realm": {
-          "type": "string",
-          "description": "Realm value for WWW-Authenticate header. If empty, will be set to LB hostname."
-        },
-        "charset": {
-          "type": "string",
-          "description": "Charset value for WWW-Authenticate header. If empty, will be set to “UTF-8”."
-        },
-        "users": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/tetrate.api.tcc.core.v1.BasicAuthSettings.User"
-          },
-          "description": "List of basic auth users."
-        }
-      }
-    },
-    "tetrate.api.tcc.core.v1.BasicAuthSettings.User": {
-      "type": "object",
-      "properties": {
-        "username": {
-          "type": "string"
-        },
-        "password": {
-          "type": "string"
-        }
-      }
-    },
     "tetrate.api.tcc.core.v1.BulkLoadClusterRequest": {
       "type": "object",
       "properties": {
@@ -3924,14 +3893,6 @@
         "tcpSettings": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.TcpSettings",
           "description": "TCP specific settings, transformations and routing rules associated with non-HTTP traffic to this service."
-        },
-        "basicAuthSettings": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.BasicAuthSettings",
-          "description": "Basic auth settings."
-        },
-        "rateLimitSettings": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.RateLimitSettings",
-          "description": "Rate limit settings."
         }
       }
     },
@@ -4120,20 +4081,6 @@
           "type": "integer",
           "format": "int64",
           "description": "Indicates the node port attached to a physical deployment on a kubernetes cluster."
-        }
-      }
-    },
-    "tetrate.api.tcc.core.v1.RateLimitSettings": {
-      "type": "object",
-      "properties": {
-        "requestsLimit": {
-          "type": "integer",
-          "format": "int64",
-          "description": "The number of requests limit per time interval."
-        },
-        "interval": {
-          "type": "string",
-          "description": "Interval for requests within limit."
         }
       }
     },
