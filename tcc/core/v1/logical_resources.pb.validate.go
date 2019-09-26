@@ -1802,10 +1802,24 @@ func (m *LoadBalancer) Validate() error {
 
 	// no validation rules for EnableWorkflows
 
+	if _, ok := _LoadBalancer_LoadBalancerClass_NotInLookup[m.GetLoadBalancerClass()]; ok {
+		return LoadBalancerValidationError{
+			field:  "LoadBalancerClass",
+			reason: "value must not be in list [0]",
+		}
+	}
+
 	if _, ok := LoadBalancerClass_name[int32(m.GetLoadBalancerClass())]; !ok {
 		return LoadBalancerValidationError{
 			field:  "LoadBalancerClass",
 			reason: "value must be one of the defined enum values",
+		}
+	}
+
+	if _, ok := _LoadBalancer_Registry_NotInLookup[m.GetRegistry()]; ok {
+		return LoadBalancerValidationError{
+			field:  "Registry",
+			reason: "value must not be in list [0]",
 		}
 	}
 
@@ -1823,9 +1837,36 @@ func (m *LoadBalancer) Validate() error {
 		}
 	}
 
-	// no validation rules for Labels
+	if len(m.GetLabels()) < 1 {
+		return LoadBalancerValidationError{
+			field:  "Labels",
+			reason: "value must contain at least 1 pair(s)",
+		}
+	}
 
-	// no validation rules for Applications
+	for key, val := range m.GetApplications() {
+		_ = val
+
+		if val == nil {
+			return LoadBalancerValidationError{
+				field:  fmt.Sprintf("Applications[%v]", key),
+				reason: "value cannot be sparse, all pairs must be non-nil",
+			}
+		}
+
+		// no validation rules for Applications[key]
+
+		if v, ok := interface{}(val).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return LoadBalancerValidationError{
+					field:  fmt.Sprintf("Applications[%v]", key),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
 
 	if v, ok := interface{}(m.GetClientSettings()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
@@ -1901,6 +1942,14 @@ var _ interface {
 	ErrorName() string
 } = LoadBalancerValidationError{}
 
+var _LoadBalancer_LoadBalancerClass_NotInLookup = map[LoadBalancerClass]struct{}{
+	0: {},
+}
+
+var _LoadBalancer_Registry_NotInLookup = map[Registry]struct{}{
+	0: {},
+}
+
 // Validate checks the field values on CreateLoadBalancerRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
@@ -1931,10 +1980,24 @@ func (m *CreateLoadBalancerRequest) Validate() error {
 
 	// no validation rules for EnableWorkflows
 
+	if _, ok := _CreateLoadBalancerRequest_LoadBalancerClass_NotInLookup[m.GetLoadBalancerClass()]; ok {
+		return CreateLoadBalancerRequestValidationError{
+			field:  "LoadBalancerClass",
+			reason: "value must not be in list [0]",
+		}
+	}
+
 	if _, ok := LoadBalancerClass_name[int32(m.GetLoadBalancerClass())]; !ok {
 		return CreateLoadBalancerRequestValidationError{
 			field:  "LoadBalancerClass",
 			reason: "value must be one of the defined enum values",
+		}
+	}
+
+	if _, ok := _CreateLoadBalancerRequest_Registry_NotInLookup[m.GetRegistry()]; ok {
+		return CreateLoadBalancerRequestValidationError{
+			field:  "Registry",
+			reason: "value must not be in list [0]",
 		}
 	}
 
@@ -1952,9 +2015,36 @@ func (m *CreateLoadBalancerRequest) Validate() error {
 		}
 	}
 
-	// no validation rules for Labels
+	if len(m.GetLabels()) < 1 {
+		return CreateLoadBalancerRequestValidationError{
+			field:  "Labels",
+			reason: "value must contain at least 1 pair(s)",
+		}
+	}
 
-	// no validation rules for Applications
+	for key, val := range m.GetApplications() {
+		_ = val
+
+		if val == nil {
+			return CreateLoadBalancerRequestValidationError{
+				field:  fmt.Sprintf("Applications[%v]", key),
+				reason: "value cannot be sparse, all pairs must be non-nil",
+			}
+		}
+
+		// no validation rules for Applications[key]
+
+		if v, ok := interface{}(val).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return CreateLoadBalancerRequestValidationError{
+					field:  fmt.Sprintf("Applications[%v]", key),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
 
 	if v, ok := interface{}(m.GetClientSettings()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
@@ -2024,6 +2114,14 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = CreateLoadBalancerRequestValidationError{}
+
+var _CreateLoadBalancerRequest_LoadBalancerClass_NotInLookup = map[LoadBalancerClass]struct{}{
+	0: {},
+}
+
+var _CreateLoadBalancerRequest_Registry_NotInLookup = map[Registry]struct{}{
+	0: {},
+}
 
 // Validate checks the field values on GetLoadBalancerRequest with the rules
 // defined in the proto definition for this message. If any rules are
@@ -2378,7 +2476,12 @@ func (m *Application_ApplicationSpecificLB) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Labels
+	if len(m.GetLabels()) < 1 {
+		return Application_ApplicationSpecificLBValidationError{
+			field:  "Labels",
+			reason: "value must contain at least 1 pair(s)",
+		}
+	}
 
 	if v, ok := interface{}(m.GetTls()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
@@ -2459,7 +2562,12 @@ func (m *CreateApplicationRequest_ApplicationSpecificLB) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Labels
+	if len(m.GetLabels()) < 1 {
+		return CreateApplicationRequest_ApplicationSpecificLBValidationError{
+			field:  "Labels",
+			reason: "value must contain at least 1 pair(s)",
+		}
+	}
 
 	if v, ok := interface{}(m.GetTls()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {

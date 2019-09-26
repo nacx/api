@@ -219,7 +219,7 @@ message Application {
   message ApplicationSpecificLB {
     // Load balancer deployment labels (Kubernetes only for now). If gateway was created using TCC helm charts, use tcc:
     // appgateway for kubernetes. The gateway will expose the application on ports 80 and 443 (if tls is configured).
-    map<string, string> labels = 1;
+    map<string, string> labels = 1 [(validate.rules).map.min_pairs = 1];
     // TLS certificate info for the application. If nil, the gateway will expose the application on port 80 only.
     // Internal use only. Auto populated.
     TLSSettings tls = 2;
@@ -254,7 +254,7 @@ message CreateApplicationRequest {
   message ApplicationSpecificLB {
     // Load balancer deployment labels (Kubernetes only for now). If gateway was created using TCC helm charts, use tcc:
     // appgateway for kubernetes. The gateway will expose the application on ports 80 and 443 (if tls is configured).
-    map<string, string> labels = 1;
+    map<string, string> labels = 1 [(validate.rules).map.min_pairs = 1];
     // TLS certificate info for the application. If nil, the gateway will expose the application on port 80 only.
     // Internal use only. Auto populated.
     TLSSettings tls = 2;
@@ -385,18 +385,18 @@ message LoadBalancer {
   string description = 5;
   bool enable_workflows = 6;
 
-  LoadBalancerClass load_balancer_class = 7 [(validate.rules).enum.defined_only = true];
-  Registry registry = 8 [(validate.rules).enum.defined_only = true];
+  LoadBalancerClass load_balancer_class = 7 [(validate.rules).enum = {defined_only: true, not_in : [0]}];
+  Registry registry = 8 [(validate.rules).enum = {defined_only: true, not_in : [0]}];
 
   // The namespace where the load balancer is/will be deployed in a given cluster.
   string cluster_namespace = 9 [(validate.rules).string.min_len = 1];
 
   // Labels that uniquely identify the cluster loadbalancer. If cluster level gateway was deployed using TCC helm
   // charts, set this field to tcc: clustergateway.
-  map<string, string> labels = 10;
+  map<string, string> labels = 10 [(validate.rules).map.min_pairs = 1];
 
   // Map of applications attached to this loadbalancer in the form applicationId: TLS credential information.
-  map<string, TLSSettings> applications = 11;
+  map<string, TLSSettings> applications = 11 [(validate.rules).map.no_sparse = true];
 
   // Client settings are applicable for traffic from the load balancer's cluster namespace to the application's
   // namespaces.
@@ -417,18 +417,18 @@ message CreateLoadBalancerRequest {
   string description = 5;
   bool enable_workflows = 6;
 
-  LoadBalancerClass load_balancer_class = 7 [(validate.rules).enum.defined_only = true];
-  Registry registry = 8 [(validate.rules).enum.defined_only = true];
+  LoadBalancerClass load_balancer_class = 7 [(validate.rules).enum = {defined_only: true, not_in : [0]}];
+  Registry registry = 8 [(validate.rules).enum = {defined_only: true, not_in : [0]}];
 
   // The namespace where the load balancer is/will be deployed in a given cluster.
   string cluster_namespace = 9 [(validate.rules).string.min_len = 1];
 
   // Labels that uniquely identify the cluster loadbalancer. If cluster level gateway was deployed using TCC helm
   // charts, set this field to tcc: clustergateway.
-  map<string, string> labels = 10;
+  map<string, string> labels = 10 [(validate.rules).map.min_pairs = 1];
 
   // Map of applications attached to this loadbalancer in the form applicationId: TLS credential information.
-  map<string, TLSSettings> applications = 11;
+  map<string, TLSSettings> applications = 11 [(validate.rules).map.no_sparse = true];
 
   // Client settings are applicable for traffic from the load balancer's cluster namespace to the application's
   // namespaces.
