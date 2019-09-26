@@ -28,10 +28,6 @@ var _ status.Status
 var _ = runtime.String
 var _ = utilities.NewDoubleArray
 
-var (
-	filter_LogicalResourceModel_CreateWorkspace_0 = &utilities.DoubleArray{Encoding: map[string]int{"workspace": 0, "tenant": 1}, Base: []int{1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 2, 3}}
-)
-
 func request_LogicalResourceModel_CreateWorkspace_0(ctx context.Context, marshaler runtime.Marshaler, client LogicalResourceModelClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq CreateWorkspaceRequest
 	var metadata runtime.ServerMetadata
@@ -40,7 +36,7 @@ func request_LogicalResourceModel_CreateWorkspace_0(ctx context.Context, marshal
 	if berr != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.Workspace); err != nil && err != io.EOF {
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -60,10 +56,6 @@ func request_LogicalResourceModel_CreateWorkspace_0(ctx context.Context, marshal
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
-	}
-
-	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_LogicalResourceModel_CreateWorkspace_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := client.CreateWorkspace(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -244,10 +236,6 @@ func request_LogicalResourceModel_DeleteWorkspace_0(ctx context.Context, marshal
 
 }
 
-var (
-	filter_LogicalResourceModel_CreateApplication_0 = &utilities.DoubleArray{Encoding: map[string]int{"application": 0, "tenant": 1, "workspace": 2}, Base: []int{1, 1, 2, 3, 0, 0, 0}, Check: []int{0, 1, 1, 1, 2, 3, 4}}
-)
-
 func request_LogicalResourceModel_CreateApplication_0(ctx context.Context, marshaler runtime.Marshaler, client LogicalResourceModelClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq CreateApplicationRequest
 	var metadata runtime.ServerMetadata
@@ -256,7 +244,7 @@ func request_LogicalResourceModel_CreateApplication_0(ctx context.Context, marsh
 	if berr != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.Application); err != nil && err != io.EOF {
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -287,10 +275,6 @@ func request_LogicalResourceModel_CreateApplication_0(ctx context.Context, marsh
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "workspace", err)
-	}
-
-	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_LogicalResourceModel_CreateApplication_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := client.CreateApplication(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -515,10 +499,6 @@ func request_LogicalResourceModel_DeleteApplication_0(ctx context.Context, marsh
 
 }
 
-var (
-	filter_LogicalResourceModel_CreateService_0 = &utilities.DoubleArray{Encoding: map[string]int{"service": 0, "tenant": 1, "workspace": 2, "application": 3}, Base: []int{1, 1, 2, 3, 4, 0, 0, 0, 0}, Check: []int{0, 1, 1, 1, 1, 2, 3, 4, 5}}
-)
-
 func request_LogicalResourceModel_CreateService_0(ctx context.Context, marshaler runtime.Marshaler, client LogicalResourceModelClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq CreateServiceRequest
 	var metadata runtime.ServerMetadata
@@ -527,7 +507,7 @@ func request_LogicalResourceModel_CreateService_0(ctx context.Context, marshaler
 	if berr != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.Service); err != nil && err != io.EOF {
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -569,10 +549,6 @@ func request_LogicalResourceModel_CreateService_0(ctx context.Context, marshaler
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "application", err)
-	}
-
-	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_LogicalResourceModel_CreateService_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := client.CreateService(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -841,10 +817,6 @@ func request_LogicalResourceModel_DeleteService_0(ctx context.Context, marshaler
 
 }
 
-var (
-	filter_LogicalResourceModel_CreateLoadBalancer_0 = &utilities.DoubleArray{Encoding: map[string]int{"loadbalancer": 0, "tenant": 1, "workspace": 2}, Base: []int{1, 1, 2, 3, 0, 0, 0}, Check: []int{0, 1, 1, 1, 2, 3, 4}}
-)
-
 func request_LogicalResourceModel_CreateLoadBalancer_0(ctx context.Context, marshaler runtime.Marshaler, client LogicalResourceModelClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq CreateLoadBalancerRequest
 	var metadata runtime.ServerMetadata
@@ -853,7 +825,7 @@ func request_LogicalResourceModel_CreateLoadBalancer_0(ctx context.Context, mars
 	if berr != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.Loadbalancer); err != nil && err != io.EOF {
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -884,10 +856,6 @@ func request_LogicalResourceModel_CreateLoadBalancer_0(ctx context.Context, mars
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "workspace", err)
-	}
-
-	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_LogicalResourceModel_CreateLoadBalancer_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := client.CreateLoadBalancer(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))

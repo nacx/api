@@ -14,6 +14,15 @@
 
 import * as runtime from '../runtime';
 import {
+    TetrateApiTccCoreV1CreateTeamRequest,
+    TetrateApiTccCoreV1CreateTeamRequestFromJSON,
+    TetrateApiTccCoreV1CreateTeamRequestToJSON,
+    TetrateApiTccCoreV1CreateTenantRequest,
+    TetrateApiTccCoreV1CreateTenantRequestFromJSON,
+    TetrateApiTccCoreV1CreateTenantRequestToJSON,
+    TetrateApiTccCoreV1CreateUserRequest,
+    TetrateApiTccCoreV1CreateUserRequestFromJSON,
+    TetrateApiTccCoreV1CreateUserRequestToJSON,
     TetrateApiTccCoreV1ListTeamMembersResponse,
     TetrateApiTccCoreV1ListTeamMembersResponseFromJSON,
     TetrateApiTccCoreV1ListTeamMembersResponseToJSON,
@@ -39,16 +48,16 @@ import {
 
 export interface CreateTeamRequest {
     tenant: string;
-    body: TetrateApiTccCoreV1Team;
+    body: TetrateApiTccCoreV1CreateTeamRequest;
 }
 
 export interface CreateTenantRequest {
-    body: TetrateApiTccCoreV1Tenant;
+    body: TetrateApiTccCoreV1CreateTenantRequest;
 }
 
 export interface CreateUserRequest {
     tenant: string;
-    body: TetrateApiTccCoreV1User;
+    body: TetrateApiTccCoreV1CreateUserRequest;
 }
 
 export interface DeleteTeamRequest {
@@ -145,7 +154,7 @@ export class OrganizationApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: TetrateApiTccCoreV1TeamToJSON(requestParameters.body),
+            body: TetrateApiTccCoreV1CreateTeamRequestToJSON(requestParameters.body),
         });
 
         return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccCoreV1TeamFromJSON(jsonValue));
@@ -176,7 +185,7 @@ export class OrganizationApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: TetrateApiTccCoreV1TenantToJSON(requestParameters.body),
+            body: TetrateApiTccCoreV1CreateTenantRequestToJSON(requestParameters.body),
         });
 
         return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccCoreV1TenantFromJSON(jsonValue));
@@ -211,7 +220,7 @@ export class OrganizationApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: TetrateApiTccCoreV1UserToJSON(requestParameters.body),
+            body: TetrateApiTccCoreV1CreateUserRequestToJSON(requestParameters.body),
         });
 
         return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccCoreV1UserFromJSON(jsonValue));

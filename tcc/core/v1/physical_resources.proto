@@ -15,7 +15,7 @@ service PhysicalResourceModel {
   rpc CreateCluster(CreateClusterRequest) returns (Cluster) {
     option (google.api.http) = {
       post: "/v1/tenants/{tenant}/clusters"
-      body: "cluster"
+      body: "*"
     };
   };
 
@@ -48,7 +48,7 @@ service PhysicalResourceModel {
   rpc CreateNamespace(CreateNamespaceRequest) returns (Namespace) {
     option (google.api.http) = {
       post: "/v1/tenants/{tenant}/clusters/{cluster}/namespaces"
-      body: "namespace"
+      body: "*"
     };
   };
 
@@ -80,7 +80,7 @@ service PhysicalResourceModel {
   rpc CreateDeployment(CreateDeploymentRequest) returns (Deployment) {
     option (google.api.http) = {
       post: "/v1/tenants/{tenant}/clusters/{cluster}/namespaces/{namespace}/deployments"
-      body: "deployment"
+      body: "*"
     };
   };
 
@@ -112,7 +112,7 @@ service PhysicalResourceModel {
   rpc CreateEndpoint(CreateEndpointRequest) returns (Endpoint) {
     option (google.api.http) = {
       post: "/v1/tenants/{tenant}/clusters/{cluster}/namespaces/{namespace}/deployments/{deployment}/endpoints"
-      body: "endpoint"
+      body: "*"
     };
   };
 
@@ -163,8 +163,10 @@ message Cluster {
 
 message CreateClusterRequest {
   string parent = 1;
-  string tenant = 2;
-  Cluster cluster = 3;
+  // if present, this will be used as the id for the created object
+  string id = 2;
+  string tenant = 3;
+  Cluster cluster = 4;
 }
 
 message GetClusterRequest {
@@ -206,9 +208,11 @@ message Namespace {
 
 message CreateNamespaceRequest {
   string parent = 1;
-  string tenant = 2;
-  string cluster = 3;
-  Namespace namespace = 4;
+  // if present, this will be used as the id for the created object
+  string id = 2;
+  string tenant = 3;
+  string cluster = 4;
+  Namespace namespace = 5;
 }
 
 message GetNamespaceRequest {
@@ -270,10 +274,12 @@ message LoadBalancerInfo {
 
 message CreateDeploymentRequest {
   string parent = 1;
-  string tenant = 2;
-  string cluster = 3;
-  string namespace = 4;
-  Deployment deployment = 5;
+  // if present, this will be used as the id for the created object
+  string id = 2;
+  string tenant = 3;
+  string cluster = 4;
+  string namespace = 5;
+  Deployment deployment = 6;
 }
 
 message GetDeploymentRequest {
@@ -339,11 +345,13 @@ message Endpoint {
 
 message CreateEndpointRequest {
   string parent = 1;
-  string tenant = 2;
-  string cluster = 3;
-  string namespace = 4;
-  string deployment = 5;
-  Endpoint endpoint = 6;
+  // if present, this will be used as the id for the created object
+  string id = 2;
+  string tenant = 3;
+  string cluster = 4;
+  string namespace = 5;
+  string deployment = 6;
+  Endpoint endpoint = 7;
 }
 
 message GetEndpointRequest {

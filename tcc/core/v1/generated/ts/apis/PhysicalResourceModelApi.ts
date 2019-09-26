@@ -17,6 +17,18 @@ import {
     TetrateApiTccCoreV1Cluster,
     TetrateApiTccCoreV1ClusterFromJSON,
     TetrateApiTccCoreV1ClusterToJSON,
+    TetrateApiTccCoreV1CreateClusterRequest,
+    TetrateApiTccCoreV1CreateClusterRequestFromJSON,
+    TetrateApiTccCoreV1CreateClusterRequestToJSON,
+    TetrateApiTccCoreV1CreateDeploymentRequest,
+    TetrateApiTccCoreV1CreateDeploymentRequestFromJSON,
+    TetrateApiTccCoreV1CreateDeploymentRequestToJSON,
+    TetrateApiTccCoreV1CreateEndpointRequest,
+    TetrateApiTccCoreV1CreateEndpointRequestFromJSON,
+    TetrateApiTccCoreV1CreateEndpointRequestToJSON,
+    TetrateApiTccCoreV1CreateNamespaceRequest,
+    TetrateApiTccCoreV1CreateNamespaceRequestFromJSON,
+    TetrateApiTccCoreV1CreateNamespaceRequestToJSON,
     TetrateApiTccCoreV1Deployment,
     TetrateApiTccCoreV1DeploymentFromJSON,
     TetrateApiTccCoreV1DeploymentToJSON,
@@ -42,14 +54,14 @@ import {
 
 export interface CreateClusterRequest {
     tenant: string;
-    body: TetrateApiTccCoreV1Cluster;
+    body: TetrateApiTccCoreV1CreateClusterRequest;
 }
 
 export interface CreateDeploymentRequest {
     tenant: string;
     cluster: string;
     namespace: string;
-    body: TetrateApiTccCoreV1Deployment;
+    body: TetrateApiTccCoreV1CreateDeploymentRequest;
 }
 
 export interface CreateEndpointRequest {
@@ -57,13 +69,13 @@ export interface CreateEndpointRequest {
     cluster: string;
     namespace: string;
     deployment: string;
-    body: TetrateApiTccCoreV1Endpoint;
+    body: TetrateApiTccCoreV1CreateEndpointRequest;
 }
 
 export interface CreateNamespaceRequest {
     tenant: string;
     cluster: string;
-    body: TetrateApiTccCoreV1Namespace;
+    body: TetrateApiTccCoreV1CreateNamespaceRequest;
 }
 
 export interface DeleteClusterRequest {
@@ -209,7 +221,7 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: TetrateApiTccCoreV1ClusterToJSON(requestParameters.body),
+            body: TetrateApiTccCoreV1CreateClusterRequestToJSON(requestParameters.body),
         });
 
         return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccCoreV1ClusterFromJSON(jsonValue));
@@ -252,7 +264,7 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: TetrateApiTccCoreV1DeploymentToJSON(requestParameters.body),
+            body: TetrateApiTccCoreV1CreateDeploymentRequestToJSON(requestParameters.body),
         });
 
         return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccCoreV1DeploymentFromJSON(jsonValue));
@@ -299,7 +311,7 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: TetrateApiTccCoreV1EndpointToJSON(requestParameters.body),
+            body: TetrateApiTccCoreV1CreateEndpointRequestToJSON(requestParameters.body),
         });
 
         return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccCoreV1EndpointFromJSON(jsonValue));
@@ -338,7 +350,7 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: TetrateApiTccCoreV1NamespaceToJSON(requestParameters.body),
+            body: TetrateApiTccCoreV1CreateNamespaceRequestToJSON(requestParameters.body),
         });
 
         return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccCoreV1NamespaceFromJSON(jsonValue));

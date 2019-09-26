@@ -17,6 +17,18 @@ import {
     TetrateApiTccCoreV1Application,
     TetrateApiTccCoreV1ApplicationFromJSON,
     TetrateApiTccCoreV1ApplicationToJSON,
+    TetrateApiTccCoreV1CreateApplicationRequest,
+    TetrateApiTccCoreV1CreateApplicationRequestFromJSON,
+    TetrateApiTccCoreV1CreateApplicationRequestToJSON,
+    TetrateApiTccCoreV1CreateLoadBalancerRequest,
+    TetrateApiTccCoreV1CreateLoadBalancerRequestFromJSON,
+    TetrateApiTccCoreV1CreateLoadBalancerRequestToJSON,
+    TetrateApiTccCoreV1CreateServiceRequest,
+    TetrateApiTccCoreV1CreateServiceRequestFromJSON,
+    TetrateApiTccCoreV1CreateServiceRequestToJSON,
+    TetrateApiTccCoreV1CreateWorkspaceRequest,
+    TetrateApiTccCoreV1CreateWorkspaceRequestFromJSON,
+    TetrateApiTccCoreV1CreateWorkspaceRequestToJSON,
     TetrateApiTccCoreV1ListApplicationsResponse,
     TetrateApiTccCoreV1ListApplicationsResponseFromJSON,
     TetrateApiTccCoreV1ListApplicationsResponseToJSON,
@@ -43,25 +55,25 @@ import {
 export interface CreateApplicationRequest {
     tenant: string;
     workspace: string;
-    body: TetrateApiTccCoreV1Application;
+    body: TetrateApiTccCoreV1CreateApplicationRequest;
 }
 
 export interface CreateLoadBalancerRequest {
     tenant: string;
     workspace: string;
-    body: TetrateApiTccCoreV1LoadBalancer;
+    body: TetrateApiTccCoreV1CreateLoadBalancerRequest;
 }
 
 export interface CreateServiceRequest {
     tenant: string;
     workspace: string;
     application: string;
-    body: TetrateApiTccCoreV1Service;
+    body: TetrateApiTccCoreV1CreateServiceRequest;
 }
 
 export interface CreateWorkspaceRequest {
     tenant: string;
-    body: TetrateApiTccCoreV1Workspace;
+    body: TetrateApiTccCoreV1CreateWorkspaceRequest;
 }
 
 export interface DeleteApplicationRequest {
@@ -203,7 +215,7 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: TetrateApiTccCoreV1ApplicationToJSON(requestParameters.body),
+            body: TetrateApiTccCoreV1CreateApplicationRequestToJSON(requestParameters.body),
         });
 
         return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccCoreV1ApplicationFromJSON(jsonValue));
@@ -242,7 +254,7 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: TetrateApiTccCoreV1LoadBalancerToJSON(requestParameters.body),
+            body: TetrateApiTccCoreV1CreateLoadBalancerRequestToJSON(requestParameters.body),
         });
 
         return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccCoreV1LoadBalancerFromJSON(jsonValue));
@@ -285,7 +297,7 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: TetrateApiTccCoreV1ServiceToJSON(requestParameters.body),
+            body: TetrateApiTccCoreV1CreateServiceRequestToJSON(requestParameters.body),
         });
 
         return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccCoreV1ServiceFromJSON(jsonValue));
@@ -320,7 +332,7 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: TetrateApiTccCoreV1WorkspaceToJSON(requestParameters.body),
+            body: TetrateApiTccCoreV1CreateWorkspaceRequestToJSON(requestParameters.body),
         });
 
         return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccCoreV1WorkspaceFromJSON(jsonValue));

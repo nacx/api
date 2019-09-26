@@ -10,7 +10,7 @@ service Organization {
   rpc CreateTenant(CreateTenantRequest) returns (Tenant) {
     option (google.api.http) = {
       post: "/v1/tenants"
-      body: "tenant"
+      body: "*"
     };
   };
 
@@ -42,7 +42,7 @@ service Organization {
   rpc CreateTeam(CreateTeamRequest) returns (Team) {
     option (google.api.http) = {
       post: "/v1/tenants/{tenant}/teams"
-      body: "team"
+      body: "*"
     };
   };
 
@@ -74,7 +74,7 @@ service Organization {
   rpc CreateUser(CreateUserRequest) returns (User) {
     option (google.api.http) = {
       post: "/v1/tenants/{tenant}/users"
-      body: "user"
+      body: "*"
     };
   };
 
@@ -117,7 +117,9 @@ message Tenant {
 }
 
 message CreateTenantRequest {
-  Tenant tenant = 1;
+  // if present, this will be used as the id for the created object
+  string id = 1;
+  Tenant tenant = 2;
 }
 
 message GetTenantRequest {
@@ -146,8 +148,10 @@ message Team {
 
 message CreateTeamRequest {
   string parent = 1;
-  string tenant = 2;
-  Team team = 3;
+  // if present, this will be used as the id for the created object
+  string id = 2;
+  string tenant = 3;
+  Team team = 4;
 }
 
 message GetTeamRequest {
@@ -180,8 +184,10 @@ message User {
 
 message CreateUserRequest {
   string parent = 1;
-  string tenant = 2;
-  User user = 3;
+  // if present, this will be used as the id for the created object
+  string id = 2;
+  string tenant = 3;
+  User user = 4;
 }
 
 message GetUserRequest {

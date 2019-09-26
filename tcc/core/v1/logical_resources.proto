@@ -14,7 +14,7 @@ service LogicalResourceModel {
   rpc CreateWorkspace(CreateWorkspaceRequest) returns (Workspace) {
     option (google.api.http) = {
       post: "/v1/tenants/{tenant}/workspaces"
-      body: "workspace"
+      body: "*"
     };
   };
 
@@ -46,7 +46,7 @@ service LogicalResourceModel {
   rpc CreateApplication(CreateApplicationRequest) returns (Application) {
     option (google.api.http) = {
       post: "/v1/tenants/{tenant}/workspaces/{workspace}/applications"
-      body: "application"
+      body: "*"
     };
   };
 
@@ -78,7 +78,7 @@ service LogicalResourceModel {
   rpc CreateService(CreateServiceRequest) returns (Service) {
     option (google.api.http) = {
       post: "/v1/tenants/{tenant}/workspaces/{workspace}/applications/{application}/services"
-      body: "service"
+      body: "*"
     };
   };
 
@@ -110,7 +110,7 @@ service LogicalResourceModel {
   rpc CreateLoadBalancer(CreateLoadBalancerRequest) returns (LoadBalancer) {
     option (google.api.http) = {
       post: "/v1/tenants/{tenant}/workspaces/{workspace}/loadbalancers"
-      body: "loadbalancer"
+      body: "*"
     };
   };
 
@@ -150,8 +150,10 @@ message Workspace {
 
 message CreateWorkspaceRequest {
   string parent = 1;
-  string tenant = 2;
-  Workspace workspace = 3;
+  // if present, this will be used as the id for the created object
+  string id = 2;
+  string tenant = 3;
+  Workspace workspace = 4;
 }
 
 message GetWorkspaceRequest {
@@ -186,9 +188,11 @@ message Application {
 
 message CreateApplicationRequest {
   string parent = 1;
-  string tenant = 2;
-  string workspace = 3;
-  Application application = 4;
+  // if present, this will be used as the id for the created object
+  string id = 2;
+  string tenant = 3;
+  string workspace = 4;
+  Application application = 5;
 }
 
 message GetApplicationRequest {
@@ -228,10 +232,12 @@ message Service {
 
 message CreateServiceRequest {
   string parent = 1;
-  string tenant = 2;
-  string workspace = 3;
-  string application = 4;
-  Service service = 5;
+  // if present, this will be used as the id for the created object
+  string id = 2;
+  string tenant = 3;
+  string workspace = 4;
+  string application = 5;
+  Service service = 6;
 }
 
 message GetServiceRequest {
@@ -279,9 +285,11 @@ message LoadBalancer {
 
 message CreateLoadBalancerRequest {
   string parent = 1;
-  string tenant = 2;
-  string workspace = 3;
-  LoadBalancer loadbalancer = 4;
+  // if present, this will be used as the id for the created object
+  string id = 2;
+  string tenant = 3;
+  string workspace = 4;
+  LoadBalancer loadbalancer = 5;
 }
 
 message GetLoadBalancerRequest {

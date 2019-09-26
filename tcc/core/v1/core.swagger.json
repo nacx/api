@@ -63,7 +63,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.Tenant"
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.CreateTenantRequest"
             }
           }
         ],
@@ -241,7 +241,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.Cluster"
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.CreateClusterRequest"
             }
           }
         ],
@@ -325,7 +325,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.Namespace"
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.CreateNamespaceRequest"
             }
           }
         ],
@@ -563,7 +563,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.Deployment"
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.CreateDeploymentRequest"
             }
           }
         ],
@@ -671,7 +671,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.Endpoint"
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.CreateEndpointRequest"
             }
           }
         ],
@@ -1301,7 +1301,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.Team"
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.CreateTeamRequest"
             }
           }
         ],
@@ -1539,7 +1539,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.User"
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.CreateUserRequest"
             }
           }
         ],
@@ -1735,7 +1735,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.Workspace"
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.CreateWorkspaceRequest"
             }
           }
         ],
@@ -1943,7 +1943,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.Application"
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.CreateApplicationRequest"
             }
           }
         ],
@@ -2039,7 +2039,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.Service"
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.CreateServiceRequest"
             }
           }
         ],
@@ -2425,7 +2425,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.LoadBalancer"
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.CreateLoadBalancerRequest"
             }
           }
         ],
@@ -2744,6 +2744,228 @@
           "type": "boolean",
           "format": "boolean",
           "description": "Indicates whether the caller is allowed to send the actual request\n(not the preflight) using credentials. Translates to\n`Access-Control-Allow-Credentials` header."
+        }
+      }
+    },
+    "tetrate.api.tcc.core.v1.CreateApplicationRequest": {
+      "type": "object",
+      "properties": {
+        "parent": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string",
+          "title": "if present, this will be used as the id for the created object"
+        },
+        "tenant": {
+          "type": "string"
+        },
+        "workspace": {
+          "type": "string"
+        },
+        "application": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Application"
+        }
+      }
+    },
+    "tetrate.api.tcc.core.v1.CreateClusterRequest": {
+      "type": "object",
+      "properties": {
+        "parent": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string",
+          "title": "if present, this will be used as the id for the created object"
+        },
+        "tenant": {
+          "type": "string"
+        },
+        "cluster": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Cluster"
+        }
+      }
+    },
+    "tetrate.api.tcc.core.v1.CreateDeploymentRequest": {
+      "type": "object",
+      "properties": {
+        "parent": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string",
+          "title": "if present, this will be used as the id for the created object"
+        },
+        "tenant": {
+          "type": "string"
+        },
+        "cluster": {
+          "type": "string"
+        },
+        "namespace": {
+          "type": "string"
+        },
+        "deployment": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Deployment"
+        }
+      }
+    },
+    "tetrate.api.tcc.core.v1.CreateEndpointRequest": {
+      "type": "object",
+      "properties": {
+        "parent": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string",
+          "title": "if present, this will be used as the id for the created object"
+        },
+        "tenant": {
+          "type": "string"
+        },
+        "cluster": {
+          "type": "string"
+        },
+        "namespace": {
+          "type": "string"
+        },
+        "deployment": {
+          "type": "string"
+        },
+        "endpoint": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Endpoint"
+        }
+      }
+    },
+    "tetrate.api.tcc.core.v1.CreateLoadBalancerRequest": {
+      "type": "object",
+      "properties": {
+        "parent": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string",
+          "title": "if present, this will be used as the id for the created object"
+        },
+        "tenant": {
+          "type": "string"
+        },
+        "workspace": {
+          "type": "string"
+        },
+        "loadbalancer": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.LoadBalancer"
+        }
+      }
+    },
+    "tetrate.api.tcc.core.v1.CreateNamespaceRequest": {
+      "type": "object",
+      "properties": {
+        "parent": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string",
+          "title": "if present, this will be used as the id for the created object"
+        },
+        "tenant": {
+          "type": "string"
+        },
+        "cluster": {
+          "type": "string"
+        },
+        "namespace": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Namespace"
+        }
+      }
+    },
+    "tetrate.api.tcc.core.v1.CreateServiceRequest": {
+      "type": "object",
+      "properties": {
+        "parent": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string",
+          "title": "if present, this will be used as the id for the created object"
+        },
+        "tenant": {
+          "type": "string"
+        },
+        "workspace": {
+          "type": "string"
+        },
+        "application": {
+          "type": "string"
+        },
+        "service": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Service"
+        }
+      }
+    },
+    "tetrate.api.tcc.core.v1.CreateTeamRequest": {
+      "type": "object",
+      "properties": {
+        "parent": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string",
+          "title": "if present, this will be used as the id for the created object"
+        },
+        "tenant": {
+          "type": "string"
+        },
+        "team": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Team"
+        }
+      }
+    },
+    "tetrate.api.tcc.core.v1.CreateTenantRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "if present, this will be used as the id for the created object"
+        },
+        "tenant": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Tenant"
+        }
+      }
+    },
+    "tetrate.api.tcc.core.v1.CreateUserRequest": {
+      "type": "object",
+      "properties": {
+        "parent": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string",
+          "title": "if present, this will be used as the id for the created object"
+        },
+        "tenant": {
+          "type": "string"
+        },
+        "user": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.User"
+        }
+      }
+    },
+    "tetrate.api.tcc.core.v1.CreateWorkspaceRequest": {
+      "type": "object",
+      "properties": {
+        "parent": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string",
+          "title": "if present, this will be used as the id for the created object"
+        },
+        "tenant": {
+          "type": "string"
+        },
+        "workspace": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Workspace"
         }
       }
     },

@@ -28,10 +28,6 @@ var _ status.Status
 var _ = runtime.String
 var _ = utilities.NewDoubleArray
 
-var (
-	filter_PhysicalResourceModel_CreateCluster_0 = &utilities.DoubleArray{Encoding: map[string]int{"cluster": 0, "tenant": 1}, Base: []int{1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 2, 3}}
-)
-
 func request_PhysicalResourceModel_CreateCluster_0(ctx context.Context, marshaler runtime.Marshaler, client PhysicalResourceModelClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq CreateClusterRequest
 	var metadata runtime.ServerMetadata
@@ -40,7 +36,7 @@ func request_PhysicalResourceModel_CreateCluster_0(ctx context.Context, marshale
 	if berr != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.Cluster); err != nil && err != io.EOF {
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -60,10 +56,6 @@ func request_PhysicalResourceModel_CreateCluster_0(ctx context.Context, marshale
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
-	}
-
-	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_PhysicalResourceModel_CreateCluster_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := client.CreateCluster(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -244,10 +236,6 @@ func request_PhysicalResourceModel_DeleteCluster_0(ctx context.Context, marshale
 
 }
 
-var (
-	filter_PhysicalResourceModel_CreateNamespace_0 = &utilities.DoubleArray{Encoding: map[string]int{"namespace": 0, "tenant": 1, "cluster": 2}, Base: []int{1, 1, 2, 3, 0, 0, 0}, Check: []int{0, 1, 1, 1, 2, 3, 4}}
-)
-
 func request_PhysicalResourceModel_CreateNamespace_0(ctx context.Context, marshaler runtime.Marshaler, client PhysicalResourceModelClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq CreateNamespaceRequest
 	var metadata runtime.ServerMetadata
@@ -256,7 +244,7 @@ func request_PhysicalResourceModel_CreateNamespace_0(ctx context.Context, marsha
 	if berr != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.Namespace); err != nil && err != io.EOF {
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -287,10 +275,6 @@ func request_PhysicalResourceModel_CreateNamespace_0(ctx context.Context, marsha
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "cluster", err)
-	}
-
-	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_PhysicalResourceModel_CreateNamespace_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := client.CreateNamespace(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -515,10 +499,6 @@ func request_PhysicalResourceModel_DeleteNamespace_0(ctx context.Context, marsha
 
 }
 
-var (
-	filter_PhysicalResourceModel_CreateDeployment_0 = &utilities.DoubleArray{Encoding: map[string]int{"deployment": 0, "tenant": 1, "cluster": 2, "namespace": 3}, Base: []int{1, 1, 2, 3, 4, 0, 0, 0, 0}, Check: []int{0, 1, 1, 1, 1, 2, 3, 4, 5}}
-)
-
 func request_PhysicalResourceModel_CreateDeployment_0(ctx context.Context, marshaler runtime.Marshaler, client PhysicalResourceModelClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq CreateDeploymentRequest
 	var metadata runtime.ServerMetadata
@@ -527,7 +507,7 @@ func request_PhysicalResourceModel_CreateDeployment_0(ctx context.Context, marsh
 	if berr != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.Deployment); err != nil && err != io.EOF {
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -569,10 +549,6 @@ func request_PhysicalResourceModel_CreateDeployment_0(ctx context.Context, marsh
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "namespace", err)
-	}
-
-	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_PhysicalResourceModel_CreateDeployment_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := client.CreateDeployment(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -841,10 +817,6 @@ func request_PhysicalResourceModel_DeleteDeployment_0(ctx context.Context, marsh
 
 }
 
-var (
-	filter_PhysicalResourceModel_CreateEndpoint_0 = &utilities.DoubleArray{Encoding: map[string]int{"endpoint": 0, "tenant": 1, "cluster": 2, "namespace": 3, "deployment": 4}, Base: []int{1, 1, 2, 3, 4, 5, 0, 0, 0, 0, 0}, Check: []int{0, 1, 1, 1, 1, 1, 2, 3, 4, 5, 6}}
-)
-
 func request_PhysicalResourceModel_CreateEndpoint_0(ctx context.Context, marshaler runtime.Marshaler, client PhysicalResourceModelClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq CreateEndpointRequest
 	var metadata runtime.ServerMetadata
@@ -853,7 +825,7 @@ func request_PhysicalResourceModel_CreateEndpoint_0(ctx context.Context, marshal
 	if berr != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.Endpoint); err != nil && err != io.EOF {
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -906,10 +878,6 @@ func request_PhysicalResourceModel_CreateEndpoint_0(ctx context.Context, marshal
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "deployment", err)
-	}
-
-	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_PhysicalResourceModel_CreateEndpoint_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := client.CreateEndpoint(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
