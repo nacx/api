@@ -211,7 +211,7 @@ func request_LoadBalancerWorkflow_GetTicketStatus_0(ctx context.Context, marshal
 }
 
 var (
-	filter_LoadBalancerWorkflow_ListPendingTickets_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "environment": 1, "id": 2}, Base: []int{1, 1, 2, 3, 0, 0, 0}, Check: []int{0, 1, 1, 1, 2, 3, 4}}
+	filter_LoadBalancerWorkflow_ListPendingTickets_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "environment": 1, "loadbalancer": 2}, Base: []int{1, 1, 2, 3, 0, 0, 0}, Check: []int{0, 1, 1, 1, 2, 3, 4}}
 )
 
 func request_LoadBalancerWorkflow_ListPendingTickets_0(ctx context.Context, marshaler runtime.Marshaler, client LoadBalancerWorkflowClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
@@ -247,15 +247,15 @@ func request_LoadBalancerWorkflow_ListPendingTickets_0(ctx context.Context, mars
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "environment", err)
 	}
 
-	val, ok = pathParams["id"]
+	val, ok = pathParams["loadbalancer"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "loadbalancer")
 	}
 
-	protoReq.Id, err = runtime.String(val)
+	protoReq.Loadbalancer, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "loadbalancer", err)
 	}
 
 	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_LoadBalancerWorkflow_ListPendingTickets_0); err != nil {
@@ -747,7 +747,7 @@ var (
 
 	pattern_LoadBalancerWorkflow_GetTicketStatus_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 2, 6, 1, 0, 4, 1, 5, 7, 2, 8, 1, 0, 4, 1, 5, 9, 2, 10}, []string{"v1", "tenants", "tenant", "environments", "environment", "workflows", "loadbalancers", "loadbalancer", "requests", "id", "status"}, ""))
 
-	pattern_LoadBalancerWorkflow_ListPendingTickets_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 2, 6, 1, 0, 4, 1, 5, 7, 2, 8}, []string{"v1", "tenants", "tenant", "environments", "environment", "workflows", "loadbalancers", "id", "pending"}, ""))
+	pattern_LoadBalancerWorkflow_ListPendingTickets_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 2, 6, 1, 0, 4, 1, 5, 7, 2, 8}, []string{"v1", "tenants", "tenant", "environments", "environment", "workflows", "loadbalancers", "loadbalancer", "pending"}, ""))
 
 	pattern_LoadBalancerWorkflow_Approve_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 2, 6, 1, 0, 4, 1, 5, 7, 2, 8, 1, 0, 4, 1, 5, 9, 2, 10}, []string{"v1", "tenants", "tenant", "environments", "environment", "workflows", "loadbalancers", "loadbalancer", "requests", "id", "approve"}, ""))
 

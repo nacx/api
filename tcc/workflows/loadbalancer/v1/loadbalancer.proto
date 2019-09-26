@@ -44,7 +44,7 @@ service LoadBalancerWorkflow {
 
   rpc ListPendingTickets(ListTicketsRequest) returns (ListTicketsResponse) {
     option (google.api.http) = {
-      get: "/v1/tenants/{tenant}/environments/{environment}/workflows/loadbalancers/{id}/pending"
+      get: "/v1/tenants/{tenant}/environments/{environment}/workflows/loadbalancers/{loadbalancer}/pending"
     };
   };
 
@@ -133,7 +133,7 @@ message ListTicketsRequest {
   string parent = 1;
   string tenant = 2;
   string environment = 3;
-  string id = 4;
+  string loadbalancer = 4;
 }
 
 message ListTicketsResponse {

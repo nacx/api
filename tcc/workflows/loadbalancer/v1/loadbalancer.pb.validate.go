@@ -361,7 +361,7 @@ func (m *ListTicketsRequest) Validate() error {
 
 	// no validation rules for Environment
 
-	// no validation rules for Id
+	// no validation rules for Loadbalancer
 
 	return nil
 }

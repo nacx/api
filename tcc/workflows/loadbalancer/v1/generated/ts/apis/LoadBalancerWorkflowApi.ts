@@ -83,7 +83,7 @@ export interface GetTicketStatusRequest {
 export interface ListPendingTicketsRequest {
     tenant: string;
     environment: string;
-    id: string;
+    loadbalancer: string;
     parent?: string;
 }
 
@@ -382,8 +382,8 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling listPendingTickets.');
         }
 
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling listPendingTickets.');
+        if (requestParameters.loadbalancer === null || requestParameters.loadbalancer === undefined) {
+            throw new runtime.RequiredError('loadbalancer','Required parameter requestParameters.loadbalancer was null or undefined when calling listPendingTickets.');
         }
 
         const queryParameters: runtime.HTTPQuery = {};
@@ -395,7 +395,7 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/environments/{environment}/workflows/loadbalancers/{id}/pending`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/workflows/loadbalancers/{loadbalancer}/pending`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"loadbalancer"}}`, encodeURIComponent(String(requestParameters.loadbalancer))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

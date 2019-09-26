@@ -120,7 +120,7 @@
         ]
       }
     },
-    "/v1/tenants/{tenant}/environments/{environment}/workflows/loadbalancers/{id}/pending": {
+    "/v1/tenants/{tenant}/environments/{environment}/workflows/loadbalancers/{loadbalancer}/pending": {
       "get": {
         "operationId": "ListPendingTickets",
         "responses": {
@@ -151,7 +151,7 @@
             "type": "string"
           },
           {
-            "name": "id",
+            "name": "loadbalancer",
             "in": "path",
             "required": true,
             "type": "string"
