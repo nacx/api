@@ -53,10 +53,16 @@ service InventoryService {
 // Tetrate service definition that uniquely identifies services
 message Service {
   // Unique name of this service to identify it. This name must be a
-  // fully qualified one, e.g. `foo.bar.com`, and should be a valid DNS (RFC 1035) name
+  // fully qualified domain one, e.g. `foo.bar.com`, and should be a valid DNS (RFC 1035) name
   string name = 1;
 
-  // ServiceKind represents a service's type; whether it's a one-shot job,
+  // List of originators that are sources of this service entry. For instance, Istio Pilot
+  // VirtualHost name in a mesh. In a non-Istio mesh, this could be a hosts sourcing
+  // this service entry. Multiple originators could be producing the same service entry, and
+  // hence this is a list, and deduplication is implicit
+  repeated string originators = 2;
+
+  // Kind represents a service's type; whether it's a one-shot job,
   // a traditional service, stateful set, etc.
   enum Kind {
     // A Service, a long running job that answers many requests
@@ -65,7 +71,7 @@ message Service {
     VIRTUALSERVICE = 2;
   }
   // This Service's kind
-  Kind kind = 2;
+  Kind kind = 3;
 
   // ServiceStatus represents the health status of this service
   enum Status {
@@ -74,21 +80,21 @@ message Service {
     DELETED = 2;
   }
   // This Service's health status
-  Status status = 3;
+  Status status = 4;
 
   // Transport port spec
-  repeated PortSpec ports = 4;
+  repeated PortSpec ports = 5;
 
   // Service's metadata attributes
-  Metadata metadata = 5;
+  Metadata metadata = 6;
 
   // Service's cluster participation
-  repeated Cluster cluster = 6;
+  repeated Cluster cluster = 7;
 
   // Service's workload presence
-  Workload workload = 7;
+  Workload workload = 8;
 
-  google.protobuf.Timestamp last_modified = 8;
+  google.protobuf.Timestamp last_modified = 9;
 }
 
 // ListServicesRequest 
@@ -131,10 +137,14 @@ message Cluster {
   // Cluster name e.g. "clusterA.local"
   string name = 1;
 
-  // One of more endpoints serving as part of cluster
-  repeated Endpoint endpoints = 2;
+  // Originator of this cluster entry. In an Istio mesh, this could be Istio Pilot
+  // VirtualHost name. In a non-Istio mesh, this could be a hosts sourcing this entry.
+  string originator = 2;
 
-  google.protobuf.Timestamp last_modified = 3;
+  // One of more endpoints serving as part of cluster
+  repeated Endpoint endpoints = 3;
+
+  google.protobuf.Timestamp last_modified = 4;
 }
 
 // Workload represents the location of a specific instance of a service,
@@ -165,6 +175,10 @@ message Endpoint {
 
   // Endpoint port for this entity
   PortSpec port = 4;
+
+  // Originator of this endpoint. In an Istio mesh, this could be Istio Pilot
+  // VirtualHost name. In a non-Istio mesh, this could be a hosts sourcing this entry.
+  string originator = 5;
 }
 
 // PortSpec represents an endpoint's port details. A single endpoint can have

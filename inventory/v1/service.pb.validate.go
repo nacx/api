@@ -397,6 +397,8 @@ func (m *Cluster) Validate() error {
 
 	// no validation rules for Name
 
+	// no validation rules for Originator
+
 	for idx, item := range m.GetEndpoints() {
 		_, _ = idx, item
 
@@ -567,6 +569,8 @@ func (m *Endpoint) Validate() error {
 			}
 		}
 	}
+
+	// no validation rules for Originator
 
 	switch m.Address.(type) {
 
