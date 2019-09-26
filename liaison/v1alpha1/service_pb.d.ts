@@ -13,6 +13,14 @@ export class Service extends jspb.Message {
   getDisplayName(): string;
   setDisplayName(value: string): void;
 
+  getNamespace(): string;
+  setNamespace(value: string): void;
+
+  clearPortsList(): void;
+  getPortsList(): Array<Port>;
+  setPortsList(value: Array<Port>): void;
+  addPorts(value?: Port, index?: number): Port;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): Service.AsObject;
   static toObject(includeInstance: boolean, msg: Service): Service.AsObject;
@@ -27,10 +35,47 @@ export namespace Service {
   export type AsObject = {
     name: string,
     displayName: string,
+    namespace: string,
+    portsList: Array<Port.AsObject>,
+  }
+}
+
+export class Port extends jspb.Message {
+  getName(): string;
+  setName(value: string): void;
+
+  getProtocol(): string;
+  setProtocol(value: string): void;
+
+  getPort(): number;
+  setPort(value: number): void;
+
+  getTargetPort(): number;
+  setTargetPort(value: number): void;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): Port.AsObject;
+  static toObject(includeInstance: boolean, msg: Port): Port.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: Port, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): Port;
+  static deserializeBinaryFromReader(message: Port, reader: jspb.BinaryReader): Port;
+}
+
+export namespace Port {
+  export type AsObject = {
+    name: string,
+    protocol: string,
+    port: number,
+    targetPort: number,
   }
 }
 
 export class ListServicesRequest extends jspb.Message {
+  getNamespace(): string;
+  setNamespace(value: string): void;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): ListServicesRequest.AsObject;
   static toObject(includeInstance: boolean, msg: ListServicesRequest): ListServicesRequest.AsObject;
@@ -43,6 +88,7 @@ export class ListServicesRequest extends jspb.Message {
 
 export namespace ListServicesRequest {
   export type AsObject = {
+    namespace: string,
   }
 }
 

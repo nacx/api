@@ -17,13 +17,24 @@ message Service {
 
   // The name displayed to end users.
   string display_name = 2;
+
+  string namespace = 3;
+
+  repeated Port ports = 4;
+}
+
+message Port {
+  string name = 1;
+  string protocol = 2;
+  int32 port = 3;
+  int32 target_port = 4;
 }
 
 // REST API for the Service resource.
 service Services {
   rpc ListServices(ListServicesRequest) returns (ListServicesResponse) {
     option (google.api.http) = {
-      get: "/v1alpha1/services"
+      get: "/v1alpha1/{namespace}/services"
     };
   }
 
@@ -55,6 +66,9 @@ service Services {
 }
 
 message ListServicesRequest {
+  // Why we need namespace here? Since in openshift the project concept is namespace. We need to
+  // limit the discovery only to that namespace.
+  string namespace = 1;
 }
 
 message ListServicesResponse {

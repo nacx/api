@@ -49,6 +49,23 @@ func (m *Service) Validate() error {
 
 	// no validation rules for DisplayName
 
+	// no validation rules for Namespace
+
+	for idx, item := range m.GetPorts() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ServiceValidationError{
+					field:  fmt.Sprintf("Ports[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
 	return nil
 }
 
@@ -106,6 +123,78 @@ var _ interface {
 	ErrorName() string
 } = ServiceValidationError{}
 
+// Validate checks the field values on Port with the rules defined in the proto
+// definition for this message. If any rules are violated, an error is returned.
+func (m *Port) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Name
+
+	// no validation rules for Protocol
+
+	// no validation rules for Port
+
+	// no validation rules for TargetPort
+
+	return nil
+}
+
+// PortValidationError is the validation error returned by Port.Validate if the
+// designated constraints aren't met.
+type PortValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e PortValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e PortValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e PortValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e PortValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e PortValidationError) ErrorName() string { return "PortValidationError" }
+
+// Error satisfies the builtin error interface
+func (e PortValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sPort.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = PortValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = PortValidationError{}
+
 // Validate checks the field values on ListServicesRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
@@ -113,6 +202,8 @@ func (m *ListServicesRequest) Validate() error {
 	if m == nil {
 		return nil
 	}
+
+	// no validation rules for Namespace
 
 	return nil
 }
