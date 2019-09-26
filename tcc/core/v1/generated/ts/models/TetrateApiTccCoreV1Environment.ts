@@ -19,31 +19,31 @@ import {
 } from './';
 
 /**
- * 
+ * Environment is a collection of applications, services, load balancers, and clusters where they are deployed.
  * @export
  * @interface TetrateApiTccCoreV1Environment
  */
 export interface TetrateApiTccCoreV1Environment {
     /**
-     * 
+     * Internal use only. Auto populated field.
      * @type {string}
      * @memberof TetrateApiTccCoreV1Environment
      */
     name?: string;
     /**
-     * 
+     * Tenant.Id
      * @type {string}
      * @memberof TetrateApiTccCoreV1Environment
      */
     tenant?: string;
     /**
-     * 
+     * A short name for the environment (e.g,, dev, stage, us-1, etc.)
      * @type {string}
      * @memberof TetrateApiTccCoreV1Environment
      */
     id?: string;
     /**
-     * 
+     * Additional information for readability.
      * @type {string}
      * @memberof TetrateApiTccCoreV1Environment
      */

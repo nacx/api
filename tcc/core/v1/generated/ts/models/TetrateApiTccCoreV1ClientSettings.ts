@@ -40,7 +40,7 @@ export interface TetrateApiTccCoreV1ClientSettings {
      */
     httpRetries?: TetrateApiTccCoreV1HTTPRetry;
     /**
-     * These two settings will go to dest rule TCP connection timeout.
+     * TCP connection timeout.
      * @type {string}
      * @memberof TetrateApiTccCoreV1ClientSettings
      */

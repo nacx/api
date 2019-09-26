@@ -147,7 +147,12 @@ func (m *HTTPRetry) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Attempts
+	if m.GetAttempts() < 1 {
+		return HTTPRetryValidationError{
+			field:  "Attempts",
+			reason: "value must be greater than or equal to 1",
+		}
+	}
 
 	if v, ok := interface{}(m.GetPerTryTimeout()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {

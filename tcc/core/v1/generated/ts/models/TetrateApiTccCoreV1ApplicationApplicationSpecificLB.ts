@@ -25,7 +25,7 @@ import {
  */
 export interface TetrateApiTccCoreV1ApplicationApplicationSpecificLB {
     /**
-     * Labels that uniquely identify the load balancer in the application\'s namespace. If omitted, defaults to \"app: <id>\".
+     * 
      * @type {{ [key: string]: string; }}
      * @memberof TetrateApiTccCoreV1ApplicationApplicationSpecificLB
      */

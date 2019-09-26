@@ -98,6 +98,7 @@
           },
           {
             "name": "name",
+            "description": "Internal use only. Auto populated field.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -132,6 +133,7 @@
           },
           {
             "name": "name",
+            "description": "Internal use only. Auto populated field.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -204,6 +206,7 @@
           },
           {
             "name": "parent",
+            "description": "Internal use only. Auto populated field.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -282,6 +285,7 @@
           },
           {
             "name": "parent",
+            "description": "Internal use only. Auto populated field.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -310,12 +314,14 @@
         "parameters": [
           {
             "name": "tenant",
+            "description": "Tenant.Id",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "environment",
+            "description": "Environment.Id",
             "in": "path",
             "required": true,
             "type": "string"
@@ -372,6 +378,7 @@
           },
           {
             "name": "parent",
+            "description": "Internal use only. Auto populated field.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -474,6 +481,7 @@
           },
           {
             "name": "name",
+            "description": "Internal use only. Auto populated field.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -526,6 +534,7 @@
           },
           {
             "name": "name",
+            "description": "Internal use only. Auto populated field.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -554,24 +563,28 @@
         "parameters": [
           {
             "name": "tenant",
+            "description": "Tenant.Id",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "environment",
+            "description": "Environment.Id",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "application",
+            "description": "Application.Id",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "id",
+            "description": "short name for the service. Clusters are expected to have namespaces that match the application, and services that match the Id, especially on Kubernetes.",
             "in": "path",
             "required": true,
             "type": "string"
@@ -628,6 +641,7 @@
           },
           {
             "name": "name",
+            "description": "Internal use only. Auto populated field.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -674,6 +688,7 @@
           },
           {
             "name": "name",
+            "description": "Internal use only. Auto populated field.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -702,18 +717,21 @@
         "parameters": [
           {
             "name": "tenant",
+            "description": "Tenant.Id",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "environment",
+            "description": "Environment.Id",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "id",
+            "description": "short name for the application. Clusters are expected to have namespaces that match the application Id, especially on Kubernetes.",
             "in": "path",
             "required": true,
             "type": "string"
@@ -2007,6 +2025,7 @@
           },
           {
             "name": "parent",
+            "description": "Internal use only. Auto populated field.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -2097,6 +2116,7 @@
           },
           {
             "name": "name",
+            "description": "Internal use only. Auto populated field.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -2143,6 +2163,7 @@
           },
           {
             "name": "name",
+            "description": "Internal use only. Auto populated field.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -2233,6 +2254,7 @@
           },
           {
             "name": "name",
+            "description": "Internal use only. Auto populated field.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -2273,6 +2295,7 @@
           },
           {
             "name": "name",
+            "description": "Internal use only. Auto populated field.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -2301,12 +2324,14 @@
         "parameters": [
           {
             "name": "tenant",
+            "description": "Tenant.Id",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "id",
+            "description": "A short name for the environment (e.g,, dev, stage, us-1, etc.)",
             "in": "path",
             "required": true,
             "type": "string"
@@ -2351,6 +2376,7 @@
           },
           {
             "name": "parent",
+            "description": "Internal use only. Auto populated field.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -2429,6 +2455,7 @@
           },
           {
             "name": "name",
+            "description": "Internal use only. Auto populated field.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -2469,6 +2496,7 @@
           },
           {
             "name": "name",
+            "description": "Internal use only. Auto populated field.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -2547,6 +2575,7 @@
           },
           {
             "name": "parent",
+            "description": "Internal use only. Auto populated field.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -2625,6 +2654,7 @@
           },
           {
             "name": "name",
+            "description": "Internal use only. Auto populated field.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -2665,6 +2695,7 @@
           },
           {
             "name": "name",
+            "description": "Internal use only. Auto populated field.",
             "in": "query",
             "required": false,
             "type": "string"
@@ -2723,34 +2754,44 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "description": "Internal use only. Auto populated field."
         },
         "tenant": {
-          "type": "string"
+          "type": "string",
+          "description": "Tenant.Id"
         },
         "environment": {
-          "type": "string"
+          "type": "string",
+          "description": "Environment.Id"
         },
         "id": {
-          "type": "string"
+          "type": "string",
+          "description": "short name for the application. Clusters are expected to have namespaces that match the application Id, especially on Kubernetes."
         },
         "description": {
-          "type": "string"
+          "type": "string",
+          "description": "Additional information."
         },
         "hostname": {
-          "type": "string"
+          "type": "string",
+          "description": "Hostname with which the application is exposed on a Gateway"
         },
         "routingInfo": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.RoutingInfo"
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.RoutingInfo",
+          "description": "HTTP Routing settings for the applications. Note that subsets should not be defined at application level."
         },
         "clientSettings": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.ClientSettings"
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.ClientSettings",
+          "description": "Resilience settings that apply to all services within the application, for outbound calls from the application's services to other services."
         },
         "appLb": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.Application.ApplicationSpecificLB",
-          "description": "If defined, the application is assumed to be exposed on the load balancer in\nthe application's own namespace instead of the cluster level load balancer."
+          "description": "An application can be exposed on a shared gateway in the cluster or a dedicated gateway in the app's namespace. Set app_lb to indicate that the application should be exposed on the dedicated load balancer deployed in the app namespace. It is assumed that the gateway service is deployed in the app's namespace."
         }
-      }
+      },
+      "description": "An Application is a collection of services. Each application corresponds to a kubernetes namespace or an application deployment on VMs. The hostname of the application is exposed via the load balancer (either shared or dedicated).",
+      "title": "Application"
     },
     "tetrate.api.tcc.core.v1.Application.ApplicationSpecificLB": {
       "type": "object",
@@ -2759,11 +2800,11 @@
           "type": "object",
           "additionalProperties": {
             "type": "string"
-          },
-          "description": "Labels that uniquely identify the load balancer in the application's namespace.\nIf omitted, defaults to \"app: \u003cid\u003e\"."
+          }
         },
         "tls": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.TLSSettings"
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.TLSSettings",
+          "description": "TLS certificate info for the application. If nil, the gateway will expose the application on port 80 only. Internal use only. Auto populated"
         }
       }
     },
@@ -2843,7 +2884,7 @@
         },
         "tcpConnectTimeout": {
           "type": "string",
-          "description": "These two settings will go to dest rule\nTCP connection timeout."
+          "description": "TCP connection timeout."
         },
         "tcpKeepalive": {
           "type": "boolean",
@@ -2852,10 +2893,11 @@
         },
         "circuitBreakerSensitivity": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.ClientSettings.Sensitivity",
-          "description": "the sensitivity levels will translate to specific values of\ndest rule outlier detection."
+          "description": "  The sensitivity levels will translate to specific values of dest rule outlier detection."
         }
       },
-      "description": "All the timeouts, retries, circuit breakers etc. that consumers\nwant to set to gaurd against failures of their dependencies. These\nroughly translate to pieces of istio virtual service, destination\nrules, etc. At runtime, for a given namespace, for the namespace's\ndependencies, we combine the client specified reliability settings\nwith the virtual service/dest rule for the dependencies to produce\nan updated virtual service/dest rule per dependent service. All\nthese client customized virtual services/dest rules will be private\nto the namespace i.e. will have an exportTo setting '.' . Doing so\nwill make Pilot apply these customizations only to the namespace\nconcerned without leaking it to all other namespaces."
+      "description": "All the timeouts, retries, circuit breakers etc. that consumers want to set to gaurd against failures of their dependencies. These roughly translate to pieces of istio virtual service, destination rules, etc. At runtime, for a given namespace, for the namespace's dependencies, we combine the client specified reliability settings with the virtual service/dest rule for the dependencies to produce an updated virtual service/dest rule per dependent service. All these client customized virtual services/dest rules will be private to the namespace i.e. will have an exportTo setting '.' . Doing so will make Pilot apply these customizations only to the namespace concerned without leaking it to all other namespaces.",
+      "title": "Client Settings"
     },
     "tetrate.api.tcc.core.v1.ClientSettings.Sensitivity": {
       "type": "string",
@@ -2935,37 +2977,37 @@
           "items": {
             "type": "string"
           },
-          "description": "The list of origins that are allowed to perform CORS requests. The\ncontent will be serialized into the Access-Control-Allow-Origin\nheader. Wildcard * will allow all origins."
+          "description": "  The list of origins that are allowed to perform CORS requests. The content will be serialized into the Access-Control-Allow-Origin header. Wildcard * will allow all origins."
         },
         "allowMethods": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "description": "List of HTTP methods allowed to access the resource. The content will\nbe serialized into the Access-Control-Allow-Methods header."
+          "description": "  List of HTTP methods allowed to access the resource. The content will be serialized into the Access-Control-Allow-Methods header."
         },
         "allowHeaders": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "description": "List of HTTP headers that can be used when requesting the\nresource. Serialized to Access-Control-Allow-Headers header."
+          "description": " List of HTTP headers that can be used when requesting the resource. Serialized to Access-Control-Allow-Headers header."
         },
         "exposeHeaders": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "description": "A white list of HTTP headers that the browsers are allowed to\naccess. Serialized into Access-Control-Expose-Headers header."
+          "description": "  A white list of HTTP headers that the browsers are allowed to access. Serialized into Access-Control-Expose-Headers header."
         },
         "maxAge": {
           "type": "string",
-          "description": "Specifies how long the results of a preflight request can be\ncached. Translates to the `Access-Control-Max-Age` header."
+          "description": "  Specifies how long the results of a preflight request can be cached. Translates to the Access-Control-Max-Age header."
         },
         "allowCredentials": {
           "type": "boolean",
           "format": "boolean",
-          "description": "Indicates whether the caller is allowed to send the actual request\n(not the preflight) using credentials. Translates to\n`Access-Control-Allow-Credentials` header."
+          "description": "  Indicates whether the caller is allowed to send the actual request (not the preflight) using credentials. Translates to Access-Control-Allow-Credentials header."
         }
       }
     },
@@ -2973,17 +3015,20 @@
       "type": "object",
       "properties": {
         "parent": {
-          "type": "string"
+          "type": "string",
+          "description": "Internal use only. Auto populated field."
         },
         "id": {
           "type": "string",
-          "title": "if present, this will be used as the id for the created object"
+          "description": "short name for the application. Clusters are expected to have namespaces that match the application Id, especially on Kubernetes."
         },
         "tenant": {
-          "type": "string"
+          "type": "string",
+          "description": "Tenant.Id"
         },
         "environment": {
-          "type": "string"
+          "type": "string",
+          "description": "Environment.Id"
         },
         "application": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.Application"
@@ -3072,11 +3117,12 @@
       "type": "object",
       "properties": {
         "parent": {
-          "type": "string"
+          "type": "string",
+          "description": "Internal use only. Auto populated field."
         },
         "id": {
           "type": "string",
-          "title": "if present, this will be used as the id for the created object"
+          "description": "if present, this will be used as the id for the created object."
         },
         "tenant": {
           "type": "string"
@@ -3090,11 +3136,11 @@
       "type": "object",
       "properties": {
         "parent": {
-          "type": "string"
+          "type": "string",
+          "description": "Internal use only. Auto populated field."
         },
         "id": {
-          "type": "string",
-          "title": "if present, this will be used as the id for the created object"
+          "type": "string"
         },
         "tenant": {
           "type": "string"
@@ -3135,11 +3181,11 @@
       "type": "object",
       "properties": {
         "parent": {
-          "type": "string"
+          "type": "string",
+          "description": "Internal use only. Auto populated field."
         },
         "id": {
-          "type": "string",
-          "title": "if present, this will be used as the id for the created object"
+          "type": "string"
         },
         "tenant": {
           "type": "string"
@@ -3159,11 +3205,11 @@
       "type": "object",
       "properties": {
         "parent": {
-          "type": "string"
+          "type": "string",
+          "description": "Internal use only. Auto populated field."
         },
         "id": {
-          "type": "string",
-          "title": "if present, this will be used as the id for the created object"
+          "type": "string"
         },
         "tenant": {
           "type": "string"
@@ -3177,8 +3223,7 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "string",
-          "title": "if present, this will be used as the id for the created object"
+          "type": "string"
         },
         "tenant": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.Tenant"
@@ -3189,11 +3234,11 @@
       "type": "object",
       "properties": {
         "parent": {
-          "type": "string"
+          "type": "string",
+          "description": "Internal use only. Auto populated field."
         },
         "id": {
-          "type": "string",
-          "title": "if present, this will be used as the id for the created object"
+          "type": "string"
         },
         "tenant": {
           "type": "string"
@@ -3304,21 +3349,28 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "description": "Internal use only. Auto populated field."
         },
         "tenant": {
-          "type": "string"
+          "type": "string",
+          "description": "Tenant.Id"
         },
         "id": {
-          "type": "string"
+          "type": "string",
+          "description": "A short name for the environment (e.g,, dev, stage, us-1, etc.)"
         },
         "description": {
-          "type": "string"
+          "type": "string",
+          "description": "Additional information for readability."
         },
         "clientSettings": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.ClientSettings"
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.ClientSettings",
+          "description": "Resilience settings that apply to all clusters in the environment."
         }
-      }
+      },
+      "description": "Environment is a collection of applications, services, load balancers, and clusters where they are deployed.",
+      "title": "Environment"
     },
     "tetrate.api.tcc.core.v1.HTTPRetry": {
       "type": "object",
@@ -3326,7 +3378,7 @@
         "attempts": {
           "type": "integer",
           "format": "int32",
-          "description": "REQUIRED. Number of retries for a given request. The interval\nbetween retries will be determined automatically (25ms+). Actual\nnumber of retries attempted depends on the httpReqTimeout."
+          "description": "Number of retries for a given request. The interval between retries will be determined automatically (25ms+). Actual number of retries attempted depends on the httpReqTimeout."
         },
         "perTryTimeout": {
           "type": "string",
@@ -3334,7 +3386,7 @@
         },
         "retryOn": {
           "type": "string",
-          "description": "Specifies the conditions under which retry takes place.\nOne or more policies can be specified using a ‘,’ delimited list.\nSee the [supported\npolicies](https://www.envoyproxy.io/docs/envoy/latest/configuration/http_filters/router_filter#x-envoy-retry-on)\nand\n[here](https://www.envoyproxy.io/docs/envoy/latest/configuration/http_filters/router_filter#x-envoy-retry-grpc-on)\nfor more details."
+          "description": "  Specifies the conditions under which retry takes place. One or more policies can be specified using a ‘,’ delimited list. See the [supported policies](https://www.envoyproxy.io/docs/envoy/latest/configuration/http_filters/router_filter#x-envoy-retry-on) and [here](https://www.envoyproxy.io/docs/envoy/latest/configuration/http_filters/router_filter#x-envoy-retry-grpc-on) for more details."
         }
       }
     },
@@ -3343,11 +3395,11 @@
       "properties": {
         "uri": {
           "type": "string",
-          "description": "rewrite the path (or the prefix) portion of the URI with this\nvalue. If the original URI was matched based on prefix, the value\nprovided in this field will replace the corresponding matched prefix."
+          "description": "  Rewrite the path (or the prefix) portion of the URI with this value. If the original URI was matched based on prefix, the value provided in this field will replace the corresponding matched prefix."
         },
         "authority": {
           "type": "string",
-          "description": "rewrite the Authority/Host header with this value."
+          "description": "Rewrite the Authority/Host header with this value."
         }
       }
     },
@@ -3356,14 +3408,14 @@
       "properties": {
         "request": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.Headers.HeaderOperations",
-          "title": "Header manipulation rules to apply before forwarding a request\nto the destination service"
+          "description": "  Header manipulation rules to apply before forwarding a request to the destination service"
         },
         "response": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.Headers.HeaderOperations",
-          "title": "Header manipulation rules to apply before returning a response\nto the caller"
+          "description": "Header manipulation rules to apply before returning a response to the caller"
         }
       },
-      "title": "Header manipulation rules"
+      "description": "Header manipulation rules"
     },
     "tetrate.api.tcc.core.v1.Headers.HeaderOperations": {
       "type": "object",
@@ -3372,54 +3424,51 @@
           "type": "object",
           "additionalProperties": {
             "type": "string"
-          },
-          "title": "Overwrite the headers specified by key with the given values"
+          }
         },
         "add": {
           "type": "object",
           "additionalProperties": {
             "type": "string"
-          },
-          "title": "Append the given values to the headers specified by keys\n(will create a comma-separated list of values)"
+          }
         },
         "remove": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "title": "Remove a the specified headers"
+          "description": "Remove a the specified headers"
         }
       },
-      "title": "HeaderOperations Describes the header manipulations to apply"
+      "description": "  HeaderOperations Describes the header manipulations to apply"
     },
     "tetrate.api.tcc.core.v1.HttpMatchCondition": {
       "type": "object",
       "properties": {
         "uri": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.StringMatch",
-          "title": "URI to match"
+          "description": "URI to match"
         },
         "scheme": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.StringMatch",
-          "title": "URI Scheme"
+          "description": "URI Scheme"
         },
         "method": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.StringMatch",
-          "title": "HTTP Method"
+          "description": "HTTP Method"
         },
         "authority": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.StringMatch",
-          "title": "HTTP Authority"
+          "description": "HTTP Authority"
         },
         "headers": {
           "type": "object",
           "additionalProperties": {
             "$ref": "#/definitions/tetrate.api.tcc.core.v1.StringMatch"
-          },
-          "description": "The header keys must be lowercase and use hyphen as the separator,\ne.g. _x-request-id_."
+          }
         }
       },
-      "title": "A single match clause to match all aspects of a request"
+      "description": "A single match clause to match all aspects of a request"
     },
     "tetrate.api.tcc.core.v1.HttpModifyAction": {
       "type": "object",
@@ -3431,7 +3480,7 @@
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.Headers"
         }
       },
-      "title": "HTTP path/url/header modification"
+      "description": "HTTP path/url/header modification"
     },
     "tetrate.api.tcc.core.v1.HttpRule": {
       "type": "object",
@@ -3441,11 +3490,11 @@
           "items": {
             "$ref": "#/definitions/tetrate.api.tcc.core.v1.HttpMatchCondition"
           },
-          "title": "one or more match conditions (OR-ed)"
+          "description": "one or more match conditions (OR-ed)"
         },
         "modify": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.HttpModifyAction",
-          "title": "one or more mutations to be performed before forwarding.\nIncludes typical modifications to be done on a single request\nlike URL rewrite, host rewrite, headers to add/remove/append"
+          "description": "  One or more mutations to be performed before forwarding. Includes typical modifications to be done on a single request like URL rewrite, host rewrite, headers to add/remove/append"
         },
         "route": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.Route"
@@ -3454,7 +3503,7 @@
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.Redirect"
         }
       },
-      "title": "A single HTTP rule"
+      "description": "A single HTTP rule"
     },
     "tetrate.api.tcc.core.v1.HttpSettings": {
       "type": "object",
@@ -3479,7 +3528,7 @@
       "properties": {
         "name": {
           "type": "string",
-          "description": "REQUIRED. Name of the cookie."
+          "description": "Name of the cookie."
         },
         "path": {
           "type": "string",
@@ -3487,10 +3536,10 @@
         },
         "ttl": {
           "type": "string",
-          "description": "REQUIRED. Lifetime of the cookie."
+          "description": "Lifetime of the cookie."
         }
       },
-      "description": "Describes a HTTP cookie that will be used for sticky sessions. If\nthe cookie is not present, it will be generated."
+      "description": "  Describes a HTTP cookie that will be used for sticky sessions. If the cookie is not present, it will be generated."
     },
     "tetrate.api.tcc.core.v1.HttpSettings.StickySession": {
       "type": "object",
@@ -3509,7 +3558,7 @@
           "description": "Hash based on the source IP address."
         }
       },
-      "title": "If set, the load balancer will route all requests from a\nparticular client to the same backend of the service.\nTODO (@lizan): this is incomplete in envoy. It still uses ketama hash\nwhich changes the mapping when more endpoints are added to LB pool"
+      "description": "If set, the load balancer will route all requests from a particular client to the same backend of the service."
     },
     "tetrate.api.tcc.core.v1.ListApplicationsResponse": {
       "type": "object",
@@ -3636,7 +3685,8 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "description": "Internal use only. Auto populated field."
         },
         "tenant": {
           "type": "string"
@@ -3668,19 +3718,17 @@
           "type": "object",
           "additionalProperties": {
             "type": "string"
-          },
-          "title": "Labels that uniquely identify the cluster loadbalancer.\nIf omitted, defaults to \"app: istio-ingressgateway\""
+          }
         },
         "applications": {
           "type": "object",
           "additionalProperties": {
             "$ref": "#/definitions/tetrate.api.tcc.core.v1.TLSSettings"
-          },
-          "title": "Map of applications attached to this loadbalancer in the form\napplicationId: TLS credential information"
+          }
         },
         "clientSettings": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.ClientSettings",
-          "description": "Client settings are applicable for traffic from the load\nbalancer's cluster namespace to the application's namespaces."
+          "description": "Client settings are applicable for traffic from the load balancer's cluster namespace to the application's namespaces."
         },
         "etag": {
           "type": "string"
@@ -3734,20 +3782,20 @@
         "number": {
           "type": "integer",
           "format": "int64",
-          "description": "REQUIRED: A valid non-negative integer port number."
+          "description": "A valid non-negative integer port number."
         },
         "protocol": {
           "type": "string",
-          "description": "The protocol exposed on the port.\nMUST BE one of HTTP|GRPC|HTTP2|HTTPS|TCP|TLS.\nTLS implies the connection will be routed based on the SNI header to\nthe destination without terminating the TLS connection."
+          "description": "  The protocol exposed on the port. MUST BE one of HTTP|GRPC|HTTP2|HTTPS|TCP|TLS. TLS implies the connection will be routed based on the SNI header to the destination without terminating the TLS connection."
         },
         "name": {
           "type": "string",
-          "description": "Label assigned to the port."
+          "description": "Name assigned to the port."
         },
         "endpointPort": {
           "type": "integer",
           "format": "int64",
-          "description": "The endpoint port to which this service port maps to. For example, service port 80\nexposed on the load balancer could map to an endpoint port 9080 on a VM."
+          "description": "The endpoint port to which this service port maps to. For example, service port 80 exposed on the load balancer could map to an endpoint port 9080 on a VM."
         }
       }
     },
@@ -3756,11 +3804,11 @@
       "properties": {
         "uri": {
           "type": "string",
-          "description": "On a redirect, overwrite the Path portion of the URL with this\nvalue."
+          "description": "On a redirect, overwrite the Path portion of the URL with this value."
         },
         "authority": {
           "type": "string",
-          "description": "On a redirect, overwrite the Authority/Host portion of the URL with\nthis value."
+          "description": "On a redirect, overwrite the Authority/Host portion of the URL with this value."
         }
       }
     },
@@ -3821,14 +3869,14 @@
           }
         }
       },
-      "title": "One or more destinations for the given request"
+      "description": "One or more destinations for the given request"
     },
     "tetrate.api.tcc.core.v1.Route.Destination": {
       "type": "object",
       "properties": {
         "host": {
           "type": "string",
-          "title": "if omitted, will route to same host as the service"
+          "description": "if omitted, will route to same host as the service"
         },
         "subset": {
           "type": "string"
@@ -3836,12 +3884,12 @@
         "weight": {
           "type": "integer",
           "format": "int64",
-          "title": "100 if omitted. sum of all weights should add up to 100"
+          "description": "100 if omitted. sum of all weights should add up to 100"
         },
         "port": {
           "type": "integer",
           "format": "int64",
-          "title": "optional"
+          "description": "optional"
         }
       }
     },
@@ -3852,49 +3900,56 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/tetrate.api.tcc.core.v1.Subset"
-          }
+          },
+          "description": "One or more versions of the service. Each version has a distinct name and a set of labels that help uniquely identify the pods/VMs of that version."
         },
         "httpSettings": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.HttpSettings",
-          "description": "HTTP specific settings, transformations and routing rules\nassociated with HTTP traffic to this service."
+          "description": "  HTTP specific settings, transformations and routing rules associated with HTTP traffic to this service."
         },
         "tcpSettings": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.TcpSettings",
-          "description": "TCP specific settings, transformations and routing rules\nassociated with non-HTTP traffic to this service."
+          "description": "TCP specific settings, transformations and routing rules associated with non-HTTP traffic to this service."
         }
       },
-      "title": "Part of the Deployment type_info oneof"
+      "description": "HTTP routing settings for application or service. Subsets of a service should be declared here as well.",
+      "title": "Routing Info"
     },
     "tetrate.api.tcc.core.v1.Service": {
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "description": "Internal use only. Auto populated field."
         },
         "tenant": {
-          "type": "string"
+          "type": "string",
+          "description": "Tenant.Id"
         },
         "environment": {
-          "type": "string"
+          "type": "string",
+          "description": "Environment.Id"
         },
         "application": {
-          "type": "string"
+          "type": "string",
+          "description": "Application.Id"
         },
         "id": {
-          "type": "string"
+          "type": "string",
+          "description": "short name for the service. Clusters are expected to have namespaces that match the application, and services that match the Id, especially on Kubernetes."
         },
         "description": {
           "type": "string"
         },
         "hostname": {
-          "type": "string"
+          "type": "string",
+          "description": "FQDN hostname of the service."
         },
         "labels": {
           "type": "object",
           "additionalProperties": {
             "type": "string"
-          },
-          "description": "User identifiable tags associated with this service."
+          }
         },
         "ports": {
           "type": "array",
@@ -3903,7 +3958,8 @@
           }
         },
         "routingInfo": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.RoutingInfo"
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.RoutingInfo",
+          "description": "HTTP Routing settings for the service. Note that subsets (versions of the service) if any should be defined here."
         },
         "etag": {
           "type": "string"
@@ -3915,18 +3971,18 @@
       "properties": {
         "exact": {
           "type": "string",
-          "title": "exact string match"
+          "description": "exact string match"
         },
         "prefix": {
           "type": "string",
-          "title": "prefix-based match"
+          "description": "prefix-based match"
         },
         "regex": {
           "type": "string",
-          "title": "ECMAscript style regex-based match"
+          "description": "ECMAscript style regex-based match"
         }
       },
-      "description": "Describes how to match a given string in HTTP headers. Match is\ncase-sensitive."
+      "description": "Describes how to match a given string in HTTP headers. Match is case-sensitive."
     },
     "tetrate.api.tcc.core.v1.Subset": {
       "type": "object",
@@ -3938,8 +3994,7 @@
           "type": "object",
           "additionalProperties": {
             "type": "string"
-          },
-          "description": "Labels apply a filter over the endpoints of a service in the\nservice registry."
+          }
         }
       }
     },
@@ -3948,22 +4003,21 @@
       "properties": {
         "serverCertificate": {
           "type": "string",
-          "description": "For proxies running on VMs, the path to the file holding the\nserver-side TLS certificate to use."
+          "description": "For proxies running on VMs, the path to the file holding the server-side TLS certificate to use."
         },
         "privateKey": {
           "type": "string",
-          "description": "For proxies running on VMs, the path to the file holding the\nserver's private key."
+          "description": "  For proxies running on VMs, the path to the file holding the server's private key."
         },
         "caCertificates": {
           "type": "string",
-          "description": "For proxies running on VMs, the path to a file containing\ncertificate authority certificates to use in verifying a\npresented client side certificate for mutual TLS connections."
+          "description": "  For proxies running on VMs, the path to a file containing certificate authority certificates to use in verifying a presented client side certificate for mutual TLS connections."
         },
         "secretName": {
           "type": "string",
-          "description": "For proxies running on Kubernetes, the name of the secret that\nholds the TLS certs. Currently applicable only on Kubernetes.\nThe secret should contain the server certificate and the private\nkey. If mutual TLS is being used, an additional secret with name\nsecretName-cacert should be created with the CaCertificates that\nthe server will use to verify client side certificates. If the\nservice is exposed via a load balancer, the secret must be\naccessible to it."
+          "description": "For proxies running on Kubernetes, the name of the secret that holds the TLS certs. Currently applicable only on Kubernetes. The secret should contain the server certificate and the private key. If mutual TLS is being used, an additional secret with name secretName-cacert should be created with the CaCertificates that the server will use to verify client side certificates. If the service is exposed via a load balancer, the secret must be accessible to it."
         }
-      },
-      "title": "TODO: This must become some form of a meta API such that it can be reused across LBs"
+      }
     },
     "tetrate.api.tcc.core.v1.TcpSettings": {
       "type": "object",
@@ -3979,7 +4033,8 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "description": "Internal use only. Auto populated field."
         },
         "tenant": {
           "type": "string"
@@ -4005,7 +4060,8 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "description": "Internal use only. Auto populated field."
         },
         "id": {
           "type": "string"
@@ -4019,7 +4075,8 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "description": "Internal use only. Auto populated field."
         },
         "tenant": {
           "type": "string"

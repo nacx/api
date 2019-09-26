@@ -25,43 +25,43 @@ import {
 } from './';
 
 /**
- * 
+ * An Application is a collection of services. Each application corresponds to a kubernetes namespace or an application deployment on VMs. The hostname of the application is exposed via the load balancer (either shared or dedicated).
  * @export
  * @interface TetrateApiTccCoreV1Application
  */
 export interface TetrateApiTccCoreV1Application {
     /**
-     * 
+     * Internal use only. Auto populated field.
      * @type {string}
      * @memberof TetrateApiTccCoreV1Application
      */
     name?: string;
     /**
-     * 
+     * Tenant.Id
      * @type {string}
      * @memberof TetrateApiTccCoreV1Application
      */
     tenant?: string;
     /**
-     * 
+     * Environment.Id
      * @type {string}
      * @memberof TetrateApiTccCoreV1Application
      */
     environment?: string;
     /**
-     * 
+     * short name for the application. Clusters are expected to have namespaces that match the application Id, especially on Kubernetes.
      * @type {string}
      * @memberof TetrateApiTccCoreV1Application
      */
     id?: string;
     /**
-     * 
+     * Additional information.
      * @type {string}
      * @memberof TetrateApiTccCoreV1Application
      */
     description?: string;
     /**
-     * 
+     * Hostname with which the application is exposed on a Gateway
      * @type {string}
      * @memberof TetrateApiTccCoreV1Application
      */

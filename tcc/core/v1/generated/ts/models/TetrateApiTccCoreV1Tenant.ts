@@ -19,7 +19,7 @@ import { exists, mapValues } from '../runtime';
  */
 export interface TetrateApiTccCoreV1Tenant {
     /**
-     * 
+     * Internal use only. Auto populated field.
      * @type {string}
      * @memberof TetrateApiTccCoreV1Tenant
      */

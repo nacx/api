@@ -25,25 +25,25 @@ import {
  */
 export interface TetrateApiTccCoreV1CreateApplicationRequest {
     /**
-     * 
+     * Internal use only. Auto populated field.
      * @type {string}
      * @memberof TetrateApiTccCoreV1CreateApplicationRequest
      */
     parent?: string;
     /**
-     * 
+     * short name for the application. Clusters are expected to have namespaces that match the application Id, especially on Kubernetes.
      * @type {string}
      * @memberof TetrateApiTccCoreV1CreateApplicationRequest
      */
     id?: string;
     /**
-     * 
+     * Tenant.Id
      * @type {string}
      * @memberof TetrateApiTccCoreV1CreateApplicationRequest
      */
     tenant?: string;
     /**
-     * 
+     * Environment.Id
      * @type {string}
      * @memberof TetrateApiTccCoreV1CreateApplicationRequest
      */

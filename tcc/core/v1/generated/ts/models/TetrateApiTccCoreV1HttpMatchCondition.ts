@@ -19,7 +19,7 @@ import {
 } from './';
 
 /**
- * 
+ * A single match clause to match all aspects of a request
  * @export
  * @interface TetrateApiTccCoreV1HttpMatchCondition
  */
@@ -49,7 +49,7 @@ export interface TetrateApiTccCoreV1HttpMatchCondition {
      */
     authority?: TetrateApiTccCoreV1StringMatch;
     /**
-     * The header keys must be lowercase and use hyphen as the separator, e.g. _x-request-id_.
+     * 
      * @type {{ [key: string]: TetrateApiTccCoreV1StringMatch; }}
      * @memberof TetrateApiTccCoreV1HttpMatchCondition
      */

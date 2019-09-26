@@ -25,13 +25,13 @@ import {
  */
 export interface TetrateApiTccCoreV1CreateEnvironmentRequest {
     /**
-     * 
+     * Internal use only. Auto populated field.
      * @type {string}
      * @memberof TetrateApiTccCoreV1CreateEnvironmentRequest
      */
     parent?: string;
     /**
-     * 
+     * if present, this will be used as the id for the created object.
      * @type {string}
      * @memberof TetrateApiTccCoreV1CreateEnvironmentRequest
      */

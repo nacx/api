@@ -19,7 +19,7 @@ import {
 } from './';
 
 /**
- * 
+ * If set, the load balancer will route all requests from a particular client to the same backend of the service.
  * @export
  * @interface TetrateApiTccCoreV1HttpSettingsStickySession
  */

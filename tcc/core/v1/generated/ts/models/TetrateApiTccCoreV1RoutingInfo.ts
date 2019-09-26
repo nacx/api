@@ -25,13 +25,13 @@ import {
 } from './';
 
 /**
- * 
+ * HTTP routing settings for application or service. Subsets of a service should be declared here as well.
  * @export
  * @interface TetrateApiTccCoreV1RoutingInfo
  */
 export interface TetrateApiTccCoreV1RoutingInfo {
     /**
-     * 
+     * One or more versions of the service. Each version has a distinct name and a set of labels that help uniquely identify the pods/VMs of that version.
      * @type {Array<TetrateApiTccCoreV1Subset>}
      * @memberof TetrateApiTccCoreV1RoutingInfo
      */

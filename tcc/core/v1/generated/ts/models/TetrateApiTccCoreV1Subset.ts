@@ -25,7 +25,7 @@ export interface TetrateApiTccCoreV1Subset {
      */
     name?: string;
     /**
-     * Labels apply a filter over the endpoints of a service in the service registry.
+     * 
      * @type {{ [key: string]: string; }}
      * @memberof TetrateApiTccCoreV1Subset
      */

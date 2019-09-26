@@ -19,19 +19,19 @@ import { exists, mapValues } from '../runtime';
  */
 export interface TetrateApiTccCoreV1Port {
     /**
-     * REQUIRED: A valid non-negative integer port number.
+     * A valid non-negative integer port number.
      * @type {number}
      * @memberof TetrateApiTccCoreV1Port
      */
     number?: number;
     /**
-     * The protocol exposed on the port. MUST BE one of HTTP|GRPC|HTTP2|HTTPS|TCP|TLS. TLS implies the connection will be routed based on the SNI header to the destination without terminating the TLS connection.
+     *   The protocol exposed on the port. MUST BE one of HTTP|GRPC|HTTP2|HTTPS|TCP|TLS. TLS implies the connection will be routed based on the SNI header to the destination without terminating the TLS connection.
      * @type {string}
      * @memberof TetrateApiTccCoreV1Port
      */
     protocol?: string;
     /**
-     * Label assigned to the port.
+     * Name assigned to the port.
      * @type {string}
      * @memberof TetrateApiTccCoreV1Port
      */

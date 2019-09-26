@@ -454,22 +454,21 @@
       "properties": {
         "serverCertificate": {
           "type": "string",
-          "description": "For proxies running on VMs, the path to the file holding the\nserver-side TLS certificate to use."
+          "description": "For proxies running on VMs, the path to the file holding the server-side TLS certificate to use."
         },
         "privateKey": {
           "type": "string",
-          "description": "For proxies running on VMs, the path to the file holding the\nserver's private key."
+          "description": "  For proxies running on VMs, the path to the file holding the server's private key."
         },
         "caCertificates": {
           "type": "string",
-          "description": "For proxies running on VMs, the path to a file containing\ncertificate authority certificates to use in verifying a\npresented client side certificate for mutual TLS connections."
+          "description": "  For proxies running on VMs, the path to a file containing certificate authority certificates to use in verifying a presented client side certificate for mutual TLS connections."
         },
         "secretName": {
           "type": "string",
-          "description": "For proxies running on Kubernetes, the name of the secret that\nholds the TLS certs. Currently applicable only on Kubernetes.\nThe secret should contain the server certificate and the private\nkey. If mutual TLS is being used, an additional secret with name\nsecretName-cacert should be created with the CaCertificates that\nthe server will use to verify client side certificates. If the\nservice is exposed via a load balancer, the secret must be\naccessible to it."
+          "description": "For proxies running on Kubernetes, the name of the secret that holds the TLS certs. Currently applicable only on Kubernetes. The secret should contain the server certificate and the private key. If mutual TLS is being used, an additional secret with name secretName-cacert should be created with the CaCertificates that the server will use to verify client side certificates. If the service is exposed via a load balancer, the secret must be accessible to it."
         }
-      },
-      "title": "TODO: This must become some form of a meta API such that it can be reused across LBs"
+      }
     },
     "tetrate.api.tcc.workflows.loadbalancer.v1.Action": {
       "type": "string",

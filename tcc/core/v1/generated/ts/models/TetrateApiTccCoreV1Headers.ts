@@ -19,7 +19,7 @@ import {
 } from './';
 
 /**
- * 
+ * Header manipulation rules
  * @export
  * @interface TetrateApiTccCoreV1Headers
  */

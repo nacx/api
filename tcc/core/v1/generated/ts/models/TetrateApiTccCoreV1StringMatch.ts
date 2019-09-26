@@ -19,19 +19,19 @@ import { exists, mapValues } from '../runtime';
  */
 export interface TetrateApiTccCoreV1StringMatch {
     /**
-     * 
+     * exact string match
      * @type {string}
      * @memberof TetrateApiTccCoreV1StringMatch
      */
     exact?: string;
     /**
-     * 
+     * prefix-based match
      * @type {string}
      * @memberof TetrateApiTccCoreV1StringMatch
      */
     prefix?: string;
     /**
-     * 
+     * ECMAscript style regex-based match
      * @type {string}
      * @memberof TetrateApiTccCoreV1StringMatch
      */

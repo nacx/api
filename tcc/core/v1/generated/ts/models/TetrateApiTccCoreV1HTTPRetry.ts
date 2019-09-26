@@ -19,7 +19,7 @@ import { exists, mapValues } from '../runtime';
  */
 export interface TetrateApiTccCoreV1HTTPRetry {
     /**
-     * REQUIRED. Number of retries for a given request. The interval between retries will be determined automatically (25ms+). Actual number of retries attempted depends on the httpReqTimeout.
+     * Number of retries for a given request. The interval between retries will be determined automatically (25ms+). Actual number of retries attempted depends on the httpReqTimeout.
      * @type {number}
      * @memberof TetrateApiTccCoreV1HTTPRetry
      */
@@ -31,7 +31,7 @@ export interface TetrateApiTccCoreV1HTTPRetry {
      */
     perTryTimeout?: string;
     /**
-     * Specifies the conditions under which retry takes place. One or more policies can be specified using a ‘,’ delimited list. See the [supported policies](https://www.envoyproxy.io/docs/envoy/latest/configuration/http_filters/router_filter#x-envoy-retry-on) and [here](https://www.envoyproxy.io/docs/envoy/latest/configuration/http_filters/router_filter#x-envoy-retry-grpc-on) for more details.
+     *   Specifies the conditions under which retry takes place. One or more policies can be specified using a ‘,’ delimited list. See the [supported policies](https://www.envoyproxy.io/docs/envoy/latest/configuration/http_filters/router_filter#x-envoy-retry-on) and [here](https://www.envoyproxy.io/docs/envoy/latest/configuration/http_filters/router_filter#x-envoy-retry-grpc-on) for more details.
      * @type {string}
      * @memberof TetrateApiTccCoreV1HTTPRetry
      */

@@ -13,7 +13,7 @@
 
 import { exists, mapValues } from '../runtime';
 /**
- * 
+ *   HeaderOperations Describes the header manipulations to apply
  * @export
  * @interface TetrateApiTccCoreV1HeadersHeaderOperations
  */
@@ -31,7 +31,7 @@ export interface TetrateApiTccCoreV1HeadersHeaderOperations {
      */
     add?: { [key: string]: string; };
     /**
-     * 
+     * Remove a the specified headers
      * @type {Array<string>}
      * @memberof TetrateApiTccCoreV1HeadersHeaderOperations
      */

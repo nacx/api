@@ -25,7 +25,7 @@ import {
  */
 export interface TetrateApiTccCoreV1CreateLoadBalancerRequest {
     /**
-     * 
+     * Internal use only. Auto populated field.
      * @type {string}
      * @memberof TetrateApiTccCoreV1CreateLoadBalancerRequest
      */
