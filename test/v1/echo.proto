@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package tetrate.api.test.v1;
+option go_package = "testv1";
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+// Tetrate Service inventory
+service Service {
+	rpc Echo(EchoRequest) returns (EchoResponse) {
+		option (google.api.http) = {
+			put: "/v1/{id}"
+			body: "*"
+		};
+	};
+}
+
+message EchoRequest {
+	string id = 1;
+	bytes body = 2;
+}
+
+message EchoResponse {
+	string id = 1;
+	bytes body = 2;
+	google.protobuf.Timestamp server_time = 3;
+}

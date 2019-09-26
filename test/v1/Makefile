@@ -11,7 +11,7 @@ ${PROTO_GO_SOURCES}: ${PROTO_SOURCES}
 		-I ${TOPDIR}/ \
 		-I ${VENDOR} \
 		--go_out=plugins=grpc:. \
-		--descriptor_set_out=inventory.proto-descriptor --include_imports \
+		--descriptor_set_out=test.proto-descriptor --include_imports \
 		$?
 
 all: ${PROTO_GO_SOURCES}
@@ -20,5 +20,5 @@ all: ${PROTO_GO_SOURCES}
 .PHONY: all
 
 clean:
-	@rm -f ${PROTO_GO_SOURCES} inventory.proto-descriptor
+	@rm -f ${PROTO_GO_SOURCES} test.proto-descriptor
 	@echo "Cleaned ${PROTO_GO_SOURCES}"
