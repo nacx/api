@@ -81,6 +81,18 @@ message LBRouteSettings {
     // TCP specific settings, transformations and routing rules associated with non-HTTP traffic to
     // this service.
     TcpSettings tcp_settings = 4;
+
+    // Available authentication settings.
+    message AuthSettings {
+      oneof settings {
+        BasicAuthSettings basic_auth_settings = 1;
+      }
+    }
+
+    // One or more auth settings (OR-ed).
+    repeated AuthSettings auth_settings = 5;
+    // Rate limit settings.
+    RateLimitSettings rate_limit_settings = 6;
   };
   repeated LBRoute routes = 3;
 }
@@ -352,4 +364,40 @@ message CorsPolicy {
   // Indicates whether the caller is allowed to send the actual request (not the preflight) using
   // credentials. Translates to Access-Control-Allow-Credentials header.
   google.protobuf.BoolValue allow_credentials = 6;
+}
+
+message BasicAuthSettings {
+  // Realm value for WWW-Authenticate header. If empty, will be set to LoadBalancer's hostname.
+  string realm = 1;
+  // Charset value for WWW-Authenticate header. If empty, will be set to "UTF-8".
+  string charset = 2;
+
+  message User {
+    string username = 1;
+    string password = 2;
+  }
+
+  // List of basic auth users.
+  repeated User users = 3;
+}
+
+message RateLimitSettings {
+  // The number of requests limit per time interval.
+  uint32 requests_limit = 1;
+  // Interval for requests within limit.
+  google.protobuf.Duration interval = 2;
+
+  // Available entity options to rate limit by.
+  enum LimitBy {
+    // Limit by IP.
+    IP = 0;
+    // Limit by user. Basic auth must be enabled.
+    USER = 1;
+    // Limit without any entity. This will count all traffic incoming to the proxy for this
+    // LoadBalancer.
+    NONE = 2;
+  }
+
+  // Limit by entity. Defaults to IP.
+  LimitBy limit_by = 3;
 }

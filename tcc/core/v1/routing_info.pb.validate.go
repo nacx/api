@@ -1689,6 +1689,183 @@ var _ interface {
 	ErrorName() string
 } = CorsPolicyValidationError{}
 
+// Validate checks the field values on BasicAuthSettings with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *BasicAuthSettings) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Realm
+
+	// no validation rules for Charset
+
+	for idx, item := range m.GetUsers() {
+		_, _ = idx, item
+
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return BasicAuthSettingsValidationError{
+						field:  fmt.Sprintf("Users[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// BasicAuthSettingsValidationError is the validation error returned by
+// BasicAuthSettings.Validate if the designated constraints aren't met.
+type BasicAuthSettingsValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e BasicAuthSettingsValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e BasicAuthSettingsValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e BasicAuthSettingsValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e BasicAuthSettingsValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e BasicAuthSettingsValidationError) ErrorName() string {
+	return "BasicAuthSettingsValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e BasicAuthSettingsValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sBasicAuthSettings.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = BasicAuthSettingsValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = BasicAuthSettingsValidationError{}
+
+// Validate checks the field values on RateLimitSettings with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *RateLimitSettings) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for RequestsLimit
+
+	{
+		tmp := m.GetInterval()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return RateLimitSettingsValidationError{
+					field:  "Interval",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+	}
+
+	// no validation rules for LimitBy
+
+	return nil
+}
+
+// RateLimitSettingsValidationError is the validation error returned by
+// RateLimitSettings.Validate if the designated constraints aren't met.
+type RateLimitSettingsValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e RateLimitSettingsValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e RateLimitSettingsValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e RateLimitSettingsValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e RateLimitSettingsValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e RateLimitSettingsValidationError) ErrorName() string {
+	return "RateLimitSettingsValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e RateLimitSettingsValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sRateLimitSettings.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = RateLimitSettingsValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = RateLimitSettingsValidationError{}
+
 // Validate checks the field values on LBRouteSettings_LBRoute with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
@@ -1742,6 +1919,41 @@ func (m *LBRouteSettings_LBRoute) Validate() error {
 			if err := v.Validate(); err != nil {
 				return LBRouteSettings_LBRouteValidationError{
 					field:  "TcpSettings",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+	}
+
+	for idx, item := range m.GetAuthSettings() {
+		_, _ = idx, item
+
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return LBRouteSettings_LBRouteValidationError{
+						field:  fmt.Sprintf("AuthSettings[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+		}
+
+	}
+
+	{
+		tmp := m.GetRateLimitSettings()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return LBRouteSettings_LBRouteValidationError{
+					field:  "RateLimitSettings",
 					reason: "embedded message failed validation",
 					cause:  err,
 				}
@@ -1807,6 +2019,95 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = LBRouteSettings_LBRouteValidationError{}
+
+// Validate checks the field values on LBRouteSettings_LBRoute_AuthSettings
+// with the rules defined in the proto definition for this message. If any
+// rules are violated, an error is returned.
+func (m *LBRouteSettings_LBRoute_AuthSettings) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	switch m.Settings.(type) {
+
+	case *LBRouteSettings_LBRoute_AuthSettings_BasicAuthSettings:
+
+		{
+			tmp := m.GetBasicAuthSettings()
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return LBRouteSettings_LBRoute_AuthSettingsValidationError{
+						field:  "BasicAuthSettings",
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// LBRouteSettings_LBRoute_AuthSettingsValidationError is the validation error
+// returned by LBRouteSettings_LBRoute_AuthSettings.Validate if the designated
+// constraints aren't met.
+type LBRouteSettings_LBRoute_AuthSettingsValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e LBRouteSettings_LBRoute_AuthSettingsValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e LBRouteSettings_LBRoute_AuthSettingsValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e LBRouteSettings_LBRoute_AuthSettingsValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e LBRouteSettings_LBRoute_AuthSettingsValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e LBRouteSettings_LBRoute_AuthSettingsValidationError) ErrorName() string {
+	return "LBRouteSettings_LBRoute_AuthSettingsValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e LBRouteSettings_LBRoute_AuthSettingsValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sLBRouteSettings_LBRoute_AuthSettings.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = LBRouteSettings_LBRoute_AuthSettingsValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = LBRouteSettings_LBRoute_AuthSettingsValidationError{}
 
 // Validate checks the field values on HttpSettings_HTTPCookie with the rules
 // defined in the proto definition for this message. If any rules are
@@ -2350,3 +2651,74 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = Route_DestinationValidationError{}
+
+// Validate checks the field values on BasicAuthSettings_User with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *BasicAuthSettings_User) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Username
+
+	// no validation rules for Password
+
+	return nil
+}
+
+// BasicAuthSettings_UserValidationError is the validation error returned by
+// BasicAuthSettings_User.Validate if the designated constraints aren't met.
+type BasicAuthSettings_UserValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e BasicAuthSettings_UserValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e BasicAuthSettings_UserValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e BasicAuthSettings_UserValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e BasicAuthSettings_UserValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e BasicAuthSettings_UserValidationError) ErrorName() string {
+	return "BasicAuthSettings_UserValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e BasicAuthSettings_UserValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sBasicAuthSettings_User.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = BasicAuthSettings_UserValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = BasicAuthSettings_UserValidationError{}
