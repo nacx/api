@@ -24,6 +24,7 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
 
+// Available sensitivity levels.
 type ClientSettings_Sensitivity int32
 
 const (
@@ -57,7 +58,7 @@ func (ClientSettings_Sensitivity) EnumDescriptor() ([]byte, []int) {
 
 // ClientSettings
 //
-// All the timeouts, retries, circuit breakers etc. that consumers want to set to gaurd against failures of their
+// All the timeouts, retries, circuit breakers etc. that consumers want to set to guard against failures of their
 // dependencies. These roughly translate to pieces of istio virtual service, destination rules, etc. At runtime, for a
 // given namespace, for the namespace's dependencies, we combine the client specified reliability settings with the
 // virtual service/dest rule for the dependencies to produce an updated virtual service/dest rule per dependent service.

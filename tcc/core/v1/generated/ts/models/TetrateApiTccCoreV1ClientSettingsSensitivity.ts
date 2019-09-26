@@ -12,7 +12,7 @@
  */
 
 /**
- * 
+ * Available sensitivity levels.
  * @export
  * @enum {string}
  */

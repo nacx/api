@@ -22,7 +22,7 @@ import {
 } from './';
 
 /**
- * All the timeouts, retries, circuit breakers etc. that consumers want to set to gaurd against failures of their dependencies. These roughly translate to pieces of istio virtual service, destination rules, etc. At runtime, for a given namespace, for the namespace\'s dependencies, we combine the client specified reliability settings with the virtual service/dest rule for the dependencies to produce an updated virtual service/dest rule per dependent service. All these client customized virtual services/dest rules will be private to the namespace i.e. will have an exportTo setting \'.\' . Doing so will make Pilot apply these customizations only to the namespace concerned without leaking it to all other namespaces.
+ * All the timeouts, retries, circuit breakers etc. that consumers want to set to guard against failures of their dependencies. These roughly translate to pieces of istio virtual service, destination rules, etc. At runtime, for a given namespace, for the namespace\'s dependencies, we combine the client specified reliability settings with the virtual service/dest rule for the dependencies to produce an updated virtual service/dest rule per dependent service. All these client customized virtual services/dest rules will be private to the namespace i.e. will have an exportTo setting \'.\' . Doing so will make Pilot apply these customizations only to the namespace concerned without leaking it to all other namespaces.
  * @export
  * @interface TetrateApiTccCoreV1ClientSettings
  */
