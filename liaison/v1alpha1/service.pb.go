@@ -31,11 +31,11 @@ type Service struct {
 	// Resource name with format:
 	//   "services/<FQDN>"
 	// where the FQDN is the 'name' in tetrate.api.inventory.v1.Service.
-	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Name string `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
 	// The name displayed to end users.
-	DisplayName          string   `protobuf:"bytes,2,opt,name=display_name,json=displayName,proto3" json:"display_name,omitempty"`
-	Namespace            string   `protobuf:"bytes,3,opt,name=namespace,proto3" json:"namespace,omitempty"`
-	Ports                []*Port  `protobuf:"bytes,4,rep,name=ports,proto3" json:"ports,omitempty"`
+	DisplayName          string   `protobuf:"bytes,2,opt,name=display_name,json=displayName" json:"display_name,omitempty"`
+	Namespace            string   `protobuf:"bytes,3,opt,name=namespace" json:"namespace,omitempty"`
+	Ports                []*Port  `protobuf:"bytes,4,rep,name=ports" json:"ports,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -94,10 +94,10 @@ func (m *Service) GetPorts() []*Port {
 }
 
 type Port struct {
-	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Protocol             string   `protobuf:"bytes,2,opt,name=protocol,proto3" json:"protocol,omitempty"`
-	Port                 int32    `protobuf:"varint,3,opt,name=port,proto3" json:"port,omitempty"`
-	TargetPort           int32    `protobuf:"varint,4,opt,name=target_port,json=targetPort,proto3" json:"target_port,omitempty"`
+	Name                 string   `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
+	Protocol             string   `protobuf:"bytes,2,opt,name=protocol" json:"protocol,omitempty"`
+	Port                 int32    `protobuf:"varint,3,opt,name=port" json:"port,omitempty"`
+	TargetPort           int32    `protobuf:"varint,4,opt,name=target_port,json=targetPort" json:"target_port,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -158,7 +158,7 @@ func (m *Port) GetTargetPort() int32 {
 type ListServicesRequest struct {
 	// Why we need namespace here? Since in openshift the project concept is namespace. We need to
 	// limit the discovery only to that namespace.
-	Namespace            string   `protobuf:"bytes,1,opt,name=namespace,proto3" json:"namespace,omitempty"`
+	Namespace            string   `protobuf:"bytes,1,opt,name=namespace" json:"namespace,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -196,7 +196,7 @@ func (m *ListServicesRequest) GetNamespace() string {
 }
 
 type ListServicesResponse struct {
-	Services             []*Service `protobuf:"bytes,1,rep,name=services,proto3" json:"services,omitempty"`
+	Services             []*Service `protobuf:"bytes,1,rep,name=services" json:"services,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}   `json:"-"`
 	XXX_unrecognized     []byte     `json:"-"`
 	XXX_sizecache        int32      `json:"-"`
@@ -234,7 +234,7 @@ func (m *ListServicesResponse) GetServices() []*Service {
 }
 
 type GetServiceRequest struct {
-	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Name                 string   `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -272,7 +272,7 @@ func (m *GetServiceRequest) GetName() string {
 }
 
 type CreateServiceRequest struct {
-	Service              *Service `protobuf:"bytes,1,opt,name=service,proto3" json:"service,omitempty"`
+	Service              *Service `protobuf:"bytes,1,opt,name=service" json:"service,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -310,7 +310,7 @@ func (m *CreateServiceRequest) GetService() *Service {
 }
 
 type UpdateServiceRequest struct {
-	Service              *Service `protobuf:"bytes,1,opt,name=service,proto3" json:"service,omitempty"`
+	Service              *Service `protobuf:"bytes,1,opt,name=service" json:"service,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -348,7 +348,7 @@ func (m *UpdateServiceRequest) GetService() *Service {
 }
 
 type DeleteServiceRequest struct {
-	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Name                 string   `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -404,9 +404,8 @@ var _ grpc.ClientConn
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion4
 
-// ServicesClient is the client API for Services service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+// Client API for Services service
+
 type ServicesClient interface {
 	ListServices(ctx context.Context, in *ListServicesRequest, opts ...grpc.CallOption) (*ListServicesResponse, error)
 	GetService(ctx context.Context, in *GetServiceRequest, opts ...grpc.CallOption) (*Service, error)
@@ -425,7 +424,7 @@ func NewServicesClient(cc *grpc.ClientConn) ServicesClient {
 
 func (c *servicesClient) ListServices(ctx context.Context, in *ListServicesRequest, opts ...grpc.CallOption) (*ListServicesResponse, error) {
 	out := new(ListServicesResponse)
-	err := c.cc.Invoke(ctx, "/tetrate.api.liaison.v1alpha1.Services/ListServices", in, out, opts...)
+	err := grpc.Invoke(ctx, "/tetrate.api.liaison.v1alpha1.Services/ListServices", in, out, c.cc, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -434,7 +433,7 @@ func (c *servicesClient) ListServices(ctx context.Context, in *ListServicesReque
 
 func (c *servicesClient) GetService(ctx context.Context, in *GetServiceRequest, opts ...grpc.CallOption) (*Service, error) {
 	out := new(Service)
-	err := c.cc.Invoke(ctx, "/tetrate.api.liaison.v1alpha1.Services/GetService", in, out, opts...)
+	err := grpc.Invoke(ctx, "/tetrate.api.liaison.v1alpha1.Services/GetService", in, out, c.cc, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -443,7 +442,7 @@ func (c *servicesClient) GetService(ctx context.Context, in *GetServiceRequest, 
 
 func (c *servicesClient) CreateService(ctx context.Context, in *CreateServiceRequest, opts ...grpc.CallOption) (*Service, error) {
 	out := new(Service)
-	err := c.cc.Invoke(ctx, "/tetrate.api.liaison.v1alpha1.Services/CreateService", in, out, opts...)
+	err := grpc.Invoke(ctx, "/tetrate.api.liaison.v1alpha1.Services/CreateService", in, out, c.cc, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -452,7 +451,7 @@ func (c *servicesClient) CreateService(ctx context.Context, in *CreateServiceReq
 
 func (c *servicesClient) UpdateService(ctx context.Context, in *UpdateServiceRequest, opts ...grpc.CallOption) (*Service, error) {
 	out := new(Service)
-	err := c.cc.Invoke(ctx, "/tetrate.api.liaison.v1alpha1.Services/UpdateService", in, out, opts...)
+	err := grpc.Invoke(ctx, "/tetrate.api.liaison.v1alpha1.Services/UpdateService", in, out, c.cc, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -461,14 +460,15 @@ func (c *servicesClient) UpdateService(ctx context.Context, in *UpdateServiceReq
 
 func (c *servicesClient) DeleteService(ctx context.Context, in *DeleteServiceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/tetrate.api.liaison.v1alpha1.Services/DeleteService", in, out, opts...)
+	err := grpc.Invoke(ctx, "/tetrate.api.liaison.v1alpha1.Services/DeleteService", in, out, c.cc, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// ServicesServer is the server API for Services service.
+// Server API for Services service
+
 type ServicesServer interface {
 	ListServices(context.Context, *ListServicesRequest) (*ListServicesResponse, error)
 	GetService(context.Context, *GetServiceRequest) (*Service, error)
