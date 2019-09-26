@@ -22,6 +22,14 @@ service ResourcesService {
   rpc GetResource(GetResourceRequest) returns (Resource) {
     option (google.api.http).get = "/v1alpha1/resources/{key}";
   };
+
+  // DeleteResource deletes a resource from YAML bytes
+  rpc DeleteResource(DeleteResourceRequest) returns (DeleteResourceResponse) {
+    option (google.api.http) = {
+      delete : "/v1alpha1/resources"
+      body : "*"
+    };
+  };
 }
 
 // A representation of a stored resource.
@@ -41,4 +49,14 @@ message SetResourceRequest {
 message GetResourceRequest {
   // The resource key. Key = TypeURL:FullName. Stringified as [Key](TypeURL:FullName).
   string key = 1;
+}
+
+// A request message to delete a resource in YAML format.
+message DeleteResourceRequest {
+  // Resource representation in YAML bytes.
+  bytes yaml = 1;
+}
+
+message DeleteResourceResponse {
+  repeated Resource resources = 1;
 }
