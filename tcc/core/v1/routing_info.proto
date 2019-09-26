@@ -34,7 +34,7 @@ message Port {
   // MUST BE one of HTTP|GRPC|HTTP2|HTTPS|TCP|TLS.
   // TLS implies the connection will be routed based on the SNI header to
   // the destination without terminating the TLS connection.
-  string protocol = 2 [(validate.rules).string = {in: ["HTTP", "GRPC", "HTTP2", "TCP", "TLS"]}];
+  string protocol = 2 [(validate.rules).string = {in: ["HTTP", "GRPC", "HTTP2", "TCP", "TLS", "UDP", "SCTP"]}];
 
   // Label assigned to the port.
   string name = 3;

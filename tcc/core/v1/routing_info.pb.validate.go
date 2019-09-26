@@ -145,7 +145,7 @@ func (m *Port) Validate() error {
 	if _, ok := _Port_Protocol_InLookup[m.GetProtocol()]; !ok {
 		return PortValidationError{
 			field:  "Protocol",
-			reason: "value must be in list [HTTP GRPC HTTP2 TCP TLS]",
+			reason: "value must be in list [HTTP GRPC HTTP2 TCP TLS UDP SCTP]",
 		}
 	}
 
@@ -216,6 +216,8 @@ var _Port_Protocol_InLookup = map[string]struct{}{
 	"HTTP2": {},
 	"TCP":   {},
 	"TLS":   {},
+	"UDP":   {},
+	"SCTP":  {},
 }
 
 // Validate checks the field values on Subset with the rules defined in the
