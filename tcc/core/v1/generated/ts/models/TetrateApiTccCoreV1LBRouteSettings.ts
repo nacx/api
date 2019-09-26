@@ -19,6 +19,9 @@ import {
     TetrateApiTccCoreV1LoadBalancerClass,
     TetrateApiTccCoreV1LoadBalancerClassFromJSON,
     TetrateApiTccCoreV1LoadBalancerClassToJSON,
+    TetrateApiTccCoreV1LoadBalancerTier,
+    TetrateApiTccCoreV1LoadBalancerTierFromJSON,
+    TetrateApiTccCoreV1LoadBalancerTierToJSON,
 } from './';
 
 /**
@@ -41,6 +44,12 @@ export interface TetrateApiTccCoreV1LBRouteSettings {
     loadBalancerClass?: TetrateApiTccCoreV1LoadBalancerClass;
     /**
      * 
+     * @type {TetrateApiTccCoreV1LoadBalancerTier}
+     * @memberof TetrateApiTccCoreV1LBRouteSettings
+     */
+    loadBalancerTier?: TetrateApiTccCoreV1LoadBalancerTier;
+    /**
+     * 
      * @type {Array<TetrateApiTccCoreV1LBRouteSettingsLBRoute>}
      * @memberof TetrateApiTccCoreV1LBRouteSettings
      */
@@ -51,6 +60,7 @@ export function TetrateApiTccCoreV1LBRouteSettingsFromJSON(json: any): TetrateAp
     return {
         'enableWorkflows': !exists(json, 'enableWorkflows') ? undefined : json['enableWorkflows'],
         'loadBalancerClass': !exists(json, 'loadBalancerClass') ? undefined : TetrateApiTccCoreV1LoadBalancerClassFromJSON(json['loadBalancerClass']),
+        'loadBalancerTier': !exists(json, 'loadBalancerTier') ? undefined : TetrateApiTccCoreV1LoadBalancerTierFromJSON(json['loadBalancerTier']),
         'routes': !exists(json, 'routes') ? undefined : (json['routes'] as Array<any>).map(TetrateApiTccCoreV1LBRouteSettingsLBRouteFromJSON),
     };
 }
@@ -62,6 +72,7 @@ export function TetrateApiTccCoreV1LBRouteSettingsToJSON(value?: TetrateApiTccCo
     return {
         'enableWorkflows': value.enableWorkflows,
         'loadBalancerClass': TetrateApiTccCoreV1LoadBalancerClassToJSON(value.loadBalancerClass),
+        'loadBalancerTier': TetrateApiTccCoreV1LoadBalancerTierToJSON(value.loadBalancerTier),
         'routes': value.routes === undefined ? undefined : (value.routes as Array<any>).map(TetrateApiTccCoreV1LBRouteSettingsLBRouteToJSON),
     };
 }

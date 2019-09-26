@@ -25,7 +25,7 @@ import {
  */
 export interface TetrateApiTccCoreV1Route {
     /**
-     * 
+     * All destinations within a route must be of the same type.
      * @type {Array<TetrateApiTccCoreV1RouteDestination>}
      * @memberof TetrateApiTccCoreV1Route
      */

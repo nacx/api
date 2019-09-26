@@ -49,6 +49,7 @@ export * from './TetrateApiTccCoreV1ListTeamsResponse';
 export * from './TetrateApiTccCoreV1ListTenantsResponse';
 export * from './TetrateApiTccCoreV1ListUsersResponse';
 export * from './TetrateApiTccCoreV1LoadBalancerClass';
+export * from './TetrateApiTccCoreV1LoadBalancerTier';
 export * from './TetrateApiTccCoreV1Namespace';
 export * from './TetrateApiTccCoreV1Port';
 export * from './TetrateApiTccCoreV1Redirect';

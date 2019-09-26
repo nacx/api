@@ -172,6 +172,8 @@ func (m *LBRouteSettings) Validate() error {
 		}
 	}
 
+	// no validation rules for LoadBalancerTier
+
 	for idx, item := range m.GetRoutes() {
 		_, _ = idx, item
 

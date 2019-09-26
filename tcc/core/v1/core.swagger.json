@@ -3860,6 +3860,10 @@
         "loadBalancerClass": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.LoadBalancerClass"
         },
+        "loadBalancerTier": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.LoadBalancerTier",
+          "description": "Current restrictions: Tier1 load balancers can only route to other tier2 load balancers in any cluster (local/remote). They cannot route to internal services in their local clusters. Tier2 load balancers can route to internal services in the same cluster only."
+        },
         "routes": {
           "type": "array",
           "items": {
@@ -4010,6 +4014,15 @@
       ],
       "default": "NONE"
     },
+    "tetrate.api.tcc.core.v1.LoadBalancerTier": {
+      "type": "string",
+      "enum": [
+        "TIER_NOT_SET",
+        "TIER1",
+        "TIER2"
+      ],
+      "default": "TIER_NOT_SET"
+    },
     "tetrate.api.tcc.core.v1.Namespace": {
       "type": "object",
       "properties": {
@@ -4137,7 +4150,8 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/tetrate.api.tcc.core.v1.Route.Destination"
-          }
+          },
+          "description": "All destinations within a route must be of the same type."
         }
       },
       "description": "One or more destinations in a local cluster for the given request."

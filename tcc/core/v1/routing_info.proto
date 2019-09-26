@@ -40,6 +40,12 @@ enum LoadBalancerClass {
   F5 = 2;
 }
 
+enum LoadBalancerTier {
+  TIER_NOT_SET = 0;
+  TIER1 = 1;
+  TIER2 = 2;
+}
+
 // LBRouteSettings
 //
 // HTTP/TCP routing settings for application exposed via a load balancer service. Enforced at load balancer only.
@@ -47,6 +53,13 @@ message LBRouteSettings {
   bool enable_workflows = 1;
 
   LoadBalancerClass load_balancer_class = 2 [(validate.rules).enum = {defined_only: true, not_in : [0]}];
+
+  // Current restrictions: Tier1 load balancers can only route to
+  // other tier2 load balancers in any cluster (local/remote). They
+  // cannot route to internal services in their local clusters. Tier2
+  // load balancers can route to internal services in the same cluster
+  // only.
+  LoadBalancerTier load_balancer_tier = 4;
 
   message LBRoute {
     // Hostname with which the application is exposed on this load balancer.
@@ -288,6 +301,7 @@ message Route {
     uint32 port = 5;
   }
 
+  // All destinations within a route must be of the same type.
   repeated Destination destinations = 1 [(validate.rules).repeated.min_items = 1];
 }
 
