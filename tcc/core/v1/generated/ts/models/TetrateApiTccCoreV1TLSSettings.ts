@@ -23,33 +23,33 @@ export interface TetrateApiTccCoreV1TLSSettings {
      * @type {string}
      * @memberof TetrateApiTccCoreV1TLSSettings
      */
-    serverCertificate?: string;
+    server_certificate?: string;
     /**
      *   For proxies running on VMs, the path to the file holding the server\'s private key.
      * @type {string}
      * @memberof TetrateApiTccCoreV1TLSSettings
      */
-    privateKey?: string;
+    private_key?: string;
     /**
      *   For proxies running on VMs, the path to a file containing certificate authority certificates to use in verifying a presented client side certificate for mutual TLS connections.
      * @type {string}
      * @memberof TetrateApiTccCoreV1TLSSettings
      */
-    caCertificates?: string;
+    ca_certificates?: string;
     /**
      * For proxies running on Kubernetes, the name of the secret that holds the TLS certs. Currently applicable only on Kubernetes. The secret should contain the server certificate and the private key. If mutual TLS is being used, an additional secret with name secretName-cacert should be created with the CaCertificates that the server will use to verify client side certificates. If the service is exposed via a load balancer, the secret must be accessible to it.
      * @type {string}
      * @memberof TetrateApiTccCoreV1TLSSettings
      */
-    secretName?: string;
+    secret_name?: string;
 }
 
 export function TetrateApiTccCoreV1TLSSettingsFromJSON(json: any): TetrateApiTccCoreV1TLSSettings {
     return {
-        'serverCertificate': !exists(json, 'serverCertificate') ? undefined : json['serverCertificate'],
-        'privateKey': !exists(json, 'privateKey') ? undefined : json['privateKey'],
-        'caCertificates': !exists(json, 'caCertificates') ? undefined : json['caCertificates'],
-        'secretName': !exists(json, 'secretName') ? undefined : json['secretName'],
+        'server_certificate': !exists(json, 'serverCertificate') ? undefined : json['serverCertificate'],
+        'private_key': !exists(json, 'privateKey') ? undefined : json['privateKey'],
+        'ca_certificates': !exists(json, 'caCertificates') ? undefined : json['caCertificates'],
+        'secret_name': !exists(json, 'secretName') ? undefined : json['secretName'],
     };
 }
 
@@ -58,10 +58,10 @@ export function TetrateApiTccCoreV1TLSSettingsToJSON(value?: TetrateApiTccCoreV1
         return undefined;
     }
     return {
-        'serverCertificate': value.serverCertificate,
-        'privateKey': value.privateKey,
-        'caCertificates': value.caCertificates,
-        'secretName': value.secretName,
+        'serverCertificate': value.server_certificate,
+        'privateKey': value.private_key,
+        'caCertificates': value.ca_certificates,
+        'secretName': value.secret_name,
     };
 }
 

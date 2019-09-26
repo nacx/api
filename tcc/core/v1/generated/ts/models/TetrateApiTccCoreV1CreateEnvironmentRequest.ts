@@ -53,7 +53,7 @@ export interface TetrateApiTccCoreV1CreateEnvironmentRequest {
      * @type {TetrateApiTccCoreV1ClientSettings}
      * @memberof TetrateApiTccCoreV1CreateEnvironmentRequest
      */
-    clientSettings?: TetrateApiTccCoreV1ClientSettings;
+    client_settings?: TetrateApiTccCoreV1ClientSettings;
 }
 
 export function TetrateApiTccCoreV1CreateEnvironmentRequestFromJSON(json: any): TetrateApiTccCoreV1CreateEnvironmentRequest {
@@ -62,7 +62,7 @@ export function TetrateApiTccCoreV1CreateEnvironmentRequestFromJSON(json: any): 
         'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
         'id': !exists(json, 'id') ? undefined : json['id'],
         'description': !exists(json, 'description') ? undefined : json['description'],
-        'clientSettings': !exists(json, 'clientSettings') ? undefined : TetrateApiTccCoreV1ClientSettingsFromJSON(json['clientSettings']),
+        'client_settings': !exists(json, 'clientSettings') ? undefined : TetrateApiTccCoreV1ClientSettingsFromJSON(json['clientSettings']),
     };
 }
 
@@ -75,7 +75,7 @@ export function TetrateApiTccCoreV1CreateEnvironmentRequestToJSON(value?: Tetrat
         'tenant': value.tenant,
         'id': value.id,
         'description': value.description,
-        'clientSettings': TetrateApiTccCoreV1ClientSettingsToJSON(value.clientSettings),
+        'clientSettings': TetrateApiTccCoreV1ClientSettingsToJSON(value.client_settings),
     };
 }
 

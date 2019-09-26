@@ -83,7 +83,7 @@ export interface TetrateApiTccCoreV1Deployment {
      * @type {string}
      * @memberof TetrateApiTccCoreV1Deployment
      */
-    lbManagementIp?: string;
+    lb_management_ip?: string;
 }
 
 export function TetrateApiTccCoreV1DeploymentFromJSON(json: any): TetrateApiTccCoreV1Deployment {
@@ -97,7 +97,7 @@ export function TetrateApiTccCoreV1DeploymentFromJSON(json: any): TetrateApiTccC
         'hostname': !exists(json, 'hostname') ? undefined : json['hostname'],
         'labels': !exists(json, 'labels') ? undefined : json['labels'],
         'ports': !exists(json, 'ports') ? undefined : (json['ports'] as Array<any>).map(TetrateApiTccCoreV1PortFromJSON),
-        'lbManagementIp': !exists(json, 'lbManagementIp') ? undefined : json['lbManagementIp'],
+        'lb_management_ip': !exists(json, 'lbManagementIp') ? undefined : json['lbManagementIp'],
     };
 }
 
@@ -115,7 +115,7 @@ export function TetrateApiTccCoreV1DeploymentToJSON(value?: TetrateApiTccCoreV1D
         'hostname': value.hostname,
         'labels': value.labels,
         'ports': value.ports === undefined ? undefined : (value.ports as Array<any>).map(TetrateApiTccCoreV1PortToJSON),
-        'lbManagementIp': value.lbManagementIp,
+        'lbManagementIp': value.lb_management_ip,
     };
 }
 

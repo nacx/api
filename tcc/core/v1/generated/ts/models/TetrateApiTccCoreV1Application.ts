@@ -71,19 +71,19 @@ export interface TetrateApiTccCoreV1Application {
      * @type {TetrateApiTccCoreV1RoutingInfo}
      * @memberof TetrateApiTccCoreV1Application
      */
-    routingInfo?: TetrateApiTccCoreV1RoutingInfo;
+    routing_info?: TetrateApiTccCoreV1RoutingInfo;
     /**
      * 
      * @type {TetrateApiTccCoreV1ClientSettings}
      * @memberof TetrateApiTccCoreV1Application
      */
-    clientSettings?: TetrateApiTccCoreV1ClientSettings;
+    client_settings?: TetrateApiTccCoreV1ClientSettings;
     /**
      * 
      * @type {TetrateApiTccCoreV1ApplicationApplicationSpecificLB}
      * @memberof TetrateApiTccCoreV1Application
      */
-    appLb?: TetrateApiTccCoreV1ApplicationApplicationSpecificLB;
+    app_lb?: TetrateApiTccCoreV1ApplicationApplicationSpecificLB;
 }
 
 export function TetrateApiTccCoreV1ApplicationFromJSON(json: any): TetrateApiTccCoreV1Application {
@@ -94,9 +94,9 @@ export function TetrateApiTccCoreV1ApplicationFromJSON(json: any): TetrateApiTcc
         'id': !exists(json, 'id') ? undefined : json['id'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'hostname': !exists(json, 'hostname') ? undefined : json['hostname'],
-        'routingInfo': !exists(json, 'routingInfo') ? undefined : TetrateApiTccCoreV1RoutingInfoFromJSON(json['routingInfo']),
-        'clientSettings': !exists(json, 'clientSettings') ? undefined : TetrateApiTccCoreV1ClientSettingsFromJSON(json['clientSettings']),
-        'appLb': !exists(json, 'appLb') ? undefined : TetrateApiTccCoreV1ApplicationApplicationSpecificLBFromJSON(json['appLb']),
+        'routing_info': !exists(json, 'routingInfo') ? undefined : TetrateApiTccCoreV1RoutingInfoFromJSON(json['routingInfo']),
+        'client_settings': !exists(json, 'clientSettings') ? undefined : TetrateApiTccCoreV1ClientSettingsFromJSON(json['clientSettings']),
+        'app_lb': !exists(json, 'appLb') ? undefined : TetrateApiTccCoreV1ApplicationApplicationSpecificLBFromJSON(json['appLb']),
     };
 }
 
@@ -111,9 +111,9 @@ export function TetrateApiTccCoreV1ApplicationToJSON(value?: TetrateApiTccCoreV1
         'id': value.id,
         'description': value.description,
         'hostname': value.hostname,
-        'routingInfo': TetrateApiTccCoreV1RoutingInfoToJSON(value.routingInfo),
-        'clientSettings': TetrateApiTccCoreV1ClientSettingsToJSON(value.clientSettings),
-        'appLb': TetrateApiTccCoreV1ApplicationApplicationSpecificLBToJSON(value.appLb),
+        'routingInfo': TetrateApiTccCoreV1RoutingInfoToJSON(value.routing_info),
+        'clientSettings': TetrateApiTccCoreV1ClientSettingsToJSON(value.client_settings),
+        'appLb': TetrateApiTccCoreV1ApplicationApplicationSpecificLBToJSON(value.app_lb),
     };
 }
 

@@ -32,40 +32,40 @@ export interface TetrateApiTccCoreV1ClientSettings {
      * @type {string}
      * @memberof TetrateApiTccCoreV1ClientSettings
      */
-    httpRequestTimeout?: string;
+    http_request_timeout?: string;
     /**
      * 
      * @type {TetrateApiTccCoreV1HTTPRetry}
      * @memberof TetrateApiTccCoreV1ClientSettings
      */
-    httpRetries?: TetrateApiTccCoreV1HTTPRetry;
+    http_retries?: TetrateApiTccCoreV1HTTPRetry;
     /**
      * TCP connection timeout.
      * @type {string}
      * @memberof TetrateApiTccCoreV1ClientSettings
      */
-    tcpConnectTimeout?: string;
+    tcp_connect_timeout?: string;
     /**
      * If set then set SO_KEEPALIVE on the socket to enable TCP Keepalives.
      * @type {boolean}
      * @memberof TetrateApiTccCoreV1ClientSettings
      */
-    tcpKeepalive?: boolean;
+    tcp_keepalive?: boolean;
     /**
      * 
      * @type {TetrateApiTccCoreV1ClientSettingsSensitivity}
      * @memberof TetrateApiTccCoreV1ClientSettings
      */
-    circuitBreakerSensitivity?: TetrateApiTccCoreV1ClientSettingsSensitivity;
+    circuit_breaker_sensitivity?: TetrateApiTccCoreV1ClientSettingsSensitivity;
 }
 
 export function TetrateApiTccCoreV1ClientSettingsFromJSON(json: any): TetrateApiTccCoreV1ClientSettings {
     return {
-        'httpRequestTimeout': !exists(json, 'httpRequestTimeout') ? undefined : json['httpRequestTimeout'],
-        'httpRetries': !exists(json, 'httpRetries') ? undefined : TetrateApiTccCoreV1HTTPRetryFromJSON(json['httpRetries']),
-        'tcpConnectTimeout': !exists(json, 'tcpConnectTimeout') ? undefined : json['tcpConnectTimeout'],
-        'tcpKeepalive': !exists(json, 'tcpKeepalive') ? undefined : json['tcpKeepalive'],
-        'circuitBreakerSensitivity': !exists(json, 'circuitBreakerSensitivity') ? undefined : TetrateApiTccCoreV1ClientSettingsSensitivityFromJSON(json['circuitBreakerSensitivity']),
+        'http_request_timeout': !exists(json, 'httpRequestTimeout') ? undefined : json['httpRequestTimeout'],
+        'http_retries': !exists(json, 'httpRetries') ? undefined : TetrateApiTccCoreV1HTTPRetryFromJSON(json['httpRetries']),
+        'tcp_connect_timeout': !exists(json, 'tcpConnectTimeout') ? undefined : json['tcpConnectTimeout'],
+        'tcp_keepalive': !exists(json, 'tcpKeepalive') ? undefined : json['tcpKeepalive'],
+        'circuit_breaker_sensitivity': !exists(json, 'circuitBreakerSensitivity') ? undefined : TetrateApiTccCoreV1ClientSettingsSensitivityFromJSON(json['circuitBreakerSensitivity']),
     };
 }
 
@@ -74,11 +74,11 @@ export function TetrateApiTccCoreV1ClientSettingsToJSON(value?: TetrateApiTccCor
         return undefined;
     }
     return {
-        'httpRequestTimeout': value.httpRequestTimeout,
-        'httpRetries': TetrateApiTccCoreV1HTTPRetryToJSON(value.httpRetries),
-        'tcpConnectTimeout': value.tcpConnectTimeout,
-        'tcpKeepalive': value.tcpKeepalive,
-        'circuitBreakerSensitivity': TetrateApiTccCoreV1ClientSettingsSensitivityToJSON(value.circuitBreakerSensitivity),
+        'httpRequestTimeout': value.http_request_timeout,
+        'httpRetries': TetrateApiTccCoreV1HTTPRetryToJSON(value.http_retries),
+        'tcpConnectTimeout': value.tcp_connect_timeout,
+        'tcpKeepalive': value.tcp_keepalive,
+        'circuitBreakerSensitivity': TetrateApiTccCoreV1ClientSettingsSensitivityToJSON(value.circuit_breaker_sensitivity),
     };
 }
 

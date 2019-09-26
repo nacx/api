@@ -68,13 +68,13 @@ export interface TetrateApiTccCoreV1LoadBalancer {
      * @type {boolean}
      * @memberof TetrateApiTccCoreV1LoadBalancer
      */
-    enableWorkflows?: boolean;
+    enable_workflows?: boolean;
     /**
      * 
      * @type {TetrateApiTccCoreV1LoadBalancerClass}
      * @memberof TetrateApiTccCoreV1LoadBalancer
      */
-    loadBalancerClass?: TetrateApiTccCoreV1LoadBalancerClass;
+    load_balancer_class?: TetrateApiTccCoreV1LoadBalancerClass;
     /**
      * 
      * @type {TetrateApiTccCoreV1Registry}
@@ -86,7 +86,7 @@ export interface TetrateApiTccCoreV1LoadBalancer {
      * @type {string}
      * @memberof TetrateApiTccCoreV1LoadBalancer
      */
-    clusterNamespace?: string;
+    cluster_namespace?: string;
     /**
      * 
      * @type {{ [key: string]: string; }}
@@ -104,7 +104,7 @@ export interface TetrateApiTccCoreV1LoadBalancer {
      * @type {TetrateApiTccCoreV1ClientSettings}
      * @memberof TetrateApiTccCoreV1LoadBalancer
      */
-    clientSettings?: TetrateApiTccCoreV1ClientSettings;
+    client_settings?: TetrateApiTccCoreV1ClientSettings;
     /**
      * 
      * @type {string}
@@ -120,13 +120,13 @@ export function TetrateApiTccCoreV1LoadBalancerFromJSON(json: any): TetrateApiTc
         'environment': !exists(json, 'environment') ? undefined : json['environment'],
         'id': !exists(json, 'id') ? undefined : json['id'],
         'description': !exists(json, 'description') ? undefined : json['description'],
-        'enableWorkflows': !exists(json, 'enableWorkflows') ? undefined : json['enableWorkflows'],
-        'loadBalancerClass': !exists(json, 'loadBalancerClass') ? undefined : TetrateApiTccCoreV1LoadBalancerClassFromJSON(json['loadBalancerClass']),
+        'enable_workflows': !exists(json, 'enableWorkflows') ? undefined : json['enableWorkflows'],
+        'load_balancer_class': !exists(json, 'loadBalancerClass') ? undefined : TetrateApiTccCoreV1LoadBalancerClassFromJSON(json['loadBalancerClass']),
         'registry': !exists(json, 'registry') ? undefined : TetrateApiTccCoreV1RegistryFromJSON(json['registry']),
-        'clusterNamespace': !exists(json, 'clusterNamespace') ? undefined : json['clusterNamespace'],
+        'cluster_namespace': !exists(json, 'clusterNamespace') ? undefined : json['clusterNamespace'],
         'labels': !exists(json, 'labels') ? undefined : json['labels'],
         'applications': !exists(json, 'applications') ? undefined : mapValues(json['applications'], TetrateApiTccCoreV1TLSSettingsFromJSON),
-        'clientSettings': !exists(json, 'clientSettings') ? undefined : TetrateApiTccCoreV1ClientSettingsFromJSON(json['clientSettings']),
+        'client_settings': !exists(json, 'clientSettings') ? undefined : TetrateApiTccCoreV1ClientSettingsFromJSON(json['clientSettings']),
         'etag': !exists(json, 'etag') ? undefined : json['etag'],
     };
 }
@@ -141,13 +141,13 @@ export function TetrateApiTccCoreV1LoadBalancerToJSON(value?: TetrateApiTccCoreV
         'environment': value.environment,
         'id': value.id,
         'description': value.description,
-        'enableWorkflows': value.enableWorkflows,
-        'loadBalancerClass': TetrateApiTccCoreV1LoadBalancerClassToJSON(value.loadBalancerClass),
+        'enableWorkflows': value.enable_workflows,
+        'loadBalancerClass': TetrateApiTccCoreV1LoadBalancerClassToJSON(value.load_balancer_class),
         'registry': TetrateApiTccCoreV1RegistryToJSON(value.registry),
-        'clusterNamespace': value.clusterNamespace,
+        'clusterNamespace': value.cluster_namespace,
         'labels': value.labels,
         'applications': value.applications === undefined ? undefined : mapValues(value.applications, TetrateApiTccCoreV1TLSSettingsToJSON),
-        'clientSettings': TetrateApiTccCoreV1ClientSettingsToJSON(value.clientSettings),
+        'clientSettings': TetrateApiTccCoreV1ClientSettingsToJSON(value.client_settings),
         'etag': value.etag,
     };
 }

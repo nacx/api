@@ -23,47 +23,47 @@ export interface TetrateApiTccCoreV1CorsPolicy {
      * @type {Array<string>}
      * @memberof TetrateApiTccCoreV1CorsPolicy
      */
-    allowOrigin?: Array<string>;
+    allow_origin?: Array<string>;
     /**
      *   List of HTTP methods allowed to access the resource. The content will be serialized into the Access-Control-Allow-Methods header.
      * @type {Array<string>}
      * @memberof TetrateApiTccCoreV1CorsPolicy
      */
-    allowMethods?: Array<string>;
+    allow_methods?: Array<string>;
     /**
      *  List of HTTP headers that can be used when requesting the resource. Serialized to Access-Control-Allow-Headers header.
      * @type {Array<string>}
      * @memberof TetrateApiTccCoreV1CorsPolicy
      */
-    allowHeaders?: Array<string>;
+    allow_headers?: Array<string>;
     /**
      *   A white list of HTTP headers that the browsers are allowed to access. Serialized into Access-Control-Expose-Headers header.
      * @type {Array<string>}
      * @memberof TetrateApiTccCoreV1CorsPolicy
      */
-    exposeHeaders?: Array<string>;
+    expose_headers?: Array<string>;
     /**
      *   Specifies how long the results of a preflight request can be cached. Translates to the Access-Control-Max-Age header.
      * @type {string}
      * @memberof TetrateApiTccCoreV1CorsPolicy
      */
-    maxAge?: string;
+    max_age?: string;
     /**
      *   Indicates whether the caller is allowed to send the actual request (not the preflight) using credentials. Translates to Access-Control-Allow-Credentials header.
      * @type {boolean}
      * @memberof TetrateApiTccCoreV1CorsPolicy
      */
-    allowCredentials?: boolean;
+    allow_credentials?: boolean;
 }
 
 export function TetrateApiTccCoreV1CorsPolicyFromJSON(json: any): TetrateApiTccCoreV1CorsPolicy {
     return {
-        'allowOrigin': !exists(json, 'allowOrigin') ? undefined : json['allowOrigin'],
-        'allowMethods': !exists(json, 'allowMethods') ? undefined : json['allowMethods'],
-        'allowHeaders': !exists(json, 'allowHeaders') ? undefined : json['allowHeaders'],
-        'exposeHeaders': !exists(json, 'exposeHeaders') ? undefined : json['exposeHeaders'],
-        'maxAge': !exists(json, 'maxAge') ? undefined : json['maxAge'],
-        'allowCredentials': !exists(json, 'allowCredentials') ? undefined : json['allowCredentials'],
+        'allow_origin': !exists(json, 'allowOrigin') ? undefined : json['allowOrigin'],
+        'allow_methods': !exists(json, 'allowMethods') ? undefined : json['allowMethods'],
+        'allow_headers': !exists(json, 'allowHeaders') ? undefined : json['allowHeaders'],
+        'expose_headers': !exists(json, 'exposeHeaders') ? undefined : json['exposeHeaders'],
+        'max_age': !exists(json, 'maxAge') ? undefined : json['maxAge'],
+        'allow_credentials': !exists(json, 'allowCredentials') ? undefined : json['allowCredentials'],
     };
 }
 
@@ -72,12 +72,12 @@ export function TetrateApiTccCoreV1CorsPolicyToJSON(value?: TetrateApiTccCoreV1C
         return undefined;
     }
     return {
-        'allowOrigin': value.allowOrigin,
-        'allowMethods': value.allowMethods,
-        'allowHeaders': value.allowHeaders,
-        'exposeHeaders': value.exposeHeaders,
-        'maxAge': value.maxAge,
-        'allowCredentials': value.allowCredentials,
+        'allowOrigin': value.allow_origin,
+        'allowMethods': value.allow_methods,
+        'allowHeaders': value.allow_headers,
+        'exposeHeaders': value.expose_headers,
+        'maxAge': value.max_age,
+        'allowCredentials': value.allow_credentials,
     };
 }
 

@@ -35,26 +35,26 @@ export interface TetrateApiTccCoreV1HttpSettings {
      * @type {TetrateApiTccCoreV1HttpSettingsStickySession}
      * @memberof TetrateApiTccCoreV1HttpSettings
      */
-    stickySession?: TetrateApiTccCoreV1HttpSettingsStickySession;
+    sticky_session?: TetrateApiTccCoreV1HttpSettingsStickySession;
     /**
      * 
      * @type {TetrateApiTccCoreV1CorsPolicy}
      * @memberof TetrateApiTccCoreV1HttpSettings
      */
-    corsPolicy?: TetrateApiTccCoreV1CorsPolicy;
+    cors_policy?: TetrateApiTccCoreV1CorsPolicy;
     /**
      * 
      * @type {Array<TetrateApiTccCoreV1HttpRule>}
      * @memberof TetrateApiTccCoreV1HttpSettings
      */
-    routeRules?: Array<TetrateApiTccCoreV1HttpRule>;
+    route_rules?: Array<TetrateApiTccCoreV1HttpRule>;
 }
 
 export function TetrateApiTccCoreV1HttpSettingsFromJSON(json: any): TetrateApiTccCoreV1HttpSettings {
     return {
-        'stickySession': !exists(json, 'stickySession') ? undefined : TetrateApiTccCoreV1HttpSettingsStickySessionFromJSON(json['stickySession']),
-        'corsPolicy': !exists(json, 'corsPolicy') ? undefined : TetrateApiTccCoreV1CorsPolicyFromJSON(json['corsPolicy']),
-        'routeRules': !exists(json, 'routeRules') ? undefined : (json['routeRules'] as Array<any>).map(TetrateApiTccCoreV1HttpRuleFromJSON),
+        'sticky_session': !exists(json, 'stickySession') ? undefined : TetrateApiTccCoreV1HttpSettingsStickySessionFromJSON(json['stickySession']),
+        'cors_policy': !exists(json, 'corsPolicy') ? undefined : TetrateApiTccCoreV1CorsPolicyFromJSON(json['corsPolicy']),
+        'route_rules': !exists(json, 'routeRules') ? undefined : (json['routeRules'] as Array<any>).map(TetrateApiTccCoreV1HttpRuleFromJSON),
     };
 }
 
@@ -63,9 +63,9 @@ export function TetrateApiTccCoreV1HttpSettingsToJSON(value?: TetrateApiTccCoreV
         return undefined;
     }
     return {
-        'stickySession': TetrateApiTccCoreV1HttpSettingsStickySessionToJSON(value.stickySession),
-        'corsPolicy': TetrateApiTccCoreV1CorsPolicyToJSON(value.corsPolicy),
-        'routeRules': value.routeRules === undefined ? undefined : (value.routeRules as Array<any>).map(TetrateApiTccCoreV1HttpRuleToJSON),
+        'stickySession': TetrateApiTccCoreV1HttpSettingsStickySessionToJSON(value.sticky_session),
+        'corsPolicy': TetrateApiTccCoreV1CorsPolicyToJSON(value.cors_policy),
+        'routeRules': value.route_rules === undefined ? undefined : (value.route_rules as Array<any>).map(TetrateApiTccCoreV1HttpRuleToJSON),
     };
 }
 

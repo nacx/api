@@ -41,7 +41,7 @@ export interface TetrateApiTccCoreV1Port {
      * @type {number}
      * @memberof TetrateApiTccCoreV1Port
      */
-    endpointPort?: number;
+    endpoint_port?: number;
 }
 
 export function TetrateApiTccCoreV1PortFromJSON(json: any): TetrateApiTccCoreV1Port {
@@ -49,7 +49,7 @@ export function TetrateApiTccCoreV1PortFromJSON(json: any): TetrateApiTccCoreV1P
         'number': !exists(json, 'number') ? undefined : json['number'],
         'protocol': !exists(json, 'protocol') ? undefined : json['protocol'],
         'name': !exists(json, 'name') ? undefined : json['name'],
-        'endpointPort': !exists(json, 'endpointPort') ? undefined : json['endpointPort'],
+        'endpoint_port': !exists(json, 'endpointPort') ? undefined : json['endpointPort'],
     };
 }
 
@@ -61,7 +61,7 @@ export function TetrateApiTccCoreV1PortToJSON(value?: TetrateApiTccCoreV1Port): 
         'number': value.number,
         'protocol': value.protocol,
         'name': value.name,
-        'endpointPort': value.endpointPort,
+        'endpointPort': value.endpoint_port,
     };
 }
 
