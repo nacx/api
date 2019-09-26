@@ -354,7 +354,7 @@ message ApplicationSpecificLB {
   string namespace = 3;
   // Hostname with which the application is exposed on this load balancer.
   string hostname = 4 [(validate.rules).string.min_len = 1];
-  // HTTP Routing settings for the hostname. Note that subsets should not be defined at LB hostname level.
+  // HTTP Routing settings for the hostname.
   RoutingInfo routing_info = 5;
   // Indicator whether to use this LB as primary. This is used for Metrics reporting at the App level. If there are
   // multiple dedicated load balancers in an App, only one and mandatorily one has to be marked primary. If there
@@ -381,13 +381,17 @@ message Service {
   map<string, string> labels = 8;
 
   repeated Port ports = 9 ;
-  // HTTP Routing settings for the service. Note that subsets (versions of the service) if any should be defined here.
+  // HTTP Routing settings for the service.
   RoutingInfo routing_info = 10;
   string etag = 11 [(validate.rules).string.min_len = 1];
   // Namespace where the service is scoped and should be one of application namespaces. If the application has
   // only one namespace and if this field is omitted, this filed would default to the application namespace.
   // This field cannot be omitted if the application has more than one namespace.
   string namespace = 12;
+  // One or more versions of the service. Each version has a distinct
+  // name and a set of labels that help uniquely identify the pods/VMs
+  // of that version.
+  repeated Subset subsets = 13;
 }
 
 message CreateServiceRequest {
@@ -415,6 +419,10 @@ message CreateServiceRequest {
   // only one namespace and if this field is omitted, this filed would default to the application namespace.
   // This field cannot be omitted if the application has more than one namespace.
   string namespace = 11;
+  // One or more versions of the service. Each version has a distinct
+  // name and a set of labels that help uniquely identify the pods/VMs
+  // of that version.
+  repeated Subset subsets = 12;
 }
 
 message GetServiceRequest {

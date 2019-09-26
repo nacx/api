@@ -19,6 +19,9 @@ import {
     TetrateApiTccCoreV1RoutingInfo,
     TetrateApiTccCoreV1RoutingInfoFromJSON,
     TetrateApiTccCoreV1RoutingInfoToJSON,
+    TetrateApiTccCoreV1Subset,
+    TetrateApiTccCoreV1SubsetFromJSON,
+    TetrateApiTccCoreV1SubsetToJSON,
 } from './';
 
 /**
@@ -93,6 +96,12 @@ export interface TetrateApiTccCoreV1CreateServiceRequest {
      * @memberof TetrateApiTccCoreV1CreateServiceRequest
      */
     namespace?: string;
+    /**
+     * One or more versions of the service. Each version has a distinct name and a set of labels that help uniquely identify the pods/VMs of that version.
+     * @type {Array<TetrateApiTccCoreV1Subset>}
+     * @memberof TetrateApiTccCoreV1CreateServiceRequest
+     */
+    subsets?: Array<TetrateApiTccCoreV1Subset>;
 }
 
 export function TetrateApiTccCoreV1CreateServiceRequestFromJSON(json: any): TetrateApiTccCoreV1CreateServiceRequest {
@@ -108,6 +117,7 @@ export function TetrateApiTccCoreV1CreateServiceRequestFromJSON(json: any): Tetr
         'ports': !exists(json, 'ports') ? undefined : (json['ports'] as Array<any>).map(TetrateApiTccCoreV1PortFromJSON),
         'routingInfo': !exists(json, 'routingInfo') ? undefined : TetrateApiTccCoreV1RoutingInfoFromJSON(json['routingInfo']),
         'namespace': !exists(json, 'namespace') ? undefined : json['namespace'],
+        'subsets': !exists(json, 'subsets') ? undefined : (json['subsets'] as Array<any>).map(TetrateApiTccCoreV1SubsetFromJSON),
     };
 }
 
@@ -127,6 +137,7 @@ export function TetrateApiTccCoreV1CreateServiceRequestToJSON(value?: TetrateApi
         'ports': value.ports === undefined ? undefined : (value.ports as Array<any>).map(TetrateApiTccCoreV1PortToJSON),
         'routingInfo': TetrateApiTccCoreV1RoutingInfoToJSON(value.routingInfo),
         'namespace': value.namespace,
+        'subsets': value.subsets === undefined ? undefined : (value.subsets as Array<any>).map(TetrateApiTccCoreV1SubsetToJSON),
     };
 }
 

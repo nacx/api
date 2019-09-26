@@ -1526,6 +1526,21 @@ func (m *Service) Validate() error {
 
 	// no validation rules for Namespace
 
+	for idx, item := range m.GetSubsets() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ServiceValidationError{
+					field:  fmt.Sprintf("Subsets[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
 	return nil
 }
 
@@ -1653,6 +1668,21 @@ func (m *CreateServiceRequest) Validate() error {
 	}
 
 	// no validation rules for Namespace
+
+	for idx, item := range m.GetSubsets() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return CreateServiceRequestValidationError{
+					field:  fmt.Sprintf("Subsets[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
 
 	return nil
 }

@@ -3184,7 +3184,7 @@
         },
         "routingInfo": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.RoutingInfo",
-          "description": "HTTP Routing settings for the hostname. Note that subsets should not be defined at LB hostname level."
+          "description": "HTTP Routing settings for the hostname."
         },
         "isPrimary": {
           "type": "boolean",
@@ -3763,6 +3763,13 @@
         "namespace": {
           "type": "string",
           "description": "Namespace where the service is scoped. It should be one of application namespaces. If the application has only one namespace and if this field is omitted, this filed would default to the application namespace. This field cannot be omitted if the application has more than one namespace."
+        },
+        "subsets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.core.v1.Subset"
+          },
+          "description": "One or more versions of the service. Each version has a distinct name and a set of labels that help uniquely identify the pods/VMs of that version."
         }
       }
     },
@@ -4590,7 +4597,7 @@
         },
         "routingInfo": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.RoutingInfo",
-          "description": "HTTP Routing settings for the service. Note that subsets (versions of the service) if any should be defined here."
+          "description": "HTTP Routing settings for the service."
         },
         "etag": {
           "type": "string"
@@ -4598,6 +4605,13 @@
         "namespace": {
           "type": "string",
           "description": "Namespace where the service is scoped and should be one of application namespaces. If the application has only one namespace and if this field is omitted, this filed would default to the application namespace. This field cannot be omitted if the application has more than one namespace."
+        },
+        "subsets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.core.v1.Subset"
+          },
+          "description": "One or more versions of the service. Each version has a distinct name and a set of labels that help uniquely identify the pods/VMs of that version."
         }
       }
     },
