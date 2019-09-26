@@ -1379,11 +1379,11 @@ func (m *ListTeamMembersRequest) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Parent
+	// no validation rules for Name
 
 	// no validation rules for Tenant
 
-	// no validation rules for Team
+	// no validation rules for Id
 
 	return nil
 }

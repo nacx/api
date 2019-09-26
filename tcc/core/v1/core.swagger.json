@@ -1434,7 +1434,7 @@
         ]
       }
     },
-    "/v1/tenants/{tenant}/teams/{team}/members": {
+    "/v1/tenants/{tenant}/teams/{id}/members": {
       "get": {
         "operationId": "ListTeamMembers",
         "responses": {
@@ -1459,13 +1459,13 @@
             "type": "string"
           },
           {
-            "name": "team",
+            "name": "id",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
-            "name": "parent",
+            "name": "name",
             "in": "query",
             "required": false,
             "type": "string"

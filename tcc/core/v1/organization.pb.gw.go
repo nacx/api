@@ -576,7 +576,7 @@ func request_Organization_ListUsers_0(ctx context.Context, marshaler runtime.Mar
 }
 
 var (
-	filter_Organization_ListTeamMembers_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "team": 1}, Base: []int{1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 2, 3}}
+	filter_Organization_ListTeamMembers_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "id": 1}, Base: []int{1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 2, 3}}
 )
 
 func request_Organization_ListTeamMembers_0(ctx context.Context, marshaler runtime.Marshaler, client OrganizationClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
@@ -601,15 +601,15 @@ func request_Organization_ListTeamMembers_0(ctx context.Context, marshaler runti
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
 	}
 
-	val, ok = pathParams["team"]
+	val, ok = pathParams["id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "team")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
 	}
 
-	protoReq.Team, err = runtime.String(val)
+	protoReq.Id, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "team", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
 	}
 
 	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_Organization_ListTeamMembers_0); err != nil {
@@ -1013,7 +1013,7 @@ var (
 
 	pattern_Organization_ListUsers_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"v1", "tenants", "tenant", "users"}, ""))
 
-	pattern_Organization_ListTeamMembers_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "tenants", "tenant", "teams", "team", "members"}, ""))
+	pattern_Organization_ListTeamMembers_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "tenants", "tenant", "teams", "id", "members"}, ""))
 )
 
 var (

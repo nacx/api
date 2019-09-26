@@ -96,8 +96,8 @@ export interface GetUserRequest {
 
 export interface ListTeamMembersRequest {
     tenant: string;
-    team: string;
-    parent?: string;
+    id: string;
+    name?: string;
 }
 
 export interface ListTeamsRequest {
@@ -448,20 +448,20 @@ export class OrganizationApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling listTeamMembers.');
         }
 
-        if (requestParameters.team === null || requestParameters.team === undefined) {
-            throw new runtime.RequiredError('team','Required parameter requestParameters.team was null or undefined when calling listTeamMembers.');
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling listTeamMembers.');
         }
 
         const queryParameters: runtime.HTTPQuery = {};
 
-        if (requestParameters.parent !== undefined) {
-            queryParameters['parent'] = requestParameters.parent;
+        if (requestParameters.name !== undefined) {
+            queryParameters['name'] = requestParameters.name;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/teams/{team}/members`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"team"}}`, encodeURIComponent(String(requestParameters.team))),
+            path: `/v1/tenants/{tenant}/teams/{id}/members`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
