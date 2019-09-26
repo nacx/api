@@ -547,15 +547,19 @@ type isEndpoint_Address interface {
 type Endpoint_Ipv4 struct {
 	Ipv4 []byte `protobuf:"bytes,1,opt,name=ipv4,proto3,oneof"`
 }
+
 type Endpoint_Ipv6 struct {
 	Ipv6 []byte `protobuf:"bytes,2,opt,name=ipv6,proto3,oneof"`
 }
+
 type Endpoint_DnsName struct {
 	DnsName string `protobuf:"bytes,3,opt,name=dns_name,json=dnsName,proto3,oneof"`
 }
 
-func (*Endpoint_Ipv4) isEndpoint_Address()    {}
-func (*Endpoint_Ipv6) isEndpoint_Address()    {}
+func (*Endpoint_Ipv4) isEndpoint_Address() {}
+
+func (*Endpoint_Ipv6) isEndpoint_Address() {}
+
 func (*Endpoint_DnsName) isEndpoint_Address() {}
 
 func (m *Endpoint) GetAddress() isEndpoint_Address {
