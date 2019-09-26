@@ -31,7 +31,7 @@ service TeamService {
   };
 
   // Resets the password of the given user so it can be changed
-  rpc ResetPassword(ResetPasswordRequest) returns (google.protobuf.Empty) {
+  rpc ResetPassword(ResetPasswordRequest) returns (ResetPasswordResponse) {
     option (google.api.http).post = "/v1/users/{name=**}/resetpassword";
   };
 
@@ -166,9 +166,15 @@ message ListRoleBindingsResponse {
 }
 
 // Request to reset he password for a given user
-message ResetPasswordRequest{
+message ResetPasswordRequest {
   // Name of the user to reset the password for
   string name = 1;
+}
+
+// Reset password response with the URL where a new password can be set for a given user
+message ResetPasswordResponse {
+  // URL where a new password can be configured for a user
+  string url = 1;
 }
 
 // Request to change the password of the current user
