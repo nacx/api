@@ -2,11 +2,11 @@
 // source: loadbalancer.proto
 
 /*
-Package workflows is a reverse proxy.
+Package v1 is a reverse proxy.
 
 It translates gRPC into RESTful JSON APIs.
 */
-package workflows
+package v1
 
 import (
 	"context"

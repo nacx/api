@@ -23,7 +23,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.v1.workflows.Status"
+              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.Status"
             }
           }
         },
@@ -33,7 +33,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.v1.workflows.LoadBalancerWorkflowUserRequest"
+              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.LoadBalancerWorkflowUserRequest"
             }
           }
         ],
@@ -49,7 +49,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.v1.workflows.Status"
+              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.Status"
             }
           }
         },
@@ -59,7 +59,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.v1.workflows.LoadBalancerWorkflowUserRequest"
+              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.LoadBalancerWorkflowUserRequest"
             }
           }
         ],
@@ -75,7 +75,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.v1.workflows.ListPendingResponse"
+              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.ListPendingResponse"
             }
           }
         },
@@ -92,7 +92,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.v1.workflows.Status"
+              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.Status"
             }
           }
         },
@@ -102,7 +102,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.v1.workflows.LoadBalancerWorkflowOwnerRequest"
+              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.LoadBalancerWorkflowOwnerRequest"
             }
           }
         ],
@@ -119,7 +119,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.v1.workflows.ApproveResponse"
+              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.ApproveResponse"
             }
           }
         },
@@ -135,7 +135,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.v1.workflows.ApproveRequest"
+              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.ApproveRequest"
             }
           }
         ],
@@ -152,7 +152,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.v1.workflows.CancelResponse"
+              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.CancelResponse"
             }
           }
         },
@@ -168,7 +168,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.v1.workflows.CancelRequest"
+              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.CancelRequest"
             }
           }
         ],
@@ -185,7 +185,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.v1.workflows.DenyResponse"
+              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.DenyResponse"
             }
           }
         },
@@ -201,7 +201,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.v1.workflows.DenyRequest"
+              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.DenyRequest"
             }
           }
         ],
@@ -217,7 +217,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.v1.workflows.Status"
+              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.Status"
             }
           }
         },
@@ -237,7 +237,7 @@
     }
   },
   "definitions": {
-    "tetrate.api.tcc.v1.workflows.ApproveRequest": {
+    "tetrate.api.tcc.workflows.v1.ApproveRequest": {
       "type": "object",
       "properties": {
         "requestid": {
@@ -245,7 +245,7 @@
         }
       }
     },
-    "tetrate.api.tcc.v1.workflows.ApproveResponse": {
+    "tetrate.api.tcc.workflows.v1.ApproveResponse": {
       "type": "object",
       "properties": {
         "requestid": {
@@ -257,7 +257,7 @@
         }
       }
     },
-    "tetrate.api.tcc.v1.workflows.CancelRequest": {
+    "tetrate.api.tcc.workflows.v1.CancelRequest": {
       "type": "object",
       "properties": {
         "requestid": {
@@ -265,7 +265,7 @@
         }
       }
     },
-    "tetrate.api.tcc.v1.workflows.CancelResponse": {
+    "tetrate.api.tcc.workflows.v1.CancelResponse": {
       "type": "object",
       "properties": {
         "requestid": {
@@ -277,7 +277,7 @@
         }
       }
     },
-    "tetrate.api.tcc.v1.workflows.DenyRequest": {
+    "tetrate.api.tcc.workflows.v1.DenyRequest": {
       "type": "object",
       "properties": {
         "requestid": {
@@ -285,7 +285,7 @@
         }
       }
     },
-    "tetrate.api.tcc.v1.workflows.DenyResponse": {
+    "tetrate.api.tcc.workflows.v1.DenyResponse": {
       "type": "object",
       "properties": {
         "requestid": {
@@ -297,18 +297,18 @@
         }
       }
     },
-    "tetrate.api.tcc.v1.workflows.ListPendingResponse": {
+    "tetrate.api.tcc.workflows.v1.ListPendingResponse": {
       "type": "object",
       "properties": {
         "pendingRequests": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/tetrate.api.tcc.v1.workflows.ListPendingResponse.PendingRequest"
+            "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.ListPendingResponse.PendingRequest"
           }
         }
       }
     },
-    "tetrate.api.tcc.v1.workflows.ListPendingResponse.PendingRequest": {
+    "tetrate.api.tcc.workflows.v1.ListPendingResponse.PendingRequest": {
       "type": "object",
       "properties": {
         "loadbalancer": {
@@ -318,11 +318,11 @@
           "type": "string"
         },
         "operation": {
-          "$ref": "#/definitions/tetrate.api.tcc.v1.workflows.ListPendingResponse.PendingRequest.OP"
+          "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.ListPendingResponse.PendingRequest.OP"
         }
       }
     },
-    "tetrate.api.tcc.v1.workflows.ListPendingResponse.PendingRequest.OP": {
+    "tetrate.api.tcc.workflows.v1.ListPendingResponse.PendingRequest.OP": {
       "type": "string",
       "enum": [
         "ATTACH",
@@ -330,7 +330,7 @@
       ],
       "default": "ATTACH"
     },
-    "tetrate.api.tcc.v1.workflows.LoadBalancerWorkflowOwnerRequest": {
+    "tetrate.api.tcc.workflows.v1.LoadBalancerWorkflowOwnerRequest": {
       "type": "object",
       "properties": {
         "loadbalancer": {
@@ -342,12 +342,12 @@
           "title": "the name of the service to publish. `tenant/123/workspace/456/service/foo.com`"
         },
         "tls": {
-          "$ref": "#/definitions/tetrate.api.tcc.v1.workflows.TLSSettings",
+          "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.TLSSettings",
           "description": "TLS settings for the service to be published."
         }
       }
     },
-    "tetrate.api.tcc.v1.workflows.LoadBalancerWorkflowUserRequest": {
+    "tetrate.api.tcc.workflows.v1.LoadBalancerWorkflowUserRequest": {
       "type": "object",
       "properties": {
         "loadbalancer": {
@@ -360,7 +360,7 @@
         }
       }
     },
-    "tetrate.api.tcc.v1.workflows.Status": {
+    "tetrate.api.tcc.workflows.v1.Status": {
       "type": "object",
       "properties": {
         "requestid": {
@@ -380,7 +380,7 @@
         }
       }
     },
-    "tetrate.api.tcc.v1.workflows.TLSSettings": {
+    "tetrate.api.tcc.workflows.v1.TLSSettings": {
       "type": "object",
       "properties": {
         "sni": {

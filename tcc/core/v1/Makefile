@@ -1,6 +1,6 @@
 # Copyright (c) Tetrate, Inc 2018 All Rights Reserved.
 
-TOPDIR := ../../..
+TOPDIR := ../../../..
 VENDOR := $(TOPDIR)/third_party/protobuf/
 APIS := $(TOPDIR)/api
 
@@ -9,7 +9,7 @@ PROTO_GO_SOURCES = $(patsubst %.proto,%.pb.go,$(PROTO_SOURCES))
 PROTO_GO_VALIDATE_SOURCES := $(patsubst %.proto,%.pb.validate.go,$(PROTO_SOURCES))
 PROTO_GO_GW_SOURCES = $(patsubst %.proto,%.pb.gw.go,$(PROTO_SOURCES))
 
-DESCRIPTOR := tcc.proto-descriptor
+DESCRIPTOR := core.proto-descriptor
 SWAGGER := core.swagger.json
 
 GOPATH := $(shell go env GOPATH)

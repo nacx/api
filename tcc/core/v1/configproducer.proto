@@ -1,7 +1,7 @@
 syntax = "proto3";
 
-package tetrate.api.tcc.v1;
-option go_package = "github.com/tetrateio/tetrate/api/tcc/v1";
+package tetrate.api.tcc.core.v1;
+option go_package = "github.com/tetrateio/tetrate/api/tcc/core/v1";
 
 import "google/api/annotations.proto";
 
