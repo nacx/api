@@ -1,0 +1,154 @@
+// Copyright (c) Tetrate, Inc 2018 All Rights Reserved.
+
+syntax = "proto3";
+
+package tetrate.api.inventory.v1;
+option go_package = "github.com/tetatrateio/tetrate/api/inventory/v1;invv1";
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+// InventoryService returns a collection of all Tetrate-discovered service entities
+service InventoryService {
+  rpc ListServices(ListServicesRequest) returns (ListServicesResponse) {
+    option (google.api.http).get = "/v1/services";
+  };
+}
+
+// Tetrate service definition that uniquely identifies services
+message Service {
+  // Unique name of this service to identify it. This name must be a
+  // fully qualified one, e.g. `foo.bar.com`, and should be a valid DNS (RFC 1035) name
+  string name = 1;
+
+  // ServiceKind represents a service's type; whether it's a one-shot job,
+  // a traditional service, stateful set, etc.
+  enum Kind {
+    // A Service, a long running job that answers many requests
+    SERVICE = 0;
+    JOB = 1;
+    VIRTUALSERVICE = 2;
+  }
+  // This Service's kind
+  Kind kind = 2;
+
+  // ServiceStatus represents the health status of this service
+  enum Status {
+    UNHEALTHY = 0;
+    HEALTHY = 1;
+  }
+  // This Service's health status
+  Status status = 3;
+
+  // Transport port spec
+  repeated PortSpec ports = 4;
+
+  // Service's metadata attributes
+  Metadata metadata = 5;
+
+  // Service's cluster participation
+  repeated Cluster cluster = 6;
+
+  // Service's workload presence
+  Workload workload = 7;
+
+  google.protobuf.Timestamp last_modified = 8;
+}
+
+// ListServicesRequest 
+message ListServicesRequest {
+  // TBD
+}
+
+// ListServicesResponse is a collection of Tetrate-discovered services
+message ListServicesResponse {
+  repeated Service services = 1;
+}
+
+// Metadata extends object definitions by substaintiating them with
+// additional attributes
+message Metadata {
+  // Generic metadata name
+  string namespace = 1;
+
+  // Specific domain associated with this entity e.g. "svc.cluster.local"
+  string domain = 2;
+
+  // Entities can be versioned e.g. "v1alpha1"
+  string version = 3;
+
+  // Labels represent any "key" ==> "value" attached to entities.
+  // These identify and query meaningful attributes of entities
+  map<string, string> labels = 4;
+
+  // Annotations represent "key" ==> "value" attached to entities.
+  // These are non-identifying information of entities
+  map<string, string> annotation = 5;
+
+  // Organizational Unit associated with service e.g. "OU=ApplicationServers"
+  string ou = 6;
+}
+
+// Cluster is a collection of distributed endpoints serving certain
+// functionality, that is typically bounded by administrative domain
+message Cluster {
+  // Cluster name e.g. "clusterA.local"
+  string name = 1;
+
+  // One of more endpoints serving as part of cluster
+  repeated Endpoint endpoints = 2;
+
+  google.protobuf.Timestamp last_modified = 3;
+}
+
+// Workload represents the location of a specific instance of a service,
+// identified by its provider (a public cloud like GCP or AWS or a private cloud),
+// location, and node.
+message Workload {
+  // Generic name representing cloud workload
+  string name = 1;
+
+  // Workload provider info e.g. AWS, GCP, Azure
+  string provider = 2;
+
+  // Cloud region this service resides e.g. "us-west-2"
+  string region = 3;
+
+  // Specific physical cloud node e.g. "gke-testing-default-pool-842099ce-7rdn"
+  string node = 4;
+}
+
+// Endpoint represents 
+message Endpoint {
+  // Endpoint represents one of IP or DNS name
+  oneof address {
+    bytes ipv4 = 1;
+    bytes ipv6 = 2;
+    string dns_name = 3;
+  }
+
+  // Endpoint port for this entity
+  PortSpec port = 4;
+}
+
+// PortSpec represents an endpoint's port details. A single endpoint can have
+// one or more port specs.
+message PortSpec {
+  string name = 1;
+
+  // Transport protocols that are currently supported
+  enum Protocol {
+    TCP = 0;
+    HTTP = 1;
+    GRPC = 2;
+    REDIS = 3;
+  }
+  // This spec's protocol
+  Protocol protocol = 2;
+
+  // Port facing external network
+  int32 external_port = 3;
+
+  // Container port that services this request
+  int32 container_port = 5;
+}
