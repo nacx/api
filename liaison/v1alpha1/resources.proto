@@ -35,6 +35,6 @@ message SetResourceRequest {
 
 // Request to get an uploaded resource.
 message GetResourceRequest {
-  // The resource key.
+  // The resource key. Key = TypeURL:FullName. Stringified as [Key](TypeURL:FullName).
   string key = 1;
 }
