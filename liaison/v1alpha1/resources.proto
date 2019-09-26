@@ -1,0 +1,40 @@
+// Copyright (c) Tetrate, Inc 2019 All Rights Reserved.
+syntax = "proto3";
+
+package tetrate.api.liaison.v1alpha1;
+option go_package = "github.com/tetrateio/tetrate/api/liaison/v1alpha1";
+
+import "google/api/annotations.proto";
+import "validate/validate.proto";
+
+// ResourcesService serves raw resource management in Liaison.
+service ResourcesService {
+  // SetResource sets a resource from YAML bytes. When the resource exists it
+  // updates the corresponding resource.
+  rpc SetResource(SetResourceRequest) returns (Resource) {
+    option (google.api.http) = {
+      post : "/v1alpha1/resources"
+      body : "*"
+    };
+  };
+
+  // GetResource gets a resource by the provided key.
+  rpc GetResource(GetResourceRequest) returns (Resource) {
+    option (google.api.http).get = "/v1alpha1/resources/{key}";
+  };
+}
+
+// A representation of a stored resource.
+message Resource { string key = 1; }
+
+// A request message to upload a resource in YAML format.
+message SetResourceRequest {
+  // Resource representation in YAML bytes.
+  bytes yaml = 1;
+}
+
+// Request to get an uploaded resource.
+message GetResourceRequest {
+  // The resource key.
+  string key = 1;
+}

@@ -1,1 +1,7 @@
 envoyfilter.yaml
+node_modules
+*.log
+
+# these contains empty js files.
+google
+validate
