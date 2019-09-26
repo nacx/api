@@ -3,84 +3,25 @@ syntax = "proto3";
 package tetrate.api.tcc.core.v1;
 option go_package = "github.com/tetrateio/tetrate/api/tcc/core/v1";
 
-import "google/api/annotations.proto";
 import "google/protobuf/duration.proto";
-import "google/protobuf/empty.proto";
 
 // All the timeouts, retries, circuit breakers etc. that consumers
 // want to set to gaurd against failures of their dependencies. These
 // roughly translate to pieces of istio virtual service, destination
-// rules, etc. At runtime, for a given workspace, for the workspace's
+// rules, etc. At runtime, for a given namespace, for the namespace's
 // dependencies, we combine the client specified reliability settings
 // with the virtual service/dest rule for the dependencies to produce
 // an updated virtual service/dest rule per dependent service. All
 // these client customized virtual services/dest rules will be private
-// to the workspace i.e. will have an exportTo setting '.' . Doing so
-// will make Pilot apply these customizations only to the workspace
+// to the namespace i.e. will have an exportTo setting '.' . Doing so
+// will make Pilot apply these customizations only to the namespace
 // concerned without leaking it to all other namespaces.
-service ClientSettingsService {
-  // There are defaults for every tenant/workspace. So there is no create here.
-  // workspace owners can customize this but not delete.
-  rpc GetClientSettingsForService(GetClientSettingsRequest) returns (ClientSettings) {
-    option (google.api.http) = {
-      get: "/v1/clientsettings/tenant/{tenant}/workspace/{workspace}/service/{service}"
-    };
-  }
-
-  rpc GetClientSettingsForWorkspace(GetClientSettingsRequest) returns (ClientSettings) {
-    option (google.api.http) = {
-      get: "/v1/clientsettings/tenant/{tenant}/workspace/{workspace}"
-    };
-  }
-
-  rpc GetClientSettingsForTenant(GetClientSettingsRequest) returns (ClientSettings) {
-    option (google.api.http) = {
-      get: "/v1/clientsettings/tenant/{tenant}"
-    };
-  }
-
-  rpc UpdateClientSettingsForService(UpdateClientSettingsRequest) returns (ClientSettings) {
-    option (google.api.http) = {
-      put: "/v1/clientsettings/tenant/{tenant}/workspace/{workspace}/service/{service}"
-      body: "*"
-    };
-  }
-
-  rpc UpdateClientSettingsForWorkspace(UpdateClientSettingsRequest) returns (ClientSettings) {
-    option (google.api.http) = {
-      put: "/v1/clientsettings/tenant/{tenant}/workspace/{workspace}"
-      body: "*"
-    };
-  }
-
-  rpc UpdateClientSettingsForTenant(UpdateClientSettingsRequest) returns (ClientSettings) {
-    option (google.api.http) = {
-      put: "/v1/clientsettings/tenant/{tenant}"
-      body: "*"
-    };
-  }
-
-  rpc DeleteClientSettingsForService(DeleteClientSettingsRequest) returns (google.protobuf.Empty) {
-    option (google.api.http) = {
-      delete: "/v1/clientsettings/tenant/{tenant}/workspace/{workspace}/service/{service}"
-    };
-  }
-
-  rpc DeleteClientSettingsForWorkspace(DeleteClientSettingsRequest)
-      returns (google.protobuf.Empty) {
-    option (google.api.http) = {
-      delete: "/v1/clientsettings/tenant/{tenant}/workspace/{workspace}"
-    };
-  }
-  // no tenant level deletes(?)
-}
-
 message ClientSettings {
-  // empty if this is applicable to entire workspace
+  // empty if this is applicable to entire namespace
   string service = 1;
-  // empty if this is applicable to entire tenant
-  string workspace = 2;
-  string tenant = 3;
+  // empty if this is applicable to entire cluster
+  string namespace = 2;
+  string cluster = 3;
 
   // Timeout for HTTP requests.
   google.protobuf.Duration http_request_timeout = 4;
@@ -122,43 +63,4 @@ message HTTPRetry {
   // [here](https://www.envoyproxy.io/docs/envoy/latest/configuration/http_filters/router_filter#x-envoy-retry-grpc-on)
   // for more details.
   string retry_on = 3;
-}
-
-message GetClientSettingsRequest {
-  string tenant = 1;
-  string workspace = 2;
-  string service = 3;
-}
-
-message UpdateClientSettingsRequest {
-  string tenant = 1;
-  string workspace = 2;
-  string service = 3;
-  // Timeout for HTTP requests.
-  google.protobuf.Duration http_request_timeout = 4;
-
-  // Retry policy for HTTP requests.
-  HTTPRetry http_retries = 5;
-
-  // These two settings will go to dest rule
-  // TCP connection timeout.
-  google.protobuf.Duration tcp_connect_timeout = 6;
-
-  // If set then set SO_KEEPALIVE on the socket to enable TCP Keepalives.
-  bool tcp_keepalive = 7;
-
-  enum Sensitivity {
-    LOW = 0;
-    MEDIUM = 1;
-    HIGH = 2;
-  }
-  // the sensitivity levels will translate to specific values of
-  // dest rule outlier detection.
-  Sensitivity circuit_breaker_sensitivity = 8;
-}
-
-message DeleteClientSettingsRequest {
-  string tenant = 1;
-  string workspace = 2;
-  string service = 3;
 }

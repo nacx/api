@@ -22,14 +22,14 @@ service LoadBalancerWorkflow {
   // the namespace owner where the load balancer resides.
   rpc Attach(LoadBalancerWorkflowUserRequest) returns (Status) {
     option (google.api.http) = {
-      post: "/v1/workflows/loadbalancer/attach"
+      post: "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/attach"
       body: "*"
     };
   };
 
   rpc Detach(LoadBalancerWorkflowUserRequest) returns (Status) {
     option (google.api.http) = {
-      post: "/v1/workflows/loadbalancer/detach"
+      post: "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/detach"
       body: "*"
     };
   };
@@ -38,130 +38,142 @@ service LoadBalancerWorkflow {
   // finally expose the service on the load balancer
   rpc Publish(LoadBalancerWorkflowOwnerRequest) returns (Status) {
     option (google.api.http) = {
-      post: "/v1/workflows/loadbalancer/publish"
+      post: "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/publish"
       body: "*"
     };
   };
 
   rpc ListPendingRequests(ListRequests) returns (ListPendingResponse) {
     option (google.api.http) = {
-      get: "/v1/workflows/loadbalancer/pending"
+      get: "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/pending"
     };
   };
 
   rpc GetRequestStatus(GetStatus) returns (Status) {
     option (google.api.http) = {
-      get: "/v1/workflows/loadbalancer/request/{requestid}/status"
+      get: "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/request/{requestid}/status"
     };
   }
 
-  // namespace members who own the load balancer & admins.
   rpc Approve(ApproveRequest) returns (ApproveResponse) {
     option (google.api.http) = {
-      post: "/v1/workflows/loadbalancer/request/{requestid}/approve"
+      post: "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/request/{requestid}/approve"
       body: "*"
     };
   };
 
-  // namespace members who own the load balancer & admins.
   rpc Deny(DenyRequest) returns (DenyResponse) {
     option (google.api.http) = {
-      post: "/v1/workflows/loadbalancer/request/{requestid}/deny"
+      post: "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/request/{requestid}/deny"
       body: "*"
     };
   };
 
-  // namespace members who own the load balancer & admins.
   rpc Cancel(CancelRequest) returns (CancelResponse) {
     option (google.api.http) = {
-      post: "/v1/workflows/loadbalancer/request/{requestid}/cancel"
+      post: "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/request/{requestid}/cancel"
       body: "*"
     };
   };
 }
 
 message LoadBalancerWorkflowUserRequest {
-  // The load balancer where the service should be attached/detached from
-  // of form tenant/123/workspace/345/loadbalancer/blah
-  string loadbalancer = 1;
+  string loadbalancer_name = 1;
+  string loadbalancer_namespace = 2;
 
-  // the name of the service to attach/detach; `tenant/123/workspace/456/service/foo.com`
-  string service = 2;
+  string service_hostname = 3;
+  string service_namespace = 4;
+
+  string cluster = 5;
+  string tenant = 6;
 }
 
 message Status {
-  // e.g. `attach-789`
-  string requestid = 1;
+  string cluster = 1;
+  // e.g. attach-789
+  string requestid = 2;
 
-  bool approved = 2;
-  bool published = 3;
-  string note = 4;
+  bool approved = 3;
+  bool published = 4;
+  string note = 5;
 }
 
 message GetStatus {
-  // e.g. `attach-789`
+  // e.g. attach-789
   string requestid = 1;
+  string cluster = 2;
+  string tenant = 3;
 }
 
-message ListRequests {}
+message ListRequests {
+  string cluster = 1;
+  string tenant = 2;
+}
 
 message ListPendingResponse {
   message PendingRequest {
-    string loadbalancer = 1;
-    string service = 2;
+    string loadbalancer_name = 1;
+    string loadbalancer_namespace = 2;
+    string service_hostname = 3;
+    string service_namespace = 4;
     enum OP {
       ATTACH = 0;
       DETACH = 1;
     }
-    OP operation = 3;
+    OP operation = 5;
   }
 
-  repeated PendingRequest pending_requests = 1;
+  string cluster = 1;
+  repeated PendingRequest pending_requests = 2;
 }
 
 message ApproveRequest {
   string requestid = 1;
+  string cluster = 2;
+  string tenant = 3;
 }
 
 message DenyRequest {
   string requestid = 1;
+  string cluster = 2;
+  string tenant = 3;
 }
 
 message CancelRequest {
   string requestid = 1;
+  string cluster = 2;
+  string tenant = 3;
 }
 
 message ApproveResponse {
   string requestid = 1;
-
+  string cluster = 2;
   // optional description of the approval (e.g. to be recorded in audit logs)
-  string note = 2;
+  string note = 3;
 }
 
 message DenyResponse {
   string requestid = 1;
-
+  string cluster = 2;
   // optional description of the denial (e.g. to be recorded in audit logs)
-  string note = 2;
+  string note = 3;
 }
 
 message CancelResponse {
   string requestid = 1;
-
+  string cluster = 2;
   // optional description of the cancelation (e.g. to be recorded in audit logs)
-  string note = 2;
+  string note = 3;
 }
 
 message LoadBalancerWorkflowOwnerRequest {
-  // The load balancer where the service should be published
-  // of form tenant/123/workspace/345/loadbalancer/blah
-  string loadbalancer = 1;
-
-  // the name of the service to publish. `tenant/123/workspace/456/service/foo.com`
-  string service = 2;
-
-  // TLS settings for the service to be published.
-  TLSSettings tls = 3;
+  string loadbalancer_name = 1;
+  string loadbalancer_namespace = 2;
+  string service_name = 3;
+  string service_namespace = 4;
+  string cluster = 5;
+  string tenant = 6;
+  TLSSettings tls = 7;
 }
 
 message TLSSettings {

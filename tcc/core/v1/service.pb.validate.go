@@ -41,9 +41,11 @@ func (m *CreateServiceRequest) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Name
+	// no validation rules for Hostname
 
-	// no validation rules for Workspace
+	// no validation rules for Namespace
+
+	// no validation rules for Cluster
 
 	// no validation rules for Tenant
 
@@ -166,9 +168,11 @@ func (m *GetServiceRequest) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Name
+	// no validation rules for Hostname
 
-	// no validation rules for Workspace
+	// no validation rules for Namespace
+
+	// no validation rules for Cluster
 
 	// no validation rules for Tenant
 
@@ -239,9 +243,11 @@ func (m *ListServiceRequest) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Tenant
+	// no validation rules for Cluster
 
-	// no validation rules for Workspace
+	// no validation rules for Namespace
+
+	// no validation rules for Tenant
 
 	return nil
 }
@@ -392,9 +398,11 @@ func (m *UpdateServiceRequest) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Name
+	// no validation rules for Hostname
 
-	// no validation rules for Workspace
+	// no validation rules for Namespace
+
+	// no validation rules for Cluster
 
 	// no validation rules for Tenant
 
@@ -517,9 +525,11 @@ func (m *DeleteServiceRequest) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Name
+	// no validation rules for Hostname
 
-	// no validation rules for Workspace
+	// no validation rules for Namespace
+
+	// no validation rules for Cluster
 
 	// no validation rules for Tenant
 
@@ -589,9 +599,11 @@ func (m *Service) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Name
+	// no validation rules for Hostname
 
-	// no validation rules for Workspace
+	// no validation rules for Namespace
+
+	// no validation rules for Cluster
 
 	// no validation rules for Tenant
 

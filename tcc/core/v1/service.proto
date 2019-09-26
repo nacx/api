@@ -3,87 +3,32 @@ syntax = "proto3";
 package tetrate.api.tcc.core.v1;
 option go_package = "github.com/tetrateio/tetrate/api/tcc/core/v1";
 
-import "google/api/annotations.proto";
-import "google/protobuf/empty.proto";
 import "google/protobuf/wrappers.proto";
 import "google/protobuf/duration.proto";
 
-// TODO: rationalize this with the existing inventory service
-
-service Services {
-  // namespace members & admins: Typically, create service fails if the
-  // service already exists in a service registry import from systems
-  // like kubernetes or consul.  Such services cannot be
-  // created/deleted. Only updates can be made.
-  rpc CreateService(CreateServiceRequest) returns (Service) {
-    option (google.api.http) = {
-      post: "/v1/services/tenant/{tenant}/workspace/{workspace}/{name}"
-      body: "*"
-    };
-  };
-
-  // Get properties of a service. If host name is not provided,
-  // lists properties of all services in the given namespace. If
-  // namespace name is omitted, lists all services in the system.
-  rpc GetService(GetServiceRequest) returns (Service) {
-    option (google.api.http) = {
-      get: "/v1/services/tenant/{tenant}/workspace/{workspace}/{name}"
-    };
-  };
-
-  // Get properties of a service. If host name is not provided,
-  // lists properties of all services in the given namespace. If
-  // namespace name is omitted, lists all services in the system.
-  rpc ListService(ListServiceRequest) returns (ListServiceResponse) {
-    option (google.api.http) = {
-      get: "/v1/services/tenant/{tenant}/workspace/{workspace}"
-    };
-  };
-
-  // namespace members & admins: Update an existing service with
-  // information like subsets, TLS settings, http route rules,
-  // dependencies, etc. Updates to certain properties of a service
-  // such as VIP address, ports, etc. will fail if the service was
-  // imported from a service registry
-  rpc UpdateService(UpdateServiceRequest) returns (Service) {
-    option (google.api.http) = {
-      put: "/v1/services/tenant/{tenant}/workspace/{workspace}/{name}"
-      body: "*"
-    };
-  };
-
-  // namespace members & admins: Typically, delete service fails if the
-  // service exists in a service registry import from systems like
-  // kubernetes or consul.  Such services cannot be
-  // created/deleted. Only updates can be made.
-  rpc DeleteService(DeleteServiceRequest) returns (google.protobuf.Empty) {
-    option (google.api.http) = {
-      delete: "/v1/services/tenant/{tenant}/workspace/{workspace}/{name}"
-    };
-  };
-}
-
 message CreateServiceRequest {
-  // fqdn
-  string name = 1;
-  string workspace = 2;
-  string tenant = 3;
-  map<string, string> labels = 4;
-  repeated Port ports = 5;
-  repeated Subset subsets = 6;
-  HttpSettings http_settings = 7;
-  TcpSettings tcp_settings = 8;
+  string hostname = 1;
+  string namespace = 2;
+  string cluster = 3;
+  string tenant = 4;
+  map<string, string> labels = 5;
+  repeated Port ports = 6;
+  repeated Subset subsets = 7;
+  HttpSettings http_settings = 8;
+  TcpSettings tcp_settings = 9;
 }
 
 message GetServiceRequest {
-  string name = 1;
-  string workspace = 2;
-  string tenant = 3;
+  string hostname = 1;
+  string namespace = 2;
+  string cluster = 3;
+  string tenant = 4;
 }
 
 message ListServiceRequest {
-  string tenant = 1;
-  string workspace = 2;
+  string cluster = 1;
+  string namespace = 2;
+  string tenant = 3;
 }
 
 message ListServiceResponse {
@@ -91,27 +36,27 @@ message ListServiceResponse {
 }
 
 message UpdateServiceRequest {
-  // immutable
-  string name = 1;
-  string workspace = 2;
-  string tenant = 3;
-
+  string hostname = 1;
+  string namespace = 2;
+  string cluster = 3;
+  string tenant = 4;
   // If provided, will overwrite existing labels.
-  map<string, string> labels = 4;
+  map<string, string> labels = 5;
 
   // if specified, overwrites existing port list
-  repeated Port ports = 5;
+  repeated Port ports = 6;
 
   // if specified, overwrites the existing list of subsets
-  repeated Subset subsets = 6;
-  HttpSettings http_settings = 7;
-  TcpSettings tcp_settings = 8;
+  repeated Subset subsets = 7;
+  HttpSettings http_settings = 8;
+  TcpSettings tcp_settings = 9;
 }
 
 message DeleteServiceRequest {
-  string name = 1;
-  string workspace = 2;
-  string tenant = 3;
+  string hostname = 1;
+  string namespace = 2;
+  string cluster = 3;
+  string tenant = 4;
 }
 
 // This is roughly equivalent to Istio service entry + virtual service + destination rule
@@ -119,31 +64,25 @@ message DeleteServiceRequest {
 // TLS is omitted from here because usually, the secOps team in the enterprise determines the
 // certs, the mount points, etc. The service owner should not care about it.
 message Service {
-  // The FQDN of the service
-  string name = 1;
-  // equivalent to k8s namespace
-  string workspace = 2;
-  string tenant = 3;
-
+  string hostname = 1;
+  string namespace = 2;
+  string cluster = 3;
+  string tenant = 4;
   // User identifiable tags associated with this service.
-  map<string, string> labels = 4;
+  map<string, string> labels = 5;
 
-  repeated Port ports = 5;
-  repeated Subset subsets = 6;
-
-  // The service owner controls these settings. The path/prefix rewrites
-  // sticky session settings, etc.
+  repeated Port ports = 6;
+  repeated Subset subsets = 7;
 
   // HTTP specific settings, transformations and routing rules
   // associated with HTTP traffic to this service.
-  HttpSettings http_settings = 7;
+  HttpSettings http_settings = 8;
 
   // TCP specific settings, transformations and routing rules
   // associated with non-HTTP traffic to this service.
-  TcpSettings tcp_settings = 8;
+  TcpSettings tcp_settings = 9;
 }
 
-// Port describes the properties of a specific port of a service on a VM or k8s.
 message Port {
   // REQUIRED: A valid non-negative integer port number.
   uint32 number = 1;
@@ -294,7 +233,7 @@ message Route {
     // Optional:
     uint32 port = 3;
 
-    // Must be of form tenant/123/workspace/456/service/blah.com. If specified, incoming traffic
+    // Must be of form cluster/123/namespace/456/service/blah.com. If specified, incoming traffic
     // for the service will be forwarded to the service
     // specified. Typically used on ingress gateways on kubernetes
     // clusters.

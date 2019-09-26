@@ -3,56 +3,6 @@ syntax = "proto3";
 package tetrate.api.tcc.core.v1;
 option go_package = "github.com/tetrateio/tetrate/api/tcc/core/v1";
 
-import "google/api/annotations.proto";
-import "google/protobuf/empty.proto";
-
-service Endpoints {
-  // Endpoints may or may not belong to a service
-  rpc CreateEndpoint(CreateEndpointRequest) returns (Endpoint) {
-    option (google.api.http) = {
-      post: "/v1/endpoints/tenant/{tenant}/workspace/{workspace}/{name}"
-      body: "*"
-    };
-  };
-
-  rpc GetEndpoint(GetEndpointRequest) returns (Endpoint) {
-    option (google.api.http) = {
-      get: "/v1/endpoints/tenant/{tenant}/workspace/{workspace}/{name}"
-    };
-  };
-
-  rpc ListWorkspaceEndpoint(ListWorkspaceEndpointRequest) returns (ListEndpointResponse) {
-    option (google.api.http) = {
-      get: "/v1/endpoints/tenant/{tenant}/workspace/{workspace}"
-    };
-  };
-
-  rpc ListServiceEndpoint(ListServiceEndpointRequest) returns (ListEndpointResponse) {
-    option (google.api.http) = {
-      get: "/v1/endpoints/tenant/{tenant}/workspace/{workspace}/service/{service}"
-    };
-  };
-
-  rpc ListServiceSubsetEndpoint(ListServiceSubsetEndpointRequest) returns (ListEndpointResponse) {
-    option (google.api.http) = {
-      get: "/v1/endpoints/tenant/{tenant}/workspace/{workspace}/service/{service}/subset/{subset}"
-    };
-  };
-
-  rpc UpdateEndpoint(UpdateEndpointRequest) returns (Endpoint) {
-    option (google.api.http) = {
-      put: "/v1/endpoints/tenant/{tenant}/workspace/{workspace}/{name}"
-      body: "*"
-    };
-  };
-
-  rpc DeleteEndpoint(DeleteEndpointRequest) returns (google.protobuf.Empty) {
-    option (google.api.http) = {
-      delete: "/v1/endpoints/tenant/{tenant}/workspace/{workspace}/{name}"
-    };
-  };
-}
-
 // Endpoint defines a network address (IP or hostname) associated with
 // the service.
 message Endpoint {
@@ -60,87 +10,72 @@ message Endpoint {
   string name = 1;
   // empty if not associated with a service
   string service = 2;
-  string tenant = 3;
-  string workspace = 4;
-
+  string namespace = 3;
+  string cluster = 4;
+  string tenant = 5;
   // REQUIRED: Address associated with the network endpoint without
   // the port.  Domain names can be used and must be fully-qualified
   // without wildcards.
-  string address = 5;
+  string address = 6;
 
   // Set of inbound traffic ports associated with the endpoint. The
   // ports must be associated with a port number that was declared
   // as part of the service.
-  map<uint32, uint32> ports = 6;
+  map<uint32, uint32> ports = 7;
 
   // One or more labels associated with the endpoint.
-  map<string, string> labels = 7;
+  map<string, string> labels = 8;
 
   // The locality associated with the endpoint, in the form
   // country/region/zone. A locality corresponds to a failure domain
   // (country/region/zone).
-  string locality = 8;
+  string locality = 9;
 
   // The load balancing weight associated with the endpoint. Endpoints
   // with higher weights in a pool will receive proportionally higher
   // traffic.
-  uint32 weight = 9;
+  uint32 weight = 10;
 }
 
 message CreateEndpointRequest {
-  // Short name of the endpoint, e.g. "1.2.3.4". TODO: other name reqs/restrictions
   string name = 1;
-  // optional
   string service = 2;
-  string tenant = 3;
-  string workspace = 4;
-
-  // REQUIRED: Address associated with the network endpoint without
-  // the port.  Domain names can be used and must be fully-qualified
-  // without wildcards.
-  string address = 5;
-
-  // Set of ports associated with the endpoint. The ports must be
-  // associated with a port name that was declared as part of the
-  // service.
-  map<uint32, uint32> ports = 6;
-
-  // One or more labels associated with the endpoint.
-  map<string, string> labels = 7;
-
-  // The locality associated with the endpoint, in the form
-  // country/region/zone. A locality corresponds to a failure domain
-  // (country/region/zone).
-  string locality = 8;
-
-  // The load balancing weight associated with the endpoint. Endpoints
-  // with higher weights in a pool will receive proportionally higher
-  // traffic.
-  uint32 weight = 9;
+  string namespace = 3;
+  string cluster = 4;
+  string tenant = 5;
+  string address = 6;
+  map<uint32, uint32> ports = 7;
+  map<string, string> labels = 8;
+  string locality = 9;
+  uint32 weight = 10;
 }
 
 message GetEndpointRequest {
   string name = 1;
-  string workspace = 2;
-  string tenant = 3;
+  string namespace = 2;
+  string cluster = 3;
+  string tenant = 4;
 }
 
-message ListWorkspaceEndpointRequest {
-  string tenant = 2;
-  string workspace = 3;
+message ListNamespaceEndpointRequest {
+  string cluster = 1;
+  string namespace = 2;
+  string tenant = 3;
 }
 
 message ListServiceEndpointRequest {
   string service = 1;
-  string tenant = 2;
-  string workspace = 3;
+  string cluster = 2;
+  string namespace = 3;
+  string tenant = 4;
 }
 
 message ListServiceSubsetEndpointRequest {
   string service = 1;
-  string tenant = 2;
-  string workspace = 3;
+  string cluster = 2;
+  string namespace = 3;
   string subset = 4;
+  string tenant = 5;
 }
 
 message ListEndpointResponse {
@@ -149,35 +84,19 @@ message ListEndpointResponse {
 
 message UpdateEndpointRequest {
   string name = 1;
-  string workspace = 2;
-  string tenant = 3;
-
-  // REQUIRED: Address associated with the network endpoint without
-  // the port.  Domain names can be used and must be fully-qualified
-  // without wildcards.
-  string address = 4;
-
-  // Set of ports associated with the endpoint. The ports must be
-  // associated with a port name that was declared as part of the
-  // service.
-  map<uint32, uint32> ports = 5;
-
-  // One or more labels associated with the endpoint.
-  map<string, string> labels = 6;
-
-  // The locality associated with the endpoint, in the form
-  // country/region/zone. A locality corresponds to a failure domain
-  // (country/region/zone).
-  string locality = 7;
-
-  // The load balancing weight associated with the endpoint. Endpoints
-  // with higher weights in a pool will receive proportionally higher
-  // traffic.
-  uint32 weight = 8;
+  string namespace = 2;
+  string cluster = 3;
+  string tenant = 4;
+  string address = 5;
+  map<uint32, uint32> ports = 6;
+  map<string, string> labels = 7;
+  string locality = 8;
+  uint32 weight = 9;
 }
 
 message DeleteEndpointRequest {
   string name = 1;
-  string workspace = 2;
-  string tenant = 3;
+  string namespace = 2;
+  string cluster = 3;
+  string tenant = 4;
 }

@@ -45,6 +45,8 @@ func (m *ConfigDownloadRequest) Validate() error {
 
 	// no validation rules for Cluster
 
+	// no validation rules for Tenant
+
 	return nil
 }
 
@@ -114,6 +116,8 @@ func (m *ConfigData) Validate() error {
 	// no validation rules for Configtype
 
 	// no validation rules for Cluster
+
+	// no validation rules for Tenant
 
 	// no validation rules for Payload
 

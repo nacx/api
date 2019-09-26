@@ -15,7 +15,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/workflows/loadbalancer/attach": {
+    "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/attach": {
       "post": {
         "summary": "namespace members of the service being requested \u0026 admins.\nThe API call must be made either by the admin or by owners of the\nnamespaces whose services are being exposed. It is assumed that\nthe load balancer has been created, deployed and imported into TCC\nthrough out of band mechanisms [for F5] or through service registry\nimports. The parameters should list the set of services that need\nto be exposed. Services will not be exposed until its approved by\nthe namespace owner where the load balancer resides.",
         "operationId": "Attach",
@@ -29,31 +29,17 @@
         },
         "parameters": [
           {
-            "name": "body",
-            "in": "body",
+            "name": "tenant",
+            "in": "path",
             "required": true,
-            "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.LoadBalancerWorkflowUserRequest"
-            }
-          }
-        ],
-        "tags": [
-          "LoadBalancerWorkflow"
-        ]
-      }
-    },
-    "/v1/workflows/loadbalancer/detach": {
-      "post": {
-        "operationId": "Detach",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.Status"
-            }
-          }
-        },
-        "parameters": [
+            "type": "string"
+          },
+          {
+            "name": "cluster",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
           {
             "name": "body",
             "in": "body",
@@ -68,7 +54,45 @@
         ]
       }
     },
-    "/v1/workflows/loadbalancer/pending": {
+    "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/detach": {
+      "post": {
+        "operationId": "Detach",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.Status"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "cluster",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.LoadBalancerWorkflowUserRequest"
+            }
+          }
+        ],
+        "tags": [
+          "LoadBalancerWorkflow"
+        ]
+      }
+    },
+    "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/pending": {
       "get": {
         "operationId": "ListPendingRequests",
         "responses": {
@@ -79,12 +103,26 @@
             }
           }
         },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "cluster",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "tags": [
           "LoadBalancerWorkflow"
         ]
       }
     },
-    "/v1/workflows/loadbalancer/publish": {
+    "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/publish": {
       "post": {
         "summary": "LB owner calls this API with additional settings like TLS, to\nfinally expose the service on the load balancer",
         "operationId": "Publish",
@@ -97,6 +135,18 @@
           }
         },
         "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "cluster",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
           {
             "name": "body",
             "in": "body",
@@ -111,9 +161,8 @@
         ]
       }
     },
-    "/v1/workflows/loadbalancer/request/{requestid}/approve": {
+    "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/request/{requestid}/approve": {
       "post": {
-        "summary": "namespace members who own the load balancer \u0026 admins.",
         "operationId": "Approve",
         "responses": {
           "200": {
@@ -124,6 +173,18 @@
           }
         },
         "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "cluster",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
           {
             "name": "requestid",
             "in": "path",
@@ -144,9 +205,8 @@
         ]
       }
     },
-    "/v1/workflows/loadbalancer/request/{requestid}/cancel": {
+    "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/request/{requestid}/cancel": {
       "post": {
-        "summary": "namespace members who own the load balancer \u0026 admins.",
         "operationId": "Cancel",
         "responses": {
           "200": {
@@ -157,6 +217,18 @@
           }
         },
         "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "cluster",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
           {
             "name": "requestid",
             "in": "path",
@@ -177,9 +249,8 @@
         ]
       }
     },
-    "/v1/workflows/loadbalancer/request/{requestid}/deny": {
+    "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/request/{requestid}/deny": {
       "post": {
-        "summary": "namespace members who own the load balancer \u0026 admins.",
         "operationId": "Deny",
         "responses": {
           "200": {
@@ -190,6 +261,18 @@
           }
         },
         "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "cluster",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
           {
             "name": "requestid",
             "in": "path",
@@ -210,7 +293,7 @@
         ]
       }
     },
-    "/v1/workflows/loadbalancer/request/{requestid}/status": {
+    "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/request/{requestid}/status": {
       "get": {
         "operationId": "GetRequestStatus",
         "responses": {
@@ -223,8 +306,20 @@
         },
         "parameters": [
           {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "cluster",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
             "name": "requestid",
-            "description": "e.g. `attach-789`",
+            "description": "e.g. attach-789",
             "in": "path",
             "required": true,
             "type": "string"
@@ -242,6 +337,12 @@
       "properties": {
         "requestid": {
           "type": "string"
+        },
+        "cluster": {
+          "type": "string"
+        },
+        "tenant": {
+          "type": "string"
         }
       }
     },
@@ -249,6 +350,9 @@
       "type": "object",
       "properties": {
         "requestid": {
+          "type": "string"
+        },
+        "cluster": {
           "type": "string"
         },
         "note": {
@@ -262,6 +366,12 @@
       "properties": {
         "requestid": {
           "type": "string"
+        },
+        "cluster": {
+          "type": "string"
+        },
+        "tenant": {
+          "type": "string"
         }
       }
     },
@@ -269,6 +379,9 @@
       "type": "object",
       "properties": {
         "requestid": {
+          "type": "string"
+        },
+        "cluster": {
           "type": "string"
         },
         "note": {
@@ -282,6 +395,12 @@
       "properties": {
         "requestid": {
           "type": "string"
+        },
+        "cluster": {
+          "type": "string"
+        },
+        "tenant": {
+          "type": "string"
         }
       }
     },
@@ -289,6 +408,9 @@
       "type": "object",
       "properties": {
         "requestid": {
+          "type": "string"
+        },
+        "cluster": {
           "type": "string"
         },
         "note": {
@@ -300,6 +422,9 @@
     "tetrate.api.tcc.workflows.v1.ListPendingResponse": {
       "type": "object",
       "properties": {
+        "cluster": {
+          "type": "string"
+        },
         "pendingRequests": {
           "type": "array",
           "items": {
@@ -311,10 +436,16 @@
     "tetrate.api.tcc.workflows.v1.ListPendingResponse.PendingRequest": {
       "type": "object",
       "properties": {
-        "loadbalancer": {
+        "loadbalancerName": {
           "type": "string"
         },
-        "service": {
+        "loadbalancerNamespace": {
+          "type": "string"
+        },
+        "serviceHostname": {
+          "type": "string"
+        },
+        "serviceNamespace": {
           "type": "string"
         },
         "operation": {
@@ -333,39 +464,61 @@
     "tetrate.api.tcc.workflows.v1.LoadBalancerWorkflowOwnerRequest": {
       "type": "object",
       "properties": {
-        "loadbalancer": {
-          "type": "string",
-          "title": "The load balancer where the service should be published\nof form tenant/123/workspace/345/loadbalancer/blah"
+        "loadbalancerName": {
+          "type": "string"
         },
-        "service": {
-          "type": "string",
-          "title": "the name of the service to publish. `tenant/123/workspace/456/service/foo.com`"
+        "loadbalancerNamespace": {
+          "type": "string"
+        },
+        "serviceName": {
+          "type": "string"
+        },
+        "serviceNamespace": {
+          "type": "string"
+        },
+        "cluster": {
+          "type": "string"
+        },
+        "tenant": {
+          "type": "string"
         },
         "tls": {
-          "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.TLSSettings",
-          "description": "TLS settings for the service to be published."
+          "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.TLSSettings"
         }
       }
     },
     "tetrate.api.tcc.workflows.v1.LoadBalancerWorkflowUserRequest": {
       "type": "object",
       "properties": {
-        "loadbalancer": {
-          "type": "string",
-          "title": "The load balancer where the service should be attached/detached from\nof form tenant/123/workspace/345/loadbalancer/blah"
+        "loadbalancerName": {
+          "type": "string"
         },
-        "service": {
-          "type": "string",
-          "title": "the name of the service to attach/detach; `tenant/123/workspace/456/service/foo.com`"
+        "loadbalancerNamespace": {
+          "type": "string"
+        },
+        "serviceHostname": {
+          "type": "string"
+        },
+        "serviceNamespace": {
+          "type": "string"
+        },
+        "cluster": {
+          "type": "string"
+        },
+        "tenant": {
+          "type": "string"
         }
       }
     },
     "tetrate.api.tcc.workflows.v1.Status": {
       "type": "object",
       "properties": {
+        "cluster": {
+          "type": "string"
+        },
         "requestid": {
           "type": "string",
-          "title": "e.g. `attach-789`"
+          "title": "e.g. attach-789"
         },
         "approved": {
           "type": "boolean",

@@ -7,13 +7,6 @@ import proto "github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
 import duration "github.com/golang/protobuf/ptypes/duration"
-import empty "github.com/golang/protobuf/ptypes/empty"
-import _ "google.golang.org/genproto/googleapis/api/annotations"
-
-import (
-	context "golang.org/x/net/context"
-	grpc "google.golang.org/grpc"
-)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -49,41 +42,26 @@ func (x ClientSettings_Sensitivity) String() string {
 	return proto.EnumName(ClientSettings_Sensitivity_name, int32(x))
 }
 func (ClientSettings_Sensitivity) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_client_settings_b497358077569596, []int{0, 0}
+	return fileDescriptor_client_settings_049dd1d15f5e6ceb, []int{0, 0}
 }
 
-type UpdateClientSettingsRequest_Sensitivity int32
-
-const (
-	UpdateClientSettingsRequest_LOW    UpdateClientSettingsRequest_Sensitivity = 0
-	UpdateClientSettingsRequest_MEDIUM UpdateClientSettingsRequest_Sensitivity = 1
-	UpdateClientSettingsRequest_HIGH   UpdateClientSettingsRequest_Sensitivity = 2
-)
-
-var UpdateClientSettingsRequest_Sensitivity_name = map[int32]string{
-	0: "LOW",
-	1: "MEDIUM",
-	2: "HIGH",
-}
-var UpdateClientSettingsRequest_Sensitivity_value = map[string]int32{
-	"LOW":    0,
-	"MEDIUM": 1,
-	"HIGH":   2,
-}
-
-func (x UpdateClientSettingsRequest_Sensitivity) String() string {
-	return proto.EnumName(UpdateClientSettingsRequest_Sensitivity_name, int32(x))
-}
-func (UpdateClientSettingsRequest_Sensitivity) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_client_settings_b497358077569596, []int{3, 0}
-}
-
+// All the timeouts, retries, circuit breakers etc. that consumers
+// want to set to gaurd against failures of their dependencies. These
+// roughly translate to pieces of istio virtual service, destination
+// rules, etc. At runtime, for a given namespace, for the namespace's
+// dependencies, we combine the client specified reliability settings
+// with the virtual service/dest rule for the dependencies to produce
+// an updated virtual service/dest rule per dependent service. All
+// these client customized virtual services/dest rules will be private
+// to the namespace i.e. will have an exportTo setting '.' . Doing so
+// will make Pilot apply these customizations only to the namespace
+// concerned without leaking it to all other namespaces.
 type ClientSettings struct {
-	// empty if this is applicable to entire workspace
+	// empty if this is applicable to entire namespace
 	Service string `protobuf:"bytes,1,opt,name=service,proto3" json:"service,omitempty"`
-	// empty if this is applicable to entire tenant
-	Workspace string `protobuf:"bytes,2,opt,name=workspace,proto3" json:"workspace,omitempty"`
-	Tenant    string `protobuf:"bytes,3,opt,name=tenant,proto3" json:"tenant,omitempty"`
+	// empty if this is applicable to entire cluster
+	Namespace string `protobuf:"bytes,2,opt,name=namespace,proto3" json:"namespace,omitempty"`
+	Cluster   string `protobuf:"bytes,3,opt,name=cluster,proto3" json:"cluster,omitempty"`
 	// Timeout for HTTP requests.
 	HttpRequestTimeout *duration.Duration `protobuf:"bytes,4,opt,name=http_request_timeout,json=httpRequestTimeout,proto3" json:"http_request_timeout,omitempty"`
 	// Retry policy for HTTP requests.
@@ -105,7 +83,7 @@ func (m *ClientSettings) Reset()         { *m = ClientSettings{} }
 func (m *ClientSettings) String() string { return proto.CompactTextString(m) }
 func (*ClientSettings) ProtoMessage()    {}
 func (*ClientSettings) Descriptor() ([]byte, []int) {
-	return fileDescriptor_client_settings_b497358077569596, []int{0}
+	return fileDescriptor_client_settings_049dd1d15f5e6ceb, []int{0}
 }
 func (m *ClientSettings) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ClientSettings.Unmarshal(m, b)
@@ -132,16 +110,16 @@ func (m *ClientSettings) GetService() string {
 	return ""
 }
 
-func (m *ClientSettings) GetWorkspace() string {
+func (m *ClientSettings) GetNamespace() string {
 	if m != nil {
-		return m.Workspace
+		return m.Namespace
 	}
 	return ""
 }
 
-func (m *ClientSettings) GetTenant() string {
+func (m *ClientSettings) GetCluster() string {
 	if m != nil {
-		return m.Tenant
+		return m.Cluster
 	}
 	return ""
 }
@@ -205,7 +183,7 @@ func (m *HTTPRetry) Reset()         { *m = HTTPRetry{} }
 func (m *HTTPRetry) String() string { return proto.CompactTextString(m) }
 func (*HTTPRetry) ProtoMessage()    {}
 func (*HTTPRetry) Descriptor() ([]byte, []int) {
-	return fileDescriptor_client_settings_b497358077569596, []int{1}
+	return fileDescriptor_client_settings_049dd1d15f5e6ceb, []int{1}
 }
 func (m *HTTPRetry) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_HTTPRetry.Unmarshal(m, b)
@@ -246,587 +224,45 @@ func (m *HTTPRetry) GetRetryOn() string {
 	return ""
 }
 
-type GetClientSettingsRequest struct {
-	Tenant               string   `protobuf:"bytes,1,opt,name=tenant,proto3" json:"tenant,omitempty"`
-	Workspace            string   `protobuf:"bytes,2,opt,name=workspace,proto3" json:"workspace,omitempty"`
-	Service              string   `protobuf:"bytes,3,opt,name=service,proto3" json:"service,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *GetClientSettingsRequest) Reset()         { *m = GetClientSettingsRequest{} }
-func (m *GetClientSettingsRequest) String() string { return proto.CompactTextString(m) }
-func (*GetClientSettingsRequest) ProtoMessage()    {}
-func (*GetClientSettingsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_client_settings_b497358077569596, []int{2}
-}
-func (m *GetClientSettingsRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_GetClientSettingsRequest.Unmarshal(m, b)
-}
-func (m *GetClientSettingsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_GetClientSettingsRequest.Marshal(b, m, deterministic)
-}
-func (dst *GetClientSettingsRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetClientSettingsRequest.Merge(dst, src)
-}
-func (m *GetClientSettingsRequest) XXX_Size() int {
-	return xxx_messageInfo_GetClientSettingsRequest.Size(m)
-}
-func (m *GetClientSettingsRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_GetClientSettingsRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_GetClientSettingsRequest proto.InternalMessageInfo
-
-func (m *GetClientSettingsRequest) GetTenant() string {
-	if m != nil {
-		return m.Tenant
-	}
-	return ""
-}
-
-func (m *GetClientSettingsRequest) GetWorkspace() string {
-	if m != nil {
-		return m.Workspace
-	}
-	return ""
-}
-
-func (m *GetClientSettingsRequest) GetService() string {
-	if m != nil {
-		return m.Service
-	}
-	return ""
-}
-
-type UpdateClientSettingsRequest struct {
-	Tenant    string `protobuf:"bytes,1,opt,name=tenant,proto3" json:"tenant,omitempty"`
-	Workspace string `protobuf:"bytes,2,opt,name=workspace,proto3" json:"workspace,omitempty"`
-	Service   string `protobuf:"bytes,3,opt,name=service,proto3" json:"service,omitempty"`
-	// Timeout for HTTP requests.
-	HttpRequestTimeout *duration.Duration `protobuf:"bytes,4,opt,name=http_request_timeout,json=httpRequestTimeout,proto3" json:"http_request_timeout,omitempty"`
-	// Retry policy for HTTP requests.
-	HttpRetries *HTTPRetry `protobuf:"bytes,5,opt,name=http_retries,json=httpRetries,proto3" json:"http_retries,omitempty"`
-	// These two settings will go to dest rule
-	// TCP connection timeout.
-	TcpConnectTimeout *duration.Duration `protobuf:"bytes,6,opt,name=tcp_connect_timeout,json=tcpConnectTimeout,proto3" json:"tcp_connect_timeout,omitempty"`
-	// If set then set SO_KEEPALIVE on the socket to enable TCP Keepalives.
-	TcpKeepalive bool `protobuf:"varint,7,opt,name=tcp_keepalive,json=tcpKeepalive,proto3" json:"tcp_keepalive,omitempty"`
-	// the sensitivity levels will translate to specific values of
-	// dest rule outlier detection.
-	CircuitBreakerSensitivity UpdateClientSettingsRequest_Sensitivity `protobuf:"varint,8,opt,name=circuit_breaker_sensitivity,json=circuitBreakerSensitivity,proto3,enum=tetrate.api.tcc.core.v1.UpdateClientSettingsRequest_Sensitivity" json:"circuit_breaker_sensitivity,omitempty"`
-	XXX_NoUnkeyedLiteral      struct{}                                `json:"-"`
-	XXX_unrecognized          []byte                                  `json:"-"`
-	XXX_sizecache             int32                                   `json:"-"`
-}
-
-func (m *UpdateClientSettingsRequest) Reset()         { *m = UpdateClientSettingsRequest{} }
-func (m *UpdateClientSettingsRequest) String() string { return proto.CompactTextString(m) }
-func (*UpdateClientSettingsRequest) ProtoMessage()    {}
-func (*UpdateClientSettingsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_client_settings_b497358077569596, []int{3}
-}
-func (m *UpdateClientSettingsRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_UpdateClientSettingsRequest.Unmarshal(m, b)
-}
-func (m *UpdateClientSettingsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_UpdateClientSettingsRequest.Marshal(b, m, deterministic)
-}
-func (dst *UpdateClientSettingsRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_UpdateClientSettingsRequest.Merge(dst, src)
-}
-func (m *UpdateClientSettingsRequest) XXX_Size() int {
-	return xxx_messageInfo_UpdateClientSettingsRequest.Size(m)
-}
-func (m *UpdateClientSettingsRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_UpdateClientSettingsRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_UpdateClientSettingsRequest proto.InternalMessageInfo
-
-func (m *UpdateClientSettingsRequest) GetTenant() string {
-	if m != nil {
-		return m.Tenant
-	}
-	return ""
-}
-
-func (m *UpdateClientSettingsRequest) GetWorkspace() string {
-	if m != nil {
-		return m.Workspace
-	}
-	return ""
-}
-
-func (m *UpdateClientSettingsRequest) GetService() string {
-	if m != nil {
-		return m.Service
-	}
-	return ""
-}
-
-func (m *UpdateClientSettingsRequest) GetHttpRequestTimeout() *duration.Duration {
-	if m != nil {
-		return m.HttpRequestTimeout
-	}
-	return nil
-}
-
-func (m *UpdateClientSettingsRequest) GetHttpRetries() *HTTPRetry {
-	if m != nil {
-		return m.HttpRetries
-	}
-	return nil
-}
-
-func (m *UpdateClientSettingsRequest) GetTcpConnectTimeout() *duration.Duration {
-	if m != nil {
-		return m.TcpConnectTimeout
-	}
-	return nil
-}
-
-func (m *UpdateClientSettingsRequest) GetTcpKeepalive() bool {
-	if m != nil {
-		return m.TcpKeepalive
-	}
-	return false
-}
-
-func (m *UpdateClientSettingsRequest) GetCircuitBreakerSensitivity() UpdateClientSettingsRequest_Sensitivity {
-	if m != nil {
-		return m.CircuitBreakerSensitivity
-	}
-	return UpdateClientSettingsRequest_LOW
-}
-
-type DeleteClientSettingsRequest struct {
-	Tenant               string   `protobuf:"bytes,1,opt,name=tenant,proto3" json:"tenant,omitempty"`
-	Workspace            string   `protobuf:"bytes,2,opt,name=workspace,proto3" json:"workspace,omitempty"`
-	Service              string   `protobuf:"bytes,3,opt,name=service,proto3" json:"service,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *DeleteClientSettingsRequest) Reset()         { *m = DeleteClientSettingsRequest{} }
-func (m *DeleteClientSettingsRequest) String() string { return proto.CompactTextString(m) }
-func (*DeleteClientSettingsRequest) ProtoMessage()    {}
-func (*DeleteClientSettingsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_client_settings_b497358077569596, []int{4}
-}
-func (m *DeleteClientSettingsRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_DeleteClientSettingsRequest.Unmarshal(m, b)
-}
-func (m *DeleteClientSettingsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_DeleteClientSettingsRequest.Marshal(b, m, deterministic)
-}
-func (dst *DeleteClientSettingsRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_DeleteClientSettingsRequest.Merge(dst, src)
-}
-func (m *DeleteClientSettingsRequest) XXX_Size() int {
-	return xxx_messageInfo_DeleteClientSettingsRequest.Size(m)
-}
-func (m *DeleteClientSettingsRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_DeleteClientSettingsRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_DeleteClientSettingsRequest proto.InternalMessageInfo
-
-func (m *DeleteClientSettingsRequest) GetTenant() string {
-	if m != nil {
-		return m.Tenant
-	}
-	return ""
-}
-
-func (m *DeleteClientSettingsRequest) GetWorkspace() string {
-	if m != nil {
-		return m.Workspace
-	}
-	return ""
-}
-
-func (m *DeleteClientSettingsRequest) GetService() string {
-	if m != nil {
-		return m.Service
-	}
-	return ""
-}
-
 func init() {
 	proto.RegisterType((*ClientSettings)(nil), "tetrate.api.tcc.core.v1.ClientSettings")
 	proto.RegisterType((*HTTPRetry)(nil), "tetrate.api.tcc.core.v1.HTTPRetry")
-	proto.RegisterType((*GetClientSettingsRequest)(nil), "tetrate.api.tcc.core.v1.GetClientSettingsRequest")
-	proto.RegisterType((*UpdateClientSettingsRequest)(nil), "tetrate.api.tcc.core.v1.UpdateClientSettingsRequest")
-	proto.RegisterType((*DeleteClientSettingsRequest)(nil), "tetrate.api.tcc.core.v1.DeleteClientSettingsRequest")
 	proto.RegisterEnum("tetrate.api.tcc.core.v1.ClientSettings_Sensitivity", ClientSettings_Sensitivity_name, ClientSettings_Sensitivity_value)
-	proto.RegisterEnum("tetrate.api.tcc.core.v1.UpdateClientSettingsRequest_Sensitivity", UpdateClientSettingsRequest_Sensitivity_name, UpdateClientSettingsRequest_Sensitivity_value)
-}
-
-// Reference imports to suppress errors if they are not otherwise used.
-var _ context.Context
-var _ grpc.ClientConn
-
-// This is a compile-time assertion to ensure that this generated file
-// is compatible with the grpc package it is being compiled against.
-const _ = grpc.SupportPackageIsVersion4
-
-// ClientSettingsServiceClient is the client API for ClientSettingsService service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
-type ClientSettingsServiceClient interface {
-	// There are defaults for every tenant/workspace. So there is no create here.
-	// workspace owners can customize this but not delete.
-	GetClientSettingsForService(ctx context.Context, in *GetClientSettingsRequest, opts ...grpc.CallOption) (*ClientSettings, error)
-	GetClientSettingsForWorkspace(ctx context.Context, in *GetClientSettingsRequest, opts ...grpc.CallOption) (*ClientSettings, error)
-	GetClientSettingsForTenant(ctx context.Context, in *GetClientSettingsRequest, opts ...grpc.CallOption) (*ClientSettings, error)
-	UpdateClientSettingsForService(ctx context.Context, in *UpdateClientSettingsRequest, opts ...grpc.CallOption) (*ClientSettings, error)
-	UpdateClientSettingsForWorkspace(ctx context.Context, in *UpdateClientSettingsRequest, opts ...grpc.CallOption) (*ClientSettings, error)
-	UpdateClientSettingsForTenant(ctx context.Context, in *UpdateClientSettingsRequest, opts ...grpc.CallOption) (*ClientSettings, error)
-	DeleteClientSettingsForService(ctx context.Context, in *DeleteClientSettingsRequest, opts ...grpc.CallOption) (*empty.Empty, error)
-	DeleteClientSettingsForWorkspace(ctx context.Context, in *DeleteClientSettingsRequest, opts ...grpc.CallOption) (*empty.Empty, error)
-}
-
-type clientSettingsServiceClient struct {
-	cc *grpc.ClientConn
-}
-
-func NewClientSettingsServiceClient(cc *grpc.ClientConn) ClientSettingsServiceClient {
-	return &clientSettingsServiceClient{cc}
-}
-
-func (c *clientSettingsServiceClient) GetClientSettingsForService(ctx context.Context, in *GetClientSettingsRequest, opts ...grpc.CallOption) (*ClientSettings, error) {
-	out := new(ClientSettings)
-	err := c.cc.Invoke(ctx, "/tetrate.api.tcc.core.v1.ClientSettingsService/GetClientSettingsForService", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *clientSettingsServiceClient) GetClientSettingsForWorkspace(ctx context.Context, in *GetClientSettingsRequest, opts ...grpc.CallOption) (*ClientSettings, error) {
-	out := new(ClientSettings)
-	err := c.cc.Invoke(ctx, "/tetrate.api.tcc.core.v1.ClientSettingsService/GetClientSettingsForWorkspace", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *clientSettingsServiceClient) GetClientSettingsForTenant(ctx context.Context, in *GetClientSettingsRequest, opts ...grpc.CallOption) (*ClientSettings, error) {
-	out := new(ClientSettings)
-	err := c.cc.Invoke(ctx, "/tetrate.api.tcc.core.v1.ClientSettingsService/GetClientSettingsForTenant", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *clientSettingsServiceClient) UpdateClientSettingsForService(ctx context.Context, in *UpdateClientSettingsRequest, opts ...grpc.CallOption) (*ClientSettings, error) {
-	out := new(ClientSettings)
-	err := c.cc.Invoke(ctx, "/tetrate.api.tcc.core.v1.ClientSettingsService/UpdateClientSettingsForService", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *clientSettingsServiceClient) UpdateClientSettingsForWorkspace(ctx context.Context, in *UpdateClientSettingsRequest, opts ...grpc.CallOption) (*ClientSettings, error) {
-	out := new(ClientSettings)
-	err := c.cc.Invoke(ctx, "/tetrate.api.tcc.core.v1.ClientSettingsService/UpdateClientSettingsForWorkspace", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *clientSettingsServiceClient) UpdateClientSettingsForTenant(ctx context.Context, in *UpdateClientSettingsRequest, opts ...grpc.CallOption) (*ClientSettings, error) {
-	out := new(ClientSettings)
-	err := c.cc.Invoke(ctx, "/tetrate.api.tcc.core.v1.ClientSettingsService/UpdateClientSettingsForTenant", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *clientSettingsServiceClient) DeleteClientSettingsForService(ctx context.Context, in *DeleteClientSettingsRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/tetrate.api.tcc.core.v1.ClientSettingsService/DeleteClientSettingsForService", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *clientSettingsServiceClient) DeleteClientSettingsForWorkspace(ctx context.Context, in *DeleteClientSettingsRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/tetrate.api.tcc.core.v1.ClientSettingsService/DeleteClientSettingsForWorkspace", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// ClientSettingsServiceServer is the server API for ClientSettingsService service.
-type ClientSettingsServiceServer interface {
-	// There are defaults for every tenant/workspace. So there is no create here.
-	// workspace owners can customize this but not delete.
-	GetClientSettingsForService(context.Context, *GetClientSettingsRequest) (*ClientSettings, error)
-	GetClientSettingsForWorkspace(context.Context, *GetClientSettingsRequest) (*ClientSettings, error)
-	GetClientSettingsForTenant(context.Context, *GetClientSettingsRequest) (*ClientSettings, error)
-	UpdateClientSettingsForService(context.Context, *UpdateClientSettingsRequest) (*ClientSettings, error)
-	UpdateClientSettingsForWorkspace(context.Context, *UpdateClientSettingsRequest) (*ClientSettings, error)
-	UpdateClientSettingsForTenant(context.Context, *UpdateClientSettingsRequest) (*ClientSettings, error)
-	DeleteClientSettingsForService(context.Context, *DeleteClientSettingsRequest) (*empty.Empty, error)
-	DeleteClientSettingsForWorkspace(context.Context, *DeleteClientSettingsRequest) (*empty.Empty, error)
-}
-
-func RegisterClientSettingsServiceServer(s *grpc.Server, srv ClientSettingsServiceServer) {
-	s.RegisterService(&_ClientSettingsService_serviceDesc, srv)
-}
-
-func _ClientSettingsService_GetClientSettingsForService_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetClientSettingsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ClientSettingsServiceServer).GetClientSettingsForService(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/tetrate.api.tcc.core.v1.ClientSettingsService/GetClientSettingsForService",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ClientSettingsServiceServer).GetClientSettingsForService(ctx, req.(*GetClientSettingsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ClientSettingsService_GetClientSettingsForWorkspace_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetClientSettingsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ClientSettingsServiceServer).GetClientSettingsForWorkspace(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/tetrate.api.tcc.core.v1.ClientSettingsService/GetClientSettingsForWorkspace",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ClientSettingsServiceServer).GetClientSettingsForWorkspace(ctx, req.(*GetClientSettingsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ClientSettingsService_GetClientSettingsForTenant_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetClientSettingsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ClientSettingsServiceServer).GetClientSettingsForTenant(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/tetrate.api.tcc.core.v1.ClientSettingsService/GetClientSettingsForTenant",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ClientSettingsServiceServer).GetClientSettingsForTenant(ctx, req.(*GetClientSettingsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ClientSettingsService_UpdateClientSettingsForService_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateClientSettingsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ClientSettingsServiceServer).UpdateClientSettingsForService(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/tetrate.api.tcc.core.v1.ClientSettingsService/UpdateClientSettingsForService",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ClientSettingsServiceServer).UpdateClientSettingsForService(ctx, req.(*UpdateClientSettingsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ClientSettingsService_UpdateClientSettingsForWorkspace_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateClientSettingsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ClientSettingsServiceServer).UpdateClientSettingsForWorkspace(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/tetrate.api.tcc.core.v1.ClientSettingsService/UpdateClientSettingsForWorkspace",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ClientSettingsServiceServer).UpdateClientSettingsForWorkspace(ctx, req.(*UpdateClientSettingsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ClientSettingsService_UpdateClientSettingsForTenant_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateClientSettingsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ClientSettingsServiceServer).UpdateClientSettingsForTenant(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/tetrate.api.tcc.core.v1.ClientSettingsService/UpdateClientSettingsForTenant",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ClientSettingsServiceServer).UpdateClientSettingsForTenant(ctx, req.(*UpdateClientSettingsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ClientSettingsService_DeleteClientSettingsForService_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteClientSettingsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ClientSettingsServiceServer).DeleteClientSettingsForService(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/tetrate.api.tcc.core.v1.ClientSettingsService/DeleteClientSettingsForService",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ClientSettingsServiceServer).DeleteClientSettingsForService(ctx, req.(*DeleteClientSettingsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ClientSettingsService_DeleteClientSettingsForWorkspace_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteClientSettingsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ClientSettingsServiceServer).DeleteClientSettingsForWorkspace(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/tetrate.api.tcc.core.v1.ClientSettingsService/DeleteClientSettingsForWorkspace",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ClientSettingsServiceServer).DeleteClientSettingsForWorkspace(ctx, req.(*DeleteClientSettingsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-var _ClientSettingsService_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "tetrate.api.tcc.core.v1.ClientSettingsService",
-	HandlerType: (*ClientSettingsServiceServer)(nil),
-	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "GetClientSettingsForService",
-			Handler:    _ClientSettingsService_GetClientSettingsForService_Handler,
-		},
-		{
-			MethodName: "GetClientSettingsForWorkspace",
-			Handler:    _ClientSettingsService_GetClientSettingsForWorkspace_Handler,
-		},
-		{
-			MethodName: "GetClientSettingsForTenant",
-			Handler:    _ClientSettingsService_GetClientSettingsForTenant_Handler,
-		},
-		{
-			MethodName: "UpdateClientSettingsForService",
-			Handler:    _ClientSettingsService_UpdateClientSettingsForService_Handler,
-		},
-		{
-			MethodName: "UpdateClientSettingsForWorkspace",
-			Handler:    _ClientSettingsService_UpdateClientSettingsForWorkspace_Handler,
-		},
-		{
-			MethodName: "UpdateClientSettingsForTenant",
-			Handler:    _ClientSettingsService_UpdateClientSettingsForTenant_Handler,
-		},
-		{
-			MethodName: "DeleteClientSettingsForService",
-			Handler:    _ClientSettingsService_DeleteClientSettingsForService_Handler,
-		},
-		{
-			MethodName: "DeleteClientSettingsForWorkspace",
-			Handler:    _ClientSettingsService_DeleteClientSettingsForWorkspace_Handler,
-		},
-	},
-	Streams:  []grpc.StreamDesc{},
-	Metadata: "client_settings.proto",
 }
 
 func init() {
-	proto.RegisterFile("client_settings.proto", fileDescriptor_client_settings_b497358077569596)
+	proto.RegisterFile("client_settings.proto", fileDescriptor_client_settings_049dd1d15f5e6ceb)
 }
 
-var fileDescriptor_client_settings_b497358077569596 = []byte{
-	// 807 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xec, 0x57, 0x4f, 0x6f, 0xeb, 0x44,
-	0x10, 0x67, 0xd3, 0xbc, 0x24, 0xdd, 0xf6, 0x3d, 0xca, 0xc2, 0x7b, 0xb8, 0x4e, 0x5b, 0x45, 0x06,
-	0xa9, 0x51, 0x54, 0x6c, 0xa5, 0xe5, 0x80, 0x2a, 0x21, 0x95, 0xfe, 0xa1, 0x2d, 0x6d, 0x55, 0xe4,
-	0xa6, 0xaa, 0xc4, 0xc5, 0x72, 0xb6, 0x4b, 0xba, 0x34, 0xb1, 0xcd, 0x7a, 0x12, 0x14, 0x55, 0x95,
-	0x10, 0x12, 0xe2, 0x03, 0x70, 0xe3, 0x88, 0xb8, 0x72, 0xe1, 0xce, 0x85, 0x03, 0x37, 0x4e, 0x48,
-	0x7c, 0x02, 0x3e, 0x08, 0xf2, 0x7a, 0x9d, 0x3f, 0x34, 0x6e, 0xa3, 0xa8, 0xe9, 0xe9, 0x9d, 0xb2,
-	0xb3, 0x93, 0x99, 0xfd, 0xfd, 0x66, 0x7f, 0x33, 0x9b, 0xe0, 0x97, 0xb4, 0xc9, 0x99, 0x07, 0x4e,
-	0xc8, 0x00, 0xb8, 0xd7, 0x08, 0xcd, 0x40, 0xf8, 0xe0, 0x93, 0x77, 0x81, 0x81, 0x70, 0x81, 0x99,
-	0x6e, 0xc0, 0x4d, 0xa0, 0xd4, 0xa4, 0xbe, 0x60, 0x66, 0xa7, 0xaa, 0x2f, 0x35, 0x7c, 0xbf, 0xd1,
-	0x64, 0x96, 0x1b, 0x70, 0xcb, 0xf5, 0x3c, 0x1f, 0x5c, 0xe0, 0xbe, 0xa7, 0xc2, 0xf4, 0x15, 0xe5,
-	0x95, 0x56, 0xbd, 0xfd, 0xa5, 0x75, 0xd9, 0x16, 0xf2, 0x0b, 0xca, 0x5f, 0xfc, 0xbf, 0x9f, 0xb5,
-	0x02, 0xe8, 0xc6, 0x4e, 0xe3, 0x87, 0x2c, 0x7e, 0xb1, 0x23, 0xd1, 0x9c, 0x29, 0x30, 0x44, 0xc3,
-	0xf9, 0x90, 0x89, 0x0e, 0xa7, 0x4c, 0x43, 0x25, 0x54, 0x9e, 0xb5, 0x13, 0x93, 0x2c, 0xe1, 0xd9,
-	0x6f, 0x7c, 0x71, 0x1d, 0x06, 0x2e, 0x65, 0x5a, 0x46, 0xfa, 0xfa, 0x1b, 0xe4, 0x15, 0xce, 0x01,
-	0xf3, 0x5c, 0x0f, 0xb4, 0x19, 0xe9, 0x52, 0x16, 0x39, 0xc2, 0xef, 0x5c, 0x01, 0x04, 0x8e, 0x60,
-	0x5f, 0xb7, 0x59, 0x08, 0x0e, 0xf0, 0x16, 0xf3, 0xdb, 0xa0, 0x65, 0x4b, 0xa8, 0x3c, 0xb7, 0xbe,
-	0x68, 0xc6, 0xf0, 0xcc, 0x04, 0x9e, 0xb9, 0xab, 0xe0, 0xdb, 0x24, 0x0a, 0xb3, 0xe3, 0xa8, 0x5a,
-	0x1c, 0x44, 0xf6, 0xf0, 0xbc, 0x4a, 0x06, 0x82, 0xb3, 0x50, 0x7b, 0x26, 0x93, 0x18, 0x66, 0x4a,
-	0xe9, 0xcc, 0x83, 0x5a, 0xed, 0x73, 0x9b, 0x81, 0xe8, 0xda, 0x73, 0x71, 0x36, 0x19, 0x46, 0x0e,
-	0xf1, 0xdb, 0x40, 0x03, 0x87, 0xfa, 0x9e, 0xc7, 0x68, 0x1f, 0x52, 0xee, 0x21, 0x48, 0x6f, 0x01,
-	0x0d, 0x76, 0xe2, 0xa0, 0x04, 0xd1, 0x7b, 0xf8, 0x79, 0x94, 0xea, 0x9a, 0xb1, 0xc0, 0x6d, 0xf2,
-	0x0e, 0xd3, 0xf2, 0x25, 0x54, 0x2e, 0xd8, 0xf3, 0x40, 0x83, 0xa3, 0x64, 0x8f, 0x84, 0xb8, 0x48,
-	0xb9, 0xa0, 0x6d, 0x0e, 0x4e, 0x5d, 0x30, 0xf7, 0x9a, 0x09, 0x27, 0x64, 0x5e, 0xc8, 0x81, 0x77,
-	0x38, 0x74, 0xb5, 0x42, 0x09, 0x95, 0x5f, 0xac, 0x6f, 0xa4, 0xb2, 0x18, 0xbe, 0x21, 0xf3, 0xac,
-	0x1f, 0x6a, 0x2f, 0xaa, 0xbc, 0xdb, 0x71, 0xda, 0x01, 0x97, 0xb1, 0x86, 0xe7, 0x06, 0x4c, 0x92,
-	0xc7, 0x33, 0xc7, 0xa7, 0x17, 0x0b, 0x6f, 0x10, 0x8c, 0x73, 0x27, 0x7b, 0xbb, 0x87, 0xe7, 0x27,
-	0x0b, 0x88, 0x14, 0x70, 0xf6, 0xe0, 0x70, 0xff, 0x60, 0x21, 0x63, 0x7c, 0x8f, 0xf0, 0x6c, 0xaf,
-	0x5a, 0x44, 0xc7, 0x05, 0x17, 0x20, 0x52, 0x4a, 0x28, 0x55, 0xf0, 0xcc, 0xee, 0xd9, 0xe4, 0x13,
-	0xfc, 0x66, 0xc0, 0x84, 0x03, 0xa2, 0xdb, 0x2b, 0x5c, 0xe6, 0xa1, 0xc2, 0x3d, 0x0f, 0x98, 0xa8,
-	0x89, 0x6e, 0x52, 0xb4, 0x45, 0x5c, 0x88, 0x6e, 0xb0, 0xeb, 0xf8, 0x9e, 0x52, 0x4b, 0x5e, 0xda,
-	0xa7, 0x9e, 0xf1, 0x15, 0xd6, 0xf6, 0x19, 0x0c, 0x33, 0x56, 0x22, 0x18, 0x90, 0x18, 0x1a, 0x92,
-	0xd8, 0xfd, 0xc2, 0x1c, 0x10, 0xf4, 0xcc, 0x90, 0xa0, 0x8d, 0x9f, 0xb3, 0xb8, 0x78, 0x1e, 0x5c,
-	0xba, 0xc0, 0x9e, 0xe4, 0xbc, 0xd7, 0xad, 0xd0, 0x61, 0xe4, 0x5b, 0x34, 0x4e, 0x2f, 0x6c, 0xa5,
-	0xd2, 0xb8, 0xe7, 0xbe, 0xa6, 0xd3, 0x18, 0x2d, 0x5c, 0xdc, 0x65, 0x4d, 0xf6, 0x44, 0x1a, 0x59,
-	0xff, 0x69, 0x1e, 0xbf, 0x1c, 0x3e, 0xe9, 0x4c, 0xa9, 0xe7, 0x2f, 0x84, 0x8b, 0x77, 0x5a, 0xe3,
-	0x53, 0x5f, 0x24, 0xfe, 0x6a, 0x6a, 0xcd, 0xd2, 0x1a, 0x4a, 0x5f, 0x1d, 0x73, 0xe4, 0x18, 0xf6,
-	0x77, 0x7f, 0xff, 0xfb, 0x63, 0xe6, 0x98, 0x7c, 0x66, 0x75, 0xaa, 0x56, 0xfc, 0x7c, 0x25, 0xaf,
-	0x97, 0x15, 0x13, 0xb6, 0x6e, 0xe2, 0xcf, 0x5b, 0xab, 0xc7, 0xd2, 0xba, 0xe9, 0x2d, 0x6f, 0x2d,
-	0xc5, 0xcf, 0xba, 0x51, 0x8b, 0x5b, 0xf2, 0x3b, 0xc2, 0xcb, 0xa3, 0xf8, 0x5c, 0xf4, 0xaa, 0x34,
-	0x4d, 0x46, 0x5b, 0x92, 0xd1, 0x26, 0xf9, 0x68, 0x52, 0x46, 0xe4, 0x17, 0x84, 0xf5, 0x51, 0xf8,
-	0x6b, 0xb1, 0x00, 0xa6, 0x09, 0xbe, 0x22, 0xc1, 0xbf, 0x4f, 0x8c, 0x87, 0xc1, 0x93, 0x7f, 0x10,
-	0x5e, 0x19, 0xd5, 0x34, 0x03, 0xca, 0xf9, 0x70, 0x92, 0x6e, 0x1b, 0x1f, 0xed, 0xb9, 0x44, 0x7b,
-	0xaa, 0x3f, 0xa2, 0x78, 0x36, 0x51, 0x85, 0xfc, 0x89, 0x70, 0x29, 0x85, 0x58, 0x5f, 0x42, 0x53,
-	0xa6, 0xb6, 0x23, 0xa9, 0x7d, 0xac, 0x4f, 0xac, 0xa2, 0x88, 0xc8, 0xaf, 0x08, 0x2f, 0xa7, 0x10,
-	0x51, 0x5a, 0x9a, 0x32, 0x8b, 0x0f, 0x24, 0x8b, 0x55, 0x7d, 0x0c, 0x39, 0x45, 0x78, 0xff, 0x40,
-	0x78, 0x65, 0xd4, 0x48, 0x1c, 0x4b, 0x51, 0xf7, 0xcc, 0x52, 0xfd, 0xd5, 0x9d, 0xe7, 0x66, 0x2f,
-	0xfa, 0xad, 0x9a, 0x4c, 0x9f, 0xca, 0x63, 0x4e, 0x9f, 0xdf, 0x10, 0x2e, 0xa5, 0x90, 0x18, 0x47,
-	0x3d, 0x93, 0xd0, 0x50, 0x23, 0xa7, 0x32, 0xb1, 0x58, 0xb6, 0xcd, 0x2f, 0xd6, 0x1a, 0x1c, 0xae,
-	0xda, 0x75, 0x93, 0xfa, 0x2d, 0x4b, 0x61, 0xe3, 0x7e, 0xb2, 0x92, 0xff, 0x10, 0x80, 0x52, 0x2b,
-	0x42, 0x69, 0x75, 0xaa, 0xf5, 0x9c, 0x44, 0xb0, 0xf1, 0x5f, 0x00, 0x00, 0x00, 0xff, 0xff, 0xf6,
-	0xab, 0x26, 0x81, 0x72, 0x0c, 0x00, 0x00,
+var fileDescriptor_client_settings_049dd1d15f5e6ceb = []byte{
+	// 459 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x92, 0xcd, 0x6e, 0xd3, 0x40,
+	0x14, 0x85, 0x71, 0x9a, 0x26, 0xce, 0x4d, 0x5b, 0xc2, 0x00, 0xc2, 0x29, 0x08, 0x45, 0x61, 0x93,
+	0x45, 0x35, 0x56, 0xdb, 0x27, 0xa0, 0x3f, 0x22, 0x51, 0xa9, 0x8a, 0xdc, 0x20, 0x24, 0x36, 0x96,
+	0x33, 0x5c, 0xd2, 0x51, 0x93, 0x99, 0x61, 0xe6, 0xda, 0x92, 0x1f, 0x80, 0x05, 0x6f, 0x8d, 0xfc,
+	0x97, 0xb4, 0x8b, 0xaa, 0x3b, 0x9f, 0x19, 0x7f, 0xc7, 0xc7, 0xe7, 0x5e, 0x78, 0x2b, 0x56, 0x12,
+	0x15, 0xc5, 0x0e, 0x89, 0xa4, 0x5a, 0x3a, 0x6e, 0xac, 0x26, 0xcd, 0xde, 0x11, 0x92, 0x4d, 0x08,
+	0x79, 0x62, 0x24, 0x27, 0x21, 0xb8, 0xd0, 0x16, 0x79, 0x76, 0x7c, 0xf8, 0x71, 0xa9, 0xf5, 0x72,
+	0x85, 0x61, 0xf9, 0xda, 0x22, 0xfd, 0x1d, 0xfe, 0x4a, 0x6d, 0x42, 0x52, 0xab, 0x0a, 0x1c, 0xff,
+	0x6b, 0xc3, 0xc1, 0x79, 0x69, 0x79, 0x5b, 0x3b, 0xb2, 0x00, 0xba, 0x0e, 0x6d, 0x26, 0x05, 0x06,
+	0xde, 0xc8, 0x9b, 0xf4, 0xa2, 0x46, 0xb2, 0x0f, 0xd0, 0x53, 0xc9, 0x1a, 0x9d, 0x49, 0x04, 0x06,
+	0xad, 0xf2, 0x6e, 0x7b, 0x50, 0x70, 0x62, 0x95, 0x3a, 0x42, 0x1b, 0xec, 0x54, 0x5c, 0x2d, 0xd9,
+	0x15, 0xbc, 0xb9, 0x23, 0x32, 0xb1, 0xc5, 0x3f, 0x29, 0x3a, 0x8a, 0x49, 0xae, 0x51, 0xa7, 0x14,
+	0xb4, 0x47, 0xde, 0xa4, 0x7f, 0x32, 0xe4, 0x55, 0x46, 0xde, 0x64, 0xe4, 0x17, 0x75, 0xc6, 0x88,
+	0x15, 0x58, 0x54, 0x51, 0xf3, 0x0a, 0x62, 0x97, 0xb0, 0x57, 0x9b, 0x91, 0x95, 0xe8, 0x82, 0xdd,
+	0xd2, 0x64, 0xcc, 0x9f, 0x68, 0x80, 0x4f, 0xe7, 0xf3, 0x6f, 0x11, 0x92, 0xcd, 0xa3, 0x7e, 0xe5,
+	0x56, 0x62, 0x6c, 0x06, 0xaf, 0x49, 0x98, 0x58, 0x68, 0xa5, 0x50, 0x6c, 0x23, 0x75, 0x9e, 0x8b,
+	0xf4, 0x8a, 0x84, 0x39, 0xaf, 0xa0, 0x26, 0xd1, 0x27, 0xd8, 0x2f, 0xac, 0xee, 0x11, 0x4d, 0xb2,
+	0x92, 0x19, 0x06, 0xdd, 0x91, 0x37, 0xf1, 0xa3, 0x3d, 0x12, 0xe6, 0xaa, 0x39, 0x63, 0x0e, 0xde,
+	0x0b, 0x69, 0x45, 0x2a, 0x29, 0x5e, 0x58, 0x4c, 0xee, 0xd1, 0xc6, 0x0e, 0x95, 0x93, 0x24, 0x33,
+	0x49, 0x79, 0xe0, 0x8f, 0xbc, 0xc9, 0xc1, 0xc9, 0xe9, 0x93, 0x7f, 0xf1, 0x78, 0x46, 0xfc, 0x76,
+	0x8b, 0x46, 0xc3, 0xda, 0xf7, 0xac, 0xb2, 0x7d, 0x70, 0x35, 0x3e, 0x82, 0xfe, 0x03, 0xc9, 0xba,
+	0xb0, 0xf3, 0xf5, 0xe6, 0xc7, 0xe0, 0x05, 0x03, 0xe8, 0x5c, 0x5f, 0x5e, 0xcc, 0xbe, 0x5f, 0x0f,
+	0x3c, 0xe6, 0x43, 0x7b, 0x3a, 0xfb, 0x32, 0x1d, 0xb4, 0xc6, 0x7f, 0x3d, 0xe8, 0x6d, 0xda, 0x62,
+	0x87, 0xe0, 0x27, 0x44, 0xb8, 0x36, 0xe4, 0xca, 0x3d, 0xd8, 0x8d, 0x36, 0x9a, 0x7d, 0x86, 0x97,
+	0x06, 0x6d, 0x4c, 0x36, 0xdf, 0x14, 0xd7, 0x7a, 0xae, 0xb8, 0x7d, 0x83, 0x76, 0x6e, 0xf3, 0xa6,
+	0xb4, 0x21, 0xf8, 0xc5, 0x04, 0xf3, 0x58, 0xab, 0x66, 0x5d, 0x4a, 0x7d, 0xa3, 0xce, 0xf8, 0xcf,
+	0xa3, 0xa5, 0xa4, 0xbb, 0x74, 0xc1, 0x85, 0x5e, 0x87, 0x75, 0x23, 0x52, 0x37, 0x4f, 0x61, 0x62,
+	0x64, 0x48, 0x42, 0x84, 0x45, 0x37, 0x61, 0x76, 0xbc, 0xe8, 0x94, 0x1f, 0x3b, 0xfd, 0x1f, 0x00,
+	0x00, 0xff, 0xff, 0x59, 0xf6, 0xfb, 0x53, 0x1c, 0x03, 0x00, 0x00,
 }

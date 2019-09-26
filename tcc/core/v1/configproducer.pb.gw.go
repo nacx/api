@@ -39,6 +39,17 @@ func request_ConfigProducer_Download_0(ctx context.Context, marshaler runtime.Ma
 		_   = err
 	)
 
+	val, ok = pathParams["tenant"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "tenant")
+	}
+
+	protoReq.Tenant, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
+	}
+
 	val, ok = pathParams["configtype"]
 	if !ok {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "configtype")
@@ -128,7 +139,7 @@ func RegisterConfigProducerHandlerClient(ctx context.Context, mux *runtime.Serve
 }
 
 var (
-	pattern_ConfigProducer_Download_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "configproducer", "configtype", "cluster"}, ""))
+	pattern_ConfigProducer_Download_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 1, 0, 4, 1, 5, 5}, []string{"v1", "tenants", "tenant", "configproducer", "configtype", "cluster"}, ""))
 )
 
 var (

@@ -44,9 +44,11 @@ func (m *Endpoint) Validate() error {
 
 	// no validation rules for Service
 
-	// no validation rules for Tenant
+	// no validation rules for Namespace
 
-	// no validation rules for Workspace
+	// no validation rules for Cluster
+
+	// no validation rules for Tenant
 
 	// no validation rules for Address
 
@@ -127,9 +129,11 @@ func (m *CreateEndpointRequest) Validate() error {
 
 	// no validation rules for Service
 
-	// no validation rules for Tenant
+	// no validation rules for Namespace
 
-	// no validation rules for Workspace
+	// no validation rules for Cluster
+
+	// no validation rules for Tenant
 
 	// no validation rules for Address
 
@@ -210,7 +214,9 @@ func (m *GetEndpointRequest) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Workspace
+	// no validation rules for Namespace
+
+	// no validation rules for Cluster
 
 	// no validation rules for Tenant
 
@@ -273,25 +279,27 @@ var _ interface {
 	ErrorName() string
 } = GetEndpointRequestValidationError{}
 
-// Validate checks the field values on ListWorkspaceEndpointRequest with the
+// Validate checks the field values on ListNamespaceEndpointRequest with the
 // rules defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
-func (m *ListWorkspaceEndpointRequest) Validate() error {
+func (m *ListNamespaceEndpointRequest) Validate() error {
 	if m == nil {
 		return nil
 	}
 
-	// no validation rules for Tenant
+	// no validation rules for Cluster
 
-	// no validation rules for Workspace
+	// no validation rules for Namespace
+
+	// no validation rules for Tenant
 
 	return nil
 }
 
-// ListWorkspaceEndpointRequestValidationError is the validation error returned
-// by ListWorkspaceEndpointRequest.Validate if the designated constraints
+// ListNamespaceEndpointRequestValidationError is the validation error returned
+// by ListNamespaceEndpointRequest.Validate if the designated constraints
 // aren't met.
-type ListWorkspaceEndpointRequestValidationError struct {
+type ListNamespaceEndpointRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -299,24 +307,24 @@ type ListWorkspaceEndpointRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e ListWorkspaceEndpointRequestValidationError) Field() string { return e.field }
+func (e ListNamespaceEndpointRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e ListWorkspaceEndpointRequestValidationError) Reason() string { return e.reason }
+func (e ListNamespaceEndpointRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e ListWorkspaceEndpointRequestValidationError) Cause() error { return e.cause }
+func (e ListNamespaceEndpointRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e ListWorkspaceEndpointRequestValidationError) Key() bool { return e.key }
+func (e ListNamespaceEndpointRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e ListWorkspaceEndpointRequestValidationError) ErrorName() string {
-	return "ListWorkspaceEndpointRequestValidationError"
+func (e ListNamespaceEndpointRequestValidationError) ErrorName() string {
+	return "ListNamespaceEndpointRequestValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e ListWorkspaceEndpointRequestValidationError) Error() string {
+func (e ListNamespaceEndpointRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -328,14 +336,14 @@ func (e ListWorkspaceEndpointRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sListWorkspaceEndpointRequest.%s: %s%s",
+		"invalid %sListNamespaceEndpointRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = ListWorkspaceEndpointRequestValidationError{}
+var _ error = ListNamespaceEndpointRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -343,7 +351,7 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = ListWorkspaceEndpointRequestValidationError{}
+} = ListNamespaceEndpointRequestValidationError{}
 
 // Validate checks the field values on ListServiceEndpointRequest with the
 // rules defined in the proto definition for this message. If any rules are
@@ -355,9 +363,11 @@ func (m *ListServiceEndpointRequest) Validate() error {
 
 	// no validation rules for Service
 
-	// no validation rules for Tenant
+	// no validation rules for Cluster
 
-	// no validation rules for Workspace
+	// no validation rules for Namespace
+
+	// no validation rules for Tenant
 
 	return nil
 }
@@ -428,11 +438,13 @@ func (m *ListServiceSubsetEndpointRequest) Validate() error {
 
 	// no validation rules for Service
 
-	// no validation rules for Tenant
+	// no validation rules for Cluster
 
-	// no validation rules for Workspace
+	// no validation rules for Namespace
 
 	// no validation rules for Subset
+
+	// no validation rules for Tenant
 
 	return nil
 }
@@ -586,7 +598,9 @@ func (m *UpdateEndpointRequest) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Workspace
+	// no validation rules for Namespace
+
+	// no validation rules for Cluster
 
 	// no validation rules for Tenant
 
@@ -669,7 +683,9 @@ func (m *DeleteEndpointRequest) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Workspace
+	// no validation rules for Namespace
+
+	// no validation rules for Cluster
 
 	// no validation rules for Tenant
 

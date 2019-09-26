@@ -41,9 +41,17 @@ func (m *LoadBalancerWorkflowUserRequest) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Loadbalancer
+	// no validation rules for LoadbalancerName
 
-	// no validation rules for Service
+	// no validation rules for LoadbalancerNamespace
+
+	// no validation rules for ServiceHostname
+
+	// no validation rules for ServiceNamespace
+
+	// no validation rules for Cluster
+
+	// no validation rules for Tenant
 
 	return nil
 }
@@ -111,6 +119,8 @@ func (m *Status) Validate() error {
 	if m == nil {
 		return nil
 	}
+
+	// no validation rules for Cluster
 
 	// no validation rules for Requestid
 
@@ -186,6 +196,10 @@ func (m *GetStatus) Validate() error {
 
 	// no validation rules for Requestid
 
+	// no validation rules for Cluster
+
+	// no validation rules for Tenant
+
 	return nil
 }
 
@@ -251,6 +265,10 @@ func (m *ListRequests) Validate() error {
 		return nil
 	}
 
+	// no validation rules for Cluster
+
+	// no validation rules for Tenant
+
 	return nil
 }
 
@@ -315,6 +333,8 @@ func (m *ListPendingResponse) Validate() error {
 	if m == nil {
 		return nil
 	}
+
+	// no validation rules for Cluster
 
 	for idx, item := range m.GetPendingRequests() {
 		_, _ = idx, item
@@ -400,6 +420,10 @@ func (m *ApproveRequest) Validate() error {
 
 	// no validation rules for Requestid
 
+	// no validation rules for Cluster
+
+	// no validation rules for Tenant
+
 	return nil
 }
 
@@ -466,6 +490,10 @@ func (m *DenyRequest) Validate() error {
 	}
 
 	// no validation rules for Requestid
+
+	// no validation rules for Cluster
+
+	// no validation rules for Tenant
 
 	return nil
 }
@@ -534,6 +562,10 @@ func (m *CancelRequest) Validate() error {
 
 	// no validation rules for Requestid
 
+	// no validation rules for Cluster
+
+	// no validation rules for Tenant
+
 	return nil
 }
 
@@ -600,6 +632,8 @@ func (m *ApproveResponse) Validate() error {
 	}
 
 	// no validation rules for Requestid
+
+	// no validation rules for Cluster
 
 	// no validation rules for Note
 
@@ -670,6 +704,8 @@ func (m *DenyResponse) Validate() error {
 
 	// no validation rules for Requestid
 
+	// no validation rules for Cluster
+
 	// no validation rules for Note
 
 	return nil
@@ -739,6 +775,8 @@ func (m *CancelResponse) Validate() error {
 
 	// no validation rules for Requestid
 
+	// no validation rules for Cluster
+
 	// no validation rules for Note
 
 	return nil
@@ -806,9 +844,17 @@ func (m *LoadBalancerWorkflowOwnerRequest) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Loadbalancer
+	// no validation rules for LoadbalancerName
 
-	// no validation rules for Service
+	// no validation rules for LoadbalancerNamespace
+
+	// no validation rules for ServiceName
+
+	// no validation rules for ServiceNamespace
+
+	// no validation rules for Cluster
+
+	// no validation rules for Tenant
 
 	if v, ok := interface{}(m.GetTls()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
@@ -963,9 +1009,13 @@ func (m *ListPendingResponse_PendingRequest) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Loadbalancer
+	// no validation rules for LoadbalancerName
 
-	// no validation rules for Service
+	// no validation rules for LoadbalancerNamespace
+
+	// no validation rules for ServiceHostname
+
+	// no validation rules for ServiceNamespace
 
 	// no validation rules for Operation
 

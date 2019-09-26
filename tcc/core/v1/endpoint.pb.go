@@ -6,13 +6,6 @@ package v1 // import "github.com/tetrateio/tetrate/api/tcc/core/v1"
 import proto "github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
-import empty "github.com/golang/protobuf/ptypes/empty"
-import _ "google.golang.org/genproto/googleapis/api/annotations"
-
-import (
-	context "golang.org/x/net/context"
-	grpc "google.golang.org/grpc"
-)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -32,26 +25,27 @@ type Endpoint struct {
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	// empty if not associated with a service
 	Service   string `protobuf:"bytes,2,opt,name=service,proto3" json:"service,omitempty"`
-	Tenant    string `protobuf:"bytes,3,opt,name=tenant,proto3" json:"tenant,omitempty"`
-	Workspace string `protobuf:"bytes,4,opt,name=workspace,proto3" json:"workspace,omitempty"`
+	Namespace string `protobuf:"bytes,3,opt,name=namespace,proto3" json:"namespace,omitempty"`
+	Cluster   string `protobuf:"bytes,4,opt,name=cluster,proto3" json:"cluster,omitempty"`
+	Tenant    string `protobuf:"bytes,5,opt,name=tenant,proto3" json:"tenant,omitempty"`
 	// REQUIRED: Address associated with the network endpoint without
 	// the port.  Domain names can be used and must be fully-qualified
 	// without wildcards.
-	Address string `protobuf:"bytes,5,opt,name=address,proto3" json:"address,omitempty"`
+	Address string `protobuf:"bytes,6,opt,name=address,proto3" json:"address,omitempty"`
 	// Set of inbound traffic ports associated with the endpoint. The
 	// ports must be associated with a port number that was declared
 	// as part of the service.
-	Ports map[uint32]uint32 `protobuf:"bytes,6,rep,name=ports,proto3" json:"ports,omitempty" protobuf_key:"varint,1,opt,name=key,proto3" protobuf_val:"varint,2,opt,name=value,proto3"`
+	Ports map[uint32]uint32 `protobuf:"bytes,7,rep,name=ports,proto3" json:"ports,omitempty" protobuf_key:"varint,1,opt,name=key,proto3" protobuf_val:"varint,2,opt,name=value,proto3"`
 	// One or more labels associated with the endpoint.
-	Labels map[string]string `protobuf:"bytes,7,rep,name=labels,proto3" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	Labels map[string]string `protobuf:"bytes,8,rep,name=labels,proto3" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 	// The locality associated with the endpoint, in the form
 	// country/region/zone. A locality corresponds to a failure domain
 	// (country/region/zone).
-	Locality string `protobuf:"bytes,8,opt,name=locality,proto3" json:"locality,omitempty"`
+	Locality string `protobuf:"bytes,9,opt,name=locality,proto3" json:"locality,omitempty"`
 	// The load balancing weight associated with the endpoint. Endpoints
 	// with higher weights in a pool will receive proportionally higher
 	// traffic.
-	Weight               uint32   `protobuf:"varint,9,opt,name=weight,proto3" json:"weight,omitempty"`
+	Weight               uint32   `protobuf:"varint,10,opt,name=weight,proto3" json:"weight,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -61,7 +55,7 @@ func (m *Endpoint) Reset()         { *m = Endpoint{} }
 func (m *Endpoint) String() string { return proto.CompactTextString(m) }
 func (*Endpoint) ProtoMessage()    {}
 func (*Endpoint) Descriptor() ([]byte, []int) {
-	return fileDescriptor_endpoint_ae654c01f3a708ae, []int{0}
+	return fileDescriptor_endpoint_b54cea086e4bb994, []int{0}
 }
 func (m *Endpoint) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Endpoint.Unmarshal(m, b)
@@ -95,16 +89,23 @@ func (m *Endpoint) GetService() string {
 	return ""
 }
 
-func (m *Endpoint) GetTenant() string {
+func (m *Endpoint) GetNamespace() string {
 	if m != nil {
-		return m.Tenant
+		return m.Namespace
 	}
 	return ""
 }
 
-func (m *Endpoint) GetWorkspace() string {
+func (m *Endpoint) GetCluster() string {
 	if m != nil {
-		return m.Workspace
+		return m.Cluster
+	}
+	return ""
+}
+
+func (m *Endpoint) GetTenant() string {
+	if m != nil {
+		return m.Tenant
 	}
 	return ""
 }
@@ -145,40 +146,26 @@ func (m *Endpoint) GetWeight() uint32 {
 }
 
 type CreateEndpointRequest struct {
-	// Short name of the endpoint, e.g. "1.2.3.4". TODO: other name reqs/restrictions
-	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	// optional
-	Service   string `protobuf:"bytes,2,opt,name=service,proto3" json:"service,omitempty"`
-	Tenant    string `protobuf:"bytes,3,opt,name=tenant,proto3" json:"tenant,omitempty"`
-	Workspace string `protobuf:"bytes,4,opt,name=workspace,proto3" json:"workspace,omitempty"`
-	// REQUIRED: Address associated with the network endpoint without
-	// the port.  Domain names can be used and must be fully-qualified
-	// without wildcards.
-	Address string `protobuf:"bytes,5,opt,name=address,proto3" json:"address,omitempty"`
-	// Set of ports associated with the endpoint. The ports must be
-	// associated with a port name that was declared as part of the
-	// service.
-	Ports map[uint32]uint32 `protobuf:"bytes,6,rep,name=ports,proto3" json:"ports,omitempty" protobuf_key:"varint,1,opt,name=key,proto3" protobuf_val:"varint,2,opt,name=value,proto3"`
-	// One or more labels associated with the endpoint.
-	Labels map[string]string `protobuf:"bytes,7,rep,name=labels,proto3" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
-	// The locality associated with the endpoint, in the form
-	// country/region/zone. A locality corresponds to a failure domain
-	// (country/region/zone).
-	Locality string `protobuf:"bytes,8,opt,name=locality,proto3" json:"locality,omitempty"`
-	// The load balancing weight associated with the endpoint. Endpoints
-	// with higher weights in a pool will receive proportionally higher
-	// traffic.
-	Weight               uint32   `protobuf:"varint,9,opt,name=weight,proto3" json:"weight,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Name                 string            `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Service              string            `protobuf:"bytes,2,opt,name=service,proto3" json:"service,omitempty"`
+	Namespace            string            `protobuf:"bytes,3,opt,name=namespace,proto3" json:"namespace,omitempty"`
+	Cluster              string            `protobuf:"bytes,4,opt,name=cluster,proto3" json:"cluster,omitempty"`
+	Tenant               string            `protobuf:"bytes,5,opt,name=tenant,proto3" json:"tenant,omitempty"`
+	Address              string            `protobuf:"bytes,6,opt,name=address,proto3" json:"address,omitempty"`
+	Ports                map[uint32]uint32 `protobuf:"bytes,7,rep,name=ports,proto3" json:"ports,omitempty" protobuf_key:"varint,1,opt,name=key,proto3" protobuf_val:"varint,2,opt,name=value,proto3"`
+	Labels               map[string]string `protobuf:"bytes,8,rep,name=labels,proto3" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	Locality             string            `protobuf:"bytes,9,opt,name=locality,proto3" json:"locality,omitempty"`
+	Weight               uint32            `protobuf:"varint,10,opt,name=weight,proto3" json:"weight,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
+	XXX_unrecognized     []byte            `json:"-"`
+	XXX_sizecache        int32             `json:"-"`
 }
 
 func (m *CreateEndpointRequest) Reset()         { *m = CreateEndpointRequest{} }
 func (m *CreateEndpointRequest) String() string { return proto.CompactTextString(m) }
 func (*CreateEndpointRequest) ProtoMessage()    {}
 func (*CreateEndpointRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_endpoint_ae654c01f3a708ae, []int{1}
+	return fileDescriptor_endpoint_b54cea086e4bb994, []int{1}
 }
 func (m *CreateEndpointRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CreateEndpointRequest.Unmarshal(m, b)
@@ -212,16 +199,23 @@ func (m *CreateEndpointRequest) GetService() string {
 	return ""
 }
 
-func (m *CreateEndpointRequest) GetTenant() string {
+func (m *CreateEndpointRequest) GetNamespace() string {
 	if m != nil {
-		return m.Tenant
+		return m.Namespace
 	}
 	return ""
 }
 
-func (m *CreateEndpointRequest) GetWorkspace() string {
+func (m *CreateEndpointRequest) GetCluster() string {
 	if m != nil {
-		return m.Workspace
+		return m.Cluster
+	}
+	return ""
+}
+
+func (m *CreateEndpointRequest) GetTenant() string {
+	if m != nil {
+		return m.Tenant
 	}
 	return ""
 }
@@ -263,8 +257,9 @@ func (m *CreateEndpointRequest) GetWeight() uint32 {
 
 type GetEndpointRequest struct {
 	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Workspace            string   `protobuf:"bytes,2,opt,name=workspace,proto3" json:"workspace,omitempty"`
-	Tenant               string   `protobuf:"bytes,3,opt,name=tenant,proto3" json:"tenant,omitempty"`
+	Namespace            string   `protobuf:"bytes,2,opt,name=namespace,proto3" json:"namespace,omitempty"`
+	Cluster              string   `protobuf:"bytes,3,opt,name=cluster,proto3" json:"cluster,omitempty"`
+	Tenant               string   `protobuf:"bytes,4,opt,name=tenant,proto3" json:"tenant,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -274,7 +269,7 @@ func (m *GetEndpointRequest) Reset()         { *m = GetEndpointRequest{} }
 func (m *GetEndpointRequest) String() string { return proto.CompactTextString(m) }
 func (*GetEndpointRequest) ProtoMessage()    {}
 func (*GetEndpointRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_endpoint_ae654c01f3a708ae, []int{2}
+	return fileDescriptor_endpoint_b54cea086e4bb994, []int{2}
 }
 func (m *GetEndpointRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetEndpointRequest.Unmarshal(m, b)
@@ -301,9 +296,16 @@ func (m *GetEndpointRequest) GetName() string {
 	return ""
 }
 
-func (m *GetEndpointRequest) GetWorkspace() string {
+func (m *GetEndpointRequest) GetNamespace() string {
 	if m != nil {
-		return m.Workspace
+		return m.Namespace
+	}
+	return ""
+}
+
+func (m *GetEndpointRequest) GetCluster() string {
+	if m != nil {
+		return m.Cluster
 	}
 	return ""
 }
@@ -315,56 +317,65 @@ func (m *GetEndpointRequest) GetTenant() string {
 	return ""
 }
 
-type ListWorkspaceEndpointRequest struct {
-	Tenant               string   `protobuf:"bytes,2,opt,name=tenant,proto3" json:"tenant,omitempty"`
-	Workspace            string   `protobuf:"bytes,3,opt,name=workspace,proto3" json:"workspace,omitempty"`
+type ListNamespaceEndpointRequest struct {
+	Cluster              string   `protobuf:"bytes,1,opt,name=cluster,proto3" json:"cluster,omitempty"`
+	Namespace            string   `protobuf:"bytes,2,opt,name=namespace,proto3" json:"namespace,omitempty"`
+	Tenant               string   `protobuf:"bytes,3,opt,name=tenant,proto3" json:"tenant,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *ListWorkspaceEndpointRequest) Reset()         { *m = ListWorkspaceEndpointRequest{} }
-func (m *ListWorkspaceEndpointRequest) String() string { return proto.CompactTextString(m) }
-func (*ListWorkspaceEndpointRequest) ProtoMessage()    {}
-func (*ListWorkspaceEndpointRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_endpoint_ae654c01f3a708ae, []int{3}
+func (m *ListNamespaceEndpointRequest) Reset()         { *m = ListNamespaceEndpointRequest{} }
+func (m *ListNamespaceEndpointRequest) String() string { return proto.CompactTextString(m) }
+func (*ListNamespaceEndpointRequest) ProtoMessage()    {}
+func (*ListNamespaceEndpointRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_endpoint_b54cea086e4bb994, []int{3}
 }
-func (m *ListWorkspaceEndpointRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_ListWorkspaceEndpointRequest.Unmarshal(m, b)
+func (m *ListNamespaceEndpointRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ListNamespaceEndpointRequest.Unmarshal(m, b)
 }
-func (m *ListWorkspaceEndpointRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_ListWorkspaceEndpointRequest.Marshal(b, m, deterministic)
+func (m *ListNamespaceEndpointRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ListNamespaceEndpointRequest.Marshal(b, m, deterministic)
 }
-func (dst *ListWorkspaceEndpointRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ListWorkspaceEndpointRequest.Merge(dst, src)
+func (dst *ListNamespaceEndpointRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ListNamespaceEndpointRequest.Merge(dst, src)
 }
-func (m *ListWorkspaceEndpointRequest) XXX_Size() int {
-	return xxx_messageInfo_ListWorkspaceEndpointRequest.Size(m)
+func (m *ListNamespaceEndpointRequest) XXX_Size() int {
+	return xxx_messageInfo_ListNamespaceEndpointRequest.Size(m)
 }
-func (m *ListWorkspaceEndpointRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_ListWorkspaceEndpointRequest.DiscardUnknown(m)
+func (m *ListNamespaceEndpointRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ListNamespaceEndpointRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_ListWorkspaceEndpointRequest proto.InternalMessageInfo
+var xxx_messageInfo_ListNamespaceEndpointRequest proto.InternalMessageInfo
 
-func (m *ListWorkspaceEndpointRequest) GetTenant() string {
+func (m *ListNamespaceEndpointRequest) GetCluster() string {
+	if m != nil {
+		return m.Cluster
+	}
+	return ""
+}
+
+func (m *ListNamespaceEndpointRequest) GetNamespace() string {
+	if m != nil {
+		return m.Namespace
+	}
+	return ""
+}
+
+func (m *ListNamespaceEndpointRequest) GetTenant() string {
 	if m != nil {
 		return m.Tenant
 	}
 	return ""
 }
 
-func (m *ListWorkspaceEndpointRequest) GetWorkspace() string {
-	if m != nil {
-		return m.Workspace
-	}
-	return ""
-}
-
 type ListServiceEndpointRequest struct {
 	Service              string   `protobuf:"bytes,1,opt,name=service,proto3" json:"service,omitempty"`
-	Tenant               string   `protobuf:"bytes,2,opt,name=tenant,proto3" json:"tenant,omitempty"`
-	Workspace            string   `protobuf:"bytes,3,opt,name=workspace,proto3" json:"workspace,omitempty"`
+	Cluster              string   `protobuf:"bytes,2,opt,name=cluster,proto3" json:"cluster,omitempty"`
+	Namespace            string   `protobuf:"bytes,3,opt,name=namespace,proto3" json:"namespace,omitempty"`
+	Tenant               string   `protobuf:"bytes,4,opt,name=tenant,proto3" json:"tenant,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -374,7 +385,7 @@ func (m *ListServiceEndpointRequest) Reset()         { *m = ListServiceEndpointR
 func (m *ListServiceEndpointRequest) String() string { return proto.CompactTextString(m) }
 func (*ListServiceEndpointRequest) ProtoMessage()    {}
 func (*ListServiceEndpointRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_endpoint_ae654c01f3a708ae, []int{4}
+	return fileDescriptor_endpoint_b54cea086e4bb994, []int{4}
 }
 func (m *ListServiceEndpointRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListServiceEndpointRequest.Unmarshal(m, b)
@@ -401,6 +412,20 @@ func (m *ListServiceEndpointRequest) GetService() string {
 	return ""
 }
 
+func (m *ListServiceEndpointRequest) GetCluster() string {
+	if m != nil {
+		return m.Cluster
+	}
+	return ""
+}
+
+func (m *ListServiceEndpointRequest) GetNamespace() string {
+	if m != nil {
+		return m.Namespace
+	}
+	return ""
+}
+
 func (m *ListServiceEndpointRequest) GetTenant() string {
 	if m != nil {
 		return m.Tenant
@@ -408,18 +433,12 @@ func (m *ListServiceEndpointRequest) GetTenant() string {
 	return ""
 }
 
-func (m *ListServiceEndpointRequest) GetWorkspace() string {
-	if m != nil {
-		return m.Workspace
-	}
-	return ""
-}
-
 type ListServiceSubsetEndpointRequest struct {
 	Service              string   `protobuf:"bytes,1,opt,name=service,proto3" json:"service,omitempty"`
-	Tenant               string   `protobuf:"bytes,2,opt,name=tenant,proto3" json:"tenant,omitempty"`
-	Workspace            string   `protobuf:"bytes,3,opt,name=workspace,proto3" json:"workspace,omitempty"`
+	Cluster              string   `protobuf:"bytes,2,opt,name=cluster,proto3" json:"cluster,omitempty"`
+	Namespace            string   `protobuf:"bytes,3,opt,name=namespace,proto3" json:"namespace,omitempty"`
 	Subset               string   `protobuf:"bytes,4,opt,name=subset,proto3" json:"subset,omitempty"`
+	Tenant               string   `protobuf:"bytes,5,opt,name=tenant,proto3" json:"tenant,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -429,7 +448,7 @@ func (m *ListServiceSubsetEndpointRequest) Reset()         { *m = ListServiceSub
 func (m *ListServiceSubsetEndpointRequest) String() string { return proto.CompactTextString(m) }
 func (*ListServiceSubsetEndpointRequest) ProtoMessage()    {}
 func (*ListServiceSubsetEndpointRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_endpoint_ae654c01f3a708ae, []int{5}
+	return fileDescriptor_endpoint_b54cea086e4bb994, []int{5}
 }
 func (m *ListServiceSubsetEndpointRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListServiceSubsetEndpointRequest.Unmarshal(m, b)
@@ -456,16 +475,16 @@ func (m *ListServiceSubsetEndpointRequest) GetService() string {
 	return ""
 }
 
-func (m *ListServiceSubsetEndpointRequest) GetTenant() string {
+func (m *ListServiceSubsetEndpointRequest) GetCluster() string {
 	if m != nil {
-		return m.Tenant
+		return m.Cluster
 	}
 	return ""
 }
 
-func (m *ListServiceSubsetEndpointRequest) GetWorkspace() string {
+func (m *ListServiceSubsetEndpointRequest) GetNamespace() string {
 	if m != nil {
-		return m.Workspace
+		return m.Namespace
 	}
 	return ""
 }
@@ -473,6 +492,13 @@ func (m *ListServiceSubsetEndpointRequest) GetWorkspace() string {
 func (m *ListServiceSubsetEndpointRequest) GetSubset() string {
 	if m != nil {
 		return m.Subset
+	}
+	return ""
+}
+
+func (m *ListServiceSubsetEndpointRequest) GetTenant() string {
+	if m != nil {
+		return m.Tenant
 	}
 	return ""
 }
@@ -488,7 +514,7 @@ func (m *ListEndpointResponse) Reset()         { *m = ListEndpointResponse{} }
 func (m *ListEndpointResponse) String() string { return proto.CompactTextString(m) }
 func (*ListEndpointResponse) ProtoMessage()    {}
 func (*ListEndpointResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_endpoint_ae654c01f3a708ae, []int{6}
+	return fileDescriptor_endpoint_b54cea086e4bb994, []int{6}
 }
 func (m *ListEndpointResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListEndpointResponse.Unmarshal(m, b)
@@ -516,37 +542,25 @@ func (m *ListEndpointResponse) GetEndpoints() []*Endpoint {
 }
 
 type UpdateEndpointRequest struct {
-	Name      string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Workspace string `protobuf:"bytes,2,opt,name=workspace,proto3" json:"workspace,omitempty"`
-	Tenant    string `protobuf:"bytes,3,opt,name=tenant,proto3" json:"tenant,omitempty"`
-	// REQUIRED: Address associated with the network endpoint without
-	// the port.  Domain names can be used and must be fully-qualified
-	// without wildcards.
-	Address string `protobuf:"bytes,4,opt,name=address,proto3" json:"address,omitempty"`
-	// Set of ports associated with the endpoint. The ports must be
-	// associated with a port name that was declared as part of the
-	// service.
-	Ports map[uint32]uint32 `protobuf:"bytes,5,rep,name=ports,proto3" json:"ports,omitempty" protobuf_key:"varint,1,opt,name=key,proto3" protobuf_val:"varint,2,opt,name=value,proto3"`
-	// One or more labels associated with the endpoint.
-	Labels map[string]string `protobuf:"bytes,6,rep,name=labels,proto3" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
-	// The locality associated with the endpoint, in the form
-	// country/region/zone. A locality corresponds to a failure domain
-	// (country/region/zone).
-	Locality string `protobuf:"bytes,7,opt,name=locality,proto3" json:"locality,omitempty"`
-	// The load balancing weight associated with the endpoint. Endpoints
-	// with higher weights in a pool will receive proportionally higher
-	// traffic.
-	Weight               uint32   `protobuf:"varint,8,opt,name=weight,proto3" json:"weight,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Name                 string            `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Namespace            string            `protobuf:"bytes,2,opt,name=namespace,proto3" json:"namespace,omitempty"`
+	Cluster              string            `protobuf:"bytes,3,opt,name=cluster,proto3" json:"cluster,omitempty"`
+	Tenant               string            `protobuf:"bytes,4,opt,name=tenant,proto3" json:"tenant,omitempty"`
+	Address              string            `protobuf:"bytes,5,opt,name=address,proto3" json:"address,omitempty"`
+	Ports                map[uint32]uint32 `protobuf:"bytes,6,rep,name=ports,proto3" json:"ports,omitempty" protobuf_key:"varint,1,opt,name=key,proto3" protobuf_val:"varint,2,opt,name=value,proto3"`
+	Labels               map[string]string `protobuf:"bytes,7,rep,name=labels,proto3" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	Locality             string            `protobuf:"bytes,8,opt,name=locality,proto3" json:"locality,omitempty"`
+	Weight               uint32            `protobuf:"varint,9,opt,name=weight,proto3" json:"weight,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
+	XXX_unrecognized     []byte            `json:"-"`
+	XXX_sizecache        int32             `json:"-"`
 }
 
 func (m *UpdateEndpointRequest) Reset()         { *m = UpdateEndpointRequest{} }
 func (m *UpdateEndpointRequest) String() string { return proto.CompactTextString(m) }
 func (*UpdateEndpointRequest) ProtoMessage()    {}
 func (*UpdateEndpointRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_endpoint_ae654c01f3a708ae, []int{7}
+	return fileDescriptor_endpoint_b54cea086e4bb994, []int{7}
 }
 func (m *UpdateEndpointRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_UpdateEndpointRequest.Unmarshal(m, b)
@@ -573,9 +587,16 @@ func (m *UpdateEndpointRequest) GetName() string {
 	return ""
 }
 
-func (m *UpdateEndpointRequest) GetWorkspace() string {
+func (m *UpdateEndpointRequest) GetNamespace() string {
 	if m != nil {
-		return m.Workspace
+		return m.Namespace
+	}
+	return ""
+}
+
+func (m *UpdateEndpointRequest) GetCluster() string {
+	if m != nil {
+		return m.Cluster
 	}
 	return ""
 }
@@ -624,8 +645,9 @@ func (m *UpdateEndpointRequest) GetWeight() uint32 {
 
 type DeleteEndpointRequest struct {
 	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Workspace            string   `protobuf:"bytes,2,opt,name=workspace,proto3" json:"workspace,omitempty"`
-	Tenant               string   `protobuf:"bytes,3,opt,name=tenant,proto3" json:"tenant,omitempty"`
+	Namespace            string   `protobuf:"bytes,2,opt,name=namespace,proto3" json:"namespace,omitempty"`
+	Cluster              string   `protobuf:"bytes,3,opt,name=cluster,proto3" json:"cluster,omitempty"`
+	Tenant               string   `protobuf:"bytes,4,opt,name=tenant,proto3" json:"tenant,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -635,7 +657,7 @@ func (m *DeleteEndpointRequest) Reset()         { *m = DeleteEndpointRequest{} }
 func (m *DeleteEndpointRequest) String() string { return proto.CompactTextString(m) }
 func (*DeleteEndpointRequest) ProtoMessage()    {}
 func (*DeleteEndpointRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_endpoint_ae654c01f3a708ae, []int{8}
+	return fileDescriptor_endpoint_b54cea086e4bb994, []int{8}
 }
 func (m *DeleteEndpointRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DeleteEndpointRequest.Unmarshal(m, b)
@@ -662,9 +684,16 @@ func (m *DeleteEndpointRequest) GetName() string {
 	return ""
 }
 
-func (m *DeleteEndpointRequest) GetWorkspace() string {
+func (m *DeleteEndpointRequest) GetNamespace() string {
 	if m != nil {
-		return m.Workspace
+		return m.Namespace
+	}
+	return ""
+}
+
+func (m *DeleteEndpointRequest) GetCluster() string {
+	if m != nil {
+		return m.Cluster
 	}
 	return ""
 }
@@ -684,7 +713,7 @@ func init() {
 	proto.RegisterMapType((map[string]string)(nil), "tetrate.api.tcc.core.v1.CreateEndpointRequest.LabelsEntry")
 	proto.RegisterMapType((map[uint32]uint32)(nil), "tetrate.api.tcc.core.v1.CreateEndpointRequest.PortsEntry")
 	proto.RegisterType((*GetEndpointRequest)(nil), "tetrate.api.tcc.core.v1.GetEndpointRequest")
-	proto.RegisterType((*ListWorkspaceEndpointRequest)(nil), "tetrate.api.tcc.core.v1.ListWorkspaceEndpointRequest")
+	proto.RegisterType((*ListNamespaceEndpointRequest)(nil), "tetrate.api.tcc.core.v1.ListNamespaceEndpointRequest")
 	proto.RegisterType((*ListServiceEndpointRequest)(nil), "tetrate.api.tcc.core.v1.ListServiceEndpointRequest")
 	proto.RegisterType((*ListServiceSubsetEndpointRequest)(nil), "tetrate.api.tcc.core.v1.ListServiceSubsetEndpointRequest")
 	proto.RegisterType((*ListEndpointResponse)(nil), "tetrate.api.tcc.core.v1.ListEndpointResponse")
@@ -694,331 +723,44 @@ func init() {
 	proto.RegisterType((*DeleteEndpointRequest)(nil), "tetrate.api.tcc.core.v1.DeleteEndpointRequest")
 }
 
-// Reference imports to suppress errors if they are not otherwise used.
-var _ context.Context
-var _ grpc.ClientConn
+func init() { proto.RegisterFile("endpoint.proto", fileDescriptor_endpoint_b54cea086e4bb994) }
 
-// This is a compile-time assertion to ensure that this generated file
-// is compatible with the grpc package it is being compiled against.
-const _ = grpc.SupportPackageIsVersion4
-
-// EndpointsClient is the client API for Endpoints service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
-type EndpointsClient interface {
-	// Endpoints may or may not belong to a service
-	CreateEndpoint(ctx context.Context, in *CreateEndpointRequest, opts ...grpc.CallOption) (*Endpoint, error)
-	GetEndpoint(ctx context.Context, in *GetEndpointRequest, opts ...grpc.CallOption) (*Endpoint, error)
-	ListWorkspaceEndpoint(ctx context.Context, in *ListWorkspaceEndpointRequest, opts ...grpc.CallOption) (*ListEndpointResponse, error)
-	ListServiceEndpoint(ctx context.Context, in *ListServiceEndpointRequest, opts ...grpc.CallOption) (*ListEndpointResponse, error)
-	ListServiceSubsetEndpoint(ctx context.Context, in *ListServiceSubsetEndpointRequest, opts ...grpc.CallOption) (*ListEndpointResponse, error)
-	UpdateEndpoint(ctx context.Context, in *UpdateEndpointRequest, opts ...grpc.CallOption) (*Endpoint, error)
-	DeleteEndpoint(ctx context.Context, in *DeleteEndpointRequest, opts ...grpc.CallOption) (*empty.Empty, error)
-}
-
-type endpointsClient struct {
-	cc *grpc.ClientConn
-}
-
-func NewEndpointsClient(cc *grpc.ClientConn) EndpointsClient {
-	return &endpointsClient{cc}
-}
-
-func (c *endpointsClient) CreateEndpoint(ctx context.Context, in *CreateEndpointRequest, opts ...grpc.CallOption) (*Endpoint, error) {
-	out := new(Endpoint)
-	err := c.cc.Invoke(ctx, "/tetrate.api.tcc.core.v1.Endpoints/CreateEndpoint", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *endpointsClient) GetEndpoint(ctx context.Context, in *GetEndpointRequest, opts ...grpc.CallOption) (*Endpoint, error) {
-	out := new(Endpoint)
-	err := c.cc.Invoke(ctx, "/tetrate.api.tcc.core.v1.Endpoints/GetEndpoint", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *endpointsClient) ListWorkspaceEndpoint(ctx context.Context, in *ListWorkspaceEndpointRequest, opts ...grpc.CallOption) (*ListEndpointResponse, error) {
-	out := new(ListEndpointResponse)
-	err := c.cc.Invoke(ctx, "/tetrate.api.tcc.core.v1.Endpoints/ListWorkspaceEndpoint", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *endpointsClient) ListServiceEndpoint(ctx context.Context, in *ListServiceEndpointRequest, opts ...grpc.CallOption) (*ListEndpointResponse, error) {
-	out := new(ListEndpointResponse)
-	err := c.cc.Invoke(ctx, "/tetrate.api.tcc.core.v1.Endpoints/ListServiceEndpoint", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *endpointsClient) ListServiceSubsetEndpoint(ctx context.Context, in *ListServiceSubsetEndpointRequest, opts ...grpc.CallOption) (*ListEndpointResponse, error) {
-	out := new(ListEndpointResponse)
-	err := c.cc.Invoke(ctx, "/tetrate.api.tcc.core.v1.Endpoints/ListServiceSubsetEndpoint", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *endpointsClient) UpdateEndpoint(ctx context.Context, in *UpdateEndpointRequest, opts ...grpc.CallOption) (*Endpoint, error) {
-	out := new(Endpoint)
-	err := c.cc.Invoke(ctx, "/tetrate.api.tcc.core.v1.Endpoints/UpdateEndpoint", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *endpointsClient) DeleteEndpoint(ctx context.Context, in *DeleteEndpointRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/tetrate.api.tcc.core.v1.Endpoints/DeleteEndpoint", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// EndpointsServer is the server API for Endpoints service.
-type EndpointsServer interface {
-	// Endpoints may or may not belong to a service
-	CreateEndpoint(context.Context, *CreateEndpointRequest) (*Endpoint, error)
-	GetEndpoint(context.Context, *GetEndpointRequest) (*Endpoint, error)
-	ListWorkspaceEndpoint(context.Context, *ListWorkspaceEndpointRequest) (*ListEndpointResponse, error)
-	ListServiceEndpoint(context.Context, *ListServiceEndpointRequest) (*ListEndpointResponse, error)
-	ListServiceSubsetEndpoint(context.Context, *ListServiceSubsetEndpointRequest) (*ListEndpointResponse, error)
-	UpdateEndpoint(context.Context, *UpdateEndpointRequest) (*Endpoint, error)
-	DeleteEndpoint(context.Context, *DeleteEndpointRequest) (*empty.Empty, error)
-}
-
-func RegisterEndpointsServer(s *grpc.Server, srv EndpointsServer) {
-	s.RegisterService(&_Endpoints_serviceDesc, srv)
-}
-
-func _Endpoints_CreateEndpoint_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateEndpointRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(EndpointsServer).CreateEndpoint(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/tetrate.api.tcc.core.v1.Endpoints/CreateEndpoint",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EndpointsServer).CreateEndpoint(ctx, req.(*CreateEndpointRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Endpoints_GetEndpoint_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetEndpointRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(EndpointsServer).GetEndpoint(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/tetrate.api.tcc.core.v1.Endpoints/GetEndpoint",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EndpointsServer).GetEndpoint(ctx, req.(*GetEndpointRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Endpoints_ListWorkspaceEndpoint_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListWorkspaceEndpointRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(EndpointsServer).ListWorkspaceEndpoint(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/tetrate.api.tcc.core.v1.Endpoints/ListWorkspaceEndpoint",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EndpointsServer).ListWorkspaceEndpoint(ctx, req.(*ListWorkspaceEndpointRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Endpoints_ListServiceEndpoint_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListServiceEndpointRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(EndpointsServer).ListServiceEndpoint(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/tetrate.api.tcc.core.v1.Endpoints/ListServiceEndpoint",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EndpointsServer).ListServiceEndpoint(ctx, req.(*ListServiceEndpointRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Endpoints_ListServiceSubsetEndpoint_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListServiceSubsetEndpointRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(EndpointsServer).ListServiceSubsetEndpoint(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/tetrate.api.tcc.core.v1.Endpoints/ListServiceSubsetEndpoint",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EndpointsServer).ListServiceSubsetEndpoint(ctx, req.(*ListServiceSubsetEndpointRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Endpoints_UpdateEndpoint_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateEndpointRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(EndpointsServer).UpdateEndpoint(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/tetrate.api.tcc.core.v1.Endpoints/UpdateEndpoint",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EndpointsServer).UpdateEndpoint(ctx, req.(*UpdateEndpointRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Endpoints_DeleteEndpoint_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteEndpointRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(EndpointsServer).DeleteEndpoint(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/tetrate.api.tcc.core.v1.Endpoints/DeleteEndpoint",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EndpointsServer).DeleteEndpoint(ctx, req.(*DeleteEndpointRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-var _Endpoints_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "tetrate.api.tcc.core.v1.Endpoints",
-	HandlerType: (*EndpointsServer)(nil),
-	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "CreateEndpoint",
-			Handler:    _Endpoints_CreateEndpoint_Handler,
-		},
-		{
-			MethodName: "GetEndpoint",
-			Handler:    _Endpoints_GetEndpoint_Handler,
-		},
-		{
-			MethodName: "ListWorkspaceEndpoint",
-			Handler:    _Endpoints_ListWorkspaceEndpoint_Handler,
-		},
-		{
-			MethodName: "ListServiceEndpoint",
-			Handler:    _Endpoints_ListServiceEndpoint_Handler,
-		},
-		{
-			MethodName: "ListServiceSubsetEndpoint",
-			Handler:    _Endpoints_ListServiceSubsetEndpoint_Handler,
-		},
-		{
-			MethodName: "UpdateEndpoint",
-			Handler:    _Endpoints_UpdateEndpoint_Handler,
-		},
-		{
-			MethodName: "DeleteEndpoint",
-			Handler:    _Endpoints_DeleteEndpoint_Handler,
-		},
-	},
-	Streams:  []grpc.StreamDesc{},
-	Metadata: "endpoint.proto",
-}
-
-func init() { proto.RegisterFile("endpoint.proto", fileDescriptor_endpoint_ae654c01f3a708ae) }
-
-var fileDescriptor_endpoint_ae654c01f3a708ae = []byte{
-	// 805 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xd4, 0x57, 0xcf, 0x4e, 0xdb, 0x4c,
-	0x10, 0x97, 0x13, 0x12, 0x92, 0x41, 0xa0, 0x4f, 0xfb, 0x11, 0x3e, 0x7f, 0x2e, 0x87, 0xd4, 0x27,
-	0x44, 0xc1, 0x2b, 0x40, 0x48, 0x90, 0x56, 0x42, 0xa2, 0x8d, 0xb8, 0x50, 0xb5, 0x32, 0x45, 0x48,
-	0x95, 0x5a, 0xc9, 0x71, 0xb6, 0xc1, 0xc2, 0x78, 0x5d, 0xef, 0x26, 0x28, 0x8a, 0x72, 0xe9, 0xb1,
-	0xd7, 0x1e, 0x7a, 0xe9, 0xa5, 0xd7, 0x3e, 0x42, 0xd5, 0x07, 0x68, 0xcf, 0x7d, 0x84, 0xf2, 0x20,
-	0x95, 0xd7, 0x76, 0xe2, 0x04, 0x3b, 0x7f, 0x80, 0x0a, 0xf5, 0xe4, 0x1d, 0xaf, 0x67, 0xe6, 0x37,
-	0x3b, 0xf3, 0xfb, 0x59, 0x0b, 0x0b, 0xc4, 0xa9, 0xbb, 0xd4, 0x72, 0xb8, 0xe6, 0x7a, 0x94, 0x53,
-	0xf4, 0x1f, 0x27, 0xdc, 0x33, 0x38, 0xd1, 0x0c, 0xd7, 0xd2, 0xb8, 0x69, 0x6a, 0x26, 0xf5, 0x88,
-	0xd6, 0xda, 0x50, 0x96, 0x1b, 0x94, 0x36, 0x6c, 0x82, 0x0d, 0xd7, 0xc2, 0x86, 0xe3, 0x50, 0x6e,
-	0x70, 0x8b, 0x3a, 0x2c, 0x70, 0x53, 0xee, 0x85, 0xbb, 0xc2, 0xaa, 0x35, 0xdf, 0x60, 0x72, 0xee,
-	0xf2, 0x76, 0xb0, 0xa9, 0x7e, 0xcb, 0x42, 0xa1, 0x1a, 0xa6, 0x41, 0x08, 0x66, 0x1c, 0xe3, 0x9c,
-	0xc8, 0x52, 0x59, 0x5a, 0x29, 0xea, 0x62, 0x8d, 0x64, 0x98, 0x65, 0xc4, 0x6b, 0x59, 0x26, 0x91,
-	0x33, 0xe2, 0x75, 0x64, 0xa2, 0x25, 0xc8, 0x73, 0xe2, 0x18, 0x0e, 0x97, 0xb3, 0x62, 0x23, 0xb4,
-	0xd0, 0x32, 0x14, 0x2f, 0xa8, 0x77, 0xc6, 0x5c, 0xc3, 0x24, 0xf2, 0x8c, 0xd8, 0xea, 0xbf, 0xf0,
-	0xe3, 0x19, 0xf5, 0xba, 0x47, 0x18, 0x93, 0x73, 0x41, 0xbc, 0xd0, 0x44, 0xfb, 0x90, 0x73, 0xa9,
-	0xc7, 0x99, 0x9c, 0x2f, 0x67, 0x57, 0xe6, 0x36, 0xd7, 0xb4, 0x94, 0x72, 0xb5, 0x08, 0xaf, 0xf6,
-	0xdc, 0xff, 0xbc, 0xea, 0x70, 0xaf, 0xad, 0x07, 0xae, 0xa8, 0x0a, 0x79, 0xdb, 0xa8, 0x11, 0x9b,
-	0xc9, 0xb3, 0x22, 0xc8, 0xfa, 0xf8, 0x20, 0x87, 0xe2, 0xfb, 0x20, 0x4a, 0xe8, 0x8c, 0x14, 0x28,
-	0xd8, 0xd4, 0x34, 0x6c, 0x8b, 0xb7, 0xe5, 0x82, 0x40, 0xd9, 0xb3, 0xfd, 0xb2, 0x2f, 0x88, 0xd5,
-	0x38, 0xe5, 0x72, 0xb1, 0x2c, 0xad, 0xcc, 0xeb, 0xa1, 0xa5, 0xec, 0x00, 0xf4, 0xf1, 0xa0, 0x7f,
-	0x20, 0x7b, 0x46, 0xda, 0xe2, 0x24, 0xe7, 0x75, 0x7f, 0x89, 0x16, 0x21, 0xd7, 0x32, 0xec, 0x66,
-	0x70, 0x8c, 0xf3, 0x7a, 0x60, 0x54, 0x32, 0x3b, 0x92, 0xb2, 0x0b, 0x73, 0x31, 0x10, 0x71, 0xd7,
-	0x62, 0x82, 0x6b, 0x31, 0xe6, 0xaa, 0xfe, 0xca, 0x42, 0xe9, 0xb1, 0x47, 0x0c, 0x4e, 0xa2, 0x7a,
-	0x74, 0xf2, 0xb6, 0x49, 0xd8, 0x5d, 0xf7, 0xf2, 0xd9, 0x60, 0x2f, 0x77, 0x53, 0xdb, 0x90, 0x08,
-	0x3e, 0xa1, 0xb1, 0xfa, 0x50, 0x63, 0x2b, 0x53, 0x46, 0xfc, 0xab, 0xbb, 0xfc, 0x1a, 0xd0, 0x01,
-	0xe1, 0x93, 0x74, 0x78, 0xa0, 0x5f, 0x99, 0xe1, 0x7e, 0xa5, 0x74, 0x59, 0x7d, 0x01, 0xcb, 0x87,
-	0x16, 0xe3, 0x27, 0xd1, 0x87, 0xc3, 0x99, 0xfa, 0x7e, 0x99, 0xf4, 0xe9, 0xc8, 0x0e, 0x65, 0x53,
-	0x6d, 0x50, 0xfc, 0xa8, 0x47, 0xc1, 0x88, 0x0d, 0xc7, 0x8c, 0xcd, 0xa2, 0x94, 0x36, 0x8b, 0xd3,
-	0x64, 0x7b, 0x2f, 0x41, 0x39, 0x96, 0xee, 0xa8, 0x59, 0x63, 0x57, 0x8f, 0xec, 0x96, 0x93, 0xfa,
-	0x5e, 0x4c, 0x24, 0x0a, 0xb9, 0x11, 0x5a, 0xea, 0x09, 0x2c, 0xfa, 0x58, 0xfa, 0xe9, 0x99, 0x4b,
-	0x1d, 0x46, 0xd0, 0x1e, 0x14, 0x23, 0x4d, 0x67, 0xb2, 0x24, 0x06, 0xf9, 0xfe, 0x58, 0x85, 0xd2,
-	0xfb, 0x3e, 0xea, 0x8f, 0x2c, 0x94, 0x8e, 0xdd, 0xfa, 0x84, 0x7c, 0xbf, 0xd6, 0x34, 0xc4, 0x59,
-	0x3d, 0x93, 0xc2, 0xea, 0xdc, 0x18, 0x56, 0x27, 0x42, 0x1c, 0xc9, 0xea, 0xfc, 0x18, 0x56, 0x27,
-	0x47, 0x1c, 0xc7, 0xea, 0xd9, 0x54, 0x56, 0x17, 0xee, 0x9e, 0xd5, 0x06, 0x94, 0x9e, 0x10, 0x9b,
-	0xfc, 0xc1, 0x56, 0x6e, 0x7e, 0x04, 0x28, 0x46, 0xd1, 0x19, 0xfa, 0x22, 0xc1, 0xc2, 0xa0, 0x3a,
-	0x22, 0x6d, 0x3a, 0x19, 0x55, 0xc6, 0x4f, 0xab, 0x5a, 0x7d, 0xf7, 0xf3, 0xf2, 0x43, 0x66, 0x4f,
-	0xad, 0xe0, 0xd6, 0x06, 0xee, 0x4d, 0x2e, 0x0e, 0x10, 0xe1, 0x4e, 0xf0, 0xec, 0xe2, 0x1e, 0x78,
-	0xdc, 0xe9, 0x2d, 0xbb, 0xb8, 0xe3, 0x17, 0xdb, 0xad, 0x48, 0xab, 0xe8, 0xb3, 0x04, 0x73, 0x31,
-	0xd1, 0x43, 0x0f, 0x52, 0x33, 0x5f, 0x95, 0xc6, 0x49, 0x60, 0xee, 0x0b, 0x98, 0x8f, 0xd0, 0x0d,
-	0x60, 0xa2, 0xaf, 0x12, 0x94, 0x12, 0x85, 0x13, 0x6d, 0xa7, 0x02, 0x18, 0x25, 0xb4, 0xca, 0xfa,
-	0x48, 0xb7, 0x61, 0x39, 0x51, 0x1f, 0x8a, 0x1a, 0xb6, 0xd1, 0xd6, 0x35, 0x6a, 0x40, 0xdf, 0x25,
-	0xf8, 0x37, 0x41, 0x9f, 0xd1, 0xd6, 0x48, 0x0c, 0xc9, 0x6a, 0x3e, 0x2d, 0xf0, 0xa7, 0x02, 0xf8,
-	0x01, 0xaa, 0x5e, 0xe7, 0xf0, 0x43, 0xc9, 0xc6, 0x9d, 0x70, 0xd1, 0x45, 0x97, 0x12, 0xfc, 0x9f,
-	0xaa, 0xfd, 0x68, 0x77, 0x92, 0x82, 0x12, 0xff, 0x17, 0xd3, 0x96, 0xf5, 0x4a, 0x94, 0x75, 0x82,
-	0x8e, 0x6f, 0xa5, 0x2c, 0x1c, 0xfc, 0x4c, 0x70, 0x27, 0x78, 0x76, 0x05, 0x7f, 0x07, 0x75, 0x70,
-	0x04, 0x7f, 0x13, 0x05, 0x73, 0x0a, 0xfe, 0x2a, 0x37, 0xe4, 0xef, 0x27, 0x09, 0x16, 0x06, 0xe5,
-	0x6d, 0x04, 0xd8, 0x44, 0x1d, 0x54, 0x96, 0xb4, 0xe0, 0xe6, 0xa2, 0x45, 0x37, 0x17, 0xad, 0xea,
-	0xdf, 0x5c, 0x22, 0xea, 0xae, 0xde, 0x00, 0xe1, 0xbe, 0xf6, 0x72, 0xad, 0x61, 0xf1, 0xd3, 0x66,
-	0x4d, 0x33, 0xe9, 0x39, 0x0e, 0x71, 0x59, 0x34, 0x5a, 0x89, 0xab, 0x14, 0x37, 0x4d, 0xec, 0x23,
-	0xc4, 0xad, 0x8d, 0x5a, 0x5e, 0x60, 0xd8, 0xfa, 0x1d, 0x00, 0x00, 0xff, 0xff, 0x68, 0xa0, 0xb1,
-	0x74, 0x94, 0x0d, 0x00, 0x00,
+var fileDescriptor_endpoint_b54cea086e4bb994 = []byte{
+	// 564 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xd4, 0x56, 0x4d, 0x6f, 0xd3, 0x40,
+	0x10, 0x95, 0xe3, 0xe6, 0xc3, 0x53, 0x05, 0xa1, 0x55, 0x03, 0xab, 0xa8, 0x87, 0xe0, 0x53, 0x0e,
+	0x65, 0xad, 0xc2, 0xa5, 0xed, 0x05, 0xa9, 0x10, 0x71, 0xa9, 0x00, 0xb9, 0x42, 0x48, 0xdc, 0x36,
+	0x9b, 0x51, 0x6b, 0xe1, 0xda, 0xc6, 0xbb, 0x0e, 0x44, 0xdc, 0xf9, 0x25, 0xfc, 0x26, 0xfe, 0x00,
+	0xbf, 0x03, 0x09, 0x79, 0x6d, 0x63, 0xbb, 0xd8, 0x71, 0x91, 0x40, 0x85, 0xdb, 0x8e, 0xbd, 0xef,
+	0xcd, 0x9b, 0x7d, 0xeb, 0x97, 0xc0, 0x1d, 0x0c, 0x56, 0x51, 0xe8, 0x05, 0x8a, 0x45, 0x71, 0xa8,
+	0x42, 0x72, 0x5f, 0xa1, 0x8a, 0xb9, 0x42, 0xc6, 0x23, 0x8f, 0x29, 0x21, 0x98, 0x08, 0x63, 0x64,
+	0xeb, 0x43, 0xfb, 0xab, 0x09, 0xa3, 0x45, 0xbe, 0x97, 0x10, 0xd8, 0x09, 0xf8, 0x15, 0x52, 0x63,
+	0x66, 0xcc, 0x2d, 0x57, 0xaf, 0x09, 0x85, 0xa1, 0xc4, 0x78, 0xed, 0x09, 0xa4, 0x3d, 0xfd, 0xb8,
+	0x28, 0xc9, 0x3e, 0x58, 0xe9, 0x0e, 0x19, 0x71, 0x81, 0xd4, 0xd4, 0xef, 0xca, 0x07, 0x29, 0x4e,
+	0xf8, 0x89, 0x54, 0x18, 0xd3, 0x9d, 0x0c, 0x97, 0x97, 0xe4, 0x1e, 0x0c, 0x14, 0x06, 0x3c, 0x50,
+	0xb4, 0xaf, 0x5f, 0xe4, 0x55, 0x8a, 0xe0, 0xab, 0x55, 0x8c, 0x52, 0xd2, 0x41, 0x86, 0xc8, 0x4b,
+	0x72, 0x0a, 0xfd, 0x28, 0x8c, 0x95, 0xa4, 0xc3, 0x99, 0x39, 0xdf, 0x7d, 0x74, 0xc0, 0x5a, 0xa6,
+	0x61, 0xc5, 0x24, 0xec, 0x55, 0xba, 0x7d, 0x11, 0xa8, 0x78, 0xe3, 0x66, 0x50, 0xb2, 0x80, 0x81,
+	0xcf, 0x97, 0xe8, 0x4b, 0x3a, 0xd2, 0x24, 0x0f, 0xbb, 0x49, 0xce, 0xf4, 0xfe, 0x8c, 0x25, 0x07,
+	0x93, 0x29, 0x8c, 0xfc, 0x50, 0x70, 0xdf, 0x53, 0x1b, 0x6a, 0x69, 0x95, 0x3f, 0xeb, 0x74, 0xb0,
+	0x0f, 0xe8, 0x5d, 0x5c, 0x2a, 0x0a, 0x33, 0x63, 0x3e, 0x76, 0xf3, 0x6a, 0x7a, 0x04, 0x50, 0xea,
+	0x21, 0x77, 0xc1, 0x7c, 0x87, 0x1b, 0x7d, 0xc6, 0x63, 0x37, 0x5d, 0x92, 0x3d, 0xe8, 0xaf, 0xb9,
+	0x9f, 0x64, 0x07, 0x3c, 0x76, 0xb3, 0xe2, 0xa4, 0x77, 0x64, 0x4c, 0x8f, 0x61, 0xb7, 0x22, 0xa2,
+	0x0a, 0xb5, 0x1a, 0xa0, 0x56, 0x05, 0x6a, 0x7f, 0x37, 0x61, 0xf2, 0x34, 0x46, 0xae, 0xb0, 0x98,
+	0xc7, 0xc5, 0xf7, 0x09, 0xca, 0x7f, 0xd7, 0xe5, 0x97, 0x75, 0x97, 0x8f, 0x5b, 0x0d, 0x6a, 0x1c,
+	0xab, 0xc1, 0x72, 0xf7, 0x9a, 0xe5, 0x27, 0xbf, 0xc9, 0xf8, 0x5f, 0xfb, 0xff, 0x11, 0xc8, 0x73,
+	0x54, 0x37, 0xf1, 0xbe, 0xe6, 0x70, 0x6f, 0x8b, 0xc3, 0x66, 0x9b, 0xc3, 0x3b, 0x55, 0x87, 0xed,
+	0x00, 0xf6, 0xcf, 0x3c, 0xa9, 0x5e, 0x14, 0x14, 0xd7, 0x35, 0x54, 0x18, 0x8d, 0x3a, 0xe3, 0x76,
+	0x25, 0x65, 0x3f, 0xb3, 0xd6, 0xef, 0xb3, 0x01, 0xd3, 0xb4, 0xe1, 0x79, 0x76, 0x63, 0x1b, 0xda,
+	0x15, 0x57, 0xdb, 0xa8, 0x5f, 0xed, 0x8a, 0x90, 0xde, 0x16, 0x21, 0x66, 0xbb, 0x90, 0xfa, 0xe0,
+	0x5f, 0x0c, 0x98, 0x55, 0x84, 0x9c, 0x27, 0x4b, 0xf9, 0xab, 0x03, 0x7f, 0x45, 0x8e, 0xd4, 0xad,
+	0x0a, 0x39, 0x59, 0xd5, 0xf6, 0x05, 0xda, 0x6f, 0x60, 0x2f, 0x55, 0x59, 0x0a, 0x93, 0x51, 0x18,
+	0x48, 0x24, 0x4f, 0xc0, 0x2a, 0x7e, 0x35, 0x24, 0x35, 0xf4, 0x17, 0xf3, 0xa0, 0x33, 0x24, 0xdd,
+	0x12, 0x63, 0x7f, 0x33, 0x61, 0xf2, 0x3a, 0x5a, 0xdd, 0x30, 0x72, 0xfe, 0xf0, 0xb5, 0xab, 0x06,
+	0x4b, 0xbf, 0x25, 0x58, 0x06, 0x1d, 0xc1, 0xd2, 0x28, 0x7e, 0x6b, 0xb0, 0x0c, 0x3b, 0x82, 0xa5,
+	0x99, 0xb1, 0x2b, 0x58, 0x46, 0xad, 0xc1, 0x62, 0xdd, 0x7e, 0xb0, 0x7c, 0x82, 0xc9, 0x33, 0xf4,
+	0xf1, 0x56, 0x4c, 0x3e, 0x65, 0x6f, 0x0f, 0x2e, 0x3c, 0x75, 0x99, 0x2c, 0x99, 0x08, 0xaf, 0x9c,
+	0xfc, 0xd4, 0xbd, 0xb0, 0x58, 0x39, 0x3c, 0xf2, 0x1c, 0x25, 0x84, 0x93, 0x9e, 0xbf, 0xb3, 0x3e,
+	0x5c, 0x0e, 0xf4, 0xdf, 0x9f, 0xc7, 0x3f, 0x02, 0x00, 0x00, 0xff, 0xff, 0xb3, 0x80, 0xab, 0x9d,
+	0x10, 0x09, 0x00, 0x00,
 }

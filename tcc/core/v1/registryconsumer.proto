@@ -15,7 +15,7 @@ import "google/protobuf/empty.proto";
 service RegistryConsumer {
   rpc Upload(RegistryData) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      post: "/v1/registryconsumer/{registrytype}/{cluster}"
+      post: "/v1/tenants/{tenant}/registryconsumer/{registrytype}/{cluster}"
       body: "*"
     };
   };
@@ -26,10 +26,11 @@ service RegistryConsumer {
 message RegistryData {
   // currently accepted values are kubernetes or f5
   string registrytype = 1;
+  string tenant = 2;
   // A unique identifier for the k8s/f5 cluster
-  string cluster = 2;
+  string cluster = 3;
   // A huge json dump of all services, endpoints.
   // For k8s, its literally kubectl get services --all-namespaces -o json
   // and kubectl get po --all-namespaces -o json
-  string payload = 3;
+  string payload = 4;
 }
