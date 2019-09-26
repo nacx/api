@@ -10,17 +10,16 @@ DESCRIPTOR := inventory.proto-descriptor
 ENVOYFILTER := envoyfilter.yaml
 
 .PHONY: all
-all: $(PROTO_GO_SOURCES) $(ENVOYFILTER)
+all: $(DESCRIPTOR) $(ENVOYFILTER)
 	@echo "All protos done"
 
-$(DESCRIPTOR): $(PROTO_GO_SOURCES)
-$(PROTO_GO_SOURCES): $(PROTO_SOURCES)
+$(DESCRIPTOR):
 	@echo "building protos..."
 	@protoc -I ./ \
 		-I$(VENDOR) \
 		--go_out=paths=source_relative,plugins=grpc:. \
 		--descriptor_set_out=$(DESCRIPTOR) --include_imports \
-		$?
+		$(PROTO_SOURCES)
 
 $(ENVOYFILTER): $(DESCRIPTOR)
 	@echo "generating Envoy filter..."
