@@ -20,11 +20,12 @@ TS_APIS = ./generated/ts/apis/*
 TS_MODELS = ./generated/ts/models/*
 TS_INDEX = ./generated/ts/index.ts
 TS_RUNTIME = ./generated/ts/runtime.ts
+TS_GENERATED = ./generated/ts/tsconfig.json
 
 DESCRIPTOR := core.proto-descriptor
 SWAGGER := core.swagger.json
 
-all: $(DESCRIPTOR) $(SWAGGER) generate-ts
+all: $(DESCRIPTOR) $(SWAGGER) $(TS_GENERATED)
 	@echo "all protos done"
 
 ${DESCRIPTOR}:
@@ -51,6 +52,7 @@ $(SWAGGER):
 		--swagger_out=allow_delete_body=true,json_names_for_fields=true,allow_merge=true,merge_file_name=core,fqn_for_swagger_name=true:. \
 		$(PROTO_SOURCES)
 	sed -i -e 's/\\n/ /g' $@
+	rm -fr $(TS_OUTPUT_GEN)
 	@echo "done building swagger"
 
 clean:
@@ -59,8 +61,7 @@ clean:
 	rm -f $(TS_APIS) $(TS_MODELS) $(TS_INDEX) $(TS_RUNTIME)
 	@echo "cleaned $(TS_APIS) $(TS_MODELS) $(TS_INDEX) $(TS_RUNTIME)"
 
-# TODO(dio): Can we cache this? e.g. generated/ts/index.ts.
-generate-ts: $(OPENAPI_GEN) $(SWAGGER)
+$(TS_GENERATED): $(OPENAPI_GEN) $(SWAGGER)
 	@echo "generating typescript-fetch from swagger"
 	$(OPENAPI_GEN) generate -i ${SWAGGER} -g typescript-fetch -o ${TS_OUTPUT_GEN}
 	@echo "done generating typescript files"
@@ -79,4 +80,4 @@ $(OPENAPI_GEN): $(YARN)
 	@echo installing openapi-generator
 	yarn global add gen8
 
-.PHONY: all clean generate-ts
+.PHONY: all clean
