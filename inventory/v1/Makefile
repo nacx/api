@@ -1,6 +1,7 @@
 # Copyright (c) Tetrate, Inc 2018 All Rights Reserved.
 
-VENDOR := $(GOPATH)/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis
+TOPDIR := ../../..
+VENDOR := $(TOPDIR)/third_party/protobuf/
 
 PROTO_SOURCES = $(wildcard *.proto)
 PROTO_GO_SOURCES = $(patsubst %.proto,%.pb.go,$(PROTO_SOURCES))

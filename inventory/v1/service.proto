@@ -67,6 +67,7 @@ message Service {
   enum Status {
     UNHEALTHY = 0;
     HEALTHY = 1;
+    DELETED = 2;
   }
   // This Service's health status
   Status status = 3;
