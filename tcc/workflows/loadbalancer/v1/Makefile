@@ -1,10 +1,11 @@
 # Copyright (c) Tetrate, Inc 2018 All Rights Reserved.
+TOPDIR := ../../../../..
+
 NPM := $(or ${shell which npm},npm)
-YARN := $(or ${shell which yarn},yarn)
+YARN := $(TOPDIR)/scripts/yarn
 NODE := $(or ${shell which node},node)
 OPENAPI_GEN := $(or ${shell which openapi-generator},openapi-generator)
 
-TOPDIR := ../../../../..
 VENDOR := $(TOPDIR)/third_party/protobuf/
 APIS := $(TOPDIR)/api
 TS_OUTPUT_GEN := ./generated/ts
@@ -61,7 +62,7 @@ clean:
 	rm -f $(TS_APIS) $(TS_MODELS) $(TS_INDEX) $(TS_RUNTIME)
 	@echo "cleaned $(TS_APIS) $(TS_MODELS) $(TS_INDEX) $(TS_RUNTIME)"
 
-$(TS_GENERATED): $(OPENAPI_GEN) $(SWAGGER)
+$(TS_GENERATED): $(OPENAPI_GEN) $(YARN) $(NPM) $(NODE) $(SWAGGER)
 	@echo "generating typescript-fetch from swagger"
 	$(OPENAPI_GEN) generate -i ${SWAGGER} -g typescript-fetch -o ${TS_OUTPUT_GEN}
 	@echo "done generating typescript files"
@@ -72,12 +73,10 @@ $(NPM):
 $(NODE):
 	$(error node is required)
 
-$(YARN): $(NPM)
-	@echo installing yarn
-	@echo npm install -g yarn
+$(YARN):
+	wget -O - -q https://github.com/yarnpkg/yarn/releases/download/v1.17.3/yarn-1.17.3.js > $(YARN)
 
 $(OPENAPI_GEN): $(YARN)
-	@echo installing openapi-generator
-	yarn global add gen8
+	$(YARN) global add gen8
 
 .PHONY: all clean
