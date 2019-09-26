@@ -35,7 +35,7 @@ ALL_GENERATED := $(ALL_GO_PROTOS) $(ALL_GO_VALIDATE_PROTOS) $(DESCRIPTOR) $(ENVO
 	$(ISTIO_API) $(ALL_CLIENT_PROTOS) $(ALL_JS_ARTIFACTS)
 
 .PHONY: all
-all: $(DESCRIPTOR) $(ENVOYFILTER) node_modules
+all: $(DESCRIPTOR) $(ALL_JS_PROTOS) $(ALL_TS_PROTOS) $(ENVOYFILTER) node_modules
 	@echo "all protos done"
 
 # Install all the required global deps.

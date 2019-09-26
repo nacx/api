@@ -27,7 +27,7 @@ const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
 // A representation of a stored resource.
 type Resource struct {
-	Key                  string   `protobuf:"bytes,1,opt,name=key" json:"key,omitempty"`
+	Key                  string   `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -107,7 +107,7 @@ func (m *SetResourceRequest) GetYaml() []byte {
 // Request to get an uploaded resource.
 type GetResourceRequest struct {
 	// The resource key. Key = TypeURL:FullName. Stringified as [Key](TypeURL:FullName).
-	Key                  string   `protobuf:"bytes,1,opt,name=key" json:"key,omitempty"`
+	Key                  string   `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -158,8 +158,9 @@ var _ grpc.ClientConn
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion4
 
-// Client API for ResourcesService service
-
+// ResourcesServiceClient is the client API for ResourcesService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type ResourcesServiceClient interface {
 	// SetResource sets a resource from YAML bytes. When the resource exists it
 	// updates the corresponding resource.
@@ -178,7 +179,7 @@ func NewResourcesServiceClient(cc *grpc.ClientConn) ResourcesServiceClient {
 
 func (c *resourcesServiceClient) SetResource(ctx context.Context, in *SetResourceRequest, opts ...grpc.CallOption) (*Resource, error) {
 	out := new(Resource)
-	err := grpc.Invoke(ctx, "/tetrate.api.liaison.v1alpha1.ResourcesService/SetResource", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/tetrate.api.liaison.v1alpha1.ResourcesService/SetResource", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -187,15 +188,14 @@ func (c *resourcesServiceClient) SetResource(ctx context.Context, in *SetResourc
 
 func (c *resourcesServiceClient) GetResource(ctx context.Context, in *GetResourceRequest, opts ...grpc.CallOption) (*Resource, error) {
 	out := new(Resource)
-	err := grpc.Invoke(ctx, "/tetrate.api.liaison.v1alpha1.ResourcesService/GetResource", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/tetrate.api.liaison.v1alpha1.ResourcesService/GetResource", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// Server API for ResourcesService service
-
+// ResourcesServiceServer is the server API for ResourcesService service.
 type ResourcesServiceServer interface {
 	// SetResource sets a resource from YAML bytes. When the resource exists it
 	// updates the corresponding resource.
