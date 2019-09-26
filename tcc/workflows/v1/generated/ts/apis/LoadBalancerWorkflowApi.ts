@@ -14,78 +14,66 @@
 
 import * as runtime from '../runtime';
 import {
-    TetrateApiTccWorkflowsV1ApproveRequest,
-    TetrateApiTccWorkflowsV1ApproveRequestFromJSON,
-    TetrateApiTccWorkflowsV1ApproveRequestToJSON,
-    TetrateApiTccWorkflowsV1ApproveResponse,
-    TetrateApiTccWorkflowsV1ApproveResponseFromJSON,
-    TetrateApiTccWorkflowsV1ApproveResponseToJSON,
-    TetrateApiTccWorkflowsV1CancelRequest,
-    TetrateApiTccWorkflowsV1CancelRequestFromJSON,
-    TetrateApiTccWorkflowsV1CancelRequestToJSON,
-    TetrateApiTccWorkflowsV1CancelResponse,
-    TetrateApiTccWorkflowsV1CancelResponseFromJSON,
-    TetrateApiTccWorkflowsV1CancelResponseToJSON,
-    TetrateApiTccWorkflowsV1DenyRequest,
-    TetrateApiTccWorkflowsV1DenyRequestFromJSON,
-    TetrateApiTccWorkflowsV1DenyRequestToJSON,
-    TetrateApiTccWorkflowsV1DenyResponse,
-    TetrateApiTccWorkflowsV1DenyResponseFromJSON,
-    TetrateApiTccWorkflowsV1DenyResponseToJSON,
-    TetrateApiTccWorkflowsV1ListPendingResponse,
-    TetrateApiTccWorkflowsV1ListPendingResponseFromJSON,
-    TetrateApiTccWorkflowsV1ListPendingResponseToJSON,
-    TetrateApiTccWorkflowsV1LoadBalancerWorkflowOwnerRequest,
-    TetrateApiTccWorkflowsV1LoadBalancerWorkflowOwnerRequestFromJSON,
-    TetrateApiTccWorkflowsV1LoadBalancerWorkflowOwnerRequestToJSON,
-    TetrateApiTccWorkflowsV1LoadBalancerWorkflowUserRequest,
-    TetrateApiTccWorkflowsV1LoadBalancerWorkflowUserRequestFromJSON,
-    TetrateApiTccWorkflowsV1LoadBalancerWorkflowUserRequestToJSON,
-    TetrateApiTccWorkflowsV1Status,
-    TetrateApiTccWorkflowsV1StatusFromJSON,
-    TetrateApiTccWorkflowsV1StatusToJSON,
+    TetrateApiTccWorkflowsV1LBPublishAction,
+    TetrateApiTccWorkflowsV1LBPublishActionFromJSON,
+    TetrateApiTccWorkflowsV1LBPublishActionToJSON,
+    TetrateApiTccWorkflowsV1LBTicketDetails,
+    TetrateApiTccWorkflowsV1LBTicketDetailsFromJSON,
+    TetrateApiTccWorkflowsV1LBTicketDetailsToJSON,
+    TetrateApiTccWorkflowsV1LBTicketId,
+    TetrateApiTccWorkflowsV1LBTicketIdFromJSON,
+    TetrateApiTccWorkflowsV1LBTicketIdToJSON,
+    TetrateApiTccWorkflowsV1LBTicketResolution,
+    TetrateApiTccWorkflowsV1LBTicketResolutionFromJSON,
+    TetrateApiTccWorkflowsV1LBTicketResolutionToJSON,
+    TetrateApiTccWorkflowsV1LBTicketStatus,
+    TetrateApiTccWorkflowsV1LBTicketStatusFromJSON,
+    TetrateApiTccWorkflowsV1LBTicketStatusToJSON,
+    TetrateApiTccWorkflowsV1ListTicketsResponse,
+    TetrateApiTccWorkflowsV1ListTicketsResponseFromJSON,
+    TetrateApiTccWorkflowsV1ListTicketsResponseToJSON,
 } from '../models';
 
 export interface ApproveRequest {
     tenant: string;
     cluster: string;
     requestid: string;
-    body: TetrateApiTccWorkflowsV1ApproveRequest;
+    body: TetrateApiTccWorkflowsV1LBTicketResolution;
 }
 
 export interface AttachRequest {
     tenant: string;
     cluster: string;
-    body: TetrateApiTccWorkflowsV1LoadBalancerWorkflowUserRequest;
+    body: TetrateApiTccWorkflowsV1LBTicketDetails;
 }
 
 export interface CancelRequest {
     tenant: string;
     cluster: string;
     requestid: string;
-    body: TetrateApiTccWorkflowsV1CancelRequest;
+    body: TetrateApiTccWorkflowsV1LBTicketId;
 }
 
 export interface DenyRequest {
     tenant: string;
     cluster: string;
     requestid: string;
-    body: TetrateApiTccWorkflowsV1DenyRequest;
+    body: TetrateApiTccWorkflowsV1LBTicketResolution;
 }
 
 export interface DetachRequest {
     tenant: string;
     cluster: string;
-    body: TetrateApiTccWorkflowsV1LoadBalancerWorkflowUserRequest;
+    body: TetrateApiTccWorkflowsV1LBTicketDetails;
 }
 
-export interface GetRequestStatusRequest {
+export interface GetTicketStatusRequest {
     tenant: string;
     cluster: string;
     requestid: string;
 }
 
-export interface ListPendingRequestsRequest {
+export interface ListPendingTicketsRequest {
     tenant: string;
     cluster: string;
 }
@@ -93,7 +81,7 @@ export interface ListPendingRequestsRequest {
 export interface PublishRequest {
     tenant: string;
     cluster: string;
-    body: TetrateApiTccWorkflowsV1LoadBalancerWorkflowOwnerRequest;
+    body: TetrateApiTccWorkflowsV1LBPublishAction;
 }
 
 /**
@@ -131,21 +119,20 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: TetrateApiTccWorkflowsV1ApproveRequestToJSON(requestParameters.body),
+            body: TetrateApiTccWorkflowsV1LBTicketResolutionToJSON(requestParameters.body),
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccWorkflowsV1ApproveResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccWorkflowsV1LBTicketStatusFromJSON(jsonValue));
     }
 
     /**
      */
-    async approve(requestParameters: ApproveRequest): Promise<TetrateApiTccWorkflowsV1ApproveResponse> {
+    async approve(requestParameters: ApproveRequest): Promise<TetrateApiTccWorkflowsV1LBTicketStatus> {
         const response = await this.approveRaw(requestParameters);
         return await response.value();
     }
 
     /**
-     * namespace members of the service being requested & admins. The API call must be made either by the admin or by owners of the namespaces whose services are being exposed. It is assumed that the load balancer has been created, deployed and imported into TCC through out of band mechanisms [for F5] or through service registry imports. The parameters should list the set of services that need to be exposed. Services will not be exposed until its approved by the namespace owner where the load balancer resides.
      */
     async attachRaw(requestParameters: AttachRequest): Promise<runtime.ApiResponse<any>> {
         if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
@@ -171,16 +158,15 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: TetrateApiTccWorkflowsV1LoadBalancerWorkflowUserRequestToJSON(requestParameters.body),
+            body: TetrateApiTccWorkflowsV1LBTicketDetailsToJSON(requestParameters.body),
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccWorkflowsV1StatusFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccWorkflowsV1LBTicketIdFromJSON(jsonValue));
     }
 
     /**
-     * namespace members of the service being requested & admins. The API call must be made either by the admin or by owners of the namespaces whose services are being exposed. It is assumed that the load balancer has been created, deployed and imported into TCC through out of band mechanisms [for F5] or through service registry imports. The parameters should list the set of services that need to be exposed. Services will not be exposed until its approved by the namespace owner where the load balancer resides.
      */
-    async attach(requestParameters: AttachRequest): Promise<TetrateApiTccWorkflowsV1Status> {
+    async attach(requestParameters: AttachRequest): Promise<TetrateApiTccWorkflowsV1LBTicketId> {
         const response = await this.attachRaw(requestParameters);
         return await response.value();
     }
@@ -215,15 +201,15 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: TetrateApiTccWorkflowsV1CancelRequestToJSON(requestParameters.body),
+            body: TetrateApiTccWorkflowsV1LBTicketIdToJSON(requestParameters.body),
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccWorkflowsV1CancelResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccWorkflowsV1LBTicketStatusFromJSON(jsonValue));
     }
 
     /**
      */
-    async cancel(requestParameters: CancelRequest): Promise<TetrateApiTccWorkflowsV1CancelResponse> {
+    async cancel(requestParameters: CancelRequest): Promise<TetrateApiTccWorkflowsV1LBTicketStatus> {
         const response = await this.cancelRaw(requestParameters);
         return await response.value();
     }
@@ -258,15 +244,15 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: TetrateApiTccWorkflowsV1DenyRequestToJSON(requestParameters.body),
+            body: TetrateApiTccWorkflowsV1LBTicketResolutionToJSON(requestParameters.body),
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccWorkflowsV1DenyResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccWorkflowsV1LBTicketStatusFromJSON(jsonValue));
     }
 
     /**
      */
-    async deny(requestParameters: DenyRequest): Promise<TetrateApiTccWorkflowsV1DenyResponse> {
+    async deny(requestParameters: DenyRequest): Promise<TetrateApiTccWorkflowsV1LBTicketStatus> {
         const response = await this.denyRaw(requestParameters);
         return await response.value();
     }
@@ -297,32 +283,32 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: TetrateApiTccWorkflowsV1LoadBalancerWorkflowUserRequestToJSON(requestParameters.body),
+            body: TetrateApiTccWorkflowsV1LBTicketDetailsToJSON(requestParameters.body),
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccWorkflowsV1StatusFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccWorkflowsV1LBTicketIdFromJSON(jsonValue));
     }
 
     /**
      */
-    async detach(requestParameters: DetachRequest): Promise<TetrateApiTccWorkflowsV1Status> {
+    async detach(requestParameters: DetachRequest): Promise<TetrateApiTccWorkflowsV1LBTicketId> {
         const response = await this.detachRaw(requestParameters);
         return await response.value();
     }
 
     /**
      */
-    async getRequestStatusRaw(requestParameters: GetRequestStatusRequest): Promise<runtime.ApiResponse<any>> {
+    async getTicketStatusRaw(requestParameters: GetTicketStatusRequest): Promise<runtime.ApiResponse<any>> {
         if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
-            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling getRequestStatus.');
+            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling getTicketStatus.');
         }
 
         if (requestParameters.cluster === null || requestParameters.cluster === undefined) {
-            throw new runtime.RequiredError('cluster','Required parameter requestParameters.cluster was null or undefined when calling getRequestStatus.');
+            throw new runtime.RequiredError('cluster','Required parameter requestParameters.cluster was null or undefined when calling getTicketStatus.');
         }
 
         if (requestParameters.requestid === null || requestParameters.requestid === undefined) {
-            throw new runtime.RequiredError('requestid','Required parameter requestParameters.requestid was null or undefined when calling getRequestStatus.');
+            throw new runtime.RequiredError('requestid','Required parameter requestParameters.requestid was null or undefined when calling getTicketStatus.');
         }
 
         const queryParameters: runtime.HTTPQuery = {};
@@ -336,25 +322,25 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccWorkflowsV1StatusFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccWorkflowsV1LBTicketStatusFromJSON(jsonValue));
     }
 
     /**
      */
-    async getRequestStatus(requestParameters: GetRequestStatusRequest): Promise<TetrateApiTccWorkflowsV1Status> {
-        const response = await this.getRequestStatusRaw(requestParameters);
+    async getTicketStatus(requestParameters: GetTicketStatusRequest): Promise<TetrateApiTccWorkflowsV1LBTicketStatus> {
+        const response = await this.getTicketStatusRaw(requestParameters);
         return await response.value();
     }
 
     /**
      */
-    async listPendingRequestsRaw(requestParameters: ListPendingRequestsRequest): Promise<runtime.ApiResponse<any>> {
+    async listPendingTicketsRaw(requestParameters: ListPendingTicketsRequest): Promise<runtime.ApiResponse<any>> {
         if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
-            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling listPendingRequests.');
+            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling listPendingTickets.');
         }
 
         if (requestParameters.cluster === null || requestParameters.cluster === undefined) {
-            throw new runtime.RequiredError('cluster','Required parameter requestParameters.cluster was null or undefined when calling listPendingRequests.');
+            throw new runtime.RequiredError('cluster','Required parameter requestParameters.cluster was null or undefined when calling listPendingTickets.');
         }
 
         const queryParameters: runtime.HTTPQuery = {};
@@ -368,13 +354,13 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccWorkflowsV1ListPendingResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccWorkflowsV1ListTicketsResponseFromJSON(jsonValue));
     }
 
     /**
      */
-    async listPendingRequests(requestParameters: ListPendingRequestsRequest): Promise<TetrateApiTccWorkflowsV1ListPendingResponse> {
-        const response = await this.listPendingRequestsRaw(requestParameters);
+    async listPendingTickets(requestParameters: ListPendingTicketsRequest): Promise<TetrateApiTccWorkflowsV1ListTicketsResponse> {
+        const response = await this.listPendingTicketsRaw(requestParameters);
         return await response.value();
     }
 
@@ -405,16 +391,16 @@ export class LoadBalancerWorkflowApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: TetrateApiTccWorkflowsV1LoadBalancerWorkflowOwnerRequestToJSON(requestParameters.body),
+            body: TetrateApiTccWorkflowsV1LBPublishActionToJSON(requestParameters.body),
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccWorkflowsV1StatusFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccWorkflowsV1LBTicketStatusFromJSON(jsonValue));
     }
 
     /**
      * LB owner calls this API with additional settings like TLS, to finally expose the service on the load balancer
      */
-    async publish(requestParameters: PublishRequest): Promise<TetrateApiTccWorkflowsV1Status> {
+    async publish(requestParameters: PublishRequest): Promise<TetrateApiTccWorkflowsV1LBTicketStatus> {
         const response = await this.publishRaw(requestParameters);
         return await response.value();
     }

@@ -12,61 +12,62 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import {
-    TetrateApiTccWorkflowsV1ListPendingResponsePendingRequestOP,
-    TetrateApiTccWorkflowsV1ListPendingResponsePendingRequestOPFromJSON,
-    TetrateApiTccWorkflowsV1ListPendingResponsePendingRequestOPToJSON,
-} from './';
-
 /**
  * 
  * @export
- * @interface TetrateApiTccWorkflowsV1ListPendingResponsePendingRequest
+ * @interface TetrateApiTccWorkflowsV1LBTicketDetails
  */
-export interface TetrateApiTccWorkflowsV1ListPendingResponsePendingRequest {
+export interface TetrateApiTccWorkflowsV1LBTicketDetails {
     /**
      * 
      * @type {string}
-     * @memberof TetrateApiTccWorkflowsV1ListPendingResponsePendingRequest
+     * @memberof TetrateApiTccWorkflowsV1LBTicketDetails
      */
     loadbalancerName?: string;
     /**
      * 
      * @type {string}
-     * @memberof TetrateApiTccWorkflowsV1ListPendingResponsePendingRequest
+     * @memberof TetrateApiTccWorkflowsV1LBTicketDetails
      */
     loadbalancerNamespace?: string;
     /**
      * 
      * @type {string}
-     * @memberof TetrateApiTccWorkflowsV1ListPendingResponsePendingRequest
+     * @memberof TetrateApiTccWorkflowsV1LBTicketDetails
      */
     serviceHostname?: string;
     /**
      * 
      * @type {string}
-     * @memberof TetrateApiTccWorkflowsV1ListPendingResponsePendingRequest
+     * @memberof TetrateApiTccWorkflowsV1LBTicketDetails
      */
     serviceNamespace?: string;
     /**
      * 
-     * @type {TetrateApiTccWorkflowsV1ListPendingResponsePendingRequestOP}
-     * @memberof TetrateApiTccWorkflowsV1ListPendingResponsePendingRequest
+     * @type {string}
+     * @memberof TetrateApiTccWorkflowsV1LBTicketDetails
      */
-    operation?: TetrateApiTccWorkflowsV1ListPendingResponsePendingRequestOP;
+    cluster?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccWorkflowsV1LBTicketDetails
+     */
+    tenant?: string;
 }
 
-export function TetrateApiTccWorkflowsV1ListPendingResponsePendingRequestFromJSON(json: any): TetrateApiTccWorkflowsV1ListPendingResponsePendingRequest {
+export function TetrateApiTccWorkflowsV1LBTicketDetailsFromJSON(json: any): TetrateApiTccWorkflowsV1LBTicketDetails {
     return {
         'loadbalancerName': !exists(json, 'loadbalancerName') ? undefined : json['loadbalancerName'],
         'loadbalancerNamespace': !exists(json, 'loadbalancerNamespace') ? undefined : json['loadbalancerNamespace'],
         'serviceHostname': !exists(json, 'serviceHostname') ? undefined : json['serviceHostname'],
         'serviceNamespace': !exists(json, 'serviceNamespace') ? undefined : json['serviceNamespace'],
-        'operation': !exists(json, 'operation') ? undefined : TetrateApiTccWorkflowsV1ListPendingResponsePendingRequestOPFromJSON(json['operation']),
+        'cluster': !exists(json, 'cluster') ? undefined : json['cluster'],
+        'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
     };
 }
 
-export function TetrateApiTccWorkflowsV1ListPendingResponsePendingRequestToJSON(value?: TetrateApiTccWorkflowsV1ListPendingResponsePendingRequest): any {
+export function TetrateApiTccWorkflowsV1LBTicketDetailsToJSON(value?: TetrateApiTccWorkflowsV1LBTicketDetails): any {
     if (value === undefined) {
         return undefined;
     }
@@ -75,7 +76,8 @@ export function TetrateApiTccWorkflowsV1ListPendingResponsePendingRequestToJSON(
         'loadbalancerNamespace': value.loadbalancerNamespace,
         'serviceHostname': value.serviceHostname,
         'serviceNamespace': value.serviceNamespace,
-        'operation': TetrateApiTccWorkflowsV1ListPendingResponsePendingRequestOPToJSON(value.operation),
+        'cluster': value.cluster,
+        'tenant': value.tenant,
     };
 }
 

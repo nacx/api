@@ -473,8 +473,8 @@ func request_LogicalTopology_DeleteApplication_0(ctx context.Context, marshaler 
 
 }
 
-func request_LogicalTopology_AddServiceToApplication_0(ctx context.Context, marshaler runtime.Marshaler, client LogicalTopologyClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq AddApplicationServiceRequest
+func request_LogicalTopology_AddServicesToApplication_0(ctx context.Context, marshaler runtime.Marshaler, client LogicalTopologyClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ApplicationServicesRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -525,25 +525,22 @@ func request_LogicalTopology_AddServiceToApplication_0(ctx context.Context, mars
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "application", err)
 	}
 
-	val, ok = pathParams["servicename"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "servicename")
-	}
-
-	protoReq.Servicename, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "servicename", err)
-	}
-
-	msg, err := client.AddServiceToApplication(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.AddServicesToApplication(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func request_LogicalTopology_RemoveServiceFromApplication_0(ctx context.Context, marshaler runtime.Marshaler, client LogicalTopologyClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq RemoveApplicationServiceRequest
+func request_LogicalTopology_RemoveServicesFromApplication_0(ctx context.Context, marshaler runtime.Marshaler, client LogicalTopologyClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ApplicationServicesRequest
 	var metadata runtime.ServerMetadata
+
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
+	}
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
 
 	var (
 		val string
@@ -585,18 +582,7 @@ func request_LogicalTopology_RemoveServiceFromApplication_0(ctx context.Context,
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "application", err)
 	}
 
-	val, ok = pathParams["servicename"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "servicename")
-	}
-
-	protoReq.Servicename, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "servicename", err)
-	}
-
-	msg, err := client.RemoveServiceFromApplication(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.RemoveServicesFromApplication(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
@@ -888,7 +874,7 @@ func RegisterLogicalTopologyHandlerClient(ctx context.Context, mux *runtime.Serv
 
 	})
 
-	mux.Handle("POST", pattern_LogicalTopology_AddServiceToApplication_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_LogicalTopology_AddServicesToApplication_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -897,18 +883,18 @@ func RegisterLogicalTopologyHandlerClient(ctx context.Context, mux *runtime.Serv
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_LogicalTopology_AddServiceToApplication_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_LogicalTopology_AddServicesToApplication_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_LogicalTopology_AddServiceToApplication_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_LogicalTopology_AddServicesToApplication_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("DELETE", pattern_LogicalTopology_RemoveServiceFromApplication_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_LogicalTopology_RemoveServicesFromApplication_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -917,14 +903,14 @@ func RegisterLogicalTopologyHandlerClient(ctx context.Context, mux *runtime.Serv
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_LogicalTopology_RemoveServiceFromApplication_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_LogicalTopology_RemoveServicesFromApplication_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_LogicalTopology_RemoveServiceFromApplication_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_LogicalTopology_RemoveServicesFromApplication_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -972,9 +958,9 @@ var (
 
 	pattern_LogicalTopology_DeleteApplication_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6}, []string{"v1", "tenants", "tenant", "workspaces", "workspace", "applications", "name"}, ""))
 
-	pattern_LogicalTopology_AddServiceToApplication_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7, 1, 0, 4, 1, 5, 8}, []string{"v1", "tenants", "tenant", "workspaces", "workspace", "applications", "application", "services", "servicename"}, ""))
+	pattern_LogicalTopology_AddServicesToApplication_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7, 2, 8}, []string{"v1", "tenants", "tenant", "workspaces", "workspace", "applications", "application", "services", "add"}, ""))
 
-	pattern_LogicalTopology_RemoveServiceFromApplication_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7, 1, 0, 4, 1, 5, 8}, []string{"v1", "tenants", "tenant", "workspaces", "workspace", "applications", "application", "services", "servicename"}, ""))
+	pattern_LogicalTopology_RemoveServicesFromApplication_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7, 2, 8}, []string{"v1", "tenants", "tenant", "workspaces", "workspace", "applications", "application", "services", "remove"}, ""))
 
 	pattern_LogicalTopology_ListApplicationServices_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7}, []string{"v1", "tenants", "tenant", "workspaces", "workspace", "applications", "application", "services"}, ""))
 )
@@ -1000,9 +986,9 @@ var (
 
 	forward_LogicalTopology_DeleteApplication_0 = runtime.ForwardResponseMessage
 
-	forward_LogicalTopology_AddServiceToApplication_0 = runtime.ForwardResponseMessage
+	forward_LogicalTopology_AddServicesToApplication_0 = runtime.ForwardResponseMessage
 
-	forward_LogicalTopology_RemoveServiceFromApplication_0 = runtime.ForwardResponseMessage
+	forward_LogicalTopology_RemoveServicesFromApplication_0 = runtime.ForwardResponseMessage
 
 	forward_LogicalTopology_ListApplicationServices_0 = runtime.ForwardResponseMessage
 )

@@ -15,44 +15,52 @@ import { exists, mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface TetrateApiTccWorkflowsV1CancelResponse
+ * @interface TetrateApiTccWorkflowsV1LBTicketStatus
  */
-export interface TetrateApiTccWorkflowsV1CancelResponse {
+export interface TetrateApiTccWorkflowsV1LBTicketStatus {
     /**
      * 
      * @type {string}
-     * @memberof TetrateApiTccWorkflowsV1CancelResponse
+     * @memberof TetrateApiTccWorkflowsV1LBTicketStatus
      */
-    requestid?: string;
+    tenant?: string;
     /**
      * 
      * @type {string}
-     * @memberof TetrateApiTccWorkflowsV1CancelResponse
+     * @memberof TetrateApiTccWorkflowsV1LBTicketStatus
      */
     cluster?: string;
     /**
      * 
      * @type {string}
-     * @memberof TetrateApiTccWorkflowsV1CancelResponse
+     * @memberof TetrateApiTccWorkflowsV1LBTicketStatus
+     */
+    requestid?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccWorkflowsV1LBTicketStatus
      */
     note?: string;
 }
 
-export function TetrateApiTccWorkflowsV1CancelResponseFromJSON(json: any): TetrateApiTccWorkflowsV1CancelResponse {
+export function TetrateApiTccWorkflowsV1LBTicketStatusFromJSON(json: any): TetrateApiTccWorkflowsV1LBTicketStatus {
     return {
-        'requestid': !exists(json, 'requestid') ? undefined : json['requestid'],
+        'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
         'cluster': !exists(json, 'cluster') ? undefined : json['cluster'],
+        'requestid': !exists(json, 'requestid') ? undefined : json['requestid'],
         'note': !exists(json, 'note') ? undefined : json['note'],
     };
 }
 
-export function TetrateApiTccWorkflowsV1CancelResponseToJSON(value?: TetrateApiTccWorkflowsV1CancelResponse): any {
+export function TetrateApiTccWorkflowsV1LBTicketStatusToJSON(value?: TetrateApiTccWorkflowsV1LBTicketStatus): any {
     if (value === undefined) {
         return undefined;
     }
     return {
-        'requestid': value.requestid,
+        'tenant': value.tenant,
         'cluster': value.cluster,
+        'requestid': value.requestid,
         'note': value.note,
     };
 }

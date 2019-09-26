@@ -2298,55 +2298,9 @@
         ]
       }
     },
-    "/v1/tenants/{tenant}/workspaces/{workspace}/applications/{application}/services/{servicename}": {
-      "delete": {
-        "operationId": "RemoveServiceFromApplication",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
-          },
-          "404": {
-            "description": "Returned when the resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "tenant",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "workspace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "application",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "servicename",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "LogicalTopology"
-        ]
-      },
+    "/v1/tenants/{tenant}/workspaces/{workspace}/applications/{application}/services/add": {
       "post": {
-        "operationId": "AddServiceToApplication",
+        "operationId": "AddServicesToApplication",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2376,12 +2330,6 @@
           },
           {
             "name": "application",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "servicename",
             "in": "path",
             "required": true,
             "type": "string"
@@ -2391,7 +2339,57 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.AddApplicationServiceRequest"
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.ApplicationServicesRequest"
+            }
+          }
+        ],
+        "tags": [
+          "LogicalTopology"
+        ]
+      }
+    },
+    "/v1/tenants/{tenant}/workspaces/{workspace}/applications/{application}/services/remove": {
+      "post": {
+        "operationId": "RemoveServicesFromApplication",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "workspace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "application",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.ApplicationServicesRequest"
             }
           }
         ],
@@ -2580,23 +2578,6 @@
     }
   },
   "definitions": {
-    "tetrate.api.tcc.core.v1.AddApplicationServiceRequest": {
-      "type": "object",
-      "properties": {
-        "workspace": {
-          "type": "string"
-        },
-        "application": {
-          "type": "string"
-        },
-        "servicename": {
-          "type": "string"
-        },
-        "tenant": {
-          "type": "string"
-        }
-      }
-    },
     "tetrate.api.tcc.core.v1.Application": {
       "type": "object",
       "properties": {
@@ -2614,6 +2595,40 @@
         },
         "permissions": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.Permissions"
+        }
+      }
+    },
+    "tetrate.api.tcc.core.v1.ApplicationServicesRequest": {
+      "type": "object",
+      "properties": {
+        "tenant": {
+          "type": "string"
+        },
+        "workspace": {
+          "type": "string"
+        },
+        "application": {
+          "type": "string"
+        },
+        "services": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.core.v1.ApplicationServicesRequest.ServiceId"
+          }
+        }
+      }
+    },
+    "tetrate.api.tcc.core.v1.ApplicationServicesRequest.ServiceId": {
+      "type": "object",
+      "properties": {
+        "cluster": {
+          "type": "string"
+        },
+        "namespace": {
+          "type": "string"
+        },
+        "hostname": {
+          "type": "string"
         }
       }
     },

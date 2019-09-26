@@ -21,54 +21,54 @@ import {
 /**
  * 
  * @export
- * @interface TetrateApiTccWorkflowsV1LoadBalancerWorkflowOwnerRequest
+ * @interface TetrateApiTccWorkflowsV1LBPublishAction
  */
-export interface TetrateApiTccWorkflowsV1LoadBalancerWorkflowOwnerRequest {
+export interface TetrateApiTccWorkflowsV1LBPublishAction {
     /**
      * 
      * @type {string}
-     * @memberof TetrateApiTccWorkflowsV1LoadBalancerWorkflowOwnerRequest
+     * @memberof TetrateApiTccWorkflowsV1LBPublishAction
      */
     loadbalancerName?: string;
     /**
      * 
      * @type {string}
-     * @memberof TetrateApiTccWorkflowsV1LoadBalancerWorkflowOwnerRequest
+     * @memberof TetrateApiTccWorkflowsV1LBPublishAction
      */
     loadbalancerNamespace?: string;
     /**
      * 
      * @type {string}
-     * @memberof TetrateApiTccWorkflowsV1LoadBalancerWorkflowOwnerRequest
+     * @memberof TetrateApiTccWorkflowsV1LBPublishAction
      */
     serviceName?: string;
     /**
      * 
      * @type {string}
-     * @memberof TetrateApiTccWorkflowsV1LoadBalancerWorkflowOwnerRequest
+     * @memberof TetrateApiTccWorkflowsV1LBPublishAction
      */
     serviceNamespace?: string;
     /**
      * 
      * @type {string}
-     * @memberof TetrateApiTccWorkflowsV1LoadBalancerWorkflowOwnerRequest
+     * @memberof TetrateApiTccWorkflowsV1LBPublishAction
      */
     cluster?: string;
     /**
      * 
      * @type {string}
-     * @memberof TetrateApiTccWorkflowsV1LoadBalancerWorkflowOwnerRequest
+     * @memberof TetrateApiTccWorkflowsV1LBPublishAction
      */
     tenant?: string;
     /**
      * 
      * @type {TetrateApiTccWorkflowsV1TLSSettings}
-     * @memberof TetrateApiTccWorkflowsV1LoadBalancerWorkflowOwnerRequest
+     * @memberof TetrateApiTccWorkflowsV1LBPublishAction
      */
     tls?: TetrateApiTccWorkflowsV1TLSSettings;
 }
 
-export function TetrateApiTccWorkflowsV1LoadBalancerWorkflowOwnerRequestFromJSON(json: any): TetrateApiTccWorkflowsV1LoadBalancerWorkflowOwnerRequest {
+export function TetrateApiTccWorkflowsV1LBPublishActionFromJSON(json: any): TetrateApiTccWorkflowsV1LBPublishAction {
     return {
         'loadbalancerName': !exists(json, 'loadbalancerName') ? undefined : json['loadbalancerName'],
         'loadbalancerNamespace': !exists(json, 'loadbalancerNamespace') ? undefined : json['loadbalancerNamespace'],
@@ -80,7 +80,7 @@ export function TetrateApiTccWorkflowsV1LoadBalancerWorkflowOwnerRequestFromJSON
     };
 }
 
-export function TetrateApiTccWorkflowsV1LoadBalancerWorkflowOwnerRequestToJSON(value?: TetrateApiTccWorkflowsV1LoadBalancerWorkflowOwnerRequest): any {
+export function TetrateApiTccWorkflowsV1LBPublishActionToJSON(value?: TetrateApiTccWorkflowsV1LBPublishAction): any {
     if (value === undefined) {
         return undefined;
     }

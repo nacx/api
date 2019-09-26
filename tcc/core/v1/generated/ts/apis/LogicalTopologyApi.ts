@@ -14,12 +14,12 @@
 
 import * as runtime from '../runtime';
 import {
-    TetrateApiTccCoreV1AddApplicationServiceRequest,
-    TetrateApiTccCoreV1AddApplicationServiceRequestFromJSON,
-    TetrateApiTccCoreV1AddApplicationServiceRequestToJSON,
     TetrateApiTccCoreV1Application,
     TetrateApiTccCoreV1ApplicationFromJSON,
     TetrateApiTccCoreV1ApplicationToJSON,
+    TetrateApiTccCoreV1ApplicationServicesRequest,
+    TetrateApiTccCoreV1ApplicationServicesRequestFromJSON,
+    TetrateApiTccCoreV1ApplicationServicesRequestToJSON,
     TetrateApiTccCoreV1CreateApplicationRequest,
     TetrateApiTccCoreV1CreateApplicationRequestFromJSON,
     TetrateApiTccCoreV1CreateApplicationRequestToJSON,
@@ -46,12 +46,11 @@ import {
     TetrateApiTccCoreV1WorkspaceToJSON,
 } from '../models';
 
-export interface AddServiceToApplicationRequest {
+export interface AddServicesToApplicationRequest {
     tenant: string;
     workspace: string;
     application: string;
-    servicename: string;
-    body: TetrateApiTccCoreV1AddApplicationServiceRequest;
+    body: TetrateApiTccCoreV1ApplicationServicesRequest;
 }
 
 export interface CreateApplicationRequest {
@@ -104,11 +103,11 @@ export interface ListWorkspacesRequest {
     tenant: string;
 }
 
-export interface RemoveServiceFromApplicationRequest {
+export interface RemoveServicesFromApplicationRequest {
     tenant: string;
     workspace: string;
     application: string;
-    servicename: string;
+    body: TetrateApiTccCoreV1ApplicationServicesRequest;
 }
 
 export interface UpdateApplicationRequest {
@@ -131,25 +130,21 @@ export class LogicalTopologyApi extends runtime.BaseAPI {
 
     /**
      */
-    async addServiceToApplicationRaw(requestParameters: AddServiceToApplicationRequest): Promise<runtime.ApiResponse<any>> {
+    async addServicesToApplicationRaw(requestParameters: AddServicesToApplicationRequest): Promise<runtime.ApiResponse<any>> {
         if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
-            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling addServiceToApplication.');
+            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling addServicesToApplication.');
         }
 
         if (requestParameters.workspace === null || requestParameters.workspace === undefined) {
-            throw new runtime.RequiredError('workspace','Required parameter requestParameters.workspace was null or undefined when calling addServiceToApplication.');
+            throw new runtime.RequiredError('workspace','Required parameter requestParameters.workspace was null or undefined when calling addServicesToApplication.');
         }
 
         if (requestParameters.application === null || requestParameters.application === undefined) {
-            throw new runtime.RequiredError('application','Required parameter requestParameters.application was null or undefined when calling addServiceToApplication.');
-        }
-
-        if (requestParameters.servicename === null || requestParameters.servicename === undefined) {
-            throw new runtime.RequiredError('servicename','Required parameter requestParameters.servicename was null or undefined when calling addServiceToApplication.');
+            throw new runtime.RequiredError('application','Required parameter requestParameters.application was null or undefined when calling addServicesToApplication.');
         }
 
         if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling addServiceToApplication.');
+            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling addServicesToApplication.');
         }
 
         const queryParameters: runtime.HTTPQuery = {};
@@ -159,11 +154,11 @@ export class LogicalTopologyApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/workspaces/{workspace}/applications/{application}/services/{servicename}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters.workspace))).replace(`{${"application"}}`, encodeURIComponent(String(requestParameters.application))).replace(`{${"servicename"}}`, encodeURIComponent(String(requestParameters.servicename))),
+            path: `/v1/tenants/{tenant}/workspaces/{workspace}/applications/{application}/services/add`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters.workspace))).replace(`{${"application"}}`, encodeURIComponent(String(requestParameters.application))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: TetrateApiTccCoreV1AddApplicationServiceRequestToJSON(requestParameters.body),
+            body: TetrateApiTccCoreV1ApplicationServicesRequestToJSON(requestParameters.body),
         });
 
         return new runtime.TextApiResponse(response);
@@ -171,8 +166,8 @@ export class LogicalTopologyApi extends runtime.BaseAPI {
 
     /**
      */
-    async addServiceToApplication(requestParameters: AddServiceToApplicationRequest): Promise<object> {
-        const response = await this.addServiceToApplicationRaw(requestParameters);
+    async addServicesToApplication(requestParameters: AddServicesToApplicationRequest): Promise<object> {
+        const response = await this.addServicesToApplicationRaw(requestParameters);
         return await response.value();
     }
 
@@ -492,32 +487,35 @@ export class LogicalTopologyApi extends runtime.BaseAPI {
 
     /**
      */
-    async removeServiceFromApplicationRaw(requestParameters: RemoveServiceFromApplicationRequest): Promise<runtime.ApiResponse<any>> {
+    async removeServicesFromApplicationRaw(requestParameters: RemoveServicesFromApplicationRequest): Promise<runtime.ApiResponse<any>> {
         if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
-            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling removeServiceFromApplication.');
+            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling removeServicesFromApplication.');
         }
 
         if (requestParameters.workspace === null || requestParameters.workspace === undefined) {
-            throw new runtime.RequiredError('workspace','Required parameter requestParameters.workspace was null or undefined when calling removeServiceFromApplication.');
+            throw new runtime.RequiredError('workspace','Required parameter requestParameters.workspace was null or undefined when calling removeServicesFromApplication.');
         }
 
         if (requestParameters.application === null || requestParameters.application === undefined) {
-            throw new runtime.RequiredError('application','Required parameter requestParameters.application was null or undefined when calling removeServiceFromApplication.');
+            throw new runtime.RequiredError('application','Required parameter requestParameters.application was null or undefined when calling removeServicesFromApplication.');
         }
 
-        if (requestParameters.servicename === null || requestParameters.servicename === undefined) {
-            throw new runtime.RequiredError('servicename','Required parameter requestParameters.servicename was null or undefined when calling removeServiceFromApplication.');
+        if (requestParameters.body === null || requestParameters.body === undefined) {
+            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling removeServicesFromApplication.');
         }
 
         const queryParameters: runtime.HTTPQuery = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+        headerParameters['Content-Type'] = 'application/json';
+
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/workspaces/{workspace}/applications/{application}/services/{servicename}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters.workspace))).replace(`{${"application"}}`, encodeURIComponent(String(requestParameters.application))).replace(`{${"servicename"}}`, encodeURIComponent(String(requestParameters.servicename))),
-            method: 'DELETE',
+            path: `/v1/tenants/{tenant}/workspaces/{workspace}/applications/{application}/services/remove`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters.workspace))).replace(`{${"application"}}`, encodeURIComponent(String(requestParameters.application))),
+            method: 'POST',
             headers: headerParameters,
             query: queryParameters,
+            body: TetrateApiTccCoreV1ApplicationServicesRequestToJSON(requestParameters.body),
         });
 
         return new runtime.TextApiResponse(response);
@@ -525,8 +523,8 @@ export class LogicalTopologyApi extends runtime.BaseAPI {
 
     /**
      */
-    async removeServiceFromApplication(requestParameters: RemoveServiceFromApplicationRequest): Promise<object> {
-        const response = await this.removeServiceFromApplicationRaw(requestParameters);
+    async removeServicesFromApplication(requestParameters: RemoveServicesFromApplicationRequest): Promise<object> {
+        const response = await this.removeServicesFromApplicationRaw(requestParameters);
         return await response.value();
     }
 

@@ -1124,29 +1124,41 @@ var _ interface {
 	ErrorName() string
 } = DeleteApplicationRequestValidationError{}
 
-// Validate checks the field values on AddApplicationServiceRequest with the
+// Validate checks the field values on ApplicationServicesRequest with the
 // rules defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
-func (m *AddApplicationServiceRequest) Validate() error {
+func (m *ApplicationServicesRequest) Validate() error {
 	if m == nil {
 		return nil
 	}
+
+	// no validation rules for Tenant
 
 	// no validation rules for Workspace
 
 	// no validation rules for Application
 
-	// no validation rules for Servicename
+	for idx, item := range m.GetServices() {
+		_, _ = idx, item
 
-	// no validation rules for Tenant
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ApplicationServicesRequestValidationError{
+					field:  fmt.Sprintf("Services[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
 
 	return nil
 }
 
-// AddApplicationServiceRequestValidationError is the validation error returned
-// by AddApplicationServiceRequest.Validate if the designated constraints
-// aren't met.
-type AddApplicationServiceRequestValidationError struct {
+// ApplicationServicesRequestValidationError is the validation error returned
+// by ApplicationServicesRequest.Validate if the designated constraints aren't met.
+type ApplicationServicesRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -1154,24 +1166,24 @@ type AddApplicationServiceRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e AddApplicationServiceRequestValidationError) Field() string { return e.field }
+func (e ApplicationServicesRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e AddApplicationServiceRequestValidationError) Reason() string { return e.reason }
+func (e ApplicationServicesRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e AddApplicationServiceRequestValidationError) Cause() error { return e.cause }
+func (e ApplicationServicesRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e AddApplicationServiceRequestValidationError) Key() bool { return e.key }
+func (e ApplicationServicesRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e AddApplicationServiceRequestValidationError) ErrorName() string {
-	return "AddApplicationServiceRequestValidationError"
+func (e ApplicationServicesRequestValidationError) ErrorName() string {
+	return "ApplicationServicesRequestValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e AddApplicationServiceRequestValidationError) Error() string {
+func (e ApplicationServicesRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -1183,14 +1195,14 @@ func (e AddApplicationServiceRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sAddApplicationServiceRequest.%s: %s%s",
+		"invalid %sApplicationServicesRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = AddApplicationServiceRequestValidationError{}
+var _ error = ApplicationServicesRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -1198,83 +1210,7 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = AddApplicationServiceRequestValidationError{}
-
-// Validate checks the field values on RemoveApplicationServiceRequest with the
-// rules defined in the proto definition for this message. If any rules are
-// violated, an error is returned.
-func (m *RemoveApplicationServiceRequest) Validate() error {
-	if m == nil {
-		return nil
-	}
-
-	// no validation rules for Workspace
-
-	// no validation rules for Application
-
-	// no validation rules for Servicename
-
-	// no validation rules for Tenant
-
-	return nil
-}
-
-// RemoveApplicationServiceRequestValidationError is the validation error
-// returned by RemoveApplicationServiceRequest.Validate if the designated
-// constraints aren't met.
-type RemoveApplicationServiceRequestValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e RemoveApplicationServiceRequestValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e RemoveApplicationServiceRequestValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e RemoveApplicationServiceRequestValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e RemoveApplicationServiceRequestValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e RemoveApplicationServiceRequestValidationError) ErrorName() string {
-	return "RemoveApplicationServiceRequestValidationError"
-}
-
-// Error satisfies the builtin error interface
-func (e RemoveApplicationServiceRequestValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sRemoveApplicationServiceRequest.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = RemoveApplicationServiceRequestValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = RemoveApplicationServiceRequestValidationError{}
+} = ApplicationServicesRequestValidationError{}
 
 // Validate checks the field values on ListApplicationServicesRequest with the
 // rules defined in the proto definition for this message. If any rules are
@@ -1432,3 +1368,77 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = ListApplicationServicesResponseValidationError{}
+
+// Validate checks the field values on ApplicationServicesRequest_ServiceId
+// with the rules defined in the proto definition for this message. If any
+// rules are violated, an error is returned.
+func (m *ApplicationServicesRequest_ServiceId) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Cluster
+
+	// no validation rules for Namespace
+
+	// no validation rules for Hostname
+
+	return nil
+}
+
+// ApplicationServicesRequest_ServiceIdValidationError is the validation error
+// returned by ApplicationServicesRequest_ServiceId.Validate if the designated
+// constraints aren't met.
+type ApplicationServicesRequest_ServiceIdValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ApplicationServicesRequest_ServiceIdValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ApplicationServicesRequest_ServiceIdValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ApplicationServicesRequest_ServiceIdValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ApplicationServicesRequest_ServiceIdValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ApplicationServicesRequest_ServiceIdValidationError) ErrorName() string {
+	return "ApplicationServicesRequest_ServiceIdValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ApplicationServicesRequest_ServiceIdValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sApplicationServicesRequest_ServiceId.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ApplicationServicesRequest_ServiceIdValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ApplicationServicesRequest_ServiceIdValidationError{}

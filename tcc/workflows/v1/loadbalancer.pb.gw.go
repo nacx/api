@@ -29,7 +29,7 @@ var _ = runtime.String
 var _ = utilities.NewDoubleArray
 
 func request_LoadBalancerWorkflow_Attach_0(ctx context.Context, marshaler runtime.Marshaler, client LoadBalancerWorkflowClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq LoadBalancerWorkflowUserRequest
+	var protoReq LBTicketDetails
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -75,7 +75,7 @@ func request_LoadBalancerWorkflow_Attach_0(ctx context.Context, marshaler runtim
 }
 
 func request_LoadBalancerWorkflow_Detach_0(ctx context.Context, marshaler runtime.Marshaler, client LoadBalancerWorkflowClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq LoadBalancerWorkflowUserRequest
+	var protoReq LBTicketDetails
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -120,8 +120,114 @@ func request_LoadBalancerWorkflow_Detach_0(ctx context.Context, marshaler runtim
 
 }
 
+func request_LoadBalancerWorkflow_GetTicketStatus_0(ctx context.Context, marshaler runtime.Marshaler, client LoadBalancerWorkflowClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq LBTicketId
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["tenant"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "tenant")
+	}
+
+	protoReq.Tenant, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
+	}
+
+	val, ok = pathParams["cluster"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "cluster")
+	}
+
+	protoReq.Cluster, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "cluster", err)
+	}
+
+	val, ok = pathParams["requestid"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "requestid")
+	}
+
+	protoReq.Requestid, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "requestid", err)
+	}
+
+	msg, err := client.GetTicketStatus(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func request_LoadBalancerWorkflow_Cancel_0(ctx context.Context, marshaler runtime.Marshaler, client LoadBalancerWorkflowClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq LBTicketId
+	var metadata runtime.ServerMetadata
+
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
+	}
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["tenant"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "tenant")
+	}
+
+	protoReq.Tenant, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
+	}
+
+	val, ok = pathParams["cluster"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "cluster")
+	}
+
+	protoReq.Cluster, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "cluster", err)
+	}
+
+	val, ok = pathParams["requestid"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "requestid")
+	}
+
+	protoReq.Requestid, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "requestid", err)
+	}
+
+	msg, err := client.Cancel(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
 func request_LoadBalancerWorkflow_Publish_0(ctx context.Context, marshaler runtime.Marshaler, client LoadBalancerWorkflowClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq LoadBalancerWorkflowOwnerRequest
+	var protoReq LBPublishAction
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -166,8 +272,8 @@ func request_LoadBalancerWorkflow_Publish_0(ctx context.Context, marshaler runti
 
 }
 
-func request_LoadBalancerWorkflow_ListPendingRequests_0(ctx context.Context, marshaler runtime.Marshaler, client LoadBalancerWorkflowClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ListRequests
+func request_LoadBalancerWorkflow_ListPendingTickets_0(ctx context.Context, marshaler runtime.Marshaler, client LoadBalancerWorkflowClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ListTicketsRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -199,62 +305,13 @@ func request_LoadBalancerWorkflow_ListPendingRequests_0(ctx context.Context, mar
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "cluster", err)
 	}
 
-	msg, err := client.ListPendingRequests(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
-	return msg, metadata, err
-
-}
-
-func request_LoadBalancerWorkflow_GetRequestStatus_0(ctx context.Context, marshaler runtime.Marshaler, client LoadBalancerWorkflowClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq GetStatus
-	var metadata runtime.ServerMetadata
-
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["tenant"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "tenant")
-	}
-
-	protoReq.Tenant, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
-	}
-
-	val, ok = pathParams["cluster"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "cluster")
-	}
-
-	protoReq.Cluster, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "cluster", err)
-	}
-
-	val, ok = pathParams["requestid"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "requestid")
-	}
-
-	protoReq.Requestid, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "requestid", err)
-	}
-
-	msg, err := client.GetRequestStatus(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.ListPendingTickets(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
 func request_LoadBalancerWorkflow_Approve_0(ctx context.Context, marshaler runtime.Marshaler, client LoadBalancerWorkflowClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ApproveRequest
+	var protoReq LBTicketResolution
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -311,7 +368,7 @@ func request_LoadBalancerWorkflow_Approve_0(ctx context.Context, marshaler runti
 }
 
 func request_LoadBalancerWorkflow_Deny_0(ctx context.Context, marshaler runtime.Marshaler, client LoadBalancerWorkflowClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq DenyRequest
+	var protoReq LBTicketResolution
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -363,63 +420,6 @@ func request_LoadBalancerWorkflow_Deny_0(ctx context.Context, marshaler runtime.
 	}
 
 	msg, err := client.Deny(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
-	return msg, metadata, err
-
-}
-
-func request_LoadBalancerWorkflow_Cancel_0(ctx context.Context, marshaler runtime.Marshaler, client LoadBalancerWorkflowClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq CancelRequest
-	var metadata runtime.ServerMetadata
-
-	newReader, berr := utilities.IOReaderFactory(req.Body)
-	if berr != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
-	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["tenant"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "tenant")
-	}
-
-	protoReq.Tenant, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
-	}
-
-	val, ok = pathParams["cluster"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "cluster")
-	}
-
-	protoReq.Cluster, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "cluster", err)
-	}
-
-	val, ok = pathParams["requestid"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "requestid")
-	}
-
-	protoReq.Requestid, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "requestid", err)
-	}
-
-	msg, err := client.Cancel(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
@@ -502,6 +502,46 @@ func RegisterLoadBalancerWorkflowHandlerClient(ctx context.Context, mux *runtime
 
 	})
 
+	mux.Handle("GET", pattern_LoadBalancerWorkflow_GetTicketStatus_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_LoadBalancerWorkflow_GetTicketStatus_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_LoadBalancerWorkflow_GetTicketStatus_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("POST", pattern_LoadBalancerWorkflow_Cancel_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_LoadBalancerWorkflow_Cancel_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_LoadBalancerWorkflow_Cancel_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
 	mux.Handle("POST", pattern_LoadBalancerWorkflow_Publish_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
@@ -522,7 +562,7 @@ func RegisterLoadBalancerWorkflowHandlerClient(ctx context.Context, mux *runtime
 
 	})
 
-	mux.Handle("GET", pattern_LoadBalancerWorkflow_ListPendingRequests_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_LoadBalancerWorkflow_ListPendingTickets_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -531,34 +571,14 @@ func RegisterLoadBalancerWorkflowHandlerClient(ctx context.Context, mux *runtime
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_LoadBalancerWorkflow_ListPendingRequests_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_LoadBalancerWorkflow_ListPendingTickets_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_LoadBalancerWorkflow_ListPendingRequests_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-
-	})
-
-	mux.Handle("GET", pattern_LoadBalancerWorkflow_GetRequestStatus_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := request_LoadBalancerWorkflow_GetRequestStatus_0(rctx, inboundMarshaler, client, req, pathParams)
-		ctx = runtime.NewServerMetadataContext(ctx, md)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-
-		forward_LoadBalancerWorkflow_GetRequestStatus_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_LoadBalancerWorkflow_ListPendingTickets_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -602,26 +622,6 @@ func RegisterLoadBalancerWorkflowHandlerClient(ctx context.Context, mux *runtime
 
 	})
 
-	mux.Handle("POST", pattern_LoadBalancerWorkflow_Cancel_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := request_LoadBalancerWorkflow_Cancel_0(rctx, inboundMarshaler, client, req, pathParams)
-		ctx = runtime.NewServerMetadataContext(ctx, md)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-
-		forward_LoadBalancerWorkflow_Cancel_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-
-	})
-
 	return nil
 }
 
@@ -630,17 +630,17 @@ var (
 
 	pattern_LoadBalancerWorkflow_Detach_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 2, 7}, []string{"v1", "tenants", "tenant", "workflows", "clusters", "cluster", "loadbalancer", "detach"}, ""))
 
+	pattern_LoadBalancerWorkflow_GetTicketStatus_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 2, 7, 1, 0, 4, 1, 5, 8, 2, 9}, []string{"v1", "tenants", "tenant", "workflows", "clusters", "cluster", "loadbalancer", "request", "requestid", "status"}, ""))
+
+	pattern_LoadBalancerWorkflow_Cancel_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 2, 7, 1, 0, 4, 1, 5, 8, 2, 9}, []string{"v1", "tenants", "tenant", "workflows", "clusters", "cluster", "loadbalancer", "request", "requestid", "cancel"}, ""))
+
 	pattern_LoadBalancerWorkflow_Publish_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 2, 7}, []string{"v1", "tenants", "tenant", "workflows", "clusters", "cluster", "loadbalancer", "publish"}, ""))
 
-	pattern_LoadBalancerWorkflow_ListPendingRequests_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 2, 7}, []string{"v1", "tenants", "tenant", "workflows", "clusters", "cluster", "loadbalancer", "pending"}, ""))
-
-	pattern_LoadBalancerWorkflow_GetRequestStatus_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 2, 7, 1, 0, 4, 1, 5, 8, 2, 9}, []string{"v1", "tenants", "tenant", "workflows", "clusters", "cluster", "loadbalancer", "request", "requestid", "status"}, ""))
+	pattern_LoadBalancerWorkflow_ListPendingTickets_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 2, 7}, []string{"v1", "tenants", "tenant", "workflows", "clusters", "cluster", "loadbalancer", "pending"}, ""))
 
 	pattern_LoadBalancerWorkflow_Approve_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 2, 7, 1, 0, 4, 1, 5, 8, 2, 9}, []string{"v1", "tenants", "tenant", "workflows", "clusters", "cluster", "loadbalancer", "request", "requestid", "approve"}, ""))
 
 	pattern_LoadBalancerWorkflow_Deny_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 2, 7, 1, 0, 4, 1, 5, 8, 2, 9}, []string{"v1", "tenants", "tenant", "workflows", "clusters", "cluster", "loadbalancer", "request", "requestid", "deny"}, ""))
-
-	pattern_LoadBalancerWorkflow_Cancel_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 2, 7, 1, 0, 4, 1, 5, 8, 2, 9}, []string{"v1", "tenants", "tenant", "workflows", "clusters", "cluster", "loadbalancer", "request", "requestid", "cancel"}, ""))
 )
 
 var (
@@ -648,15 +648,15 @@ var (
 
 	forward_LoadBalancerWorkflow_Detach_0 = runtime.ForwardResponseMessage
 
+	forward_LoadBalancerWorkflow_GetTicketStatus_0 = runtime.ForwardResponseMessage
+
+	forward_LoadBalancerWorkflow_Cancel_0 = runtime.ForwardResponseMessage
+
 	forward_LoadBalancerWorkflow_Publish_0 = runtime.ForwardResponseMessage
 
-	forward_LoadBalancerWorkflow_ListPendingRequests_0 = runtime.ForwardResponseMessage
-
-	forward_LoadBalancerWorkflow_GetRequestStatus_0 = runtime.ForwardResponseMessage
+	forward_LoadBalancerWorkflow_ListPendingTickets_0 = runtime.ForwardResponseMessage
 
 	forward_LoadBalancerWorkflow_Approve_0 = runtime.ForwardResponseMessage
 
 	forward_LoadBalancerWorkflow_Deny_0 = runtime.ForwardResponseMessage
-
-	forward_LoadBalancerWorkflow_Cancel_0 = runtime.ForwardResponseMessage
 )

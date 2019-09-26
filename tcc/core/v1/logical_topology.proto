@@ -85,16 +85,17 @@ service LogicalTopology {
     };
   };
 
-  rpc AddServiceToApplication(AddApplicationServiceRequest) returns (google.protobuf.Empty) {
+  rpc AddServicesToApplication(ApplicationServicesRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      post: "/v1/tenants/{tenant}/workspaces/{workspace}/applications/{application}/services/{servicename}"
+      post: "/v1/tenants/{tenant}/workspaces/{workspace}/applications/{application}/services/add"
       body: "*"
     };
   };
 
-  rpc RemoveServiceFromApplication(RemoveApplicationServiceRequest) returns (google.protobuf.Empty) {
+  rpc RemoveServicesFromApplication(ApplicationServicesRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      delete: "/v1/tenants/{tenant}/workspaces/{workspace}/applications/{application}/services/{servicename}"
+      post: "/v1/tenants/{tenant}/workspaces/{workspace}/applications/{application}/services/remove"
+      body: "*"
     };
   };
 
@@ -189,18 +190,18 @@ message DeleteApplicationRequest {
   string tenant = 3;
 }
 
-message AddApplicationServiceRequest {
-  string workspace = 1;
-  string application = 2;
-  string servicename = 3;
-  string tenant = 4;
-}
+message ApplicationServicesRequest {
+  string tenant = 1;
+  string workspace = 2;
+  string application = 3;
 
-message RemoveApplicationServiceRequest {
-  string workspace = 1;
-  string application = 2;
-  string servicename = 3;
-  string tenant = 4;
+  message ServiceId {
+    string cluster = 1;
+    string namespace = 2;
+    string hostname = 3;
+  }
+
+  repeated ServiceId services = 4;
 }
 
 message ListApplicationServicesRequest {

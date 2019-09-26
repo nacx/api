@@ -1,5 +1,6 @@
-export * from './TetrateApiTccCoreV1AddApplicationServiceRequest';
 export * from './TetrateApiTccCoreV1Application';
+export * from './TetrateApiTccCoreV1ApplicationServicesRequest';
+export * from './TetrateApiTccCoreV1ApplicationServicesRequestServiceId';
 export * from './TetrateApiTccCoreV1BatchOperationRequest';
 export * from './TetrateApiTccCoreV1ClientSettings';
 export * from './TetrateApiTccCoreV1ClientSettingsSensitivity';

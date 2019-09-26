@@ -22,13 +22,12 @@
   "paths": {
     "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/attach": {
       "post": {
-        "summary": "namespace members of the service being requested \u0026 admins.\nThe API call must be made either by the admin or by owners of the\nnamespaces whose services are being exposed. It is assumed that\nthe load balancer has been created, deployed and imported into TCC\nthrough out of band mechanisms [for F5] or through service registry\nimports. The parameters should list the set of services that need\nto be exposed. Services will not be exposed until its approved by\nthe namespace owner where the load balancer resides.",
         "operationId": "Attach",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.Status"
+              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.LBTicketId"
             }
           },
           "404": {
@@ -56,7 +55,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.LoadBalancerWorkflowUserRequest"
+              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.LBTicketDetails"
             }
           }
         ],
@@ -72,7 +71,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.Status"
+              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.LBTicketId"
             }
           },
           "404": {
@@ -100,7 +99,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.LoadBalancerWorkflowUserRequest"
+              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.LBTicketDetails"
             }
           }
         ],
@@ -111,12 +110,12 @@
     },
     "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/pending": {
       "get": {
-        "operationId": "ListPendingRequests",
+        "operationId": "ListPendingTickets",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.ListPendingResponse"
+              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.ListTicketsResponse"
             }
           },
           "404": {
@@ -153,7 +152,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.Status"
+              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.LBTicketStatus"
             }
           },
           "404": {
@@ -181,7 +180,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.LoadBalancerWorkflowOwnerRequest"
+              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.LBPublishAction"
             }
           }
         ],
@@ -197,7 +196,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.ApproveResponse"
+              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.LBTicketStatus"
             }
           },
           "404": {
@@ -231,7 +230,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.ApproveRequest"
+              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.LBTicketResolution"
             }
           }
         ],
@@ -247,7 +246,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.CancelResponse"
+              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.LBTicketStatus"
             }
           },
           "404": {
@@ -281,7 +280,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.CancelRequest"
+              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.LBTicketId"
             }
           }
         ],
@@ -297,7 +296,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.DenyResponse"
+              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.LBTicketStatus"
             }
           },
           "404": {
@@ -331,7 +330,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.DenyRequest"
+              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.LBTicketResolution"
             }
           }
         ],
@@ -342,12 +341,12 @@
     },
     "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/request/{requestid}/status": {
       "get": {
-        "operationId": "GetRequestStatus",
+        "operationId": "GetTicketStatus",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.Status"
+              "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.LBTicketStatus"
             }
           },
           "404": {
@@ -372,7 +371,6 @@
           },
           {
             "name": "requestid",
-            "description": "e.g. attach-789",
             "in": "path",
             "required": true,
             "type": "string"
@@ -385,136 +383,7 @@
     }
   },
   "definitions": {
-    "tetrate.api.tcc.workflows.v1.ApproveRequest": {
-      "type": "object",
-      "properties": {
-        "requestid": {
-          "type": "string"
-        },
-        "cluster": {
-          "type": "string"
-        },
-        "tenant": {
-          "type": "string"
-        }
-      }
-    },
-    "tetrate.api.tcc.workflows.v1.ApproveResponse": {
-      "type": "object",
-      "properties": {
-        "requestid": {
-          "type": "string"
-        },
-        "cluster": {
-          "type": "string"
-        },
-        "note": {
-          "type": "string",
-          "title": "optional description of the approval (e.g. to be recorded in audit logs)"
-        }
-      }
-    },
-    "tetrate.api.tcc.workflows.v1.CancelRequest": {
-      "type": "object",
-      "properties": {
-        "requestid": {
-          "type": "string"
-        },
-        "cluster": {
-          "type": "string"
-        },
-        "tenant": {
-          "type": "string"
-        }
-      }
-    },
-    "tetrate.api.tcc.workflows.v1.CancelResponse": {
-      "type": "object",
-      "properties": {
-        "requestid": {
-          "type": "string"
-        },
-        "cluster": {
-          "type": "string"
-        },
-        "note": {
-          "type": "string",
-          "title": "optional description of the cancelation (e.g. to be recorded in audit logs)"
-        }
-      }
-    },
-    "tetrate.api.tcc.workflows.v1.DenyRequest": {
-      "type": "object",
-      "properties": {
-        "requestid": {
-          "type": "string"
-        },
-        "cluster": {
-          "type": "string"
-        },
-        "tenant": {
-          "type": "string"
-        }
-      }
-    },
-    "tetrate.api.tcc.workflows.v1.DenyResponse": {
-      "type": "object",
-      "properties": {
-        "requestid": {
-          "type": "string"
-        },
-        "cluster": {
-          "type": "string"
-        },
-        "note": {
-          "type": "string",
-          "title": "optional description of the denial (e.g. to be recorded in audit logs)"
-        }
-      }
-    },
-    "tetrate.api.tcc.workflows.v1.ListPendingResponse": {
-      "type": "object",
-      "properties": {
-        "cluster": {
-          "type": "string"
-        },
-        "pendingRequests": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.ListPendingResponse.PendingRequest"
-          }
-        }
-      }
-    },
-    "tetrate.api.tcc.workflows.v1.ListPendingResponse.PendingRequest": {
-      "type": "object",
-      "properties": {
-        "loadbalancerName": {
-          "type": "string"
-        },
-        "loadbalancerNamespace": {
-          "type": "string"
-        },
-        "serviceHostname": {
-          "type": "string"
-        },
-        "serviceNamespace": {
-          "type": "string"
-        },
-        "operation": {
-          "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.ListPendingResponse.PendingRequest.OP"
-        }
-      }
-    },
-    "tetrate.api.tcc.workflows.v1.ListPendingResponse.PendingRequest.OP": {
-      "type": "string",
-      "enum": [
-        "ATTACH",
-        "DETACH"
-      ],
-      "default": "ATTACH"
-    },
-    "tetrate.api.tcc.workflows.v1.LoadBalancerWorkflowOwnerRequest": {
+    "tetrate.api.tcc.workflows.v1.LBPublishAction": {
       "type": "object",
       "properties": {
         "loadbalancerName": {
@@ -540,7 +409,7 @@
         }
       }
     },
-    "tetrate.api.tcc.workflows.v1.LoadBalancerWorkflowUserRequest": {
+    "tetrate.api.tcc.workflows.v1.LBTicketDetails": {
       "type": "object",
       "properties": {
         "loadbalancerName": {
@@ -563,9 +432,44 @@
         }
       }
     },
-    "tetrate.api.tcc.workflows.v1.Status": {
+    "tetrate.api.tcc.workflows.v1.LBTicketId": {
       "type": "object",
       "properties": {
+        "requestid": {
+          "type": "string"
+        },
+        "cluster": {
+          "type": "string"
+        },
+        "tenant": {
+          "type": "string"
+        }
+      }
+    },
+    "tetrate.api.tcc.workflows.v1.LBTicketResolution": {
+      "type": "object",
+      "properties": {
+        "tenant": {
+          "type": "string"
+        },
+        "cluster": {
+          "type": "string"
+        },
+        "requestid": {
+          "type": "string"
+        },
+        "note": {
+          "type": "string",
+          "title": "optional description (e.g. to be recorded in audit logs)"
+        }
+      }
+    },
+    "tetrate.api.tcc.workflows.v1.LBTicketStatus": {
+      "type": "object",
+      "properties": {
+        "tenant": {
+          "type": "string"
+        },
         "cluster": {
           "type": "string"
         },
@@ -573,18 +477,52 @@
           "type": "string",
           "title": "e.g. attach-789"
         },
-        "approved": {
-          "type": "boolean",
-          "format": "boolean"
-        },
-        "published": {
-          "type": "boolean",
-          "format": "boolean"
-        },
         "note": {
           "type": "string"
         }
       }
+    },
+    "tetrate.api.tcc.workflows.v1.ListTicketsResponse": {
+      "type": "object",
+      "properties": {
+        "cluster": {
+          "type": "string"
+        },
+        "pendingTickets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.ListTicketsResponse.PendingTickets"
+          }
+        }
+      }
+    },
+    "tetrate.api.tcc.workflows.v1.ListTicketsResponse.PendingTickets": {
+      "type": "object",
+      "properties": {
+        "loadbalancerName": {
+          "type": "string"
+        },
+        "loadbalancerNamespace": {
+          "type": "string"
+        },
+        "serviceHostname": {
+          "type": "string"
+        },
+        "serviceNamespace": {
+          "type": "string"
+        },
+        "operation": {
+          "$ref": "#/definitions/tetrate.api.tcc.workflows.v1.ListTicketsResponse.PendingTickets.OP"
+        }
+      }
+    },
+    "tetrate.api.tcc.workflows.v1.ListTicketsResponse.PendingTickets.OP": {
+      "type": "string",
+      "enum": [
+        "ATTACH",
+        "DETACH"
+      ],
+      "default": "ATTACH"
     },
     "tetrate.api.tcc.workflows.v1.TLSSettings": {
       "type": "object",

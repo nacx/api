@@ -5,79 +5,80 @@ option go_package = "github.com/tetrateio/tetrate/api/tcc/workflows/v1";
 
 import "google/api/annotations.proto";
 
-service LoadBalancerWorkflow {
-  //    service owner   |  network admin
-  // -------------------|-----------------
-  // REQUESTED -> PENDING_APPROVAL -> APPROVED -> PUBLISHED
-  //     V                       | -> DENIED
-  //  REJECTED                   | -> CANCEL
+//    service owner   |  network admin
+// -------------------|-----------------
+// REQUESTED -> PENDING_APPROVAL -> APPROVED -> PUBLISHED
+//     V                       | -> DENIED
+//  REJECTED                   | -> CANCEL
 
-  // namespace members of the service being requested & admins.
-  // The API call must be made either by the admin or by owners of the
-  // namespaces whose services are being exposed. It is assumed that
-  // the load balancer has been created, deployed and imported into TCC
-  // through out of band mechanisms [for F5] or through service registry
-  // imports. The parameters should list the set of services that need
-  // to be exposed. Services will not be exposed until its approved by
-  // the namespace owner where the load balancer resides.
-  rpc Attach(LoadBalancerWorkflowUserRequest) returns (Status) {
+// namespace members of the service being requested & admins.
+// The API call must be made either by the admin or by owners of the
+// namespaces whose services are being exposed. It is assumed that
+// the load balancer has been created, deployed and imported into TCC
+// through out of band mechanisms [for F5] or through service registry
+// imports. The parameters should list the set of services that need
+// to be exposed. Services will not be exposed until its approved by
+// the namespace owner where the load balancer resides.
+service LoadBalancerWorkflow {
+  rpc Attach(LBTicketDetails) returns (LBTicketId) {
     option (google.api.http) = {
       post: "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/attach"
       body: "*"
     };
   };
 
-  rpc Detach(LoadBalancerWorkflowUserRequest) returns (Status) {
+  rpc Detach(LBTicketDetails) returns (LBTicketId) {
     option (google.api.http) = {
       post: "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/detach"
       body: "*"
     };
   };
 
+  rpc GetTicketStatus(LBTicketId) returns (LBTicketStatus) {
+    option (google.api.http) = {
+      get: "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/request/{requestid}/status"
+    };
+  }
+
+  rpc Cancel(LBTicketId) returns (LBTicketStatus) {
+    option (google.api.http) = {
+      post: "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/request/{requestid}/cancel"
+      body: "*"
+    };
+  };
+
   // LB owner calls this API with additional settings like TLS, to
   // finally expose the service on the load balancer
-  rpc Publish(LoadBalancerWorkflowOwnerRequest) returns (Status) {
+  rpc Publish(LBPublishAction) returns (LBTicketStatus) {
     option (google.api.http) = {
       post: "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/publish"
       body: "*"
     };
   };
 
-  rpc ListPendingRequests(ListRequests) returns (ListPendingResponse) {
+  rpc ListPendingTickets(ListTicketsRequest) returns (ListTicketsResponse) {
     option (google.api.http) = {
       get: "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/pending"
     };
   };
 
-  rpc GetRequestStatus(GetStatus) returns (Status) {
-    option (google.api.http) = {
-      get: "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/request/{requestid}/status"
-    };
-  }
-
-  rpc Approve(ApproveRequest) returns (ApproveResponse) {
+  rpc Approve(LBTicketResolution) returns (LBTicketStatus) {
     option (google.api.http) = {
       post: "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/request/{requestid}/approve"
       body: "*"
     };
   };
 
-  rpc Deny(DenyRequest) returns (DenyResponse) {
+  rpc Deny(LBTicketResolution) returns (LBTicketStatus) {
     option (google.api.http) = {
       post: "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/request/{requestid}/deny"
       body: "*"
     };
   };
 
-  rpc Cancel(CancelRequest) returns (CancelResponse) {
-    option (google.api.http) = {
-      post: "/v1/tenants/{tenant}/workflows/clusters/{cluster}/loadbalancer/request/{requestid}/cancel"
-      body: "*"
-    };
-  };
 }
 
-message LoadBalancerWorkflowUserRequest {
+message LBTicketDetails {
   string loadbalancer_name = 1;
   string loadbalancer_namespace = 2;
 
@@ -88,30 +89,29 @@ message LoadBalancerWorkflowUserRequest {
   string tenant = 6;
 }
 
-message Status {
-  string cluster = 1;
-  // e.g. attach-789
-  string requestid = 2;
-
-  bool approved = 3;
-  bool published = 4;
-  string note = 5;
-}
-
-message GetStatus {
-  // e.g. attach-789
-  string requestid = 1;
+message LBTicketStatus {
+  string tenant = 1;
   string cluster = 2;
-  string tenant = 3;
+  // e.g. attach-789
+  string requestid = 3;
+
+  enum RequestState {
+    PENDING = 0;
+    APPROVED = 1;
+    DENIED = 2;
+    PUBLISHED = 3;
+    CANCELED = 4;
+  }
+  string note = 6;
 }
 
-message ListRequests {
+message ListTicketsRequest {
   string cluster = 1;
   string tenant = 2;
 }
 
-message ListPendingResponse {
-  message PendingRequest {
+message ListTicketsResponse {
+  message PendingTickets {
     string loadbalancer_name = 1;
     string loadbalancer_namespace = 2;
     string service_hostname = 3;
@@ -124,49 +124,24 @@ message ListPendingResponse {
   }
 
   string cluster = 1;
-  repeated PendingRequest pending_requests = 2;
+  repeated PendingTickets pending_tickets = 2;
 }
 
-message ApproveRequest {
+message LBTicketId {
   string requestid = 1;
   string cluster = 2;
   string tenant = 3;
 }
 
-message DenyRequest {
-  string requestid = 1;
+message LBTicketResolution {
+  string tenant = 1;
   string cluster = 2;
-  string tenant = 3;
+  string requestid = 3;
+  // optional description (e.g. to be recorded in audit logs)
+  string note = 4;
 }
 
-message CancelRequest {
-  string requestid = 1;
-  string cluster = 2;
-  string tenant = 3;
-}
-
-message ApproveResponse {
-  string requestid = 1;
-  string cluster = 2;
-  // optional description of the approval (e.g. to be recorded in audit logs)
-  string note = 3;
-}
-
-message DenyResponse {
-  string requestid = 1;
-  string cluster = 2;
-  // optional description of the denial (e.g. to be recorded in audit logs)
-  string note = 3;
-}
-
-message CancelResponse {
-  string requestid = 1;
-  string cluster = 2;
-  // optional description of the cancelation (e.g. to be recorded in audit logs)
-  string note = 3;
-}
-
-message LoadBalancerWorkflowOwnerRequest {
+message LBPublishAction {
   string loadbalancer_name = 1;
   string loadbalancer_namespace = 2;
   string service_name = 3;

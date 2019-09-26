@@ -15,30 +15,30 @@ import { exists, mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface TetrateApiTccWorkflowsV1CancelRequest
+ * @interface TetrateApiTccWorkflowsV1LBTicketId
  */
-export interface TetrateApiTccWorkflowsV1CancelRequest {
+export interface TetrateApiTccWorkflowsV1LBTicketId {
     /**
      * 
      * @type {string}
-     * @memberof TetrateApiTccWorkflowsV1CancelRequest
+     * @memberof TetrateApiTccWorkflowsV1LBTicketId
      */
     requestid?: string;
     /**
      * 
      * @type {string}
-     * @memberof TetrateApiTccWorkflowsV1CancelRequest
+     * @memberof TetrateApiTccWorkflowsV1LBTicketId
      */
     cluster?: string;
     /**
      * 
      * @type {string}
-     * @memberof TetrateApiTccWorkflowsV1CancelRequest
+     * @memberof TetrateApiTccWorkflowsV1LBTicketId
      */
     tenant?: string;
 }
 
-export function TetrateApiTccWorkflowsV1CancelRequestFromJSON(json: any): TetrateApiTccWorkflowsV1CancelRequest {
+export function TetrateApiTccWorkflowsV1LBTicketIdFromJSON(json: any): TetrateApiTccWorkflowsV1LBTicketId {
     return {
         'requestid': !exists(json, 'requestid') ? undefined : json['requestid'],
         'cluster': !exists(json, 'cluster') ? undefined : json['cluster'],
@@ -46,7 +46,7 @@ export function TetrateApiTccWorkflowsV1CancelRequestFromJSON(json: any): Tetrat
     };
 }
 
-export function TetrateApiTccWorkflowsV1CancelRequestToJSON(value?: TetrateApiTccWorkflowsV1CancelRequest): any {
+export function TetrateApiTccWorkflowsV1LBTicketIdToJSON(value?: TetrateApiTccWorkflowsV1LBTicketId): any {
     if (value === undefined) {
         return undefined;
     }
