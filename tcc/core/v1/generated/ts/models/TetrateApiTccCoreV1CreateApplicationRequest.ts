@@ -47,7 +47,7 @@ export interface TetrateApiTccCoreV1CreateApplicationRequest {
      * @type {string}
      * @memberof TetrateApiTccCoreV1CreateApplicationRequest
      */
-    workspace?: string;
+    environment?: string;
     /**
      * 
      * @type {TetrateApiTccCoreV1Application}
@@ -61,7 +61,7 @@ export function TetrateApiTccCoreV1CreateApplicationRequestFromJSON(json: any): 
         'parent': !exists(json, 'parent') ? undefined : json['parent'],
         'id': !exists(json, 'id') ? undefined : json['id'],
         'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
-        'workspace': !exists(json, 'workspace') ? undefined : json['workspace'],
+        'environment': !exists(json, 'environment') ? undefined : json['environment'],
         'application': !exists(json, 'application') ? undefined : TetrateApiTccCoreV1ApplicationFromJSON(json['application']),
     };
 }
@@ -74,7 +74,7 @@ export function TetrateApiTccCoreV1CreateApplicationRequestToJSON(value?: Tetrat
         'parent': value.parent,
         'id': value.id,
         'tenant': value.tenant,
-        'workspace': value.workspace,
+        'environment': value.environment,
         'application': TetrateApiTccCoreV1ApplicationToJSON(value.application),
     };
 }

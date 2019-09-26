@@ -6,172 +6,171 @@ option go_package = "github.com/tetrateio/tetrate/api/tcc/core/v1";
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 import "routing_info.proto";
-import "permissions.proto";
+import "client_settings.proto";
 import "tlssettings.proto";
-import "organization.proto";
 
 service LogicalResourceModel {
-  rpc CreateWorkspace(CreateWorkspaceRequest) returns (Workspace) {
+  rpc CreateEnvironment(CreateEnvironmentRequest) returns (Environment) {
     option (google.api.http) = {
-      post: "/v1/tenants/{tenant}/workspaces"
+      post: "/v1/tenants/{tenant}/environments"
       body: "*"
     };
   };
 
-  rpc GetWorkspace(GetWorkspaceRequest) returns (Workspace) {
+  rpc GetEnvironment(GetEnvironmentRequest) returns (Environment) {
     option (google.api.http) = {
-      get: "/v1/tenants/{tenant}/workspaces/{id}"
+      get: "/v1/tenants/{tenant}/environments/{id}"
     };
   };
 
-  rpc UpdateWorkspace(Workspace) returns (Workspace) {
+  rpc UpdateEnvironment(Environment) returns (Environment) {
     option (google.api.http) = {
-      put: "/v1/tenants/{tenant}/workspaces/{id}"
+      put: "/v1/tenants/{tenant}/environments/{id}"
       body: "*"
     };
   };
 
-  rpc ListWorkspaces(ListWorkspacesRequest) returns (ListWorkspacesResponse) {
+  rpc ListEnvironments(ListEnvironmentsRequest) returns (ListEnvironmentsResponse) {
     option (google.api.http) = {
-      get: "/v1/tenants/{tenant}/workspaces"
+      get: "/v1/tenants/{tenant}/environments"
     };
   }
 
-  rpc DeleteWorkspace(DeleteWorkspaceRequest) returns (google.protobuf.Empty) {
+  rpc DeleteEnvironment(DeleteEnvironmentRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      delete: "/v1/tenants/{tenant}/workspaces/{id}"
+      delete: "/v1/tenants/{tenant}/environments/{id}"
     };
   };
 
   rpc CreateApplication(CreateApplicationRequest) returns (Application) {
     option (google.api.http) = {
-      post: "/v1/tenants/{tenant}/workspaces/{workspace}/applications"
+      post: "/v1/tenants/{tenant}/environments/{environment}/applications"
       body: "*"
     };
   };
 
   rpc GetApplication(GetApplicationRequest) returns (Application) {
     option (google.api.http) = {
-      get: "/v1/tenants/{tenant}/workspaces/{workspace}/applications/{id}"
+      get: "/v1/tenants/{tenant}/environments/{environment}/applications/{id}"
     };
   };
 
   rpc UpdateApplication(Application) returns (Application) {
     option (google.api.http) = {
-      put: "/v1/tenants/{tenant}/workspaces/{workspace}/applications/{id}"
+      put: "/v1/tenants/{tenant}/environments/{environment}/applications/{id}"
       body: "*"
     };
   };
 
   rpc ListApplications(ListApplicationsRequest) returns (ListApplicationsResponse) {
     option (google.api.http) = {
-      get: "/v1/tenants/{tenant}/workspaces/{workspace}/applications"
+      get: "/v1/tenants/{tenant}/environments/{environment}/applications"
     };
   }
 
   rpc DeleteApplication(DeleteApplicationRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      delete: "/v1/tenants/{tenant}/workspaces/{workspace}/applications/{id}"
+      delete: "/v1/tenants/{tenant}/environments/{environment}/applications/{id}"
     };
   };
 
   rpc CreateService(CreateServiceRequest) returns (Service) {
     option (google.api.http) = {
-      post: "/v1/tenants/{tenant}/workspaces/{workspace}/applications/{application}/services"
+      post: "/v1/tenants/{tenant}/environments/{environment}/applications/{application}/services"
       body: "*"
     };
   };
 
   rpc GetService(GetServiceRequest) returns (Service) {
     option (google.api.http) = {
-      get: "/v1/tenants/{tenant}/workspaces/{workspace}/applications/{application}/services/{id}"
+      get: "/v1/tenants/{tenant}/environments/{environment}/applications/{application}/services/{id}"
     };
   };
 
   rpc ListServices(ListServicesRequest) returns (ListServicesResponse) {
     option (google.api.http) = {
-      get: "/v1/tenants/{tenant}/workspaces/{workspace}/applications/{application}/services"
+      get: "/v1/tenants/{tenant}/environments/{environment}/applications/{application}/services"
     };
   };
 
   rpc UpdateService(Service) returns (Service) {
     option (google.api.http) = {
-      put: "/v1/tenants/{tenant}/workspaces/{workspace}/applications/{application}/services/{id}"
+      put: "/v1/tenants/{tenant}/environments/{environment}/applications/{application}/services/{id}"
       body: "*"
     };
   };
 
   rpc DeleteService(DeleteServiceRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      delete: "/v1/tenants/{tenant}/workspaces/{workspace}/applications/{application}/services/{id}"
+      delete: "/v1/tenants/{tenant}/environments/{environment}/applications/{application}/services/{id}"
     };
   };
 
   rpc CreateLoadBalancer(CreateLoadBalancerRequest) returns (LoadBalancer) {
     option (google.api.http) = {
-      post: "/v1/tenants/{tenant}/workspaces/{workspace}/loadbalancers"
+      post: "/v1/tenants/{tenant}/environments/{environment}/loadbalancers"
       body: "*"
     };
   };
 
   rpc GetLoadBalancer(GetLoadBalancerRequest) returns (LoadBalancer) {
     option (google.api.http) = {
-      get: "/v1/tenants/{tenant}/workspaces/{workspace}/loadbalancers/{id}"
+      get: "/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{id}"
     };
   };
 
   rpc ListLoadBalancers(ListLoadBalancersRequest) returns (ListLoadBalancersResponse) {
     option (google.api.http) = {
-      get: "/v1/tenants/{tenant}/workspaces/{workspace}/loadbalancers"
+      get: "/v1/tenants/{tenant}/environments/{environment}/loadbalancers"
     };
   };
 
   rpc UpdateLoadBalancer(LoadBalancer) returns (LoadBalancer) {
     option (google.api.http) = {
-      put: "/v1/tenants/{tenant}/workspaces/{workspace}/loadbalancers/{id}"
+      put: "/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{id}"
       body: "*"
     };
   };
 
   rpc DeleteLoadBalancer(DeleteLoadBalancerRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      delete: "/v1/tenants/{tenant}/workspaces/{workspace}/loadbalancers/{id}"
+      delete: "/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{id}"
     };
   };
 }
 
-message Workspace {
+message Environment {
   string name = 1;
   string tenant = 2;
   string id = 3;
   string description = 4;
-  Permissions permissions = 5;
+  ClientSettings client_settings = 5;
 }
 
-message CreateWorkspaceRequest {
+message CreateEnvironmentRequest {
   string parent = 1;
   // if present, this will be used as the id for the created object
   string id = 2;
   string tenant = 3;
-  Workspace workspace = 4;
+  Environment environment = 4;
 }
 
-message GetWorkspaceRequest {
+message GetEnvironmentRequest {
   string name = 1;
   string tenant = 2;
   string id = 3;
 }
 
-message ListWorkspacesRequest {
+message ListEnvironmentsRequest {
   string parent = 1;
   string tenant = 2;
 }
 
-message ListWorkspacesResponse {
-  repeated Workspace workspaces = 1;
+message ListEnvironmentsResponse {
+  repeated Environment environments = 1;
 }
 
-message DeleteWorkspaceRequest {
+message DeleteEnvironmentRequest {
   string name = 1;
   string tenant = 2;
   string id = 3;
@@ -180,10 +179,21 @@ message DeleteWorkspaceRequest {
 message Application {
   string name = 1;
   string tenant = 2;
-  string workspace = 3;
+  string environment = 3;
   string id = 4;
   string description = 5;
-  Permissions permissions = 6;
+  RoutingInfo routing_info = 6;
+  ClientSettings client_settings = 7;
+
+  message ApplicationSpecificLB {
+    // Labels that uniquely identify the load balancer in the application's namespace.
+    map<string, string> labels = 1;
+    TLSSettings tls = 2;
+  }
+
+  // If defined, the application is assumed to be exposed on the load balancer in
+  // the application's own namespace instead of the cluster level load balancer.
+  ApplicationSpecificLB app_lb = 8;  
 }
 
 message CreateApplicationRequest {
@@ -191,21 +201,21 @@ message CreateApplicationRequest {
   // if present, this will be used as the id for the created object
   string id = 2;
   string tenant = 3;
-  string workspace = 4;
+  string environment = 4;
   Application application = 5;
 }
 
 message GetApplicationRequest {
   string name = 1;
   string tenant = 2;
-  string workspace = 3;
+  string environment = 3;
   string id = 4;
 }
 
 message ListApplicationsRequest {
   string parent = 1;
   string tenant = 2;
-  string workspace = 3;
+  string environment = 3;
 }
 
 message ListApplicationsResponse {
@@ -215,19 +225,19 @@ message ListApplicationsResponse {
 message DeleteApplicationRequest {
   string name = 1;
   string tenant = 2;
-  string workspace = 3;
+  string environment = 3;
   string id = 4;
 }
 
 message Service {
   string name = 1;
   string tenant = 2;
-  string workspace = 3;
+  string environment = 3;
   string application = 4;
   string id = 5;
   string description = 6;
-  RoutingInfo routing_info = 7;
-  repeated string service_deployments = 8;
+  string hostname = 7;
+  RoutingInfo routing_info = 8;
   string etag = 9;
 }
 
@@ -236,7 +246,7 @@ message CreateServiceRequest {
   // if present, this will be used as the id for the created object
   string id = 2;
   string tenant = 3;
-  string workspace = 4;
+  string environment = 4;
   string application = 5;
   Service service = 6;
 }
@@ -244,7 +254,7 @@ message CreateServiceRequest {
 message GetServiceRequest {
   string name = 1;
   string tenant = 2;
-  string workspace = 3;
+  string environment = 3;
   string application = 4;
   string id = 5;
 }
@@ -252,7 +262,7 @@ message GetServiceRequest {
 message ListServicesRequest {
   string parent = 1;
   string tenant = 2;
-  string workspace = 3;
+  string environment = 3;
   string application = 4;
 }
 
@@ -263,7 +273,7 @@ message ListServicesResponse {
 message DeleteServiceRequest {
   string name = 1;
   string tenant = 2;
-  string workspace = 3;
+  string environment = 3;
   string application = 4;
   string id = 5;
 }
@@ -271,19 +281,21 @@ message DeleteServiceRequest {
 message LoadBalancer {
   string name = 1;
   string tenant = 2;
-  string workspace = 3;
+  string environment = 3;
   string id = 4;
   string description = 5;
+  bool enable_workflows = 6;
 
-  // Map of services attached to this loadbalancer in the form
-  // workspaces/<workspace>/applications/<application>/services/<service>: TLS credential information
-  // or clusters/<cluster>/namespaces/<namespace>/deployments/<deployment>: TLS credential information
-  map<string, TLSSettings> services = 6;
+  // The namespace where the load balancer is/will be deployed in a given cluster.
+  string cluster_namespace = 7;
 
-  // List of physical load balancer deployments attached to this logical loadbalancer
-  repeated string loadbalancer_deployments = 7;
+  // Labels that uniquely identify the cluster loadbalancer
+  map<string, string> labels = 8;
 
-  string etag = 8;
+  // Map of applications attached to this loadbalancer in the form
+  // applicationId: TLS credential information
+  map<string, TLSSettings> applications = 9;
+  string etag = 10;
 }
 
 message CreateLoadBalancerRequest {
@@ -291,21 +303,21 @@ message CreateLoadBalancerRequest {
   // if present, this will be used as the id for the created object
   string id = 2;
   string tenant = 3;
-  string workspace = 4;
+  string environment = 4;
   LoadBalancer loadbalancer = 5;
 }
 
 message GetLoadBalancerRequest {
   string name = 1;
   string tenant = 2;
-  string workspace = 3;
+  string environment = 3;
   string id = 4;
 }
 
 message ListLoadBalancersRequest {
   string parent = 1;
   string tenant = 2;
-  string workspace = 3;
+  string environment = 3;
 }
 
 message ListLoadBalancersResponse {
@@ -315,6 +327,6 @@ message ListLoadBalancersResponse {
 message DeleteLoadBalancerRequest {
   string name = 1;
   string tenant = 2;
-  string workspace = 3;
+  string environment = 3;
   string id = 4;
 }

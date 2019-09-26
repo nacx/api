@@ -12,12 +12,6 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import {
-    TetrateApiTccWorkflowsLoadbalancerV1Target,
-    TetrateApiTccWorkflowsLoadbalancerV1TargetFromJSON,
-    TetrateApiTccWorkflowsLoadbalancerV1TargetToJSON,
-} from './';
-
 /**
  * 
  * @export
@@ -41,7 +35,7 @@ export interface TetrateApiTccWorkflowsLoadbalancerV1CreateTicketRequest {
      * @type {string}
      * @memberof TetrateApiTccWorkflowsLoadbalancerV1CreateTicketRequest
      */
-    workspace?: string;
+    environment?: string;
     /**
      * 
      * @type {string}
@@ -50,19 +44,19 @@ export interface TetrateApiTccWorkflowsLoadbalancerV1CreateTicketRequest {
     id?: string;
     /**
      * 
-     * @type {TetrateApiTccWorkflowsLoadbalancerV1Target}
+     * @type {string}
      * @memberof TetrateApiTccWorkflowsLoadbalancerV1CreateTicketRequest
      */
-    target?: TetrateApiTccWorkflowsLoadbalancerV1Target;
+    application?: string;
 }
 
 export function TetrateApiTccWorkflowsLoadbalancerV1CreateTicketRequestFromJSON(json: any): TetrateApiTccWorkflowsLoadbalancerV1CreateTicketRequest {
     return {
         'parent': !exists(json, 'parent') ? undefined : json['parent'],
         'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
-        'workspace': !exists(json, 'workspace') ? undefined : json['workspace'],
+        'environment': !exists(json, 'environment') ? undefined : json['environment'],
         'id': !exists(json, 'id') ? undefined : json['id'],
-        'target': !exists(json, 'target') ? undefined : TetrateApiTccWorkflowsLoadbalancerV1TargetFromJSON(json['target']),
+        'application': !exists(json, 'application') ? undefined : json['application'],
     };
 }
 
@@ -73,9 +67,9 @@ export function TetrateApiTccWorkflowsLoadbalancerV1CreateTicketRequestToJSON(va
     return {
         'parent': value.parent,
         'tenant': value.tenant,
-        'workspace': value.workspace,
+        'environment': value.environment,
         'id': value.id,
-        'target': TetrateApiTccWorkflowsLoadbalancerV1TargetToJSON(value.target),
+        'application': value.application,
     };
 }
 

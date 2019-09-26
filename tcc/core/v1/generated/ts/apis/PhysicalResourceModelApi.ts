@@ -54,11 +54,13 @@ import {
 
 export interface CreateClusterRequest {
     tenant: string;
+    environment: string;
     body: TetrateApiTccCoreV1CreateClusterRequest;
 }
 
 export interface CreateDeploymentRequest {
     tenant: string;
+    environment: string;
     cluster: string;
     namespace: string;
     body: TetrateApiTccCoreV1CreateDeploymentRequest;
@@ -66,6 +68,7 @@ export interface CreateDeploymentRequest {
 
 export interface CreateEndpointRequest {
     tenant: string;
+    environment: string;
     cluster: string;
     namespace: string;
     deployment: string;
@@ -74,18 +77,21 @@ export interface CreateEndpointRequest {
 
 export interface CreateNamespaceRequest {
     tenant: string;
+    environment: string;
     cluster: string;
     body: TetrateApiTccCoreV1CreateNamespaceRequest;
 }
 
 export interface DeleteClusterRequest {
     tenant: string;
+    environment: string;
     id: string;
     name?: string;
 }
 
 export interface DeleteDeploymentRequest {
     tenant: string;
+    environment: string;
     cluster: string;
     namespace: string;
     id: string;
@@ -94,6 +100,7 @@ export interface DeleteDeploymentRequest {
 
 export interface DeleteEndpointRequest {
     tenant: string;
+    environment: string;
     cluster: string;
     namespace: string;
     deployment: string;
@@ -103,6 +110,7 @@ export interface DeleteEndpointRequest {
 
 export interface DeleteNamespaceRequest {
     tenant: string;
+    environment: string;
     cluster: string;
     id: string;
     name?: string;
@@ -110,12 +118,14 @@ export interface DeleteNamespaceRequest {
 
 export interface GetClusterRequest {
     tenant: string;
+    environment: string;
     id: string;
     name?: string;
 }
 
 export interface GetDeploymentRequest {
     tenant: string;
+    environment: string;
     cluster: string;
     namespace: string;
     id: string;
@@ -124,6 +134,7 @@ export interface GetDeploymentRequest {
 
 export interface GetEndpointRequest {
     tenant: string;
+    environment: string;
     cluster: string;
     namespace: string;
     deployment: string;
@@ -133,6 +144,7 @@ export interface GetEndpointRequest {
 
 export interface GetNamespaceRequest {
     tenant: string;
+    environment: string;
     cluster: string;
     id: string;
     name?: string;
@@ -140,11 +152,13 @@ export interface GetNamespaceRequest {
 
 export interface ListClustersRequest {
     tenant: string;
+    environment: string;
     parent?: string;
 }
 
 export interface ListDeploymentsRequest {
     tenant: string;
+    environment: string;
     cluster: string;
     namespace: string;
     parent?: string;
@@ -152,6 +166,7 @@ export interface ListDeploymentsRequest {
 
 export interface ListEndpointsRequest {
     tenant: string;
+    environment: string;
     cluster: string;
     namespace: string;
     deployment: string;
@@ -160,18 +175,21 @@ export interface ListEndpointsRequest {
 
 export interface ListNamespacesRequest {
     tenant: string;
+    environment: string;
     cluster: string;
     parent?: string;
 }
 
 export interface UpdateClusterRequest {
     tenant: string;
+    environment: string;
     id: string;
     body: TetrateApiTccCoreV1Cluster;
 }
 
 export interface UpdateDeploymentRequest {
     tenant: string;
+    environment: string;
     cluster: string;
     namespace: string;
     id: string;
@@ -180,6 +198,7 @@ export interface UpdateDeploymentRequest {
 
 export interface UpdateEndpointRequest {
     tenant: string;
+    environment: string;
     cluster: string;
     namespace: string;
     deployment: string;
@@ -189,6 +208,7 @@ export interface UpdateEndpointRequest {
 
 export interface UpdateNamespaceRequest {
     tenant: string;
+    environment: string;
     cluster: string;
     id: string;
     body: TetrateApiTccCoreV1Namespace;
@@ -206,6 +226,10 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling createCluster.');
         }
 
+        if (requestParameters.environment === null || requestParameters.environment === undefined) {
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling createCluster.');
+        }
+
         if (requestParameters.body === null || requestParameters.body === undefined) {
             throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling createCluster.');
         }
@@ -217,7 +241,7 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/clusters`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/clusters`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -241,6 +265,10 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling createDeployment.');
         }
 
+        if (requestParameters.environment === null || requestParameters.environment === undefined) {
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling createDeployment.');
+        }
+
         if (requestParameters.cluster === null || requestParameters.cluster === undefined) {
             throw new runtime.RequiredError('cluster','Required parameter requestParameters.cluster was null or undefined when calling createDeployment.');
         }
@@ -260,7 +288,7 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/clusters/{cluster}/namespaces/{namespace}/deployments`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))).replace(`{${"namespace"}}`, encodeURIComponent(String(requestParameters.namespace))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces/{namespace}/deployments`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))).replace(`{${"namespace"}}`, encodeURIComponent(String(requestParameters.namespace))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -282,6 +310,10 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
     async createEndpointRaw(requestParameters: CreateEndpointRequest): Promise<runtime.ApiResponse<any>> {
         if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling createEndpoint.');
+        }
+
+        if (requestParameters.environment === null || requestParameters.environment === undefined) {
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling createEndpoint.');
         }
 
         if (requestParameters.cluster === null || requestParameters.cluster === undefined) {
@@ -307,7 +339,7 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/clusters/{cluster}/namespaces/{namespace}/deployments/{deployment}/endpoints`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))).replace(`{${"namespace"}}`, encodeURIComponent(String(requestParameters.namespace))).replace(`{${"deployment"}}`, encodeURIComponent(String(requestParameters.deployment))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces/{namespace}/deployments/{deployment}/endpoints`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))).replace(`{${"namespace"}}`, encodeURIComponent(String(requestParameters.namespace))).replace(`{${"deployment"}}`, encodeURIComponent(String(requestParameters.deployment))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -331,6 +363,10 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling createNamespace.');
         }
 
+        if (requestParameters.environment === null || requestParameters.environment === undefined) {
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling createNamespace.');
+        }
+
         if (requestParameters.cluster === null || requestParameters.cluster === undefined) {
             throw new runtime.RequiredError('cluster','Required parameter requestParameters.cluster was null or undefined when calling createNamespace.');
         }
@@ -346,7 +382,7 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/clusters/{cluster}/namespaces`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -370,6 +406,10 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling deleteCluster.');
         }
 
+        if (requestParameters.environment === null || requestParameters.environment === undefined) {
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling deleteCluster.');
+        }
+
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteCluster.');
         }
@@ -383,7 +423,7 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/clusters/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/clusters/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -404,6 +444,10 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
     async deleteDeploymentRaw(requestParameters: DeleteDeploymentRequest): Promise<runtime.ApiResponse<any>> {
         if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling deleteDeployment.');
+        }
+
+        if (requestParameters.environment === null || requestParameters.environment === undefined) {
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling deleteDeployment.');
         }
 
         if (requestParameters.cluster === null || requestParameters.cluster === undefined) {
@@ -427,7 +471,7 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/clusters/{cluster}/namespaces/{namespace}/deployments/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))).replace(`{${"namespace"}}`, encodeURIComponent(String(requestParameters.namespace))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces/{namespace}/deployments/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))).replace(`{${"namespace"}}`, encodeURIComponent(String(requestParameters.namespace))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -448,6 +492,10 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
     async deleteEndpointRaw(requestParameters: DeleteEndpointRequest): Promise<runtime.ApiResponse<any>> {
         if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling deleteEndpoint.');
+        }
+
+        if (requestParameters.environment === null || requestParameters.environment === undefined) {
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling deleteEndpoint.');
         }
 
         if (requestParameters.cluster === null || requestParameters.cluster === undefined) {
@@ -475,7 +523,7 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/clusters/{cluster}/namespaces/{namespace}/deployments/{deployment}/endpoints/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))).replace(`{${"namespace"}}`, encodeURIComponent(String(requestParameters.namespace))).replace(`{${"deployment"}}`, encodeURIComponent(String(requestParameters.deployment))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces/{namespace}/deployments/{deployment}/endpoints/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))).replace(`{${"namespace"}}`, encodeURIComponent(String(requestParameters.namespace))).replace(`{${"deployment"}}`, encodeURIComponent(String(requestParameters.deployment))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -498,6 +546,10 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling deleteNamespace.');
         }
 
+        if (requestParameters.environment === null || requestParameters.environment === undefined) {
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling deleteNamespace.');
+        }
+
         if (requestParameters.cluster === null || requestParameters.cluster === undefined) {
             throw new runtime.RequiredError('cluster','Required parameter requestParameters.cluster was null or undefined when calling deleteNamespace.');
         }
@@ -515,7 +567,7 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/clusters/{cluster}/namespaces/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -538,6 +590,10 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling getCluster.');
         }
 
+        if (requestParameters.environment === null || requestParameters.environment === undefined) {
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling getCluster.');
+        }
+
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getCluster.');
         }
@@ -551,7 +607,7 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/clusters/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/clusters/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -572,6 +628,10 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
     async getDeploymentRaw(requestParameters: GetDeploymentRequest): Promise<runtime.ApiResponse<any>> {
         if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling getDeployment.');
+        }
+
+        if (requestParameters.environment === null || requestParameters.environment === undefined) {
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling getDeployment.');
         }
 
         if (requestParameters.cluster === null || requestParameters.cluster === undefined) {
@@ -595,7 +655,7 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/clusters/{cluster}/namespaces/{namespace}/deployments/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))).replace(`{${"namespace"}}`, encodeURIComponent(String(requestParameters.namespace))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces/{namespace}/deployments/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))).replace(`{${"namespace"}}`, encodeURIComponent(String(requestParameters.namespace))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -616,6 +676,10 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
     async getEndpointRaw(requestParameters: GetEndpointRequest): Promise<runtime.ApiResponse<any>> {
         if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling getEndpoint.');
+        }
+
+        if (requestParameters.environment === null || requestParameters.environment === undefined) {
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling getEndpoint.');
         }
 
         if (requestParameters.cluster === null || requestParameters.cluster === undefined) {
@@ -643,7 +707,7 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/clusters/{cluster}/namespaces/{namespace}/deployments/{deployment}/endpoints/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))).replace(`{${"namespace"}}`, encodeURIComponent(String(requestParameters.namespace))).replace(`{${"deployment"}}`, encodeURIComponent(String(requestParameters.deployment))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces/{namespace}/deployments/{deployment}/endpoints/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))).replace(`{${"namespace"}}`, encodeURIComponent(String(requestParameters.namespace))).replace(`{${"deployment"}}`, encodeURIComponent(String(requestParameters.deployment))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -666,6 +730,10 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling getNamespace.');
         }
 
+        if (requestParameters.environment === null || requestParameters.environment === undefined) {
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling getNamespace.');
+        }
+
         if (requestParameters.cluster === null || requestParameters.cluster === undefined) {
             throw new runtime.RequiredError('cluster','Required parameter requestParameters.cluster was null or undefined when calling getNamespace.');
         }
@@ -683,7 +751,7 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/clusters/{cluster}/namespaces/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -706,6 +774,10 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling listClusters.');
         }
 
+        if (requestParameters.environment === null || requestParameters.environment === undefined) {
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling listClusters.');
+        }
+
         const queryParameters: runtime.HTTPQuery = {};
 
         if (requestParameters.parent !== undefined) {
@@ -715,7 +787,7 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/clusters`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/clusters`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -738,6 +810,10 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling listDeployments.');
         }
 
+        if (requestParameters.environment === null || requestParameters.environment === undefined) {
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling listDeployments.');
+        }
+
         if (requestParameters.cluster === null || requestParameters.cluster === undefined) {
             throw new runtime.RequiredError('cluster','Required parameter requestParameters.cluster was null or undefined when calling listDeployments.');
         }
@@ -755,7 +831,7 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/clusters/{cluster}/namespaces/{namespace}/deployments`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))).replace(`{${"namespace"}}`, encodeURIComponent(String(requestParameters.namespace))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces/{namespace}/deployments`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))).replace(`{${"namespace"}}`, encodeURIComponent(String(requestParameters.namespace))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -776,6 +852,10 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
     async listEndpointsRaw(requestParameters: ListEndpointsRequest): Promise<runtime.ApiResponse<any>> {
         if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling listEndpoints.');
+        }
+
+        if (requestParameters.environment === null || requestParameters.environment === undefined) {
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling listEndpoints.');
         }
 
         if (requestParameters.cluster === null || requestParameters.cluster === undefined) {
@@ -799,7 +879,7 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/clusters/{cluster}/namespaces/{namespace}/deployments/{deployment}/endpoints`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))).replace(`{${"namespace"}}`, encodeURIComponent(String(requestParameters.namespace))).replace(`{${"deployment"}}`, encodeURIComponent(String(requestParameters.deployment))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces/{namespace}/deployments/{deployment}/endpoints`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))).replace(`{${"namespace"}}`, encodeURIComponent(String(requestParameters.namespace))).replace(`{${"deployment"}}`, encodeURIComponent(String(requestParameters.deployment))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -822,6 +902,10 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling listNamespaces.');
         }
 
+        if (requestParameters.environment === null || requestParameters.environment === undefined) {
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling listNamespaces.');
+        }
+
         if (requestParameters.cluster === null || requestParameters.cluster === undefined) {
             throw new runtime.RequiredError('cluster','Required parameter requestParameters.cluster was null or undefined when calling listNamespaces.');
         }
@@ -835,7 +919,7 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/clusters/{cluster}/namespaces`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -858,6 +942,10 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling updateCluster.');
         }
 
+        if (requestParameters.environment === null || requestParameters.environment === undefined) {
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling updateCluster.');
+        }
+
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling updateCluster.');
         }
@@ -873,7 +961,7 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/clusters/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/clusters/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -895,6 +983,10 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
     async updateDeploymentRaw(requestParameters: UpdateDeploymentRequest): Promise<runtime.ApiResponse<any>> {
         if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling updateDeployment.');
+        }
+
+        if (requestParameters.environment === null || requestParameters.environment === undefined) {
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling updateDeployment.');
         }
 
         if (requestParameters.cluster === null || requestParameters.cluster === undefined) {
@@ -920,7 +1012,7 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/clusters/{cluster}/namespaces/{namespace}/deployments/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))).replace(`{${"namespace"}}`, encodeURIComponent(String(requestParameters.namespace))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces/{namespace}/deployments/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))).replace(`{${"namespace"}}`, encodeURIComponent(String(requestParameters.namespace))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -942,6 +1034,10 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
     async updateEndpointRaw(requestParameters: UpdateEndpointRequest): Promise<runtime.ApiResponse<any>> {
         if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling updateEndpoint.');
+        }
+
+        if (requestParameters.environment === null || requestParameters.environment === undefined) {
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling updateEndpoint.');
         }
 
         if (requestParameters.cluster === null || requestParameters.cluster === undefined) {
@@ -971,7 +1067,7 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/clusters/{cluster}/namespaces/{namespace}/deployments/{deployment}/endpoints/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))).replace(`{${"namespace"}}`, encodeURIComponent(String(requestParameters.namespace))).replace(`{${"deployment"}}`, encodeURIComponent(String(requestParameters.deployment))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces/{namespace}/deployments/{deployment}/endpoints/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))).replace(`{${"namespace"}}`, encodeURIComponent(String(requestParameters.namespace))).replace(`{${"deployment"}}`, encodeURIComponent(String(requestParameters.deployment))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -995,6 +1091,10 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling updateNamespace.');
         }
 
+        if (requestParameters.environment === null || requestParameters.environment === undefined) {
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling updateNamespace.');
+        }
+
         if (requestParameters.cluster === null || requestParameters.cluster === undefined) {
             throw new runtime.RequiredError('cluster','Required parameter requestParameters.cluster was null or undefined when calling updateNamespace.');
         }
@@ -1014,7 +1114,7 @@ export class PhysicalResourceModelApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/clusters/{cluster}/namespaces/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"cluster"}}`, encodeURIComponent(String(requestParameters.cluster))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,

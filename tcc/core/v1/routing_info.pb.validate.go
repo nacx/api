@@ -472,13 +472,13 @@ func (m *HttpRule) Validate() error {
 		return nil
 	}
 
-	for idx, item := range m.GetMatchConditions() {
+	for idx, item := range m.GetMatch() {
 		_, _ = idx, item
 
 		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
 				return HttpRuleValidationError{
-					field:  fmt.Sprintf("MatchConditions[%v]", idx),
+					field:  fmt.Sprintf("Match[%v]", idx),
 					reason: "embedded message failed validation",
 					cause:  err,
 				}
@@ -487,19 +487,14 @@ func (m *HttpRule) Validate() error {
 
 	}
 
-	for idx, item := range m.GetModifyActions() {
-		_, _ = idx, item
-
-		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return HttpRuleValidationError{
-					field:  fmt.Sprintf("ModifyActions[%v]", idx),
-					reason: "embedded message failed validation",
-					cause:  err,
-				}
+	if v, ok := interface{}(m.GetModify()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return HttpRuleValidationError{
+				field:  "Modify",
+				reason: "embedded message failed validation",
+				cause:  err,
 			}
 		}
-
 	}
 
 	switch m.RouteOrRedirect.(type) {
@@ -774,6 +769,159 @@ var _ interface {
 	ErrorName() string
 } = StringMatchValidationError{}
 
+// Validate checks the field values on HTTPRewrite with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *HTTPRewrite) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Uri
+
+	// no validation rules for Authority
+
+	return nil
+}
+
+// HTTPRewriteValidationError is the validation error returned by
+// HTTPRewrite.Validate if the designated constraints aren't met.
+type HTTPRewriteValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e HTTPRewriteValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e HTTPRewriteValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e HTTPRewriteValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e HTTPRewriteValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e HTTPRewriteValidationError) ErrorName() string { return "HTTPRewriteValidationError" }
+
+// Error satisfies the builtin error interface
+func (e HTTPRewriteValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sHTTPRewrite.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = HTTPRewriteValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = HTTPRewriteValidationError{}
+
+// Validate checks the field values on Headers with the rules defined in the
+// proto definition for this message. If any rules are violated, an error is returned.
+func (m *Headers) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if v, ok := interface{}(m.GetRequest()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return HeadersValidationError{
+				field:  "Request",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if v, ok := interface{}(m.GetResponse()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return HeadersValidationError{
+				field:  "Response",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// HeadersValidationError is the validation error returned by Headers.Validate
+// if the designated constraints aren't met.
+type HeadersValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e HeadersValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e HeadersValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e HeadersValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e HeadersValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e HeadersValidationError) ErrorName() string { return "HeadersValidationError" }
+
+// Error satisfies the builtin error interface
+func (e HeadersValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sHeaders.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = HeadersValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = HeadersValidationError{}
+
 // Validate checks the field values on HttpModifyAction with the rules defined
 // in the proto definition for this message. If any rules are violated, an
 // error is returned.
@@ -782,13 +930,25 @@ func (m *HttpModifyAction) Validate() error {
 		return nil
 	}
 
-	// no validation rules for What
+	if v, ok := interface{}(m.GetRewrite()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return HttpModifyActionValidationError{
+				field:  "Rewrite",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
 
-	// no validation rules for How
-
-	// no validation rules for HeaderName
-
-	// no validation rules for Value
+	if v, ok := interface{}(m.GetHeaders()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return HttpModifyActionValidationError{
+				field:  "Headers",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
 
 	return nil
 }
@@ -1248,6 +1408,77 @@ var _ interface {
 	ErrorName() string
 } = HttpSettings_StickySessionValidationError{}
 
+// Validate checks the field values on Headers_HeaderOperations with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *Headers_HeaderOperations) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Set
+
+	// no validation rules for Add
+
+	return nil
+}
+
+// Headers_HeaderOperationsValidationError is the validation error returned by
+// Headers_HeaderOperations.Validate if the designated constraints aren't met.
+type Headers_HeaderOperationsValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e Headers_HeaderOperationsValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e Headers_HeaderOperationsValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e Headers_HeaderOperationsValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e Headers_HeaderOperationsValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e Headers_HeaderOperationsValidationError) ErrorName() string {
+	return "Headers_HeaderOperationsValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e Headers_HeaderOperationsValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sHeaders_HeaderOperations.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = Headers_HeaderOperationsValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = Headers_HeaderOperationsValidationError{}
+
 // Validate checks the field values on Route_Destination with the rules defined
 // in the proto definition for this message. If any rules are violated, an
 // error is returned.
@@ -1256,13 +1487,13 @@ func (m *Route_Destination) Validate() error {
 		return nil
 	}
 
+	// no validation rules for Host
+
 	// no validation rules for Subset
 
 	// no validation rules for Weight
 
 	// no validation rules for Port
-
-	// no validation rules for Svc
 
 	return nil
 }

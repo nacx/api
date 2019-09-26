@@ -58,6 +58,17 @@ func request_PhysicalResourceModel_CreateCluster_0(ctx context.Context, marshale
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
 	}
 
+	val, ok = pathParams["environment"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "environment")
+	}
+
+	protoReq.Environment, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "environment", err)
+	}
+
 	msg, err := client.CreateCluster(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
@@ -93,6 +104,17 @@ func request_PhysicalResourceModel_UpdateCluster_0(ctx context.Context, marshale
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
 	}
 
+	val, ok = pathParams["environment"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "environment")
+	}
+
+	protoReq.Environment, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "environment", err)
+	}
+
 	val, ok = pathParams["id"]
 	if !ok {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
@@ -110,7 +132,7 @@ func request_PhysicalResourceModel_UpdateCluster_0(ctx context.Context, marshale
 }
 
 var (
-	filter_PhysicalResourceModel_GetCluster_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "id": 1}, Base: []int{1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 2, 3}}
+	filter_PhysicalResourceModel_GetCluster_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "environment": 1, "id": 2}, Base: []int{1, 1, 2, 3, 0, 0, 0}, Check: []int{0, 1, 1, 1, 2, 3, 4}}
 )
 
 func request_PhysicalResourceModel_GetCluster_0(ctx context.Context, marshaler runtime.Marshaler, client PhysicalResourceModelClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
@@ -135,6 +157,17 @@ func request_PhysicalResourceModel_GetCluster_0(ctx context.Context, marshaler r
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
 	}
 
+	val, ok = pathParams["environment"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "environment")
+	}
+
+	protoReq.Environment, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "environment", err)
+	}
+
 	val, ok = pathParams["id"]
 	if !ok {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
@@ -156,7 +189,7 @@ func request_PhysicalResourceModel_GetCluster_0(ctx context.Context, marshaler r
 }
 
 var (
-	filter_PhysicalResourceModel_ListClusters_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+	filter_PhysicalResourceModel_ListClusters_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "environment": 1}, Base: []int{1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 2, 3}}
 )
 
 func request_PhysicalResourceModel_ListClusters_0(ctx context.Context, marshaler runtime.Marshaler, client PhysicalResourceModelClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
@@ -181,6 +214,17 @@ func request_PhysicalResourceModel_ListClusters_0(ctx context.Context, marshaler
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
 	}
 
+	val, ok = pathParams["environment"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "environment")
+	}
+
+	protoReq.Environment, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "environment", err)
+	}
+
 	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_PhysicalResourceModel_ListClusters_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
@@ -191,7 +235,7 @@ func request_PhysicalResourceModel_ListClusters_0(ctx context.Context, marshaler
 }
 
 var (
-	filter_PhysicalResourceModel_DeleteCluster_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "id": 1}, Base: []int{1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 2, 3}}
+	filter_PhysicalResourceModel_DeleteCluster_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "environment": 1, "id": 2}, Base: []int{1, 1, 2, 3, 0, 0, 0}, Check: []int{0, 1, 1, 1, 2, 3, 4}}
 )
 
 func request_PhysicalResourceModel_DeleteCluster_0(ctx context.Context, marshaler runtime.Marshaler, client PhysicalResourceModelClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
@@ -214,6 +258,17 @@ func request_PhysicalResourceModel_DeleteCluster_0(ctx context.Context, marshale
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
+	}
+
+	val, ok = pathParams["environment"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "environment")
+	}
+
+	protoReq.Environment, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "environment", err)
 	}
 
 	val, ok = pathParams["id"]
@@ -266,6 +321,17 @@ func request_PhysicalResourceModel_CreateNamespace_0(ctx context.Context, marsha
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
 	}
 
+	val, ok = pathParams["environment"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "environment")
+	}
+
+	protoReq.Environment, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "environment", err)
+	}
+
 	val, ok = pathParams["cluster"]
 	if !ok {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "cluster")
@@ -283,7 +349,7 @@ func request_PhysicalResourceModel_CreateNamespace_0(ctx context.Context, marsha
 }
 
 var (
-	filter_PhysicalResourceModel_GetNamespace_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "cluster": 1, "id": 2}, Base: []int{1, 1, 2, 3, 0, 0, 0}, Check: []int{0, 1, 1, 1, 2, 3, 4}}
+	filter_PhysicalResourceModel_GetNamespace_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "environment": 1, "cluster": 2, "id": 3}, Base: []int{1, 1, 2, 3, 4, 0, 0, 0, 0}, Check: []int{0, 1, 1, 1, 1, 2, 3, 4, 5}}
 )
 
 func request_PhysicalResourceModel_GetNamespace_0(ctx context.Context, marshaler runtime.Marshaler, client PhysicalResourceModelClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
@@ -306,6 +372,17 @@ func request_PhysicalResourceModel_GetNamespace_0(ctx context.Context, marshaler
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
+	}
+
+	val, ok = pathParams["environment"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "environment")
+	}
+
+	protoReq.Environment, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "environment", err)
 	}
 
 	val, ok = pathParams["cluster"]
@@ -369,6 +446,17 @@ func request_PhysicalResourceModel_UpdateNamespace_0(ctx context.Context, marsha
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
 	}
 
+	val, ok = pathParams["environment"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "environment")
+	}
+
+	protoReq.Environment, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "environment", err)
+	}
+
 	val, ok = pathParams["cluster"]
 	if !ok {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "cluster")
@@ -397,7 +485,7 @@ func request_PhysicalResourceModel_UpdateNamespace_0(ctx context.Context, marsha
 }
 
 var (
-	filter_PhysicalResourceModel_ListNamespaces_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "cluster": 1}, Base: []int{1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 2, 3}}
+	filter_PhysicalResourceModel_ListNamespaces_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "environment": 1, "cluster": 2}, Base: []int{1, 1, 2, 3, 0, 0, 0}, Check: []int{0, 1, 1, 1, 2, 3, 4}}
 )
 
 func request_PhysicalResourceModel_ListNamespaces_0(ctx context.Context, marshaler runtime.Marshaler, client PhysicalResourceModelClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
@@ -422,6 +510,17 @@ func request_PhysicalResourceModel_ListNamespaces_0(ctx context.Context, marshal
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
 	}
 
+	val, ok = pathParams["environment"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "environment")
+	}
+
+	protoReq.Environment, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "environment", err)
+	}
+
 	val, ok = pathParams["cluster"]
 	if !ok {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "cluster")
@@ -443,7 +542,7 @@ func request_PhysicalResourceModel_ListNamespaces_0(ctx context.Context, marshal
 }
 
 var (
-	filter_PhysicalResourceModel_DeleteNamespace_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "cluster": 1, "id": 2}, Base: []int{1, 1, 2, 3, 0, 0, 0}, Check: []int{0, 1, 1, 1, 2, 3, 4}}
+	filter_PhysicalResourceModel_DeleteNamespace_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "environment": 1, "cluster": 2, "id": 3}, Base: []int{1, 1, 2, 3, 4, 0, 0, 0, 0}, Check: []int{0, 1, 1, 1, 1, 2, 3, 4, 5}}
 )
 
 func request_PhysicalResourceModel_DeleteNamespace_0(ctx context.Context, marshaler runtime.Marshaler, client PhysicalResourceModelClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
@@ -466,6 +565,17 @@ func request_PhysicalResourceModel_DeleteNamespace_0(ctx context.Context, marsha
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
+	}
+
+	val, ok = pathParams["environment"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "environment")
+	}
+
+	protoReq.Environment, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "environment", err)
 	}
 
 	val, ok = pathParams["cluster"]
@@ -529,6 +639,17 @@ func request_PhysicalResourceModel_CreateDeployment_0(ctx context.Context, marsh
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
 	}
 
+	val, ok = pathParams["environment"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "environment")
+	}
+
+	protoReq.Environment, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "environment", err)
+	}
+
 	val, ok = pathParams["cluster"]
 	if !ok {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "cluster")
@@ -557,7 +678,7 @@ func request_PhysicalResourceModel_CreateDeployment_0(ctx context.Context, marsh
 }
 
 var (
-	filter_PhysicalResourceModel_GetDeployment_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "cluster": 1, "namespace": 2, "id": 3}, Base: []int{1, 1, 2, 3, 4, 0, 0, 0, 0}, Check: []int{0, 1, 1, 1, 1, 2, 3, 4, 5}}
+	filter_PhysicalResourceModel_GetDeployment_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "environment": 1, "cluster": 2, "namespace": 3, "id": 4}, Base: []int{1, 1, 2, 3, 4, 5, 0, 0, 0, 0, 0}, Check: []int{0, 1, 1, 1, 1, 1, 2, 3, 4, 5, 6}}
 )
 
 func request_PhysicalResourceModel_GetDeployment_0(ctx context.Context, marshaler runtime.Marshaler, client PhysicalResourceModelClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
@@ -580,6 +701,17 @@ func request_PhysicalResourceModel_GetDeployment_0(ctx context.Context, marshale
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
+	}
+
+	val, ok = pathParams["environment"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "environment")
+	}
+
+	protoReq.Environment, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "environment", err)
 	}
 
 	val, ok = pathParams["cluster"]
@@ -625,7 +757,7 @@ func request_PhysicalResourceModel_GetDeployment_0(ctx context.Context, marshale
 }
 
 var (
-	filter_PhysicalResourceModel_ListDeployments_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "cluster": 1, "namespace": 2}, Base: []int{1, 1, 2, 3, 0, 0, 0}, Check: []int{0, 1, 1, 1, 2, 3, 4}}
+	filter_PhysicalResourceModel_ListDeployments_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "environment": 1, "cluster": 2, "namespace": 3}, Base: []int{1, 1, 2, 3, 4, 0, 0, 0, 0}, Check: []int{0, 1, 1, 1, 1, 2, 3, 4, 5}}
 )
 
 func request_PhysicalResourceModel_ListDeployments_0(ctx context.Context, marshaler runtime.Marshaler, client PhysicalResourceModelClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
@@ -648,6 +780,17 @@ func request_PhysicalResourceModel_ListDeployments_0(ctx context.Context, marsha
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
+	}
+
+	val, ok = pathParams["environment"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "environment")
+	}
+
+	protoReq.Environment, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "environment", err)
 	}
 
 	val, ok = pathParams["cluster"]
@@ -711,6 +854,17 @@ func request_PhysicalResourceModel_UpdateDeployment_0(ctx context.Context, marsh
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
 	}
 
+	val, ok = pathParams["environment"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "environment")
+	}
+
+	protoReq.Environment, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "environment", err)
+	}
+
 	val, ok = pathParams["cluster"]
 	if !ok {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "cluster")
@@ -750,7 +904,7 @@ func request_PhysicalResourceModel_UpdateDeployment_0(ctx context.Context, marsh
 }
 
 var (
-	filter_PhysicalResourceModel_DeleteDeployment_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "cluster": 1, "namespace": 2, "id": 3}, Base: []int{1, 1, 2, 3, 4, 0, 0, 0, 0}, Check: []int{0, 1, 1, 1, 1, 2, 3, 4, 5}}
+	filter_PhysicalResourceModel_DeleteDeployment_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "environment": 1, "cluster": 2, "namespace": 3, "id": 4}, Base: []int{1, 1, 2, 3, 4, 5, 0, 0, 0, 0, 0}, Check: []int{0, 1, 1, 1, 1, 1, 2, 3, 4, 5, 6}}
 )
 
 func request_PhysicalResourceModel_DeleteDeployment_0(ctx context.Context, marshaler runtime.Marshaler, client PhysicalResourceModelClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
@@ -773,6 +927,17 @@ func request_PhysicalResourceModel_DeleteDeployment_0(ctx context.Context, marsh
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
+	}
+
+	val, ok = pathParams["environment"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "environment")
+	}
+
+	protoReq.Environment, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "environment", err)
 	}
 
 	val, ok = pathParams["cluster"]
@@ -847,6 +1012,17 @@ func request_PhysicalResourceModel_CreateEndpoint_0(ctx context.Context, marshal
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
 	}
 
+	val, ok = pathParams["environment"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "environment")
+	}
+
+	protoReq.Environment, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "environment", err)
+	}
+
 	val, ok = pathParams["cluster"]
 	if !ok {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "cluster")
@@ -886,7 +1062,7 @@ func request_PhysicalResourceModel_CreateEndpoint_0(ctx context.Context, marshal
 }
 
 var (
-	filter_PhysicalResourceModel_GetEndpoint_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "cluster": 1, "namespace": 2, "deployment": 3, "id": 4}, Base: []int{1, 1, 2, 3, 4, 5, 0, 0, 0, 0, 0}, Check: []int{0, 1, 1, 1, 1, 1, 2, 3, 4, 5, 6}}
+	filter_PhysicalResourceModel_GetEndpoint_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "environment": 1, "cluster": 2, "namespace": 3, "deployment": 4, "id": 5}, Base: []int{1, 1, 2, 3, 4, 5, 6, 0, 0, 0, 0, 0, 0}, Check: []int{0, 1, 1, 1, 1, 1, 1, 2, 3, 4, 5, 6, 7}}
 )
 
 func request_PhysicalResourceModel_GetEndpoint_0(ctx context.Context, marshaler runtime.Marshaler, client PhysicalResourceModelClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
@@ -909,6 +1085,17 @@ func request_PhysicalResourceModel_GetEndpoint_0(ctx context.Context, marshaler 
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
+	}
+
+	val, ok = pathParams["environment"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "environment")
+	}
+
+	protoReq.Environment, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "environment", err)
 	}
 
 	val, ok = pathParams["cluster"]
@@ -965,7 +1152,7 @@ func request_PhysicalResourceModel_GetEndpoint_0(ctx context.Context, marshaler 
 }
 
 var (
-	filter_PhysicalResourceModel_ListEndpoints_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "cluster": 1, "namespace": 2, "deployment": 3}, Base: []int{1, 1, 2, 3, 4, 0, 0, 0, 0}, Check: []int{0, 1, 1, 1, 1, 2, 3, 4, 5}}
+	filter_PhysicalResourceModel_ListEndpoints_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "environment": 1, "cluster": 2, "namespace": 3, "deployment": 4}, Base: []int{1, 1, 2, 3, 4, 5, 0, 0, 0, 0, 0}, Check: []int{0, 1, 1, 1, 1, 1, 2, 3, 4, 5, 6}}
 )
 
 func request_PhysicalResourceModel_ListEndpoints_0(ctx context.Context, marshaler runtime.Marshaler, client PhysicalResourceModelClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
@@ -988,6 +1175,17 @@ func request_PhysicalResourceModel_ListEndpoints_0(ctx context.Context, marshale
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
+	}
+
+	val, ok = pathParams["environment"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "environment")
+	}
+
+	protoReq.Environment, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "environment", err)
 	}
 
 	val, ok = pathParams["cluster"]
@@ -1062,6 +1260,17 @@ func request_PhysicalResourceModel_UpdateEndpoint_0(ctx context.Context, marshal
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
 	}
 
+	val, ok = pathParams["environment"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "environment")
+	}
+
+	protoReq.Environment, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "environment", err)
+	}
+
 	val, ok = pathParams["cluster"]
 	if !ok {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "cluster")
@@ -1112,7 +1321,7 @@ func request_PhysicalResourceModel_UpdateEndpoint_0(ctx context.Context, marshal
 }
 
 var (
-	filter_PhysicalResourceModel_DeleteEndpoint_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "cluster": 1, "namespace": 2, "deployment": 3, "id": 4}, Base: []int{1, 1, 2, 3, 4, 5, 0, 0, 0, 0, 0}, Check: []int{0, 1, 1, 1, 1, 1, 2, 3, 4, 5, 6}}
+	filter_PhysicalResourceModel_DeleteEndpoint_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "environment": 1, "cluster": 2, "namespace": 3, "deployment": 4, "id": 5}, Base: []int{1, 1, 2, 3, 4, 5, 6, 0, 0, 0, 0, 0, 0}, Check: []int{0, 1, 1, 1, 1, 1, 1, 2, 3, 4, 5, 6, 7}}
 )
 
 func request_PhysicalResourceModel_DeleteEndpoint_0(ctx context.Context, marshaler runtime.Marshaler, client PhysicalResourceModelClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
@@ -1135,6 +1344,17 @@ func request_PhysicalResourceModel_DeleteEndpoint_0(ctx context.Context, marshal
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
+	}
+
+	val, ok = pathParams["environment"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "environment")
+	}
+
+	protoReq.Environment, err = runtime.String(val)
+
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "environment", err)
 	}
 
 	val, ok = pathParams["cluster"]
@@ -1632,45 +1852,45 @@ func RegisterPhysicalResourceModelHandlerClient(ctx context.Context, mux *runtim
 }
 
 var (
-	pattern_PhysicalResourceModel_CreateCluster_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"v1", "tenants", "tenant", "clusters"}, ""))
+	pattern_PhysicalResourceModel_CreateCluster_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "tenants", "tenant", "environments", "environment", "clusters"}, ""))
 
-	pattern_PhysicalResourceModel_UpdateCluster_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"v1", "tenants", "tenant", "clusters", "id"}, ""))
+	pattern_PhysicalResourceModel_UpdateCluster_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6}, []string{"v1", "tenants", "tenant", "environments", "environment", "clusters", "id"}, ""))
 
-	pattern_PhysicalResourceModel_GetCluster_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"v1", "tenants", "tenant", "clusters", "id"}, ""))
+	pattern_PhysicalResourceModel_GetCluster_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6}, []string{"v1", "tenants", "tenant", "environments", "environment", "clusters", "id"}, ""))
 
-	pattern_PhysicalResourceModel_ListClusters_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"v1", "tenants", "tenant", "clusters"}, ""))
+	pattern_PhysicalResourceModel_ListClusters_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "tenants", "tenant", "environments", "environment", "clusters"}, ""))
 
-	pattern_PhysicalResourceModel_DeleteCluster_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"v1", "tenants", "tenant", "clusters", "id"}, ""))
+	pattern_PhysicalResourceModel_DeleteCluster_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6}, []string{"v1", "tenants", "tenant", "environments", "environment", "clusters", "id"}, ""))
 
-	pattern_PhysicalResourceModel_CreateNamespace_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "tenants", "tenant", "clusters", "cluster", "namespaces"}, ""))
+	pattern_PhysicalResourceModel_CreateNamespace_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7}, []string{"v1", "tenants", "tenant", "environments", "environment", "clusters", "cluster", "namespaces"}, ""))
 
-	pattern_PhysicalResourceModel_GetNamespace_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6}, []string{"v1", "tenants", "tenant", "clusters", "cluster", "namespaces", "id"}, ""))
+	pattern_PhysicalResourceModel_GetNamespace_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7, 1, 0, 4, 1, 5, 8}, []string{"v1", "tenants", "tenant", "environments", "environment", "clusters", "cluster", "namespaces", "id"}, ""))
 
-	pattern_PhysicalResourceModel_UpdateNamespace_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6}, []string{"v1", "tenants", "tenant", "clusters", "cluster", "namespaces", "id"}, ""))
+	pattern_PhysicalResourceModel_UpdateNamespace_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7, 1, 0, 4, 1, 5, 8}, []string{"v1", "tenants", "tenant", "environments", "environment", "clusters", "cluster", "namespaces", "id"}, ""))
 
-	pattern_PhysicalResourceModel_ListNamespaces_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "tenants", "tenant", "clusters", "cluster", "namespaces"}, ""))
+	pattern_PhysicalResourceModel_ListNamespaces_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7}, []string{"v1", "tenants", "tenant", "environments", "environment", "clusters", "cluster", "namespaces"}, ""))
 
-	pattern_PhysicalResourceModel_DeleteNamespace_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6}, []string{"v1", "tenants", "tenant", "clusters", "cluster", "namespaces", "id"}, ""))
+	pattern_PhysicalResourceModel_DeleteNamespace_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7, 1, 0, 4, 1, 5, 8}, []string{"v1", "tenants", "tenant", "environments", "environment", "clusters", "cluster", "namespaces", "id"}, ""))
 
-	pattern_PhysicalResourceModel_CreateDeployment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7}, []string{"v1", "tenants", "tenant", "clusters", "cluster", "namespaces", "namespace", "deployments"}, ""))
+	pattern_PhysicalResourceModel_CreateDeployment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7, 1, 0, 4, 1, 5, 8, 2, 9}, []string{"v1", "tenants", "tenant", "environments", "environment", "clusters", "cluster", "namespaces", "namespace", "deployments"}, ""))
 
-	pattern_PhysicalResourceModel_GetDeployment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7, 1, 0, 4, 1, 5, 8}, []string{"v1", "tenants", "tenant", "clusters", "cluster", "namespaces", "namespace", "deployments", "id"}, ""))
+	pattern_PhysicalResourceModel_GetDeployment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7, 1, 0, 4, 1, 5, 8, 2, 9, 1, 0, 4, 1, 5, 10}, []string{"v1", "tenants", "tenant", "environments", "environment", "clusters", "cluster", "namespaces", "namespace", "deployments", "id"}, ""))
 
-	pattern_PhysicalResourceModel_ListDeployments_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7}, []string{"v1", "tenants", "tenant", "clusters", "cluster", "namespaces", "namespace", "deployments"}, ""))
+	pattern_PhysicalResourceModel_ListDeployments_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7, 1, 0, 4, 1, 5, 8, 2, 9}, []string{"v1", "tenants", "tenant", "environments", "environment", "clusters", "cluster", "namespaces", "namespace", "deployments"}, ""))
 
-	pattern_PhysicalResourceModel_UpdateDeployment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7, 1, 0, 4, 1, 5, 8}, []string{"v1", "tenants", "tenant", "clusters", "cluster", "namespaces", "namespace", "deployments", "id"}, ""))
+	pattern_PhysicalResourceModel_UpdateDeployment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7, 1, 0, 4, 1, 5, 8, 2, 9, 1, 0, 4, 1, 5, 10}, []string{"v1", "tenants", "tenant", "environments", "environment", "clusters", "cluster", "namespaces", "namespace", "deployments", "id"}, ""))
 
-	pattern_PhysicalResourceModel_DeleteDeployment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7, 1, 0, 4, 1, 5, 8}, []string{"v1", "tenants", "tenant", "clusters", "cluster", "namespaces", "namespace", "deployments", "id"}, ""))
+	pattern_PhysicalResourceModel_DeleteDeployment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7, 1, 0, 4, 1, 5, 8, 2, 9, 1, 0, 4, 1, 5, 10}, []string{"v1", "tenants", "tenant", "environments", "environment", "clusters", "cluster", "namespaces", "namespace", "deployments", "id"}, ""))
 
-	pattern_PhysicalResourceModel_CreateEndpoint_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7, 1, 0, 4, 1, 5, 8, 2, 9}, []string{"v1", "tenants", "tenant", "clusters", "cluster", "namespaces", "namespace", "deployments", "deployment", "endpoints"}, ""))
+	pattern_PhysicalResourceModel_CreateEndpoint_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7, 1, 0, 4, 1, 5, 8, 2, 9, 1, 0, 4, 1, 5, 10, 2, 11}, []string{"v1", "tenants", "tenant", "environments", "environment", "clusters", "cluster", "namespaces", "namespace", "deployments", "deployment", "endpoints"}, ""))
 
-	pattern_PhysicalResourceModel_GetEndpoint_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7, 1, 0, 4, 1, 5, 8, 2, 9, 1, 0, 4, 1, 5, 10}, []string{"v1", "tenants", "tenant", "clusters", "cluster", "namespaces", "namespace", "deployments", "deployment", "endpoints", "id"}, ""))
+	pattern_PhysicalResourceModel_GetEndpoint_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7, 1, 0, 4, 1, 5, 8, 2, 9, 1, 0, 4, 1, 5, 10, 2, 11, 1, 0, 4, 1, 5, 12}, []string{"v1", "tenants", "tenant", "environments", "environment", "clusters", "cluster", "namespaces", "namespace", "deployments", "deployment", "endpoints", "id"}, ""))
 
-	pattern_PhysicalResourceModel_ListEndpoints_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7, 1, 0, 4, 1, 5, 8, 2, 9}, []string{"v1", "tenants", "tenant", "clusters", "cluster", "namespaces", "namespace", "deployments", "deployment", "endpoints"}, ""))
+	pattern_PhysicalResourceModel_ListEndpoints_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7, 1, 0, 4, 1, 5, 8, 2, 9, 1, 0, 4, 1, 5, 10, 2, 11}, []string{"v1", "tenants", "tenant", "environments", "environment", "clusters", "cluster", "namespaces", "namespace", "deployments", "deployment", "endpoints"}, ""))
 
-	pattern_PhysicalResourceModel_UpdateEndpoint_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7, 1, 0, 4, 1, 5, 8, 2, 9, 1, 0, 4, 1, 5, 10}, []string{"v1", "tenants", "tenant", "clusters", "cluster", "namespaces", "namespace", "deployments", "deployment", "endpoints", "id"}, ""))
+	pattern_PhysicalResourceModel_UpdateEndpoint_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7, 1, 0, 4, 1, 5, 8, 2, 9, 1, 0, 4, 1, 5, 10, 2, 11, 1, 0, 4, 1, 5, 12}, []string{"v1", "tenants", "tenant", "environments", "environment", "clusters", "cluster", "namespaces", "namespace", "deployments", "deployment", "endpoints", "id"}, ""))
 
-	pattern_PhysicalResourceModel_DeleteEndpoint_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7, 1, 0, 4, 1, 5, 8, 2, 9, 1, 0, 4, 1, 5, 10}, []string{"v1", "tenants", "tenant", "clusters", "cluster", "namespaces", "namespace", "deployments", "deployment", "endpoints", "id"}, ""))
+	pattern_PhysicalResourceModel_DeleteEndpoint_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7, 1, 0, 4, 1, 5, 8, 2, 9, 1, 0, 4, 1, 5, 10, 2, 11, 1, 0, 4, 1, 5, 12}, []string{"v1", "tenants", "tenant", "environments", "environment", "clusters", "cluster", "namespaces", "namespace", "deployments", "deployment", "endpoints", "id"}, ""))
 )
 
 var (

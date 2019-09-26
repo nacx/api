@@ -35,7 +35,7 @@ export interface TetrateApiTccWorkflowsLoadbalancerV1ResolveTicketRequest {
      * @type {string}
      * @memberof TetrateApiTccWorkflowsLoadbalancerV1ResolveTicketRequest
      */
-    workspace?: string;
+    environment?: string;
     /**
      * 
      * @type {string}
@@ -60,7 +60,7 @@ export function TetrateApiTccWorkflowsLoadbalancerV1ResolveTicketRequestFromJSON
     return {
         'name': !exists(json, 'name') ? undefined : json['name'],
         'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
-        'workspace': !exists(json, 'workspace') ? undefined : json['workspace'],
+        'environment': !exists(json, 'environment') ? undefined : json['environment'],
         'loadbalancer': !exists(json, 'loadbalancer') ? undefined : json['loadbalancer'],
         'id': !exists(json, 'id') ? undefined : json['id'],
         'note': !exists(json, 'note') ? undefined : json['note'],
@@ -74,7 +74,7 @@ export function TetrateApiTccWorkflowsLoadbalancerV1ResolveTicketRequestToJSON(v
     return {
         'name': value.name,
         'tenant': value.tenant,
-        'workspace': value.workspace,
+        'environment': value.environment,
         'loadbalancer': value.loadbalancer,
         'id': value.id,
         'note': value.note,

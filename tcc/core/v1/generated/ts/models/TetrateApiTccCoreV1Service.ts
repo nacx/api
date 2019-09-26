@@ -41,7 +41,7 @@ export interface TetrateApiTccCoreV1Service {
      * @type {string}
      * @memberof TetrateApiTccCoreV1Service
      */
-    workspace?: string;
+    environment?: string;
     /**
      * 
      * @type {string}
@@ -62,16 +62,16 @@ export interface TetrateApiTccCoreV1Service {
     description?: string;
     /**
      * 
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1Service
+     */
+    hostname?: string;
+    /**
+     * 
      * @type {TetrateApiTccCoreV1RoutingInfo}
      * @memberof TetrateApiTccCoreV1Service
      */
     routingInfo?: TetrateApiTccCoreV1RoutingInfo;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof TetrateApiTccCoreV1Service
-     */
-    serviceDeployments?: Array<string>;
     /**
      * 
      * @type {string}
@@ -84,12 +84,12 @@ export function TetrateApiTccCoreV1ServiceFromJSON(json: any): TetrateApiTccCore
     return {
         'name': !exists(json, 'name') ? undefined : json['name'],
         'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
-        'workspace': !exists(json, 'workspace') ? undefined : json['workspace'],
+        'environment': !exists(json, 'environment') ? undefined : json['environment'],
         'application': !exists(json, 'application') ? undefined : json['application'],
         'id': !exists(json, 'id') ? undefined : json['id'],
         'description': !exists(json, 'description') ? undefined : json['description'],
+        'hostname': !exists(json, 'hostname') ? undefined : json['hostname'],
         'routingInfo': !exists(json, 'routingInfo') ? undefined : TetrateApiTccCoreV1RoutingInfoFromJSON(json['routingInfo']),
-        'serviceDeployments': !exists(json, 'serviceDeployments') ? undefined : json['serviceDeployments'],
         'etag': !exists(json, 'etag') ? undefined : json['etag'],
     };
 }
@@ -101,12 +101,12 @@ export function TetrateApiTccCoreV1ServiceToJSON(value?: TetrateApiTccCoreV1Serv
     return {
         'name': value.name,
         'tenant': value.tenant,
-        'workspace': value.workspace,
+        'environment': value.environment,
         'application': value.application,
         'id': value.id,
         'description': value.description,
+        'hostname': value.hostname,
         'routingInfo': TetrateApiTccCoreV1RoutingInfoToJSON(value.routingInfo),
-        'serviceDeployments': value.serviceDeployments,
         'etag': value.etag,
     };
 }

@@ -47,6 +47,12 @@ export interface TetrateApiTccCoreV1CreateEndpointRequest {
      * @type {string}
      * @memberof TetrateApiTccCoreV1CreateEndpointRequest
      */
+    environment?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1CreateEndpointRequest
+     */
     cluster?: string;
     /**
      * 
@@ -73,6 +79,7 @@ export function TetrateApiTccCoreV1CreateEndpointRequestFromJSON(json: any): Tet
         'parent': !exists(json, 'parent') ? undefined : json['parent'],
         'id': !exists(json, 'id') ? undefined : json['id'],
         'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
+        'environment': !exists(json, 'environment') ? undefined : json['environment'],
         'cluster': !exists(json, 'cluster') ? undefined : json['cluster'],
         'namespace': !exists(json, 'namespace') ? undefined : json['namespace'],
         'deployment': !exists(json, 'deployment') ? undefined : json['deployment'],
@@ -88,6 +95,7 @@ export function TetrateApiTccCoreV1CreateEndpointRequestToJSON(value?: TetrateAp
         'parent': value.parent,
         'id': value.id,
         'tenant': value.tenant,
+        'environment': value.environment,
         'cluster': value.cluster,
         'namespace': value.namespace,
         'deployment': value.deployment,

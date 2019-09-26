@@ -44,6 +44,8 @@ func (m *Cluster) Validate() error {
 
 	// no validation rules for Tenant
 
+	// no validation rules for Environment
+
 	// no validation rules for Id
 
 	// no validation rules for Description
@@ -56,16 +58,6 @@ func (m *Cluster) Validate() error {
 		if err := v.Validate(); err != nil {
 			return ClusterValidationError{
 				field:  "ClientSettings",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
-	if v, ok := interface{}(m.GetPermissions()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return ClusterValidationError{
-				field:  "Permissions",
 				reason: "embedded message failed validation",
 				cause:  err,
 			}
@@ -142,6 +134,8 @@ func (m *CreateClusterRequest) Validate() error {
 	// no validation rules for Id
 
 	// no validation rules for Tenant
+
+	// no validation rules for Environment
 
 	if v, ok := interface{}(m.GetCluster()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
@@ -224,6 +218,8 @@ func (m *GetClusterRequest) Validate() error {
 
 	// no validation rules for Tenant
 
+	// no validation rules for Environment
+
 	// no validation rules for Id
 
 	return nil
@@ -296,6 +292,8 @@ func (m *ListClustersRequest) Validate() error {
 	// no validation rules for Parent
 
 	// no validation rules for Tenant
+
+	// no validation rules for Environment
 
 	return nil
 }
@@ -450,6 +448,8 @@ func (m *DeleteClusterRequest) Validate() error {
 
 	// no validation rules for Tenant
 
+	// no validation rules for Environment
+
 	// no validation rules for Id
 
 	return nil
@@ -522,6 +522,8 @@ func (m *Namespace) Validate() error {
 
 	// no validation rules for Tenant
 
+	// no validation rules for Environment
+
 	// no validation rules for Cluster
 
 	// no validation rules for Id
@@ -532,16 +534,6 @@ func (m *Namespace) Validate() error {
 		if err := v.Validate(); err != nil {
 			return NamespaceValidationError{
 				field:  "ClientSettings",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
-	if v, ok := interface{}(m.GetPermissions()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return NamespaceValidationError{
-				field:  "Permissions",
 				reason: "embedded message failed validation",
 				cause:  err,
 			}
@@ -620,6 +612,8 @@ func (m *CreateNamespaceRequest) Validate() error {
 	// no validation rules for Id
 
 	// no validation rules for Tenant
+
+	// no validation rules for Environment
 
 	// no validation rules for Cluster
 
@@ -704,6 +698,8 @@ func (m *GetNamespaceRequest) Validate() error {
 
 	// no validation rules for Tenant
 
+	// no validation rules for Environment
+
 	// no validation rules for Cluster
 
 	// no validation rules for Id
@@ -778,6 +774,8 @@ func (m *ListNamespacesRequest) Validate() error {
 	// no validation rules for Parent
 
 	// no validation rules for Tenant
+
+	// no validation rules for Environment
 
 	// no validation rules for Cluster
 
@@ -934,6 +932,8 @@ func (m *DeleteNamespaceRequest) Validate() error {
 
 	// no validation rules for Tenant
 
+	// no validation rules for Environment
+
 	// no validation rules for Cluster
 
 	// no validation rules for Id
@@ -1007,6 +1007,8 @@ func (m *Deployment) Validate() error {
 	// no validation rules for Name
 
 	// no validation rules for Tenant
+
+	// no validation rules for Environment
 
 	// no validation rules for Cluster
 
@@ -1188,6 +1190,8 @@ func (m *CreateDeploymentRequest) Validate() error {
 
 	// no validation rules for Tenant
 
+	// no validation rules for Environment
+
 	// no validation rules for Cluster
 
 	// no validation rules for Namespace
@@ -1273,6 +1277,8 @@ func (m *GetDeploymentRequest) Validate() error {
 
 	// no validation rules for Tenant
 
+	// no validation rules for Environment
+
 	// no validation rules for Cluster
 
 	// no validation rules for Namespace
@@ -1349,6 +1355,8 @@ func (m *ListDeploymentsRequest) Validate() error {
 	// no validation rules for Parent
 
 	// no validation rules for Tenant
+
+	// no validation rules for Environment
 
 	// no validation rules for Cluster
 
@@ -1507,6 +1515,8 @@ func (m *DeleteDeploymentRequest) Validate() error {
 
 	// no validation rules for Tenant
 
+	// no validation rules for Environment
+
 	// no validation rules for Cluster
 
 	// no validation rules for Namespace
@@ -1582,6 +1592,8 @@ func (m *Endpoint) Validate() error {
 	// no validation rules for Name
 
 	// no validation rules for Tenant
+
+	// no validation rules for Environment
 
 	// no validation rules for Cluster
 
@@ -1672,6 +1684,8 @@ func (m *CreateEndpointRequest) Validate() error {
 
 	// no validation rules for Tenant
 
+	// no validation rules for Environment
+
 	// no validation rules for Cluster
 
 	// no validation rules for Namespace
@@ -1759,6 +1773,8 @@ func (m *GetEndpointRequest) Validate() error {
 
 	// no validation rules for Tenant
 
+	// no validation rules for Environment
+
 	// no validation rules for Cluster
 
 	// no validation rules for Namespace
@@ -1837,6 +1853,8 @@ func (m *ListEndpointsRequest) Validate() error {
 	// no validation rules for Parent
 
 	// no validation rules for Tenant
+
+	// no validation rules for Environment
 
 	// no validation rules for Cluster
 
@@ -1996,6 +2014,8 @@ func (m *DeleteEndpointRequest) Validate() error {
 	// no validation rules for Name
 
 	// no validation rules for Tenant
+
+	// no validation rules for Environment
 
 	// no validation rules for Cluster
 

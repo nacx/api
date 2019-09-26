@@ -20,168 +20,168 @@ import {
     TetrateApiTccCoreV1CreateApplicationRequest,
     TetrateApiTccCoreV1CreateApplicationRequestFromJSON,
     TetrateApiTccCoreV1CreateApplicationRequestToJSON,
+    TetrateApiTccCoreV1CreateEnvironmentRequest,
+    TetrateApiTccCoreV1CreateEnvironmentRequestFromJSON,
+    TetrateApiTccCoreV1CreateEnvironmentRequestToJSON,
     TetrateApiTccCoreV1CreateLoadBalancerRequest,
     TetrateApiTccCoreV1CreateLoadBalancerRequestFromJSON,
     TetrateApiTccCoreV1CreateLoadBalancerRequestToJSON,
     TetrateApiTccCoreV1CreateServiceRequest,
     TetrateApiTccCoreV1CreateServiceRequestFromJSON,
     TetrateApiTccCoreV1CreateServiceRequestToJSON,
-    TetrateApiTccCoreV1CreateWorkspaceRequest,
-    TetrateApiTccCoreV1CreateWorkspaceRequestFromJSON,
-    TetrateApiTccCoreV1CreateWorkspaceRequestToJSON,
+    TetrateApiTccCoreV1Environment,
+    TetrateApiTccCoreV1EnvironmentFromJSON,
+    TetrateApiTccCoreV1EnvironmentToJSON,
     TetrateApiTccCoreV1ListApplicationsResponse,
     TetrateApiTccCoreV1ListApplicationsResponseFromJSON,
     TetrateApiTccCoreV1ListApplicationsResponseToJSON,
+    TetrateApiTccCoreV1ListEnvironmentsResponse,
+    TetrateApiTccCoreV1ListEnvironmentsResponseFromJSON,
+    TetrateApiTccCoreV1ListEnvironmentsResponseToJSON,
     TetrateApiTccCoreV1ListLoadBalancersResponse,
     TetrateApiTccCoreV1ListLoadBalancersResponseFromJSON,
     TetrateApiTccCoreV1ListLoadBalancersResponseToJSON,
     TetrateApiTccCoreV1ListServicesResponse,
     TetrateApiTccCoreV1ListServicesResponseFromJSON,
     TetrateApiTccCoreV1ListServicesResponseToJSON,
-    TetrateApiTccCoreV1ListWorkspacesResponse,
-    TetrateApiTccCoreV1ListWorkspacesResponseFromJSON,
-    TetrateApiTccCoreV1ListWorkspacesResponseToJSON,
     TetrateApiTccCoreV1LoadBalancer,
     TetrateApiTccCoreV1LoadBalancerFromJSON,
     TetrateApiTccCoreV1LoadBalancerToJSON,
     TetrateApiTccCoreV1Service,
     TetrateApiTccCoreV1ServiceFromJSON,
     TetrateApiTccCoreV1ServiceToJSON,
-    TetrateApiTccCoreV1Workspace,
-    TetrateApiTccCoreV1WorkspaceFromJSON,
-    TetrateApiTccCoreV1WorkspaceToJSON,
 } from '../models';
 
 export interface CreateApplicationRequest {
     tenant: string;
-    workspace: string;
+    environment: string;
     body: TetrateApiTccCoreV1CreateApplicationRequest;
+}
+
+export interface CreateEnvironmentRequest {
+    tenant: string;
+    body: TetrateApiTccCoreV1CreateEnvironmentRequest;
 }
 
 export interface CreateLoadBalancerRequest {
     tenant: string;
-    workspace: string;
+    environment: string;
     body: TetrateApiTccCoreV1CreateLoadBalancerRequest;
 }
 
 export interface CreateServiceRequest {
     tenant: string;
-    workspace: string;
+    environment: string;
     application: string;
     body: TetrateApiTccCoreV1CreateServiceRequest;
 }
 
-export interface CreateWorkspaceRequest {
-    tenant: string;
-    body: TetrateApiTccCoreV1CreateWorkspaceRequest;
-}
-
 export interface DeleteApplicationRequest {
     tenant: string;
-    workspace: string;
+    environment: string;
+    id: string;
+    name?: string;
+}
+
+export interface DeleteEnvironmentRequest {
+    tenant: string;
     id: string;
     name?: string;
 }
 
 export interface DeleteLoadBalancerRequest {
     tenant: string;
-    workspace: string;
+    environment: string;
     id: string;
     name?: string;
 }
 
 export interface DeleteServiceRequest {
     tenant: string;
-    workspace: string;
+    environment: string;
     application: string;
-    id: string;
-    name?: string;
-}
-
-export interface DeleteWorkspaceRequest {
-    tenant: string;
     id: string;
     name?: string;
 }
 
 export interface GetApplicationRequest {
     tenant: string;
-    workspace: string;
+    environment: string;
+    id: string;
+    name?: string;
+}
+
+export interface GetEnvironmentRequest {
+    tenant: string;
     id: string;
     name?: string;
 }
 
 export interface GetLoadBalancerRequest {
     tenant: string;
-    workspace: string;
+    environment: string;
     id: string;
     name?: string;
 }
 
 export interface GetServiceRequest {
     tenant: string;
-    workspace: string;
+    environment: string;
     application: string;
-    id: string;
-    name?: string;
-}
-
-export interface GetWorkspaceRequest {
-    tenant: string;
     id: string;
     name?: string;
 }
 
 export interface ListApplicationsRequest {
     tenant: string;
-    workspace: string;
+    environment: string;
+    parent?: string;
+}
+
+export interface ListEnvironmentsRequest {
+    tenant: string;
     parent?: string;
 }
 
 export interface ListLoadBalancersRequest {
     tenant: string;
-    workspace: string;
+    environment: string;
     parent?: string;
 }
 
 export interface ListServicesRequest {
     tenant: string;
-    workspace: string;
+    environment: string;
     application: string;
-    parent?: string;
-}
-
-export interface ListWorkspacesRequest {
-    tenant: string;
     parent?: string;
 }
 
 export interface UpdateApplicationRequest {
     tenant: string;
-    workspace: string;
+    environment: string;
     id: string;
     body: TetrateApiTccCoreV1Application;
 }
 
+export interface UpdateEnvironmentRequest {
+    tenant: string;
+    id: string;
+    body: TetrateApiTccCoreV1Environment;
+}
+
 export interface UpdateLoadBalancerRequest {
     tenant: string;
-    workspace: string;
+    environment: string;
     id: string;
     body: TetrateApiTccCoreV1LoadBalancer;
 }
 
 export interface UpdateServiceRequest {
     tenant: string;
-    workspace: string;
+    environment: string;
     application: string;
     id: string;
     body: TetrateApiTccCoreV1Service;
-}
-
-export interface UpdateWorkspaceRequest {
-    tenant: string;
-    id: string;
-    body: TetrateApiTccCoreV1Workspace;
 }
 
 /**
@@ -196,8 +196,8 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling createApplication.');
         }
 
-        if (requestParameters.workspace === null || requestParameters.workspace === undefined) {
-            throw new runtime.RequiredError('workspace','Required parameter requestParameters.workspace was null or undefined when calling createApplication.');
+        if (requestParameters.environment === null || requestParameters.environment === undefined) {
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling createApplication.');
         }
 
         if (requestParameters.body === null || requestParameters.body === undefined) {
@@ -211,7 +211,7 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/workspaces/{workspace}/applications`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters.workspace))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/applications`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -230,13 +230,48 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
 
     /**
      */
+    async createEnvironmentRaw(requestParameters: CreateEnvironmentRequest): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
+            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling createEnvironment.');
+        }
+
+        if (requestParameters.body === null || requestParameters.body === undefined) {
+            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling createEnvironment.');
+        }
+
+        const queryParameters: runtime.HTTPQuery = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/v1/tenants/{tenant}/environments`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: TetrateApiTccCoreV1CreateEnvironmentRequestToJSON(requestParameters.body),
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccCoreV1EnvironmentFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async createEnvironment(requestParameters: CreateEnvironmentRequest): Promise<TetrateApiTccCoreV1Environment> {
+        const response = await this.createEnvironmentRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     */
     async createLoadBalancerRaw(requestParameters: CreateLoadBalancerRequest): Promise<runtime.ApiResponse<any>> {
         if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling createLoadBalancer.');
         }
 
-        if (requestParameters.workspace === null || requestParameters.workspace === undefined) {
-            throw new runtime.RequiredError('workspace','Required parameter requestParameters.workspace was null or undefined when calling createLoadBalancer.');
+        if (requestParameters.environment === null || requestParameters.environment === undefined) {
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling createLoadBalancer.');
         }
 
         if (requestParameters.body === null || requestParameters.body === undefined) {
@@ -250,7 +285,7 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/workspaces/{workspace}/loadbalancers`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters.workspace))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/loadbalancers`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -274,8 +309,8 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling createService.');
         }
 
-        if (requestParameters.workspace === null || requestParameters.workspace === undefined) {
-            throw new runtime.RequiredError('workspace','Required parameter requestParameters.workspace was null or undefined when calling createService.');
+        if (requestParameters.environment === null || requestParameters.environment === undefined) {
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling createService.');
         }
 
         if (requestParameters.application === null || requestParameters.application === undefined) {
@@ -293,7 +328,7 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/workspaces/{workspace}/applications/{application}/services`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters.workspace))).replace(`{${"application"}}`, encodeURIComponent(String(requestParameters.application))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/applications/{application}/services`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"application"}}`, encodeURIComponent(String(requestParameters.application))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -312,48 +347,13 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
 
     /**
      */
-    async createWorkspaceRaw(requestParameters: CreateWorkspaceRequest): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
-            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling createWorkspace.');
-        }
-
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling createWorkspace.');
-        }
-
-        const queryParameters: runtime.HTTPQuery = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        const response = await this.request({
-            path: `/v1/tenants/{tenant}/workspaces`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))),
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-            body: TetrateApiTccCoreV1CreateWorkspaceRequestToJSON(requestParameters.body),
-        });
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccCoreV1WorkspaceFromJSON(jsonValue));
-    }
-
-    /**
-     */
-    async createWorkspace(requestParameters: CreateWorkspaceRequest): Promise<TetrateApiTccCoreV1Workspace> {
-        const response = await this.createWorkspaceRaw(requestParameters);
-        return await response.value();
-    }
-
-    /**
-     */
     async deleteApplicationRaw(requestParameters: DeleteApplicationRequest): Promise<runtime.ApiResponse<any>> {
         if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling deleteApplication.');
         }
 
-        if (requestParameters.workspace === null || requestParameters.workspace === undefined) {
-            throw new runtime.RequiredError('workspace','Required parameter requestParameters.workspace was null or undefined when calling deleteApplication.');
+        if (requestParameters.environment === null || requestParameters.environment === undefined) {
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling deleteApplication.');
         }
 
         if (requestParameters.id === null || requestParameters.id === undefined) {
@@ -369,7 +369,7 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/workspaces/{workspace}/applications/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters.workspace))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/applications/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -387,13 +387,49 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
 
     /**
      */
+    async deleteEnvironmentRaw(requestParameters: DeleteEnvironmentRequest): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
+            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling deleteEnvironment.');
+        }
+
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteEnvironment.');
+        }
+
+        const queryParameters: runtime.HTTPQuery = {};
+
+        if (requestParameters.name !== undefined) {
+            queryParameters['name'] = requestParameters.name;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/v1/tenants/{tenant}/environments/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.TextApiResponse(response);
+    }
+
+    /**
+     */
+    async deleteEnvironment(requestParameters: DeleteEnvironmentRequest): Promise<object> {
+        const response = await this.deleteEnvironmentRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     */
     async deleteLoadBalancerRaw(requestParameters: DeleteLoadBalancerRequest): Promise<runtime.ApiResponse<any>> {
         if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling deleteLoadBalancer.');
         }
 
-        if (requestParameters.workspace === null || requestParameters.workspace === undefined) {
-            throw new runtime.RequiredError('workspace','Required parameter requestParameters.workspace was null or undefined when calling deleteLoadBalancer.');
+        if (requestParameters.environment === null || requestParameters.environment === undefined) {
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling deleteLoadBalancer.');
         }
 
         if (requestParameters.id === null || requestParameters.id === undefined) {
@@ -409,7 +445,7 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/workspaces/{workspace}/loadbalancers/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters.workspace))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -432,8 +468,8 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling deleteService.');
         }
 
-        if (requestParameters.workspace === null || requestParameters.workspace === undefined) {
-            throw new runtime.RequiredError('workspace','Required parameter requestParameters.workspace was null or undefined when calling deleteService.');
+        if (requestParameters.environment === null || requestParameters.environment === undefined) {
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling deleteService.');
         }
 
         if (requestParameters.application === null || requestParameters.application === undefined) {
@@ -453,7 +489,7 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/workspaces/{workspace}/applications/{application}/services/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters.workspace))).replace(`{${"application"}}`, encodeURIComponent(String(requestParameters.application))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/applications/{application}/services/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"application"}}`, encodeURIComponent(String(requestParameters.application))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -471,49 +507,13 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
 
     /**
      */
-    async deleteWorkspaceRaw(requestParameters: DeleteWorkspaceRequest): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
-            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling deleteWorkspace.');
-        }
-
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteWorkspace.');
-        }
-
-        const queryParameters: runtime.HTTPQuery = {};
-
-        if (requestParameters.name !== undefined) {
-            queryParameters['name'] = requestParameters.name;
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        const response = await this.request({
-            path: `/v1/tenants/{tenant}/workspaces/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
-            method: 'DELETE',
-            headers: headerParameters,
-            query: queryParameters,
-        });
-
-        return new runtime.TextApiResponse(response);
-    }
-
-    /**
-     */
-    async deleteWorkspace(requestParameters: DeleteWorkspaceRequest): Promise<object> {
-        const response = await this.deleteWorkspaceRaw(requestParameters);
-        return await response.value();
-    }
-
-    /**
-     */
     async getApplicationRaw(requestParameters: GetApplicationRequest): Promise<runtime.ApiResponse<any>> {
         if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling getApplication.');
         }
 
-        if (requestParameters.workspace === null || requestParameters.workspace === undefined) {
-            throw new runtime.RequiredError('workspace','Required parameter requestParameters.workspace was null or undefined when calling getApplication.');
+        if (requestParameters.environment === null || requestParameters.environment === undefined) {
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling getApplication.');
         }
 
         if (requestParameters.id === null || requestParameters.id === undefined) {
@@ -529,7 +529,7 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/workspaces/{workspace}/applications/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters.workspace))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/applications/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -547,13 +547,49 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
 
     /**
      */
+    async getEnvironmentRaw(requestParameters: GetEnvironmentRequest): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
+            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling getEnvironment.');
+        }
+
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getEnvironment.');
+        }
+
+        const queryParameters: runtime.HTTPQuery = {};
+
+        if (requestParameters.name !== undefined) {
+            queryParameters['name'] = requestParameters.name;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/v1/tenants/{tenant}/environments/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccCoreV1EnvironmentFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async getEnvironment(requestParameters: GetEnvironmentRequest): Promise<TetrateApiTccCoreV1Environment> {
+        const response = await this.getEnvironmentRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     */
     async getLoadBalancerRaw(requestParameters: GetLoadBalancerRequest): Promise<runtime.ApiResponse<any>> {
         if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling getLoadBalancer.');
         }
 
-        if (requestParameters.workspace === null || requestParameters.workspace === undefined) {
-            throw new runtime.RequiredError('workspace','Required parameter requestParameters.workspace was null or undefined when calling getLoadBalancer.');
+        if (requestParameters.environment === null || requestParameters.environment === undefined) {
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling getLoadBalancer.');
         }
 
         if (requestParameters.id === null || requestParameters.id === undefined) {
@@ -569,7 +605,7 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/workspaces/{workspace}/loadbalancers/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters.workspace))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -592,8 +628,8 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling getService.');
         }
 
-        if (requestParameters.workspace === null || requestParameters.workspace === undefined) {
-            throw new runtime.RequiredError('workspace','Required parameter requestParameters.workspace was null or undefined when calling getService.');
+        if (requestParameters.environment === null || requestParameters.environment === undefined) {
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling getService.');
         }
 
         if (requestParameters.application === null || requestParameters.application === undefined) {
@@ -613,7 +649,7 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/workspaces/{workspace}/applications/{application}/services/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters.workspace))).replace(`{${"application"}}`, encodeURIComponent(String(requestParameters.application))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/applications/{application}/services/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"application"}}`, encodeURIComponent(String(requestParameters.application))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -631,49 +667,13 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
 
     /**
      */
-    async getWorkspaceRaw(requestParameters: GetWorkspaceRequest): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
-            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling getWorkspace.');
-        }
-
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getWorkspace.');
-        }
-
-        const queryParameters: runtime.HTTPQuery = {};
-
-        if (requestParameters.name !== undefined) {
-            queryParameters['name'] = requestParameters.name;
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        const response = await this.request({
-            path: `/v1/tenants/{tenant}/workspaces/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        });
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccCoreV1WorkspaceFromJSON(jsonValue));
-    }
-
-    /**
-     */
-    async getWorkspace(requestParameters: GetWorkspaceRequest): Promise<TetrateApiTccCoreV1Workspace> {
-        const response = await this.getWorkspaceRaw(requestParameters);
-        return await response.value();
-    }
-
-    /**
-     */
     async listApplicationsRaw(requestParameters: ListApplicationsRequest): Promise<runtime.ApiResponse<any>> {
         if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling listApplications.');
         }
 
-        if (requestParameters.workspace === null || requestParameters.workspace === undefined) {
-            throw new runtime.RequiredError('workspace','Required parameter requestParameters.workspace was null or undefined when calling listApplications.');
+        if (requestParameters.environment === null || requestParameters.environment === undefined) {
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling listApplications.');
         }
 
         const queryParameters: runtime.HTTPQuery = {};
@@ -685,7 +685,7 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/workspaces/{workspace}/applications`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters.workspace))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/applications`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -703,13 +703,9 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
 
     /**
      */
-    async listLoadBalancersRaw(requestParameters: ListLoadBalancersRequest): Promise<runtime.ApiResponse<any>> {
+    async listEnvironmentsRaw(requestParameters: ListEnvironmentsRequest): Promise<runtime.ApiResponse<any>> {
         if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
-            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling listLoadBalancers.');
-        }
-
-        if (requestParameters.workspace === null || requestParameters.workspace === undefined) {
-            throw new runtime.RequiredError('workspace','Required parameter requestParameters.workspace was null or undefined when calling listLoadBalancers.');
+            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling listEnvironments.');
         }
 
         const queryParameters: runtime.HTTPQuery = {};
@@ -721,7 +717,43 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/workspaces/{workspace}/loadbalancers`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters.workspace))),
+            path: `/v1/tenants/{tenant}/environments`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccCoreV1ListEnvironmentsResponseFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async listEnvironments(requestParameters: ListEnvironmentsRequest): Promise<TetrateApiTccCoreV1ListEnvironmentsResponse> {
+        const response = await this.listEnvironmentsRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     */
+    async listLoadBalancersRaw(requestParameters: ListLoadBalancersRequest): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
+            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling listLoadBalancers.');
+        }
+
+        if (requestParameters.environment === null || requestParameters.environment === undefined) {
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling listLoadBalancers.');
+        }
+
+        const queryParameters: runtime.HTTPQuery = {};
+
+        if (requestParameters.parent !== undefined) {
+            queryParameters['parent'] = requestParameters.parent;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/v1/tenants/{tenant}/environments/{environment}/loadbalancers`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -744,8 +776,8 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling listServices.');
         }
 
-        if (requestParameters.workspace === null || requestParameters.workspace === undefined) {
-            throw new runtime.RequiredError('workspace','Required parameter requestParameters.workspace was null or undefined when calling listServices.');
+        if (requestParameters.environment === null || requestParameters.environment === undefined) {
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling listServices.');
         }
 
         if (requestParameters.application === null || requestParameters.application === undefined) {
@@ -761,7 +793,7 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/workspaces/{workspace}/applications/{application}/services`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters.workspace))).replace(`{${"application"}}`, encodeURIComponent(String(requestParameters.application))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/applications/{application}/services`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"application"}}`, encodeURIComponent(String(requestParameters.application))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -779,45 +811,13 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
 
     /**
      */
-    async listWorkspacesRaw(requestParameters: ListWorkspacesRequest): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
-            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling listWorkspaces.');
-        }
-
-        const queryParameters: runtime.HTTPQuery = {};
-
-        if (requestParameters.parent !== undefined) {
-            queryParameters['parent'] = requestParameters.parent;
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        const response = await this.request({
-            path: `/v1/tenants/{tenant}/workspaces`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        });
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccCoreV1ListWorkspacesResponseFromJSON(jsonValue));
-    }
-
-    /**
-     */
-    async listWorkspaces(requestParameters: ListWorkspacesRequest): Promise<TetrateApiTccCoreV1ListWorkspacesResponse> {
-        const response = await this.listWorkspacesRaw(requestParameters);
-        return await response.value();
-    }
-
-    /**
-     */
     async updateApplicationRaw(requestParameters: UpdateApplicationRequest): Promise<runtime.ApiResponse<any>> {
         if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling updateApplication.');
         }
 
-        if (requestParameters.workspace === null || requestParameters.workspace === undefined) {
-            throw new runtime.RequiredError('workspace','Required parameter requestParameters.workspace was null or undefined when calling updateApplication.');
+        if (requestParameters.environment === null || requestParameters.environment === undefined) {
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling updateApplication.');
         }
 
         if (requestParameters.id === null || requestParameters.id === undefined) {
@@ -835,7 +835,7 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/workspaces/{workspace}/applications/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters.workspace))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/applications/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -854,13 +854,52 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
 
     /**
      */
+    async updateEnvironmentRaw(requestParameters: UpdateEnvironmentRequest): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
+            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling updateEnvironment.');
+        }
+
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling updateEnvironment.');
+        }
+
+        if (requestParameters.body === null || requestParameters.body === undefined) {
+            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling updateEnvironment.');
+        }
+
+        const queryParameters: runtime.HTTPQuery = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/v1/tenants/{tenant}/environments/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: TetrateApiTccCoreV1EnvironmentToJSON(requestParameters.body),
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccCoreV1EnvironmentFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async updateEnvironment(requestParameters: UpdateEnvironmentRequest): Promise<TetrateApiTccCoreV1Environment> {
+        const response = await this.updateEnvironmentRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     */
     async updateLoadBalancerRaw(requestParameters: UpdateLoadBalancerRequest): Promise<runtime.ApiResponse<any>> {
         if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling updateLoadBalancer.');
         }
 
-        if (requestParameters.workspace === null || requestParameters.workspace === undefined) {
-            throw new runtime.RequiredError('workspace','Required parameter requestParameters.workspace was null or undefined when calling updateLoadBalancer.');
+        if (requestParameters.environment === null || requestParameters.environment === undefined) {
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling updateLoadBalancer.');
         }
 
         if (requestParameters.id === null || requestParameters.id === undefined) {
@@ -878,7 +917,7 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/workspaces/{workspace}/loadbalancers/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters.workspace))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -902,8 +941,8 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling updateService.');
         }
 
-        if (requestParameters.workspace === null || requestParameters.workspace === undefined) {
-            throw new runtime.RequiredError('workspace','Required parameter requestParameters.workspace was null or undefined when calling updateService.');
+        if (requestParameters.environment === null || requestParameters.environment === undefined) {
+            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling updateService.');
         }
 
         if (requestParameters.application === null || requestParameters.application === undefined) {
@@ -925,7 +964,7 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/v1/tenants/{tenant}/workspaces/{workspace}/applications/{application}/services/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"workspace"}}`, encodeURIComponent(String(requestParameters.workspace))).replace(`{${"application"}}`, encodeURIComponent(String(requestParameters.application))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/v1/tenants/{tenant}/environments/{environment}/applications/{application}/services/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"application"}}`, encodeURIComponent(String(requestParameters.application))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -939,45 +978,6 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
      */
     async updateService(requestParameters: UpdateServiceRequest): Promise<TetrateApiTccCoreV1Service> {
         const response = await this.updateServiceRaw(requestParameters);
-        return await response.value();
-    }
-
-    /**
-     */
-    async updateWorkspaceRaw(requestParameters: UpdateWorkspaceRequest): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
-            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling updateWorkspace.');
-        }
-
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling updateWorkspace.');
-        }
-
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling updateWorkspace.');
-        }
-
-        const queryParameters: runtime.HTTPQuery = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        const response = await this.request({
-            path: `/v1/tenants/{tenant}/workspaces/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
-            method: 'PUT',
-            headers: headerParameters,
-            query: queryParameters,
-            body: TetrateApiTccCoreV1WorkspaceToJSON(requestParameters.body),
-        });
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccCoreV1WorkspaceFromJSON(jsonValue));
-    }
-
-    /**
-     */
-    async updateWorkspace(requestParameters: UpdateWorkspaceRequest): Promise<TetrateApiTccCoreV1Workspace> {
-        const response = await this.updateWorkspaceRaw(requestParameters);
         return await response.value();
     }
 

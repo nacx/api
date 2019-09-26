@@ -13,12 +13,12 @@
 
 import { exists, mapValues } from '../runtime';
 import {
-    TetrateApiTccCoreV1HttpModifyActionHow,
-    TetrateApiTccCoreV1HttpModifyActionHowFromJSON,
-    TetrateApiTccCoreV1HttpModifyActionHowToJSON,
-    TetrateApiTccCoreV1HttpModifyActionWhat,
-    TetrateApiTccCoreV1HttpModifyActionWhatFromJSON,
-    TetrateApiTccCoreV1HttpModifyActionWhatToJSON,
+    TetrateApiTccCoreV1HTTPRewrite,
+    TetrateApiTccCoreV1HTTPRewriteFromJSON,
+    TetrateApiTccCoreV1HTTPRewriteToJSON,
+    TetrateApiTccCoreV1Headers,
+    TetrateApiTccCoreV1HeadersFromJSON,
+    TetrateApiTccCoreV1HeadersToJSON,
 } from './';
 
 /**
@@ -29,36 +29,22 @@ import {
 export interface TetrateApiTccCoreV1HttpModifyAction {
     /**
      * 
-     * @type {TetrateApiTccCoreV1HttpModifyActionWhat}
+     * @type {TetrateApiTccCoreV1HTTPRewrite}
      * @memberof TetrateApiTccCoreV1HttpModifyAction
      */
-    what?: TetrateApiTccCoreV1HttpModifyActionWhat;
+    rewrite?: TetrateApiTccCoreV1HTTPRewrite;
     /**
      * 
-     * @type {TetrateApiTccCoreV1HttpModifyActionHow}
+     * @type {TetrateApiTccCoreV1Headers}
      * @memberof TetrateApiTccCoreV1HttpModifyAction
      */
-    how?: TetrateApiTccCoreV1HttpModifyActionHow;
-    /**
-     * 
-     * @type {string}
-     * @memberof TetrateApiTccCoreV1HttpModifyAction
-     */
-    headerName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TetrateApiTccCoreV1HttpModifyAction
-     */
-    value?: string;
+    headers?: TetrateApiTccCoreV1Headers;
 }
 
 export function TetrateApiTccCoreV1HttpModifyActionFromJSON(json: any): TetrateApiTccCoreV1HttpModifyAction {
     return {
-        'what': !exists(json, 'what') ? undefined : TetrateApiTccCoreV1HttpModifyActionWhatFromJSON(json['what']),
-        'how': !exists(json, 'how') ? undefined : TetrateApiTccCoreV1HttpModifyActionHowFromJSON(json['how']),
-        'headerName': !exists(json, 'headerName') ? undefined : json['headerName'],
-        'value': !exists(json, 'value') ? undefined : json['value'],
+        'rewrite': !exists(json, 'rewrite') ? undefined : TetrateApiTccCoreV1HTTPRewriteFromJSON(json['rewrite']),
+        'headers': !exists(json, 'headers') ? undefined : TetrateApiTccCoreV1HeadersFromJSON(json['headers']),
     };
 }
 
@@ -67,10 +53,8 @@ export function TetrateApiTccCoreV1HttpModifyActionToJSON(value?: TetrateApiTccC
         return undefined;
     }
     return {
-        'what': TetrateApiTccCoreV1HttpModifyActionWhatToJSON(value.what),
-        'how': TetrateApiTccCoreV1HttpModifyActionHowToJSON(value.how),
-        'headerName': value.headerName,
-        'value': value.value,
+        'rewrite': TetrateApiTccCoreV1HTTPRewriteToJSON(value.rewrite),
+        'headers': TetrateApiTccCoreV1HeadersToJSON(value.headers),
     };
 }
 

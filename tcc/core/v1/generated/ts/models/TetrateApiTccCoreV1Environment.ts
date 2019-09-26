@@ -13,60 +13,60 @@
 
 import { exists, mapValues } from '../runtime';
 import {
-    TetrateApiTccCoreV1Permissions,
-    TetrateApiTccCoreV1PermissionsFromJSON,
-    TetrateApiTccCoreV1PermissionsToJSON,
+    TetrateApiTccCoreV1ClientSettings,
+    TetrateApiTccCoreV1ClientSettingsFromJSON,
+    TetrateApiTccCoreV1ClientSettingsToJSON,
 } from './';
 
 /**
  * 
  * @export
- * @interface TetrateApiTccCoreV1Workspace
+ * @interface TetrateApiTccCoreV1Environment
  */
-export interface TetrateApiTccCoreV1Workspace {
+export interface TetrateApiTccCoreV1Environment {
     /**
      * 
      * @type {string}
-     * @memberof TetrateApiTccCoreV1Workspace
+     * @memberof TetrateApiTccCoreV1Environment
      */
     name?: string;
     /**
      * 
      * @type {string}
-     * @memberof TetrateApiTccCoreV1Workspace
+     * @memberof TetrateApiTccCoreV1Environment
      */
     tenant?: string;
     /**
      * 
      * @type {string}
-     * @memberof TetrateApiTccCoreV1Workspace
+     * @memberof TetrateApiTccCoreV1Environment
      */
     id?: string;
     /**
      * 
      * @type {string}
-     * @memberof TetrateApiTccCoreV1Workspace
+     * @memberof TetrateApiTccCoreV1Environment
      */
     description?: string;
     /**
      * 
-     * @type {TetrateApiTccCoreV1Permissions}
-     * @memberof TetrateApiTccCoreV1Workspace
+     * @type {TetrateApiTccCoreV1ClientSettings}
+     * @memberof TetrateApiTccCoreV1Environment
      */
-    permissions?: TetrateApiTccCoreV1Permissions;
+    clientSettings?: TetrateApiTccCoreV1ClientSettings;
 }
 
-export function TetrateApiTccCoreV1WorkspaceFromJSON(json: any): TetrateApiTccCoreV1Workspace {
+export function TetrateApiTccCoreV1EnvironmentFromJSON(json: any): TetrateApiTccCoreV1Environment {
     return {
         'name': !exists(json, 'name') ? undefined : json['name'],
         'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
         'id': !exists(json, 'id') ? undefined : json['id'],
         'description': !exists(json, 'description') ? undefined : json['description'],
-        'permissions': !exists(json, 'permissions') ? undefined : TetrateApiTccCoreV1PermissionsFromJSON(json['permissions']),
+        'clientSettings': !exists(json, 'clientSettings') ? undefined : TetrateApiTccCoreV1ClientSettingsFromJSON(json['clientSettings']),
     };
 }
 
-export function TetrateApiTccCoreV1WorkspaceToJSON(value?: TetrateApiTccCoreV1Workspace): any {
+export function TetrateApiTccCoreV1EnvironmentToJSON(value?: TetrateApiTccCoreV1Environment): any {
     if (value === undefined) {
         return undefined;
     }
@@ -75,7 +75,7 @@ export function TetrateApiTccCoreV1WorkspaceToJSON(value?: TetrateApiTccCoreV1Wo
         'tenant': value.tenant,
         'id': value.id,
         'description': value.description,
-        'permissions': TetrateApiTccCoreV1PermissionsToJSON(value.permissions),
+        'clientSettings': TetrateApiTccCoreV1ClientSettingsToJSON(value.clientSettings),
     };
 }
 

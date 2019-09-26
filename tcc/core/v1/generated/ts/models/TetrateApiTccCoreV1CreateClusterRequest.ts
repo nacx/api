@@ -44,6 +44,12 @@ export interface TetrateApiTccCoreV1CreateClusterRequest {
     tenant?: string;
     /**
      * 
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1CreateClusterRequest
+     */
+    environment?: string;
+    /**
+     * 
      * @type {TetrateApiTccCoreV1Cluster}
      * @memberof TetrateApiTccCoreV1CreateClusterRequest
      */
@@ -55,6 +61,7 @@ export function TetrateApiTccCoreV1CreateClusterRequestFromJSON(json: any): Tetr
         'parent': !exists(json, 'parent') ? undefined : json['parent'],
         'id': !exists(json, 'id') ? undefined : json['id'],
         'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
+        'environment': !exists(json, 'environment') ? undefined : json['environment'],
         'cluster': !exists(json, 'cluster') ? undefined : TetrateApiTccCoreV1ClusterFromJSON(json['cluster']),
     };
 }
@@ -67,6 +74,7 @@ export function TetrateApiTccCoreV1CreateClusterRequestToJSON(value?: TetrateApi
         'parent': value.parent,
         'id': value.id,
         'tenant': value.tenant,
+        'environment': value.environment,
         'cluster': TetrateApiTccCoreV1ClusterToJSON(value.cluster),
     };
 }

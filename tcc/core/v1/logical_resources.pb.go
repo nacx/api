@@ -25,140 +25,140 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
-type Workspace struct {
-	Name                 string       `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Tenant               string       `protobuf:"bytes,2,opt,name=tenant,proto3" json:"tenant,omitempty"`
-	Id                   string       `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
-	Description          string       `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
-	Permissions          *Permissions `protobuf:"bytes,5,opt,name=permissions,proto3" json:"permissions,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}     `json:"-"`
-	XXX_unrecognized     []byte       `json:"-"`
-	XXX_sizecache        int32        `json:"-"`
+type Environment struct {
+	Name                 string          `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Tenant               string          `protobuf:"bytes,2,opt,name=tenant,proto3" json:"tenant,omitempty"`
+	Id                   string          `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
+	Description          string          `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
+	ClientSettings       *ClientSettings `protobuf:"bytes,5,opt,name=client_settings,json=clientSettings,proto3" json:"client_settings,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
 }
 
-func (m *Workspace) Reset()         { *m = Workspace{} }
-func (m *Workspace) String() string { return proto.CompactTextString(m) }
-func (*Workspace) ProtoMessage()    {}
-func (*Workspace) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_e536f4c3dabebea2, []int{0}
+func (m *Environment) Reset()         { *m = Environment{} }
+func (m *Environment) String() string { return proto.CompactTextString(m) }
+func (*Environment) ProtoMessage()    {}
+func (*Environment) Descriptor() ([]byte, []int) {
+	return fileDescriptor_logical_resources_74929b3a0ddf6d9a, []int{0}
 }
-func (m *Workspace) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_Workspace.Unmarshal(m, b)
+func (m *Environment) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_Environment.Unmarshal(m, b)
 }
-func (m *Workspace) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_Workspace.Marshal(b, m, deterministic)
+func (m *Environment) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_Environment.Marshal(b, m, deterministic)
 }
-func (dst *Workspace) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Workspace.Merge(dst, src)
+func (dst *Environment) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Environment.Merge(dst, src)
 }
-func (m *Workspace) XXX_Size() int {
-	return xxx_messageInfo_Workspace.Size(m)
+func (m *Environment) XXX_Size() int {
+	return xxx_messageInfo_Environment.Size(m)
 }
-func (m *Workspace) XXX_DiscardUnknown() {
-	xxx_messageInfo_Workspace.DiscardUnknown(m)
+func (m *Environment) XXX_DiscardUnknown() {
+	xxx_messageInfo_Environment.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_Workspace proto.InternalMessageInfo
+var xxx_messageInfo_Environment proto.InternalMessageInfo
 
-func (m *Workspace) GetName() string {
+func (m *Environment) GetName() string {
 	if m != nil {
 		return m.Name
 	}
 	return ""
 }
 
-func (m *Workspace) GetTenant() string {
+func (m *Environment) GetTenant() string {
 	if m != nil {
 		return m.Tenant
 	}
 	return ""
 }
 
-func (m *Workspace) GetId() string {
+func (m *Environment) GetId() string {
 	if m != nil {
 		return m.Id
 	}
 	return ""
 }
 
-func (m *Workspace) GetDescription() string {
+func (m *Environment) GetDescription() string {
 	if m != nil {
 		return m.Description
 	}
 	return ""
 }
 
-func (m *Workspace) GetPermissions() *Permissions {
+func (m *Environment) GetClientSettings() *ClientSettings {
 	if m != nil {
-		return m.Permissions
+		return m.ClientSettings
 	}
 	return nil
 }
 
-type CreateWorkspaceRequest struct {
+type CreateEnvironmentRequest struct {
 	Parent string `protobuf:"bytes,1,opt,name=parent,proto3" json:"parent,omitempty"`
 	// if present, this will be used as the id for the created object
-	Id                   string     `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
-	Tenant               string     `protobuf:"bytes,3,opt,name=tenant,proto3" json:"tenant,omitempty"`
-	Workspace            *Workspace `protobuf:"bytes,4,opt,name=workspace,proto3" json:"workspace,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}   `json:"-"`
-	XXX_unrecognized     []byte     `json:"-"`
-	XXX_sizecache        int32      `json:"-"`
+	Id                   string       `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
+	Tenant               string       `protobuf:"bytes,3,opt,name=tenant,proto3" json:"tenant,omitempty"`
+	Environment          *Environment `protobuf:"bytes,4,opt,name=environment,proto3" json:"environment,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}     `json:"-"`
+	XXX_unrecognized     []byte       `json:"-"`
+	XXX_sizecache        int32        `json:"-"`
 }
 
-func (m *CreateWorkspaceRequest) Reset()         { *m = CreateWorkspaceRequest{} }
-func (m *CreateWorkspaceRequest) String() string { return proto.CompactTextString(m) }
-func (*CreateWorkspaceRequest) ProtoMessage()    {}
-func (*CreateWorkspaceRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_e536f4c3dabebea2, []int{1}
+func (m *CreateEnvironmentRequest) Reset()         { *m = CreateEnvironmentRequest{} }
+func (m *CreateEnvironmentRequest) String() string { return proto.CompactTextString(m) }
+func (*CreateEnvironmentRequest) ProtoMessage()    {}
+func (*CreateEnvironmentRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_logical_resources_74929b3a0ddf6d9a, []int{1}
 }
-func (m *CreateWorkspaceRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_CreateWorkspaceRequest.Unmarshal(m, b)
+func (m *CreateEnvironmentRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CreateEnvironmentRequest.Unmarshal(m, b)
 }
-func (m *CreateWorkspaceRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_CreateWorkspaceRequest.Marshal(b, m, deterministic)
+func (m *CreateEnvironmentRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CreateEnvironmentRequest.Marshal(b, m, deterministic)
 }
-func (dst *CreateWorkspaceRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CreateWorkspaceRequest.Merge(dst, src)
+func (dst *CreateEnvironmentRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CreateEnvironmentRequest.Merge(dst, src)
 }
-func (m *CreateWorkspaceRequest) XXX_Size() int {
-	return xxx_messageInfo_CreateWorkspaceRequest.Size(m)
+func (m *CreateEnvironmentRequest) XXX_Size() int {
+	return xxx_messageInfo_CreateEnvironmentRequest.Size(m)
 }
-func (m *CreateWorkspaceRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_CreateWorkspaceRequest.DiscardUnknown(m)
+func (m *CreateEnvironmentRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_CreateEnvironmentRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_CreateWorkspaceRequest proto.InternalMessageInfo
+var xxx_messageInfo_CreateEnvironmentRequest proto.InternalMessageInfo
 
-func (m *CreateWorkspaceRequest) GetParent() string {
+func (m *CreateEnvironmentRequest) GetParent() string {
 	if m != nil {
 		return m.Parent
 	}
 	return ""
 }
 
-func (m *CreateWorkspaceRequest) GetId() string {
+func (m *CreateEnvironmentRequest) GetId() string {
 	if m != nil {
 		return m.Id
 	}
 	return ""
 }
 
-func (m *CreateWorkspaceRequest) GetTenant() string {
+func (m *CreateEnvironmentRequest) GetTenant() string {
 	if m != nil {
 		return m.Tenant
 	}
 	return ""
 }
 
-func (m *CreateWorkspaceRequest) GetWorkspace() *Workspace {
+func (m *CreateEnvironmentRequest) GetEnvironment() *Environment {
 	if m != nil {
-		return m.Workspace
+		return m.Environment
 	}
 	return nil
 }
 
-type GetWorkspaceRequest struct {
+type GetEnvironmentRequest struct {
 	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	Tenant               string   `protobuf:"bytes,2,opt,name=tenant,proto3" json:"tenant,omitempty"`
 	Id                   string   `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
@@ -167,52 +167,52 @@ type GetWorkspaceRequest struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *GetWorkspaceRequest) Reset()         { *m = GetWorkspaceRequest{} }
-func (m *GetWorkspaceRequest) String() string { return proto.CompactTextString(m) }
-func (*GetWorkspaceRequest) ProtoMessage()    {}
-func (*GetWorkspaceRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_e536f4c3dabebea2, []int{2}
+func (m *GetEnvironmentRequest) Reset()         { *m = GetEnvironmentRequest{} }
+func (m *GetEnvironmentRequest) String() string { return proto.CompactTextString(m) }
+func (*GetEnvironmentRequest) ProtoMessage()    {}
+func (*GetEnvironmentRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_logical_resources_74929b3a0ddf6d9a, []int{2}
 }
-func (m *GetWorkspaceRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_GetWorkspaceRequest.Unmarshal(m, b)
+func (m *GetEnvironmentRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetEnvironmentRequest.Unmarshal(m, b)
 }
-func (m *GetWorkspaceRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_GetWorkspaceRequest.Marshal(b, m, deterministic)
+func (m *GetEnvironmentRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetEnvironmentRequest.Marshal(b, m, deterministic)
 }
-func (dst *GetWorkspaceRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetWorkspaceRequest.Merge(dst, src)
+func (dst *GetEnvironmentRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetEnvironmentRequest.Merge(dst, src)
 }
-func (m *GetWorkspaceRequest) XXX_Size() int {
-	return xxx_messageInfo_GetWorkspaceRequest.Size(m)
+func (m *GetEnvironmentRequest) XXX_Size() int {
+	return xxx_messageInfo_GetEnvironmentRequest.Size(m)
 }
-func (m *GetWorkspaceRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_GetWorkspaceRequest.DiscardUnknown(m)
+func (m *GetEnvironmentRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetEnvironmentRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_GetWorkspaceRequest proto.InternalMessageInfo
+var xxx_messageInfo_GetEnvironmentRequest proto.InternalMessageInfo
 
-func (m *GetWorkspaceRequest) GetName() string {
+func (m *GetEnvironmentRequest) GetName() string {
 	if m != nil {
 		return m.Name
 	}
 	return ""
 }
 
-func (m *GetWorkspaceRequest) GetTenant() string {
+func (m *GetEnvironmentRequest) GetTenant() string {
 	if m != nil {
 		return m.Tenant
 	}
 	return ""
 }
 
-func (m *GetWorkspaceRequest) GetId() string {
+func (m *GetEnvironmentRequest) GetId() string {
 	if m != nil {
 		return m.Id
 	}
 	return ""
 }
 
-type ListWorkspacesRequest struct {
+type ListEnvironmentsRequest struct {
 	Parent               string   `protobuf:"bytes,1,opt,name=parent,proto3" json:"parent,omitempty"`
 	Tenant               string   `protobuf:"bytes,2,opt,name=tenant,proto3" json:"tenant,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -220,83 +220,83 @@ type ListWorkspacesRequest struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *ListWorkspacesRequest) Reset()         { *m = ListWorkspacesRequest{} }
-func (m *ListWorkspacesRequest) String() string { return proto.CompactTextString(m) }
-func (*ListWorkspacesRequest) ProtoMessage()    {}
-func (*ListWorkspacesRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_e536f4c3dabebea2, []int{3}
+func (m *ListEnvironmentsRequest) Reset()         { *m = ListEnvironmentsRequest{} }
+func (m *ListEnvironmentsRequest) String() string { return proto.CompactTextString(m) }
+func (*ListEnvironmentsRequest) ProtoMessage()    {}
+func (*ListEnvironmentsRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_logical_resources_74929b3a0ddf6d9a, []int{3}
 }
-func (m *ListWorkspacesRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_ListWorkspacesRequest.Unmarshal(m, b)
+func (m *ListEnvironmentsRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ListEnvironmentsRequest.Unmarshal(m, b)
 }
-func (m *ListWorkspacesRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_ListWorkspacesRequest.Marshal(b, m, deterministic)
+func (m *ListEnvironmentsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ListEnvironmentsRequest.Marshal(b, m, deterministic)
 }
-func (dst *ListWorkspacesRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ListWorkspacesRequest.Merge(dst, src)
+func (dst *ListEnvironmentsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ListEnvironmentsRequest.Merge(dst, src)
 }
-func (m *ListWorkspacesRequest) XXX_Size() int {
-	return xxx_messageInfo_ListWorkspacesRequest.Size(m)
+func (m *ListEnvironmentsRequest) XXX_Size() int {
+	return xxx_messageInfo_ListEnvironmentsRequest.Size(m)
 }
-func (m *ListWorkspacesRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_ListWorkspacesRequest.DiscardUnknown(m)
+func (m *ListEnvironmentsRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ListEnvironmentsRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_ListWorkspacesRequest proto.InternalMessageInfo
+var xxx_messageInfo_ListEnvironmentsRequest proto.InternalMessageInfo
 
-func (m *ListWorkspacesRequest) GetParent() string {
+func (m *ListEnvironmentsRequest) GetParent() string {
 	if m != nil {
 		return m.Parent
 	}
 	return ""
 }
 
-func (m *ListWorkspacesRequest) GetTenant() string {
+func (m *ListEnvironmentsRequest) GetTenant() string {
 	if m != nil {
 		return m.Tenant
 	}
 	return ""
 }
 
-type ListWorkspacesResponse struct {
-	Workspaces           []*Workspace `protobuf:"bytes,1,rep,name=workspaces,proto3" json:"workspaces,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}     `json:"-"`
-	XXX_unrecognized     []byte       `json:"-"`
-	XXX_sizecache        int32        `json:"-"`
+type ListEnvironmentsResponse struct {
+	Environments         []*Environment `protobuf:"bytes,1,rep,name=environments,proto3" json:"environments,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
 }
 
-func (m *ListWorkspacesResponse) Reset()         { *m = ListWorkspacesResponse{} }
-func (m *ListWorkspacesResponse) String() string { return proto.CompactTextString(m) }
-func (*ListWorkspacesResponse) ProtoMessage()    {}
-func (*ListWorkspacesResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_e536f4c3dabebea2, []int{4}
+func (m *ListEnvironmentsResponse) Reset()         { *m = ListEnvironmentsResponse{} }
+func (m *ListEnvironmentsResponse) String() string { return proto.CompactTextString(m) }
+func (*ListEnvironmentsResponse) ProtoMessage()    {}
+func (*ListEnvironmentsResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_logical_resources_74929b3a0ddf6d9a, []int{4}
 }
-func (m *ListWorkspacesResponse) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_ListWorkspacesResponse.Unmarshal(m, b)
+func (m *ListEnvironmentsResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ListEnvironmentsResponse.Unmarshal(m, b)
 }
-func (m *ListWorkspacesResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_ListWorkspacesResponse.Marshal(b, m, deterministic)
+func (m *ListEnvironmentsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ListEnvironmentsResponse.Marshal(b, m, deterministic)
 }
-func (dst *ListWorkspacesResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ListWorkspacesResponse.Merge(dst, src)
+func (dst *ListEnvironmentsResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ListEnvironmentsResponse.Merge(dst, src)
 }
-func (m *ListWorkspacesResponse) XXX_Size() int {
-	return xxx_messageInfo_ListWorkspacesResponse.Size(m)
+func (m *ListEnvironmentsResponse) XXX_Size() int {
+	return xxx_messageInfo_ListEnvironmentsResponse.Size(m)
 }
-func (m *ListWorkspacesResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_ListWorkspacesResponse.DiscardUnknown(m)
+func (m *ListEnvironmentsResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_ListEnvironmentsResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_ListWorkspacesResponse proto.InternalMessageInfo
+var xxx_messageInfo_ListEnvironmentsResponse proto.InternalMessageInfo
 
-func (m *ListWorkspacesResponse) GetWorkspaces() []*Workspace {
+func (m *ListEnvironmentsResponse) GetEnvironments() []*Environment {
 	if m != nil {
-		return m.Workspaces
+		return m.Environments
 	}
 	return nil
 }
 
-type DeleteWorkspaceRequest struct {
+type DeleteEnvironmentRequest struct {
 	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	Tenant               string   `protobuf:"bytes,2,opt,name=tenant,proto3" json:"tenant,omitempty"`
 	Id                   string   `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
@@ -305,45 +305,45 @@ type DeleteWorkspaceRequest struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *DeleteWorkspaceRequest) Reset()         { *m = DeleteWorkspaceRequest{} }
-func (m *DeleteWorkspaceRequest) String() string { return proto.CompactTextString(m) }
-func (*DeleteWorkspaceRequest) ProtoMessage()    {}
-func (*DeleteWorkspaceRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_e536f4c3dabebea2, []int{5}
+func (m *DeleteEnvironmentRequest) Reset()         { *m = DeleteEnvironmentRequest{} }
+func (m *DeleteEnvironmentRequest) String() string { return proto.CompactTextString(m) }
+func (*DeleteEnvironmentRequest) ProtoMessage()    {}
+func (*DeleteEnvironmentRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_logical_resources_74929b3a0ddf6d9a, []int{5}
 }
-func (m *DeleteWorkspaceRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_DeleteWorkspaceRequest.Unmarshal(m, b)
+func (m *DeleteEnvironmentRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_DeleteEnvironmentRequest.Unmarshal(m, b)
 }
-func (m *DeleteWorkspaceRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_DeleteWorkspaceRequest.Marshal(b, m, deterministic)
+func (m *DeleteEnvironmentRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_DeleteEnvironmentRequest.Marshal(b, m, deterministic)
 }
-func (dst *DeleteWorkspaceRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_DeleteWorkspaceRequest.Merge(dst, src)
+func (dst *DeleteEnvironmentRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_DeleteEnvironmentRequest.Merge(dst, src)
 }
-func (m *DeleteWorkspaceRequest) XXX_Size() int {
-	return xxx_messageInfo_DeleteWorkspaceRequest.Size(m)
+func (m *DeleteEnvironmentRequest) XXX_Size() int {
+	return xxx_messageInfo_DeleteEnvironmentRequest.Size(m)
 }
-func (m *DeleteWorkspaceRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_DeleteWorkspaceRequest.DiscardUnknown(m)
+func (m *DeleteEnvironmentRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_DeleteEnvironmentRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_DeleteWorkspaceRequest proto.InternalMessageInfo
+var xxx_messageInfo_DeleteEnvironmentRequest proto.InternalMessageInfo
 
-func (m *DeleteWorkspaceRequest) GetName() string {
+func (m *DeleteEnvironmentRequest) GetName() string {
 	if m != nil {
 		return m.Name
 	}
 	return ""
 }
 
-func (m *DeleteWorkspaceRequest) GetTenant() string {
+func (m *DeleteEnvironmentRequest) GetTenant() string {
 	if m != nil {
 		return m.Tenant
 	}
 	return ""
 }
 
-func (m *DeleteWorkspaceRequest) GetId() string {
+func (m *DeleteEnvironmentRequest) GetId() string {
 	if m != nil {
 		return m.Id
 	}
@@ -351,22 +351,26 @@ func (m *DeleteWorkspaceRequest) GetId() string {
 }
 
 type Application struct {
-	Name                 string       `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Tenant               string       `protobuf:"bytes,2,opt,name=tenant,proto3" json:"tenant,omitempty"`
-	Workspace            string       `protobuf:"bytes,3,opt,name=workspace,proto3" json:"workspace,omitempty"`
-	Id                   string       `protobuf:"bytes,4,opt,name=id,proto3" json:"id,omitempty"`
-	Description          string       `protobuf:"bytes,5,opt,name=description,proto3" json:"description,omitempty"`
-	Permissions          *Permissions `protobuf:"bytes,6,opt,name=permissions,proto3" json:"permissions,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}     `json:"-"`
-	XXX_unrecognized     []byte       `json:"-"`
-	XXX_sizecache        int32        `json:"-"`
+	Name           string          `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Tenant         string          `protobuf:"bytes,2,opt,name=tenant,proto3" json:"tenant,omitempty"`
+	Environment    string          `protobuf:"bytes,3,opt,name=environment,proto3" json:"environment,omitempty"`
+	Id             string          `protobuf:"bytes,4,opt,name=id,proto3" json:"id,omitempty"`
+	Description    string          `protobuf:"bytes,5,opt,name=description,proto3" json:"description,omitempty"`
+	RoutingInfo    *RoutingInfo    `protobuf:"bytes,6,opt,name=routing_info,json=routingInfo,proto3" json:"routing_info,omitempty"`
+	ClientSettings *ClientSettings `protobuf:"bytes,7,opt,name=client_settings,json=clientSettings,proto3" json:"client_settings,omitempty"`
+	// If defined, the application is assumed to be exposed on the load balancer in
+	// the application's own namespace instead of the cluster level load balancer.
+	AppLb                *Application_ApplicationSpecificLB `protobuf:"bytes,8,opt,name=app_lb,json=appLb,proto3" json:"app_lb,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                           `json:"-"`
+	XXX_unrecognized     []byte                             `json:"-"`
+	XXX_sizecache        int32                              `json:"-"`
 }
 
 func (m *Application) Reset()         { *m = Application{} }
 func (m *Application) String() string { return proto.CompactTextString(m) }
 func (*Application) ProtoMessage()    {}
 func (*Application) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_e536f4c3dabebea2, []int{6}
+	return fileDescriptor_logical_resources_74929b3a0ddf6d9a, []int{6}
 }
 func (m *Application) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Application.Unmarshal(m, b)
@@ -400,9 +404,9 @@ func (m *Application) GetTenant() string {
 	return ""
 }
 
-func (m *Application) GetWorkspace() string {
+func (m *Application) GetEnvironment() string {
 	if m != nil {
-		return m.Workspace
+		return m.Environment
 	}
 	return ""
 }
@@ -421,9 +425,70 @@ func (m *Application) GetDescription() string {
 	return ""
 }
 
-func (m *Application) GetPermissions() *Permissions {
+func (m *Application) GetRoutingInfo() *RoutingInfo {
 	if m != nil {
-		return m.Permissions
+		return m.RoutingInfo
+	}
+	return nil
+}
+
+func (m *Application) GetClientSettings() *ClientSettings {
+	if m != nil {
+		return m.ClientSettings
+	}
+	return nil
+}
+
+func (m *Application) GetAppLb() *Application_ApplicationSpecificLB {
+	if m != nil {
+		return m.AppLb
+	}
+	return nil
+}
+
+type Application_ApplicationSpecificLB struct {
+	// Labels that uniquely identify the load balancer in the application's namespace.
+	Labels               map[string]string `protobuf:"bytes,1,rep,name=labels,proto3" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	Tls                  *TLSSettings      `protobuf:"bytes,2,opt,name=tls,proto3" json:"tls,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
+	XXX_unrecognized     []byte            `json:"-"`
+	XXX_sizecache        int32             `json:"-"`
+}
+
+func (m *Application_ApplicationSpecificLB) Reset()         { *m = Application_ApplicationSpecificLB{} }
+func (m *Application_ApplicationSpecificLB) String() string { return proto.CompactTextString(m) }
+func (*Application_ApplicationSpecificLB) ProtoMessage()    {}
+func (*Application_ApplicationSpecificLB) Descriptor() ([]byte, []int) {
+	return fileDescriptor_logical_resources_74929b3a0ddf6d9a, []int{6, 0}
+}
+func (m *Application_ApplicationSpecificLB) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_Application_ApplicationSpecificLB.Unmarshal(m, b)
+}
+func (m *Application_ApplicationSpecificLB) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_Application_ApplicationSpecificLB.Marshal(b, m, deterministic)
+}
+func (dst *Application_ApplicationSpecificLB) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Application_ApplicationSpecificLB.Merge(dst, src)
+}
+func (m *Application_ApplicationSpecificLB) XXX_Size() int {
+	return xxx_messageInfo_Application_ApplicationSpecificLB.Size(m)
+}
+func (m *Application_ApplicationSpecificLB) XXX_DiscardUnknown() {
+	xxx_messageInfo_Application_ApplicationSpecificLB.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Application_ApplicationSpecificLB proto.InternalMessageInfo
+
+func (m *Application_ApplicationSpecificLB) GetLabels() map[string]string {
+	if m != nil {
+		return m.Labels
+	}
+	return nil
+}
+
+func (m *Application_ApplicationSpecificLB) GetTls() *TLSSettings {
+	if m != nil {
+		return m.Tls
 	}
 	return nil
 }
@@ -433,7 +498,7 @@ type CreateApplicationRequest struct {
 	// if present, this will be used as the id for the created object
 	Id                   string       `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
 	Tenant               string       `protobuf:"bytes,3,opt,name=tenant,proto3" json:"tenant,omitempty"`
-	Workspace            string       `protobuf:"bytes,4,opt,name=workspace,proto3" json:"workspace,omitempty"`
+	Environment          string       `protobuf:"bytes,4,opt,name=environment,proto3" json:"environment,omitempty"`
 	Application          *Application `protobuf:"bytes,5,opt,name=application,proto3" json:"application,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}     `json:"-"`
 	XXX_unrecognized     []byte       `json:"-"`
@@ -444,7 +509,7 @@ func (m *CreateApplicationRequest) Reset()         { *m = CreateApplicationReque
 func (m *CreateApplicationRequest) String() string { return proto.CompactTextString(m) }
 func (*CreateApplicationRequest) ProtoMessage()    {}
 func (*CreateApplicationRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_e536f4c3dabebea2, []int{7}
+	return fileDescriptor_logical_resources_74929b3a0ddf6d9a, []int{7}
 }
 func (m *CreateApplicationRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CreateApplicationRequest.Unmarshal(m, b)
@@ -485,9 +550,9 @@ func (m *CreateApplicationRequest) GetTenant() string {
 	return ""
 }
 
-func (m *CreateApplicationRequest) GetWorkspace() string {
+func (m *CreateApplicationRequest) GetEnvironment() string {
 	if m != nil {
-		return m.Workspace
+		return m.Environment
 	}
 	return ""
 }
@@ -502,7 +567,7 @@ func (m *CreateApplicationRequest) GetApplication() *Application {
 type GetApplicationRequest struct {
 	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	Tenant               string   `protobuf:"bytes,2,opt,name=tenant,proto3" json:"tenant,omitempty"`
-	Workspace            string   `protobuf:"bytes,3,opt,name=workspace,proto3" json:"workspace,omitempty"`
+	Environment          string   `protobuf:"bytes,3,opt,name=environment,proto3" json:"environment,omitempty"`
 	Id                   string   `protobuf:"bytes,4,opt,name=id,proto3" json:"id,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -513,7 +578,7 @@ func (m *GetApplicationRequest) Reset()         { *m = GetApplicationRequest{} }
 func (m *GetApplicationRequest) String() string { return proto.CompactTextString(m) }
 func (*GetApplicationRequest) ProtoMessage()    {}
 func (*GetApplicationRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_e536f4c3dabebea2, []int{8}
+	return fileDescriptor_logical_resources_74929b3a0ddf6d9a, []int{8}
 }
 func (m *GetApplicationRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetApplicationRequest.Unmarshal(m, b)
@@ -547,9 +612,9 @@ func (m *GetApplicationRequest) GetTenant() string {
 	return ""
 }
 
-func (m *GetApplicationRequest) GetWorkspace() string {
+func (m *GetApplicationRequest) GetEnvironment() string {
 	if m != nil {
-		return m.Workspace
+		return m.Environment
 	}
 	return ""
 }
@@ -564,7 +629,7 @@ func (m *GetApplicationRequest) GetId() string {
 type ListApplicationsRequest struct {
 	Parent               string   `protobuf:"bytes,1,opt,name=parent,proto3" json:"parent,omitempty"`
 	Tenant               string   `protobuf:"bytes,2,opt,name=tenant,proto3" json:"tenant,omitempty"`
-	Workspace            string   `protobuf:"bytes,3,opt,name=workspace,proto3" json:"workspace,omitempty"`
+	Environment          string   `protobuf:"bytes,3,opt,name=environment,proto3" json:"environment,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -574,7 +639,7 @@ func (m *ListApplicationsRequest) Reset()         { *m = ListApplicationsRequest
 func (m *ListApplicationsRequest) String() string { return proto.CompactTextString(m) }
 func (*ListApplicationsRequest) ProtoMessage()    {}
 func (*ListApplicationsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_e536f4c3dabebea2, []int{9}
+	return fileDescriptor_logical_resources_74929b3a0ddf6d9a, []int{9}
 }
 func (m *ListApplicationsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListApplicationsRequest.Unmarshal(m, b)
@@ -608,9 +673,9 @@ func (m *ListApplicationsRequest) GetTenant() string {
 	return ""
 }
 
-func (m *ListApplicationsRequest) GetWorkspace() string {
+func (m *ListApplicationsRequest) GetEnvironment() string {
 	if m != nil {
-		return m.Workspace
+		return m.Environment
 	}
 	return ""
 }
@@ -626,7 +691,7 @@ func (m *ListApplicationsResponse) Reset()         { *m = ListApplicationsRespon
 func (m *ListApplicationsResponse) String() string { return proto.CompactTextString(m) }
 func (*ListApplicationsResponse) ProtoMessage()    {}
 func (*ListApplicationsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_e536f4c3dabebea2, []int{10}
+	return fileDescriptor_logical_resources_74929b3a0ddf6d9a, []int{10}
 }
 func (m *ListApplicationsResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListApplicationsResponse.Unmarshal(m, b)
@@ -656,7 +721,7 @@ func (m *ListApplicationsResponse) GetApplications() []*Application {
 type DeleteApplicationRequest struct {
 	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	Tenant               string   `protobuf:"bytes,2,opt,name=tenant,proto3" json:"tenant,omitempty"`
-	Workspace            string   `protobuf:"bytes,3,opt,name=workspace,proto3" json:"workspace,omitempty"`
+	Environment          string   `protobuf:"bytes,3,opt,name=environment,proto3" json:"environment,omitempty"`
 	Id                   string   `protobuf:"bytes,4,opt,name=id,proto3" json:"id,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -667,7 +732,7 @@ func (m *DeleteApplicationRequest) Reset()         { *m = DeleteApplicationReque
 func (m *DeleteApplicationRequest) String() string { return proto.CompactTextString(m) }
 func (*DeleteApplicationRequest) ProtoMessage()    {}
 func (*DeleteApplicationRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_e536f4c3dabebea2, []int{11}
+	return fileDescriptor_logical_resources_74929b3a0ddf6d9a, []int{11}
 }
 func (m *DeleteApplicationRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DeleteApplicationRequest.Unmarshal(m, b)
@@ -701,9 +766,9 @@ func (m *DeleteApplicationRequest) GetTenant() string {
 	return ""
 }
 
-func (m *DeleteApplicationRequest) GetWorkspace() string {
+func (m *DeleteApplicationRequest) GetEnvironment() string {
 	if m != nil {
-		return m.Workspace
+		return m.Environment
 	}
 	return ""
 }
@@ -718,12 +783,12 @@ func (m *DeleteApplicationRequest) GetId() string {
 type Service struct {
 	Name                 string       `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	Tenant               string       `protobuf:"bytes,2,opt,name=tenant,proto3" json:"tenant,omitempty"`
-	Workspace            string       `protobuf:"bytes,3,opt,name=workspace,proto3" json:"workspace,omitempty"`
+	Environment          string       `protobuf:"bytes,3,opt,name=environment,proto3" json:"environment,omitempty"`
 	Application          string       `protobuf:"bytes,4,opt,name=application,proto3" json:"application,omitempty"`
 	Id                   string       `protobuf:"bytes,5,opt,name=id,proto3" json:"id,omitempty"`
 	Description          string       `protobuf:"bytes,6,opt,name=description,proto3" json:"description,omitempty"`
-	RoutingInfo          *RoutingInfo `protobuf:"bytes,7,opt,name=routing_info,json=routingInfo,proto3" json:"routing_info,omitempty"`
-	ServiceDeployments   []string     `protobuf:"bytes,8,rep,name=service_deployments,json=serviceDeployments,proto3" json:"service_deployments,omitempty"`
+	Hostname             string       `protobuf:"bytes,7,opt,name=hostname,proto3" json:"hostname,omitempty"`
+	RoutingInfo          *RoutingInfo `protobuf:"bytes,8,opt,name=routing_info,json=routingInfo,proto3" json:"routing_info,omitempty"`
 	Etag                 string       `protobuf:"bytes,9,opt,name=etag,proto3" json:"etag,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}     `json:"-"`
 	XXX_unrecognized     []byte       `json:"-"`
@@ -734,7 +799,7 @@ func (m *Service) Reset()         { *m = Service{} }
 func (m *Service) String() string { return proto.CompactTextString(m) }
 func (*Service) ProtoMessage()    {}
 func (*Service) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_e536f4c3dabebea2, []int{12}
+	return fileDescriptor_logical_resources_74929b3a0ddf6d9a, []int{12}
 }
 func (m *Service) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Service.Unmarshal(m, b)
@@ -768,9 +833,9 @@ func (m *Service) GetTenant() string {
 	return ""
 }
 
-func (m *Service) GetWorkspace() string {
+func (m *Service) GetEnvironment() string {
 	if m != nil {
-		return m.Workspace
+		return m.Environment
 	}
 	return ""
 }
@@ -796,16 +861,16 @@ func (m *Service) GetDescription() string {
 	return ""
 }
 
+func (m *Service) GetHostname() string {
+	if m != nil {
+		return m.Hostname
+	}
+	return ""
+}
+
 func (m *Service) GetRoutingInfo() *RoutingInfo {
 	if m != nil {
 		return m.RoutingInfo
-	}
-	return nil
-}
-
-func (m *Service) GetServiceDeployments() []string {
-	if m != nil {
-		return m.ServiceDeployments
 	}
 	return nil
 }
@@ -822,7 +887,7 @@ type CreateServiceRequest struct {
 	// if present, this will be used as the id for the created object
 	Id                   string   `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
 	Tenant               string   `protobuf:"bytes,3,opt,name=tenant,proto3" json:"tenant,omitempty"`
-	Workspace            string   `protobuf:"bytes,4,opt,name=workspace,proto3" json:"workspace,omitempty"`
+	Environment          string   `protobuf:"bytes,4,opt,name=environment,proto3" json:"environment,omitempty"`
 	Application          string   `protobuf:"bytes,5,opt,name=application,proto3" json:"application,omitempty"`
 	Service              *Service `protobuf:"bytes,6,opt,name=service,proto3" json:"service,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -834,7 +899,7 @@ func (m *CreateServiceRequest) Reset()         { *m = CreateServiceRequest{} }
 func (m *CreateServiceRequest) String() string { return proto.CompactTextString(m) }
 func (*CreateServiceRequest) ProtoMessage()    {}
 func (*CreateServiceRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_e536f4c3dabebea2, []int{13}
+	return fileDescriptor_logical_resources_74929b3a0ddf6d9a, []int{13}
 }
 func (m *CreateServiceRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CreateServiceRequest.Unmarshal(m, b)
@@ -875,9 +940,9 @@ func (m *CreateServiceRequest) GetTenant() string {
 	return ""
 }
 
-func (m *CreateServiceRequest) GetWorkspace() string {
+func (m *CreateServiceRequest) GetEnvironment() string {
 	if m != nil {
-		return m.Workspace
+		return m.Environment
 	}
 	return ""
 }
@@ -899,7 +964,7 @@ func (m *CreateServiceRequest) GetService() *Service {
 type GetServiceRequest struct {
 	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	Tenant               string   `protobuf:"bytes,2,opt,name=tenant,proto3" json:"tenant,omitempty"`
-	Workspace            string   `protobuf:"bytes,3,opt,name=workspace,proto3" json:"workspace,omitempty"`
+	Environment          string   `protobuf:"bytes,3,opt,name=environment,proto3" json:"environment,omitempty"`
 	Application          string   `protobuf:"bytes,4,opt,name=application,proto3" json:"application,omitempty"`
 	Id                   string   `protobuf:"bytes,5,opt,name=id,proto3" json:"id,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -911,7 +976,7 @@ func (m *GetServiceRequest) Reset()         { *m = GetServiceRequest{} }
 func (m *GetServiceRequest) String() string { return proto.CompactTextString(m) }
 func (*GetServiceRequest) ProtoMessage()    {}
 func (*GetServiceRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_e536f4c3dabebea2, []int{14}
+	return fileDescriptor_logical_resources_74929b3a0ddf6d9a, []int{14}
 }
 func (m *GetServiceRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetServiceRequest.Unmarshal(m, b)
@@ -945,9 +1010,9 @@ func (m *GetServiceRequest) GetTenant() string {
 	return ""
 }
 
-func (m *GetServiceRequest) GetWorkspace() string {
+func (m *GetServiceRequest) GetEnvironment() string {
 	if m != nil {
-		return m.Workspace
+		return m.Environment
 	}
 	return ""
 }
@@ -969,7 +1034,7 @@ func (m *GetServiceRequest) GetId() string {
 type ListServicesRequest struct {
 	Parent               string   `protobuf:"bytes,1,opt,name=parent,proto3" json:"parent,omitempty"`
 	Tenant               string   `protobuf:"bytes,2,opt,name=tenant,proto3" json:"tenant,omitempty"`
-	Workspace            string   `protobuf:"bytes,3,opt,name=workspace,proto3" json:"workspace,omitempty"`
+	Environment          string   `protobuf:"bytes,3,opt,name=environment,proto3" json:"environment,omitempty"`
 	Application          string   `protobuf:"bytes,4,opt,name=application,proto3" json:"application,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -980,7 +1045,7 @@ func (m *ListServicesRequest) Reset()         { *m = ListServicesRequest{} }
 func (m *ListServicesRequest) String() string { return proto.CompactTextString(m) }
 func (*ListServicesRequest) ProtoMessage()    {}
 func (*ListServicesRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_e536f4c3dabebea2, []int{15}
+	return fileDescriptor_logical_resources_74929b3a0ddf6d9a, []int{15}
 }
 func (m *ListServicesRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListServicesRequest.Unmarshal(m, b)
@@ -1014,9 +1079,9 @@ func (m *ListServicesRequest) GetTenant() string {
 	return ""
 }
 
-func (m *ListServicesRequest) GetWorkspace() string {
+func (m *ListServicesRequest) GetEnvironment() string {
 	if m != nil {
-		return m.Workspace
+		return m.Environment
 	}
 	return ""
 }
@@ -1039,7 +1104,7 @@ func (m *ListServicesResponse) Reset()         { *m = ListServicesResponse{} }
 func (m *ListServicesResponse) String() string { return proto.CompactTextString(m) }
 func (*ListServicesResponse) ProtoMessage()    {}
 func (*ListServicesResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_e536f4c3dabebea2, []int{16}
+	return fileDescriptor_logical_resources_74929b3a0ddf6d9a, []int{16}
 }
 func (m *ListServicesResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListServicesResponse.Unmarshal(m, b)
@@ -1069,7 +1134,7 @@ func (m *ListServicesResponse) GetServices() []*Service {
 type DeleteServiceRequest struct {
 	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	Tenant               string   `protobuf:"bytes,2,opt,name=tenant,proto3" json:"tenant,omitempty"`
-	Workspace            string   `protobuf:"bytes,3,opt,name=workspace,proto3" json:"workspace,omitempty"`
+	Environment          string   `protobuf:"bytes,3,opt,name=environment,proto3" json:"environment,omitempty"`
 	Application          string   `protobuf:"bytes,4,opt,name=application,proto3" json:"application,omitempty"`
 	Id                   string   `protobuf:"bytes,5,opt,name=id,proto3" json:"id,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -1081,7 +1146,7 @@ func (m *DeleteServiceRequest) Reset()         { *m = DeleteServiceRequest{} }
 func (m *DeleteServiceRequest) String() string { return proto.CompactTextString(m) }
 func (*DeleteServiceRequest) ProtoMessage()    {}
 func (*DeleteServiceRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_e536f4c3dabebea2, []int{17}
+	return fileDescriptor_logical_resources_74929b3a0ddf6d9a, []int{17}
 }
 func (m *DeleteServiceRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DeleteServiceRequest.Unmarshal(m, b)
@@ -1115,9 +1180,9 @@ func (m *DeleteServiceRequest) GetTenant() string {
 	return ""
 }
 
-func (m *DeleteServiceRequest) GetWorkspace() string {
+func (m *DeleteServiceRequest) GetEnvironment() string {
 	if m != nil {
-		return m.Workspace
+		return m.Environment
 	}
 	return ""
 }
@@ -1137,28 +1202,30 @@ func (m *DeleteServiceRequest) GetId() string {
 }
 
 type LoadBalancer struct {
-	Name        string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Tenant      string `protobuf:"bytes,2,opt,name=tenant,proto3" json:"tenant,omitempty"`
-	Workspace   string `protobuf:"bytes,3,opt,name=workspace,proto3" json:"workspace,omitempty"`
-	Id          string `protobuf:"bytes,4,opt,name=id,proto3" json:"id,omitempty"`
-	Description string `protobuf:"bytes,5,opt,name=description,proto3" json:"description,omitempty"`
-	// Map of services attached to this loadbalancer in the form
-	// workspaces/<workspace>/applications/<application>/services/<service>: TLS credential information
-	// or clusters/<cluster>/namespaces/<namespace>/deployments/<deployment>: TLS credential information
-	Services map[string]*TLSSettings `protobuf:"bytes,6,rep,name=services,proto3" json:"services,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
-	// List of physical load balancer deployments attached to this logical loadbalancer
-	LoadbalancerDeployments []string `protobuf:"bytes,7,rep,name=loadbalancer_deployments,json=loadbalancerDeployments,proto3" json:"loadbalancer_deployments,omitempty"`
-	Etag                    string   `protobuf:"bytes,8,opt,name=etag,proto3" json:"etag,omitempty"`
-	XXX_NoUnkeyedLiteral    struct{} `json:"-"`
-	XXX_unrecognized        []byte   `json:"-"`
-	XXX_sizecache           int32    `json:"-"`
+	Name            string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Tenant          string `protobuf:"bytes,2,opt,name=tenant,proto3" json:"tenant,omitempty"`
+	Environment     string `protobuf:"bytes,3,opt,name=environment,proto3" json:"environment,omitempty"`
+	Id              string `protobuf:"bytes,4,opt,name=id,proto3" json:"id,omitempty"`
+	Description     string `protobuf:"bytes,5,opt,name=description,proto3" json:"description,omitempty"`
+	EnableWorkflows bool   `protobuf:"varint,6,opt,name=enable_workflows,json=enableWorkflows,proto3" json:"enable_workflows,omitempty"`
+	// The namespace where the load balancer is/will be deployed in a given cluster.
+	ClusterNamespace string `protobuf:"bytes,7,opt,name=cluster_namespace,json=clusterNamespace,proto3" json:"cluster_namespace,omitempty"`
+	// Labels that uniquely identify the cluster loadbalancer
+	Labels map[string]string `protobuf:"bytes,8,rep,name=labels,proto3" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	// Map of applications attached to this loadbalancer in the form
+	// applicationId: TLS credential information
+	Applications         map[string]*TLSSettings `protobuf:"bytes,9,rep,name=applications,proto3" json:"applications,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	Etag                 string                  `protobuf:"bytes,10,opt,name=etag,proto3" json:"etag,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                `json:"-"`
+	XXX_unrecognized     []byte                  `json:"-"`
+	XXX_sizecache        int32                   `json:"-"`
 }
 
 func (m *LoadBalancer) Reset()         { *m = LoadBalancer{} }
 func (m *LoadBalancer) String() string { return proto.CompactTextString(m) }
 func (*LoadBalancer) ProtoMessage()    {}
 func (*LoadBalancer) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_e536f4c3dabebea2, []int{18}
+	return fileDescriptor_logical_resources_74929b3a0ddf6d9a, []int{18}
 }
 func (m *LoadBalancer) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_LoadBalancer.Unmarshal(m, b)
@@ -1192,9 +1259,9 @@ func (m *LoadBalancer) GetTenant() string {
 	return ""
 }
 
-func (m *LoadBalancer) GetWorkspace() string {
+func (m *LoadBalancer) GetEnvironment() string {
 	if m != nil {
-		return m.Workspace
+		return m.Environment
 	}
 	return ""
 }
@@ -1213,16 +1280,30 @@ func (m *LoadBalancer) GetDescription() string {
 	return ""
 }
 
-func (m *LoadBalancer) GetServices() map[string]*TLSSettings {
+func (m *LoadBalancer) GetEnableWorkflows() bool {
 	if m != nil {
-		return m.Services
+		return m.EnableWorkflows
+	}
+	return false
+}
+
+func (m *LoadBalancer) GetClusterNamespace() string {
+	if m != nil {
+		return m.ClusterNamespace
+	}
+	return ""
+}
+
+func (m *LoadBalancer) GetLabels() map[string]string {
+	if m != nil {
+		return m.Labels
 	}
 	return nil
 }
 
-func (m *LoadBalancer) GetLoadbalancerDeployments() []string {
+func (m *LoadBalancer) GetApplications() map[string]*TLSSettings {
 	if m != nil {
-		return m.LoadbalancerDeployments
+		return m.Applications
 	}
 	return nil
 }
@@ -1239,7 +1320,7 @@ type CreateLoadBalancerRequest struct {
 	// if present, this will be used as the id for the created object
 	Id                   string        `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
 	Tenant               string        `protobuf:"bytes,3,opt,name=tenant,proto3" json:"tenant,omitempty"`
-	Workspace            string        `protobuf:"bytes,4,opt,name=workspace,proto3" json:"workspace,omitempty"`
+	Environment          string        `protobuf:"bytes,4,opt,name=environment,proto3" json:"environment,omitempty"`
 	Loadbalancer         *LoadBalancer `protobuf:"bytes,5,opt,name=loadbalancer,proto3" json:"loadbalancer,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
 	XXX_unrecognized     []byte        `json:"-"`
@@ -1250,7 +1331,7 @@ func (m *CreateLoadBalancerRequest) Reset()         { *m = CreateLoadBalancerReq
 func (m *CreateLoadBalancerRequest) String() string { return proto.CompactTextString(m) }
 func (*CreateLoadBalancerRequest) ProtoMessage()    {}
 func (*CreateLoadBalancerRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_e536f4c3dabebea2, []int{19}
+	return fileDescriptor_logical_resources_74929b3a0ddf6d9a, []int{19}
 }
 func (m *CreateLoadBalancerRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CreateLoadBalancerRequest.Unmarshal(m, b)
@@ -1291,9 +1372,9 @@ func (m *CreateLoadBalancerRequest) GetTenant() string {
 	return ""
 }
 
-func (m *CreateLoadBalancerRequest) GetWorkspace() string {
+func (m *CreateLoadBalancerRequest) GetEnvironment() string {
 	if m != nil {
-		return m.Workspace
+		return m.Environment
 	}
 	return ""
 }
@@ -1308,7 +1389,7 @@ func (m *CreateLoadBalancerRequest) GetLoadbalancer() *LoadBalancer {
 type GetLoadBalancerRequest struct {
 	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	Tenant               string   `protobuf:"bytes,2,opt,name=tenant,proto3" json:"tenant,omitempty"`
-	Workspace            string   `protobuf:"bytes,3,opt,name=workspace,proto3" json:"workspace,omitempty"`
+	Environment          string   `protobuf:"bytes,3,opt,name=environment,proto3" json:"environment,omitempty"`
 	Id                   string   `protobuf:"bytes,4,opt,name=id,proto3" json:"id,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -1319,7 +1400,7 @@ func (m *GetLoadBalancerRequest) Reset()         { *m = GetLoadBalancerRequest{}
 func (m *GetLoadBalancerRequest) String() string { return proto.CompactTextString(m) }
 func (*GetLoadBalancerRequest) ProtoMessage()    {}
 func (*GetLoadBalancerRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_e536f4c3dabebea2, []int{20}
+	return fileDescriptor_logical_resources_74929b3a0ddf6d9a, []int{20}
 }
 func (m *GetLoadBalancerRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetLoadBalancerRequest.Unmarshal(m, b)
@@ -1353,9 +1434,9 @@ func (m *GetLoadBalancerRequest) GetTenant() string {
 	return ""
 }
 
-func (m *GetLoadBalancerRequest) GetWorkspace() string {
+func (m *GetLoadBalancerRequest) GetEnvironment() string {
 	if m != nil {
-		return m.Workspace
+		return m.Environment
 	}
 	return ""
 }
@@ -1370,7 +1451,7 @@ func (m *GetLoadBalancerRequest) GetId() string {
 type ListLoadBalancersRequest struct {
 	Parent               string   `protobuf:"bytes,1,opt,name=parent,proto3" json:"parent,omitempty"`
 	Tenant               string   `protobuf:"bytes,2,opt,name=tenant,proto3" json:"tenant,omitempty"`
-	Workspace            string   `protobuf:"bytes,3,opt,name=workspace,proto3" json:"workspace,omitempty"`
+	Environment          string   `protobuf:"bytes,3,opt,name=environment,proto3" json:"environment,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -1380,7 +1461,7 @@ func (m *ListLoadBalancersRequest) Reset()         { *m = ListLoadBalancersReque
 func (m *ListLoadBalancersRequest) String() string { return proto.CompactTextString(m) }
 func (*ListLoadBalancersRequest) ProtoMessage()    {}
 func (*ListLoadBalancersRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_e536f4c3dabebea2, []int{21}
+	return fileDescriptor_logical_resources_74929b3a0ddf6d9a, []int{21}
 }
 func (m *ListLoadBalancersRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListLoadBalancersRequest.Unmarshal(m, b)
@@ -1414,9 +1495,9 @@ func (m *ListLoadBalancersRequest) GetTenant() string {
 	return ""
 }
 
-func (m *ListLoadBalancersRequest) GetWorkspace() string {
+func (m *ListLoadBalancersRequest) GetEnvironment() string {
 	if m != nil {
-		return m.Workspace
+		return m.Environment
 	}
 	return ""
 }
@@ -1432,7 +1513,7 @@ func (m *ListLoadBalancersResponse) Reset()         { *m = ListLoadBalancersResp
 func (m *ListLoadBalancersResponse) String() string { return proto.CompactTextString(m) }
 func (*ListLoadBalancersResponse) ProtoMessage()    {}
 func (*ListLoadBalancersResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_e536f4c3dabebea2, []int{22}
+	return fileDescriptor_logical_resources_74929b3a0ddf6d9a, []int{22}
 }
 func (m *ListLoadBalancersResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListLoadBalancersResponse.Unmarshal(m, b)
@@ -1462,7 +1543,7 @@ func (m *ListLoadBalancersResponse) GetLoadbalancers() []*LoadBalancer {
 type DeleteLoadBalancerRequest struct {
 	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	Tenant               string   `protobuf:"bytes,2,opt,name=tenant,proto3" json:"tenant,omitempty"`
-	Workspace            string   `protobuf:"bytes,3,opt,name=workspace,proto3" json:"workspace,omitempty"`
+	Environment          string   `protobuf:"bytes,3,opt,name=environment,proto3" json:"environment,omitempty"`
 	Id                   string   `protobuf:"bytes,4,opt,name=id,proto3" json:"id,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -1473,7 +1554,7 @@ func (m *DeleteLoadBalancerRequest) Reset()         { *m = DeleteLoadBalancerReq
 func (m *DeleteLoadBalancerRequest) String() string { return proto.CompactTextString(m) }
 func (*DeleteLoadBalancerRequest) ProtoMessage()    {}
 func (*DeleteLoadBalancerRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_logical_resources_e536f4c3dabebea2, []int{23}
+	return fileDescriptor_logical_resources_74929b3a0ddf6d9a, []int{23}
 }
 func (m *DeleteLoadBalancerRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DeleteLoadBalancerRequest.Unmarshal(m, b)
@@ -1507,9 +1588,9 @@ func (m *DeleteLoadBalancerRequest) GetTenant() string {
 	return ""
 }
 
-func (m *DeleteLoadBalancerRequest) GetWorkspace() string {
+func (m *DeleteLoadBalancerRequest) GetEnvironment() string {
 	if m != nil {
-		return m.Workspace
+		return m.Environment
 	}
 	return ""
 }
@@ -1522,13 +1603,15 @@ func (m *DeleteLoadBalancerRequest) GetId() string {
 }
 
 func init() {
-	proto.RegisterType((*Workspace)(nil), "tetrate.api.tcc.core.v1.Workspace")
-	proto.RegisterType((*CreateWorkspaceRequest)(nil), "tetrate.api.tcc.core.v1.CreateWorkspaceRequest")
-	proto.RegisterType((*GetWorkspaceRequest)(nil), "tetrate.api.tcc.core.v1.GetWorkspaceRequest")
-	proto.RegisterType((*ListWorkspacesRequest)(nil), "tetrate.api.tcc.core.v1.ListWorkspacesRequest")
-	proto.RegisterType((*ListWorkspacesResponse)(nil), "tetrate.api.tcc.core.v1.ListWorkspacesResponse")
-	proto.RegisterType((*DeleteWorkspaceRequest)(nil), "tetrate.api.tcc.core.v1.DeleteWorkspaceRequest")
+	proto.RegisterType((*Environment)(nil), "tetrate.api.tcc.core.v1.Environment")
+	proto.RegisterType((*CreateEnvironmentRequest)(nil), "tetrate.api.tcc.core.v1.CreateEnvironmentRequest")
+	proto.RegisterType((*GetEnvironmentRequest)(nil), "tetrate.api.tcc.core.v1.GetEnvironmentRequest")
+	proto.RegisterType((*ListEnvironmentsRequest)(nil), "tetrate.api.tcc.core.v1.ListEnvironmentsRequest")
+	proto.RegisterType((*ListEnvironmentsResponse)(nil), "tetrate.api.tcc.core.v1.ListEnvironmentsResponse")
+	proto.RegisterType((*DeleteEnvironmentRequest)(nil), "tetrate.api.tcc.core.v1.DeleteEnvironmentRequest")
 	proto.RegisterType((*Application)(nil), "tetrate.api.tcc.core.v1.Application")
+	proto.RegisterType((*Application_ApplicationSpecificLB)(nil), "tetrate.api.tcc.core.v1.Application.ApplicationSpecificLB")
+	proto.RegisterMapType((map[string]string)(nil), "tetrate.api.tcc.core.v1.Application.ApplicationSpecificLB.LabelsEntry")
 	proto.RegisterType((*CreateApplicationRequest)(nil), "tetrate.api.tcc.core.v1.CreateApplicationRequest")
 	proto.RegisterType((*GetApplicationRequest)(nil), "tetrate.api.tcc.core.v1.GetApplicationRequest")
 	proto.RegisterType((*ListApplicationsRequest)(nil), "tetrate.api.tcc.core.v1.ListApplicationsRequest")
@@ -1541,7 +1624,8 @@ func init() {
 	proto.RegisterType((*ListServicesResponse)(nil), "tetrate.api.tcc.core.v1.ListServicesResponse")
 	proto.RegisterType((*DeleteServiceRequest)(nil), "tetrate.api.tcc.core.v1.DeleteServiceRequest")
 	proto.RegisterType((*LoadBalancer)(nil), "tetrate.api.tcc.core.v1.LoadBalancer")
-	proto.RegisterMapType((map[string]*TLSSettings)(nil), "tetrate.api.tcc.core.v1.LoadBalancer.ServicesEntry")
+	proto.RegisterMapType((map[string]*TLSSettings)(nil), "tetrate.api.tcc.core.v1.LoadBalancer.ApplicationsEntry")
+	proto.RegisterMapType((map[string]string)(nil), "tetrate.api.tcc.core.v1.LoadBalancer.LabelsEntry")
 	proto.RegisterType((*CreateLoadBalancerRequest)(nil), "tetrate.api.tcc.core.v1.CreateLoadBalancerRequest")
 	proto.RegisterType((*GetLoadBalancerRequest)(nil), "tetrate.api.tcc.core.v1.GetLoadBalancerRequest")
 	proto.RegisterType((*ListLoadBalancersRequest)(nil), "tetrate.api.tcc.core.v1.ListLoadBalancersRequest")
@@ -1561,11 +1645,11 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type LogicalResourceModelClient interface {
-	CreateWorkspace(ctx context.Context, in *CreateWorkspaceRequest, opts ...grpc.CallOption) (*Workspace, error)
-	GetWorkspace(ctx context.Context, in *GetWorkspaceRequest, opts ...grpc.CallOption) (*Workspace, error)
-	UpdateWorkspace(ctx context.Context, in *Workspace, opts ...grpc.CallOption) (*Workspace, error)
-	ListWorkspaces(ctx context.Context, in *ListWorkspacesRequest, opts ...grpc.CallOption) (*ListWorkspacesResponse, error)
-	DeleteWorkspace(ctx context.Context, in *DeleteWorkspaceRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	CreateEnvironment(ctx context.Context, in *CreateEnvironmentRequest, opts ...grpc.CallOption) (*Environment, error)
+	GetEnvironment(ctx context.Context, in *GetEnvironmentRequest, opts ...grpc.CallOption) (*Environment, error)
+	UpdateEnvironment(ctx context.Context, in *Environment, opts ...grpc.CallOption) (*Environment, error)
+	ListEnvironments(ctx context.Context, in *ListEnvironmentsRequest, opts ...grpc.CallOption) (*ListEnvironmentsResponse, error)
+	DeleteEnvironment(ctx context.Context, in *DeleteEnvironmentRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 	CreateApplication(ctx context.Context, in *CreateApplicationRequest, opts ...grpc.CallOption) (*Application, error)
 	GetApplication(ctx context.Context, in *GetApplicationRequest, opts ...grpc.CallOption) (*Application, error)
 	UpdateApplication(ctx context.Context, in *Application, opts ...grpc.CallOption) (*Application, error)
@@ -1591,45 +1675,45 @@ func NewLogicalResourceModelClient(cc *grpc.ClientConn) LogicalResourceModelClie
 	return &logicalResourceModelClient{cc}
 }
 
-func (c *logicalResourceModelClient) CreateWorkspace(ctx context.Context, in *CreateWorkspaceRequest, opts ...grpc.CallOption) (*Workspace, error) {
-	out := new(Workspace)
-	err := c.cc.Invoke(ctx, "/tetrate.api.tcc.core.v1.LogicalResourceModel/CreateWorkspace", in, out, opts...)
+func (c *logicalResourceModelClient) CreateEnvironment(ctx context.Context, in *CreateEnvironmentRequest, opts ...grpc.CallOption) (*Environment, error) {
+	out := new(Environment)
+	err := c.cc.Invoke(ctx, "/tetrate.api.tcc.core.v1.LogicalResourceModel/CreateEnvironment", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *logicalResourceModelClient) GetWorkspace(ctx context.Context, in *GetWorkspaceRequest, opts ...grpc.CallOption) (*Workspace, error) {
-	out := new(Workspace)
-	err := c.cc.Invoke(ctx, "/tetrate.api.tcc.core.v1.LogicalResourceModel/GetWorkspace", in, out, opts...)
+func (c *logicalResourceModelClient) GetEnvironment(ctx context.Context, in *GetEnvironmentRequest, opts ...grpc.CallOption) (*Environment, error) {
+	out := new(Environment)
+	err := c.cc.Invoke(ctx, "/tetrate.api.tcc.core.v1.LogicalResourceModel/GetEnvironment", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *logicalResourceModelClient) UpdateWorkspace(ctx context.Context, in *Workspace, opts ...grpc.CallOption) (*Workspace, error) {
-	out := new(Workspace)
-	err := c.cc.Invoke(ctx, "/tetrate.api.tcc.core.v1.LogicalResourceModel/UpdateWorkspace", in, out, opts...)
+func (c *logicalResourceModelClient) UpdateEnvironment(ctx context.Context, in *Environment, opts ...grpc.CallOption) (*Environment, error) {
+	out := new(Environment)
+	err := c.cc.Invoke(ctx, "/tetrate.api.tcc.core.v1.LogicalResourceModel/UpdateEnvironment", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *logicalResourceModelClient) ListWorkspaces(ctx context.Context, in *ListWorkspacesRequest, opts ...grpc.CallOption) (*ListWorkspacesResponse, error) {
-	out := new(ListWorkspacesResponse)
-	err := c.cc.Invoke(ctx, "/tetrate.api.tcc.core.v1.LogicalResourceModel/ListWorkspaces", in, out, opts...)
+func (c *logicalResourceModelClient) ListEnvironments(ctx context.Context, in *ListEnvironmentsRequest, opts ...grpc.CallOption) (*ListEnvironmentsResponse, error) {
+	out := new(ListEnvironmentsResponse)
+	err := c.cc.Invoke(ctx, "/tetrate.api.tcc.core.v1.LogicalResourceModel/ListEnvironments", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *logicalResourceModelClient) DeleteWorkspace(ctx context.Context, in *DeleteWorkspaceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *logicalResourceModelClient) DeleteEnvironment(ctx context.Context, in *DeleteEnvironmentRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/tetrate.api.tcc.core.v1.LogicalResourceModel/DeleteWorkspace", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/tetrate.api.tcc.core.v1.LogicalResourceModel/DeleteEnvironment", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1773,11 +1857,11 @@ func (c *logicalResourceModelClient) DeleteLoadBalancer(ctx context.Context, in 
 
 // LogicalResourceModelServer is the server API for LogicalResourceModel service.
 type LogicalResourceModelServer interface {
-	CreateWorkspace(context.Context, *CreateWorkspaceRequest) (*Workspace, error)
-	GetWorkspace(context.Context, *GetWorkspaceRequest) (*Workspace, error)
-	UpdateWorkspace(context.Context, *Workspace) (*Workspace, error)
-	ListWorkspaces(context.Context, *ListWorkspacesRequest) (*ListWorkspacesResponse, error)
-	DeleteWorkspace(context.Context, *DeleteWorkspaceRequest) (*empty.Empty, error)
+	CreateEnvironment(context.Context, *CreateEnvironmentRequest) (*Environment, error)
+	GetEnvironment(context.Context, *GetEnvironmentRequest) (*Environment, error)
+	UpdateEnvironment(context.Context, *Environment) (*Environment, error)
+	ListEnvironments(context.Context, *ListEnvironmentsRequest) (*ListEnvironmentsResponse, error)
+	DeleteEnvironment(context.Context, *DeleteEnvironmentRequest) (*empty.Empty, error)
 	CreateApplication(context.Context, *CreateApplicationRequest) (*Application, error)
 	GetApplication(context.Context, *GetApplicationRequest) (*Application, error)
 	UpdateApplication(context.Context, *Application) (*Application, error)
@@ -1799,92 +1883,92 @@ func RegisterLogicalResourceModelServer(s *grpc.Server, srv LogicalResourceModel
 	s.RegisterService(&_LogicalResourceModel_serviceDesc, srv)
 }
 
-func _LogicalResourceModel_CreateWorkspace_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateWorkspaceRequest)
+func _LogicalResourceModel_CreateEnvironment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateEnvironmentRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(LogicalResourceModelServer).CreateWorkspace(ctx, in)
+		return srv.(LogicalResourceModelServer).CreateEnvironment(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tetrate.api.tcc.core.v1.LogicalResourceModel/CreateWorkspace",
+		FullMethod: "/tetrate.api.tcc.core.v1.LogicalResourceModel/CreateEnvironment",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LogicalResourceModelServer).CreateWorkspace(ctx, req.(*CreateWorkspaceRequest))
+		return srv.(LogicalResourceModelServer).CreateEnvironment(ctx, req.(*CreateEnvironmentRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _LogicalResourceModel_GetWorkspace_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetWorkspaceRequest)
+func _LogicalResourceModel_GetEnvironment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetEnvironmentRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(LogicalResourceModelServer).GetWorkspace(ctx, in)
+		return srv.(LogicalResourceModelServer).GetEnvironment(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tetrate.api.tcc.core.v1.LogicalResourceModel/GetWorkspace",
+		FullMethod: "/tetrate.api.tcc.core.v1.LogicalResourceModel/GetEnvironment",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LogicalResourceModelServer).GetWorkspace(ctx, req.(*GetWorkspaceRequest))
+		return srv.(LogicalResourceModelServer).GetEnvironment(ctx, req.(*GetEnvironmentRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _LogicalResourceModel_UpdateWorkspace_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Workspace)
+func _LogicalResourceModel_UpdateEnvironment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Environment)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(LogicalResourceModelServer).UpdateWorkspace(ctx, in)
+		return srv.(LogicalResourceModelServer).UpdateEnvironment(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tetrate.api.tcc.core.v1.LogicalResourceModel/UpdateWorkspace",
+		FullMethod: "/tetrate.api.tcc.core.v1.LogicalResourceModel/UpdateEnvironment",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LogicalResourceModelServer).UpdateWorkspace(ctx, req.(*Workspace))
+		return srv.(LogicalResourceModelServer).UpdateEnvironment(ctx, req.(*Environment))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _LogicalResourceModel_ListWorkspaces_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListWorkspacesRequest)
+func _LogicalResourceModel_ListEnvironments_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListEnvironmentsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(LogicalResourceModelServer).ListWorkspaces(ctx, in)
+		return srv.(LogicalResourceModelServer).ListEnvironments(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tetrate.api.tcc.core.v1.LogicalResourceModel/ListWorkspaces",
+		FullMethod: "/tetrate.api.tcc.core.v1.LogicalResourceModel/ListEnvironments",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LogicalResourceModelServer).ListWorkspaces(ctx, req.(*ListWorkspacesRequest))
+		return srv.(LogicalResourceModelServer).ListEnvironments(ctx, req.(*ListEnvironmentsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _LogicalResourceModel_DeleteWorkspace_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteWorkspaceRequest)
+func _LogicalResourceModel_DeleteEnvironment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteEnvironmentRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(LogicalResourceModelServer).DeleteWorkspace(ctx, in)
+		return srv.(LogicalResourceModelServer).DeleteEnvironment(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tetrate.api.tcc.core.v1.LogicalResourceModel/DeleteWorkspace",
+		FullMethod: "/tetrate.api.tcc.core.v1.LogicalResourceModel/DeleteEnvironment",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LogicalResourceModelServer).DeleteWorkspace(ctx, req.(*DeleteWorkspaceRequest))
+		return srv.(LogicalResourceModelServer).DeleteEnvironment(ctx, req.(*DeleteEnvironmentRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -2164,24 +2248,24 @@ var _LogicalResourceModel_serviceDesc = grpc.ServiceDesc{
 	HandlerType: (*LogicalResourceModelServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "CreateWorkspace",
-			Handler:    _LogicalResourceModel_CreateWorkspace_Handler,
+			MethodName: "CreateEnvironment",
+			Handler:    _LogicalResourceModel_CreateEnvironment_Handler,
 		},
 		{
-			MethodName: "GetWorkspace",
-			Handler:    _LogicalResourceModel_GetWorkspace_Handler,
+			MethodName: "GetEnvironment",
+			Handler:    _LogicalResourceModel_GetEnvironment_Handler,
 		},
 		{
-			MethodName: "UpdateWorkspace",
-			Handler:    _LogicalResourceModel_UpdateWorkspace_Handler,
+			MethodName: "UpdateEnvironment",
+			Handler:    _LogicalResourceModel_UpdateEnvironment_Handler,
 		},
 		{
-			MethodName: "ListWorkspaces",
-			Handler:    _LogicalResourceModel_ListWorkspaces_Handler,
+			MethodName: "ListEnvironments",
+			Handler:    _LogicalResourceModel_ListEnvironments_Handler,
 		},
 		{
-			MethodName: "DeleteWorkspace",
-			Handler:    _LogicalResourceModel_DeleteWorkspace_Handler,
+			MethodName: "DeleteEnvironment",
+			Handler:    _LogicalResourceModel_DeleteEnvironment_Handler,
 		},
 		{
 			MethodName: "CreateApplication",
@@ -2249,100 +2333,107 @@ var _LogicalResourceModel_serviceDesc = grpc.ServiceDesc{
 }
 
 func init() {
-	proto.RegisterFile("logical_resources.proto", fileDescriptor_logical_resources_e536f4c3dabebea2)
+	proto.RegisterFile("logical_resources.proto", fileDescriptor_logical_resources_74929b3a0ddf6d9a)
 }
 
-var fileDescriptor_logical_resources_e536f4c3dabebea2 = []byte{
-	// 1447 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xcc, 0x59, 0x5d, 0x6f, 0xdc, 0x44,
-	0x1b, 0xd5, 0x6c, 0x9a, 0xa4, 0x79, 0x36, 0x69, 0xba, 0xd3, 0x34, 0x71, 0xdd, 0x4a, 0xef, 0xbe,
-	0xa3, 0x02, 0x65, 0xd5, 0xda, 0x24, 0xbd, 0x69, 0x03, 0x2d, 0x6d, 0xfa, 0x91, 0x56, 0x04, 0x95,
-	0x6e, 0x03, 0x15, 0x55, 0xa5, 0xc8, 0xf1, 0x4e, 0xb7, 0x56, 0x37, 0xb6, 0x6b, 0xcf, 0x06, 0x85,
-	0x2a, 0x37, 0x48, 0x48, 0x08, 0x09, 0x90, 0xca, 0x5d, 0xb9, 0x46, 0x82, 0x0b, 0x2e, 0x2a, 0x51,
-	0x09, 0x24, 0x90, 0xb8, 0xe8, 0x1f, 0x00, 0xfe, 0x02, 0x3f, 0x04, 0x79, 0x3c, 0x8e, 0xc7, 0xbb,
-	0xfe, 0xca, 0xe6, 0xa3, 0xdc, 0xd9, 0x63, 0xcf, 0xcc, 0x79, 0xce, 0x9c, 0x33, 0x9e, 0xb3, 0x0b,
-	0x33, 0x1d, 0xa7, 0x6d, 0x99, 0x46, 0x67, 0xc5, 0xa3, 0xbe, 0xd3, 0xf5, 0x4c, 0xea, 0x6b, 0xae,
-	0xe7, 0x30, 0x07, 0xcf, 0x30, 0xca, 0x3c, 0x83, 0x51, 0xcd, 0x70, 0x2d, 0x8d, 0x99, 0xa6, 0x66,
-	0x3a, 0x1e, 0xd5, 0xd6, 0x67, 0xd5, 0x13, 0x6d, 0xc7, 0x69, 0x77, 0xa8, 0x6e, 0xb8, 0x96, 0x6e,
-	0xd8, 0xb6, 0xc3, 0x0c, 0x66, 0x39, 0xb6, 0xe8, 0xa6, 0x1e, 0x17, 0x4f, 0xf9, 0xdd, 0x6a, 0xf7,
-	0x81, 0x4e, 0xd7, 0x5c, 0xb6, 0x21, 0x1e, 0x62, 0xcf, 0xe9, 0x32, 0xcb, 0x6e, 0xaf, 0x58, 0xf6,
-	0x03, 0x47, 0xb4, 0xd5, 0x5c, 0xea, 0xad, 0x59, 0xbe, 0x2f, 0x8d, 0x51, 0x63, 0x1d, 0xdf, 0xa7,
-	0x2c, 0x78, 0x33, 0x6a, 0xc2, 0x8e, 0xd7, 0x36, 0x6c, 0xeb, 0x53, 0x3e, 0x57, 0xd8, 0x46, 0x9e,
-	0x23, 0x18, 0xbb, 0xeb, 0x78, 0x8f, 0x7c, 0xd7, 0x30, 0x29, 0xc6, 0x70, 0xc0, 0x36, 0xd6, 0xa8,
-	0x82, 0xea, 0xe8, 0xd4, 0x58, 0x93, 0x5f, 0xe3, 0x69, 0x18, 0x61, 0xd4, 0x36, 0x6c, 0xa6, 0x54,
-	0x78, 0xab, 0xb8, 0xc3, 0x87, 0xa0, 0x62, 0xb5, 0x94, 0x21, 0xde, 0x56, 0xb1, 0x5a, 0xb8, 0x0e,
-	0xd5, 0x16, 0xf5, 0x4d, 0xcf, 0x72, 0x83, 0xe1, 0x95, 0x03, 0xfc, 0x81, 0xdc, 0x84, 0xaf, 0x43,
-	0x55, 0xc2, 0xa9, 0x0c, 0xd7, 0xd1, 0xa9, 0xea, 0xdc, 0x49, 0x2d, 0x83, 0x23, 0xed, 0x83, 0xf8,
-	0xdd, 0xa6, 0xdc, 0x91, 0x3c, 0x43, 0x30, 0x7d, 0xc5, 0xa3, 0x06, 0xa3, 0x5b, 0xc8, 0x9b, 0xf4,
-	0x71, 0x97, 0xfa, 0x2c, 0x00, 0xeb, 0x1a, 0x1e, 0xb5, 0x99, 0x28, 0x41, 0xdc, 0x09, 0xb0, 0x95,
-	0x2d, 0xb0, 0x71, 0x51, 0x43, 0x89, 0xa2, 0x2e, 0xc1, 0xd8, 0x27, 0xd1, 0x98, 0xbc, 0x84, 0xea,
-	0x1c, 0xc9, 0x04, 0x18, 0xcf, 0x1e, 0x77, 0x22, 0xb7, 0xe1, 0xc8, 0x22, 0x65, 0x7d, 0xc0, 0x76,
-	0xc0, 0x2c, 0x59, 0x84, 0xa3, 0x4b, 0x96, 0x1f, 0x8f, 0xe9, 0x17, 0x55, 0x9b, 0x31, 0x30, 0xb9,
-	0x0f, 0xd3, 0xbd, 0x03, 0xf9, 0xae, 0x63, 0xfb, 0x14, 0x2f, 0x00, 0x6c, 0x95, 0xe0, 0x2b, 0xa8,
-	0x3e, 0x54, 0xb2, 0x70, 0xa9, 0x17, 0x59, 0x86, 0xe9, 0xab, 0xb4, 0x43, 0x53, 0x56, 0x65, 0x27,
-	0xc5, 0xff, 0x89, 0xa0, 0x7a, 0xd9, 0x75, 0x3b, 0x96, 0xc9, 0x65, 0xbb, 0xad, 0xb1, 0x4e, 0xc8,
-	0xab, 0x19, 0x0e, 0x19, 0x37, 0x88, 0x99, 0x0e, 0x64, 0x09, 0x78, 0xb8, 0x50, 0xc0, 0x23, 0x83,
-	0x0a, 0xf8, 0x0f, 0x04, 0x4a, 0x28, 0x60, 0xa9, 0xb2, 0xdd, 0x92, 0xf0, 0x89, 0x5e, 0x09, 0x27,
-	0x8a, 0xbe, 0x0e, 0x55, 0x23, 0x9e, 0xb3, 0xd0, 0x83, 0x32, 0x3e, 0xb9, 0x23, 0x79, 0x0c, 0x47,
-	0x17, 0x29, 0x4b, 0x81, 0xbf, 0x67, 0xeb, 0x43, 0xda, 0x30, 0x13, 0xa8, 0x57, 0x9a, 0x73, 0x50,
-	0x23, 0xe4, 0x4f, 0x4c, 0x5a, 0xa0, 0xf4, 0x4f, 0x24, 0x8c, 0x72, 0x03, 0xc6, 0x25, 0x1a, 0x22,
-	0xab, 0x94, 0x23, 0x30, 0xd1, 0x93, 0x30, 0x50, 0x42, 0xbb, 0xec, 0x2b, 0x89, 0x2f, 0x2a, 0x30,
-	0x7a, 0x87, 0x7a, 0xeb, 0xd6, 0x36, 0x77, 0xfb, 0xfc, 0x59, 0xea, 0x49, 0x55, 0x89, 0xbd, 0x5f,
-	0x6a, 0x12, 0x38, 0x86, 0xb3, 0xcc, 0x36, 0xd2, 0x6f, 0xb6, 0x45, 0x18, 0x97, 0xbf, 0x74, 0xca,
-	0x68, 0x81, 0x54, 0x9b, 0xe1, 0xcb, 0x37, 0xed, 0x07, 0x4e, 0xb3, 0xea, 0xc5, 0x37, 0x58, 0x87,
-	0x23, 0x7e, 0x58, 0xf1, 0x4a, 0x8b, 0xba, 0x1d, 0x67, 0x63, 0x8d, 0xda, 0xcc, 0x57, 0x0e, 0xd6,
-	0x87, 0x4e, 0x8d, 0x35, 0xb1, 0x78, 0x74, 0x35, 0x7e, 0x12, 0xf0, 0x42, 0x99, 0xd1, 0x56, 0xc6,
-	0x42, 0x5e, 0x82, 0x6b, 0xf2, 0x17, 0x82, 0xa9, 0xd0, 0xb2, 0x82, 0xbd, 0xfd, 0xb1, 0x6b, 0xbd,
-	0xdf, 0xae, 0x3d, 0xc4, 0xce, 0xc3, 0xa8, 0x28, 0x41, 0xec, 0x47, 0xf5, 0x4c, 0x86, 0x22, 0xe4,
-	0x51, 0x07, 0xf2, 0x0d, 0x82, 0xda, 0x22, 0x65, 0x3d, 0x15, 0xbd, 0x42, 0x59, 0x90, 0xcf, 0x11,
-	0x1c, 0x09, 0xbc, 0x27, 0x20, 0xed, 0x8d, 0xc1, 0x8b, 0x71, 0x91, 0x65, 0x98, 0x4a, 0xc2, 0x10,
-	0xf6, 0x7f, 0x07, 0x0e, 0x0a, 0xf2, 0x22, 0xeb, 0x17, 0xd3, 0xbd, 0xd5, 0x83, 0x3c, 0x45, 0x30,
-	0x15, 0x7a, 0xfe, 0x3f, 0x44, 0xf9, 0x57, 0x43, 0x30, 0xbe, 0xe4, 0x18, 0xad, 0x05, 0xa3, 0x63,
-	0xd8, 0x26, 0xf5, 0x5e, 0xe9, 0x17, 0xf6, 0x96, 0xc4, 0xef, 0x08, 0xe7, 0xf7, 0x6c, 0x26, 0xbf,
-	0x32, 0xe8, 0x88, 0x6c, 0xff, 0x9a, 0xcd, 0xbc, 0x8d, 0x98, 0x72, 0x7c, 0x1e, 0x94, 0x8e, 0x63,
-	0xb4, 0x56, 0xc5, 0x7b, 0x89, 0x1d, 0x60, 0x94, 0xef, 0x00, 0x33, 0xf2, 0xf3, 0xb4, 0x6d, 0xe0,
-	0x60, 0xbc, 0x0d, 0xa8, 0x06, 0x4c, 0x24, 0x66, 0xc2, 0x87, 0x61, 0xe8, 0x11, 0xdd, 0x10, 0x5c,
-	0x05, 0x97, 0x78, 0x1e, 0x86, 0xd7, 0x8d, 0x4e, 0x97, 0x72, 0xa6, 0xf2, 0x36, 0xac, 0xe5, 0xa5,
-	0x3b, 0x77, 0xc4, 0x01, 0xbd, 0x19, 0x76, 0x99, 0xaf, 0x9c, 0x43, 0xe4, 0x25, 0x82, 0x63, 0xe1,
-	0x4e, 0x23, 0x17, 0xb8, 0x3f, 0xdb, 0xcd, 0x4d, 0x18, 0x97, 0xd9, 0x10, 0xc7, 0x83, 0xd7, 0x4a,
-	0x2d, 0x41, 0x33, 0xd1, 0x95, 0x78, 0x30, 0xbd, 0x48, 0x59, 0x5a, 0x09, 0x7b, 0xf7, 0x71, 0x7b,
-	0x18, 0x7e, 0xb8, 0xe5, 0x49, 0xf7, 0xe8, 0x88, 0xf0, 0x10, 0x8e, 0xa5, 0xcc, 0x24, 0x36, 0x89,
-	0xf7, 0x60, 0x42, 0xa6, 0x22, 0xda, 0x29, 0x4a, 0xd2, 0x98, 0xec, 0x4b, 0xba, 0x70, 0x2c, 0xdc,
-	0x32, 0xf6, 0x95, 0xca, 0xb9, 0xef, 0x8e, 0xc3, 0xd4, 0x52, 0x98, 0x6a, 0x9b, 0x22, 0xd4, 0xbe,
-	0xef, 0xb4, 0x68, 0x07, 0x3f, 0x45, 0x30, 0xd9, 0x13, 0xbe, 0xb0, 0x9e, 0x59, 0x59, 0x7a, 0x4c,
-	0x53, 0x4b, 0x44, 0x0b, 0xd2, 0xf8, 0xec, 0xef, 0x7f, 0xbe, 0xad, 0x9c, 0x24, 0xff, 0xd3, 0xd7,
-	0x67, 0xf5, 0xb0, 0x06, 0x5f, 0x7f, 0x12, 0x5e, 0x6c, 0xea, 0x71, 0xee, 0x98, 0x47, 0x0d, 0xfc,
-	0x35, 0x82, 0x71, 0x39, 0x75, 0xe1, 0xd3, 0x99, 0x13, 0xa4, 0x84, 0xb3, 0x52, 0x70, 0x4e, 0x73,
-	0x38, 0xaf, 0xe3, 0x93, 0x05, 0x70, 0xf4, 0x27, 0x56, 0x6b, 0x13, 0x7f, 0x89, 0x60, 0xf2, 0x43,
-	0xb7, 0x95, 0x60, 0xa9, 0xc4, 0x2c, 0xa5, 0x90, 0xe8, 0x1c, 0xc9, 0x9b, 0x6a, 0x29, 0x24, 0x01,
-	0x3b, 0xcf, 0x10, 0x1c, 0x4a, 0xe6, 0x3e, 0xac, 0x65, 0x6b, 0x31, 0x2d, 0x69, 0xaa, 0x7a, 0xe9,
-	0xf7, 0x43, 0x0f, 0x90, 0x37, 0x38, 0xc8, 0xff, 0xe3, 0xa2, 0xd5, 0xc3, 0x5f, 0x20, 0x98, 0xec,
-	0x89, 0x8d, 0x39, 0x7a, 0x4a, 0x0f, 0x98, 0xea, 0xb4, 0x16, 0xfe, 0x62, 0xa2, 0x45, 0xbf, 0x98,
-	0x68, 0xd7, 0xd6, 0x5c, 0xb6, 0x11, 0x2d, 0x5a, 0xa3, 0xdc, 0xa2, 0x3d, 0x47, 0x50, 0xeb, 0x8b,
-	0x65, 0x78, 0xb6, 0x40, 0xdc, 0xfd, 0xc7, 0x77, 0xb5, 0x54, 0x1c, 0x20, 0x57, 0x38, 0xb8, 0x0b,
-	0xe4, 0x5c, 0x21, 0xb8, 0xad, 0xeb, 0x4d, 0x5d, 0x8e, 0x10, 0xc1, 0xda, 0xfe, 0x84, 0xe0, 0x50,
-	0x32, 0x88, 0xe5, 0xac, 0x6d, 0x6a, 0x62, 0x2b, 0x89, 0xf6, 0x1a, 0x47, 0xfb, 0x2e, 0xbe, 0x30,
-	0x28, 0xda, 0x90, 0xe3, 0x1f, 0x11, 0xd4, 0x42, 0x63, 0xc8, 0x90, 0x4b, 0x41, 0x28, 0x09, 0xf4,
-	0x06, 0x07, 0xba, 0xa0, 0xee, 0x0c, 0x68, 0xc0, 0xed, 0xaf, 0x08, 0x0e, 0xf7, 0x06, 0x41, 0xfc,
-	0x56, 0xae, 0x13, 0x52, 0xc2, 0xa9, 0x3a, 0xbb, 0x8d, 0x1e, 0xc2, 0x3d, 0x97, 0x78, 0x0d, 0xf3,
-	0x78, 0x60, 0x69, 0xe0, 0xef, 0x11, 0xd4, 0xfa, 0xe2, 0x65, 0x8e, 0x96, 0xb3, 0xa2, 0x68, 0xa6,
-	0xb5, 0x84, 0x1e, 0x1a, 0x3b, 0xd4, 0xc3, 0x6f, 0x08, 0x26, 0x12, 0xb9, 0x0a, 0x9f, 0x29, 0xf0,
-	0x5b, 0xf2, 0xe8, 0xac, 0x16, 0x9e, 0xbf, 0xc9, 0x3d, 0x8e, 0x74, 0x99, 0xdc, 0x1a, 0x1c, 0xa9,
-	0x74, 0xb7, 0xa9, 0x47, 0x67, 0xcb, 0x40, 0x22, 0xbf, 0x20, 0x80, 0x38, 0x41, 0xe1, 0x46, 0x9e,
-	0xf5, 0xb6, 0x0d, 0xfc, 0x3e, 0x07, 0xfe, 0x11, 0x5e, 0xde, 0x65, 0xe0, 0x21, 0xf3, 0x2f, 0x11,
-	0x8c, 0xcb, 0x19, 0x27, 0xe7, 0x9b, 0x99, 0x92, 0xc8, 0xd4, 0x33, 0x25, 0xdf, 0x16, 0x8a, 0xbe,
-	0xcb, 0x6b, 0xb9, 0x8d, 0x77, 0x7b, 0x11, 0xf0, 0xcf, 0x08, 0x26, 0xc2, 0x0d, 0x25, 0x5a, 0x84,
-	0x42, 0x62, 0x4b, 0x50, 0xbf, 0xc2, 0xe1, 0x7e, 0xac, 0xee, 0x09, 0xf5, 0x81, 0x70, 0x02, 0xd8,
-	0x89, 0x28, 0x98, 0xa3, 0xfb, 0xb4, 0xc8, 0x98, 0xe9, 0x4b, 0x21, 0x9a, 0xc6, 0xde, 0x88, 0xe6,
-	0x05, 0x02, 0xdc, 0x1f, 0x4e, 0xf0, 0x5c, 0x81, 0x67, 0x53, 0xce, 0xae, 0x6a, 0xb9, 0xe3, 0x30,
-	0xb9, 0xca, 0xeb, 0xb9, 0x48, 0xce, 0x6f, 0xa7, 0x9e, 0xc4, 0x11, 0x3a, 0xa0, 0xfb, 0x39, 0x82,
-	0xc9, 0x9e, 0x38, 0x92, 0x73, 0xca, 0x48, 0x0f, 0x2e, 0x65, 0x11, 0x5f, 0xe7, 0x88, 0x2f, 0xe1,
-	0x8b, 0x03, 0x23, 0x0e, 0xb9, 0xfe, 0x1d, 0x41, 0xad, 0x2f, 0x64, 0xe0, 0xfc, 0xaf, 0x49, 0x5a,
-	0xf4, 0x51, 0xe7, 0xb6, 0xd3, 0x45, 0xf8, 0xf5, 0x32, 0x2f, 0xe2, 0x6d, 0x3c, 0x38, 0xed, 0xc1,
-	0xd1, 0x04, 0x87, 0xce, 0x4c, 0xd0, 0x5e, 0x8e, 0xc5, 0xb2, 0x64, 0xdf, 0xe4, 0x38, 0xaf, 0xa8,
-	0x3b, 0x24, 0x3b, 0xd0, 0xc8, 0x0f, 0x08, 0x70, 0x7f, 0xd4, 0xca, 0xd1, 0x76, 0x66, 0x2e, 0xcb,
-	0x34, 0xa7, 0x90, 0x46, 0x63, 0x87, 0x68, 0x17, 0xb4, 0x7b, 0xa7, 0xdb, 0x16, 0x7b, 0xd8, 0x5d,
-	0xd5, 0x4c, 0x67, 0x4d, 0x17, 0xf8, 0x2c, 0x27, 0xba, 0xe2, 0x7f, 0x2b, 0x32, 0xd3, 0xd4, 0x03,
-	0xa4, 0xfa, 0xfa, 0xec, 0xea, 0x08, 0xc7, 0x71, 0xf6, 0xdf, 0x00, 0x00, 0x00, 0xff, 0xff, 0xbe,
-	0x17, 0xf6, 0xfa, 0xa9, 0x1c, 0x00, 0x00,
+var fileDescriptor_logical_resources_74929b3a0ddf6d9a = []byte{
+	// 1562 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xcc, 0x59, 0xcf, 0x6f, 0xdc, 0xc4,
+	0x17, 0xd7, 0xe4, 0x77, 0xdf, 0xa6, 0x6d, 0x76, 0xbe, 0x69, 0xbb, 0x75, 0xbf, 0x87, 0x65, 0x28,
+	0xa5, 0x4d, 0x5b, 0x9b, 0x04, 0x89, 0x1f, 0x51, 0x01, 0x35, 0x6d, 0x92, 0x06, 0xb6, 0x08, 0x36,
+	0x2d, 0x54, 0xad, 0x68, 0xf0, 0x7a, 0x27, 0xa9, 0x55, 0xc7, 0x36, 0xf6, 0xec, 0x96, 0xa8, 0xca,
+	0x85, 0x1b, 0x17, 0x0e, 0x54, 0xea, 0x81, 0x63, 0xc5, 0x05, 0x09, 0x0e, 0x1c, 0x2a, 0x81, 0x44,
+	0x25, 0x90, 0x7a, 0xe8, 0x1d, 0x89, 0xbf, 0x80, 0x03, 0xe2, 0x7f, 0x40, 0x42, 0x1e, 0x8f, 0x77,
+	0xc7, 0xbb, 0xf6, 0xda, 0xc9, 0x66, 0x53, 0x6e, 0x9e, 0xf1, 0xce, 0x9b, 0xcf, 0xfb, 0xbc, 0xf7,
+	0x79, 0x9e, 0x37, 0x0b, 0xc7, 0x2c, 0x67, 0xc3, 0x34, 0x74, 0x6b, 0xcd, 0xa3, 0xbe, 0xd3, 0xf0,
+	0x0c, 0xea, 0xab, 0xae, 0xe7, 0x30, 0x07, 0x1f, 0x63, 0x94, 0x79, 0x3a, 0xa3, 0xaa, 0xee, 0x9a,
+	0x2a, 0x33, 0x0c, 0xd5, 0x70, 0x3c, 0xaa, 0x36, 0x67, 0x95, 0xff, 0x6f, 0x38, 0xce, 0x86, 0x45,
+	0x35, 0xdd, 0x35, 0x35, 0xdd, 0xb6, 0x1d, 0xa6, 0x33, 0xd3, 0xb1, 0xc5, 0x32, 0xe5, 0x84, 0x78,
+	0xcb, 0x47, 0xb5, 0xc6, 0xba, 0x46, 0x37, 0x5d, 0xb6, 0x25, 0x5e, 0x62, 0xcf, 0x69, 0x30, 0xd3,
+	0xde, 0x58, 0x33, 0xed, 0x75, 0x47, 0xcc, 0x1d, 0x31, 0x2c, 0x93, 0xda, 0x6c, 0xcd, 0xa7, 0x2c,
+	0x78, 0x15, 0xd9, 0x29, 0x32, 0xcb, 0x8f, 0x4f, 0x91, 0x27, 0x08, 0x0a, 0x8b, 0x76, 0xd3, 0xf4,
+	0x1c, 0x7b, 0x93, 0xda, 0x0c, 0x63, 0x18, 0xb1, 0xf5, 0x4d, 0x5a, 0x42, 0x65, 0x74, 0xfa, 0x40,
+	0x95, 0x3f, 0xe3, 0xa3, 0x30, 0xc6, 0xa8, 0xad, 0xdb, 0xac, 0x34, 0xc4, 0x67, 0xc5, 0x08, 0x1f,
+	0x82, 0x21, 0xb3, 0x5e, 0x1a, 0xe6, 0x73, 0x43, 0x66, 0x1d, 0x97, 0xa1, 0x50, 0xa7, 0xbe, 0xe1,
+	0x99, 0x6e, 0x00, 0xbe, 0x34, 0xc2, 0x5f, 0xc8, 0x53, 0xf8, 0x03, 0x38, 0xdc, 0x81, 0xac, 0x34,
+	0x5a, 0x46, 0xa7, 0x0b, 0x73, 0x2f, 0xab, 0x29, 0xcc, 0xa8, 0x97, 0xf8, 0xef, 0x57, 0xc5, 0xcf,
+	0xab, 0x87, 0x8c, 0xd8, 0x98, 0x3c, 0x42, 0x50, 0xba, 0xe4, 0x51, 0x9d, 0x51, 0xc9, 0x8b, 0x2a,
+	0xfd, 0xac, 0x41, 0x7d, 0x16, 0x00, 0x77, 0x75, 0x8f, 0xda, 0x4c, 0xb8, 0x23, 0x46, 0x02, 0xf8,
+	0x50, 0x0b, 0x78, 0xdb, 0xc1, 0xe1, 0x98, 0x83, 0x4b, 0x50, 0xa0, 0x6d, 0xab, 0xdc, 0xa1, 0xc2,
+	0xdc, 0xc9, 0x54, 0xa8, 0x32, 0x02, 0x79, 0x21, 0x59, 0x85, 0x23, 0xcb, 0x94, 0x25, 0x00, 0xec,
+	0x83, 0x6d, 0xb2, 0x02, 0xc7, 0x2a, 0xa6, 0x2f, 0x5b, 0xf5, 0xb3, 0xfc, 0x4e, 0x31, 0x4d, 0xea,
+	0x50, 0xea, 0x36, 0xe5, 0xbb, 0x8e, 0xed, 0x53, 0x7c, 0x05, 0x26, 0x25, 0x57, 0xfc, 0x12, 0x2a,
+	0x0f, 0xe7, 0x26, 0x21, 0xb6, 0x92, 0x7c, 0x04, 0xa5, 0xcb, 0xd4, 0xa2, 0x89, 0x91, 0xea, 0x87,
+	0x88, 0xbf, 0x46, 0xa0, 0x70, 0xd1, 0x75, 0x2d, 0xd3, 0xe0, 0xa2, 0xd9, 0x91, 0xad, 0x72, 0x3c,
+	0xc2, 0xa1, 0x51, 0x79, 0x4a, 0xec, 0x36, 0x92, 0x96, 0xe4, 0xa3, 0xdd, 0x49, 0xbe, 0x0c, 0x93,
+	0xb2, 0x24, 0x4b, 0x63, 0x19, 0x69, 0x53, 0x0d, 0x7f, 0xbc, 0x62, 0xaf, 0x3b, 0xd5, 0x82, 0xd7,
+	0x1e, 0x24, 0xa9, 0x65, 0xbc, 0x2f, 0xb5, 0xe0, 0x0f, 0x61, 0x4c, 0x77, 0xdd, 0x35, 0xab, 0x56,
+	0x9a, 0xe0, 0x86, 0xe6, 0x53, 0x0d, 0x49, 0x84, 0xca, 0xcf, 0xab, 0x2e, 0x35, 0xcc, 0x75, 0xd3,
+	0xa8, 0x2c, 0x54, 0x47, 0x75, 0xd7, 0xad, 0xd4, 0x94, 0xbf, 0x11, 0x1c, 0x49, 0xfc, 0x01, 0xbe,
+	0x0d, 0x63, 0x96, 0x5e, 0xa3, 0x56, 0x94, 0x33, 0x4b, 0xbb, 0xdf, 0x4c, 0xad, 0x70, 0x43, 0x8b,
+	0x36, 0xf3, 0xb6, 0xaa, 0xc2, 0x2a, 0x7e, 0x0d, 0x86, 0x99, 0xe5, 0xf3, 0x80, 0xf6, 0xa2, 0xf7,
+	0x5a, 0x65, 0xb5, 0xc5, 0x47, 0xb0, 0x40, 0x79, 0x13, 0x0a, 0x92, 0x39, 0x3c, 0x05, 0xc3, 0x77,
+	0xe9, 0x96, 0xc8, 0x96, 0xe0, 0x11, 0x4f, 0xc3, 0x68, 0x53, 0xb7, 0x1a, 0x54, 0xe4, 0x4a, 0x38,
+	0x98, 0x1f, 0x7a, 0x03, 0x91, 0xa7, 0xad, 0x6a, 0x23, 0xc1, 0xdc, 0xab, 0x6a, 0x53, 0xee, 0xae,
+	0x36, 0x1d, 0xb9, 0xb8, 0x04, 0x05, 0xbd, 0xbd, 0xaf, 0x28, 0x9d, 0x27, 0xf3, 0xd0, 0x5a, 0x95,
+	0x17, 0x92, 0x06, 0xaf, 0x47, 0x09, 0x2e, 0x0c, 0x54, 0x3a, 0xe4, 0x6e, 0x58, 0xb1, 0xa4, 0x7d,
+	0x77, 0x5b, 0xb1, 0xb2, 0x37, 0x8f, 0x6a, 0x5a, 0x7c, 0xb3, 0x76, 0x4d, 0x93, 0xe8, 0xc8, 0xae,
+	0x69, 0x32, 0x53, 0xb1, 0x95, 0xe4, 0xf3, 0xa8, 0xa6, 0xed, 0x3b, 0x99, 0xdf, 0x0e, 0xc1, 0xf8,
+	0x2a, 0xf5, 0x9a, 0xa6, 0x41, 0xf7, 0x78, 0xa7, 0x72, 0x3c, 0xcb, 0x44, 0x1e, 0x4a, 0x53, 0x02,
+	0xcb, 0x68, 0x5a, 0x4d, 0x1c, 0xeb, 0xae, 0x89, 0x0a, 0x4c, 0xdc, 0x71, 0x7c, 0xc6, 0x51, 0x8e,
+	0xf3, 0xd7, 0xad, 0x71, 0x57, 0xbd, 0x9c, 0xd8, 0x6d, 0xbd, 0xc4, 0x30, 0x42, 0x99, 0xbe, 0x51,
+	0x3a, 0x10, 0xd2, 0x10, 0x3c, 0x93, 0x3f, 0x10, 0x4c, 0x87, 0x8a, 0x15, 0x64, 0xed, 0x9f, 0x5a,
+	0xcb, 0xdd, 0x6a, 0xed, 0xe0, 0x71, 0x1e, 0xc6, 0xfd, 0x10, 0x95, 0xf8, 0x48, 0x94, 0x53, 0x9d,
+	0x8e, 0xd0, 0x47, 0x0b, 0xc8, 0x03, 0x04, 0xc5, 0x65, 0xca, 0x3a, 0xbc, 0x7a, 0xce, 0x99, 0x40,
+	0xbe, 0x44, 0xf0, 0xbf, 0x40, 0x76, 0x02, 0xd6, 0xe0, 0xf4, 0x9d, 0x8d, 0x8d, 0x5c, 0x83, 0xe9,
+	0x38, 0x14, 0xa1, 0xfe, 0x0b, 0x30, 0x21, 0x48, 0x8c, 0x94, 0x9f, 0x4d, 0x7b, 0x6b, 0x05, 0x79,
+	0x88, 0x60, 0x3a, 0x94, 0xfc, 0x7f, 0x8c, 0xfa, 0xa7, 0x23, 0x30, 0x59, 0x71, 0xf4, 0xfa, 0x82,
+	0x6e, 0xe9, 0xb6, 0x41, 0xbd, 0xe7, 0x7e, 0x0e, 0x3a, 0x03, 0x53, 0xd4, 0xd6, 0x6b, 0x16, 0x5d,
+	0xbb, 0xe7, 0x78, 0x77, 0xd7, 0x2d, 0xe7, 0x9e, 0xcf, 0xd3, 0x7c, 0xa2, 0x7a, 0x38, 0x9c, 0xff,
+	0x38, 0x9a, 0xc6, 0x67, 0xa1, 0x68, 0x58, 0x0d, 0x9f, 0x51, 0x6f, 0x2d, 0x80, 0xe9, 0xbb, 0xba,
+	0x11, 0xd5, 0x89, 0x29, 0xf1, 0xe2, 0xfd, 0x68, 0x1e, 0xaf, 0xb4, 0xce, 0x15, 0x13, 0x3c, 0x7a,
+	0xb3, 0xa9, 0xd1, 0x93, 0xe9, 0x48, 0x3c, 0x42, 0xdc, 0xea, 0xf8, 0x10, 0x1c, 0xe0, 0x06, 0x5f,
+	0xcf, 0x67, 0x50, 0xfe, 0xb4, 0x84, 0x66, 0x63, 0xc6, 0x5a, 0xe5, 0x08, 0xda, 0xe5, 0xa8, 0x8f,
+	0xb3, 0x87, 0x42, 0xa1, 0xd8, 0xb5, 0x63, 0x82, 0x81, 0x79, 0xd9, 0x40, 0xde, 0x73, 0x91, 0x74,
+	0xc4, 0x79, 0x86, 0xe0, 0x78, 0x58, 0x30, 0x65, 0x67, 0xf7, 0xaf, 0x6a, 0xae, 0xc0, 0xa4, 0xe5,
+	0xe8, 0xf5, 0x9a, 0xd8, 0x58, 0x1c, 0x72, 0x5e, 0xca, 0x15, 0x92, 0x6a, 0x6c, 0x29, 0x69, 0xc2,
+	0xd1, 0x65, 0xca, 0x92, 0xdc, 0x18, 0xec, 0xa7, 0xd9, 0x0a, 0x8f, 0x1e, 0xf2, 0xc6, 0x03, 0x3c,
+	0xe8, 0xdc, 0x81, 0xe3, 0x09, 0xbb, 0x89, 0x5a, 0xf7, 0x1e, 0x1c, 0x94, 0x29, 0x89, 0x0a, 0x5e,
+	0x4e, 0x3a, 0xe3, 0x6b, 0xc9, 0x16, 0x1c, 0x0f, 0x2b, 0xdf, 0xbe, 0x53, 0x3a, 0xf7, 0xcf, 0x09,
+	0x98, 0xae, 0x84, 0x97, 0x2a, 0x55, 0x71, 0xa7, 0x72, 0xd5, 0xa9, 0x53, 0x0b, 0x7f, 0x83, 0xa0,
+	0xd8, 0xd5, 0xff, 0xe3, 0xf4, 0x92, 0x90, 0x76, 0x57, 0xa0, 0xe4, 0xea, 0x68, 0xc9, 0xb9, 0x2f,
+	0x7e, 0xff, 0xf3, 0xc1, 0xd0, 0x29, 0xf2, 0x82, 0xd6, 0x9c, 0xd5, 0x42, 0x6f, 0x7c, 0xed, 0x7e,
+	0xf8, 0xb0, 0xad, 0xc9, 0xed, 0xee, 0x3c, 0x9a, 0xc1, 0x0f, 0x11, 0x1c, 0x8a, 0x37, 0xfe, 0x58,
+	0x4d, 0xdd, 0x26, 0xf1, 0x86, 0x20, 0x27, 0x2c, 0x95, 0xc3, 0x3a, 0x8d, 0x4f, 0x65, 0xc2, 0xd2,
+	0xee, 0x9b, 0xf5, 0x6d, 0xfc, 0x35, 0x82, 0xe2, 0x75, 0xb7, 0xde, 0xc1, 0x5a, 0xae, 0xbd, 0x72,
+	0x22, 0x9a, 0xe5, 0x88, 0xce, 0x2a, 0x39, 0x11, 0x05, 0x6c, 0x3d, 0x42, 0x30, 0xd5, 0x79, 0x0d,
+	0x81, 0x5f, 0x49, 0xcf, 0xd4, 0xe4, 0xcb, 0x0f, 0x65, 0x76, 0x07, 0x2b, 0x42, 0x95, 0x90, 0x33,
+	0x1c, 0xec, 0x8b, 0x38, 0x3b, 0xaa, 0xf8, 0x2b, 0x04, 0xc5, 0xae, 0x5b, 0x8c, 0x1e, 0xf9, 0x96,
+	0x76, 0xe3, 0xa1, 0x1c, 0x55, 0xc3, 0x4b, 0x3d, 0x35, 0xba, 0xd4, 0x53, 0x17, 0x37, 0x5d, 0xb6,
+	0x15, 0x85, 0x72, 0x26, 0x6f, 0x28, 0x1f, 0xb7, 0x04, 0x20, 0xdf, 0x81, 0x64, 0x09, 0xa0, 0xbb,
+	0x5d, 0x51, 0x72, 0xb5, 0x3f, 0x64, 0x99, 0xc3, 0xbb, 0x48, 0x2e, 0xe4, 0x80, 0x27, 0x8d, 0xb6,
+	0x35, 0xf9, 0xd3, 0x18, 0x44, 0xfb, 0xc7, 0x50, 0x1b, 0x32, 0xe8, 0x9e, 0xda, 0xd8, 0x35, 0xe2,
+	0x15, 0x8e, 0xf8, 0x12, 0xbe, 0xd8, 0x0f, 0xe2, 0x90, 0xeb, 0x1f, 0x5a, 0xb2, 0x91, 0x61, 0xe7,
+	0x82, 0x91, 0x13, 0x6c, 0x85, 0x83, 0x5d, 0x52, 0xfa, 0x07, 0x1b, 0x70, 0xfc, 0x44, 0x28, 0x4a,
+	0x3e, 0x37, 0x64, 0x28, 0x2a, 0xa1, 0x39, 0xcf, 0x50, 0x54, 0x52, 0x87, 0x4d, 0x2e, 0x73, 0x3f,
+	0xde, 0xc6, 0x7d, 0xa5, 0x09, 0xfe, 0xae, 0x25, 0xb6, 0x7c, 0xb9, 0x9d, 0xd6, 0x8a, 0xa7, 0x8a,
+	0x4d, 0xe4, 0xc6, 0xcc, 0x1e, 0xe4, 0xc6, 0xaf, 0x08, 0x0e, 0xc6, 0x1a, 0x4d, 0x7c, 0x3e, 0x43,
+	0x83, 0xf1, 0xfe, 0x41, 0xc9, 0x6c, 0x42, 0xc8, 0x6d, 0x8e, 0xf6, 0x06, 0x59, 0xed, 0x0f, 0xad,
+	0x34, 0xda, 0xd6, 0xa2, 0xbe, 0x26, 0x48, 0x97, 0x5f, 0x10, 0x40, 0xbb, 0xa5, 0xc4, 0x33, 0xbd,
+	0xe4, 0xb8, 0x63, 0xf0, 0x9f, 0x72, 0xf0, 0x37, 0xf1, 0x8d, 0x01, 0x80, 0x0f, 0x23, 0xf0, 0x0c,
+	0xc1, 0xa4, 0xdc, 0xf0, 0xe1, 0x73, 0x3d, 0xf3, 0xb6, 0xa3, 0x45, 0x55, 0xce, 0xe7, 0xfc, 0xb5,
+	0xc8, 0xf0, 0x5b, 0xdc, 0x9f, 0xeb, 0x78, 0x10, 0xc1, 0xc0, 0x3f, 0x21, 0x38, 0x18, 0x16, 0x9a,
+	0x28, 0x18, 0x99, 0x04, 0xe7, 0x08, 0x81, 0xc1, 0x21, 0x7f, 0xa2, 0x0c, 0x2c, 0x04, 0x41, 0x12,
+	0x05, 0xd0, 0x63, 0xfd, 0x71, 0x0f, 0x1d, 0x24, 0xf5, 0xd1, 0xa9, 0x5a, 0x15, 0x09, 0x34, 0x33,
+	0xb8, 0x04, 0xfa, 0x19, 0x01, 0xee, 0x6e, 0x7d, 0xf0, 0x5c, 0x86, 0x8e, 0x13, 0x4e, 0xc3, 0x4a,
+	0xbe, 0x03, 0x36, 0xb9, 0xc2, 0x7d, 0x5a, 0x20, 0x6f, 0xed, 0xd4, 0xa7, 0xd8, 0xc1, 0x3c, 0xa0,
+	0xfd, 0x31, 0x82, 0xc3, 0x1d, 0xcd, 0x0e, 0xd6, 0x7a, 0x09, 0xb8, 0x0f, 0xd4, 0xef, 0x72, 0xd4,
+	0x97, 0xf1, 0x42, 0x5f, 0xa8, 0x43, 0xce, 0x7f, 0x43, 0x50, 0xec, 0x6a, 0x5f, 0x70, 0xef, 0x2f,
+	0x4e, 0x52, 0x63, 0xa5, 0xcc, 0xed, 0x64, 0x89, 0xd0, 0xf0, 0x22, 0x77, 0xe4, 0x1d, 0xdc, 0x1f,
+	0xfd, 0xc1, 0x51, 0x06, 0x87, 0x6a, 0x8d, 0xd1, 0x9f, 0x8f, 0xcd, 0xbc, 0xa4, 0x5f, 0xe5, 0x58,
+	0x97, 0x95, 0x3d, 0x20, 0x3d, 0xc8, 0x97, 0xef, 0x11, 0xe0, 0xee, 0x66, 0xae, 0x47, 0xae, 0xa7,
+	0x76, 0x7e, 0xa9, 0x82, 0x15, 0x69, 0x32, 0xb3, 0x07, 0x88, 0x17, 0xd4, 0x9b, 0xe7, 0x36, 0x4c,
+	0x76, 0xa7, 0x51, 0x53, 0x0d, 0x67, 0x53, 0x13, 0x18, 0x4d, 0x27, 0x7a, 0xe2, 0xff, 0x9b, 0x33,
+	0xc3, 0xd0, 0x02, 0xb4, 0x5a, 0x73, 0xb6, 0x36, 0xc6, 0xb1, 0xbc, 0xfa, 0x6f, 0x00, 0x00, 0x00,
+	0xff, 0xff, 0x5b, 0xfb, 0x12, 0x98, 0x8a, 0x1f, 0x00, 0x00,
 }

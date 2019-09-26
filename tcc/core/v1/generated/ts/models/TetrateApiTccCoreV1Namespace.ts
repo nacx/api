@@ -16,9 +16,6 @@ import {
     TetrateApiTccCoreV1ClientSettings,
     TetrateApiTccCoreV1ClientSettingsFromJSON,
     TetrateApiTccCoreV1ClientSettingsToJSON,
-    TetrateApiTccCoreV1Permissions,
-    TetrateApiTccCoreV1PermissionsFromJSON,
-    TetrateApiTccCoreV1PermissionsToJSON,
 } from './';
 
 /**
@@ -39,6 +36,12 @@ export interface TetrateApiTccCoreV1Namespace {
      * @memberof TetrateApiTccCoreV1Namespace
      */
     tenant?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1Namespace
+     */
+    environment?: string;
     /**
      * 
      * @type {string}
@@ -71,12 +74,6 @@ export interface TetrateApiTccCoreV1Namespace {
     clientSettings?: TetrateApiTccCoreV1ClientSettings;
     /**
      * 
-     * @type {TetrateApiTccCoreV1Permissions}
-     * @memberof TetrateApiTccCoreV1Namespace
-     */
-    permissions?: TetrateApiTccCoreV1Permissions;
-    /**
-     * 
      * @type {string}
      * @memberof TetrateApiTccCoreV1Namespace
      */
@@ -87,12 +84,12 @@ export function TetrateApiTccCoreV1NamespaceFromJSON(json: any): TetrateApiTccCo
     return {
         'name': !exists(json, 'name') ? undefined : json['name'],
         'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
+        'environment': !exists(json, 'environment') ? undefined : json['environment'],
         'cluster': !exists(json, 'cluster') ? undefined : json['cluster'],
         'id': !exists(json, 'id') ? undefined : json['id'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'dependencies': !exists(json, 'dependencies') ? undefined : json['dependencies'],
         'clientSettings': !exists(json, 'clientSettings') ? undefined : TetrateApiTccCoreV1ClientSettingsFromJSON(json['clientSettings']),
-        'permissions': !exists(json, 'permissions') ? undefined : TetrateApiTccCoreV1PermissionsFromJSON(json['permissions']),
         'etag': !exists(json, 'etag') ? undefined : json['etag'],
     };
 }
@@ -104,12 +101,12 @@ export function TetrateApiTccCoreV1NamespaceToJSON(value?: TetrateApiTccCoreV1Na
     return {
         'name': value.name,
         'tenant': value.tenant,
+        'environment': value.environment,
         'cluster': value.cluster,
         'id': value.id,
         'description': value.description,
         'dependencies': value.dependencies,
         'clientSettings': TetrateApiTccCoreV1ClientSettingsToJSON(value.clientSettings),
-        'permissions': TetrateApiTccCoreV1PermissionsToJSON(value.permissions),
         'etag': value.etag,
     };
 }

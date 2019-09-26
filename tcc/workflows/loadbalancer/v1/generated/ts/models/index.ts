@@ -5,6 +5,5 @@ export * from './TetrateApiTccWorkflowsLoadbalancerV1CreateTicketRequest';
 export * from './TetrateApiTccWorkflowsLoadbalancerV1ListTicketsResponse';
 export * from './TetrateApiTccWorkflowsLoadbalancerV1PublishTicketRequest';
 export * from './TetrateApiTccWorkflowsLoadbalancerV1ResolveTicketRequest';
-export * from './TetrateApiTccWorkflowsLoadbalancerV1Target';
 export * from './TetrateApiTccWorkflowsLoadbalancerV1TicketStatus';
 export * from './TetrateApiTccWorkflowsLoadbalancerV1TicketStatusRequestState';

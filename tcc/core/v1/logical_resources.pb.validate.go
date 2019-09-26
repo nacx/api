@@ -33,9 +33,10 @@ var (
 	_ = ptypes.DynamicAny{}
 )
 
-// Validate checks the field values on Workspace with the rules defined in the
-// proto definition for this message. If any rules are violated, an error is returned.
-func (m *Workspace) Validate() error {
+// Validate checks the field values on Environment with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *Environment) Validate() error {
 	if m == nil {
 		return nil
 	}
@@ -48,10 +49,10 @@ func (m *Workspace) Validate() error {
 
 	// no validation rules for Description
 
-	if v, ok := interface{}(m.GetPermissions()).(interface{ Validate() error }); ok {
+	if v, ok := interface{}(m.GetClientSettings()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return WorkspaceValidationError{
-				field:  "Permissions",
+			return EnvironmentValidationError{
+				field:  "ClientSettings",
 				reason: "embedded message failed validation",
 				cause:  err,
 			}
@@ -61,9 +62,9 @@ func (m *Workspace) Validate() error {
 	return nil
 }
 
-// WorkspaceValidationError is the validation error returned by
-// Workspace.Validate if the designated constraints aren't met.
-type WorkspaceValidationError struct {
+// EnvironmentValidationError is the validation error returned by
+// Environment.Validate if the designated constraints aren't met.
+type EnvironmentValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -71,22 +72,22 @@ type WorkspaceValidationError struct {
 }
 
 // Field function returns field value.
-func (e WorkspaceValidationError) Field() string { return e.field }
+func (e EnvironmentValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e WorkspaceValidationError) Reason() string { return e.reason }
+func (e EnvironmentValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e WorkspaceValidationError) Cause() error { return e.cause }
+func (e EnvironmentValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e WorkspaceValidationError) Key() bool { return e.key }
+func (e EnvironmentValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e WorkspaceValidationError) ErrorName() string { return "WorkspaceValidationError" }
+func (e EnvironmentValidationError) ErrorName() string { return "EnvironmentValidationError" }
 
 // Error satisfies the builtin error interface
-func (e WorkspaceValidationError) Error() string {
+func (e EnvironmentValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -98,14 +99,14 @@ func (e WorkspaceValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sWorkspace.%s: %s%s",
+		"invalid %sEnvironment.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = WorkspaceValidationError{}
+var _ error = EnvironmentValidationError{}
 
 var _ interface {
 	Field() string
@@ -113,12 +114,12 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = WorkspaceValidationError{}
+} = EnvironmentValidationError{}
 
-// Validate checks the field values on CreateWorkspaceRequest with the rules
+// Validate checks the field values on CreateEnvironmentRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
-func (m *CreateWorkspaceRequest) Validate() error {
+func (m *CreateEnvironmentRequest) Validate() error {
 	if m == nil {
 		return nil
 	}
@@ -129,10 +130,10 @@ func (m *CreateWorkspaceRequest) Validate() error {
 
 	// no validation rules for Tenant
 
-	if v, ok := interface{}(m.GetWorkspace()).(interface{ Validate() error }); ok {
+	if v, ok := interface{}(m.GetEnvironment()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return CreateWorkspaceRequestValidationError{
-				field:  "Workspace",
+			return CreateEnvironmentRequestValidationError{
+				field:  "Environment",
 				reason: "embedded message failed validation",
 				cause:  err,
 			}
@@ -142,9 +143,9 @@ func (m *CreateWorkspaceRequest) Validate() error {
 	return nil
 }
 
-// CreateWorkspaceRequestValidationError is the validation error returned by
-// CreateWorkspaceRequest.Validate if the designated constraints aren't met.
-type CreateWorkspaceRequestValidationError struct {
+// CreateEnvironmentRequestValidationError is the validation error returned by
+// CreateEnvironmentRequest.Validate if the designated constraints aren't met.
+type CreateEnvironmentRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -152,24 +153,24 @@ type CreateWorkspaceRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e CreateWorkspaceRequestValidationError) Field() string { return e.field }
+func (e CreateEnvironmentRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e CreateWorkspaceRequestValidationError) Reason() string { return e.reason }
+func (e CreateEnvironmentRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e CreateWorkspaceRequestValidationError) Cause() error { return e.cause }
+func (e CreateEnvironmentRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e CreateWorkspaceRequestValidationError) Key() bool { return e.key }
+func (e CreateEnvironmentRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e CreateWorkspaceRequestValidationError) ErrorName() string {
-	return "CreateWorkspaceRequestValidationError"
+func (e CreateEnvironmentRequestValidationError) ErrorName() string {
+	return "CreateEnvironmentRequestValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e CreateWorkspaceRequestValidationError) Error() string {
+func (e CreateEnvironmentRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -181,14 +182,14 @@ func (e CreateWorkspaceRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sCreateWorkspaceRequest.%s: %s%s",
+		"invalid %sCreateEnvironmentRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = CreateWorkspaceRequestValidationError{}
+var _ error = CreateEnvironmentRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -196,12 +197,12 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = CreateWorkspaceRequestValidationError{}
+} = CreateEnvironmentRequestValidationError{}
 
-// Validate checks the field values on GetWorkspaceRequest with the rules
+// Validate checks the field values on GetEnvironmentRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
-func (m *GetWorkspaceRequest) Validate() error {
+func (m *GetEnvironmentRequest) Validate() error {
 	if m == nil {
 		return nil
 	}
@@ -215,9 +216,9 @@ func (m *GetWorkspaceRequest) Validate() error {
 	return nil
 }
 
-// GetWorkspaceRequestValidationError is the validation error returned by
-// GetWorkspaceRequest.Validate if the designated constraints aren't met.
-type GetWorkspaceRequestValidationError struct {
+// GetEnvironmentRequestValidationError is the validation error returned by
+// GetEnvironmentRequest.Validate if the designated constraints aren't met.
+type GetEnvironmentRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -225,24 +226,24 @@ type GetWorkspaceRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e GetWorkspaceRequestValidationError) Field() string { return e.field }
+func (e GetEnvironmentRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e GetWorkspaceRequestValidationError) Reason() string { return e.reason }
+func (e GetEnvironmentRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e GetWorkspaceRequestValidationError) Cause() error { return e.cause }
+func (e GetEnvironmentRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e GetWorkspaceRequestValidationError) Key() bool { return e.key }
+func (e GetEnvironmentRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e GetWorkspaceRequestValidationError) ErrorName() string {
-	return "GetWorkspaceRequestValidationError"
+func (e GetEnvironmentRequestValidationError) ErrorName() string {
+	return "GetEnvironmentRequestValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e GetWorkspaceRequestValidationError) Error() string {
+func (e GetEnvironmentRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -254,14 +255,14 @@ func (e GetWorkspaceRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sGetWorkspaceRequest.%s: %s%s",
+		"invalid %sGetEnvironmentRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = GetWorkspaceRequestValidationError{}
+var _ error = GetEnvironmentRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -269,12 +270,12 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = GetWorkspaceRequestValidationError{}
+} = GetEnvironmentRequestValidationError{}
 
-// Validate checks the field values on ListWorkspacesRequest with the rules
+// Validate checks the field values on ListEnvironmentsRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
-func (m *ListWorkspacesRequest) Validate() error {
+func (m *ListEnvironmentsRequest) Validate() error {
 	if m == nil {
 		return nil
 	}
@@ -286,9 +287,9 @@ func (m *ListWorkspacesRequest) Validate() error {
 	return nil
 }
 
-// ListWorkspacesRequestValidationError is the validation error returned by
-// ListWorkspacesRequest.Validate if the designated constraints aren't met.
-type ListWorkspacesRequestValidationError struct {
+// ListEnvironmentsRequestValidationError is the validation error returned by
+// ListEnvironmentsRequest.Validate if the designated constraints aren't met.
+type ListEnvironmentsRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -296,24 +297,24 @@ type ListWorkspacesRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e ListWorkspacesRequestValidationError) Field() string { return e.field }
+func (e ListEnvironmentsRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e ListWorkspacesRequestValidationError) Reason() string { return e.reason }
+func (e ListEnvironmentsRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e ListWorkspacesRequestValidationError) Cause() error { return e.cause }
+func (e ListEnvironmentsRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e ListWorkspacesRequestValidationError) Key() bool { return e.key }
+func (e ListEnvironmentsRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e ListWorkspacesRequestValidationError) ErrorName() string {
-	return "ListWorkspacesRequestValidationError"
+func (e ListEnvironmentsRequestValidationError) ErrorName() string {
+	return "ListEnvironmentsRequestValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e ListWorkspacesRequestValidationError) Error() string {
+func (e ListEnvironmentsRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -325,14 +326,14 @@ func (e ListWorkspacesRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sListWorkspacesRequest.%s: %s%s",
+		"invalid %sListEnvironmentsRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = ListWorkspacesRequestValidationError{}
+var _ error = ListEnvironmentsRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -340,23 +341,23 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = ListWorkspacesRequestValidationError{}
+} = ListEnvironmentsRequestValidationError{}
 
-// Validate checks the field values on ListWorkspacesResponse with the rules
+// Validate checks the field values on ListEnvironmentsResponse with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
-func (m *ListWorkspacesResponse) Validate() error {
+func (m *ListEnvironmentsResponse) Validate() error {
 	if m == nil {
 		return nil
 	}
 
-	for idx, item := range m.GetWorkspaces() {
+	for idx, item := range m.GetEnvironments() {
 		_, _ = idx, item
 
 		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
-				return ListWorkspacesResponseValidationError{
-					field:  fmt.Sprintf("Workspaces[%v]", idx),
+				return ListEnvironmentsResponseValidationError{
+					field:  fmt.Sprintf("Environments[%v]", idx),
 					reason: "embedded message failed validation",
 					cause:  err,
 				}
@@ -368,9 +369,9 @@ func (m *ListWorkspacesResponse) Validate() error {
 	return nil
 }
 
-// ListWorkspacesResponseValidationError is the validation error returned by
-// ListWorkspacesResponse.Validate if the designated constraints aren't met.
-type ListWorkspacesResponseValidationError struct {
+// ListEnvironmentsResponseValidationError is the validation error returned by
+// ListEnvironmentsResponse.Validate if the designated constraints aren't met.
+type ListEnvironmentsResponseValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -378,24 +379,24 @@ type ListWorkspacesResponseValidationError struct {
 }
 
 // Field function returns field value.
-func (e ListWorkspacesResponseValidationError) Field() string { return e.field }
+func (e ListEnvironmentsResponseValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e ListWorkspacesResponseValidationError) Reason() string { return e.reason }
+func (e ListEnvironmentsResponseValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e ListWorkspacesResponseValidationError) Cause() error { return e.cause }
+func (e ListEnvironmentsResponseValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e ListWorkspacesResponseValidationError) Key() bool { return e.key }
+func (e ListEnvironmentsResponseValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e ListWorkspacesResponseValidationError) ErrorName() string {
-	return "ListWorkspacesResponseValidationError"
+func (e ListEnvironmentsResponseValidationError) ErrorName() string {
+	return "ListEnvironmentsResponseValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e ListWorkspacesResponseValidationError) Error() string {
+func (e ListEnvironmentsResponseValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -407,14 +408,14 @@ func (e ListWorkspacesResponseValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sListWorkspacesResponse.%s: %s%s",
+		"invalid %sListEnvironmentsResponse.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = ListWorkspacesResponseValidationError{}
+var _ error = ListEnvironmentsResponseValidationError{}
 
 var _ interface {
 	Field() string
@@ -422,12 +423,12 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = ListWorkspacesResponseValidationError{}
+} = ListEnvironmentsResponseValidationError{}
 
-// Validate checks the field values on DeleteWorkspaceRequest with the rules
+// Validate checks the field values on DeleteEnvironmentRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
-func (m *DeleteWorkspaceRequest) Validate() error {
+func (m *DeleteEnvironmentRequest) Validate() error {
 	if m == nil {
 		return nil
 	}
@@ -441,9 +442,9 @@ func (m *DeleteWorkspaceRequest) Validate() error {
 	return nil
 }
 
-// DeleteWorkspaceRequestValidationError is the validation error returned by
-// DeleteWorkspaceRequest.Validate if the designated constraints aren't met.
-type DeleteWorkspaceRequestValidationError struct {
+// DeleteEnvironmentRequestValidationError is the validation error returned by
+// DeleteEnvironmentRequest.Validate if the designated constraints aren't met.
+type DeleteEnvironmentRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -451,24 +452,24 @@ type DeleteWorkspaceRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e DeleteWorkspaceRequestValidationError) Field() string { return e.field }
+func (e DeleteEnvironmentRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e DeleteWorkspaceRequestValidationError) Reason() string { return e.reason }
+func (e DeleteEnvironmentRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e DeleteWorkspaceRequestValidationError) Cause() error { return e.cause }
+func (e DeleteEnvironmentRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e DeleteWorkspaceRequestValidationError) Key() bool { return e.key }
+func (e DeleteEnvironmentRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e DeleteWorkspaceRequestValidationError) ErrorName() string {
-	return "DeleteWorkspaceRequestValidationError"
+func (e DeleteEnvironmentRequestValidationError) ErrorName() string {
+	return "DeleteEnvironmentRequestValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e DeleteWorkspaceRequestValidationError) Error() string {
+func (e DeleteEnvironmentRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -480,14 +481,14 @@ func (e DeleteWorkspaceRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sDeleteWorkspaceRequest.%s: %s%s",
+		"invalid %sDeleteEnvironmentRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = DeleteWorkspaceRequestValidationError{}
+var _ error = DeleteEnvironmentRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -495,7 +496,7 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = DeleteWorkspaceRequestValidationError{}
+} = DeleteEnvironmentRequestValidationError{}
 
 // Validate checks the field values on Application with the rules defined in
 // the proto definition for this message. If any rules are violated, an error
@@ -509,16 +510,36 @@ func (m *Application) Validate() error {
 
 	// no validation rules for Tenant
 
-	// no validation rules for Workspace
+	// no validation rules for Environment
 
 	// no validation rules for Id
 
 	// no validation rules for Description
 
-	if v, ok := interface{}(m.GetPermissions()).(interface{ Validate() error }); ok {
+	if v, ok := interface{}(m.GetRoutingInfo()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
 			return ApplicationValidationError{
-				field:  "Permissions",
+				field:  "RoutingInfo",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if v, ok := interface{}(m.GetClientSettings()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ApplicationValidationError{
+				field:  "ClientSettings",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if v, ok := interface{}(m.GetAppLb()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ApplicationValidationError{
+				field:  "AppLb",
 				reason: "embedded message failed validation",
 				cause:  err,
 			}
@@ -596,7 +617,7 @@ func (m *CreateApplicationRequest) Validate() error {
 
 	// no validation rules for Tenant
 
-	// no validation rules for Workspace
+	// no validation rules for Environment
 
 	if v, ok := interface{}(m.GetApplication()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
@@ -679,7 +700,7 @@ func (m *GetApplicationRequest) Validate() error {
 
 	// no validation rules for Tenant
 
-	// no validation rules for Workspace
+	// no validation rules for Environment
 
 	// no validation rules for Id
 
@@ -754,7 +775,7 @@ func (m *ListApplicationsRequest) Validate() error {
 
 	// no validation rules for Tenant
 
-	// no validation rules for Workspace
+	// no validation rules for Environment
 
 	return nil
 }
@@ -909,7 +930,7 @@ func (m *DeleteApplicationRequest) Validate() error {
 
 	// no validation rules for Tenant
 
-	// no validation rules for Workspace
+	// no validation rules for Environment
 
 	// no validation rules for Id
 
@@ -983,13 +1004,15 @@ func (m *Service) Validate() error {
 
 	// no validation rules for Tenant
 
-	// no validation rules for Workspace
+	// no validation rules for Environment
 
 	// no validation rules for Application
 
 	// no validation rules for Id
 
 	// no validation rules for Description
+
+	// no validation rules for Hostname
 
 	if v, ok := interface{}(m.GetRoutingInfo()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
@@ -1074,7 +1097,7 @@ func (m *CreateServiceRequest) Validate() error {
 
 	// no validation rules for Tenant
 
-	// no validation rules for Workspace
+	// no validation rules for Environment
 
 	// no validation rules for Application
 
@@ -1159,7 +1182,7 @@ func (m *GetServiceRequest) Validate() error {
 
 	// no validation rules for Tenant
 
-	// no validation rules for Workspace
+	// no validation rules for Environment
 
 	// no validation rules for Application
 
@@ -1236,7 +1259,7 @@ func (m *ListServicesRequest) Validate() error {
 
 	// no validation rules for Tenant
 
-	// no validation rules for Workspace
+	// no validation rules for Environment
 
 	// no validation rules for Application
 
@@ -1393,7 +1416,7 @@ func (m *DeleteServiceRequest) Validate() error {
 
 	// no validation rules for Tenant
 
-	// no validation rules for Workspace
+	// no validation rules for Environment
 
 	// no validation rules for Application
 
@@ -1470,13 +1493,19 @@ func (m *LoadBalancer) Validate() error {
 
 	// no validation rules for Tenant
 
-	// no validation rules for Workspace
+	// no validation rules for Environment
 
 	// no validation rules for Id
 
 	// no validation rules for Description
 
-	// no validation rules for Services
+	// no validation rules for EnableWorkflows
+
+	// no validation rules for ClusterNamespace
+
+	// no validation rules for Labels
+
+	// no validation rules for Applications
 
 	// no validation rules for Etag
 
@@ -1551,7 +1580,7 @@ func (m *CreateLoadBalancerRequest) Validate() error {
 
 	// no validation rules for Tenant
 
-	// no validation rules for Workspace
+	// no validation rules for Environment
 
 	if v, ok := interface{}(m.GetLoadbalancer()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
@@ -1634,7 +1663,7 @@ func (m *GetLoadBalancerRequest) Validate() error {
 
 	// no validation rules for Tenant
 
-	// no validation rules for Workspace
+	// no validation rules for Environment
 
 	// no validation rules for Id
 
@@ -1709,7 +1738,7 @@ func (m *ListLoadBalancersRequest) Validate() error {
 
 	// no validation rules for Tenant
 
-	// no validation rules for Workspace
+	// no validation rules for Environment
 
 	return nil
 }
@@ -1864,7 +1893,7 @@ func (m *DeleteLoadBalancerRequest) Validate() error {
 
 	// no validation rules for Tenant
 
-	// no validation rules for Workspace
+	// no validation rules for Environment
 
 	// no validation rules for Id
 
@@ -1926,3 +1955,83 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = DeleteLoadBalancerRequestValidationError{}
+
+// Validate checks the field values on Application_ApplicationSpecificLB with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, an error is returned.
+func (m *Application_ApplicationSpecificLB) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Labels
+
+	if v, ok := interface{}(m.GetTls()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return Application_ApplicationSpecificLBValidationError{
+				field:  "Tls",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// Application_ApplicationSpecificLBValidationError is the validation error
+// returned by Application_ApplicationSpecificLB.Validate if the designated
+// constraints aren't met.
+type Application_ApplicationSpecificLBValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e Application_ApplicationSpecificLBValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e Application_ApplicationSpecificLBValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e Application_ApplicationSpecificLBValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e Application_ApplicationSpecificLBValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e Application_ApplicationSpecificLBValidationError) ErrorName() string {
+	return "Application_ApplicationSpecificLBValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e Application_ApplicationSpecificLBValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sApplication_ApplicationSpecificLB.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = Application_ApplicationSpecificLBValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = Application_ApplicationSpecificLBValidationError{}

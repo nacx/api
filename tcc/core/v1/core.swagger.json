@@ -178,7 +178,605 @@
         ]
       }
     },
-    "/v1/tenants/{tenant}/clusters": {
+    "/v1/tenants/{tenant}/configproducer/{configtype}/{cluster}": {
+      "get": {
+        "operationId": "Download",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.ConfigData"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "configtype",
+            "description": "currently accepted values are istio or f5",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "cluster",
+            "description": "A unique identifier for the k8s cluster or VM cluster\nTypically we have multiple k8s clusters and one big giant VM cluster\nin a DC.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ConfigProducer"
+        ]
+      }
+    },
+    "/v1/tenants/{tenant}/environments": {
+      "get": {
+        "operationId": "ListEnvironments",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.ListEnvironmentsResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "parent",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "LogicalResourceModel"
+        ]
+      },
+      "post": {
+        "operationId": "CreateEnvironment",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.Environment"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.CreateEnvironmentRequest"
+            }
+          }
+        ],
+        "tags": [
+          "LogicalResourceModel"
+        ]
+      }
+    },
+    "/v1/tenants/{tenant}/environments/{environment}/applications": {
+      "get": {
+        "operationId": "ListApplications",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.ListApplicationsResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "environment",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "parent",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "LogicalResourceModel"
+        ]
+      },
+      "post": {
+        "operationId": "CreateApplication",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.Application"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "environment",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.CreateApplicationRequest"
+            }
+          }
+        ],
+        "tags": [
+          "LogicalResourceModel"
+        ]
+      }
+    },
+    "/v1/tenants/{tenant}/environments/{environment}/applications/{application}/services": {
+      "get": {
+        "operationId": "ListServices",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.ListServicesResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "environment",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "application",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "parent",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "LogicalResourceModel"
+        ]
+      },
+      "post": {
+        "operationId": "CreateService",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.Service"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "environment",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "application",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.CreateServiceRequest"
+            }
+          }
+        ],
+        "tags": [
+          "LogicalResourceModel"
+        ]
+      }
+    },
+    "/v1/tenants/{tenant}/environments/{environment}/applications/{application}/services/{id}": {
+      "get": {
+        "operationId": "GetService",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.Service"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "environment",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "application",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "LogicalResourceModel"
+        ]
+      },
+      "delete": {
+        "operationId": "DeleteService",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "environment",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "application",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "LogicalResourceModel"
+        ]
+      },
+      "put": {
+        "operationId": "UpdateService",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.Service"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "environment",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "application",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.Service"
+            }
+          }
+        ],
+        "tags": [
+          "LogicalResourceModel"
+        ]
+      }
+    },
+    "/v1/tenants/{tenant}/environments/{environment}/applications/{id}": {
+      "get": {
+        "operationId": "GetApplication",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.Application"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "environment",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "LogicalResourceModel"
+        ]
+      },
+      "delete": {
+        "operationId": "DeleteApplication",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "environment",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "LogicalResourceModel"
+        ]
+      },
+      "put": {
+        "operationId": "UpdateApplication",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.Application"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "environment",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.Application"
+            }
+          }
+        ],
+        "tags": [
+          "LogicalResourceModel"
+        ]
+      }
+    },
+    "/v1/tenants/{tenant}/environments/{environment}/clusters": {
       "get": {
         "operationId": "ListClusters",
         "responses": {
@@ -198,6 +796,12 @@
         "parameters": [
           {
             "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "environment",
             "in": "path",
             "required": true,
             "type": "string"
@@ -237,6 +841,12 @@
             "type": "string"
           },
           {
+            "name": "environment",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
             "name": "body",
             "in": "body",
             "required": true,
@@ -250,7 +860,7 @@
         ]
       }
     },
-    "/v1/tenants/{tenant}/clusters/{cluster}/namespaces": {
+    "/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces": {
       "get": {
         "operationId": "ListNamespaces",
         "responses": {
@@ -270,6 +880,12 @@
         "parameters": [
           {
             "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "environment",
             "in": "path",
             "required": true,
             "type": "string"
@@ -315,6 +931,12 @@
             "type": "string"
           },
           {
+            "name": "environment",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
             "name": "cluster",
             "in": "path",
             "required": true,
@@ -334,7 +956,7 @@
         ]
       }
     },
-    "/v1/tenants/{tenant}/clusters/{cluster}/namespaces/{id}": {
+    "/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces/{id}": {
       "get": {
         "operationId": "GetNamespace",
         "responses": {
@@ -354,6 +976,12 @@
         "parameters": [
           {
             "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "environment",
             "in": "path",
             "required": true,
             "type": "string"
@@ -405,6 +1033,12 @@
             "type": "string"
           },
           {
+            "name": "environment",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
             "name": "cluster",
             "in": "path",
             "required": true,
@@ -451,6 +1085,12 @@
             "type": "string"
           },
           {
+            "name": "environment",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
             "name": "cluster",
             "in": "path",
             "required": true,
@@ -476,7 +1116,7 @@
         ]
       }
     },
-    "/v1/tenants/{tenant}/clusters/{cluster}/namespaces/{namespace}/deployments": {
+    "/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces/{namespace}/deployments": {
       "get": {
         "operationId": "ListDeployments",
         "responses": {
@@ -496,6 +1136,12 @@
         "parameters": [
           {
             "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "environment",
             "in": "path",
             "required": true,
             "type": "string"
@@ -547,6 +1193,12 @@
             "type": "string"
           },
           {
+            "name": "environment",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
             "name": "cluster",
             "in": "path",
             "required": true,
@@ -572,7 +1224,7 @@
         ]
       }
     },
-    "/v1/tenants/{tenant}/clusters/{cluster}/namespaces/{namespace}/deployments/{deployment}/endpoints": {
+    "/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces/{namespace}/deployments/{deployment}/endpoints": {
       "get": {
         "operationId": "ListEndpoints",
         "responses": {
@@ -592,6 +1244,12 @@
         "parameters": [
           {
             "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "environment",
             "in": "path",
             "required": true,
             "type": "string"
@@ -649,6 +1307,12 @@
             "type": "string"
           },
           {
+            "name": "environment",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
             "name": "cluster",
             "in": "path",
             "required": true,
@@ -680,7 +1344,7 @@
         ]
       }
     },
-    "/v1/tenants/{tenant}/clusters/{cluster}/namespaces/{namespace}/deployments/{deployment}/endpoints/{id}": {
+    "/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces/{namespace}/deployments/{deployment}/endpoints/{id}": {
       "get": {
         "operationId": "GetEndpoint",
         "responses": {
@@ -700,6 +1364,12 @@
         "parameters": [
           {
             "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "environment",
             "in": "path",
             "required": true,
             "type": "string"
@@ -763,6 +1433,12 @@
             "type": "string"
           },
           {
+            "name": "environment",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
             "name": "cluster",
             "in": "path",
             "required": true,
@@ -821,6 +1497,12 @@
             "type": "string"
           },
           {
+            "name": "environment",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
             "name": "cluster",
             "in": "path",
             "required": true,
@@ -858,7 +1540,7 @@
         ]
       }
     },
-    "/v1/tenants/{tenant}/clusters/{cluster}/namespaces/{namespace}/deployments/{id}": {
+    "/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces/{namespace}/deployments/{id}": {
       "get": {
         "operationId": "GetDeployment",
         "responses": {
@@ -878,6 +1560,12 @@
         "parameters": [
           {
             "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "environment",
             "in": "path",
             "required": true,
             "type": "string"
@@ -935,6 +1623,12 @@
             "type": "string"
           },
           {
+            "name": "environment",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
             "name": "cluster",
             "in": "path",
             "required": true,
@@ -987,6 +1681,12 @@
             "type": "string"
           },
           {
+            "name": "environment",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
             "name": "cluster",
             "in": "path",
             "required": true,
@@ -1018,7 +1718,7 @@
         ]
       }
     },
-    "/v1/tenants/{tenant}/clusters/{id}": {
+    "/v1/tenants/{tenant}/environments/{environment}/clusters/{id}": {
       "get": {
         "operationId": "GetCluster",
         "responses": {
@@ -1038,6 +1738,12 @@
         "parameters": [
           {
             "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "environment",
             "in": "path",
             "required": true,
             "type": "string"
@@ -1083,6 +1789,12 @@
             "type": "string"
           },
           {
+            "name": "environment",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
             "name": "id",
             "in": "path",
             "required": true,
@@ -1123,6 +1835,12 @@
             "type": "string"
           },
           {
+            "name": "environment",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
             "name": "id",
             "in": "path",
             "required": true,
@@ -1142,14 +1860,14 @@
         ]
       }
     },
-    "/v1/tenants/{tenant}/configproducer/{configtype}/{cluster}": {
+    "/v1/tenants/{tenant}/environments/{environment}/loadbalancers": {
       "get": {
-        "operationId": "Download",
+        "operationId": "ListLoadBalancers",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.ConfigData"
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.ListLoadBalancersResponse"
             }
           },
           "404": {
@@ -1167,22 +1885,328 @@
             "type": "string"
           },
           {
-            "name": "configtype",
-            "description": "currently accepted values are istio or f5",
+            "name": "environment",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
-            "name": "cluster",
-            "description": "A unique identifier for the k8s cluster or VM cluster\nTypically we have multiple k8s clusters and one big giant VM cluster\nin a DC.",
-            "in": "path",
-            "required": true,
+            "name": "parent",
+            "in": "query",
+            "required": false,
             "type": "string"
           }
         ],
         "tags": [
-          "ConfigProducer"
+          "LogicalResourceModel"
+        ]
+      },
+      "post": {
+        "operationId": "CreateLoadBalancer",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.LoadBalancer"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "environment",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.CreateLoadBalancerRequest"
+            }
+          }
+        ],
+        "tags": [
+          "LogicalResourceModel"
+        ]
+      }
+    },
+    "/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{id}": {
+      "get": {
+        "operationId": "GetLoadBalancer",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.LoadBalancer"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "environment",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "LogicalResourceModel"
+        ]
+      },
+      "delete": {
+        "operationId": "DeleteLoadBalancer",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "environment",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "LogicalResourceModel"
+        ]
+      },
+      "put": {
+        "operationId": "UpdateLoadBalancer",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.LoadBalancer"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "environment",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.LoadBalancer"
+            }
+          }
+        ],
+        "tags": [
+          "LogicalResourceModel"
+        ]
+      }
+    },
+    "/v1/tenants/{tenant}/environments/{id}": {
+      "get": {
+        "operationId": "GetEnvironment",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.Environment"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "LogicalResourceModel"
+        ]
+      },
+      "delete": {
+        "operationId": "DeleteEnvironment",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "LogicalResourceModel"
+        ]
+      },
+      "put": {
+        "operationId": "UpdateEnvironment",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.Environment"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.Environment"
+            }
+          }
+        ],
+        "tags": [
+          "LogicalResourceModel"
         ]
       }
     },
@@ -1629,910 +2653,6 @@
           "Organization"
         ]
       }
-    },
-    "/v1/tenants/{tenant}/workspaces": {
-      "get": {
-        "operationId": "ListWorkspaces",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.ListWorkspacesResponse"
-            }
-          },
-          "404": {
-            "description": "Returned when the resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "tenant",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "parent",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "LogicalResourceModel"
-        ]
-      },
-      "post": {
-        "operationId": "CreateWorkspace",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.Workspace"
-            }
-          },
-          "404": {
-            "description": "Returned when the resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "tenant",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.CreateWorkspaceRequest"
-            }
-          }
-        ],
-        "tags": [
-          "LogicalResourceModel"
-        ]
-      }
-    },
-    "/v1/tenants/{tenant}/workspaces/{id}": {
-      "get": {
-        "operationId": "GetWorkspace",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.Workspace"
-            }
-          },
-          "404": {
-            "description": "Returned when the resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "tenant",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "name",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "LogicalResourceModel"
-        ]
-      },
-      "delete": {
-        "operationId": "DeleteWorkspace",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
-          },
-          "404": {
-            "description": "Returned when the resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "tenant",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "name",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "LogicalResourceModel"
-        ]
-      },
-      "put": {
-        "operationId": "UpdateWorkspace",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.Workspace"
-            }
-          },
-          "404": {
-            "description": "Returned when the resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "tenant",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.Workspace"
-            }
-          }
-        ],
-        "tags": [
-          "LogicalResourceModel"
-        ]
-      }
-    },
-    "/v1/tenants/{tenant}/workspaces/{workspace}/applications": {
-      "get": {
-        "operationId": "ListApplications",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.ListApplicationsResponse"
-            }
-          },
-          "404": {
-            "description": "Returned when the resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "tenant",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "workspace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "parent",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "LogicalResourceModel"
-        ]
-      },
-      "post": {
-        "operationId": "CreateApplication",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.Application"
-            }
-          },
-          "404": {
-            "description": "Returned when the resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "tenant",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "workspace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.CreateApplicationRequest"
-            }
-          }
-        ],
-        "tags": [
-          "LogicalResourceModel"
-        ]
-      }
-    },
-    "/v1/tenants/{tenant}/workspaces/{workspace}/applications/{application}/services": {
-      "get": {
-        "operationId": "ListServices",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.ListServicesResponse"
-            }
-          },
-          "404": {
-            "description": "Returned when the resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "tenant",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "workspace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "application",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "parent",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "LogicalResourceModel"
-        ]
-      },
-      "post": {
-        "operationId": "CreateService",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.Service"
-            }
-          },
-          "404": {
-            "description": "Returned when the resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "tenant",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "workspace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "application",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.CreateServiceRequest"
-            }
-          }
-        ],
-        "tags": [
-          "LogicalResourceModel"
-        ]
-      }
-    },
-    "/v1/tenants/{tenant}/workspaces/{workspace}/applications/{application}/services/{id}": {
-      "get": {
-        "operationId": "GetService",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.Service"
-            }
-          },
-          "404": {
-            "description": "Returned when the resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "tenant",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "workspace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "application",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "name",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "LogicalResourceModel"
-        ]
-      },
-      "delete": {
-        "operationId": "DeleteService",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
-          },
-          "404": {
-            "description": "Returned when the resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "tenant",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "workspace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "application",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "name",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "LogicalResourceModel"
-        ]
-      },
-      "put": {
-        "operationId": "UpdateService",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.Service"
-            }
-          },
-          "404": {
-            "description": "Returned when the resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "tenant",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "workspace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "application",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.Service"
-            }
-          }
-        ],
-        "tags": [
-          "LogicalResourceModel"
-        ]
-      }
-    },
-    "/v1/tenants/{tenant}/workspaces/{workspace}/applications/{id}": {
-      "get": {
-        "operationId": "GetApplication",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.Application"
-            }
-          },
-          "404": {
-            "description": "Returned when the resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "tenant",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "workspace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "name",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "LogicalResourceModel"
-        ]
-      },
-      "delete": {
-        "operationId": "DeleteApplication",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
-          },
-          "404": {
-            "description": "Returned when the resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "tenant",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "workspace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "name",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "LogicalResourceModel"
-        ]
-      },
-      "put": {
-        "operationId": "UpdateApplication",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.Application"
-            }
-          },
-          "404": {
-            "description": "Returned when the resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "tenant",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "workspace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.Application"
-            }
-          }
-        ],
-        "tags": [
-          "LogicalResourceModel"
-        ]
-      }
-    },
-    "/v1/tenants/{tenant}/workspaces/{workspace}/loadbalancers": {
-      "get": {
-        "operationId": "ListLoadBalancers",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.ListLoadBalancersResponse"
-            }
-          },
-          "404": {
-            "description": "Returned when the resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "tenant",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "workspace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "parent",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "LogicalResourceModel"
-        ]
-      },
-      "post": {
-        "operationId": "CreateLoadBalancer",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.LoadBalancer"
-            }
-          },
-          "404": {
-            "description": "Returned when the resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "tenant",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "workspace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.CreateLoadBalancerRequest"
-            }
-          }
-        ],
-        "tags": [
-          "LogicalResourceModel"
-        ]
-      }
-    },
-    "/v1/tenants/{tenant}/workspaces/{workspace}/loadbalancers/{id}": {
-      "get": {
-        "operationId": "GetLoadBalancer",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.LoadBalancer"
-            }
-          },
-          "404": {
-            "description": "Returned when the resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "tenant",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "workspace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "name",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "LogicalResourceModel"
-        ]
-      },
-      "delete": {
-        "operationId": "DeleteLoadBalancer",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
-          },
-          "404": {
-            "description": "Returned when the resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "tenant",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "workspace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "name",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "LogicalResourceModel"
-        ]
-      },
-      "put": {
-        "operationId": "UpdateLoadBalancer",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.LoadBalancer"
-            }
-          },
-          "404": {
-            "description": "Returned when the resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "tenant",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "workspace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.LoadBalancer"
-            }
-          }
-        ],
-        "tags": [
-          "LogicalResourceModel"
-        ]
-      }
     }
   },
   "definitions": {
@@ -2545,7 +2665,7 @@
         "tenant": {
           "type": "string"
         },
-        "workspace": {
+        "environment": {
           "type": "string"
         },
         "id": {
@@ -2554,8 +2674,30 @@
         "description": {
           "type": "string"
         },
-        "permissions": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Permissions"
+        "routingInfo": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.RoutingInfo"
+        },
+        "clientSettings": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.ClientSettings"
+        },
+        "appLb": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Application.ApplicationSpecificLB",
+          "description": "If defined, the application is assumed to be exposed on the load balancer in\nthe application's own namespace instead of the cluster level load balancer."
+        }
+      }
+    },
+    "tetrate.api.tcc.core.v1.Application.ApplicationSpecificLB": {
+      "type": "object",
+      "properties": {
+        "labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Labels that uniquely identify the load balancer in the application's namespace."
+        },
+        "tls": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.TLSSettings"
         }
       }
     },
@@ -2621,6 +2763,9 @@
         "tenant": {
           "type": "string"
         },
+        "environment": {
+          "type": "string"
+        },
         "id": {
           "type": "string"
         },
@@ -2639,9 +2784,6 @@
         },
         "clientSettings": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.ClientSettings"
-        },
-        "permissions": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Permissions"
         }
       }
     },
@@ -2718,7 +2860,7 @@
         "tenant": {
           "type": "string"
         },
-        "workspace": {
+        "environment": {
           "type": "string"
         },
         "application": {
@@ -2739,6 +2881,9 @@
         "tenant": {
           "type": "string"
         },
+        "environment": {
+          "type": "string"
+        },
         "cluster": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.Cluster"
         }
@@ -2755,6 +2900,9 @@
           "title": "if present, this will be used as the id for the created object"
         },
         "tenant": {
+          "type": "string"
+        },
+        "environment": {
           "type": "string"
         },
         "cluster": {
@@ -2781,6 +2929,9 @@
         "tenant": {
           "type": "string"
         },
+        "environment": {
+          "type": "string"
+        },
         "cluster": {
           "type": "string"
         },
@@ -2792,6 +2943,24 @@
         },
         "endpoint": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.Endpoint"
+        }
+      }
+    },
+    "tetrate.api.tcc.core.v1.CreateEnvironmentRequest": {
+      "type": "object",
+      "properties": {
+        "parent": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string",
+          "title": "if present, this will be used as the id for the created object"
+        },
+        "tenant": {
+          "type": "string"
+        },
+        "environment": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Environment"
         }
       }
     },
@@ -2808,7 +2977,7 @@
         "tenant": {
           "type": "string"
         },
-        "workspace": {
+        "environment": {
           "type": "string"
         },
         "loadbalancer": {
@@ -2827,6 +2996,9 @@
           "title": "if present, this will be used as the id for the created object"
         },
         "tenant": {
+          "type": "string"
+        },
+        "environment": {
           "type": "string"
         },
         "cluster": {
@@ -2850,7 +3022,7 @@
         "tenant": {
           "type": "string"
         },
-        "workspace": {
+        "environment": {
           "type": "string"
         },
         "application": {
@@ -2909,24 +3081,6 @@
         }
       }
     },
-    "tetrate.api.tcc.core.v1.CreateWorkspaceRequest": {
-      "type": "object",
-      "properties": {
-        "parent": {
-          "type": "string"
-        },
-        "id": {
-          "type": "string",
-          "title": "if present, this will be used as the id for the created object"
-        },
-        "tenant": {
-          "type": "string"
-        },
-        "workspace": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Workspace"
-        }
-      }
-    },
     "tetrate.api.tcc.core.v1.Deployment": {
       "type": "object",
       "properties": {
@@ -2934,6 +3088,9 @@
           "type": "string"
         },
         "tenant": {
+          "type": "string"
+        },
+        "environment": {
           "type": "string"
         },
         "cluster": {
@@ -2969,6 +3126,9 @@
           "type": "string"
         },
         "tenant": {
+          "type": "string"
+        },
+        "environment": {
           "type": "string"
         },
         "cluster": {
@@ -3014,6 +3174,26 @@
       },
       "description": "Endpoint defines a network address (IP or hostname) associated with\nthe service."
     },
+    "tetrate.api.tcc.core.v1.Environment": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "tenant": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "clientSettings": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.ClientSettings"
+        }
+      }
+    },
     "tetrate.api.tcc.core.v1.HTTPRetry": {
       "type": "object",
       "properties": {
@@ -3031,6 +3211,60 @@
           "description": "Specifies the conditions under which retry takes place.\nOne or more policies can be specified using a ‘,’ delimited list.\nSee the [supported\npolicies](https://www.envoyproxy.io/docs/envoy/latest/configuration/http_filters/router_filter#x-envoy-retry-on)\nand\n[here](https://www.envoyproxy.io/docs/envoy/latest/configuration/http_filters/router_filter#x-envoy-retry-grpc-on)\nfor more details."
         }
       }
+    },
+    "tetrate.api.tcc.core.v1.HTTPRewrite": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "rewrite the path (or the prefix) portion of the URI with this\nvalue. If the original URI was matched based on prefix, the value\nprovided in this field will replace the corresponding matched prefix."
+        },
+        "authority": {
+          "type": "string",
+          "description": "rewrite the Authority/Host header with this value."
+        }
+      }
+    },
+    "tetrate.api.tcc.core.v1.Headers": {
+      "type": "object",
+      "properties": {
+        "request": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Headers.HeaderOperations",
+          "title": "Header manipulation rules to apply before forwarding a request\nto the destination service"
+        },
+        "response": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Headers.HeaderOperations",
+          "title": "Header manipulation rules to apply before returning a response\nto the caller"
+        }
+      },
+      "title": "Header manipulation rules"
+    },
+    "tetrate.api.tcc.core.v1.Headers.HeaderOperations": {
+      "type": "object",
+      "properties": {
+        "set": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Overwrite the headers specified by key with the given values"
+        },
+        "add": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Append the given values to the headers specified by keys\n(will create a comma-separated list of values)"
+        },
+        "remove": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Remove a the specified headers"
+        }
+      },
+      "title": "HeaderOperations Describes the header manipulations to apply"
     },
     "tetrate.api.tcc.core.v1.HttpMatchCondition": {
       "type": "object",
@@ -3064,57 +3298,27 @@
     "tetrate.api.tcc.core.v1.HttpModifyAction": {
       "type": "object",
       "properties": {
-        "what": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.HttpModifyAction.What"
+        "rewrite": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.HTTPRewrite"
         },
-        "how": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.HttpModifyAction.How"
-        },
-        "headerName": {
-          "type": "string",
-          "title": "used only if what is a Header"
-        },
-        "value": {
-          "type": "string",
-          "title": "string to use as replacement for url rewrite/host rewrite or setting headers\nno value is necessary when deleting the header"
+        "headers": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Headers"
         }
       },
-      "title": "A single modification for a part of a request"
-    },
-    "tetrate.api.tcc.core.v1.HttpModifyAction.How": {
-      "type": "string",
-      "enum": [
-        "SET",
-        "APPEND",
-        "DELETE"
-      ],
-      "default": "SET",
-      "title": "- SET: this is the only value allowed for uri and authority rewrite\n - APPEND: append and delete are applicable only for headers"
-    },
-    "tetrate.api.tcc.core.v1.HttpModifyAction.What": {
-      "type": "string",
-      "enum": [
-        "URI",
-        "AUTHORITY",
-        "HEADER"
-      ],
-      "default": "URI"
+      "title": "HTTP path/url/header modification"
     },
     "tetrate.api.tcc.core.v1.HttpRule": {
       "type": "object",
       "properties": {
-        "matchConditions": {
+        "match": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/tetrate.api.tcc.core.v1.HttpMatchCondition"
           },
           "title": "one or more match conditions (OR-ed)"
         },
-        "modifyActions": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/tetrate.api.tcc.core.v1.HttpModifyAction"
-          },
+        "modify": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.HttpModifyAction",
           "title": "one or more mutations to be performed before forwarding.\nIncludes typical modifications to be done on a single request\nlike URL rewrite, host rewrite, headers to add/remove/append"
         },
         "route": {
@@ -3225,6 +3429,17 @@
         }
       }
     },
+    "tetrate.api.tcc.core.v1.ListEnvironmentsResponse": {
+      "type": "object",
+      "properties": {
+        "environments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.core.v1.Environment"
+          }
+        }
+      }
+    },
     "tetrate.api.tcc.core.v1.ListLoadBalancersResponse": {
       "type": "object",
       "properties": {
@@ -3291,17 +3506,6 @@
         }
       }
     },
-    "tetrate.api.tcc.core.v1.ListWorkspacesResponse": {
-      "type": "object",
-      "properties": {
-        "workspaces": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/tetrate.api.tcc.core.v1.Workspace"
-          }
-        }
-      }
-    },
     "tetrate.api.tcc.core.v1.LoadBalancer": {
       "type": "object",
       "properties": {
@@ -3311,7 +3515,7 @@
         "tenant": {
           "type": "string"
         },
-        "workspace": {
+        "environment": {
           "type": "string"
         },
         "id": {
@@ -3320,19 +3524,27 @@
         "description": {
           "type": "string"
         },
-        "services": {
+        "enableWorkflows": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "clusterNamespace": {
+          "type": "string",
+          "description": "The namespace where the load balancer is/will be deployed in a given cluster."
+        },
+        "labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Labels that uniquely identify the cluster loadbalancer"
+        },
+        "applications": {
           "type": "object",
           "additionalProperties": {
             "$ref": "#/definitions/tetrate.api.tcc.core.v1.TLSSettings"
           },
-          "title": "Map of services attached to this loadbalancer in the form\nworkspaces/\u003cworkspace\u003e/applications/\u003capplication\u003e/services/\u003cservice\u003e: TLS credential information\nor clusters/\u003ccluster\u003e/namespaces/\u003cnamespace\u003e/deployments/\u003cdeployment\u003e: TLS credential information"
-        },
-        "loadbalancerDeployments": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "title": "List of physical load balancer deployments attached to this logical loadbalancer"
+          "title": "Map of applications attached to this loadbalancer in the form\napplicationId: TLS credential information"
         },
         "etag": {
           "type": "string"
@@ -3377,6 +3589,9 @@
         "tenant": {
           "type": "string"
         },
+        "environment": {
+          "type": "string"
+        },
         "cluster": {
           "type": "string"
         },
@@ -3396,33 +3611,10 @@
         "clientSettings": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.ClientSettings"
         },
-        "permissions": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Permissions"
-        },
         "etag": {
           "type": "string"
         }
       }
-    },
-    "tetrate.api.tcc.core.v1.Permissions": {
-      "type": "object",
-      "properties": {
-        "values": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/tetrate.api.tcc.core.v1.Permissions.Operation"
-          },
-          "title": "team : operation"
-        }
-      }
-    },
-    "tetrate.api.tcc.core.v1.Permissions.Operation": {
-      "type": "string",
-      "enum": [
-        "READ",
-        "WRITE"
-      ],
-      "default": "READ"
     },
     "tetrate.api.tcc.core.v1.Port": {
       "type": "object",
@@ -3505,6 +3697,10 @@
     "tetrate.api.tcc.core.v1.Route.Destination": {
       "type": "object",
       "properties": {
+        "host": {
+          "type": "string",
+          "title": "if omitted, will route to same host as the service"
+        },
         "subset": {
           "type": "string"
         },
@@ -3516,11 +3712,7 @@
         "port": {
           "type": "integer",
           "format": "int64",
-          "title": "Optional:"
-        },
-        "svc": {
-          "type": "string",
-          "description": "Must be of form cluster/123/namespace/456/service/blah.com. If specified, incoming traffic\nfor the service will be forwarded to the service\nspecified. Typically used on ingress gateways on kubernetes\nclusters."
+          "title": "optional"
         }
       }
     },
@@ -3566,7 +3758,7 @@
         "tenant": {
           "type": "string"
         },
-        "workspace": {
+        "environment": {
           "type": "string"
         },
         "application": {
@@ -3578,14 +3770,11 @@
         "description": {
           "type": "string"
         },
+        "hostname": {
+          "type": "string"
+        },
         "routingInfo": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.RoutingInfo"
-        },
-        "serviceDeployments": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
         },
         "etag": {
           "type": "string"
@@ -3715,26 +3904,6 @@
         },
         "description": {
           "type": "string"
-        }
-      }
-    },
-    "tetrate.api.tcc.core.v1.Workspace": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "tenant": {
-          "type": "string"
-        },
-        "id": {
-          "type": "string"
-        },
-        "description": {
-          "type": "string"
-        },
-        "permissions": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Permissions"
         }
       }
     }

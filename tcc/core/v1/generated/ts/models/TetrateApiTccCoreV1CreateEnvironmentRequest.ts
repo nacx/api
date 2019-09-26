@@ -13,53 +13,53 @@
 
 import { exists, mapValues } from '../runtime';
 import {
-    TetrateApiTccCoreV1Workspace,
-    TetrateApiTccCoreV1WorkspaceFromJSON,
-    TetrateApiTccCoreV1WorkspaceToJSON,
+    TetrateApiTccCoreV1Environment,
+    TetrateApiTccCoreV1EnvironmentFromJSON,
+    TetrateApiTccCoreV1EnvironmentToJSON,
 } from './';
 
 /**
  * 
  * @export
- * @interface TetrateApiTccCoreV1CreateWorkspaceRequest
+ * @interface TetrateApiTccCoreV1CreateEnvironmentRequest
  */
-export interface TetrateApiTccCoreV1CreateWorkspaceRequest {
+export interface TetrateApiTccCoreV1CreateEnvironmentRequest {
     /**
      * 
      * @type {string}
-     * @memberof TetrateApiTccCoreV1CreateWorkspaceRequest
+     * @memberof TetrateApiTccCoreV1CreateEnvironmentRequest
      */
     parent?: string;
     /**
      * 
      * @type {string}
-     * @memberof TetrateApiTccCoreV1CreateWorkspaceRequest
+     * @memberof TetrateApiTccCoreV1CreateEnvironmentRequest
      */
     id?: string;
     /**
      * 
      * @type {string}
-     * @memberof TetrateApiTccCoreV1CreateWorkspaceRequest
+     * @memberof TetrateApiTccCoreV1CreateEnvironmentRequest
      */
     tenant?: string;
     /**
      * 
-     * @type {TetrateApiTccCoreV1Workspace}
-     * @memberof TetrateApiTccCoreV1CreateWorkspaceRequest
+     * @type {TetrateApiTccCoreV1Environment}
+     * @memberof TetrateApiTccCoreV1CreateEnvironmentRequest
      */
-    workspace?: TetrateApiTccCoreV1Workspace;
+    environment?: TetrateApiTccCoreV1Environment;
 }
 
-export function TetrateApiTccCoreV1CreateWorkspaceRequestFromJSON(json: any): TetrateApiTccCoreV1CreateWorkspaceRequest {
+export function TetrateApiTccCoreV1CreateEnvironmentRequestFromJSON(json: any): TetrateApiTccCoreV1CreateEnvironmentRequest {
     return {
         'parent': !exists(json, 'parent') ? undefined : json['parent'],
         'id': !exists(json, 'id') ? undefined : json['id'],
         'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
-        'workspace': !exists(json, 'workspace') ? undefined : TetrateApiTccCoreV1WorkspaceFromJSON(json['workspace']),
+        'environment': !exists(json, 'environment') ? undefined : TetrateApiTccCoreV1EnvironmentFromJSON(json['environment']),
     };
 }
 
-export function TetrateApiTccCoreV1CreateWorkspaceRequestToJSON(value?: TetrateApiTccCoreV1CreateWorkspaceRequest): any {
+export function TetrateApiTccCoreV1CreateEnvironmentRequestToJSON(value?: TetrateApiTccCoreV1CreateEnvironmentRequest): any {
     if (value === undefined) {
         return undefined;
     }
@@ -67,7 +67,7 @@ export function TetrateApiTccCoreV1CreateWorkspaceRequestToJSON(value?: TetrateA
         'parent': value.parent,
         'id': value.id,
         'tenant': value.tenant,
-        'workspace': TetrateApiTccCoreV1WorkspaceToJSON(value.workspace),
+        'environment': TetrateApiTccCoreV1EnvironmentToJSON(value.environment),
     };
 }
 

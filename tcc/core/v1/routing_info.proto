@@ -93,11 +93,11 @@ message TcpSettings {
 // A single HTTP rule
 message HttpRule {
   // one or more match conditions (OR-ed)
-  repeated HttpMatchCondition match_conditions = 1;
+  repeated HttpMatchCondition match = 1;
   // one or more mutations to be performed before forwarding.
   // Includes typical modifications to be done on a single request
   // like URL rewrite, host rewrite, headers to add/remove/append
-  repeated HttpModifyAction modify_actions = 2;
+  HttpModifyAction modify = 2;
 
   oneof route_or_redirect {
     Route route = 4;
@@ -139,45 +139,53 @@ message StringMatch {
   }
 }
 
-// A single modification for a part of a request
+message HTTPRewrite {
+  // rewrite the path (or the prefix) portion of the URI with this
+  // value. If the original URI was matched based on prefix, the value
+  // provided in this field will replace the corresponding matched prefix.
+  string uri = 1;
+
+  // rewrite the Authority/Host header with this value.
+  string authority = 2;
+}
+
+// Header manipulation rules
+message Headers {
+  // Header manipulation rules to apply before forwarding a request
+  // to the destination service
+  HeaderOperations request = 1;
+  // Header manipulation rules to apply before returning a response
+  // to the caller
+  HeaderOperations response = 2;
+
+  // HeaderOperations Describes the header manipulations to apply
+  message HeaderOperations {
+    // Overwrite the headers specified by key with the given values
+    map<string, string> set = 1;
+    // Append the given values to the headers specified by keys
+    // (will create a comma-separated list of values)
+    map<string, string> add = 2;
+    // Remove a the specified headers
+    repeated string remove = 3;
+  }
+}
+
+// HTTP path/url/header modification
 message HttpModifyAction {
-  enum What {
-    URI = 0;
-    AUTHORITY = 1;
-    HEADER = 2;
-  }
-
-  enum How {
-    // this is the only value allowed for uri and authority rewrite
-    SET = 0;
-    // append and delete are applicable only for headers
-    APPEND = 1;
-    DELETE = 2;
-  }
-
-  What what = 1;
-  How how = 2;
-  // used only if what is a Header
-  string header_name = 3;
-  // string to use as replacement for url rewrite/host rewrite or setting headers
-  // no value is necessary when deleting the header
-  string value = 4;
+  HTTPRewrite rewrite = 1;
+  Headers headers = 2;
 }
 
 // One or more destinations for the given request
 message Route {
   message Destination {
-    string subset = 1;
+    // if omitted, will route to same host as the service
+    string host = 1;
+    string subset = 2;
     // 100 if omitted. sum of all weights should add up to 100
-    uint32 weight = 2;
-    // Optional:
-    uint32 port = 3;
-
-    // Must be of form cluster/123/namespace/456/service/blah.com. If specified, incoming traffic
-    // for the service will be forwarded to the service
-    // specified. Typically used on ingress gateways on kubernetes
-    // clusters.
-    string svc = 4;
+    uint32 weight = 3;
+    // optional
+    uint32 port = 4;
   }
   repeated Destination destinations = 1;
 }

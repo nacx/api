@@ -23,6 +23,12 @@ export interface TetrateApiTccCoreV1RouteDestination {
      * @type {string}
      * @memberof TetrateApiTccCoreV1RouteDestination
      */
+    host?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1RouteDestination
+     */
     subset?: string;
     /**
      * 
@@ -36,20 +42,14 @@ export interface TetrateApiTccCoreV1RouteDestination {
      * @memberof TetrateApiTccCoreV1RouteDestination
      */
     port?: number;
-    /**
-     * Must be of form cluster/123/namespace/456/service/blah.com. If specified, incoming traffic for the service will be forwarded to the service specified. Typically used on ingress gateways on kubernetes clusters.
-     * @type {string}
-     * @memberof TetrateApiTccCoreV1RouteDestination
-     */
-    svc?: string;
 }
 
 export function TetrateApiTccCoreV1RouteDestinationFromJSON(json: any): TetrateApiTccCoreV1RouteDestination {
     return {
+        'host': !exists(json, 'host') ? undefined : json['host'],
         'subset': !exists(json, 'subset') ? undefined : json['subset'],
         'weight': !exists(json, 'weight') ? undefined : json['weight'],
         'port': !exists(json, 'port') ? undefined : json['port'],
-        'svc': !exists(json, 'svc') ? undefined : json['svc'],
     };
 }
 
@@ -58,10 +58,10 @@ export function TetrateApiTccCoreV1RouteDestinationToJSON(value?: TetrateApiTccC
         return undefined;
     }
     return {
+        'host': value.host,
         'subset': value.subset,
         'weight': value.weight,
         'port': value.port,
-        'svc': value.svc,
     };
 }
 

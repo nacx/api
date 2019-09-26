@@ -28,8 +28,8 @@ var _ status.Status
 var _ = runtime.String
 var _ = utilities.NewDoubleArray
 
-func request_LogicalResourceModel_CreateWorkspace_0(ctx context.Context, marshaler runtime.Marshaler, client LogicalResourceModelClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq CreateWorkspaceRequest
+func request_LogicalResourceModel_CreateEnvironment_0(ctx context.Context, marshaler runtime.Marshaler, client LogicalResourceModelClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq CreateEnvironmentRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -58,17 +58,17 @@ func request_LogicalResourceModel_CreateWorkspace_0(ctx context.Context, marshal
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
 	}
 
-	msg, err := client.CreateWorkspace(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.CreateEnvironment(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
 var (
-	filter_LogicalResourceModel_GetWorkspace_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "id": 1}, Base: []int{1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 2, 3}}
+	filter_LogicalResourceModel_GetEnvironment_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "id": 1}, Base: []int{1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 2, 3}}
 )
 
-func request_LogicalResourceModel_GetWorkspace_0(ctx context.Context, marshaler runtime.Marshaler, client LogicalResourceModelClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq GetWorkspaceRequest
+func request_LogicalResourceModel_GetEnvironment_0(ctx context.Context, marshaler runtime.Marshaler, client LogicalResourceModelClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq GetEnvironmentRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -100,17 +100,17 @@ func request_LogicalResourceModel_GetWorkspace_0(ctx context.Context, marshaler 
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
 	}
 
-	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_LogicalResourceModel_GetWorkspace_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_LogicalResourceModel_GetEnvironment_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := client.GetWorkspace(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.GetEnvironment(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func request_LogicalResourceModel_UpdateWorkspace_0(ctx context.Context, marshaler runtime.Marshaler, client LogicalResourceModelClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq Workspace
+func request_LogicalResourceModel_UpdateEnvironment_0(ctx context.Context, marshaler runtime.Marshaler, client LogicalResourceModelClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq Environment
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -150,17 +150,17 @@ func request_LogicalResourceModel_UpdateWorkspace_0(ctx context.Context, marshal
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
 	}
 
-	msg, err := client.UpdateWorkspace(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.UpdateEnvironment(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
 var (
-	filter_LogicalResourceModel_ListWorkspaces_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+	filter_LogicalResourceModel_ListEnvironments_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
 )
 
-func request_LogicalResourceModel_ListWorkspaces_0(ctx context.Context, marshaler runtime.Marshaler, client LogicalResourceModelClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ListWorkspacesRequest
+func request_LogicalResourceModel_ListEnvironments_0(ctx context.Context, marshaler runtime.Marshaler, client LogicalResourceModelClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ListEnvironmentsRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -181,21 +181,21 @@ func request_LogicalResourceModel_ListWorkspaces_0(ctx context.Context, marshale
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
 	}
 
-	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_LogicalResourceModel_ListWorkspaces_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_LogicalResourceModel_ListEnvironments_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := client.ListWorkspaces(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.ListEnvironments(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
 var (
-	filter_LogicalResourceModel_DeleteWorkspace_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "id": 1}, Base: []int{1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 2, 3}}
+	filter_LogicalResourceModel_DeleteEnvironment_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "id": 1}, Base: []int{1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 2, 3}}
 )
 
-func request_LogicalResourceModel_DeleteWorkspace_0(ctx context.Context, marshaler runtime.Marshaler, client LogicalResourceModelClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq DeleteWorkspaceRequest
+func request_LogicalResourceModel_DeleteEnvironment_0(ctx context.Context, marshaler runtime.Marshaler, client LogicalResourceModelClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq DeleteEnvironmentRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -227,11 +227,11 @@ func request_LogicalResourceModel_DeleteWorkspace_0(ctx context.Context, marshal
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
 	}
 
-	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_LogicalResourceModel_DeleteWorkspace_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_LogicalResourceModel_DeleteEnvironment_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := client.DeleteWorkspace(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.DeleteEnvironment(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
@@ -266,15 +266,15 @@ func request_LogicalResourceModel_CreateApplication_0(ctx context.Context, marsh
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
 	}
 
-	val, ok = pathParams["workspace"]
+	val, ok = pathParams["environment"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "workspace")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "environment")
 	}
 
-	protoReq.Workspace, err = runtime.String(val)
+	protoReq.Environment, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "workspace", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "environment", err)
 	}
 
 	msg, err := client.CreateApplication(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -283,7 +283,7 @@ func request_LogicalResourceModel_CreateApplication_0(ctx context.Context, marsh
 }
 
 var (
-	filter_LogicalResourceModel_GetApplication_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "workspace": 1, "id": 2}, Base: []int{1, 1, 2, 3, 0, 0, 0}, Check: []int{0, 1, 1, 1, 2, 3, 4}}
+	filter_LogicalResourceModel_GetApplication_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "environment": 1, "id": 2}, Base: []int{1, 1, 2, 3, 0, 0, 0}, Check: []int{0, 1, 1, 1, 2, 3, 4}}
 )
 
 func request_LogicalResourceModel_GetApplication_0(ctx context.Context, marshaler runtime.Marshaler, client LogicalResourceModelClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
@@ -308,15 +308,15 @@ func request_LogicalResourceModel_GetApplication_0(ctx context.Context, marshale
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
 	}
 
-	val, ok = pathParams["workspace"]
+	val, ok = pathParams["environment"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "workspace")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "environment")
 	}
 
-	protoReq.Workspace, err = runtime.String(val)
+	protoReq.Environment, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "workspace", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "environment", err)
 	}
 
 	val, ok = pathParams["id"]
@@ -369,15 +369,15 @@ func request_LogicalResourceModel_UpdateApplication_0(ctx context.Context, marsh
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
 	}
 
-	val, ok = pathParams["workspace"]
+	val, ok = pathParams["environment"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "workspace")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "environment")
 	}
 
-	protoReq.Workspace, err = runtime.String(val)
+	protoReq.Environment, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "workspace", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "environment", err)
 	}
 
 	val, ok = pathParams["id"]
@@ -397,7 +397,7 @@ func request_LogicalResourceModel_UpdateApplication_0(ctx context.Context, marsh
 }
 
 var (
-	filter_LogicalResourceModel_ListApplications_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "workspace": 1}, Base: []int{1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 2, 3}}
+	filter_LogicalResourceModel_ListApplications_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "environment": 1}, Base: []int{1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 2, 3}}
 )
 
 func request_LogicalResourceModel_ListApplications_0(ctx context.Context, marshaler runtime.Marshaler, client LogicalResourceModelClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
@@ -422,15 +422,15 @@ func request_LogicalResourceModel_ListApplications_0(ctx context.Context, marsha
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
 	}
 
-	val, ok = pathParams["workspace"]
+	val, ok = pathParams["environment"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "workspace")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "environment")
 	}
 
-	protoReq.Workspace, err = runtime.String(val)
+	protoReq.Environment, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "workspace", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "environment", err)
 	}
 
 	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_LogicalResourceModel_ListApplications_0); err != nil {
@@ -443,7 +443,7 @@ func request_LogicalResourceModel_ListApplications_0(ctx context.Context, marsha
 }
 
 var (
-	filter_LogicalResourceModel_DeleteApplication_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "workspace": 1, "id": 2}, Base: []int{1, 1, 2, 3, 0, 0, 0}, Check: []int{0, 1, 1, 1, 2, 3, 4}}
+	filter_LogicalResourceModel_DeleteApplication_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "environment": 1, "id": 2}, Base: []int{1, 1, 2, 3, 0, 0, 0}, Check: []int{0, 1, 1, 1, 2, 3, 4}}
 )
 
 func request_LogicalResourceModel_DeleteApplication_0(ctx context.Context, marshaler runtime.Marshaler, client LogicalResourceModelClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
@@ -468,15 +468,15 @@ func request_LogicalResourceModel_DeleteApplication_0(ctx context.Context, marsh
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
 	}
 
-	val, ok = pathParams["workspace"]
+	val, ok = pathParams["environment"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "workspace")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "environment")
 	}
 
-	protoReq.Workspace, err = runtime.String(val)
+	protoReq.Environment, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "workspace", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "environment", err)
 	}
 
 	val, ok = pathParams["id"]
@@ -529,15 +529,15 @@ func request_LogicalResourceModel_CreateService_0(ctx context.Context, marshaler
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
 	}
 
-	val, ok = pathParams["workspace"]
+	val, ok = pathParams["environment"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "workspace")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "environment")
 	}
 
-	protoReq.Workspace, err = runtime.String(val)
+	protoReq.Environment, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "workspace", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "environment", err)
 	}
 
 	val, ok = pathParams["application"]
@@ -557,7 +557,7 @@ func request_LogicalResourceModel_CreateService_0(ctx context.Context, marshaler
 }
 
 var (
-	filter_LogicalResourceModel_GetService_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "workspace": 1, "application": 2, "id": 3}, Base: []int{1, 1, 2, 3, 4, 0, 0, 0, 0}, Check: []int{0, 1, 1, 1, 1, 2, 3, 4, 5}}
+	filter_LogicalResourceModel_GetService_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "environment": 1, "application": 2, "id": 3}, Base: []int{1, 1, 2, 3, 4, 0, 0, 0, 0}, Check: []int{0, 1, 1, 1, 1, 2, 3, 4, 5}}
 )
 
 func request_LogicalResourceModel_GetService_0(ctx context.Context, marshaler runtime.Marshaler, client LogicalResourceModelClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
@@ -582,15 +582,15 @@ func request_LogicalResourceModel_GetService_0(ctx context.Context, marshaler ru
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
 	}
 
-	val, ok = pathParams["workspace"]
+	val, ok = pathParams["environment"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "workspace")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "environment")
 	}
 
-	protoReq.Workspace, err = runtime.String(val)
+	protoReq.Environment, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "workspace", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "environment", err)
 	}
 
 	val, ok = pathParams["application"]
@@ -625,7 +625,7 @@ func request_LogicalResourceModel_GetService_0(ctx context.Context, marshaler ru
 }
 
 var (
-	filter_LogicalResourceModel_ListServices_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "workspace": 1, "application": 2}, Base: []int{1, 1, 2, 3, 0, 0, 0}, Check: []int{0, 1, 1, 1, 2, 3, 4}}
+	filter_LogicalResourceModel_ListServices_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "environment": 1, "application": 2}, Base: []int{1, 1, 2, 3, 0, 0, 0}, Check: []int{0, 1, 1, 1, 2, 3, 4}}
 )
 
 func request_LogicalResourceModel_ListServices_0(ctx context.Context, marshaler runtime.Marshaler, client LogicalResourceModelClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
@@ -650,15 +650,15 @@ func request_LogicalResourceModel_ListServices_0(ctx context.Context, marshaler 
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
 	}
 
-	val, ok = pathParams["workspace"]
+	val, ok = pathParams["environment"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "workspace")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "environment")
 	}
 
-	protoReq.Workspace, err = runtime.String(val)
+	protoReq.Environment, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "workspace", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "environment", err)
 	}
 
 	val, ok = pathParams["application"]
@@ -711,15 +711,15 @@ func request_LogicalResourceModel_UpdateService_0(ctx context.Context, marshaler
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
 	}
 
-	val, ok = pathParams["workspace"]
+	val, ok = pathParams["environment"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "workspace")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "environment")
 	}
 
-	protoReq.Workspace, err = runtime.String(val)
+	protoReq.Environment, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "workspace", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "environment", err)
 	}
 
 	val, ok = pathParams["application"]
@@ -750,7 +750,7 @@ func request_LogicalResourceModel_UpdateService_0(ctx context.Context, marshaler
 }
 
 var (
-	filter_LogicalResourceModel_DeleteService_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "workspace": 1, "application": 2, "id": 3}, Base: []int{1, 1, 2, 3, 4, 0, 0, 0, 0}, Check: []int{0, 1, 1, 1, 1, 2, 3, 4, 5}}
+	filter_LogicalResourceModel_DeleteService_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "environment": 1, "application": 2, "id": 3}, Base: []int{1, 1, 2, 3, 4, 0, 0, 0, 0}, Check: []int{0, 1, 1, 1, 1, 2, 3, 4, 5}}
 )
 
 func request_LogicalResourceModel_DeleteService_0(ctx context.Context, marshaler runtime.Marshaler, client LogicalResourceModelClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
@@ -775,15 +775,15 @@ func request_LogicalResourceModel_DeleteService_0(ctx context.Context, marshaler
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
 	}
 
-	val, ok = pathParams["workspace"]
+	val, ok = pathParams["environment"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "workspace")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "environment")
 	}
 
-	protoReq.Workspace, err = runtime.String(val)
+	protoReq.Environment, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "workspace", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "environment", err)
 	}
 
 	val, ok = pathParams["application"]
@@ -847,15 +847,15 @@ func request_LogicalResourceModel_CreateLoadBalancer_0(ctx context.Context, mars
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
 	}
 
-	val, ok = pathParams["workspace"]
+	val, ok = pathParams["environment"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "workspace")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "environment")
 	}
 
-	protoReq.Workspace, err = runtime.String(val)
+	protoReq.Environment, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "workspace", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "environment", err)
 	}
 
 	msg, err := client.CreateLoadBalancer(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -864,7 +864,7 @@ func request_LogicalResourceModel_CreateLoadBalancer_0(ctx context.Context, mars
 }
 
 var (
-	filter_LogicalResourceModel_GetLoadBalancer_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "workspace": 1, "id": 2}, Base: []int{1, 1, 2, 3, 0, 0, 0}, Check: []int{0, 1, 1, 1, 2, 3, 4}}
+	filter_LogicalResourceModel_GetLoadBalancer_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "environment": 1, "id": 2}, Base: []int{1, 1, 2, 3, 0, 0, 0}, Check: []int{0, 1, 1, 1, 2, 3, 4}}
 )
 
 func request_LogicalResourceModel_GetLoadBalancer_0(ctx context.Context, marshaler runtime.Marshaler, client LogicalResourceModelClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
@@ -889,15 +889,15 @@ func request_LogicalResourceModel_GetLoadBalancer_0(ctx context.Context, marshal
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
 	}
 
-	val, ok = pathParams["workspace"]
+	val, ok = pathParams["environment"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "workspace")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "environment")
 	}
 
-	protoReq.Workspace, err = runtime.String(val)
+	protoReq.Environment, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "workspace", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "environment", err)
 	}
 
 	val, ok = pathParams["id"]
@@ -921,7 +921,7 @@ func request_LogicalResourceModel_GetLoadBalancer_0(ctx context.Context, marshal
 }
 
 var (
-	filter_LogicalResourceModel_ListLoadBalancers_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "workspace": 1}, Base: []int{1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 2, 3}}
+	filter_LogicalResourceModel_ListLoadBalancers_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "environment": 1}, Base: []int{1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 2, 3}}
 )
 
 func request_LogicalResourceModel_ListLoadBalancers_0(ctx context.Context, marshaler runtime.Marshaler, client LogicalResourceModelClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
@@ -946,15 +946,15 @@ func request_LogicalResourceModel_ListLoadBalancers_0(ctx context.Context, marsh
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
 	}
 
-	val, ok = pathParams["workspace"]
+	val, ok = pathParams["environment"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "workspace")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "environment")
 	}
 
-	protoReq.Workspace, err = runtime.String(val)
+	protoReq.Environment, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "workspace", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "environment", err)
 	}
 
 	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_LogicalResourceModel_ListLoadBalancers_0); err != nil {
@@ -996,15 +996,15 @@ func request_LogicalResourceModel_UpdateLoadBalancer_0(ctx context.Context, mars
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
 	}
 
-	val, ok = pathParams["workspace"]
+	val, ok = pathParams["environment"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "workspace")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "environment")
 	}
 
-	protoReq.Workspace, err = runtime.String(val)
+	protoReq.Environment, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "workspace", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "environment", err)
 	}
 
 	val, ok = pathParams["id"]
@@ -1024,7 +1024,7 @@ func request_LogicalResourceModel_UpdateLoadBalancer_0(ctx context.Context, mars
 }
 
 var (
-	filter_LogicalResourceModel_DeleteLoadBalancer_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "workspace": 1, "id": 2}, Base: []int{1, 1, 2, 3, 0, 0, 0}, Check: []int{0, 1, 1, 1, 2, 3, 4}}
+	filter_LogicalResourceModel_DeleteLoadBalancer_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "environment": 1, "id": 2}, Base: []int{1, 1, 2, 3, 0, 0, 0}, Check: []int{0, 1, 1, 1, 2, 3, 4}}
 )
 
 func request_LogicalResourceModel_DeleteLoadBalancer_0(ctx context.Context, marshaler runtime.Marshaler, client LogicalResourceModelClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
@@ -1049,15 +1049,15 @@ func request_LogicalResourceModel_DeleteLoadBalancer_0(ctx context.Context, mars
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "tenant", err)
 	}
 
-	val, ok = pathParams["workspace"]
+	val, ok = pathParams["environment"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "workspace")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "environment")
 	}
 
-	protoReq.Workspace, err = runtime.String(val)
+	protoReq.Environment, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "workspace", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "environment", err)
 	}
 
 	val, ok = pathParams["id"]
@@ -1118,7 +1118,7 @@ func RegisterLogicalResourceModelHandler(ctx context.Context, mux *runtime.Serve
 // "LogicalResourceModelClient" to call the correct interceptors.
 func RegisterLogicalResourceModelHandlerClient(ctx context.Context, mux *runtime.ServeMux, client LogicalResourceModelClient) error {
 
-	mux.Handle("POST", pattern_LogicalResourceModel_CreateWorkspace_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_LogicalResourceModel_CreateEnvironment_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -1127,18 +1127,18 @@ func RegisterLogicalResourceModelHandlerClient(ctx context.Context, mux *runtime
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_LogicalResourceModel_CreateWorkspace_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_LogicalResourceModel_CreateEnvironment_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_LogicalResourceModel_CreateWorkspace_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_LogicalResourceModel_CreateEnvironment_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_LogicalResourceModel_GetWorkspace_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_LogicalResourceModel_GetEnvironment_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -1147,18 +1147,18 @@ func RegisterLogicalResourceModelHandlerClient(ctx context.Context, mux *runtime
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_LogicalResourceModel_GetWorkspace_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_LogicalResourceModel_GetEnvironment_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_LogicalResourceModel_GetWorkspace_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_LogicalResourceModel_GetEnvironment_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("PUT", pattern_LogicalResourceModel_UpdateWorkspace_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("PUT", pattern_LogicalResourceModel_UpdateEnvironment_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -1167,18 +1167,18 @@ func RegisterLogicalResourceModelHandlerClient(ctx context.Context, mux *runtime
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_LogicalResourceModel_UpdateWorkspace_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_LogicalResourceModel_UpdateEnvironment_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_LogicalResourceModel_UpdateWorkspace_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_LogicalResourceModel_UpdateEnvironment_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_LogicalResourceModel_ListWorkspaces_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_LogicalResourceModel_ListEnvironments_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -1187,18 +1187,18 @@ func RegisterLogicalResourceModelHandlerClient(ctx context.Context, mux *runtime
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_LogicalResourceModel_ListWorkspaces_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_LogicalResourceModel_ListEnvironments_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_LogicalResourceModel_ListWorkspaces_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_LogicalResourceModel_ListEnvironments_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("DELETE", pattern_LogicalResourceModel_DeleteWorkspace_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("DELETE", pattern_LogicalResourceModel_DeleteEnvironment_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -1207,14 +1207,14 @@ func RegisterLogicalResourceModelHandlerClient(ctx context.Context, mux *runtime
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_LogicalResourceModel_DeleteWorkspace_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_LogicalResourceModel_DeleteEnvironment_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_LogicalResourceModel_DeleteWorkspace_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_LogicalResourceModel_DeleteEnvironment_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -1522,57 +1522,57 @@ func RegisterLogicalResourceModelHandlerClient(ctx context.Context, mux *runtime
 }
 
 var (
-	pattern_LogicalResourceModel_CreateWorkspace_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"v1", "tenants", "tenant", "workspaces"}, ""))
+	pattern_LogicalResourceModel_CreateEnvironment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"v1", "tenants", "tenant", "environments"}, ""))
 
-	pattern_LogicalResourceModel_GetWorkspace_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"v1", "tenants", "tenant", "workspaces", "id"}, ""))
+	pattern_LogicalResourceModel_GetEnvironment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"v1", "tenants", "tenant", "environments", "id"}, ""))
 
-	pattern_LogicalResourceModel_UpdateWorkspace_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"v1", "tenants", "tenant", "workspaces", "id"}, ""))
+	pattern_LogicalResourceModel_UpdateEnvironment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"v1", "tenants", "tenant", "environments", "id"}, ""))
 
-	pattern_LogicalResourceModel_ListWorkspaces_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"v1", "tenants", "tenant", "workspaces"}, ""))
+	pattern_LogicalResourceModel_ListEnvironments_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"v1", "tenants", "tenant", "environments"}, ""))
 
-	pattern_LogicalResourceModel_DeleteWorkspace_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"v1", "tenants", "tenant", "workspaces", "id"}, ""))
+	pattern_LogicalResourceModel_DeleteEnvironment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"v1", "tenants", "tenant", "environments", "id"}, ""))
 
-	pattern_LogicalResourceModel_CreateApplication_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "tenants", "tenant", "workspaces", "workspace", "applications"}, ""))
+	pattern_LogicalResourceModel_CreateApplication_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "tenants", "tenant", "environments", "environment", "applications"}, ""))
 
-	pattern_LogicalResourceModel_GetApplication_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6}, []string{"v1", "tenants", "tenant", "workspaces", "workspace", "applications", "id"}, ""))
+	pattern_LogicalResourceModel_GetApplication_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6}, []string{"v1", "tenants", "tenant", "environments", "environment", "applications", "id"}, ""))
 
-	pattern_LogicalResourceModel_UpdateApplication_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6}, []string{"v1", "tenants", "tenant", "workspaces", "workspace", "applications", "id"}, ""))
+	pattern_LogicalResourceModel_UpdateApplication_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6}, []string{"v1", "tenants", "tenant", "environments", "environment", "applications", "id"}, ""))
 
-	pattern_LogicalResourceModel_ListApplications_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "tenants", "tenant", "workspaces", "workspace", "applications"}, ""))
+	pattern_LogicalResourceModel_ListApplications_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "tenants", "tenant", "environments", "environment", "applications"}, ""))
 
-	pattern_LogicalResourceModel_DeleteApplication_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6}, []string{"v1", "tenants", "tenant", "workspaces", "workspace", "applications", "id"}, ""))
+	pattern_LogicalResourceModel_DeleteApplication_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6}, []string{"v1", "tenants", "tenant", "environments", "environment", "applications", "id"}, ""))
 
-	pattern_LogicalResourceModel_CreateService_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7}, []string{"v1", "tenants", "tenant", "workspaces", "workspace", "applications", "application", "services"}, ""))
+	pattern_LogicalResourceModel_CreateService_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7}, []string{"v1", "tenants", "tenant", "environments", "environment", "applications", "application", "services"}, ""))
 
-	pattern_LogicalResourceModel_GetService_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7, 1, 0, 4, 1, 5, 8}, []string{"v1", "tenants", "tenant", "workspaces", "workspace", "applications", "application", "services", "id"}, ""))
+	pattern_LogicalResourceModel_GetService_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7, 1, 0, 4, 1, 5, 8}, []string{"v1", "tenants", "tenant", "environments", "environment", "applications", "application", "services", "id"}, ""))
 
-	pattern_LogicalResourceModel_ListServices_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7}, []string{"v1", "tenants", "tenant", "workspaces", "workspace", "applications", "application", "services"}, ""))
+	pattern_LogicalResourceModel_ListServices_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7}, []string{"v1", "tenants", "tenant", "environments", "environment", "applications", "application", "services"}, ""))
 
-	pattern_LogicalResourceModel_UpdateService_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7, 1, 0, 4, 1, 5, 8}, []string{"v1", "tenants", "tenant", "workspaces", "workspace", "applications", "application", "services", "id"}, ""))
+	pattern_LogicalResourceModel_UpdateService_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7, 1, 0, 4, 1, 5, 8}, []string{"v1", "tenants", "tenant", "environments", "environment", "applications", "application", "services", "id"}, ""))
 
-	pattern_LogicalResourceModel_DeleteService_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7, 1, 0, 4, 1, 5, 8}, []string{"v1", "tenants", "tenant", "workspaces", "workspace", "applications", "application", "services", "id"}, ""))
+	pattern_LogicalResourceModel_DeleteService_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6, 2, 7, 1, 0, 4, 1, 5, 8}, []string{"v1", "tenants", "tenant", "environments", "environment", "applications", "application", "services", "id"}, ""))
 
-	pattern_LogicalResourceModel_CreateLoadBalancer_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "tenants", "tenant", "workspaces", "workspace", "loadbalancers"}, ""))
+	pattern_LogicalResourceModel_CreateLoadBalancer_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "tenants", "tenant", "environments", "environment", "loadbalancers"}, ""))
 
-	pattern_LogicalResourceModel_GetLoadBalancer_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6}, []string{"v1", "tenants", "tenant", "workspaces", "workspace", "loadbalancers", "id"}, ""))
+	pattern_LogicalResourceModel_GetLoadBalancer_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6}, []string{"v1", "tenants", "tenant", "environments", "environment", "loadbalancers", "id"}, ""))
 
-	pattern_LogicalResourceModel_ListLoadBalancers_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "tenants", "tenant", "workspaces", "workspace", "loadbalancers"}, ""))
+	pattern_LogicalResourceModel_ListLoadBalancers_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "tenants", "tenant", "environments", "environment", "loadbalancers"}, ""))
 
-	pattern_LogicalResourceModel_UpdateLoadBalancer_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6}, []string{"v1", "tenants", "tenant", "workspaces", "workspace", "loadbalancers", "id"}, ""))
+	pattern_LogicalResourceModel_UpdateLoadBalancer_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6}, []string{"v1", "tenants", "tenant", "environments", "environment", "loadbalancers", "id"}, ""))
 
-	pattern_LogicalResourceModel_DeleteLoadBalancer_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6}, []string{"v1", "tenants", "tenant", "workspaces", "workspace", "loadbalancers", "id"}, ""))
+	pattern_LogicalResourceModel_DeleteLoadBalancer_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6}, []string{"v1", "tenants", "tenant", "environments", "environment", "loadbalancers", "id"}, ""))
 )
 
 var (
-	forward_LogicalResourceModel_CreateWorkspace_0 = runtime.ForwardResponseMessage
+	forward_LogicalResourceModel_CreateEnvironment_0 = runtime.ForwardResponseMessage
 
-	forward_LogicalResourceModel_GetWorkspace_0 = runtime.ForwardResponseMessage
+	forward_LogicalResourceModel_GetEnvironment_0 = runtime.ForwardResponseMessage
 
-	forward_LogicalResourceModel_UpdateWorkspace_0 = runtime.ForwardResponseMessage
+	forward_LogicalResourceModel_UpdateEnvironment_0 = runtime.ForwardResponseMessage
 
-	forward_LogicalResourceModel_ListWorkspaces_0 = runtime.ForwardResponseMessage
+	forward_LogicalResourceModel_ListEnvironments_0 = runtime.ForwardResponseMessage
 
-	forward_LogicalResourceModel_DeleteWorkspace_0 = runtime.ForwardResponseMessage
+	forward_LogicalResourceModel_DeleteEnvironment_0 = runtime.ForwardResponseMessage
 
 	forward_LogicalResourceModel_CreateApplication_0 = runtime.ForwardResponseMessage
 

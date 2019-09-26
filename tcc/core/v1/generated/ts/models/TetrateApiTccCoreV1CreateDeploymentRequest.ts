@@ -47,6 +47,12 @@ export interface TetrateApiTccCoreV1CreateDeploymentRequest {
      * @type {string}
      * @memberof TetrateApiTccCoreV1CreateDeploymentRequest
      */
+    environment?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1CreateDeploymentRequest
+     */
     cluster?: string;
     /**
      * 
@@ -67,6 +73,7 @@ export function TetrateApiTccCoreV1CreateDeploymentRequestFromJSON(json: any): T
         'parent': !exists(json, 'parent') ? undefined : json['parent'],
         'id': !exists(json, 'id') ? undefined : json['id'],
         'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
+        'environment': !exists(json, 'environment') ? undefined : json['environment'],
         'cluster': !exists(json, 'cluster') ? undefined : json['cluster'],
         'namespace': !exists(json, 'namespace') ? undefined : json['namespace'],
         'deployment': !exists(json, 'deployment') ? undefined : TetrateApiTccCoreV1DeploymentFromJSON(json['deployment']),
@@ -81,6 +88,7 @@ export function TetrateApiTccCoreV1CreateDeploymentRequestToJSON(value?: Tetrate
         'parent': value.parent,
         'id': value.id,
         'tenant': value.tenant,
+        'environment': value.environment,
         'cluster': value.cluster,
         'namespace': value.namespace,
         'deployment': TetrateApiTccCoreV1DeploymentToJSON(value.deployment),

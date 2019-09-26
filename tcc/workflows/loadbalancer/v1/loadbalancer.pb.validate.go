@@ -45,19 +45,11 @@ func (m *CreateTicketRequest) Validate() error {
 
 	// no validation rules for Tenant
 
-	// no validation rules for Workspace
+	// no validation rules for Environment
 
 	// no validation rules for Id
 
-	if v, ok := interface{}(m.GetTarget()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return CreateTicketRequestValidationError{
-				field:  "Target",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
+	// no validation rules for Application
 
 	return nil
 }
@@ -118,80 +110,6 @@ var _ interface {
 	ErrorName() string
 } = CreateTicketRequestValidationError{}
 
-// Validate checks the field values on Target with the rules defined in the
-// proto definition for this message. If any rules are violated, an error is returned.
-func (m *Target) Validate() error {
-	if m == nil {
-		return nil
-	}
-
-	switch m.Target.(type) {
-
-	case *Target_ServiceName:
-		// no validation rules for ServiceName
-
-	case *Target_DeploymentName:
-		// no validation rules for DeploymentName
-
-	}
-
-	return nil
-}
-
-// TargetValidationError is the validation error returned by Target.Validate if
-// the designated constraints aren't met.
-type TargetValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e TargetValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e TargetValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e TargetValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e TargetValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e TargetValidationError) ErrorName() string { return "TargetValidationError" }
-
-// Error satisfies the builtin error interface
-func (e TargetValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sTarget.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = TargetValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = TargetValidationError{}
-
 // Validate checks the field values on GetTicketStatusRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
@@ -204,7 +122,7 @@ func (m *GetTicketStatusRequest) Validate() error {
 
 	// no validation rules for Tenant
 
-	// no validation rules for Workspace
+	// no validation rules for Environment
 
 	// no validation rules for Loadbalancer
 
@@ -281,7 +199,7 @@ func (m *CancelTicketRequest) Validate() error {
 
 	// no validation rules for Tenant
 
-	// no validation rules for Workspace
+	// no validation rules for Environment
 
 	// no validation rules for Loadbalancer
 
@@ -358,27 +276,19 @@ func (m *TicketStatus) Validate() error {
 
 	// no validation rules for Tenant
 
-	// no validation rules for Workspace
+	// no validation rules for Environment
 
 	// no validation rules for Loadbalancer
 
 	// no validation rules for Id
+
+	// no validation rules for Application
 
 	// no validation rules for Action
 
 	// no validation rules for State
 
 	// no validation rules for Note
-
-	switch m.Target.(type) {
-
-	case *TicketStatus_ServiceName:
-		// no validation rules for ServiceName
-
-	case *TicketStatus_DeploymentName:
-		// no validation rules for DeploymentName
-
-	}
 
 	return nil
 }
@@ -449,7 +359,7 @@ func (m *ListTicketsRequest) Validate() error {
 
 	// no validation rules for Tenant
 
-	// no validation rules for Workspace
+	// no validation rules for Environment
 
 	// no validation rules for Id
 
@@ -606,7 +516,7 @@ func (m *ResolveTicketRequest) Validate() error {
 
 	// no validation rules for Tenant
 
-	// no validation rules for Workspace
+	// no validation rules for Environment
 
 	// no validation rules for Loadbalancer
 
@@ -685,7 +595,7 @@ func (m *PublishTicketRequest) Validate() error {
 
 	// no validation rules for Tenant
 
-	// no validation rules for Workspace
+	// no validation rules for Environment
 
 	// no validation rules for Loadbalancer
 

@@ -13,9 +13,15 @@
 
 import { exists, mapValues } from '../runtime';
 import {
-    TetrateApiTccCoreV1Permissions,
-    TetrateApiTccCoreV1PermissionsFromJSON,
-    TetrateApiTccCoreV1PermissionsToJSON,
+    TetrateApiTccCoreV1ApplicationApplicationSpecificLB,
+    TetrateApiTccCoreV1ApplicationApplicationSpecificLBFromJSON,
+    TetrateApiTccCoreV1ApplicationApplicationSpecificLBToJSON,
+    TetrateApiTccCoreV1ClientSettings,
+    TetrateApiTccCoreV1ClientSettingsFromJSON,
+    TetrateApiTccCoreV1ClientSettingsToJSON,
+    TetrateApiTccCoreV1RoutingInfo,
+    TetrateApiTccCoreV1RoutingInfoFromJSON,
+    TetrateApiTccCoreV1RoutingInfoToJSON,
 } from './';
 
 /**
@@ -41,7 +47,7 @@ export interface TetrateApiTccCoreV1Application {
      * @type {string}
      * @memberof TetrateApiTccCoreV1Application
      */
-    workspace?: string;
+    environment?: string;
     /**
      * 
      * @type {string}
@@ -56,20 +62,34 @@ export interface TetrateApiTccCoreV1Application {
     description?: string;
     /**
      * 
-     * @type {TetrateApiTccCoreV1Permissions}
+     * @type {TetrateApiTccCoreV1RoutingInfo}
      * @memberof TetrateApiTccCoreV1Application
      */
-    permissions?: TetrateApiTccCoreV1Permissions;
+    routingInfo?: TetrateApiTccCoreV1RoutingInfo;
+    /**
+     * 
+     * @type {TetrateApiTccCoreV1ClientSettings}
+     * @memberof TetrateApiTccCoreV1Application
+     */
+    clientSettings?: TetrateApiTccCoreV1ClientSettings;
+    /**
+     * 
+     * @type {TetrateApiTccCoreV1ApplicationApplicationSpecificLB}
+     * @memberof TetrateApiTccCoreV1Application
+     */
+    appLb?: TetrateApiTccCoreV1ApplicationApplicationSpecificLB;
 }
 
 export function TetrateApiTccCoreV1ApplicationFromJSON(json: any): TetrateApiTccCoreV1Application {
     return {
         'name': !exists(json, 'name') ? undefined : json['name'],
         'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
-        'workspace': !exists(json, 'workspace') ? undefined : json['workspace'],
+        'environment': !exists(json, 'environment') ? undefined : json['environment'],
         'id': !exists(json, 'id') ? undefined : json['id'],
         'description': !exists(json, 'description') ? undefined : json['description'],
-        'permissions': !exists(json, 'permissions') ? undefined : TetrateApiTccCoreV1PermissionsFromJSON(json['permissions']),
+        'routingInfo': !exists(json, 'routingInfo') ? undefined : TetrateApiTccCoreV1RoutingInfoFromJSON(json['routingInfo']),
+        'clientSettings': !exists(json, 'clientSettings') ? undefined : TetrateApiTccCoreV1ClientSettingsFromJSON(json['clientSettings']),
+        'appLb': !exists(json, 'appLb') ? undefined : TetrateApiTccCoreV1ApplicationApplicationSpecificLBFromJSON(json['appLb']),
     };
 }
 
@@ -80,10 +100,12 @@ export function TetrateApiTccCoreV1ApplicationToJSON(value?: TetrateApiTccCoreV1
     return {
         'name': value.name,
         'tenant': value.tenant,
-        'workspace': value.workspace,
+        'environment': value.environment,
         'id': value.id,
         'description': value.description,
-        'permissions': TetrateApiTccCoreV1PermissionsToJSON(value.permissions),
+        'routingInfo': TetrateApiTccCoreV1RoutingInfoToJSON(value.routingInfo),
+        'clientSettings': TetrateApiTccCoreV1ClientSettingsToJSON(value.clientSettings),
+        'appLb': TetrateApiTccCoreV1ApplicationApplicationSpecificLBToJSON(value.appLb),
     };
 }
 

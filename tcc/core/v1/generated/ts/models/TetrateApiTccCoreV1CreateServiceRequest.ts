@@ -47,7 +47,7 @@ export interface TetrateApiTccCoreV1CreateServiceRequest {
      * @type {string}
      * @memberof TetrateApiTccCoreV1CreateServiceRequest
      */
-    workspace?: string;
+    environment?: string;
     /**
      * 
      * @type {string}
@@ -67,7 +67,7 @@ export function TetrateApiTccCoreV1CreateServiceRequestFromJSON(json: any): Tetr
         'parent': !exists(json, 'parent') ? undefined : json['parent'],
         'id': !exists(json, 'id') ? undefined : json['id'],
         'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
-        'workspace': !exists(json, 'workspace') ? undefined : json['workspace'],
+        'environment': !exists(json, 'environment') ? undefined : json['environment'],
         'application': !exists(json, 'application') ? undefined : json['application'],
         'service': !exists(json, 'service') ? undefined : TetrateApiTccCoreV1ServiceFromJSON(json['service']),
     };
@@ -81,7 +81,7 @@ export function TetrateApiTccCoreV1CreateServiceRequestToJSON(value?: TetrateApi
         'parent': value.parent,
         'id': value.id,
         'tenant': value.tenant,
-        'workspace': value.workspace,
+        'environment': value.environment,
         'application': value.application,
         'service': TetrateApiTccCoreV1ServiceToJSON(value.service),
     };

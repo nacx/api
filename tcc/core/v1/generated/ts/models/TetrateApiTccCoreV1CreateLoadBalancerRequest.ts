@@ -47,7 +47,7 @@ export interface TetrateApiTccCoreV1CreateLoadBalancerRequest {
      * @type {string}
      * @memberof TetrateApiTccCoreV1CreateLoadBalancerRequest
      */
-    workspace?: string;
+    environment?: string;
     /**
      * 
      * @type {TetrateApiTccCoreV1LoadBalancer}
@@ -61,7 +61,7 @@ export function TetrateApiTccCoreV1CreateLoadBalancerRequestFromJSON(json: any):
         'parent': !exists(json, 'parent') ? undefined : json['parent'],
         'id': !exists(json, 'id') ? undefined : json['id'],
         'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
-        'workspace': !exists(json, 'workspace') ? undefined : json['workspace'],
+        'environment': !exists(json, 'environment') ? undefined : json['environment'],
         'loadbalancer': !exists(json, 'loadbalancer') ? undefined : TetrateApiTccCoreV1LoadBalancerFromJSON(json['loadbalancer']),
     };
 }
@@ -74,7 +74,7 @@ export function TetrateApiTccCoreV1CreateLoadBalancerRequestToJSON(value?: Tetra
         'parent': value.parent,
         'id': value.id,
         'tenant': value.tenant,
-        'workspace': value.workspace,
+        'environment': value.environment,
         'loadbalancer': TetrateApiTccCoreV1LoadBalancerToJSON(value.loadbalancer),
     };
 }

@@ -44,7 +44,7 @@ export interface TetrateApiTccWorkflowsLoadbalancerV1TicketStatus {
      * @type {string}
      * @memberof TetrateApiTccWorkflowsLoadbalancerV1TicketStatus
      */
-    workspace?: string;
+    environment?: string;
     /**
      * 
      * @type {string}
@@ -62,13 +62,7 @@ export interface TetrateApiTccWorkflowsLoadbalancerV1TicketStatus {
      * @type {string}
      * @memberof TetrateApiTccWorkflowsLoadbalancerV1TicketStatus
      */
-    serviceName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TetrateApiTccWorkflowsLoadbalancerV1TicketStatus
-     */
-    deploymentName?: string;
+    application?: string;
     /**
      * 
      * @type {TetrateApiTccWorkflowsLoadbalancerV1Action}
@@ -93,11 +87,10 @@ export function TetrateApiTccWorkflowsLoadbalancerV1TicketStatusFromJSON(json: a
     return {
         'name': !exists(json, 'name') ? undefined : json['name'],
         'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
-        'workspace': !exists(json, 'workspace') ? undefined : json['workspace'],
+        'environment': !exists(json, 'environment') ? undefined : json['environment'],
         'loadbalancer': !exists(json, 'loadbalancer') ? undefined : json['loadbalancer'],
         'id': !exists(json, 'id') ? undefined : json['id'],
-        'serviceName': !exists(json, 'serviceName') ? undefined : json['serviceName'],
-        'deploymentName': !exists(json, 'deploymentName') ? undefined : json['deploymentName'],
+        'application': !exists(json, 'application') ? undefined : json['application'],
         'action': !exists(json, 'action') ? undefined : TetrateApiTccWorkflowsLoadbalancerV1ActionFromJSON(json['action']),
         'state': !exists(json, 'state') ? undefined : TetrateApiTccWorkflowsLoadbalancerV1TicketStatusRequestStateFromJSON(json['state']),
         'note': !exists(json, 'note') ? undefined : json['note'],
@@ -111,11 +104,10 @@ export function TetrateApiTccWorkflowsLoadbalancerV1TicketStatusToJSON(value?: T
     return {
         'name': value.name,
         'tenant': value.tenant,
-        'workspace': value.workspace,
+        'environment': value.environment,
         'loadbalancer': value.loadbalancer,
         'id': value.id,
-        'serviceName': value.serviceName,
-        'deploymentName': value.deploymentName,
+        'application': value.application,
         'action': TetrateApiTccWorkflowsLoadbalancerV1ActionToJSON(value.action),
         'state': TetrateApiTccWorkflowsLoadbalancerV1TicketStatusRequestStateToJSON(value.state),
         'note': value.note,

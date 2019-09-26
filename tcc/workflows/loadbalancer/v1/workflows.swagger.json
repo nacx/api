@@ -20,7 +20,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/tenants/{tenant}/workspaces/{workspace}/loadbalancers/{id}/attach": {
+    "/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{id}/attach": {
       "post": {
         "operationId": "Attach",
         "responses": {
@@ -45,7 +45,7 @@
             "type": "string"
           },
           {
-            "name": "workspace",
+            "name": "environment",
             "in": "path",
             "required": true,
             "type": "string"
@@ -70,7 +70,7 @@
         ]
       }
     },
-    "/v1/tenants/{tenant}/workspaces/{workspace}/loadbalancers/{id}/detach": {
+    "/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{id}/detach": {
       "post": {
         "operationId": "Detach",
         "responses": {
@@ -95,7 +95,7 @@
             "type": "string"
           },
           {
-            "name": "workspace",
+            "name": "environment",
             "in": "path",
             "required": true,
             "type": "string"
@@ -120,7 +120,7 @@
         ]
       }
     },
-    "/v1/tenants/{tenant}/workspaces/{workspace}/loadbalancers/{id}/pending": {
+    "/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{id}/pending": {
       "get": {
         "operationId": "ListPendingTickets",
         "responses": {
@@ -145,7 +145,7 @@
             "type": "string"
           },
           {
-            "name": "workspace",
+            "name": "environment",
             "in": "path",
             "required": true,
             "type": "string"
@@ -168,7 +168,7 @@
         ]
       }
     },
-    "/v1/tenants/{tenant}/workspaces/{workspace}/loadbalancers/{loadbalancer}/requests/{id}/approve": {
+    "/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{loadbalancer}/requests/{id}/approve": {
       "post": {
         "operationId": "Approve",
         "responses": {
@@ -193,7 +193,7 @@
             "type": "string"
           },
           {
-            "name": "workspace",
+            "name": "environment",
             "in": "path",
             "required": true,
             "type": "string"
@@ -224,7 +224,7 @@
         ]
       }
     },
-    "/v1/tenants/{tenant}/workspaces/{workspace}/loadbalancers/{loadbalancer}/requests/{id}/cancel": {
+    "/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{loadbalancer}/requests/{id}/cancel": {
       "post": {
         "operationId": "Cancel",
         "responses": {
@@ -249,7 +249,7 @@
             "type": "string"
           },
           {
-            "name": "workspace",
+            "name": "environment",
             "in": "path",
             "required": true,
             "type": "string"
@@ -280,7 +280,7 @@
         ]
       }
     },
-    "/v1/tenants/{tenant}/workspaces/{workspace}/loadbalancers/{loadbalancer}/requests/{id}/deny": {
+    "/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{loadbalancer}/requests/{id}/deny": {
       "post": {
         "operationId": "Deny",
         "responses": {
@@ -305,7 +305,7 @@
             "type": "string"
           },
           {
-            "name": "workspace",
+            "name": "environment",
             "in": "path",
             "required": true,
             "type": "string"
@@ -336,7 +336,7 @@
         ]
       }
     },
-    "/v1/tenants/{tenant}/workspaces/{workspace}/loadbalancers/{loadbalancer}/requests/{id}/publish": {
+    "/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{loadbalancer}/requests/{id}/publish": {
       "post": {
         "summary": "LB owner calls this API with additional settings like TLS, to\nfinally expose the service on the load balancer or remove a detached service",
         "operationId": "Publish",
@@ -362,7 +362,7 @@
             "type": "string"
           },
           {
-            "name": "workspace",
+            "name": "environment",
             "in": "path",
             "required": true,
             "type": "string"
@@ -393,7 +393,7 @@
         ]
       }
     },
-    "/v1/tenants/{tenant}/workspaces/{workspace}/loadbalancers/{loadbalancer}/requests/{id}/status": {
+    "/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{loadbalancer}/requests/{id}/status": {
       "get": {
         "operationId": "GetTicketStatus",
         "responses": {
@@ -418,7 +418,7 @@
             "type": "string"
           },
           {
-            "name": "workspace",
+            "name": "environment",
             "in": "path",
             "required": true,
             "type": "string"
@@ -492,7 +492,7 @@
         "tenant": {
           "type": "string"
         },
-        "workspace": {
+        "environment": {
           "type": "string"
         },
         "loadbalancer": {
@@ -512,15 +512,14 @@
         "tenant": {
           "type": "string"
         },
-        "workspace": {
+        "environment": {
           "type": "string"
         },
         "id": {
           "type": "string"
         },
-        "target": {
-          "$ref": "#/definitions/tetrate.api.tcc.workflows.loadbalancer.v1.Target",
-          "description": "We need to allow both logical services as well as physical\ndeployments to be attached to a load balancer.  the physical\ndeployment piece is the essential backdoor to capture the common\nuse cases that a logical service does not address."
+        "application": {
+          "type": "string"
         }
       }
     },
@@ -544,7 +543,7 @@
         "tenant": {
           "type": "string"
         },
-        "workspace": {
+        "environment": {
           "type": "string"
         },
         "loadbalancer": {
@@ -567,7 +566,7 @@
         "tenant": {
           "type": "string"
         },
-        "workspace": {
+        "environment": {
           "type": "string"
         },
         "loadbalancer": {
@@ -582,17 +581,6 @@
         }
       }
     },
-    "tetrate.api.tcc.workflows.loadbalancer.v1.Target": {
-      "type": "object",
-      "properties": {
-        "serviceName": {
-          "type": "string"
-        },
-        "deploymentName": {
-          "type": "string"
-        }
-      }
-    },
     "tetrate.api.tcc.workflows.loadbalancer.v1.TicketStatus": {
       "type": "object",
       "properties": {
@@ -602,7 +590,7 @@
         "tenant": {
           "type": "string"
         },
-        "workspace": {
+        "environment": {
           "type": "string"
         },
         "loadbalancer": {
@@ -611,10 +599,7 @@
         "id": {
           "type": "string"
         },
-        "serviceName": {
-          "type": "string"
-        },
-        "deploymentName": {
+        "application": {
           "type": "string"
         },
         "action": {

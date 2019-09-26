@@ -38,13 +38,13 @@ export interface TetrateApiTccCoreV1HttpRule {
      * @type {Array<TetrateApiTccCoreV1HttpMatchCondition>}
      * @memberof TetrateApiTccCoreV1HttpRule
      */
-    matchConditions?: Array<TetrateApiTccCoreV1HttpMatchCondition>;
+    match?: Array<TetrateApiTccCoreV1HttpMatchCondition>;
     /**
      * 
-     * @type {Array<TetrateApiTccCoreV1HttpModifyAction>}
+     * @type {TetrateApiTccCoreV1HttpModifyAction}
      * @memberof TetrateApiTccCoreV1HttpRule
      */
-    modifyActions?: Array<TetrateApiTccCoreV1HttpModifyAction>;
+    modify?: TetrateApiTccCoreV1HttpModifyAction;
     /**
      * 
      * @type {TetrateApiTccCoreV1Route}
@@ -61,8 +61,8 @@ export interface TetrateApiTccCoreV1HttpRule {
 
 export function TetrateApiTccCoreV1HttpRuleFromJSON(json: any): TetrateApiTccCoreV1HttpRule {
     return {
-        'matchConditions': !exists(json, 'matchConditions') ? undefined : (json['matchConditions'] as Array<any>).map(TetrateApiTccCoreV1HttpMatchConditionFromJSON),
-        'modifyActions': !exists(json, 'modifyActions') ? undefined : (json['modifyActions'] as Array<any>).map(TetrateApiTccCoreV1HttpModifyActionFromJSON),
+        'match': !exists(json, 'match') ? undefined : (json['match'] as Array<any>).map(TetrateApiTccCoreV1HttpMatchConditionFromJSON),
+        'modify': !exists(json, 'modify') ? undefined : TetrateApiTccCoreV1HttpModifyActionFromJSON(json['modify']),
         'route': !exists(json, 'route') ? undefined : TetrateApiTccCoreV1RouteFromJSON(json['route']),
         'redirect': !exists(json, 'redirect') ? undefined : TetrateApiTccCoreV1RedirectFromJSON(json['redirect']),
     };
@@ -73,8 +73,8 @@ export function TetrateApiTccCoreV1HttpRuleToJSON(value?: TetrateApiTccCoreV1Htt
         return undefined;
     }
     return {
-        'matchConditions': value.matchConditions === undefined ? undefined : (value.matchConditions as Array<any>).map(TetrateApiTccCoreV1HttpMatchConditionToJSON),
-        'modifyActions': value.modifyActions === undefined ? undefined : (value.modifyActions as Array<any>).map(TetrateApiTccCoreV1HttpModifyActionToJSON),
+        'match': value.match === undefined ? undefined : (value.match as Array<any>).map(TetrateApiTccCoreV1HttpMatchConditionToJSON),
+        'modify': TetrateApiTccCoreV1HttpModifyActionToJSON(value.modify),
         'route': TetrateApiTccCoreV1RouteToJSON(value.route),
         'redirect': TetrateApiTccCoreV1RedirectToJSON(value.redirect),
     };

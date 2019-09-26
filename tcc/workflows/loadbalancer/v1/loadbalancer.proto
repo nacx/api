@@ -24,47 +24,47 @@ import "tcc/core/v1/tlssettings.proto";
 service LoadBalancerWorkflow {
   rpc Attach(CreateTicketRequest) returns (TicketStatus) {
     option (google.api.http) = {
-      post: "/v1/tenants/{tenant}/workspaces/{workspace}/loadbalancers/{id}/attach"
+      post: "/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{id}/attach"
       body: "*"
     };
   };
 
   rpc Detach(CreateTicketRequest) returns (TicketStatus) {
     option (google.api.http) = {
-      post: "/v1/tenants/{tenant}/workspaces/{workspace}/loadbalancers/{id}/detach"
+      post: "/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{id}/detach"
       body: "*"
     };
   };
 
   rpc GetTicketStatus(GetTicketStatusRequest) returns (TicketStatus) {
     option (google.api.http) = {
-      get: "/v1/tenants/{tenant}/workspaces/{workspace}/loadbalancers/{loadbalancer}/requests/{id}/status"
+      get: "/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{loadbalancer}/requests/{id}/status"
     };
   }
 
   rpc ListPendingTickets(ListTicketsRequest) returns (ListTicketsResponse) {
     option (google.api.http) = {
-      get: "/v1/tenants/{tenant}/workspaces/{workspace}/loadbalancers/{id}/pending"
+      get: "/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{id}/pending"
     };
   };
 
   rpc Approve(ResolveTicketRequest) returns (TicketStatus) {
     option (google.api.http) = {
-      post: "/v1/tenants/{tenant}/workspaces/{workspace}/loadbalancers/{loadbalancer}/requests/{id}/approve"
+      post: "/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{loadbalancer}/requests/{id}/approve"
       body: "*"
     };
   };
 
   rpc Deny(ResolveTicketRequest) returns (TicketStatus) {
     option (google.api.http) = {
-      post: "/v1/tenants/{tenant}/workspaces/{workspace}/loadbalancers/{loadbalancer}/requests/{id}/deny"
+      post: "/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{loadbalancer}/requests/{id}/deny"
       body: "*"
     };
   };
 
   rpc Cancel(CancelTicketRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      post: "/v1/tenants/{tenant}/workspaces/{workspace}/loadbalancers/{loadbalancer}/requests/{id}/cancel"
+      post: "/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{loadbalancer}/requests/{id}/cancel"
       body: "*"
     };
   };
@@ -73,7 +73,7 @@ service LoadBalancerWorkflow {
   // finally expose the service on the load balancer or remove a detached service
   rpc Publish(PublishTicketRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      post: "/v1/tenants/{tenant}/workspaces/{workspace}/loadbalancers/{loadbalancer}/requests/{id}/publish"
+      post: "/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{loadbalancer}/requests/{id}/publish"
       body: "*"
     };
   };
@@ -83,21 +83,9 @@ service LoadBalancerWorkflow {
 message CreateTicketRequest {
   string parent = 1;
   string tenant = 2;
-  string workspace = 3;
+  string environment = 3;
   string id = 4;
-
-  // We need to allow both logical services as well as physical
-  // deployments to be attached to a load balancer.  the physical
-  // deployment piece is the essential backdoor to capture the common
-  // use cases that a logical service does not address.
-  Target target = 6;
-}
-
-message Target {
-  oneof target {
-    string service_name = 6;
-    string deployment_name = 7;
-  }
+  string application = 5;
 }
 
 enum Action {
@@ -108,7 +96,7 @@ enum Action {
 message GetTicketStatusRequest {
   string name = 1;
   string tenant = 2;
-  string workspace = 3;
+  string environment = 3;
   string loadbalancer = 4;
   string id = 5;
 }
@@ -116,7 +104,7 @@ message GetTicketStatusRequest {
 message CancelTicketRequest {
   string name = 1;
   string tenant = 2;
-  string workspace = 3;
+  string environment = 3;
   string loadbalancer = 4;
   string id = 5;
 }
@@ -124,16 +112,12 @@ message CancelTicketRequest {
 message TicketStatus {
   string name = 1;
   string tenant = 2;
-  string workspace = 3;
+  string environment = 3;
   string loadbalancer = 4;
   string id = 5;
+  string application = 6;
 
-  oneof target {
-    string service_name = 6;
-    string deployment_name = 7;
-  }
-
-  Action action = 8;
+  Action action = 7;
   enum RequestState {
     PENDING = 0;
     APPROVED = 1;
@@ -141,14 +125,14 @@ message TicketStatus {
     PUBLISHED = 3;
     CANCELED = 4;
   }
-  RequestState state = 9;
-  string note = 10;
+  RequestState state = 8;
+  string note = 9;
 }
 
 message ListTicketsRequest {
   string parent = 1;
   string tenant = 2;
-  string workspace = 3;
+  string environment = 3;
   string id = 4;
 }
 
@@ -159,7 +143,7 @@ message ListTicketsResponse {
 message ResolveTicketRequest {
   string name = 1;
   string tenant = 2;
-  string workspace = 3;
+  string environment = 3;
   string loadbalancer = 4;
   string id = 5;
 
@@ -170,7 +154,7 @@ message ResolveTicketRequest {
 message PublishTicketRequest {
   string name = 1;
   string tenant = 2;
-  string workspace = 3;
+  string environment = 3;
   string loadbalancer = 4;
   string id = 5;
 

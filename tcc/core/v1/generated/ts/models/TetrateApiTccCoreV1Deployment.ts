@@ -44,6 +44,12 @@ export interface TetrateApiTccCoreV1Deployment {
      * @type {string}
      * @memberof TetrateApiTccCoreV1Deployment
      */
+    environment?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1Deployment
+     */
     cluster?: string;
     /**
      * 
@@ -87,6 +93,7 @@ export function TetrateApiTccCoreV1DeploymentFromJSON(json: any): TetrateApiTccC
     return {
         'name': !exists(json, 'name') ? undefined : json['name'],
         'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
+        'environment': !exists(json, 'environment') ? undefined : json['environment'],
         'cluster': !exists(json, 'cluster') ? undefined : json['cluster'],
         'namespace': !exists(json, 'namespace') ? undefined : json['namespace'],
         'id': !exists(json, 'id') ? undefined : json['id'],
@@ -104,6 +111,7 @@ export function TetrateApiTccCoreV1DeploymentToJSON(value?: TetrateApiTccCoreV1D
     return {
         'name': value.name,
         'tenant': value.tenant,
+        'environment': value.environment,
         'cluster': value.cluster,
         'namespace': value.namespace,
         'id': value.id,

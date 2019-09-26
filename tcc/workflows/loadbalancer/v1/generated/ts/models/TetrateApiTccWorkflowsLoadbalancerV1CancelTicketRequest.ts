@@ -35,7 +35,7 @@ export interface TetrateApiTccWorkflowsLoadbalancerV1CancelTicketRequest {
      * @type {string}
      * @memberof TetrateApiTccWorkflowsLoadbalancerV1CancelTicketRequest
      */
-    workspace?: string;
+    environment?: string;
     /**
      * 
      * @type {string}
@@ -54,7 +54,7 @@ export function TetrateApiTccWorkflowsLoadbalancerV1CancelTicketRequestFromJSON(
     return {
         'name': !exists(json, 'name') ? undefined : json['name'],
         'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
-        'workspace': !exists(json, 'workspace') ? undefined : json['workspace'],
+        'environment': !exists(json, 'environment') ? undefined : json['environment'],
         'loadbalancer': !exists(json, 'loadbalancer') ? undefined : json['loadbalancer'],
         'id': !exists(json, 'id') ? undefined : json['id'],
     };
@@ -67,7 +67,7 @@ export function TetrateApiTccWorkflowsLoadbalancerV1CancelTicketRequestToJSON(va
     return {
         'name': value.name,
         'tenant': value.tenant,
-        'workspace': value.workspace,
+        'environment': value.environment,
         'loadbalancer': value.loadbalancer,
         'id': value.id,
     };

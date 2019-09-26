@@ -16,9 +16,6 @@ import {
     TetrateApiTccCoreV1ClientSettings,
     TetrateApiTccCoreV1ClientSettingsFromJSON,
     TetrateApiTccCoreV1ClientSettingsToJSON,
-    TetrateApiTccCoreV1Permissions,
-    TetrateApiTccCoreV1PermissionsFromJSON,
-    TetrateApiTccCoreV1PermissionsToJSON,
     TetrateApiTccCoreV1Registry,
     TetrateApiTccCoreV1RegistryFromJSON,
     TetrateApiTccCoreV1RegistryToJSON,
@@ -42,6 +39,12 @@ export interface TetrateApiTccCoreV1Cluster {
      * @memberof TetrateApiTccCoreV1Cluster
      */
     tenant?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1Cluster
+     */
+    environment?: string;
     /**
      * 
      * @type {string}
@@ -72,24 +75,18 @@ export interface TetrateApiTccCoreV1Cluster {
      * @memberof TetrateApiTccCoreV1Cluster
      */
     clientSettings?: TetrateApiTccCoreV1ClientSettings;
-    /**
-     * 
-     * @type {TetrateApiTccCoreV1Permissions}
-     * @memberof TetrateApiTccCoreV1Cluster
-     */
-    permissions?: TetrateApiTccCoreV1Permissions;
 }
 
 export function TetrateApiTccCoreV1ClusterFromJSON(json: any): TetrateApiTccCoreV1Cluster {
     return {
         'name': !exists(json, 'name') ? undefined : json['name'],
         'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
+        'environment': !exists(json, 'environment') ? undefined : json['environment'],
         'id': !exists(json, 'id') ? undefined : json['id'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'registry': !exists(json, 'registry') ? undefined : TetrateApiTccCoreV1RegistryFromJSON(json['registry']),
         'labels': !exists(json, 'labels') ? undefined : json['labels'],
         'clientSettings': !exists(json, 'clientSettings') ? undefined : TetrateApiTccCoreV1ClientSettingsFromJSON(json['clientSettings']),
-        'permissions': !exists(json, 'permissions') ? undefined : TetrateApiTccCoreV1PermissionsFromJSON(json['permissions']),
     };
 }
 
@@ -100,12 +97,12 @@ export function TetrateApiTccCoreV1ClusterToJSON(value?: TetrateApiTccCoreV1Clus
     return {
         'name': value.name,
         'tenant': value.tenant,
+        'environment': value.environment,
         'id': value.id,
         'description': value.description,
         'registry': TetrateApiTccCoreV1RegistryToJSON(value.registry),
         'labels': value.labels,
         'clientSettings': TetrateApiTccCoreV1ClientSettingsToJSON(value.clientSettings),
-        'permissions': TetrateApiTccCoreV1PermissionsToJSON(value.permissions),
     };
 }
 
