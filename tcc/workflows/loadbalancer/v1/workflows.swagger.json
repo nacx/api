@@ -452,10 +452,6 @@
     "tetrate.api.tcc.core.v1.TLSSettings": {
       "type": "object",
       "properties": {
-        "sni": {
-          "type": "string",
-          "description": "If specified, only allow requests that match the SNI value."
-        },
         "serverCertificate": {
           "type": "string",
           "description": "For proxies running on VMs, the path to the file holding the\nserver-side TLS certificate to use."

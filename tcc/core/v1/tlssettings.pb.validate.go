@@ -41,8 +41,6 @@ func (m *TLSSettings) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Sni
-
 	// no validation rules for ServerCertificate
 
 	// no validation rules for PrivateKey

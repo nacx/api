@@ -19,12 +19,6 @@ import { exists, mapValues } from '../runtime';
  */
 export interface TetrateApiTccCoreV1TLSSettings {
     /**
-     * If specified, only allow requests that match the SNI value.
-     * @type {string}
-     * @memberof TetrateApiTccCoreV1TLSSettings
-     */
-    sni?: string;
-    /**
      * For proxies running on VMs, the path to the file holding the server-side TLS certificate to use.
      * @type {string}
      * @memberof TetrateApiTccCoreV1TLSSettings
@@ -52,7 +46,6 @@ export interface TetrateApiTccCoreV1TLSSettings {
 
 export function TetrateApiTccCoreV1TLSSettingsFromJSON(json: any): TetrateApiTccCoreV1TLSSettings {
     return {
-        'sni': !exists(json, 'sni') ? undefined : json['sni'],
         'serverCertificate': !exists(json, 'serverCertificate') ? undefined : json['serverCertificate'],
         'privateKey': !exists(json, 'privateKey') ? undefined : json['privateKey'],
         'caCertificates': !exists(json, 'caCertificates') ? undefined : json['caCertificates'],
@@ -65,7 +58,6 @@ export function TetrateApiTccCoreV1TLSSettingsToJSON(value?: TetrateApiTccCoreV1
         return undefined;
     }
     return {
-        'sni': value.sni,
         'serverCertificate': value.serverCertificate,
         'privateKey': value.privateKey,
         'caCertificates': value.caCertificates,
