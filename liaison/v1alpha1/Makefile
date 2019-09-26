@@ -1,4 +1,24 @@
-# Copyright (c) Tetrate, Inc 2018 All Rights Reserved.
+# Copyright (c) Tetrate, Inc 2019 All Rights Reserved.
+
+PROTOC_VERSION := 3.6.1
+PROTOC_GEN_GO_VERSION := v1.2.0
+ISTIO_API_VERSION := 1.1.0-snapshot.5
+
+GOPATH := $(shell go env GOPATH)
+GOSRCDIR := $(GOPATH)/src
+
+PROTOC_INSTALLED := $(shell protoc --version | cut -d " " -f 2)
+PROTOC_GEN_GO_INSTALLED := $(shell git -C $(GOSRCDIR)/github.com/golang/protobuf branch 2> \
+	/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/' | rev | cut -d " " -f 1 | cut -c2- | rev)
+
+ifneq ($(PROTOC_INSTALLED),$(PROTOC_VERSION))
+$(error Bad protoc version $(PROTOC_INSTALLED), please install $(PROTOC_VERSION))
+endif
+
+ifneq ($(PROTOC_GEN_GO_INSTALLED),$(PROTOC_GEN_GO_VERSION))
+$(error Bad protoc-gen-go version $(PROTOC_GEN_GO_INSTALLED), \
+	please install $(PROTOC_GEN_GO_VERSION))
+endif
 
 TOPDIR := ../../..
 VENDOR := $(TOPDIR)/third_party/protobuf/
@@ -15,14 +35,18 @@ ALL_TS_SERVICE_PROTOS := $(patsubst %.proto,%_pb_service.d.ts,$(ALL_PROTOS))
 ALL_CLIENT_PROTOS := $(ALL_JS_PROTOS) $(ALL_TS_PROTOS) $(ALL_JS_SERVICE_PROTOS) \
 	$(ALL_TS_SERVICE_PROTOS)
 
+ALL_JS_ARTIFACTS := ./google ./validate node_modules
+
+# Istio API.
+# TODO(dio): We should have a better naming for ISTIO_API if tar in osx supports --transform.
+ISTIO_API := api-$(ISTIO_API_VERSION)
+
+# Targets.
 DESCRIPTOR := liaison.proto-descriptor
 ENVOYFILTER := envoyfilter.yaml
 
 ALL_GENERATED := $(ALL_GO_PROTOS) $(ALL_GO_VALIDATE_PROTOS) $(DESCRIPTOR) $(ENVOYFILTER) \
-	$(ALL_CLIENT_PROTOS) ./google ./validate node_modules
-
-GOPATH := $(shell go env GOPATH)
-GOSRCDIR := $(GOPATH)/src
+	$(ISTIO_API) $(ALL_CLIENT_PROTOS) $(ALL_JS_ARTIFACTS)
 
 .PHONY: all
 all: $(DESCRIPTOR) $(ENVOYFILTER) node_modules
@@ -30,9 +54,7 @@ all: $(DESCRIPTOR) $(ENVOYFILTER) node_modules
 
 # Install all the required global deps.
 define install_deps
-	@GO111MODULE=off go get -d github.com/lyft/protoc-gen-validate
-	@GO111MODULE=off make -C $(GOSRCDIR)/github.com/lyft/protoc-gen-validate build
-	@GO111MODULE=off go get -d istio.io/api/networking/v1alpha3
+	make $(ISTIO_API)
 	@yarn
 endef
 
@@ -41,8 +63,8 @@ define protoc_gen_go
 	$(call install_deps)
 	protoc -I ./ \
 		-I $(VENDOR) \
+		-I $(ISTIO_API) \
 		-I $(GOSRCDIR)/github.com/lyft/protoc-gen-validate \
-		-I $(GOSRCDIR)/istio.io/api \
 		--go_out=paths=source_relative,plugins=grpc:. \
 		--validate_out=paths=source_relative,lang=go:. \
 		$(2) \
@@ -54,13 +76,22 @@ define protoc_gen_ts
 	$(call install_deps)
 	protoc -I ./ \
 		-I $(VENDOR) \
+		-I $(ISTIO_API) \
 		-I $(GOSRCDIR)/github.com/lyft/protoc-gen-validate \
-		-I $(GOSRCDIR)/istio.io/api \
 		--plugin=protoc-gen-ts=./node_modules/.bin/protoc-gen-ts \
 		--js_out=import_style=commonjs,binary:. \
   		--ts_out=service=true:. \
 		$(2) \
 		$(3)
+endef
+
+# Execute grpc_transcoder to generate envoyfilter.yaml with a specified port.
+define grpc_transcoder
+	GO111MODULE=off go get github.com/tetratelabs/istio-tools/grpc-transcoder
+	grpc-transcoder \
+		--descriptor $(DESCRIPTOR) \
+		--service liaison-server \
+		--port $(2) > $(ENVOYFILTER)
 endef
 
 $(ALL_GO_PROTOS):
@@ -70,18 +101,18 @@ $(DESCRIPTOR): $(ALL_GO_PROTOS)
 	$(call protoc_gen_go,$@,--descriptor_set_out=$(DESCRIPTOR) --include_imports,$(TOP_PROTOS))
 
 $(ENVOYFILTER): $(DESCRIPTOR)
-	@echo "generating envoy filter..."
-	GO111MODULE=off go get github.com/tetratelabs/istio-tools/grpc-transcoder
-	grpc-transcoder \
-		--descriptor $(DESCRIPTOR) \
-		--service liaison-server \
-		--port 9080 >$(ENVOYFILTER)
+	@echo "generating envoy filter"
+	$(call grpc_transcoder,$@,9080)
 
 $(ALL_JS_PROTOS):
 	$(call protoc_gen_ts,$@,``,$(patsubst %_pb.js,%.proto,$@))
 
 $(ALL_TS_PROTOS):
 	$(call protoc_gen_ts,$@,``,$(patsubst %_pb.d.ts,%.proto,$@))
+
+$(ISTIO_API):
+	@wget -q -O- https://github.com/istio/api/archive/$(ISTIO_API_VERSION).tar.gz \
+	| tar xz $(ISTIO_API)/networking/v1alpha3
 
 node_modules: touch
 	@yarn

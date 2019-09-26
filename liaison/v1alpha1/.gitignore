@@ -5,3 +5,7 @@ node_modules
 # these contains empty js files.
 google
 validate
+
+api-*
+
+liaison.proto-descriptor
