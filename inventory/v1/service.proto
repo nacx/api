@@ -23,6 +23,10 @@ service InventoryService {
     option (google.api.http).get = "/v1/services/{service}/bindings";
   };
 
+  rpc GetBinding(ServicePolicyRequest) returns (ServiceBinding) {
+    option (google.api.http).get = "/v1/services/{service}/{policy}";
+  };
+
   // Binds a service to the given policy and users or groups
   rpc BindService(BindServiceRequest) returns (ServiceBinding) {
     option (google.api.http) = {
@@ -41,7 +45,7 @@ service InventoryService {
   };
 
   // Removes the binding for the given policy
-  rpc UnbindService(UnbindServiceRequest) returns (google.protobuf.Empty) {
+  rpc UnbindService(ServicePolicyRequest) returns (google.protobuf.Empty) {
     option (google.api.http).delete = "/v1/services/{service}/{policy}";
   };
 }
@@ -208,7 +212,7 @@ message BindServiceRequest {
   ServiceBinding binding = 2;
 }
 
-message UnbindServiceRequest {
+message ServicePolicyRequest {
   string service = 1;
   string policy = 2;
 }

@@ -42,7 +42,7 @@ func (m *GetMetricsRequest) Reset()         { *m = GetMetricsRequest{} }
 func (m *GetMetricsRequest) String() string { return proto.CompactTextString(m) }
 func (*GetMetricsRequest) ProtoMessage()    {}
 func (*GetMetricsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_metrics_741094019d12f4fc, []int{0}
+	return fileDescriptor_metrics_2ab89dfcb8afd1a0, []int{0}
 }
 func (m *GetMetricsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetMetricsRequest.Unmarshal(m, b)
@@ -110,7 +110,7 @@ func (m *MetricsResponse) Reset()         { *m = MetricsResponse{} }
 func (m *MetricsResponse) String() string { return proto.CompactTextString(m) }
 func (*MetricsResponse) ProtoMessage()    {}
 func (*MetricsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_metrics_741094019d12f4fc, []int{1}
+	return fileDescriptor_metrics_2ab89dfcb8afd1a0, []int{1}
 }
 func (m *MetricsResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_MetricsResponse.Unmarshal(m, b)
@@ -157,7 +157,7 @@ func (m *GetMetricsResponse) Reset()         { *m = GetMetricsResponse{} }
 func (m *GetMetricsResponse) String() string { return proto.CompactTextString(m) }
 func (*GetMetricsResponse) ProtoMessage()    {}
 func (*GetMetricsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_metrics_741094019d12f4fc, []int{2}
+	return fileDescriptor_metrics_2ab89dfcb8afd1a0, []int{2}
 }
 func (m *GetMetricsResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetMetricsResponse.Unmarshal(m, b)
@@ -388,9 +388,9 @@ var _MetricsService_serviceDesc = grpc.ServiceDesc{
 	Metadata: "metrics.proto",
 }
 
-func init() { proto.RegisterFile("metrics.proto", fileDescriptor_metrics_741094019d12f4fc) }
+func init() { proto.RegisterFile("metrics.proto", fileDescriptor_metrics_2ab89dfcb8afd1a0) }
 
-var fileDescriptor_metrics_741094019d12f4fc = []byte{
+var fileDescriptor_metrics_2ab89dfcb8afd1a0 = []byte{
 	// 441 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x93, 0xcf, 0x6b, 0x13, 0x41,
 	0x14, 0xc7, 0x99, 0xfc, 0x68, 0x9b, 0x27, 0x5a, 0x7d, 0x88, 0x2c, 0x31, 0xd5, 0xb0, 0x2a, 0x44,
