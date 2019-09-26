@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "TCC Core API",
+    "title": "TCC Configuration API",
     "version": "v1",
     "contact": {
       "name": "Tetrate.io, Inc.",
@@ -9,9 +9,10 @@
       "email": "info@tetrate.io"
     }
   },
-  "host": "localhost:8000",
+  "host": "TCCHOST",
   "schemes": [
-    "http"
+    "http",
+    "https"
   ],
   "consumes": [
     "application/json"

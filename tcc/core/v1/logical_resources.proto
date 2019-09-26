@@ -12,10 +12,6 @@ import "client_settings.proto";
 import "tlssettings.proto";
 
 service LogicalResourceModel {
-  option (grpc.gateway.protoc_gen_swagger.options.openapiv2_tag) = {
-     description: "The Logical Resource Model represents collections of identical applications (and thus services) deployed on multiple clusters."
-  };
-
   rpc CreateEnvironment(CreateEnvironmentRequest) returns (Environment) {
     option (google.api.http) = {
       post: "/v1/tenants/{tenant}/environments"
@@ -267,7 +263,7 @@ message Service {
   string hostname = 7 [(validate.rules).string.min_len = 1,(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "FQDN hostname of the service."}];
   map<string, string> labels = 8 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "User identifiable tags associated with this service."}];
 
-  repeated Port ports = 9 [(validate.rules).repeated.min_items = 1];
+  repeated Port ports = 9 ;
   RoutingInfo routing_info = 10 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "HTTP Routing settings for the service. Note that subsets (versions of the service) if any should be defined here."}];
   string etag = 11 [(validate.rules).string.min_len = 1];
 }
@@ -284,7 +280,7 @@ message CreateServiceRequest {
   string hostname = 7 [(validate.rules).string.min_len = 1,(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "FQDN hostname of the service."}];
   map<string, string> labels = 8 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "User identifiable tags associated with this service."}];
 
-  repeated Port ports = 9 [(validate.rules).repeated.min_items = 1];
+  repeated Port ports = 9 ;
   RoutingInfo routing_info = 10 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {description: "HTTP Routing settings for the service. Note that subsets (versions of the service) if any should be defined here."}];
 }
 

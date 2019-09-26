@@ -1184,13 +1184,6 @@ func (m *Service) Validate() error {
 
 	// no validation rules for Labels
 
-	if len(m.GetPorts()) < 1 {
-		return ServiceValidationError{
-			field:  "Ports",
-			reason: "value must contain at least 1 item(s)",
-		}
-	}
-
 	for idx, item := range m.GetPorts() {
 		_, _ = idx, item
 
@@ -1323,13 +1316,6 @@ func (m *CreateServiceRequest) Validate() error {
 	}
 
 	// no validation rules for Labels
-
-	if len(m.GetPorts()) < 1 {
-		return CreateServiceRequestValidationError{
-			field:  "Ports",
-			reason: "value must contain at least 1 item(s)",
-		}
-	}
 
 	for idx, item := range m.GetPorts() {
 		_, _ = idx, item

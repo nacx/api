@@ -7,7 +7,7 @@ import "protoc-gen-swagger/options/annotations.proto";
 
 option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
     info: {
-		title: "TCC Core API";
+		title: "TCC Configuration API";
 		version: "v1";
 		contact: {
 			name: "Tetrate.io, Inc.";
@@ -16,14 +16,9 @@ option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
         };
     };
 
-    // TODO(dio): Seems like we need to have a templating mechanism for this proto to update host
-    // and schemes.
-    // Should be changed for PROD.
-    host: "localhost:8000";
-    // HTTP should be disabled when we release this in PROD.
+    host: "TCCHOST";
     schemes: HTTP;
-    // HTTPS-only should be enabled when we release this in PROD.
-	// schemes: HTTPS;
+    schemes: HTTPS;
     consumes: "application/json";
     produces: "application/json";
 
