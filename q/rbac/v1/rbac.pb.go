@@ -31,8 +31,9 @@ const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
 
 // Permission
 //
-// A permission defines an action that can be performed on a resource. By default access to resources
-// is deined unless an explicit permission grants access to perform an operation tagainst it.
+// A permission defines an action that can be performed on a resource. By default access to
+// resources is denied unless an explicit permission grants access to perform an operation against
+// it.
 type Permission int32
 
 const (
@@ -78,22 +79,24 @@ func (Permission) EnumDescriptor() ([]byte, []int) {
 
 // Role
 //
-// A role configures a set of permissions and gives them a name. Permissions are grouped into roles and then
-// can be bound to different resources to configure the access policies.
+// A role configures a set of permissions and gives them a name. Permissions are grouped into roles
+// and then can be bound to different resources to configure the access policies.
 type Role struct {
 	// A unique name for the role in the system.
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	// Details of what the role does and what the configured permissions allow.
 	Description string `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
-	// The list of permissions that will be granted by this role on all resources that are bound to it.
+	// The list of permissions that will be granted by this role on all resources that are bound to
+	// it.
 	Permissions []Permission `protobuf:"varint,3,rep,packed,name=permissions,proto3,enum=tetrate.api.q.rbac.v1.Permission" json:"permissions,omitempty"`
 	// List of resource types where the role applies.
-	// The permission system is hierarchical and allows permissions to be applied at the root elements of the configuration
-	// hierarchy, so all child objects inherit them. This allows for easy and flexible permission configuration.
-	// There are, however, many scenarios in which permissions only make sense in certain types of resources instead of applying
-	// to the entire hierarchy. In those cases, the resources field can be populated with the types of resources that
-	// are affected by hte role, and the permission set defined by the role will only apply to those resources.
-	// If this field is omitted, the permissions apply to all resource types.
+	// The permission system is hierarchical and allows permissions to be applied at the root elements
+	// of the configuration hierarchy, so all child objects inherit them. This allows for easy and
+	// flexible permission configuration. There are, however, many scenarios in which permissions only
+	// make sense in certain types of resources instead of applying to the entire hierarchy. In those
+	// cases, the resources field can be populated with the types of resources that are affected by
+	// the role, and the permission set defined by the role will only apply to those resources. If
+	// this field is omitted, the permissions apply to all resource types.
 	Resources            []string `protobuf:"bytes,4,rep,name=resources,proto3" json:"resources,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -163,8 +166,8 @@ func (m *Role) GetResources() []string {
 
 // Policy
 //
-// A policy defines the set of subjects that can access a resource and under which conditions
-// that access is granted.
+// A policy defines the set of subjects that can access a resource and under which conditions that
+// access is granted.
 type Policy struct {
 	// The list of bindings configures the different access profiles that are allowed on the resource
 	// configured by the policy.
@@ -217,8 +220,9 @@ func (m *Policy) GetBindings() []*Binding {
 // Binding
 //
 // A binding associates a role with a set of subjects.
-// Bindings are used to configure policies, where different roles can be assigned to different sets of
-// subjects to configure a fine-grained access control to the resource protected by the policy.
+//
+// Bindings are used to configure policies, where different roles can be assigned to different sets
+// of subjects to configure a fine-grained access control to the resource protected by the policy.
 type Binding struct {
 	// The role that defines the permissions that will be granted to the target resource.
 	Role string `protobuf:"bytes,1,opt,name=role,proto3" json:"role,omitempty"`
@@ -277,7 +281,7 @@ func (m *Binding) GetSubjects() []string {
 	return nil
 }
 
-// Request to create a role
+// Request to create a role.
 type CreateRoleRequest struct {
 	Name                 string       `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	Description          string       `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
@@ -349,7 +353,7 @@ func (m *CreateRoleRequest) GetResources() []string {
 	return nil
 }
 
-// Request to get the list of all existing roles
+// Request to get the list of all existing roles.
 type ListRolesRequest struct {
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -389,7 +393,7 @@ func (m *ListRolesRequest) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_ListRolesRequest proto.InternalMessageInfo
 
-// Response to the list roles request with all existing roles
+// Response to the list roles request with all existing roles.
 type ListRolesResponse struct {
 	Roles                []*Role  `protobuf:"bytes,1,rep,name=roles,proto3" json:"roles,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -437,7 +441,7 @@ func (m *ListRolesResponse) GetRoles() []*Role {
 	return nil
 }
 
-// Request to get a role by name
+// Request to get a role by name.
 type GetRoleRequest struct {
 	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -485,7 +489,7 @@ func (m *GetRoleRequest) GetName() string {
 	return ""
 }
 
-// Request to delete the role with the given name
+// Request to delete the role with the given name.
 type DeleteRoleRequest struct {
 	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -605,13 +609,14 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type RBACClient interface {
-	// Creates a Role in the system
+	// Creates a Role in the system.
 	CreateRole(ctx context.Context, in *CreateRoleRequest, opts ...grpc.CallOption) (*Role, error)
-	// List all existing roles in the system
+	// List all existing roles in the system.
 	ListRoles(ctx context.Context, in *ListRolesRequest, opts ...grpc.CallOption) (*ListRolesResponse, error)
-	// Get the details of teh role with the given name
+	// Get the details of the role with the given name.
 	GetRole(ctx context.Context, in *GetRoleRequest, opts ...grpc.CallOption) (*Role, error)
 	// Delete the role with the given name.
+	//
 	// Roles that are assigned to policies cannot be deleted. Policies need to be deleted first
 	DeleteRole(ctx context.Context, in *DeleteRoleRequest, opts ...grpc.CallOption) (*types.Empty, error)
 }
@@ -662,13 +667,14 @@ func (c *rBACClient) DeleteRole(ctx context.Context, in *DeleteRoleRequest, opts
 
 // RBACServer is the server API for RBAC service.
 type RBACServer interface {
-	// Creates a Role in the system
+	// Creates a Role in the system.
 	CreateRole(context.Context, *CreateRoleRequest) (*Role, error)
-	// List all existing roles in the system
+	// List all existing roles in the system.
 	ListRoles(context.Context, *ListRolesRequest) (*ListRolesResponse, error)
-	// Get the details of teh role with the given name
+	// Get the details of the role with the given name.
 	GetRole(context.Context, *GetRoleRequest) (*Role, error)
 	// Delete the role with the given name.
+	//
 	// Roles that are assigned to policies cannot be deleted. Policies need to be deleted first
 	DeleteRole(context.Context, *DeleteRoleRequest) (*types.Empty, error)
 }

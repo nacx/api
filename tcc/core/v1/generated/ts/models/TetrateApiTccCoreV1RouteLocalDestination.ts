@@ -19,7 +19,7 @@ import { exists, mapValues } from '../runtime';
  */
 export interface TetrateApiTccCoreV1RouteLocalDestination {
     /**
-     * If omitted, will route to same application as the service.  The application field is used by load balancers in the system application to route to other applications.
+     * If omitted, will route to same application as the service. The application field is used by load balancers in the system application to route to other applications.
      * @type {string}
      * @memberof TetrateApiTccCoreV1RouteLocalDestination
      */

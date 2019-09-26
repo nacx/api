@@ -12,6 +12,7 @@ import "validate/validate.proto";
 import "routing_info.proto";
 
 service PhysicalResourceModel {
+  // clang-format off
   rpc CreateCluster(CreateClusterRequest) returns (Cluster) {
     option (google.api.http) = {
       post: "/v1/tenants/{tenant}/environments/{environment}/clusters"
@@ -146,6 +147,7 @@ service PhysicalResourceModel {
       delete: "/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces/{namespace}/deployments/{deployment}/endpoints/{id}"
     };
   };
+  // clang-format on
 }
 
 message Cluster {
@@ -156,7 +158,7 @@ message Cluster {
   string description = 5;
   Registry registry = 6 [(validate.rules).enum.defined_only = true];
 
-  // Information like datacenter where the cluster is present
+  // Information like datacenter where the cluster is present.
   string country = 7;
   string datacenter = 8;
   string availability_zone = 9;
@@ -169,13 +171,13 @@ message CreateClusterRequest {
   string parent = 1;
   string tenant = 2 [(validate.rules).string.min_len = 1];
   string environment = 3 [(validate.rules).string.min_len = 1];
-  // if present, this will be used as the id for the created object
+  // if present, this will be used as the id for the created object.
   string id = 4;
 
   string description = 5;
   Registry registry = 6 [(validate.rules).enum.defined_only = true];
 
-  // Information like datacenter where the cluster is present
+  // Information like datacenter where the cluster is present.
   string country = 7;
   string datacenter = 8;
   string availability_zone = 9;
@@ -223,7 +225,7 @@ message CreateNamespaceRequest {
   string tenant = 2 [(validate.rules).string.min_len = 1];
   string environment = 3 [(validate.rules).string.min_len = 1];
   string cluster = 4 [(validate.rules).string.min_len = 1];
-  // if present, this will be used as the id for the created object
+  // if present, this will be used as the id for the created object.
   string id = 5;
 
   string description = 6;
@@ -266,13 +268,13 @@ message Deployment {
   string id = 6 [(validate.rules).string.min_len = 1];
   string hostname = 7 [(validate.rules).string.min_len = 1];
   map<string, string> labels = 8;
-  repeated Port ports = 9 [(validate.rules).repeated.min_items = 1];
+  repeated Port ports = 9 [(validate.rules).repeated = {min_items: 1}];
   reserved 10;
   string etag = 11 [(validate.rules).string.min_len = 1];
   string kubernetes_service_ip = 12;
-  // For kubernetes services of type load balancer, this field contains the list
-  // of lb hostnames or IPs assigned to the service. For services of type nodePort,
-  // this field contains the IP addresses of the nodes in the cluster.
+  // For kubernetes services of type load balancer, this field contains the list of lb hostnames or
+  // IPs assigned to the service. For services of type nodePort, this field contains the IP
+  // addresses of the nodes in the cluster.
   repeated string kubernetes_external_addresses = 13;
 }
 
@@ -287,12 +289,12 @@ message CreateDeploymentRequest {
 
   string hostname = 7 [(validate.rules).string.min_len = 1];
   map<string, string> labels = 8;
-  repeated Port ports = 9 [(validate.rules).repeated.min_items = 1];
+  repeated Port ports = 9 [(validate.rules).repeated .min_items = 1];
   reserved 10;
   string kubernetes_service_ip = 12;
-  // For kubernetes services of type load balancer, this field contains the list
-  // of lb hostnames or IPs assigned to the service. For services of type nodePort,
-  // this field contains the IP addresses of the nodes in the cluster.
+  // For kubernetes services of type load balancer, this field contains the list of lb hostnames or
+  // IPs assigned to the service. For services of type nodePort, this field contains the IP
+  // addresses of the nodes in the cluster.
   repeated string kubernetes_external_addresses = 13;
 }
 
@@ -326,8 +328,7 @@ message DeleteDeploymentRequest {
   string id = 6 [(validate.rules).string.min_len = 1];
 }
 
-// Endpoint defines a network address (IP or hostname) associated with
-// the service.
+// Endpoint defines a network address (IP or hostname) associated with the service.
 message Endpoint {
   string name = 1;
   string tenant = 2 [(validate.rules).string.min_len = 1];
@@ -337,27 +338,23 @@ message Endpoint {
   string deployment = 6 [(validate.rules).string.min_len = 1];
   string id = 7 [(validate.rules).string.min_len = 1];
 
-  // Address associated with the network endpoint without the port.
-  // Domain names can be used and must be fully-qualified without
-  // wildcards.
+  // Address associated with the network endpoint without the port. Domain names can be used and
+  // must be fully-qualified without wildcards.
   string address = 8 [(validate.rules).string.min_len = 1];
 
-  // Set of inbound traffic ports associated with the endpoint. The
-  // ports must be associated with a port name that was declared
-  // as part of the deployment.
+  // Set of inbound traffic ports associated with the endpoint. The ports must be associated with a
+  // port name that was declared as part of the deployment.
   map<string, uint32> ports = 9 [(validate.rules).map.min_pairs = 1];
 
   // One or more labels associated with the endpoint.
   map<string, string> labels = 10;
 
-  // The locality associated with the endpoint, in the form
-  // country/region/zone. A locality corresponds to a failure domain
-  // (country/region/zone).
+  // The locality associated with the endpoint, in the form country/region/zone. A locality
+  // corresponds to a failure domain (country/region/zone).
   string locality = 11;
 
-  // The load balancing weight associated with the endpoint. Endpoints
-  // with higher weights in a pool will receive proportionally higher
-  // traffic.
+  // The load balancing weight associated with the endpoint. Endpoints with higher weights in a pool
+  // will receive proportionally higher traffic.
   uint32 weight = 12;
 
   string etag = 13 [(validate.rules).string.min_len = 1];
@@ -370,30 +367,26 @@ message CreateEndpointRequest {
   string cluster = 4 [(validate.rules).string.min_len = 1];
   string namespace = 5 [(validate.rules).string.min_len = 1];
   string deployment = 6 [(validate.rules).string.min_len = 1];
-  // if present, this will be used as the id for the created object
+  // if present, this will be used as the id for the created object.
   string id = 7;
 
-  // Address associated with the network endpoint without the port.
-  // Domain names can be used and must be fully-qualified without
-  // wildcards.
+  // Address associated with the network endpoint without the port. Domain names can be used and
+  // must be fully-qualified without wildcards.
   string address = 8 [(validate.rules).string.min_len = 1];
 
-  // Set of inbound traffic ports associated with the endpoint. The
-  // ports must be associated with a port name that was declared
-  // as part of the deployment.
+  // Set of inbound traffic ports associated with the endpoint. The ports must be associated with a
+  // port name that was declared as part of the deployment.
   map<string, uint32> ports = 9 [(validate.rules).map.min_pairs = 1];
 
   // One or more labels associated with the endpoint.
   map<string, string> labels = 10;
 
-  // The locality associated with the endpoint, in the form
-  // country/region/zone. A locality corresponds to a failure domain
-  // (country/region/zone).
+  // The locality associated with the endpoint, in the form country/region/zone. A locality
+  // corresponds to a failure domain (country/region/zone).
   string locality = 11;
 
-  // The load balancing weight associated with the endpoint. Endpoints
-  // with higher weights in a pool will receive proportionally higher
-  // traffic.
+  // The load balancing weight associated with the endpoint. Endpoints with higher weights in a pool
+  // will receive proportionally higher traffic.
   uint32 weight = 12;
 }
 
@@ -430,12 +423,13 @@ message DeleteEndpointRequest {
   string id = 7 [(validate.rules).string.min_len = 1];
 }
 
-// Cluster, Namespaces, deployments, and endpoints in this request will replace the existing contents of a cluster
+// Cluster, Namespaces, deployments, and endpoints in this request will replace the existing
+// contents of a cluster.
 message BulkLoadClusterRequest {
   string parent = 1;
   string tenant = 2 [(validate.rules).string.min_len = 1];
   string environment = 3 [(validate.rules).string.min_len = 1];
-  repeated ClusterWithNamespaces clusters = 4 [(validate.rules).repeated.min_items = 1];
+  repeated ClusterWithNamespaces clusters = 4 [(validate.rules).repeated = {min_items: 1}];
 
   message ClusterWithNamespaces {
     Cluster cluster = 1 [(validate.rules).message.required = true];

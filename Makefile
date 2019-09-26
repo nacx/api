@@ -3,12 +3,16 @@
 APIS := audit/v1 test/v1 q/rbac/v1 tcc/core/v1 tcc/workflows/loadbalancer/v1 regsource/v1
 
 .PHONY: all
-all: $(APIS)
+all: format $(APIS)
 
 .PHONY: $(APIS)
 $(APIS):
 	@echo "--- $@: all ---"
 	$(MAKE) all -C $@
+
+.PHONY: format
+format:
+	../scripts/format-protos.sh
 
 .PHONY: clean
 clean:

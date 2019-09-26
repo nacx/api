@@ -19,7 +19,7 @@ import {
 } from './';
 
 /**
- * 
+ * Response to the list roles request with all existing roles.
  * @export
  * @interface TetrateApiQRbacV1ListRolesResponse
  */

@@ -13,37 +13,32 @@ enum TLSMode {
 }
 
 message TLSSettings {
-  // Set this to SIMPLE, MUTUAL, or SNI_PASSTHROUGH for one-way TLS,
-  // mutual TLS, or client sni-based TLS passthrough respectively.
-  // The hostname in the load balancer will be used as the SNI in the
+  // Set this to SIMPLE, MUTUAL, or SNI_PASSTHROUGH for one-way TLS, mutual TLS, or client sni-based
+  // TLS passthrough respectively. The hostname in the load balancer will be used as the SNI in the
   // TLS passthrough mode.
   TLSMode tls_mode = 7;
 
-  // enable TLS settings for the application.
+  // Enable TLS settings for the application.
   bool tls_enabled = 1 [deprecated = true];
 
-  // If set, the load balancer will redirect HTTP connections on port
-  // 80 to HTTPS port 443.
+  // If set, the load balancer will redirect HTTP connections on port 80 to HTTPS port 443.
   bool redirect_to_https = 2;
 
-  // For proxies running on VMs, the path to the file holding the
-  // server-side TLS certificate to use.
+  // For proxies running on VMs, the path to the file holding the server-side TLS certificate to
+  // use.
   string server_certificate = 3;
 
-  // For proxies running on VMs, the path to the file holding the
-  // server's private key.
+  // For proxies running on VMs, the path to the file holding the server's private key.
   string private_key = 4;
 
-  // For proxies running on VMs, the path to a file containing
-  // certificate authority certificates to use in verifying a
-  // presented client side certificate for mutual TLS connections.
+  // For proxies running on VMs, the path to a file containing certificate authority certificates to
+  // use in verifying a presented client side certificate for mutual TLS connections.
   string ca_certificates = 5;
 
-  // For proxies running on Kubernetes, the name of the secret that
-  // holds the TLS certs including the CA certificates. Currently
-  // applicable only on Kubernetes. The secret (type generic) should
-  // contain the following keys and values: key: <privateKey>, cert:
-  // <serverCert>, cacert: <CACertificate>.  If the service is exposed
-  // via a load balancer, the secret must be accessible to it.
+  // For proxies running on Kubernetes, the name of the secret that holds the TLS certs including
+  // the CA certificates. Currently applicable only on Kubernetes. The secret (type generic) should
+  // contain the following keys and values: key: <privateKey>, cert: <serverCert>, cacert:
+  // <CACertificate>.  If the service is exposed via a load balancer, the secret must be accessible
+  // to it.
   string secret_name = 6;
 }

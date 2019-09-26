@@ -36,7 +36,7 @@ type Cluster struct {
 	Id          string   `protobuf:"bytes,4,opt,name=id,proto3" json:"id,omitempty"`
 	Description string   `protobuf:"bytes,5,opt,name=description,proto3" json:"description,omitempty"`
 	Registry    Registry `protobuf:"varint,6,opt,name=registry,proto3,enum=tetrate.api.tcc.core.v1.Registry" json:"registry,omitempty"`
-	// Information like datacenter where the cluster is present
+	// Information like datacenter where the cluster is present.
 	Country                 string            `protobuf:"bytes,7,opt,name=country,proto3" json:"country,omitempty"`
 	Datacenter              string            `protobuf:"bytes,8,opt,name=datacenter,proto3" json:"datacenter,omitempty"`
 	AvailabilityZone        string            `protobuf:"bytes,9,opt,name=availability_zone,json=availabilityZone,proto3" json:"availability_zone,omitempty"`
@@ -169,11 +169,11 @@ type CreateClusterRequest struct {
 	Parent      string `protobuf:"bytes,1,opt,name=parent,proto3" json:"parent,omitempty"`
 	Tenant      string `protobuf:"bytes,2,opt,name=tenant,proto3" json:"tenant,omitempty"`
 	Environment string `protobuf:"bytes,3,opt,name=environment,proto3" json:"environment,omitempty"`
-	// if present, this will be used as the id for the created object
+	// if present, this will be used as the id for the created object.
 	Id          string   `protobuf:"bytes,4,opt,name=id,proto3" json:"id,omitempty"`
 	Description string   `protobuf:"bytes,5,opt,name=description,proto3" json:"description,omitempty"`
 	Registry    Registry `protobuf:"varint,6,opt,name=registry,proto3,enum=tetrate.api.tcc.core.v1.Registry" json:"registry,omitempty"`
-	// Information like datacenter where the cluster is present
+	// Information like datacenter where the cluster is present.
 	Country                 string            `protobuf:"bytes,7,opt,name=country,proto3" json:"country,omitempty"`
 	Datacenter              string            `protobuf:"bytes,8,opt,name=datacenter,proto3" json:"datacenter,omitempty"`
 	AvailabilityZone        string            `protobuf:"bytes,9,opt,name=availability_zone,json=availabilityZone,proto3" json:"availability_zone,omitempty"`
@@ -654,7 +654,7 @@ type CreateNamespaceRequest struct {
 	Tenant      string `protobuf:"bytes,2,opt,name=tenant,proto3" json:"tenant,omitempty"`
 	Environment string `protobuf:"bytes,3,opt,name=environment,proto3" json:"environment,omitempty"`
 	Cluster     string `protobuf:"bytes,4,opt,name=cluster,proto3" json:"cluster,omitempty"`
-	// if present, this will be used as the id for the created object
+	// if present, this will be used as the id for the created object.
 	Id                   string            `protobuf:"bytes,5,opt,name=id,proto3" json:"id,omitempty"`
 	Description          string            `protobuf:"bytes,6,opt,name=description,proto3" json:"description,omitempty"`
 	Labels               map[string]string `protobuf:"bytes,7,rep,name=labels,proto3" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
@@ -1033,9 +1033,9 @@ type Deployment struct {
 	Ports               []*Port           `protobuf:"bytes,9,rep,name=ports,proto3" json:"ports,omitempty"`
 	Etag                string            `protobuf:"bytes,11,opt,name=etag,proto3" json:"etag,omitempty"`
 	KubernetesServiceIp string            `protobuf:"bytes,12,opt,name=kubernetes_service_ip,json=kubernetesServiceIp,proto3" json:"kubernetes_service_ip,omitempty"`
-	// For kubernetes services of type load balancer, this field contains the list
-	// of lb hostnames or IPs assigned to the service. For services of type nodePort,
-	// this field contains the IP addresses of the nodes in the cluster.
+	// For kubernetes services of type load balancer, this field contains the list of lb hostnames or
+	// IPs assigned to the service. For services of type nodePort, this field contains the IP
+	// addresses of the nodes in the cluster.
 	KubernetesExternalAddresses []string `protobuf:"bytes,13,rep,name=kubernetes_external_addresses,json=kubernetesExternalAddresses,proto3" json:"kubernetes_external_addresses,omitempty"`
 	XXX_NoUnkeyedLiteral        struct{} `json:"-"`
 	XXX_unrecognized            []byte   `json:"-"`
@@ -1171,9 +1171,9 @@ type CreateDeploymentRequest struct {
 	Labels              map[string]string `protobuf:"bytes,8,rep,name=labels,proto3" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 	Ports               []*Port           `protobuf:"bytes,9,rep,name=ports,proto3" json:"ports,omitempty"`
 	KubernetesServiceIp string            `protobuf:"bytes,12,opt,name=kubernetes_service_ip,json=kubernetesServiceIp,proto3" json:"kubernetes_service_ip,omitempty"`
-	// For kubernetes services of type load balancer, this field contains the list
-	// of lb hostnames or IPs assigned to the service. For services of type nodePort,
-	// this field contains the IP addresses of the nodes in the cluster.
+	// For kubernetes services of type load balancer, this field contains the list of lb hostnames or
+	// IPs assigned to the service. For services of type nodePort, this field contains the IP
+	// addresses of the nodes in the cluster.
 	KubernetesExternalAddresses []string `protobuf:"bytes,13,rep,name=kubernetes_external_addresses,json=kubernetesExternalAddresses,proto3" json:"kubernetes_external_addresses,omitempty"`
 	XXX_NoUnkeyedLiteral        struct{} `json:"-"`
 	XXX_unrecognized            []byte   `json:"-"`
@@ -1590,8 +1590,7 @@ func (m *DeleteDeploymentRequest) GetId() string {
 	return ""
 }
 
-// Endpoint defines a network address (IP or hostname) associated with
-// the service.
+// Endpoint defines a network address (IP or hostname) associated with the service.
 type Endpoint struct {
 	Name        string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	Tenant      string `protobuf:"bytes,2,opt,name=tenant,proto3" json:"tenant,omitempty"`
@@ -1600,23 +1599,19 @@ type Endpoint struct {
 	Namespace   string `protobuf:"bytes,5,opt,name=namespace,proto3" json:"namespace,omitempty"`
 	Deployment  string `protobuf:"bytes,6,opt,name=deployment,proto3" json:"deployment,omitempty"`
 	Id          string `protobuf:"bytes,7,opt,name=id,proto3" json:"id,omitempty"`
-	// Address associated with the network endpoint without the port.
-	// Domain names can be used and must be fully-qualified without
-	// wildcards.
+	// Address associated with the network endpoint without the port. Domain names can be used and
+	// must be fully-qualified without wildcards.
 	Address string `protobuf:"bytes,8,opt,name=address,proto3" json:"address,omitempty"`
-	// Set of inbound traffic ports associated with the endpoint. The
-	// ports must be associated with a port name that was declared
-	// as part of the deployment.
+	// Set of inbound traffic ports associated with the endpoint. The ports must be associated with a
+	// port name that was declared as part of the deployment.
 	Ports map[string]uint32 `protobuf:"bytes,9,rep,name=ports,proto3" json:"ports,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"varint,2,opt,name=value,proto3"`
 	// One or more labels associated with the endpoint.
 	Labels map[string]string `protobuf:"bytes,10,rep,name=labels,proto3" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
-	// The locality associated with the endpoint, in the form
-	// country/region/zone. A locality corresponds to a failure domain
-	// (country/region/zone).
+	// The locality associated with the endpoint, in the form country/region/zone. A locality
+	// corresponds to a failure domain (country/region/zone).
 	Locality string `protobuf:"bytes,11,opt,name=locality,proto3" json:"locality,omitempty"`
-	// The load balancing weight associated with the endpoint. Endpoints
-	// with higher weights in a pool will receive proportionally higher
-	// traffic.
+	// The load balancing weight associated with the endpoint. Endpoints with higher weights in a pool
+	// will receive proportionally higher traffic.
 	Weight               uint32   `protobuf:"varint,12,opt,name=weight,proto3" json:"weight,omitempty"`
 	Etag                 string   `protobuf:"bytes,13,opt,name=etag,proto3" json:"etag,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -1755,25 +1750,21 @@ type CreateEndpointRequest struct {
 	Cluster     string `protobuf:"bytes,4,opt,name=cluster,proto3" json:"cluster,omitempty"`
 	Namespace   string `protobuf:"bytes,5,opt,name=namespace,proto3" json:"namespace,omitempty"`
 	Deployment  string `protobuf:"bytes,6,opt,name=deployment,proto3" json:"deployment,omitempty"`
-	// if present, this will be used as the id for the created object
+	// if present, this will be used as the id for the created object.
 	Id string `protobuf:"bytes,7,opt,name=id,proto3" json:"id,omitempty"`
-	// Address associated with the network endpoint without the port.
-	// Domain names can be used and must be fully-qualified without
-	// wildcards.
+	// Address associated with the network endpoint without the port. Domain names can be used and
+	// must be fully-qualified without wildcards.
 	Address string `protobuf:"bytes,8,opt,name=address,proto3" json:"address,omitempty"`
-	// Set of inbound traffic ports associated with the endpoint. The
-	// ports must be associated with a port name that was declared
-	// as part of the deployment.
+	// Set of inbound traffic ports associated with the endpoint. The ports must be associated with a
+	// port name that was declared as part of the deployment.
 	Ports map[string]uint32 `protobuf:"bytes,9,rep,name=ports,proto3" json:"ports,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"varint,2,opt,name=value,proto3"`
 	// One or more labels associated with the endpoint.
 	Labels map[string]string `protobuf:"bytes,10,rep,name=labels,proto3" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
-	// The locality associated with the endpoint, in the form
-	// country/region/zone. A locality corresponds to a failure domain
-	// (country/region/zone).
+	// The locality associated with the endpoint, in the form country/region/zone. A locality
+	// corresponds to a failure domain (country/region/zone).
 	Locality string `protobuf:"bytes,11,opt,name=locality,proto3" json:"locality,omitempty"`
-	// The load balancing weight associated with the endpoint. Endpoints
-	// with higher weights in a pool will receive proportionally higher
-	// traffic.
+	// The load balancing weight associated with the endpoint. Endpoints with higher weights in a pool
+	// will receive proportionally higher traffic.
 	Weight               uint32   `protobuf:"varint,12,opt,name=weight,proto3" json:"weight,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -2221,7 +2212,8 @@ func (m *DeleteEndpointRequest) GetId() string {
 	return ""
 }
 
-// Cluster, Namespaces, deployments, and endpoints in this request will replace the existing contents of a cluster
+// Cluster, Namespaces, deployments, and endpoints in this request will replace the existing
+// contents of a cluster.
 type BulkLoadClusterRequest struct {
 	Parent               string                                          `protobuf:"bytes,1,opt,name=parent,proto3" json:"parent,omitempty"`
 	Tenant               string                                          `protobuf:"bytes,2,opt,name=tenant,proto3" json:"tenant,omitempty"`
@@ -2655,6 +2647,7 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type PhysicalResourceModelClient interface {
+	// clang-format off
 	CreateCluster(ctx context.Context, in *CreateClusterRequest, opts ...grpc.CallOption) (*Cluster, error)
 	UpdateCluster(ctx context.Context, in *Cluster, opts ...grpc.CallOption) (*Cluster, error)
 	GetCluster(ctx context.Context, in *GetClusterRequest, opts ...grpc.CallOption) (*Cluster, error)
@@ -2877,6 +2870,7 @@ func (c *physicalResourceModelClient) DeleteEndpoint(ctx context.Context, in *De
 
 // PhysicalResourceModelServer is the server API for PhysicalResourceModel service.
 type PhysicalResourceModelServer interface {
+	// clang-format off
 	CreateCluster(context.Context, *CreateClusterRequest) (*Cluster, error)
 	UpdateCluster(context.Context, *Cluster) (*Cluster, error)
 	GetCluster(context.Context, *GetClusterRequest) (*Cluster, error)

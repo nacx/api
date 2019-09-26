@@ -148,7 +148,8 @@ message TenantPolicyRequest {
   tetrate.api.q.rbac.v1.Policy policy = 3 [(validate.rules).message.required = true];
 }
 
-message ListTenantsRequest {}
+message ListTenantsRequest {
+}
 
 message ListTenantsResponse {
   repeated Tenant tenants = 1;

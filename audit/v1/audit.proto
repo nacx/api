@@ -11,8 +11,8 @@ import "validate/validate.proto";
 
 // The audit service provides access to the system events
 service AuditService {
-  // List audit logs. If no 'count' parameter has been specified, the last 25
-  // audit logs are returned
+  // List audit logs. If no 'count' parameter has been specified, the last 25 audit logs are
+  // returned
   rpc ListAuditLogs(ListAuditLogsRequest) returns (ListAuditLogsResponse) {
     option (google.api.http).get = "/v1/logs/audit";
   };

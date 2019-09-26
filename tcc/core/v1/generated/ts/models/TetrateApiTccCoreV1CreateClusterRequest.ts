@@ -43,7 +43,7 @@ export interface TetrateApiTccCoreV1CreateClusterRequest {
      */
     environment?: string;
     /**
-     * 
+     * if present, this will be used as the id for the created object.
      * @type {string}
      * @memberof TetrateApiTccCoreV1CreateClusterRequest
      */
@@ -61,7 +61,7 @@ export interface TetrateApiTccCoreV1CreateClusterRequest {
      */
     registry?: TetrateApiTccCoreV1Registry;
     /**
-     * 
+     * Information like datacenter where the cluster is present.
      * @type {string}
      * @memberof TetrateApiTccCoreV1CreateClusterRequest
      */

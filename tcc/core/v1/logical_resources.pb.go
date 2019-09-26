@@ -32,7 +32,8 @@ const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
 
 // Environment
 //
-// Environment is a collection of applications, services, load balancers, and clusters where they are deployed.
+// Environment is a collection of applications, services, load balancers, and clusters where they
+// are deployed.
 type Environment struct {
 	// Internal use only. Auto populated field.
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
@@ -505,8 +506,8 @@ func (m *DeleteEnvironmentRequest) GetId() string {
 
 // Application
 //
-// An Application is a collection of services. Each application typically corresponds to one or more kubernetes namespace or an application
-// deployment on VMs.
+// An Application is a collection of services. Each application typically corresponds to one or more
+// kubernetes namespace or an application deployment on VMs.
 type Application struct {
 	// Internal use only. Auto populated field.
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
@@ -518,19 +519,19 @@ type Application struct {
 	Id string `protobuf:"bytes,4,opt,name=id,proto3" json:"id,omitempty"`
 	// Additional information.
 	Description string `protobuf:"bytes,5,opt,name=description,proto3" json:"description,omitempty"`
-	// Resilience settings that apply to all services within the application, for outbound calls from the application's
-	// services to other services in the application or to other applications.
+	// Resilience settings that apply to all services within the application, for outbound calls from
+	// the application's services to other services in the application or to other applications.
 	ClientSettings *ClientSettings `protobuf:"bytes,8,opt,name=client_settings,json=clientSettings,proto3" json:"client_settings,omitempty"`
-	// An application can be exposed on a shared load balancer in the cluster or a dedicated load balancer
-	// in one of the application's namespaces. Set app_lbs to indicate that the application should be exposed on
-	// the dedicated load balancers. Namespace where each of the dedicated load balancer is scoped should be unique.
+	// An application can be exposed on a shared load balancer in the cluster or a dedicated load
+	// balancer in one of the application's namespaces. Set app_lbs to indicate that the application
+	// should be exposed on the dedicated load balancers. Namespace where each of the dedicated load
+	// balancer is scoped should be unique.
 	AppLbs []*ApplicationSpecificLB `protobuf:"bytes,9,rep,name=app_lbs,json=appLbs,proto3" json:"app_lbs,omitempty"`
-	// List of namespaces where the application services (or components) are scoped within. If omitted, the application
-	// is assumed to be scoped in a namespace matching the Id field.
+	// List of namespaces where the application services (or components) are scoped within. If
+	// omitted, the application is assumed to be scoped in a namespace matching the Id field.
 	Namespaces []string `protobuf:"bytes,10,rep,name=namespaces,proto3" json:"namespaces,omitempty"`
-	// Indicates whether communication between services in the
-	// application should use mutual TLS or not. Defaults to true if not
-	// specified. Applications with just the app specific LB should set
+	// Indicates whether communication between services in the application should use mutual TLS or
+	// not. Defaults to true if not specified. Applications with just the app specific LB should set
 	// this value to false.
 	UseMtlsBetweenServices *types.BoolValue `protobuf:"bytes,11,opt,name=use_mtls_between_services,json=useMtlsBetweenServices,proto3" json:"use_mtls_between_services,omitempty"`
 	XXX_NoUnkeyedLiteral   struct{}         `json:"-"`
@@ -645,19 +646,19 @@ type CreateApplicationRequest struct {
 	Id string `protobuf:"bytes,4,opt,name=id,proto3" json:"id,omitempty"`
 	// Additional information.
 	Description string `protobuf:"bytes,5,opt,name=description,proto3" json:"description,omitempty"`
-	// Resilience settings that apply to all services within the application, for outbound calls from the application's
-	// services to other services.
+	// Resilience settings that apply to all services within the application, for outbound calls from
+	// the application's services to other services.
 	ClientSettings *ClientSettings `protobuf:"bytes,8,opt,name=client_settings,json=clientSettings,proto3" json:"client_settings,omitempty"`
-	// An application can be exposed on a shared load balancer in the cluster or a dedicated load balancer
-	// in one of the application's namespaces. Set app_lbs to indicate that the application should be exposed on
-	// the dedicated load balancers. Namespace where each of the dedicated load balancer is scoped should be unique.
+	// An application can be exposed on a shared load balancer in the cluster or a dedicated load
+	// balancer in one of the application's namespaces. Set app_lbs to indicate that the application
+	// should be exposed on the dedicated load balancers. Namespace where each of the dedicated load
+	// balancer is scoped should be unique.
 	AppLbs []*ApplicationSpecificLB `protobuf:"bytes,9,rep,name=app_lbs,json=appLbs,proto3" json:"app_lbs,omitempty"`
-	// List of namespaces where the application services (or components) are scoped within. If omitted, the application
-	// is assumed to be scoped in a namespace matching the Id field.
+	// List of namespaces where the application services (or components) are scoped within. If
+	// omitted, the application is assumed to be scoped in a namespace matching the Id field.
 	Namespaces []string `protobuf:"bytes,10,rep,name=namespaces,proto3" json:"namespaces,omitempty"`
-	// Indicates whether communication between services in the
-	// application should use mutual TLS or not. Defaults to true if not
-	// specified. Applications with just the app specific LB should set
+	// Indicates whether communication between services in the application should use mutual TLS or
+	// not. Defaults to true if not specified. Applications with just the app specific LB should set
 	// this value to false.
 	UseMtlsBetweenServices *types.BoolValue `protobuf:"bytes,11,opt,name=use_mtls_between_services,json=useMtlsBetweenServices,proto3" json:"use_mtls_between_services,omitempty"`
 	XXX_NoUnkeyedLiteral   struct{}         `json:"-"`
@@ -1097,24 +1098,27 @@ func (m *DeleteApplicationRequest) GetId() string {
 }
 
 type ApplicationSpecificLB struct {
-	// Load balancer deployment labels (Kubernetes only for now). If gateway was created using TCC helm charts, use app:
-	// {namespace}-tcclb for kubernetes. The gateway will expose the application on ports 80 and 443 (if tls is configured).
+	// Load balancer deployment labels (Kubernetes only for now). If gateway was created using TCC
+	// helm charts, use app: {namespace}-tcclb for kubernetes. The gateway will expose the application
+	// on ports 80 and 443 (if tls is configured).
 	Labels map[string]string `protobuf:"bytes,1,rep,name=labels,proto3" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
-	// TLS certificate info for the application. If nil, the gateway will expose the application on port 80 only.
-	// Internal use only. Auto populated.
+	// TLS certificate info for the application. If nil, the gateway will expose the application on
+	// port 80 only. Internal use only. Auto populated.
 	Tls *TLSSettings `protobuf:"bytes,2,opt,name=tls,proto3" json:"tls,omitempty"`
-	// The namespace where this dedicated load balancer of the application is scoped. It should be one of application
-	// namespaces. This field cannot be omitted if the application has more than one namespace. If there is only
-	// one dedicated load balancer and application has only one  namespace and if this namespace field is omitted,
-	// then this field would default to the application namespace.
+	// The namespace where this dedicated load balancer of the application is scoped. It should be one
+	// of application namespaces. This field cannot be omitted if the application has more than one
+	// namespace. If there is only one dedicated load balancer and application has only one  namespace
+	// and if this namespace field is omitted, then this field would default to the application
+	// namespace.
 	Namespace string `protobuf:"bytes,3,opt,name=namespace,proto3" json:"namespace,omitempty"`
 	// Hostname with which the application is exposed on this load balancer.
 	Hostname string `protobuf:"bytes,4,opt,name=hostname,proto3" json:"hostname,omitempty"`
 	// HTTP Routing settings for the hostname.
 	RoutingInfo *RoutingInfo `protobuf:"bytes,5,opt,name=routing_info,json=routingInfo,proto3" json:"routing_info,omitempty"`
-	// Indicator whether to use this LB as primary. This is used for Metrics reporting at the App level. If there are
-	// multiple dedicated load balancers in an App, only one and mandatorily one has to be marked primary. If there
-	// is only one dedicated load balancer in an app, it will be marked as primary by default.
+	// Indicator whether to use this LB as primary. This is used for Metrics reporting at the App
+	// level. If there are multiple dedicated load balancers in an App, only one and mandatorily one
+	// has to be marked primary. If there is only one dedicated load balancer in an app, it will be
+	// marked as primary by default.
 	IsPrimary            bool     `protobuf:"varint,6,opt,name=is_primary,json=isPrimary,proto3" json:"is_primary,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -1205,8 +1209,8 @@ type Service struct {
 	Environment string `protobuf:"bytes,3,opt,name=environment,proto3" json:"environment,omitempty"`
 	// Application.Id.
 	Application string `protobuf:"bytes,4,opt,name=application,proto3" json:"application,omitempty"`
-	// Short name for the service. Clusters are expected to have namespaces that match the application, and services that
-	// match the Id, especially on Kubernetes.
+	// Short name for the service. Clusters are expected to have namespaces that match the
+	// application, and services that match the Id, especially on Kubernetes.
 	Id          string `protobuf:"bytes,5,opt,name=id,proto3" json:"id,omitempty"`
 	Description string `protobuf:"bytes,6,opt,name=description,proto3" json:"description,omitempty"`
 	// FQDN hostname of the service.
@@ -1217,19 +1221,18 @@ type Service struct {
 	// HTTP Routing settings for the service.
 	RoutingInfo *RoutingInfo `protobuf:"bytes,10,opt,name=routing_info,json=routingInfo,proto3" json:"routing_info,omitempty"`
 	Etag        string       `protobuf:"bytes,11,opt,name=etag,proto3" json:"etag,omitempty"`
-	// Namespace where the service is scoped and should be one of application namespaces. If the application has
-	// only one namespace and if this field is omitted, this filed would default to the application namespace.
-	// This field cannot be omitted if the application has more than one namespace.
+	// Namespace where the service is scoped and should be one of application namespaces. If the
+	// application has only one namespace and if this field is omitted, this filed would default to
+	// the application namespace. This field cannot be omitted if the application has more than one
+	// namespace.
 	Namespace string `protobuf:"bytes,12,opt,name=namespace,proto3" json:"namespace,omitempty"`
-	// One or more versions of the service. Each version has a distinct
-	// name and a set of labels that help uniquely identify the pods/VMs
-	// of that version.
+	// One or more versions of the service. Each version has a distinct name and a set of labels that
+	// help uniquely identify the pods/VMs of that version.
 	Subsets []*Subset `protobuf:"bytes,13,rep,name=subsets,proto3" json:"subsets,omitempty"`
-	// Internal/external/load balancer service. External services can be
-	// created only in the "system" application.  Load balancer services
-	// in the "system" application act as shared load balancers for the
-	// entire cluster, while those under user created applications act
-	// as a dedicated load balancer for that application. Defaults to internal.
+	// Internal/external/load balancer service. External services can be created only in the "system"
+	// application.  Load balancer services in the "system" application act as shared load balancers
+	// for the entire cluster, while those under user created applications act as a dedicated load
+	// balancer for that application. Defaults to internal.
 	ServiceType ServiceType `protobuf:"varint,14,opt,name=service_type,json=serviceType,proto3,enum=tetrate.api.tcc.core.v1.ServiceType" json:"service_type,omitempty"`
 	// Types that are valid to be assigned to Routing:
 	//	*Service_LbSettings
@@ -1530,21 +1533,21 @@ type CreateServiceRequest struct {
 	// User identifiable tags associated with this service.
 	Labels map[string]string `protobuf:"bytes,8,rep,name=labels,proto3" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 	Ports  []*Port           `protobuf:"bytes,9,rep,name=ports,proto3" json:"ports,omitempty"`
-	// HTTP Routing settings for the service. Note that subsets (versions of the service) if any should be defined here.
+	// HTTP Routing settings for the service. Note that subsets (versions of the service) if any
+	// should be defined here.
 	RoutingInfo *RoutingInfo `protobuf:"bytes,10,opt,name=routing_info,json=routingInfo,proto3" json:"routing_info,omitempty"`
-	// Namespace where the service is scoped. It should be one of application namespaces. If the application has
-	// only one namespace and if this field is omitted, this filed would default to the application namespace.
-	// This field cannot be omitted if the application has more than one namespace.
+	// Namespace where the service is scoped. It should be one of application namespaces. If the
+	// application has only one namespace and if this field is omitted, this filed would default to
+	// the application namespace. This field cannot be omitted if the application has more than one
+	// namespace.
 	Namespace string `protobuf:"bytes,11,opt,name=namespace,proto3" json:"namespace,omitempty"`
-	// One or more versions of the service. Each version has a distinct
-	// name and a set of labels that help uniquely identify the pods/VMs
-	// of that version.
+	// One or more versions of the service. Each version has a distinct name and a set of labels that
+	// help uniquely identify the pods/VMs of that version.
 	Subsets []*Subset `protobuf:"bytes,12,rep,name=subsets,proto3" json:"subsets,omitempty"`
-	// Internal/external/load balancer service. External services can be
-	// created only in the "system" application.  Load balancer services
-	// in the "system" application act as shared load balancers for the
-	// entire cluster, while those under user created applications act
-	// as a dedicated load balancer for that application. Defaults to internal.
+	// Internal/external/load balancer service. External services can be created only in the "system"
+	// application.  Load balancer services in the "system" application act as shared load balancers
+	// for the entire cluster, while those under user created applications act as a dedicated load
+	// balancer for that application. Defaults to internal.
 	ServiceType ServiceType `protobuf:"varint,13,opt,name=service_type,json=serviceType,proto3,enum=tetrate.api.tcc.core.v1.ServiceType" json:"service_type,omitempty"`
 	// Types that are valid to be assigned to Routing:
 	//	*CreateServiceRequest_LbSettings
@@ -2151,9 +2154,11 @@ func (m *ListOfLBRoutingInfo) GetLbSettings() []*ListOfLBRoutingInfo_LBRoutingIn
 type ListOfLBRoutingInfo_LBRoutingInfo struct {
 	// Hostname with which the application is exposed on this load balancer.
 	Hostname string `protobuf:"bytes,1,opt,name=hostname,proto3" json:"hostname,omitempty"`
-	// TLS certificate info for the application. If nil, the gateway will expose the application on port 80 only.
+	// TLS certificate info for the application. If nil, the gateway will expose the application on
+	// port 80 only.
 	Tls *TLSSettings `protobuf:"bytes,2,opt,name=tls,proto3" json:"tls,omitempty"`
-	// HTTP Routing settings for the hostname. Note that subsets should not be defined at LB hostname level.
+	// HTTP Routing settings for the hostname. Note that subsets should not be defined at LB
+	// hostname level.
 	RoutingInfo          *RoutingInfo `protobuf:"bytes,3,opt,name=routing_info,json=routingInfo,proto3" json:"routing_info,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}     `json:"-"`
 	XXX_unrecognized     []byte       `json:"-"`

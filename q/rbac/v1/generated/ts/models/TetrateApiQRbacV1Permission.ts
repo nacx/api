@@ -12,7 +12,7 @@
  */
 
 /**
- * A permission defines an action that can be performed on a resource. By default access to resources is deined unless an explicit permission grants access to perform an operation tagainst it.   - INVALID: Default value to designate no value was explicitly set for the permission.  - READ: The read permission grants read-only access to the resource.  - WRITE: The write permission allows the subject to modify an existing resource.  - CREATE: The create permission allows subjects to create child resources on the resource.  - DELETE: The delete permission grants permissions to delete the resource.  - SET_POLICY: The set-policy permission allows subjects to manage the access policies for the resources.
+ * A permission defines an action that can be performed on a resource. By default access to resources is denied unless an explicit permission grants access to perform an operation against it.   - INVALID: Default value to designate no value was explicitly set for the permission.  - READ: The read permission grants read-only access to the resource.  - WRITE: The write permission allows the subject to modify an existing resource.  - CREATE: The create permission allows subjects to create child resources on the resource.  - DELETE: The delete permission grants permissions to delete the resource.  - SET_POLICY: The set-policy permission allows subjects to manage the access policies for the resources.
  * @export
  * @enum {string}
  */

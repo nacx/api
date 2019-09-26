@@ -468,7 +468,7 @@
         "tlsEnabled": {
           "type": "boolean",
           "format": "boolean",
-          "description": "enable TLS settings for the application."
+          "description": "Enable TLS settings for the application."
         },
         "redirectToHttps": {
           "type": "boolean",

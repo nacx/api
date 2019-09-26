@@ -115,9 +115,11 @@ service LogicalResourceModel {
   };
 
   rpc GetService(GetServiceRequest) returns (Service) {
+    // clang-format off
     option (google.api.http) = {
       get: "/v1/tenants/{tenant}/environments/{environment}/applications/{application}/services/{id}"
     };
+    // clang-format on
   };
 
   rpc ListServices(ListServicesRequest) returns (ListServicesResponse) {
@@ -127,22 +129,27 @@ service LogicalResourceModel {
   };
 
   rpc UpdateService(Service) returns (Service) {
+    // clang-format off
     option (google.api.http) = {
       put: "/v1/tenants/{tenant}/environments/{environment}/applications/{application}/services/{id}"
       body: "*"
     };
+    // clang-format on
   };
 
   rpc DeleteService(DeleteServiceRequest) returns (google.protobuf.Empty) {
+    // clang-format off
     option (google.api.http) = {
       delete: "/v1/tenants/{tenant}/environments/{environment}/applications/{application}/services/{id}"
     };
+    // clang-format on
   };
 }
 
 // Environment
 //
-// Environment is a collection of applications, services, load balancers, and clusters where they are deployed.
+// Environment is a collection of applications, services, load balancers, and clusters where they
+// are deployed.
 message Environment {
   // Internal use only. Auto populated field.
   string name = 1;
@@ -202,8 +209,8 @@ message DeleteEnvironmentRequest {
 
 // Application
 //
-// An Application is a collection of services. Each application typically corresponds to one or more kubernetes namespace or an application
-// deployment on VMs.
+// An Application is a collection of services. Each application typically corresponds to one or more
+// kubernetes namespace or an application deployment on VMs.
 message Application {
   // Internal use only. Auto populated field.
   string name = 1;
@@ -215,19 +222,19 @@ message Application {
   string id = 4 [(validate.rules).string.min_len = 1];
   // Additional information.
   string description = 5;
-  // Resilience settings that apply to all services within the application, for outbound calls from the application's
-  // services to other services in the application or to other applications.
+  // Resilience settings that apply to all services within the application, for outbound calls from
+  // the application's services to other services in the application or to other applications.
   ClientSettings client_settings = 8;
-  // An application can be exposed on a shared load balancer in the cluster or a dedicated load balancer
-  // in one of the application's namespaces. Set app_lbs to indicate that the application should be exposed on
-  // the dedicated load balancers. Namespace where each of the dedicated load balancer is scoped should be unique.
+  // An application can be exposed on a shared load balancer in the cluster or a dedicated load
+  // balancer in one of the application's namespaces. Set app_lbs to indicate that the application
+  // should be exposed on the dedicated load balancers. Namespace where each of the dedicated load
+  // balancer is scoped should be unique.
   repeated ApplicationSpecificLB app_lbs = 9;
-  // List of namespaces where the application services (or components) are scoped within. If omitted, the application
-  // is assumed to be scoped in a namespace matching the Id field.
+  // List of namespaces where the application services (or components) are scoped within. If
+  // omitted, the application is assumed to be scoped in a namespace matching the Id field.
   repeated string namespaces = 10;
-  // Indicates whether communication between services in the
-  // application should use mutual TLS or not. Defaults to true if not
-  // specified. Applications with just the app specific LB should set
+  // Indicates whether communication between services in the application should use mutual TLS or
+  // not. Defaults to true if not specified. Applications with just the app specific LB should set
   // this value to false.
   google.protobuf.BoolValue use_mtls_between_services = 11;
 }
@@ -243,19 +250,19 @@ message CreateApplicationRequest {
   string id = 4;
   // Additional information.
   string description = 5;
-  // Resilience settings that apply to all services within the application, for outbound calls from the application's
-  // services to other services.
+  // Resilience settings that apply to all services within the application, for outbound calls from
+  // the application's services to other services.
   ClientSettings client_settings = 8;
-  // An application can be exposed on a shared load balancer in the cluster or a dedicated load balancer
-  // in one of the application's namespaces. Set app_lbs to indicate that the application should be exposed on
-  // the dedicated load balancers. Namespace where each of the dedicated load balancer is scoped should be unique.
+  // An application can be exposed on a shared load balancer in the cluster or a dedicated load
+  // balancer in one of the application's namespaces. Set app_lbs to indicate that the application
+  // should be exposed on the dedicated load balancers. Namespace where each of the dedicated load
+  // balancer is scoped should be unique.
   repeated ApplicationSpecificLB app_lbs = 9;
-  // List of namespaces where the application services (or components) are scoped within. If omitted, the application
-  // is assumed to be scoped in a namespace matching the Id field.
+  // List of namespaces where the application services (or components) are scoped within. If
+  // omitted, the application is assumed to be scoped in a namespace matching the Id field.
   repeated string namespaces = 10;
-  // Indicates whether communication between services in the
-  // application should use mutual TLS or not. Defaults to true if not
-  // specified. Applications with just the app specific LB should set
+  // Indicates whether communication between services in the application should use mutual TLS or
+  // not. Defaults to true if not specified. Applications with just the app specific LB should set
   // this value to false.
   google.protobuf.BoolValue use_mtls_between_services = 11;
 }
@@ -297,24 +304,27 @@ message DeleteApplicationRequest {
 }
 
 message ApplicationSpecificLB {
-  // Load balancer deployment labels (Kubernetes only for now). If gateway was created using TCC helm charts, use app:
-  // {namespace}-tcclb for kubernetes. The gateway will expose the application on ports 80 and 443 (if tls is configured).
+  // Load balancer deployment labels (Kubernetes only for now). If gateway was created using TCC
+  // helm charts, use app: {namespace}-tcclb for kubernetes. The gateway will expose the application
+  // on ports 80 and 443 (if tls is configured).
   map<string, string> labels = 1 [(validate.rules).map.min_pairs = 1];
-  // TLS certificate info for the application. If nil, the gateway will expose the application on port 80 only.
-  // Internal use only. Auto populated.
+  // TLS certificate info for the application. If nil, the gateway will expose the application on
+  // port 80 only. Internal use only. Auto populated.
   TLSSettings tls = 2;
-  // The namespace where this dedicated load balancer of the application is scoped. It should be one of application
-  // namespaces. This field cannot be omitted if the application has more than one namespace. If there is only
-  // one dedicated load balancer and application has only one  namespace and if this namespace field is omitted,
-  // then this field would default to the application namespace.
+  // The namespace where this dedicated load balancer of the application is scoped. It should be one
+  // of application namespaces. This field cannot be omitted if the application has more than one
+  // namespace. If there is only one dedicated load balancer and application has only one  namespace
+  // and if this namespace field is omitted, then this field would default to the application
+  // namespace.
   string namespace = 3;
   // Hostname with which the application is exposed on this load balancer.
   string hostname = 4 [(validate.rules).string.min_len = 1];
   // HTTP Routing settings for the hostname.
   RoutingInfo routing_info = 5;
-  // Indicator whether to use this LB as primary. This is used for Metrics reporting at the App level. If there are
-  // multiple dedicated load balancers in an App, only one and mandatorily one has to be marked primary. If there
-  // is only one dedicated load balancer in an app, it will be marked as primary by default.
+  // Indicator whether to use this LB as primary. This is used for Metrics reporting at the App
+  // level. If there are multiple dedicated load balancers in an App, only one and mandatorily one
+  // has to be marked primary. If there is only one dedicated load balancer in an app, it will be
+  // marked as primary by default.
   bool is_primary = 6;
 }
 
@@ -327,8 +337,8 @@ message Service {
   string environment = 3 [(validate.rules).string.min_len = 1];
   // Application.Id.
   string application = 4 [(validate.rules).string.min_len = 1];
-  // Short name for the service. Clusters are expected to have namespaces that match the application, and services that
-  // match the Id, especially on Kubernetes.
+  // Short name for the service. Clusters are expected to have namespaces that match the
+  // application, and services that match the Id, especially on Kubernetes.
   string id = 5 [(validate.rules).string.min_len = 1];
   string description = 6;
   // FQDN hostname of the service.
@@ -336,31 +346,30 @@ message Service {
   // User identifiable tags associated with this service.
   map<string, string> labels = 8;
 
-  repeated Port ports = 9 ;
+  repeated Port ports = 9;
   // HTTP Routing settings for the service.
   RoutingInfo routing_info = 10;
   string etag = 11 [(validate.rules).string.min_len = 1];
-  // Namespace where the service is scoped and should be one of application namespaces. If the application has
-  // only one namespace and if this field is omitted, this filed would default to the application namespace.
-  // This field cannot be omitted if the application has more than one namespace.
+  // Namespace where the service is scoped and should be one of application namespaces. If the
+  // application has only one namespace and if this field is omitted, this filed would default to
+  // the application namespace. This field cannot be omitted if the application has more than one
+  // namespace.
   string namespace = 12;
-  // One or more versions of the service. Each version has a distinct
-  // name and a set of labels that help uniquely identify the pods/VMs
-  // of that version.
+  // One or more versions of the service. Each version has a distinct name and a set of labels that
+  // help uniquely identify the pods/VMs of that version.
   repeated Subset subsets = 13;
-  // Internal/external/load balancer service. External services can be
-  // created only in the "system" application.  Load balancer services
-  // in the "system" application act as shared load balancers for the
-  // entire cluster, while those under user created applications act
-  // as a dedicated load balancer for that application. Defaults to internal.
+  // Internal/external/load balancer service. External services can be created only in the "system"
+  // application.  Load balancer services in the "system" application act as shared load balancers
+  // for the entire cluster, while those under user created applications act as a dedicated load
+  // balancer for that application. Defaults to internal.
   ServiceType service_type = 14;
 
   oneof routing {
-    // allowed only if the service is of type load balancer.
+    // Allowed only if the service is of type load balancer.
     LBRouteSettings lb_settings = 15;
-    // allowed only if the service is of type internal.
+    // Allowed only if the service is of type internal.
     InternalRouteSettings internal_routes = 16;
-    // allowed only if the service is of type external.
+    // Allowed only if the service is of type external.
     ExternalRouteSettings external_routes = 17;
   }
 }
@@ -383,33 +392,33 @@ message CreateServiceRequest {
   // User identifiable tags associated with this service.
   map<string, string> labels = 8;
 
-  repeated Port ports = 9 ;
-  // HTTP Routing settings for the service. Note that subsets (versions of the service) if any should be defined here.
+  repeated Port ports = 9;
+  // HTTP Routing settings for the service. Note that subsets (versions of the service) if any
+  // should be defined here.
   RoutingInfo routing_info = 10;
-  // Namespace where the service is scoped. It should be one of application namespaces. If the application has
-  // only one namespace and if this field is omitted, this filed would default to the application namespace.
-  // This field cannot be omitted if the application has more than one namespace.
+  // Namespace where the service is scoped. It should be one of application namespaces. If the
+  // application has only one namespace and if this field is omitted, this filed would default to
+  // the application namespace. This field cannot be omitted if the application has more than one
+  // namespace.
   string namespace = 11;
-  // One or more versions of the service. Each version has a distinct
-  // name and a set of labels that help uniquely identify the pods/VMs
-  // of that version.
+  // One or more versions of the service. Each version has a distinct name and a set of labels that
+  // help uniquely identify the pods/VMs of that version.
   repeated Subset subsets = 12;
 
-  // Internal/external/load balancer service. External services can be
-  // created only in the "system" application.  Load balancer services
-  // in the "system" application act as shared load balancers for the
-  // entire cluster, while those under user created applications act
-  // as a dedicated load balancer for that application. Defaults to internal.
+  // Internal/external/load balancer service. External services can be created only in the "system"
+  // application.  Load balancer services in the "system" application act as shared load balancers
+  // for the entire cluster, while those under user created applications act as a dedicated load
+  // balancer for that application. Defaults to internal.
   ServiceType service_type = 13;
 
   oneof routing {
-    // allowed only if the service is of type load balancer.
+    // Allowed only if the service is of type load balancer.
     LBRouteSettings lb_settings = 14;
-    // allowed only if the service is of type internal.
+    // Allowed only if the service is of type internal.
     InternalRouteSettings internal_routes = 15;
-    // allowed only if the service is of type external.
+    // Allowed only if the service is of type external.
     ExternalRouteSettings external_routes = 16;
-  }  
+  }
 }
 
 message GetServiceRequest {
@@ -447,12 +456,12 @@ message ListOfLBRoutingInfo {
   message LBRoutingInfo {
     // Hostname with which the application is exposed on this load balancer.
     string hostname = 1 [(validate.rules).string.min_len = 1];
-    // TLS certificate info for the application. If nil, the gateway will expose the application on port 80 only.
+    // TLS certificate info for the application. If nil, the gateway will expose the application on
+    // port 80 only.
     TLSSettings tls = 2;
-    // HTTP Routing settings for the hostname. Note that subsets should not be defined at LB hostname level.
+    // HTTP Routing settings for the hostname. Note that subsets should not be defined at LB
+    // hostname level.
     RoutingInfo routing_info = 3;
   };
   repeated LBRoutingInfo lb_settings = 1;
 }
-
-

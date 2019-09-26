@@ -113,8 +113,8 @@ type ConfigData struct {
 	Cluster     string `protobuf:"bytes,2,opt,name=cluster,proto3" json:"cluster,omitempty"`
 	Environment string `protobuf:"bytes,3,opt,name=environment,proto3" json:"environment,omitempty"`
 	Tenant      string `protobuf:"bytes,4,opt,name=tenant,proto3" json:"tenant,omitempty"`
-	// For istio, this is a huge YAML dump of all Istio artifacts like virtual services, destination rules, service
-	// entries, gateways, etc. in YAML form. For F5, its all f5 config artifacts.
+	// For istio, this is a huge YAML dump of all Istio artifacts like virtual services, destination
+	// rules, service entries, gateways, etc. in YAML form. For F5, its all f5 config artifacts.
 	Payload              string   `protobuf:"bytes,5,opt,name=payload,proto3" json:"payload,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`

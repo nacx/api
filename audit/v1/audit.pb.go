@@ -279,8 +279,8 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type AuditServiceClient interface {
-	// List audit logs. If no 'count' parameter has been specified, the last 25
-	// audit logs are returned
+	// List audit logs. If no 'count' parameter has been specified, the last 25 audit logs are
+	// returned
 	ListAuditLogs(ctx context.Context, in *ListAuditLogsRequest, opts ...grpc.CallOption) (*ListAuditLogsResponse, error)
 	// Send a log to the audit system
 	SendAuditLog(ctx context.Context, in *AuditLog, opts ...grpc.CallOption) (*types.Empty, error)
@@ -314,8 +314,8 @@ func (c *auditServiceClient) SendAuditLog(ctx context.Context, in *AuditLog, opt
 
 // AuditServiceServer is the server API for AuditService service.
 type AuditServiceServer interface {
-	// List audit logs. If no 'count' parameter has been specified, the last 25
-	// audit logs are returned
+	// List audit logs. If no 'count' parameter has been specified, the last 25 audit logs are
+	// returned
 	ListAuditLogs(context.Context, *ListAuditLogsRequest) (*ListAuditLogsResponse, error)
 	// Send a log to the audit system
 	SendAuditLog(context.Context, *AuditLog) (*types.Empty, error)

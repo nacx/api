@@ -43,7 +43,7 @@ export interface TetrateApiTccCoreV1CreateNamespaceRequest {
      */
     cluster?: string;
     /**
-     * 
+     * if present, this will be used as the id for the created object.
      * @type {string}
      * @memberof TetrateApiTccCoreV1CreateNamespaceRequest
      */

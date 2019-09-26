@@ -46,7 +46,7 @@ export interface TetrateApiTccCoreV1RouteDestination {
      */
     address?: string;
     /**
-     * 100 if omitted. sum of all weights should add up to 100.
+     * The value of weight is 100 if omitted. The sum of all weights should add up to 100.
      * @type {number}
      * @memberof TetrateApiTccCoreV1RouteDestination
      */

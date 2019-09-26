@@ -43,7 +43,7 @@ export interface TetrateApiQRbacV1Role {
      */
     permissions?: Array<TetrateApiQRbacV1Permission>;
     /**
-     * List of resource types where the role applies. The permission system is hierarchical and allows permissions to be applied at the root elements of the configuration hierarchy, so all child objects inherit them. This allows for easy and flexible permission configuration. There are, however, many scenarios in which permissions only make sense in certain types of resources instead of applying to the entire hierarchy. In those cases, the resources field can be populated with the types of resources that are affected by hte role, and the permission set defined by the role will only apply to those resources. If this field is omitted, the permissions apply to all resource types.
+     * List of resource types where the role applies. The permission system is hierarchical and allows permissions to be applied at the root elements of the configuration hierarchy, so all child objects inherit them. This allows for easy and flexible permission configuration. There are, however, many scenarios in which permissions only make sense in certain types of resources instead of applying to the entire hierarchy. In those cases, the resources field can be populated with the types of resources that are affected by the role, and the permission set defined by the role will only apply to those resources. If this field is omitted, the permissions apply to all resource types.
      * @type {Array<string>}
      * @memberof TetrateApiQRbacV1Role
      */

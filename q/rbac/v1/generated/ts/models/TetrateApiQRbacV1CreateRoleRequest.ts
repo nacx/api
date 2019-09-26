@@ -19,7 +19,7 @@ import {
 } from './';
 
 /**
- * 
+ * Request to create a role.
  * @export
  * @interface TetrateApiQRbacV1CreateRoleRequest
  */

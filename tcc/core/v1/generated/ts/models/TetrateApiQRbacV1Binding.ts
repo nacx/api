@@ -13,7 +13,7 @@
 
 import { exists, mapValues } from '../runtime';
 /**
- * A binding associates a role with a set of subjects. Bindings are used to configure policies, where different roles can be assigned to different sets of subjects to configure a fine-grained access control to the resource protected by the policy.
+ * A binding associates a role with a set of subjects.  Bindings are used to configure policies, where different roles can be assigned to different sets of subjects to configure a fine-grained access control to the resource protected by the policy.
  * @export
  * @interface TetrateApiQRbacV1Binding
  */

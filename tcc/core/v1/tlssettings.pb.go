@@ -54,32 +54,27 @@ func (TLSMode) EnumDescriptor() ([]byte, []int) {
 }
 
 type TLSSettings struct {
-	// Set this to SIMPLE, MUTUAL, or SNI_PASSTHROUGH for one-way TLS,
-	// mutual TLS, or client sni-based TLS passthrough respectively.
-	// The hostname in the load balancer will be used as the SNI in the
+	// Set this to SIMPLE, MUTUAL, or SNI_PASSTHROUGH for one-way TLS, mutual TLS, or client sni-based
+	// TLS passthrough respectively. The hostname in the load balancer will be used as the SNI in the
 	// TLS passthrough mode.
 	TlsMode TLSMode `protobuf:"varint,7,opt,name=tls_mode,json=tlsMode,proto3,enum=tetrate.api.tcc.core.v1.TLSMode" json:"tls_mode,omitempty"`
-	// enable TLS settings for the application.
+	// Enable TLS settings for the application.
 	TlsEnabled bool `protobuf:"varint,1,opt,name=tls_enabled,json=tlsEnabled,proto3" json:"tls_enabled,omitempty"` // Deprecated: Do not use.
-	// If set, the load balancer will redirect HTTP connections on port
-	// 80 to HTTPS port 443.
+	// If set, the load balancer will redirect HTTP connections on port 80 to HTTPS port 443.
 	RedirectToHttps bool `protobuf:"varint,2,opt,name=redirect_to_https,json=redirectToHttps,proto3" json:"redirect_to_https,omitempty"`
-	// For proxies running on VMs, the path to the file holding the
-	// server-side TLS certificate to use.
+	// For proxies running on VMs, the path to the file holding the server-side TLS certificate to
+	// use.
 	ServerCertificate string `protobuf:"bytes,3,opt,name=server_certificate,json=serverCertificate,proto3" json:"server_certificate,omitempty"`
-	// For proxies running on VMs, the path to the file holding the
-	// server's private key.
+	// For proxies running on VMs, the path to the file holding the server's private key.
 	PrivateKey string `protobuf:"bytes,4,opt,name=private_key,json=privateKey,proto3" json:"private_key,omitempty"`
-	// For proxies running on VMs, the path to a file containing
-	// certificate authority certificates to use in verifying a
-	// presented client side certificate for mutual TLS connections.
+	// For proxies running on VMs, the path to a file containing certificate authority certificates to
+	// use in verifying a presented client side certificate for mutual TLS connections.
 	CaCertificates string `protobuf:"bytes,5,opt,name=ca_certificates,json=caCertificates,proto3" json:"ca_certificates,omitempty"`
-	// For proxies running on Kubernetes, the name of the secret that
-	// holds the TLS certs including the CA certificates. Currently
-	// applicable only on Kubernetes. The secret (type generic) should
-	// contain the following keys and values: key: <privateKey>, cert:
-	// <serverCert>, cacert: <CACertificate>.  If the service is exposed
-	// via a load balancer, the secret must be accessible to it.
+	// For proxies running on Kubernetes, the name of the secret that holds the TLS certs including
+	// the CA certificates. Currently applicable only on Kubernetes. The secret (type generic) should
+	// contain the following keys and values: key: <privateKey>, cert: <serverCert>, cacert:
+	// <CACertificate>.  If the service is exposed via a load balancer, the secret must be accessible
+	// to it.
 	SecretName           string   `protobuf:"bytes,6,opt,name=secret_name,json=secretName,proto3" json:"secret_name,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`

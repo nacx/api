@@ -19,7 +19,7 @@ import { exists, mapValues } from '../runtime';
  */
 export interface TetrateApiTccCoreV1HTTPRetry {
     /**
-     * Number of retries for a given request. The interval between retries will be determined automatically (25ms+). Actual number of retries attempted depends on the httpReqTimeout.
+     * Number of retries for a given request. The interval between retries will be determined automatically (25ms+).  Actual number of retries attempted depends on the httpReqTimeout.
      * @type {number}
      * @memberof TetrateApiTccCoreV1HTTPRetry
      */

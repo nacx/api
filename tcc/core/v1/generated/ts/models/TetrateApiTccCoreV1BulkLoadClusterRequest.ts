@@ -19,7 +19,7 @@ import {
 } from './';
 
 /**
- * 
+ * Cluster, Namespaces, deployments, and endpoints in this request will replace the existing contents of a cluster.
  * @export
  * @interface TetrateApiTccCoreV1BulkLoadClusterRequest
  */

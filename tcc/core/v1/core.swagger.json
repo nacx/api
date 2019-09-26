@@ -2797,7 +2797,7 @@
           "description": "The set of subjects that will be allowed to access the target resource with the permissions defined by the role."
         }
       },
-      "description": "A binding associates a role with a set of subjects. Bindings are used to configure policies, where different roles can be assigned to different sets of subjects to configure a fine-grained access control to the resource protected by the policy.",
+      "description": "A binding associates a role with a set of subjects.  Bindings are used to configure policies, where different roles can be assigned to different sets of subjects to configure a fine-grained access control to the resource protected by the policy.",
       "title": "Binding"
     },
     "tetrate.api.q.rbac.v1.Policy": {
@@ -2916,7 +2916,7 @@
           }
         }
       },
-      "title": "Cluster, Namespaces, deployments, and endpoints in this request will replace the existing contents of a cluster"
+      "description": "Cluster, Namespaces, deployments, and endpoints in this request will replace the existing contents of a cluster."
     },
     "tetrate.api.tcc.core.v1.BulkLoadClusterRequest.ClusterWithNamespaces": {
       "type": "object",
@@ -3022,7 +3022,7 @@
         },
         "country": {
           "type": "string",
-          "title": "Information like datacenter where the cluster is present"
+          "description": "Information like datacenter where the cluster is present."
         },
         "datacenter": {
           "type": "string"
@@ -3169,7 +3169,7 @@
         },
         "id": {
           "type": "string",
-          "title": "if present, this will be used as the id for the created object"
+          "description": "if present, this will be used as the id for the created object."
         },
         "description": {
           "type": "string"
@@ -3179,7 +3179,7 @@
         },
         "country": {
           "type": "string",
-          "title": "Information like datacenter where the cluster is present"
+          "description": "Information like datacenter where the cluster is present."
         },
         "datacenter": {
           "type": "string"
@@ -3270,7 +3270,7 @@
         },
         "id": {
           "type": "string",
-          "title": "if present, this will be used as the id for the created object"
+          "description": "if present, this will be used as the id for the created object."
         },
         "address": {
           "type": "string",
@@ -3343,7 +3343,7 @@
         },
         "id": {
           "type": "string",
-          "title": "if present, this will be used as the id for the created object"
+          "description": "if present, this will be used as the id for the created object."
         },
         "description": {
           "type": "string"
@@ -3420,15 +3420,15 @@
         },
         "lbSettings": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.LBRouteSettings",
-          "description": "allowed only if the service is of type load balancer."
+          "description": "Allowed only if the service is of type load balancer."
         },
         "internalRoutes": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.InternalRouteSettings",
-          "description": "allowed only if the service is of type internal."
+          "description": "Allowed only if the service is of type internal."
         },
         "externalRoutes": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.ExternalRouteSettings",
-          "description": "allowed only if the service is of type external."
+          "description": "Allowed only if the service is of type external."
         }
       }
     },
@@ -3650,7 +3650,7 @@
         "attempts": {
           "type": "integer",
           "format": "int32",
-          "description": "Number of retries for a given request. The interval between retries will be determined automatically (25ms+). Actual number of retries attempted depends on the httpReqTimeout."
+          "description": "Number of retries for a given request. The interval between retries will be determined automatically (25ms+).  Actual number of retries attempted depends on the httpReqTimeout."
         },
         "perTryTimeout": {
           "type": "string",
@@ -4066,7 +4066,7 @@
         },
         "protocol": {
           "type": "string",
-          "description": "The protocol exposed on the port. MUST BE one of HTTP|GRPC|HTTP2|HTTPS|TCP|TLS. TLS implies the connection will be routed based on the SNI header to the destination without terminating the TLS connection."
+          "description": "The protocol exposed on the port. MUST BE one of HTTP|GRPC|HTTP2|HTTPS|TCP|TLS.  TLS implies the connection will be routed based on the SNI header to the destination without terminating the TLS connection."
         },
         "name": {
           "type": "string",
@@ -4175,7 +4175,7 @@
         "weight": {
           "type": "integer",
           "format": "int64",
-          "description": "100 if omitted. sum of all weights should add up to 100."
+          "description": "The value of weight is 100 if omitted. The sum of all weights should add up to 100."
         },
         "port": {
           "type": "integer",
@@ -4189,7 +4189,7 @@
       "properties": {
         "application": {
           "type": "string",
-          "description": "If omitted, will route to same application as the service.  The application field is used by load balancers in the system application to route to other applications."
+          "description": "If omitted, will route to same application as the service. The application field is used by load balancers in the system application to route to other applications."
         },
         "service": {
           "type": "string",
@@ -4308,15 +4308,15 @@
         },
         "lbSettings": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.LBRouteSettings",
-          "description": "allowed only if the service is of type load balancer."
+          "description": "Allowed only if the service is of type load balancer."
         },
         "internalRoutes": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.InternalRouteSettings",
-          "description": "allowed only if the service is of type internal."
+          "description": "Allowed only if the service is of type internal."
         },
         "externalRoutes": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.ExternalRouteSettings",
-          "description": "allowed only if the service is of type external."
+          "description": "Allowed only if the service is of type external."
         }
       }
     },
@@ -4383,7 +4383,7 @@
         "tlsEnabled": {
           "type": "boolean",
           "format": "boolean",
-          "description": "enable TLS settings for the application."
+          "description": "Enable TLS settings for the application."
         },
         "redirectToHttps": {
           "type": "boolean",

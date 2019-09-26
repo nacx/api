@@ -8,21 +8,22 @@ import "google/api/annotations.proto";
 option java_multiple_files = true;
 option java_package = "io.tetrate.spm.regsource.service";
 
-// API that returns all active service instances in the cluster with their pod ip, subset, application, cluster and environment 
+// API that returns all active service instances in the cluster with their pod ip, subset,
+// application, cluster and environment
 service RegSourceSyncService {
-    rpc serviceInstanceSync (SyncRequest) returns (stream InstanceMetadata) {
-    }
+  rpc serviceInstanceSync(SyncRequest) returns (stream InstanceMetadata) {
+  }
 }
 
 message SyncRequest {
 }
 
 message InstanceMetadata {
-    string ip = 1;
-    string instance = 2;
-    string subset = 3;
-    string service = 4;
-    string namespace = 5;
-    string cluster = 6;
-    string env = 7;
+  string ip = 1;
+  string instance = 2;
+  string subset = 3;
+  string service = 4;
+  string namespace = 5;
+  string cluster = 6;
+  string env = 7;
 }

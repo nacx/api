@@ -822,6 +822,7 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type LoadBalancerWorkflowClient interface {
+	// clang-format off
 	Attach(ctx context.Context, in *CreateTicketRequest, opts ...grpc.CallOption) (*TicketStatus, error)
 	Detach(ctx context.Context, in *CreateTicketRequest, opts ...grpc.CallOption) (*TicketStatus, error)
 	GetTicketStatus(ctx context.Context, in *GetTicketStatusRequest, opts ...grpc.CallOption) (*TicketStatus, error)
@@ -829,8 +830,8 @@ type LoadBalancerWorkflowClient interface {
 	Approve(ctx context.Context, in *ResolveTicketRequest, opts ...grpc.CallOption) (*TicketStatus, error)
 	Deny(ctx context.Context, in *ResolveTicketRequest, opts ...grpc.CallOption) (*TicketStatus, error)
 	Cancel(ctx context.Context, in *CancelTicketRequest, opts ...grpc.CallOption) (*types.Empty, error)
-	// LB owner calls this API with additional settings like TLS, to
-	// finally expose the service on the load balancer or remove a detached service
+	// LB owner calls this API with additional settings like TLS, to finally expose the service on the
+	// load balancer or remove a detached service
 	Publish(ctx context.Context, in *PublishTicketRequest, opts ...grpc.CallOption) (*types.Empty, error)
 }
 
@@ -916,6 +917,7 @@ func (c *loadBalancerWorkflowClient) Publish(ctx context.Context, in *PublishTic
 
 // LoadBalancerWorkflowServer is the server API for LoadBalancerWorkflow service.
 type LoadBalancerWorkflowServer interface {
+	// clang-format off
 	Attach(context.Context, *CreateTicketRequest) (*TicketStatus, error)
 	Detach(context.Context, *CreateTicketRequest) (*TicketStatus, error)
 	GetTicketStatus(context.Context, *GetTicketStatusRequest) (*TicketStatus, error)
@@ -923,8 +925,8 @@ type LoadBalancerWorkflowServer interface {
 	Approve(context.Context, *ResolveTicketRequest) (*TicketStatus, error)
 	Deny(context.Context, *ResolveTicketRequest) (*TicketStatus, error)
 	Cancel(context.Context, *CancelTicketRequest) (*types.Empty, error)
-	// LB owner calls this API with additional settings like TLS, to
-	// finally expose the service on the load balancer or remove a detached service
+	// LB owner calls this API with additional settings like TLS, to finally expose the service on the
+	// load balancer or remove a detached service
 	Publish(context.Context, *PublishTicketRequest) (*types.Empty, error)
 }
 

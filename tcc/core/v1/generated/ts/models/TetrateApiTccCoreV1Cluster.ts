@@ -61,7 +61,7 @@ export interface TetrateApiTccCoreV1Cluster {
      */
     registry?: TetrateApiTccCoreV1Registry;
     /**
-     * 
+     * Information like datacenter where the cluster is present.
      * @type {string}
      * @memberof TetrateApiTccCoreV1Cluster
      */

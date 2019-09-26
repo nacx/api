@@ -218,8 +218,8 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type RegistryConsumerClient interface {
-	// UpdateResources to be called periodically with a bulk payload. API detects the delta between last call, and
-	// determines resources to create, modify, delete
+	// UpdateResources to be called periodically with a bulk payload. API detects the delta between
+	// last call, and determines resources to create, modify, delete.
 	UpdateResources(ctx context.Context, in *RegistryUpdateResourcesRequest, opts ...grpc.CallOption) (*RegistryConsumerResponse, error)
 }
 
@@ -242,8 +242,8 @@ func (c *registryConsumerClient) UpdateResources(ctx context.Context, in *Regist
 
 // RegistryConsumerServer is the server API for RegistryConsumer service.
 type RegistryConsumerServer interface {
-	// UpdateResources to be called periodically with a bulk payload. API detects the delta between last call, and
-	// determines resources to create, modify, delete
+	// UpdateResources to be called periodically with a bulk payload. API detects the delta between
+	// last call, and determines resources to create, modify, delete.
 	UpdateResources(context.Context, *RegistryUpdateResourcesRequest) (*RegistryConsumerResponse, error)
 }
 

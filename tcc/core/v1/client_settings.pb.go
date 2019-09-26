@@ -58,13 +58,14 @@ func (ClientSettings_Sensitivity) EnumDescriptor() ([]byte, []int) {
 
 // ClientSettings
 //
-// All the timeouts, retries, circuit breakers etc. that consumers want to set to guard against failures of their
-// dependencies. These roughly translate to pieces of istio virtual service, destination rules, etc. At runtime, for a
-// given namespace, for the namespace's dependencies, we combine the client specified reliability settings with the
-// virtual service/dest rule for the dependencies to produce an updated virtual service/dest rule per dependent service.
-// All these client customized virtual services/dest rules will be private to the namespace i.e. will have an exportTo
-// setting '.' . Doing so will make Pilot apply these customizations only to the namespace concerned without leaking it
-// to all other namespaces.
+// All the timeouts, retries, circuit breakers etc. that consumers want to set to guard against
+// failures of their dependencies. These roughly translate to pieces of istio virtual service,
+// destination rules, etc. At runtime, for a given namespace, for the namespace's dependencies, we
+// combine the client specified reliability settings with the virtual service/dest rule for the
+// dependencies to produce an updated virtual service/dest rule per dependent service. All these
+// client customized virtual services/dest rules will be private to the namespace i.e. will have an
+// exportTo setting '.' . Doing so will make Pilot apply these customizations only to the namespace
+// concerned without leaking it to all other namespaces.
 type ClientSettings struct {
 	// Timeout for HTTP requests.
 	HttpRequestTimeout *types.Duration `protobuf:"bytes,1,opt,name=http_request_timeout,json=httpRequestTimeout,proto3" json:"http_request_timeout,omitempty"`
@@ -150,15 +151,18 @@ func (m *ClientSettings) GetCircuitBreakerSensitivity() ClientSettings_Sensitivi
 }
 
 type HTTPRetry struct {
-	// Number of retries for a given request. The interval between retries will be determined automatically (25ms+).
+	// Number of retries for a given request. The interval between retries will be determined
+	// automatically (25ms+).
+	//
 	// Actual number of retries attempted depends on the httpReqTimeout.
 	Attempts int32 `protobuf:"varint,1,opt,name=attempts,proto3" json:"attempts,omitempty"`
 	// Timeout per retry attempt for a given request. format: 1h/1m/1s/1ms. MUST BE >=1ms.
 	PerTryTimeout *types.Duration `protobuf:"bytes,2,opt,name=per_try_timeout,json=perTryTimeout,proto3" json:"per_try_timeout,omitempty"`
-	// Specifies the conditions under which retry takes place. One or more policies can be specified using a ‘,’
-	// delimited list. See the
-	// [supported policies](https://www.envoyproxy.io/docs/envoy/latest/configuration/http_filters/router_filter#x-envoy-retry-on)
-	// and [here](https://www.envoyproxy.io/docs/envoy/latest/configuration/http_filters/router_filter#x-envoy-retry-grpc-on)
+	// Specifies the conditions under which retry takes place. One or more policies can be specified
+	// using a ‘,’ delimited list. See the [supported
+	// policies](https://www.envoyproxy.io/docs/envoy/latest/configuration/http_filters/router_filter#x-envoy-retry-on)
+	// and
+	// [here](https://www.envoyproxy.io/docs/envoy/latest/configuration/http_filters/router_filter#x-envoy-retry-grpc-on)
 	// for more details.
 	RetryOn              string   `protobuf:"bytes,3,opt,name=retry_on,json=retryOn,proto3" json:"retry_on,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`

@@ -31,7 +31,7 @@ export interface TetrateApiTccCoreV1TLSSettings {
      */
     tlsMode?: TetrateApiTccCoreV1TLSMode;
     /**
-     * enable TLS settings for the application.
+     * Enable TLS settings for the application.
      * @type {boolean}
      * @memberof TetrateApiTccCoreV1TLSSettings
      */
