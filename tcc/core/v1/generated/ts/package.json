@@ -1,0 +1,7 @@
+{
+  "name": "@tetrate/tcc-core",
+  "version": "0.0.1",
+  "main": "index.ts",
+  "license": "MIT",
+  "dependencies": {}
+}
