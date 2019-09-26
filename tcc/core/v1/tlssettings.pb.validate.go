@@ -41,6 +41,8 @@ func (m *TLSSettings) Validate() error {
 		return nil
 	}
 
+	// no validation rules for TlsMode
+
 	// no validation rules for TlsEnabled
 
 	// no validation rules for RedirectToHttps

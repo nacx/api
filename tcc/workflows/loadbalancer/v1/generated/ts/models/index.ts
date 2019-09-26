@@ -1,3 +1,4 @@
+export * from './TetrateApiTccCoreV1TLSMode';
 export * from './TetrateApiTccCoreV1TLSSettings';
 export * from './TetrateApiTccWorkflowsLoadbalancerV1Action';
 export * from './TetrateApiTccWorkflowsLoadbalancerV1CancelTicketRequest';

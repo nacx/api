@@ -12,12 +12,24 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import {
+    TetrateApiTccCoreV1TLSMode,
+    TetrateApiTccCoreV1TLSModeFromJSON,
+    TetrateApiTccCoreV1TLSModeToJSON,
+} from './';
+
 /**
  * 
  * @export
  * @interface TetrateApiTccCoreV1TLSSettings
  */
 export interface TetrateApiTccCoreV1TLSSettings {
+    /**
+     * 
+     * @type {TetrateApiTccCoreV1TLSMode}
+     * @memberof TetrateApiTccCoreV1TLSSettings
+     */
+    tlsMode?: TetrateApiTccCoreV1TLSMode;
     /**
      * enable TLS settings for the application.
      * @type {boolean}
@@ -49,7 +61,7 @@ export interface TetrateApiTccCoreV1TLSSettings {
      */
     caCertificates?: string;
     /**
-     * For proxies running on Kubernetes, the name of the secret that holds the TLS certs. Currently applicable only on Kubernetes. The secret should contain the server certificate and the private key. If mutual TLS is being used, an additional secret with name secretName-cacert should be created with the CaCertificates that the server will use to verify client side certificates. If the service is exposed via a load balancer, the secret must be accessible to it.
+     * For proxies running on Kubernetes, the name of the secret that holds the TLS certs including the CA certificates. Currently applicable only on Kubernetes. The secret (type generic) should contain the following keys and values: key: <privateKey>, cert: <serverCert>, cacert: <CACertificate>.  If the service is exposed via a load balancer, the secret must be accessible to it.
      * @type {string}
      * @memberof TetrateApiTccCoreV1TLSSettings
      */
@@ -58,6 +70,7 @@ export interface TetrateApiTccCoreV1TLSSettings {
 
 export function TetrateApiTccCoreV1TLSSettingsFromJSON(json: any): TetrateApiTccCoreV1TLSSettings {
     return {
+        'tlsMode': !exists(json, 'tlsMode') ? undefined : TetrateApiTccCoreV1TLSModeFromJSON(json['tlsMode']),
         'tlsEnabled': !exists(json, 'tlsEnabled') ? undefined : json['tlsEnabled'],
         'redirectToHttps': !exists(json, 'redirectToHttps') ? undefined : json['redirectToHttps'],
         'serverCertificate': !exists(json, 'serverCertificate') ? undefined : json['serverCertificate'],
@@ -72,6 +85,7 @@ export function TetrateApiTccCoreV1TLSSettingsToJSON(value?: TetrateApiTccCoreV1
         return undefined;
     }
     return {
+        'tlsMode': TetrateApiTccCoreV1TLSModeToJSON(value.tlsMode),
         'tlsEnabled': value.tlsEnabled,
         'redirectToHttps': value.redirectToHttps,
         'serverCertificate': value.serverCertificate,

@@ -75,6 +75,12 @@ export interface TetrateApiTccCoreV1CreateApplicationRequest {
      * @memberof TetrateApiTccCoreV1CreateApplicationRequest
      */
     namespaces?: Array<string>;
+    /**
+     * Indicates whether communication between services in the application should use mutual TLS or not. Defaults to true if not specified. Applications with just the app specific LB should set this value to false.
+     * @type {boolean}
+     * @memberof TetrateApiTccCoreV1CreateApplicationRequest
+     */
+    useMtlsBetweenServices?: boolean;
 }
 
 export function TetrateApiTccCoreV1CreateApplicationRequestFromJSON(json: any): TetrateApiTccCoreV1CreateApplicationRequest {
@@ -87,6 +93,7 @@ export function TetrateApiTccCoreV1CreateApplicationRequestFromJSON(json: any): 
         'clientSettings': !exists(json, 'clientSettings') ? undefined : TetrateApiTccCoreV1ClientSettingsFromJSON(json['clientSettings']),
         'appLbs': !exists(json, 'appLbs') ? undefined : (json['appLbs'] as Array<any>).map(TetrateApiTccCoreV1ApplicationSpecificLBFromJSON),
         'namespaces': !exists(json, 'namespaces') ? undefined : json['namespaces'],
+        'useMtlsBetweenServices': !exists(json, 'useMtlsBetweenServices') ? undefined : json['useMtlsBetweenServices'],
     };
 }
 
@@ -103,6 +110,7 @@ export function TetrateApiTccCoreV1CreateApplicationRequestToJSON(value?: Tetrat
         'clientSettings': TetrateApiTccCoreV1ClientSettingsToJSON(value.clientSettings),
         'appLbs': value.appLbs === undefined ? undefined : (value.appLbs as Array<any>).map(TetrateApiTccCoreV1ApplicationSpecificLBToJSON),
         'namespaces': value.namespaces,
+        'useMtlsBetweenServices': value.useMtlsBetweenServices,
     };
 }
 

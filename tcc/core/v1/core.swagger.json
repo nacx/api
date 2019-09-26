@@ -3135,7 +3135,7 @@
         },
         "clientSettings": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.ClientSettings",
-          "description": "Resilience settings that apply to all services within the application, for outbound calls from the application's services to other services."
+          "description": "Resilience settings that apply to all services within the application, for outbound calls from the application's services to other services in the application or to other applications."
         },
         "appLbs": {
           "type": "array",
@@ -3150,6 +3150,11 @@
             "type": "string"
           },
           "description": "List of namespaces where the application services (or components) are scoped within. If omitted, the application is assumed to be scoped in a namespace matching the Id field."
+        },
+        "useMtlsBetweenServices": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": "Indicates whether communication between services in the application should use mutual TLS or not. Defaults to true if not specified. Applications with just the app specific LB should set this value to false."
         }
       },
       "description": "An Application is a collection of services. Each application typically corresponds to one or more kubernetes namespace or an application deployment on VMs.",
@@ -3452,6 +3457,11 @@
             "type": "string"
           },
           "description": "List of namespaces where the application services (or components) are scoped within. If omitted, the application is assumed to be scoped in a namespace matching the Id field."
+        },
+        "useMtlsBetweenServices": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": "Indicates whether communication between services in the application should use mutual TLS or not. Defaults to true if not specified. Applications with just the app specific LB should set this value to false."
         }
       }
     },
@@ -4624,9 +4634,23 @@
         }
       }
     },
+    "tetrate.api.tcc.core.v1.TLSMode": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "SIMPLE",
+        "MUTUAL",
+        "SNI_PASSTHROUGH"
+      ],
+      "default": "DISABLED"
+    },
     "tetrate.api.tcc.core.v1.TLSSettings": {
       "type": "object",
       "properties": {
+        "tlsMode": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.TLSMode",
+          "description": "Set this to SIMPLE, MUTUAL, or SNI_PASSTHROUGH for one-way TLS, mutual TLS, or client sni-based TLS passthrough respectively. The hostname in the load balancer will be used as the SNI in the TLS passthrough mode."
+        },
         "tlsEnabled": {
           "type": "boolean",
           "format": "boolean",
@@ -4651,7 +4675,7 @@
         },
         "secretName": {
           "type": "string",
-          "description": "For proxies running on Kubernetes, the name of the secret that holds the TLS certs. Currently applicable only on Kubernetes. The secret should contain the server certificate and the private key. If mutual TLS is being used, an additional secret with name secretName-cacert should be created with the CaCertificates that the server will use to verify client side certificates. If the service is exposed via a load balancer, the secret must be accessible to it."
+          "description": "For proxies running on Kubernetes, the name of the secret that holds the TLS certs including the CA certificates. Currently applicable only on Kubernetes. The secret (type generic) should contain the following keys and values: key: \u003cprivateKey\u003e, cert: \u003cserverCert\u003e, cacert: \u003cCACertificate\u003e.  If the service is exposed via a load balancer, the secret must be accessible to it."
         }
       }
     },
