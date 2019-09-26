@@ -136,6 +136,21 @@ func (m *LoadBalancer) Validate() error {
 
 	}
 
+	for idx, item := range m.GetServices() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return LoadBalancerValidationError{
+					field:  fmt.Sprintf("Services[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
 	return nil
 }
 
@@ -201,6 +216,8 @@ func (m *LBPort) Validate() error {
 	}
 
 	// no validation rules for Port
+
+	// no validation rules for Protocol
 
 	// no validation rules for IsSecure
 
@@ -280,6 +297,10 @@ func (m *Service) Validate() error {
 
 	// no validation rules for Hostname
 
+	// no validation rules for Port
+
+	// no validation rules for Protocol
+
 	if v, ok := interface{}(m.GetTls()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
 			return ServiceValidationError{
@@ -290,10 +311,10 @@ func (m *Service) Validate() error {
 		}
 	}
 
-	if v, ok := interface{}(m.GetTimeout()).(interface{ Validate() error }); ok {
+	if v, ok := interface{}(m.GetHttpRequestTimeout()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
 			return ServiceValidationError{
-				field:  "Timeout",
+				field:  "HttpRequestTimeout",
 				reason: "embedded message failed validation",
 				cause:  err,
 			}

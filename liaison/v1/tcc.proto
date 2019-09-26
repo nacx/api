@@ -21,16 +21,22 @@ message Metadata {
 message LoadBalancer {
   Metadata metadata = 1;
   repeated LBPort ports = 2;
+  // This is a temporary hack until we figure out the workflow processes and UI related stuff.
+  // Until then we figure out the load balancer ports from the service_ids itself.
+  // In the UI, this corresponds to a user clicking on a load balancer and adding one or more
+  // hosts within that load balancer.
+  repeated Service services = 3;
 }
 
 message LBPort {
   uint32 port = 1;
+  string protocol = 2;
   // if set to true, indicates that TLS settings should be applied
   // to the server on this port
-  bool is_secure = 2;
+  bool is_secure = 3;
   // Should there be a common tls settings here?
   // set of services exposed on this port
-  repeated string service_id = 3;
+  repeated string service_ids = 4;
 }
 
 // Service describes the properties of a service
@@ -38,15 +44,20 @@ message Service {
   Metadata metadata = 1;
   string hostname = 2;
 
+  uint32 port = 3;
+  // HTTP/HTTPS/TCP/Secure TCP
+  // UI should show TLS settings if protocol is HTTPS or secure TCP
+  string protocol = 4;
+
   // We assume that this is a HTTP based service. TLS settings if
   // specified will result in TLS termination depending on the LB port
   // to which this service is assigned.
-  TLSSettingsOrId tls = 3;
+  TLSSettingsOrId tls = 5;
 
-  // Timeout for HTTP requests made to this service
-  google.protobuf.Duration timeout = 4;
+  // Timeout for HTTP requests made to backends of this service
+  google.protobuf.Duration http_request_timeout = 6;
 
-  repeated HttpRuleOrId http_rules = 5;
+  repeated HttpRuleOrId http_rules = 7;
 }
 
 message HttpRuleOrId {
@@ -70,7 +81,6 @@ message HttpRule {
     Redirect redirect = 5;
   }
 }
-
 
 message MatchProgramOrId {
   oneof obj_or_id {
