@@ -4,7 +4,7 @@ envoyfilter.yaml
 api-*
 
 # descriptor.
-liaison.proto-descriptor
+liaison-public.proto-descriptor
 
 # Old merging files.
 .orig

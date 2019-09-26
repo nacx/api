@@ -8,7 +8,7 @@ ISTIO_API := api-$(ISTIO_API_VERSION)
 ISTIO_APIS := $(ISTIO_API)/networking/v1alpha3 $(ISTIO_API)/mcp/v1alpha1
 
 # Targets.
-DESCRIPTOR := liaison.proto-descriptor
+DESCRIPTOR := liaison-public.proto-descriptor
 ENVOYFILTER := envoyfilter.yaml
 
 GOPATH := $(shell go env GOPATH)
