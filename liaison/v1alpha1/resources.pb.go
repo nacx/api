@@ -37,7 +37,7 @@ func (m *Resource) Reset()         { *m = Resource{} }
 func (m *Resource) String() string { return proto.CompactTextString(m) }
 func (*Resource) ProtoMessage()    {}
 func (*Resource) Descriptor() ([]byte, []int) {
-	return fileDescriptor_resources_71915ca02609450d, []int{0}
+	return fileDescriptor_resources_73a26cfbcfcc27d1, []int{0}
 }
 func (m *Resource) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Resource.Unmarshal(m, b)
@@ -77,7 +77,7 @@ func (m *SetResourceRequest) Reset()         { *m = SetResourceRequest{} }
 func (m *SetResourceRequest) String() string { return proto.CompactTextString(m) }
 func (*SetResourceRequest) ProtoMessage()    {}
 func (*SetResourceRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_resources_71915ca02609450d, []int{1}
+	return fileDescriptor_resources_73a26cfbcfcc27d1, []int{1}
 }
 func (m *SetResourceRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_SetResourceRequest.Unmarshal(m, b)
@@ -106,7 +106,7 @@ func (m *SetResourceRequest) GetYaml() []byte {
 
 // Request to get an uploaded resource.
 type GetResourceRequest struct {
-	// The resource key.
+	// The resource key. Key = TypeURL:FullName. Stringified as [Key](TypeURL:FullName).
 	Key                  string   `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -117,7 +117,7 @@ func (m *GetResourceRequest) Reset()         { *m = GetResourceRequest{} }
 func (m *GetResourceRequest) String() string { return proto.CompactTextString(m) }
 func (*GetResourceRequest) ProtoMessage()    {}
 func (*GetResourceRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_resources_71915ca02609450d, []int{2}
+	return fileDescriptor_resources_73a26cfbcfcc27d1, []int{2}
 }
 func (m *GetResourceRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetResourceRequest.Unmarshal(m, b)
@@ -261,9 +261,9 @@ var _ResourcesService_serviceDesc = grpc.ServiceDesc{
 	Metadata: "resources.proto",
 }
 
-func init() { proto.RegisterFile("resources.proto", fileDescriptor_resources_71915ca02609450d) }
+func init() { proto.RegisterFile("resources.proto", fileDescriptor_resources_73a26cfbcfcc27d1) }
 
-var fileDescriptor_resources_71915ca02609450d = []byte{
+var fileDescriptor_resources_73a26cfbcfcc27d1 = []byte{
 	// 290 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xe2, 0x2f, 0x4a, 0x2d, 0xce,
 	0x2f, 0x2d, 0x4a, 0x4e, 0x2d, 0xd6, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x92, 0x29, 0x49, 0x2d,
