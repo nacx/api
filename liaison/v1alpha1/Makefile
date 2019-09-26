@@ -1,6 +1,15 @@
 # Copyright (c) Tetrate, Inc 2019 All Rights Reserved.
 
+# Istio API.
 ISTIO_API_VERSION := 1.1.0-snapshot.5
+# TODO(dio): We should have a better naming for ISTIO_API if tar in osx supports --transform.
+ISTIO_API := api-$(ISTIO_API_VERSION)
+# The enabled Istio APIs.
+ISTIO_APIS := $(ISTIO_API)/networking/v1alpha3 $(ISTIO_API)/mcp/v1alpha1
+
+# Targets.
+DESCRIPTOR := liaison.proto-descriptor
+ENVOYFILTER := envoyfilter.yaml
 
 GOPATH := $(shell go env GOPATH)
 GOSRCDIR := $(GOPATH)/src
@@ -9,7 +18,7 @@ TOPDIR := ../../..
 VENDOR := $(TOPDIR)/third_party/protobuf/
 
 TOP_PROTOS := $(wildcard *.proto)
-ALL_PROTOS := $(wildcard *.proto) $(wildcard */*.proto)
+ALL_PROTOS := $(wildcard *.proto) $(wildcard */*.proto) $(wildcard */*/*.proto)
 ALL_GO_PROTOS := $(patsubst %.proto,%.pb.go,$(ALL_PROTOS))
 ALL_GO_VALIDATE_PROTOS := $(patsubst %.proto,%.pb.validate.go,$(ALL_PROTOS))
 
@@ -20,15 +29,7 @@ ALL_TS_SERVICE_PROTOS := $(patsubst %.proto,%_pb_service.d.ts,$(ALL_PROTOS))
 ALL_CLIENT_PROTOS := $(ALL_JS_PROTOS) $(ALL_TS_PROTOS) $(ALL_JS_SERVICE_PROTOS) \
 	$(ALL_TS_SERVICE_PROTOS)
 
-ALL_JS_ARTIFACTS := ./google ./validate node_modules
-
-# Istio API.
-# TODO(dio): We should have a better naming for ISTIO_API if tar in osx supports --transform.
-ISTIO_API := api-$(ISTIO_API_VERSION)
-
-# Targets.
-DESCRIPTOR := liaison.proto-descriptor
-ENVOYFILTER := envoyfilter.yaml
+ALL_JS_ARTIFACTS := ./google/api ./validate ./mcp ./networking node_modules
 
 ALL_GENERATED := $(ALL_GO_PROTOS) $(ALL_GO_VALIDATE_PROTOS) $(DESCRIPTOR) $(ENVOYFILTER) \
 	$(ISTIO_API) $(ALL_CLIENT_PROTOS) $(ALL_JS_ARTIFACTS)
@@ -97,7 +98,7 @@ $(ALL_TS_PROTOS):
 
 $(ISTIO_API):
 	@wget -q -O- https://github.com/istio/api/archive/$(ISTIO_API_VERSION).tar.gz \
-	| tar xz $(ISTIO_API)/networking/v1alpha3
+	| tar xz $(ISTIO_APIS)
 
 node_modules: touch
 	@yarn
@@ -106,10 +107,14 @@ node_modules: touch
 js: node_modules $(ALL_JS_PROTOS) $(ALL_TS_PROTOS)
 
 touch:
-	mkdir -p ./google/api
-	mkdir -p ./validate
-	touch ./google/api/annotations_pb.js
-	touch ./validate/validate_pb.js
+	@mkdir -p ./google/api
+	@mkdir -p ./validate
+	@mkdir -p $(ISTIO_API)/gogoproto
+	@touch ./google/api/annotations_pb.js
+	@touch ./validate/validate_pb.js
+	@touch $(ISTIO_API)/gogoproto/gogo_pb.js
+	@[[ -s "./mcp" ]] && echo "mcp: ok" || ln -s $(ISTIO_API)/mcp ./mcp
+	@[[ -s "./networking" ]] && echo "networking: ok" || ln -s $(ISTIO_API)/networking ./networking
 
 clean:
 	rm -fr $(ALL_GENERATED)
