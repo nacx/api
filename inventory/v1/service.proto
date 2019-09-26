@@ -7,6 +7,7 @@ option go_package = "github.com/tetrateio/tetrate/api/inventory/v1;invv1";
 
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
 
 // InventoryService returns a collection of all Tetrate-discovered service entities
 service InventoryService {
@@ -14,12 +15,34 @@ service InventoryService {
     option (google.api.http).get = "/v1/services";
   };
 
-  // ImpoBindServicertUsers binds a service to a given policy
-  rpc BindService(BindServicesRequest) returns (BindServicesResponse) {
+  rpc ListPolicies(ListPoliciesRequest) returns (ListPoliciesResponse) {
+    option (google.api.http).get = "/v1/policies";
+  };
+
+  rpc ListBindings(ListBindingsRequest) returns (ListBindingsResponse) {
+    option (google.api.http).get = "/v1/services/{service}/bindings";
+  };
+
+  // Binds a service to the given policy and users or groups
+  rpc BindService(BindServiceRequest) returns (ServiceBinding) {
     option (google.api.http) = {
-      post: "/v1/services/{service}/{binding}"
-      body: "*"
+      post: "/v1/services/{service}/{binding.policy}"
+      body: "binding"
     };
+  };
+
+  // Modifies the service binding for the given policy. This allows to modify
+  // the users and groups the binding applies to
+  rpc UpdateBinding(BindServiceRequest) returns (ServiceBinding) {
+    option (google.api.http) = {
+      put: "/v1/services/{service}/{binding.policy}"
+      body: "binding"
+    };
+  };
+
+  // Removes the binding for the given policy
+  rpc UnbindService(UnbindServiceRequest) returns (google.protobuf.Empty) {
+    option (google.api.http).delete = "/v1/services/{service}/{policy}";
   };
 }
 
@@ -161,13 +184,42 @@ message PortSpec {
   int32 container_port = 5;
 }
 
-// BindServicesRequest is a request to bind a service to a given policy
-message BindServicesRequest {
-  // The service to bind
-  string service = 1;
-  // The name of the policy to bind the service to
-  string binding = 2;
+// Represents the binding of a policy to a set of users and groups
+message ServiceBinding {
+  string etag = 1;
+  // The name of the policy the service is bound to
+  string policy = 2;
+  // The users the service is bound to with this policy
+  repeated string users = 3;
+  // The groups the service is bound to with this policy
+  repeated string groups = 4;
 }
 
-// ListServicesResponse is a collection of Tetrate-discovered services
-message BindServicesResponse { }
+// Temporal definition of policy until we have a designed how they will be defined and represented
+// It is just a placeholder to have the owner and on-call policies
+message Policy {
+  string name = 1;
+  string description = 2;
+}
+
+message BindServiceRequest {
+  string service = 1;
+  ServiceBinding binding = 2;
+}
+
+message UnbindServiceRequest {
+  string service = 1;
+  string policy = 2;
+}
+
+message ListBindingsRequest { 
+  string service = 1;
+}
+message ListBindingsResponse {
+  repeated ServiceBinding bindings = 1;
+}
+
+message ListPoliciesRequest { }
+message ListPoliciesResponse {
+  repeated Policy policies = 1;
+}

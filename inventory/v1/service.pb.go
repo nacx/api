@@ -6,6 +6,7 @@ package invv1 // import "github.com/tetrateio/tetrate/api/inventory/v1"
 import proto "github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
+import empty "github.com/golang/protobuf/ptypes/empty"
 import timestamp "github.com/golang/protobuf/ptypes/timestamp"
 import _ "google.golang.org/genproto/googleapis/api/annotations"
 
@@ -51,7 +52,7 @@ func (x Service_Kind) String() string {
 	return proto.EnumName(Service_Kind_name, int32(x))
 }
 func (Service_Kind) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_service_13e67eaeaa84f357, []int{0, 0}
+	return fileDescriptor_service_e2df29746bdb4469, []int{0, 0}
 }
 
 // ServiceStatus represents the health status of this service
@@ -75,7 +76,7 @@ func (x Service_Status) String() string {
 	return proto.EnumName(Service_Status_name, int32(x))
 }
 func (Service_Status) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_service_13e67eaeaa84f357, []int{0, 1}
+	return fileDescriptor_service_e2df29746bdb4469, []int{0, 1}
 }
 
 // Transport protocols that are currently supported
@@ -105,7 +106,7 @@ func (x PortSpec_Protocol) String() string {
 	return proto.EnumName(PortSpec_Protocol_name, int32(x))
 }
 func (PortSpec_Protocol) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_service_13e67eaeaa84f357, []int{7, 0}
+	return fileDescriptor_service_e2df29746bdb4469, []int{7, 0}
 }
 
 // Tetrate service definition that uniquely identifies services
@@ -135,7 +136,7 @@ func (m *Service) Reset()         { *m = Service{} }
 func (m *Service) String() string { return proto.CompactTextString(m) }
 func (*Service) ProtoMessage()    {}
 func (*Service) Descriptor() ([]byte, []int) {
-	return fileDescriptor_service_13e67eaeaa84f357, []int{0}
+	return fileDescriptor_service_e2df29746bdb4469, []int{0}
 }
 func (m *Service) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Service.Unmarshal(m, b)
@@ -222,7 +223,7 @@ func (m *ListServicesRequest) Reset()         { *m = ListServicesRequest{} }
 func (m *ListServicesRequest) String() string { return proto.CompactTextString(m) }
 func (*ListServicesRequest) ProtoMessage()    {}
 func (*ListServicesRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_service_13e67eaeaa84f357, []int{1}
+	return fileDescriptor_service_e2df29746bdb4469, []int{1}
 }
 func (m *ListServicesRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListServicesRequest.Unmarshal(m, b)
@@ -254,7 +255,7 @@ func (m *ListServicesResponse) Reset()         { *m = ListServicesResponse{} }
 func (m *ListServicesResponse) String() string { return proto.CompactTextString(m) }
 func (*ListServicesResponse) ProtoMessage()    {}
 func (*ListServicesResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_service_13e67eaeaa84f357, []int{2}
+	return fileDescriptor_service_e2df29746bdb4469, []int{2}
 }
 func (m *ListServicesResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListServicesResponse.Unmarshal(m, b)
@@ -307,7 +308,7 @@ func (m *Metadata) Reset()         { *m = Metadata{} }
 func (m *Metadata) String() string { return proto.CompactTextString(m) }
 func (*Metadata) ProtoMessage()    {}
 func (*Metadata) Descriptor() ([]byte, []int) {
-	return fileDescriptor_service_13e67eaeaa84f357, []int{3}
+	return fileDescriptor_service_e2df29746bdb4469, []int{3}
 }
 func (m *Metadata) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Metadata.Unmarshal(m, b)
@@ -386,7 +387,7 @@ func (m *Cluster) Reset()         { *m = Cluster{} }
 func (m *Cluster) String() string { return proto.CompactTextString(m) }
 func (*Cluster) ProtoMessage()    {}
 func (*Cluster) Descriptor() ([]byte, []int) {
-	return fileDescriptor_service_13e67eaeaa84f357, []int{4}
+	return fileDescriptor_service_e2df29746bdb4469, []int{4}
 }
 func (m *Cluster) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Cluster.Unmarshal(m, b)
@@ -448,7 +449,7 @@ func (m *Workload) Reset()         { *m = Workload{} }
 func (m *Workload) String() string { return proto.CompactTextString(m) }
 func (*Workload) ProtoMessage()    {}
 func (*Workload) Descriptor() ([]byte, []int) {
-	return fileDescriptor_service_13e67eaeaa84f357, []int{5}
+	return fileDescriptor_service_e2df29746bdb4469, []int{5}
 }
 func (m *Workload) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Workload.Unmarshal(m, b)
@@ -516,7 +517,7 @@ func (m *Endpoint) Reset()         { *m = Endpoint{} }
 func (m *Endpoint) String() string { return proto.CompactTextString(m) }
 func (*Endpoint) ProtoMessage()    {}
 func (*Endpoint) Descriptor() ([]byte, []int) {
-	return fileDescriptor_service_13e67eaeaa84f357, []int{6}
+	return fileDescriptor_service_e2df29746bdb4469, []int{6}
 }
 func (m *Endpoint) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Endpoint.Unmarshal(m, b)
@@ -693,7 +694,7 @@ func (m *PortSpec) Reset()         { *m = PortSpec{} }
 func (m *PortSpec) String() string { return proto.CompactTextString(m) }
 func (*PortSpec) ProtoMessage()    {}
 func (*PortSpec) Descriptor() ([]byte, []int) {
-	return fileDescriptor_service_13e67eaeaa84f357, []int{7}
+	return fileDescriptor_service_e2df29746bdb4469, []int{7}
 }
 func (m *PortSpec) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PortSpec.Unmarshal(m, b)
@@ -741,85 +742,355 @@ func (m *PortSpec) GetContainerPort() int32 {
 	return 0
 }
 
-// BindServicesRequest is a request to bind a service to a given policy
-type BindServicesRequest struct {
-	// The service to bind
-	Service string `protobuf:"bytes,1,opt,name=service,proto3" json:"service,omitempty"`
-	// The name of the policy to bind the service to
-	Binding              string   `protobuf:"bytes,2,opt,name=binding,proto3" json:"binding,omitempty"`
+// Represents the binding of a policy to a set of users and groups
+type ServiceBinding struct {
+	Etag string `protobuf:"bytes,1,opt,name=etag,proto3" json:"etag,omitempty"`
+	// The name of the policy the service is bound to
+	Policy string `protobuf:"bytes,2,opt,name=policy,proto3" json:"policy,omitempty"`
+	// The users the service is bound to with this policy
+	Users []string `protobuf:"bytes,3,rep,name=users,proto3" json:"users,omitempty"`
+	// The groups the service is bound to with this policy
+	Groups               []string `protobuf:"bytes,4,rep,name=groups,proto3" json:"groups,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *BindServicesRequest) Reset()         { *m = BindServicesRequest{} }
-func (m *BindServicesRequest) String() string { return proto.CompactTextString(m) }
-func (*BindServicesRequest) ProtoMessage()    {}
-func (*BindServicesRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_service_13e67eaeaa84f357, []int{8}
+func (m *ServiceBinding) Reset()         { *m = ServiceBinding{} }
+func (m *ServiceBinding) String() string { return proto.CompactTextString(m) }
+func (*ServiceBinding) ProtoMessage()    {}
+func (*ServiceBinding) Descriptor() ([]byte, []int) {
+	return fileDescriptor_service_e2df29746bdb4469, []int{8}
 }
-func (m *BindServicesRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_BindServicesRequest.Unmarshal(m, b)
+func (m *ServiceBinding) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ServiceBinding.Unmarshal(m, b)
 }
-func (m *BindServicesRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_BindServicesRequest.Marshal(b, m, deterministic)
+func (m *ServiceBinding) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ServiceBinding.Marshal(b, m, deterministic)
 }
-func (dst *BindServicesRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_BindServicesRequest.Merge(dst, src)
+func (dst *ServiceBinding) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ServiceBinding.Merge(dst, src)
 }
-func (m *BindServicesRequest) XXX_Size() int {
-	return xxx_messageInfo_BindServicesRequest.Size(m)
+func (m *ServiceBinding) XXX_Size() int {
+	return xxx_messageInfo_ServiceBinding.Size(m)
 }
-func (m *BindServicesRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_BindServicesRequest.DiscardUnknown(m)
+func (m *ServiceBinding) XXX_DiscardUnknown() {
+	xxx_messageInfo_ServiceBinding.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_BindServicesRequest proto.InternalMessageInfo
+var xxx_messageInfo_ServiceBinding proto.InternalMessageInfo
 
-func (m *BindServicesRequest) GetService() string {
+func (m *ServiceBinding) GetEtag() string {
+	if m != nil {
+		return m.Etag
+	}
+	return ""
+}
+
+func (m *ServiceBinding) GetPolicy() string {
+	if m != nil {
+		return m.Policy
+	}
+	return ""
+}
+
+func (m *ServiceBinding) GetUsers() []string {
+	if m != nil {
+		return m.Users
+	}
+	return nil
+}
+
+func (m *ServiceBinding) GetGroups() []string {
+	if m != nil {
+		return m.Groups
+	}
+	return nil
+}
+
+// Temporal definition of policy until we have a designed how they will be defined and represented
+// It is just a placeholder to have the owner and on-call policies
+type Policy struct {
+	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Description          string   `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *Policy) Reset()         { *m = Policy{} }
+func (m *Policy) String() string { return proto.CompactTextString(m) }
+func (*Policy) ProtoMessage()    {}
+func (*Policy) Descriptor() ([]byte, []int) {
+	return fileDescriptor_service_e2df29746bdb4469, []int{9}
+}
+func (m *Policy) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_Policy.Unmarshal(m, b)
+}
+func (m *Policy) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_Policy.Marshal(b, m, deterministic)
+}
+func (dst *Policy) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Policy.Merge(dst, src)
+}
+func (m *Policy) XXX_Size() int {
+	return xxx_messageInfo_Policy.Size(m)
+}
+func (m *Policy) XXX_DiscardUnknown() {
+	xxx_messageInfo_Policy.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Policy proto.InternalMessageInfo
+
+func (m *Policy) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *Policy) GetDescription() string {
+	if m != nil {
+		return m.Description
+	}
+	return ""
+}
+
+type BindServiceRequest struct {
+	Service              string          `protobuf:"bytes,1,opt,name=service,proto3" json:"service,omitempty"`
+	Binding              *ServiceBinding `protobuf:"bytes,2,opt,name=binding,proto3" json:"binding,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *BindServiceRequest) Reset()         { *m = BindServiceRequest{} }
+func (m *BindServiceRequest) String() string { return proto.CompactTextString(m) }
+func (*BindServiceRequest) ProtoMessage()    {}
+func (*BindServiceRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_service_e2df29746bdb4469, []int{10}
+}
+func (m *BindServiceRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_BindServiceRequest.Unmarshal(m, b)
+}
+func (m *BindServiceRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_BindServiceRequest.Marshal(b, m, deterministic)
+}
+func (dst *BindServiceRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_BindServiceRequest.Merge(dst, src)
+}
+func (m *BindServiceRequest) XXX_Size() int {
+	return xxx_messageInfo_BindServiceRequest.Size(m)
+}
+func (m *BindServiceRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_BindServiceRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_BindServiceRequest proto.InternalMessageInfo
+
+func (m *BindServiceRequest) GetService() string {
 	if m != nil {
 		return m.Service
 	}
 	return ""
 }
 
-func (m *BindServicesRequest) GetBinding() string {
+func (m *BindServiceRequest) GetBinding() *ServiceBinding {
 	if m != nil {
 		return m.Binding
 	}
-	return ""
+	return nil
 }
 
-// ListServicesResponse is a collection of Tetrate-discovered services
-type BindServicesResponse struct {
+type UnbindServiceRequest struct {
+	Service              string   `protobuf:"bytes,1,opt,name=service,proto3" json:"service,omitempty"`
+	Policy               string   `protobuf:"bytes,2,opt,name=policy,proto3" json:"policy,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *BindServicesResponse) Reset()         { *m = BindServicesResponse{} }
-func (m *BindServicesResponse) String() string { return proto.CompactTextString(m) }
-func (*BindServicesResponse) ProtoMessage()    {}
-func (*BindServicesResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_service_13e67eaeaa84f357, []int{9}
+func (m *UnbindServiceRequest) Reset()         { *m = UnbindServiceRequest{} }
+func (m *UnbindServiceRequest) String() string { return proto.CompactTextString(m) }
+func (*UnbindServiceRequest) ProtoMessage()    {}
+func (*UnbindServiceRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_service_e2df29746bdb4469, []int{11}
 }
-func (m *BindServicesResponse) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_BindServicesResponse.Unmarshal(m, b)
+func (m *UnbindServiceRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_UnbindServiceRequest.Unmarshal(m, b)
 }
-func (m *BindServicesResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_BindServicesResponse.Marshal(b, m, deterministic)
+func (m *UnbindServiceRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_UnbindServiceRequest.Marshal(b, m, deterministic)
 }
-func (dst *BindServicesResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_BindServicesResponse.Merge(dst, src)
+func (dst *UnbindServiceRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UnbindServiceRequest.Merge(dst, src)
 }
-func (m *BindServicesResponse) XXX_Size() int {
-	return xxx_messageInfo_BindServicesResponse.Size(m)
+func (m *UnbindServiceRequest) XXX_Size() int {
+	return xxx_messageInfo_UnbindServiceRequest.Size(m)
 }
-func (m *BindServicesResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_BindServicesResponse.DiscardUnknown(m)
+func (m *UnbindServiceRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_UnbindServiceRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_BindServicesResponse proto.InternalMessageInfo
+var xxx_messageInfo_UnbindServiceRequest proto.InternalMessageInfo
+
+func (m *UnbindServiceRequest) GetService() string {
+	if m != nil {
+		return m.Service
+	}
+	return ""
+}
+
+func (m *UnbindServiceRequest) GetPolicy() string {
+	if m != nil {
+		return m.Policy
+	}
+	return ""
+}
+
+type ListBindingsRequest struct {
+	Service              string   `protobuf:"bytes,1,opt,name=service,proto3" json:"service,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ListBindingsRequest) Reset()         { *m = ListBindingsRequest{} }
+func (m *ListBindingsRequest) String() string { return proto.CompactTextString(m) }
+func (*ListBindingsRequest) ProtoMessage()    {}
+func (*ListBindingsRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_service_e2df29746bdb4469, []int{12}
+}
+func (m *ListBindingsRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ListBindingsRequest.Unmarshal(m, b)
+}
+func (m *ListBindingsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ListBindingsRequest.Marshal(b, m, deterministic)
+}
+func (dst *ListBindingsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ListBindingsRequest.Merge(dst, src)
+}
+func (m *ListBindingsRequest) XXX_Size() int {
+	return xxx_messageInfo_ListBindingsRequest.Size(m)
+}
+func (m *ListBindingsRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ListBindingsRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ListBindingsRequest proto.InternalMessageInfo
+
+func (m *ListBindingsRequest) GetService() string {
+	if m != nil {
+		return m.Service
+	}
+	return ""
+}
+
+type ListBindingsResponse struct {
+	Bindings             []*ServiceBinding `protobuf:"bytes,1,rep,name=bindings,proto3" json:"bindings,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
+	XXX_unrecognized     []byte            `json:"-"`
+	XXX_sizecache        int32             `json:"-"`
+}
+
+func (m *ListBindingsResponse) Reset()         { *m = ListBindingsResponse{} }
+func (m *ListBindingsResponse) String() string { return proto.CompactTextString(m) }
+func (*ListBindingsResponse) ProtoMessage()    {}
+func (*ListBindingsResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_service_e2df29746bdb4469, []int{13}
+}
+func (m *ListBindingsResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ListBindingsResponse.Unmarshal(m, b)
+}
+func (m *ListBindingsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ListBindingsResponse.Marshal(b, m, deterministic)
+}
+func (dst *ListBindingsResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ListBindingsResponse.Merge(dst, src)
+}
+func (m *ListBindingsResponse) XXX_Size() int {
+	return xxx_messageInfo_ListBindingsResponse.Size(m)
+}
+func (m *ListBindingsResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_ListBindingsResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ListBindingsResponse proto.InternalMessageInfo
+
+func (m *ListBindingsResponse) GetBindings() []*ServiceBinding {
+	if m != nil {
+		return m.Bindings
+	}
+	return nil
+}
+
+type ListPoliciesRequest struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ListPoliciesRequest) Reset()         { *m = ListPoliciesRequest{} }
+func (m *ListPoliciesRequest) String() string { return proto.CompactTextString(m) }
+func (*ListPoliciesRequest) ProtoMessage()    {}
+func (*ListPoliciesRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_service_e2df29746bdb4469, []int{14}
+}
+func (m *ListPoliciesRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ListPoliciesRequest.Unmarshal(m, b)
+}
+func (m *ListPoliciesRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ListPoliciesRequest.Marshal(b, m, deterministic)
+}
+func (dst *ListPoliciesRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ListPoliciesRequest.Merge(dst, src)
+}
+func (m *ListPoliciesRequest) XXX_Size() int {
+	return xxx_messageInfo_ListPoliciesRequest.Size(m)
+}
+func (m *ListPoliciesRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ListPoliciesRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ListPoliciesRequest proto.InternalMessageInfo
+
+type ListPoliciesResponse struct {
+	Policies             []*Policy `protobuf:"bytes,1,rep,name=policies,proto3" json:"policies,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
+	XXX_unrecognized     []byte    `json:"-"`
+	XXX_sizecache        int32     `json:"-"`
+}
+
+func (m *ListPoliciesResponse) Reset()         { *m = ListPoliciesResponse{} }
+func (m *ListPoliciesResponse) String() string { return proto.CompactTextString(m) }
+func (*ListPoliciesResponse) ProtoMessage()    {}
+func (*ListPoliciesResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_service_e2df29746bdb4469, []int{15}
+}
+func (m *ListPoliciesResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ListPoliciesResponse.Unmarshal(m, b)
+}
+func (m *ListPoliciesResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ListPoliciesResponse.Marshal(b, m, deterministic)
+}
+func (dst *ListPoliciesResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ListPoliciesResponse.Merge(dst, src)
+}
+func (m *ListPoliciesResponse) XXX_Size() int {
+	return xxx_messageInfo_ListPoliciesResponse.Size(m)
+}
+func (m *ListPoliciesResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_ListPoliciesResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ListPoliciesResponse proto.InternalMessageInfo
+
+func (m *ListPoliciesResponse) GetPolicies() []*Policy {
+	if m != nil {
+		return m.Policies
+	}
+	return nil
+}
 
 func init() {
 	proto.RegisterType((*Service)(nil), "tetrate.api.inventory.v1.Service")
@@ -832,8 +1103,14 @@ func init() {
 	proto.RegisterType((*Workload)(nil), "tetrate.api.inventory.v1.Workload")
 	proto.RegisterType((*Endpoint)(nil), "tetrate.api.inventory.v1.Endpoint")
 	proto.RegisterType((*PortSpec)(nil), "tetrate.api.inventory.v1.PortSpec")
-	proto.RegisterType((*BindServicesRequest)(nil), "tetrate.api.inventory.v1.BindServicesRequest")
-	proto.RegisterType((*BindServicesResponse)(nil), "tetrate.api.inventory.v1.BindServicesResponse")
+	proto.RegisterType((*ServiceBinding)(nil), "tetrate.api.inventory.v1.ServiceBinding")
+	proto.RegisterType((*Policy)(nil), "tetrate.api.inventory.v1.Policy")
+	proto.RegisterType((*BindServiceRequest)(nil), "tetrate.api.inventory.v1.BindServiceRequest")
+	proto.RegisterType((*UnbindServiceRequest)(nil), "tetrate.api.inventory.v1.UnbindServiceRequest")
+	proto.RegisterType((*ListBindingsRequest)(nil), "tetrate.api.inventory.v1.ListBindingsRequest")
+	proto.RegisterType((*ListBindingsResponse)(nil), "tetrate.api.inventory.v1.ListBindingsResponse")
+	proto.RegisterType((*ListPoliciesRequest)(nil), "tetrate.api.inventory.v1.ListPoliciesRequest")
+	proto.RegisterType((*ListPoliciesResponse)(nil), "tetrate.api.inventory.v1.ListPoliciesResponse")
 	proto.RegisterEnum("tetrate.api.inventory.v1.Service_Kind", Service_Kind_name, Service_Kind_value)
 	proto.RegisterEnum("tetrate.api.inventory.v1.Service_Status", Service_Status_name, Service_Status_value)
 	proto.RegisterEnum("tetrate.api.inventory.v1.PortSpec_Protocol", PortSpec_Protocol_name, PortSpec_Protocol_value)
@@ -852,8 +1129,15 @@ const _ = grpc.SupportPackageIsVersion4
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type InventoryServiceClient interface {
 	ListServices(ctx context.Context, in *ListServicesRequest, opts ...grpc.CallOption) (*ListServicesResponse, error)
-	// ImpoBindServicertUsers binds a service to a given policy
-	BindService(ctx context.Context, in *BindServicesRequest, opts ...grpc.CallOption) (*BindServicesResponse, error)
+	ListPolicies(ctx context.Context, in *ListPoliciesRequest, opts ...grpc.CallOption) (*ListPoliciesResponse, error)
+	ListBindings(ctx context.Context, in *ListBindingsRequest, opts ...grpc.CallOption) (*ListBindingsResponse, error)
+	// Binds a service to the given policy and users or groups
+	BindService(ctx context.Context, in *BindServiceRequest, opts ...grpc.CallOption) (*ServiceBinding, error)
+	// Modifies the service binding for the given policy. This allows to modify
+	// the users and groups the binding applies to
+	UpdateBinding(ctx context.Context, in *BindServiceRequest, opts ...grpc.CallOption) (*ServiceBinding, error)
+	// Removes the binding for the given policy
+	UnbindService(ctx context.Context, in *UnbindServiceRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 }
 
 type inventoryServiceClient struct {
@@ -873,9 +1157,45 @@ func (c *inventoryServiceClient) ListServices(ctx context.Context, in *ListServi
 	return out, nil
 }
 
-func (c *inventoryServiceClient) BindService(ctx context.Context, in *BindServicesRequest, opts ...grpc.CallOption) (*BindServicesResponse, error) {
-	out := new(BindServicesResponse)
+func (c *inventoryServiceClient) ListPolicies(ctx context.Context, in *ListPoliciesRequest, opts ...grpc.CallOption) (*ListPoliciesResponse, error) {
+	out := new(ListPoliciesResponse)
+	err := c.cc.Invoke(ctx, "/tetrate.api.inventory.v1.InventoryService/ListPolicies", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *inventoryServiceClient) ListBindings(ctx context.Context, in *ListBindingsRequest, opts ...grpc.CallOption) (*ListBindingsResponse, error) {
+	out := new(ListBindingsResponse)
+	err := c.cc.Invoke(ctx, "/tetrate.api.inventory.v1.InventoryService/ListBindings", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *inventoryServiceClient) BindService(ctx context.Context, in *BindServiceRequest, opts ...grpc.CallOption) (*ServiceBinding, error) {
+	out := new(ServiceBinding)
 	err := c.cc.Invoke(ctx, "/tetrate.api.inventory.v1.InventoryService/BindService", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *inventoryServiceClient) UpdateBinding(ctx context.Context, in *BindServiceRequest, opts ...grpc.CallOption) (*ServiceBinding, error) {
+	out := new(ServiceBinding)
+	err := c.cc.Invoke(ctx, "/tetrate.api.inventory.v1.InventoryService/UpdateBinding", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *inventoryServiceClient) UnbindService(ctx context.Context, in *UnbindServiceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+	out := new(empty.Empty)
+	err := c.cc.Invoke(ctx, "/tetrate.api.inventory.v1.InventoryService/UnbindService", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -885,8 +1205,15 @@ func (c *inventoryServiceClient) BindService(ctx context.Context, in *BindServic
 // InventoryServiceServer is the server API for InventoryService service.
 type InventoryServiceServer interface {
 	ListServices(context.Context, *ListServicesRequest) (*ListServicesResponse, error)
-	// ImpoBindServicertUsers binds a service to a given policy
-	BindService(context.Context, *BindServicesRequest) (*BindServicesResponse, error)
+	ListPolicies(context.Context, *ListPoliciesRequest) (*ListPoliciesResponse, error)
+	ListBindings(context.Context, *ListBindingsRequest) (*ListBindingsResponse, error)
+	// Binds a service to the given policy and users or groups
+	BindService(context.Context, *BindServiceRequest) (*ServiceBinding, error)
+	// Modifies the service binding for the given policy. This allows to modify
+	// the users and groups the binding applies to
+	UpdateBinding(context.Context, *BindServiceRequest) (*ServiceBinding, error)
+	// Removes the binding for the given policy
+	UnbindService(context.Context, *UnbindServiceRequest) (*empty.Empty, error)
 }
 
 func RegisterInventoryServiceServer(s *grpc.Server, srv InventoryServiceServer) {
@@ -911,8 +1238,44 @@ func _InventoryService_ListServices_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _InventoryService_ListPolicies_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListPoliciesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InventoryServiceServer).ListPolicies(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/tetrate.api.inventory.v1.InventoryService/ListPolicies",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InventoryServiceServer).ListPolicies(ctx, req.(*ListPoliciesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _InventoryService_ListBindings_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListBindingsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InventoryServiceServer).ListBindings(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/tetrate.api.inventory.v1.InventoryService/ListBindings",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InventoryServiceServer).ListBindings(ctx, req.(*ListBindingsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _InventoryService_BindService_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(BindServicesRequest)
+	in := new(BindServiceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -924,7 +1287,43 @@ func _InventoryService_BindService_Handler(srv interface{}, ctx context.Context,
 		FullMethod: "/tetrate.api.inventory.v1.InventoryService/BindService",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InventoryServiceServer).BindService(ctx, req.(*BindServicesRequest))
+		return srv.(InventoryServiceServer).BindService(ctx, req.(*BindServiceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _InventoryService_UpdateBinding_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BindServiceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InventoryServiceServer).UpdateBinding(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/tetrate.api.inventory.v1.InventoryService/UpdateBinding",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InventoryServiceServer).UpdateBinding(ctx, req.(*BindServiceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _InventoryService_UnbindService_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UnbindServiceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InventoryServiceServer).UnbindService(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/tetrate.api.inventory.v1.InventoryService/UnbindService",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InventoryServiceServer).UnbindService(ctx, req.(*UnbindServiceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -938,76 +1337,108 @@ var _InventoryService_serviceDesc = grpc.ServiceDesc{
 			Handler:    _InventoryService_ListServices_Handler,
 		},
 		{
+			MethodName: "ListPolicies",
+			Handler:    _InventoryService_ListPolicies_Handler,
+		},
+		{
+			MethodName: "ListBindings",
+			Handler:    _InventoryService_ListBindings_Handler,
+		},
+		{
 			MethodName: "BindService",
 			Handler:    _InventoryService_BindService_Handler,
+		},
+		{
+			MethodName: "UpdateBinding",
+			Handler:    _InventoryService_UpdateBinding_Handler,
+		},
+		{
+			MethodName: "UnbindService",
+			Handler:    _InventoryService_UnbindService_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "service.proto",
 }
 
-func init() { proto.RegisterFile("service.proto", fileDescriptor_service_13e67eaeaa84f357) }
+func init() { proto.RegisterFile("service.proto", fileDescriptor_service_e2df29746bdb4469) }
 
-var fileDescriptor_service_13e67eaeaa84f357 = []byte{
-	// 960 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x56, 0x5f, 0x6f, 0x1b, 0x45,
-	0x10, 0xcf, 0xf9, 0xef, 0x79, 0xf2, 0x07, 0x6b, 0x6b, 0xaa, 0x93, 0xa9, 0x84, 0x39, 0x28, 0x8a,
-	0xa8, 0x38, 0x13, 0x17, 0xa2, 0x92, 0xaa, 0xd0, 0x24, 0x98, 0xda, 0x90, 0x16, 0x6b, 0xed, 0x14,
-	0xc1, 0x4b, 0xb4, 0xf6, 0x6d, 0xcc, 0x2a, 0xf6, 0xee, 0x71, 0xbb, 0x3e, 0x88, 0xaa, 0x4a, 0x08,
-	0x3e, 0x02, 0x12, 0x12, 0x6f, 0xbc, 0xf3, 0xca, 0x37, 0xe1, 0x2b, 0x20, 0xf1, 0x35, 0xd0, 0xed,
-	0xed, 0x3a, 0x6e, 0x71, 0xe2, 0xf4, 0x6d, 0x67, 0x6e, 0x7e, 0xf3, 0x9b, 0x9d, 0xf9, 0xed, 0xd8,
-	0xb0, 0x29, 0x69, 0x9c, 0xb0, 0x11, 0x0d, 0xa2, 0x58, 0x28, 0x81, 0x3c, 0x45, 0x55, 0x4c, 0x14,
-	0x0d, 0x48, 0xc4, 0x02, 0xc6, 0x13, 0xca, 0x95, 0x88, 0xcf, 0x83, 0x64, 0xa7, 0x7e, 0x6b, 0x2c,
-	0xc4, 0x78, 0x42, 0x9b, 0x24, 0x62, 0x4d, 0xc2, 0xb9, 0x50, 0x44, 0x31, 0xc1, 0x65, 0x86, 0xab,
-	0xbf, 0x69, 0xbe, 0x6a, 0x6b, 0x38, 0x3b, 0x6d, 0x2a, 0x36, 0xa5, 0x52, 0x91, 0x69, 0x94, 0x05,
-	0xf8, 0x7f, 0x16, 0xa0, 0xdc, 0xcf, 0xa8, 0x10, 0x82, 0x02, 0x27, 0x53, 0xea, 0x39, 0x0d, 0x67,
-	0xbb, 0x82, 0xf5, 0x19, 0xed, 0x41, 0xe1, 0x8c, 0xf1, 0xd0, 0xcb, 0x35, 0x9c, 0xed, 0xad, 0xd6,
-	0xbb, 0xc1, 0x65, 0x75, 0x04, 0x26, 0x49, 0xf0, 0x25, 0xe3, 0x21, 0xd6, 0x18, 0xf4, 0x10, 0x4a,
-	0x52, 0x11, 0x35, 0x93, 0x5e, 0x5e, 0xa3, 0xb7, 0x57, 0xa3, 0xfb, 0x3a, 0x1e, 0x1b, 0x1c, 0xba,
-	0x07, 0xc5, 0x48, 0xc4, 0x4a, 0x7a, 0x85, 0x46, 0x7e, 0x7b, 0xbd, 0xe5, 0x5f, 0x9e, 0xa0, 0x27,
-	0x62, 0xd5, 0x8f, 0xe8, 0x08, 0x67, 0x00, 0xf4, 0x09, 0xb8, 0x53, 0xaa, 0x48, 0x48, 0x14, 0xf1,
-	0x8a, 0x0d, 0xe7, 0x6a, 0xf0, 0x63, 0x13, 0x89, 0xe7, 0x18, 0x74, 0x1f, 0xca, 0xa3, 0xc9, 0x4c,
-	0x2a, 0x1a, 0x7b, 0x25, 0xcd, 0xfd, 0xd6, 0xe5, 0xf0, 0xc3, 0x2c, 0x10, 0x5b, 0x44, 0x4a, 0xfe,
-	0x83, 0x88, 0xcf, 0x26, 0x82, 0x84, 0x5e, 0x79, 0x15, 0xf9, 0xd7, 0x26, 0x12, 0xcf, 0x31, 0xe8,
-	0x53, 0xd8, 0x9c, 0x10, 0xa9, 0x4e, 0xa6, 0x22, 0x64, 0xa7, 0x8c, 0x86, 0x9e, 0xab, 0x93, 0xd4,
-	0x83, 0x6c, 0x9a, 0x81, 0x9d, 0x66, 0x30, 0xb0, 0xd3, 0xc4, 0x1b, 0x29, 0xe0, 0xb1, 0x89, 0xf7,
-	0x3f, 0x80, 0x42, 0x3a, 0x07, 0xb4, 0x0e, 0xe5, 0x7e, 0x1b, 0x3f, 0xed, 0x1e, 0xb6, 0xab, 0x6b,
-	0xa8, 0x0c, 0xf9, 0x2f, 0xbe, 0x3a, 0xa8, 0x3a, 0x08, 0xc1, 0xd6, 0xd3, 0x2e, 0x1e, 0x1c, 0xef,
-	0x1f, 0xd9, 0x8f, 0x39, 0xff, 0x1d, 0x28, 0x65, 0xbd, 0x47, 0x9b, 0x50, 0x39, 0x7e, 0xd2, 0x69,
-	0xef, 0x1f, 0x0d, 0x3a, 0xdf, 0x54, 0xd7, 0xd2, 0x14, 0xd6, 0x70, 0xfc, 0xd7, 0xe1, 0xc6, 0x11,
-	0x93, 0xca, 0x4c, 0x4b, 0x62, 0xfa, 0xfd, 0x8c, 0x4a, 0xe5, 0x1f, 0x43, 0xed, 0x45, 0xb7, 0x8c,
-	0x04, 0x97, 0x14, 0x3d, 0x00, 0xd7, 0xc8, 0x58, 0x7a, 0xce, 0xaa, 0x2e, 0x1a, 0x34, 0x9e, 0x43,
-	0xfc, 0x9f, 0xf2, 0xe0, 0xda, 0xd1, 0xa0, 0x5b, 0x50, 0x49, 0x05, 0x29, 0x23, 0x32, 0xb2, 0x0a,
-	0xbd, 0x70, 0xa0, 0x9b, 0x50, 0x0a, 0xc5, 0x94, 0x30, 0xae, 0x85, 0x5a, 0xc1, 0xc6, 0x42, 0x1e,
-	0x94, 0x13, 0x1a, 0x4b, 0x26, 0xb8, 0xd6, 0x60, 0x05, 0x5b, 0x13, 0x7d, 0x0e, 0xa5, 0x09, 0x19,
-	0xd2, 0x89, 0xd5, 0x56, 0xb0, 0x5a, 0x1e, 0xc1, 0x91, 0x06, 0xb4, 0xb9, 0x8a, 0xcf, 0xb1, 0x41,
-	0x23, 0x0c, 0x70, 0xf1, 0xec, 0xbc, 0xa2, 0xce, 0xd5, 0xba, 0x46, 0xae, 0xfd, 0x39, 0x28, 0xcb,
-	0xb7, 0x90, 0x05, 0x6d, 0x41, 0x4e, 0xcc, 0xbc, 0x92, 0x2e, 0x38, 0x27, 0x66, 0xf5, 0x8f, 0x61,
-	0x7d, 0x81, 0x1a, 0x55, 0x21, 0x7f, 0x46, 0xcf, 0x4d, 0x13, 0xd2, 0x23, 0xaa, 0x41, 0x31, 0x21,
-	0x93, 0x19, 0x35, 0xb7, 0xcf, 0x8c, 0xbd, 0xdc, 0x3d, 0xa7, 0xfe, 0x00, 0x5e, 0x7b, 0x89, 0xe9,
-	0x55, 0xe0, 0xfe, 0x1f, 0x0e, 0x94, 0x8d, 0xbc, 0x97, 0xae, 0x87, 0x87, 0x50, 0xa1, 0x3c, 0x8c,
-	0x04, 0xe3, 0x4a, 0x7a, 0xb9, 0x55, 0x8f, 0xb4, 0x6d, 0x42, 0xf1, 0x05, 0xe8, 0xff, 0x5a, 0xcf,
-	0xbf, 0xa2, 0xd6, 0x4f, 0xc1, 0xb5, 0x4f, 0x68, 0x69, 0x89, 0x75, 0x70, 0xa3, 0x58, 0x24, 0x2c,
-	0xa4, 0xb1, 0xb9, 0xdf, 0xdc, 0x4e, 0x65, 0x13, 0xd3, 0xf1, 0x85, 0x3a, 0x8c, 0xa5, 0xf3, 0x88,
-	0x90, 0x7a, 0x05, 0x93, 0x47, 0x84, 0xd4, 0xff, 0xcd, 0x01, 0xd7, 0x5e, 0x00, 0xd5, 0xa0, 0xc0,
-	0xa2, 0xe4, 0x43, 0x4d, 0xb4, 0xd1, 0x59, 0xc3, 0xda, 0x32, 0xde, 0x5d, 0x4d, 0x63, 0xbd, 0xbb,
-	0xe8, 0x0d, 0x70, 0x43, 0x2e, 0x4f, 0x74, 0x61, 0x9a, 0xa6, 0xb3, 0x86, 0xcb, 0x21, 0x97, 0x4f,
-	0xd2, 0xea, 0x76, 0xa1, 0x90, 0x2e, 0x2c, 0xcd, 0x74, 0xbd, 0x05, 0xa7, 0xe3, 0x0f, 0x2a, 0x50,
-	0x26, 0x61, 0x18, 0x53, 0x29, 0xfd, 0x7f, 0x1d, 0x70, 0xed, 0xd7, 0xa5, 0x1d, 0x78, 0xa4, 0x3b,
-	0xa0, 0xc4, 0x48, 0x4c, 0xcc, 0x1e, 0xbf, 0xb3, 0x9a, 0x27, 0xe8, 0x19, 0x08, 0x9e, 0x83, 0xd1,
-	0xdb, 0xb0, 0x49, 0x7f, 0x54, 0x34, 0xe6, 0x64, 0x72, 0xa2, 0xab, 0x4e, 0xaf, 0x53, 0xc4, 0x1b,
-	0xd6, 0x99, 0x62, 0xd1, 0x6d, 0xd8, 0x1a, 0x09, 0xae, 0x08, 0xe3, 0x34, 0xce, 0xa2, 0x8a, 0x3a,
-	0x6a, 0x73, 0xee, 0x4d, 0xc3, 0xfc, 0x16, 0xb8, 0x96, 0x21, 0xdd, 0x4c, 0x83, 0xc3, 0x5e, 0x75,
-	0x0d, 0xb9, 0x50, 0xe8, 0x0c, 0x06, 0xbd, 0xaa, 0x93, 0x9e, 0x1e, 0xe1, 0xde, 0x61, 0x35, 0x87,
-	0x2a, 0x50, 0xc4, 0xed, 0xcf, 0xba, 0xfd, 0x6a, 0xde, 0xef, 0xc2, 0x8d, 0x03, 0xc6, 0xc3, 0x97,
-	0xd6, 0x4f, 0xfa, 0xc8, 0xcd, 0xce, 0x30, 0xd7, 0xb6, 0x66, 0xfa, 0x65, 0xc8, 0x78, 0xc8, 0xf8,
-	0xd8, 0x8c, 0xde, 0x9a, 0xfe, 0x4d, 0xa8, 0xbd, 0x98, 0x2a, 0x5b, 0x59, 0xad, 0xbf, 0x72, 0x50,
-	0xed, 0xda, 0x7e, 0xd8, 0x1f, 0xc6, 0x5f, 0x1c, 0xd8, 0x58, 0x5c, 0x70, 0xe8, 0xfd, 0xcb, 0xfb,
-	0xb7, 0x64, 0x3f, 0xd6, 0x83, 0xeb, 0x86, 0x67, 0x45, 0xf8, 0xb5, 0x9f, 0xff, 0xfe, 0xe7, 0xd7,
-	0xdc, 0x16, 0xda, 0x68, 0x26, 0x3b, 0x4d, 0xbb, 0x0e, 0xd1, 0xef, 0x0e, 0xac, 0x2f, 0xd4, 0x7c,
-	0x55, 0x11, 0x4b, 0xba, 0x74, 0x55, 0x11, 0xcb, 0x3a, 0xe1, 0xdf, 0xd1, 0x45, 0xdc, 0xf6, 0x1b,
-	0x8b, 0x45, 0x34, 0x9f, 0x99, 0xd3, 0xf3, 0xe6, 0x33, 0xd3, 0xca, 0xe7, 0x7b, 0xce, 0x7b, 0x07,
-	0x1f, 0x7d, 0x7b, 0x77, 0xcc, 0xd4, 0x77, 0xb3, 0x61, 0x30, 0x12, 0xd3, 0xa6, 0x21, 0x62, 0xc2,
-	0x9e, 0xf4, 0xbf, 0x93, 0x39, 0x65, 0x33, 0xd9, 0xb9, 0xcf, 0x78, 0x92, 0xec, 0x0c, 0x4b, 0x5a,
-	0x5a, 0x77, 0xff, 0x0b, 0x00, 0x00, 0xff, 0xff, 0xc4, 0x03, 0x9b, 0x57, 0xee, 0x08, 0x00, 0x00,
+var fileDescriptor_service_e2df29746bdb4469 = []byte{
+	// 1204 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x57, 0x6d, 0x6f, 0x1b, 0x45,
+	0x10, 0xce, 0xf9, 0xf5, 0x3c, 0x89, 0x8d, 0xb5, 0x84, 0xea, 0xe4, 0x56, 0xaa, 0x7b, 0xbc, 0x34,
+	0xe2, 0xe5, 0x4c, 0x5c, 0xa8, 0x4a, 0x4b, 0x4b, 0x9b, 0xd4, 0xd4, 0x81, 0xb4, 0x58, 0x1b, 0xa7,
+	0x08, 0x84, 0x54, 0x9d, 0x7d, 0x5b, 0xb3, 0xd4, 0xbe, 0x3d, 0x6e, 0xd7, 0x86, 0xa8, 0xaa, 0x54,
+	0xc1, 0x4f, 0x40, 0xea, 0x57, 0xe0, 0x33, 0x3f, 0x87, 0xbf, 0x80, 0xc4, 0xdf, 0x40, 0xbb, 0xb7,
+	0x7b, 0x76, 0x5d, 0x3b, 0x76, 0x3e, 0xf0, 0x6d, 0x67, 0x6f, 0x9e, 0x99, 0x67, 0x5e, 0x76, 0xc6,
+	0x86, 0x32, 0x27, 0xf1, 0x84, 0xf6, 0x89, 0x17, 0xc5, 0x4c, 0x30, 0xe4, 0x08, 0x22, 0x62, 0x5f,
+	0x10, 0xcf, 0x8f, 0xa8, 0x47, 0xc3, 0x09, 0x09, 0x05, 0x8b, 0x4f, 0xbc, 0xc9, 0x6e, 0xed, 0xc2,
+	0x80, 0xb1, 0xc1, 0x90, 0x34, 0xfc, 0x88, 0x36, 0xfc, 0x30, 0x64, 0xc2, 0x17, 0x94, 0x85, 0x3c,
+	0xc1, 0xd5, 0x2e, 0xea, 0xaf, 0x4a, 0xea, 0x8d, 0x1f, 0x37, 0x04, 0x1d, 0x11, 0x2e, 0xfc, 0x51,
+	0xa4, 0x15, 0xce, 0xcf, 0x2b, 0x90, 0x51, 0x24, 0x4e, 0x92, 0x8f, 0xee, 0x5f, 0x39, 0x28, 0x1e,
+	0x25, 0x3c, 0x10, 0x82, 0x5c, 0xe8, 0x8f, 0x88, 0x63, 0xd5, 0xad, 0x9d, 0x12, 0x56, 0x67, 0x74,
+	0x1d, 0x72, 0x4f, 0x68, 0x18, 0x38, 0x99, 0xba, 0xb5, 0x53, 0x69, 0xbe, 0xe3, 0x2d, 0x23, 0xe9,
+	0x69, 0x23, 0xde, 0x97, 0x34, 0x0c, 0xb0, 0xc2, 0xa0, 0xdb, 0x50, 0xe0, 0xc2, 0x17, 0x63, 0xee,
+	0x64, 0x15, 0x7a, 0x67, 0x35, 0xfa, 0x48, 0xe9, 0x63, 0x8d, 0x43, 0xd7, 0x20, 0x1f, 0xb1, 0x58,
+	0x70, 0x27, 0x57, 0xcf, 0xee, 0x6c, 0x36, 0xdd, 0xe5, 0x06, 0x3a, 0x2c, 0x16, 0x47, 0x11, 0xe9,
+	0xe3, 0x04, 0x80, 0x6e, 0x81, 0x3d, 0x22, 0xc2, 0x0f, 0x7c, 0xe1, 0x3b, 0xf9, 0xba, 0x75, 0x3a,
+	0xf8, 0xbe, 0xd6, 0xc4, 0x29, 0x06, 0xdd, 0x80, 0x62, 0x7f, 0x38, 0xe6, 0x82, 0xc4, 0x4e, 0x41,
+	0xf9, 0xbe, 0xb4, 0x1c, 0xbe, 0x9f, 0x28, 0x62, 0x83, 0x90, 0xce, 0x7f, 0x62, 0xf1, 0x93, 0x21,
+	0xf3, 0x03, 0xa7, 0xb8, 0xca, 0xf9, 0xd7, 0x5a, 0x13, 0xa7, 0x18, 0xf4, 0x19, 0x94, 0x87, 0x3e,
+	0x17, 0x8f, 0x46, 0x2c, 0xa0, 0x8f, 0x29, 0x09, 0x1c, 0x5b, 0x19, 0xa9, 0x79, 0x49, 0x25, 0x3d,
+	0x53, 0x49, 0xaf, 0x6b, 0x4a, 0x8d, 0xb7, 0x24, 0xe0, 0xbe, 0xd6, 0x77, 0x3f, 0x84, 0x9c, 0xac,
+	0x03, 0xda, 0x84, 0xe2, 0x51, 0x0b, 0x3f, 0x3c, 0xd8, 0x6f, 0x55, 0x37, 0x50, 0x11, 0xb2, 0x5f,
+	0x7c, 0xb5, 0x57, 0xb5, 0x10, 0x82, 0xca, 0xc3, 0x03, 0xdc, 0x3d, 0xbe, 0x73, 0x68, 0x3e, 0x66,
+	0xdc, 0xb7, 0xa0, 0x90, 0xe4, 0x1e, 0x95, 0xa1, 0x74, 0xfc, 0xa0, 0xdd, 0xba, 0x73, 0xd8, 0x6d,
+	0x7f, 0x53, 0xdd, 0x90, 0x26, 0x8c, 0x60, 0xb9, 0x6f, 0xc0, 0xeb, 0x87, 0x94, 0x0b, 0x5d, 0x2d,
+	0x8e, 0xc9, 0x8f, 0x63, 0xc2, 0x85, 0x7b, 0x0c, 0xdb, 0x2f, 0x5f, 0xf3, 0x88, 0x85, 0x9c, 0xa0,
+	0x9b, 0x60, 0xeb, 0x1e, 0xe7, 0x8e, 0xb5, 0x2a, 0x8b, 0x1a, 0x8d, 0x53, 0x88, 0xfb, 0x3c, 0x0b,
+	0xb6, 0x29, 0x0d, 0xba, 0x00, 0x25, 0xd9, 0x90, 0x3c, 0xf2, 0xfb, 0xa6, 0x43, 0xa7, 0x17, 0xe8,
+	0x1c, 0x14, 0x02, 0x36, 0xf2, 0x69, 0xa8, 0x1a, 0xb5, 0x84, 0xb5, 0x84, 0x1c, 0x28, 0x4e, 0x48,
+	0xcc, 0x29, 0x0b, 0x55, 0x0f, 0x96, 0xb0, 0x11, 0xd1, 0xe7, 0x50, 0x18, 0xfa, 0x3d, 0x32, 0x34,
+	0xbd, 0xe5, 0xad, 0x6e, 0x0f, 0xef, 0x50, 0x01, 0x5a, 0xa1, 0x88, 0x4f, 0xb0, 0x46, 0x23, 0x0c,
+	0x30, 0x7d, 0x93, 0x4e, 0x5e, 0xd9, 0x6a, 0xae, 0x61, 0xeb, 0x4e, 0x0a, 0x4a, 0xec, 0xcd, 0x58,
+	0x41, 0x15, 0xc8, 0xb0, 0xb1, 0x53, 0x50, 0x84, 0x33, 0x6c, 0x5c, 0xfb, 0x04, 0x36, 0x67, 0x5c,
+	0xa3, 0x2a, 0x64, 0x9f, 0x90, 0x13, 0x9d, 0x04, 0x79, 0x44, 0xdb, 0x90, 0x9f, 0xf8, 0xc3, 0x31,
+	0xd1, 0xd1, 0x27, 0xc2, 0xf5, 0xcc, 0x35, 0xab, 0x76, 0x13, 0x5e, 0x9b, 0xf3, 0x74, 0x16, 0xb8,
+	0xfb, 0x87, 0x05, 0x45, 0xdd, 0xde, 0x0b, 0xc7, 0xc3, 0x6d, 0x28, 0x91, 0x30, 0x88, 0x18, 0x0d,
+	0x05, 0x77, 0x32, 0xab, 0x1e, 0x69, 0x4b, 0xab, 0xe2, 0x29, 0xe8, 0xd5, 0x5e, 0xcf, 0x9e, 0xb1,
+	0xd7, 0x1f, 0x83, 0x6d, 0x9e, 0xd0, 0x42, 0x8a, 0x35, 0xb0, 0xa3, 0x98, 0x4d, 0x68, 0x40, 0x62,
+	0x1d, 0x5f, 0x2a, 0xcb, 0xb6, 0x89, 0xc9, 0x60, 0xda, 0x1d, 0x5a, 0x52, 0x76, 0x58, 0x40, 0x9c,
+	0x9c, 0xb6, 0xc3, 0x02, 0xe2, 0xbe, 0xb0, 0xc0, 0x36, 0x01, 0xa0, 0x6d, 0xc8, 0xd1, 0x68, 0xf2,
+	0x91, 0x72, 0xb4, 0xd5, 0xde, 0xc0, 0x4a, 0xd2, 0xb7, 0x57, 0x95, 0x1b, 0x73, 0x7b, 0x15, 0x9d,
+	0x07, 0x3b, 0x08, 0xf9, 0x23, 0x45, 0x4c, 0xb9, 0x69, 0x6f, 0xe0, 0x62, 0x10, 0xf2, 0x07, 0x92,
+	0xdd, 0x55, 0xc8, 0xc9, 0x81, 0xa5, 0x3c, 0xad, 0x37, 0xe0, 0x94, 0xfe, 0x5e, 0x09, 0x8a, 0x7e,
+	0x10, 0xc4, 0x84, 0x73, 0xf7, 0x5f, 0x0b, 0x6c, 0xf3, 0x75, 0x61, 0x06, 0xee, 0xa9, 0x0c, 0x08,
+	0xd6, 0x67, 0x43, 0x3d, 0xc7, 0xdf, 0x5b, 0xed, 0xc7, 0xeb, 0x68, 0x08, 0x4e, 0xc1, 0xe8, 0x4d,
+	0x28, 0x93, 0x9f, 0x05, 0x89, 0x43, 0x7f, 0xf8, 0x48, 0xb1, 0x96, 0xe1, 0xe4, 0xf1, 0x96, 0xb9,
+	0x94, 0x58, 0xf4, 0x36, 0x54, 0xfa, 0x2c, 0x14, 0x3e, 0x0d, 0x49, 0x9c, 0x68, 0xe5, 0x95, 0x56,
+	0x39, 0xbd, 0x95, 0x6a, 0x6e, 0x13, 0x6c, 0xe3, 0x41, 0x4e, 0xa6, 0xee, 0x7e, 0xa7, 0xba, 0x81,
+	0x6c, 0xc8, 0xb5, 0xbb, 0xdd, 0x4e, 0xd5, 0x92, 0xa7, 0x7b, 0xb8, 0xb3, 0x5f, 0xcd, 0xa0, 0x12,
+	0xe4, 0x71, 0xeb, 0xee, 0xc1, 0x51, 0x35, 0xeb, 0xfe, 0x00, 0x15, 0x3d, 0x25, 0xf6, 0x68, 0x18,
+	0xd0, 0x70, 0x20, 0xc3, 0x25, 0xc2, 0x1f, 0x98, 0x70, 0xe5, 0x59, 0x16, 0x35, 0x62, 0x43, 0xda,
+	0x3f, 0x31, 0xb3, 0x20, 0x91, 0x64, 0x97, 0x8f, 0x39, 0x89, 0xe5, 0x36, 0xca, 0xca, 0x2e, 0x57,
+	0x82, 0xd4, 0x1e, 0xc4, 0x6c, 0x1c, 0x25, 0x73, 0xa0, 0x84, 0xb5, 0xe4, 0xde, 0x82, 0x42, 0x27,
+	0xc1, 0x2d, 0x4a, 0x69, 0x1d, 0x36, 0x03, 0xc2, 0xfb, 0x31, 0x8d, 0xd4, 0xb3, 0x4f, 0x1c, 0xcd,
+	0x5e, 0xb9, 0x31, 0x20, 0x49, 0xd2, 0x4c, 0xb5, 0x64, 0x52, 0xca, 0x79, 0xa4, 0xc7, 0x9b, 0x36,
+	0x67, 0x44, 0xb4, 0x07, 0xc5, 0x5e, 0x12, 0x94, 0xb2, 0xb6, 0xb9, 0xc6, 0xb6, 0xd4, 0x49, 0xc0,
+	0x06, 0xe8, 0xb6, 0x61, 0xfb, 0x38, 0xec, 0x9d, 0xc5, 0xeb, 0x92, 0x5c, 0xb9, 0x8d, 0x64, 0xd0,
+	0x6b, 0x0f, 0x7c, 0xa5, 0x21, 0xf7, 0xbb, 0x64, 0x05, 0x4c, 0x01, 0x7a, 0x05, 0xdc, 0x05, 0x5b,
+	0xb3, 0x33, 0x2b, 0x60, 0xfd, 0xb8, 0x52, 0xa4, 0xd9, 0x3b, 0xaa, 0x20, 0x74, 0xba, 0x77, 0xba,
+	0x89, 0xd3, 0xe9, 0xb5, 0x76, 0xfa, 0x29, 0xd8, 0x91, 0xbe, 0xd3, 0x4e, 0xeb, 0xa7, 0x35, 0xbc,
+	0x8c, 0x18, 0xa7, 0x88, 0xe6, 0xf3, 0x22, 0x54, 0x0f, 0x8c, 0x86, 0xf9, 0x6d, 0xf4, 0xab, 0x05,
+	0x5b, 0xb3, 0x3b, 0x0e, 0x7d, 0xb0, 0xdc, 0xe2, 0x82, 0x15, 0x59, 0xf3, 0xd6, 0x55, 0x4f, 0x42,
+	0x70, 0xb7, 0x7f, 0xf9, 0xfb, 0x9f, 0xdf, 0x32, 0x15, 0xb4, 0xd5, 0x98, 0xec, 0x36, 0xcc, 0x46,
+	0x4c, 0x59, 0x98, 0x88, 0x57, 0xb1, 0x98, 0x4b, 0xd8, 0x2a, 0x16, 0xf3, 0x89, 0x7c, 0x99, 0x85,
+	0x49, 0x10, 0x7a, 0xa1, 0x59, 0x98, 0x62, 0xaf, 0x62, 0x31, 0xd7, 0x45, 0xab, 0x58, 0xcc, 0xf7,
+	0x90, 0x7b, 0x59, 0xb1, 0xb8, 0x84, 0x2e, 0xce, 0xe6, 0xa2, 0xf1, 0x54, 0x9f, 0x9e, 0x35, 0x4c,
+	0x9b, 0xa0, 0xdf, 0x2d, 0xd8, 0x9c, 0x79, 0x74, 0xe8, 0xfd, 0xe5, 0x8e, 0x5e, 0x7d, 0x9b, 0xb5,
+	0xb5, 0x1b, 0xd3, 0xbd, 0xa6, 0x08, 0x35, 0xdd, 0xcb, 0x4b, 0x08, 0x3d, 0xd5, 0x8c, 0xbc, 0xe4,
+	0x35, 0x3d, 0xbb, 0x6e, 0x5e, 0x28, 0xfa, 0xd3, 0x82, 0xf2, 0x71, 0x14, 0xf8, 0x22, 0x9d, 0x60,
+	0xff, 0x33, 0xc7, 0xda, 0xd9, 0x39, 0x3e, 0x97, 0x1c, 0x67, 0xc7, 0x08, 0x3a, 0xa5, 0x60, 0x8b,
+	0xe6, 0x4d, 0xed, 0xdc, 0x2b, 0xcb, 0xbb, 0x25, 0xff, 0x72, 0x98, 0x42, 0xbe, 0xbb, 0xac, 0x90,
+	0x4f, 0x35, 0x97, 0xbd, 0x8f, 0xbf, 0xbd, 0x32, 0xa0, 0xe2, 0xfb, 0x71, 0xcf, 0xeb, 0xb3, 0x51,
+	0x43, 0x3b, 0xa7, 0xcc, 0x9c, 0xd4, 0x3f, 0xa1, 0x94, 0x46, 0x63, 0xb2, 0x7b, 0x83, 0x86, 0x93,
+	0xc9, 0x6e, 0xaf, 0xa0, 0xfc, 0x5d, 0xf9, 0x2f, 0x00, 0x00, 0xff, 0xff, 0x6f, 0xda, 0x55, 0x99,
+	0x5a, 0x0d, 0x00, 0x00,
 }
