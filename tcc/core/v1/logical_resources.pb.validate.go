@@ -1626,6 +1626,63 @@ func (m *Service) Validate() error {
 
 	}
 
+	// no validation rules for ServiceType
+
+	switch m.Routing.(type) {
+
+	case *Service_LbSettings:
+
+		{
+			tmp := m.GetLbSettings()
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return ServiceValidationError{
+						field:  "LbSettings",
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+		}
+
+	case *Service_InternalRoutes:
+
+		{
+			tmp := m.GetInternalRoutes()
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return ServiceValidationError{
+						field:  "InternalRoutes",
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+		}
+
+	case *Service_ExternalRoutes:
+
+		{
+			tmp := m.GetExternalRoutes()
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return ServiceValidationError{
+						field:  "ExternalRoutes",
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+		}
+
+	}
+
 	return nil
 }
 
@@ -1775,6 +1832,63 @@ func (m *CreateServiceRequest) Validate() error {
 				if err := v.Validate(); err != nil {
 					return CreateServiceRequestValidationError{
 						field:  fmt.Sprintf("Subsets[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+		}
+
+	}
+
+	// no validation rules for ServiceType
+
+	switch m.Routing.(type) {
+
+	case *CreateServiceRequest_LbSettings:
+
+		{
+			tmp := m.GetLbSettings()
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return CreateServiceRequestValidationError{
+						field:  "LbSettings",
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+		}
+
+	case *CreateServiceRequest_InternalRoutes:
+
+		{
+			tmp := m.GetInternalRoutes()
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return CreateServiceRequestValidationError{
+						field:  "InternalRoutes",
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+		}
+
+	case *CreateServiceRequest_ExternalRoutes:
+
+		{
+			tmp := m.GetExternalRoutes()
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return CreateServiceRequestValidationError{
+						field:  "ExternalRoutes",
 						reason: "embedded message failed validation",
 						cause:  err,
 					}

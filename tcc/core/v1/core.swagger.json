@@ -3770,6 +3770,22 @@
             "$ref": "#/definitions/tetrate.api.tcc.core.v1.Subset"
           },
           "description": "One or more versions of the service. Each version has a distinct name and a set of labels that help uniquely identify the pods/VMs of that version."
+        },
+        "serviceType": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.ServiceType",
+          "description": "Internal/external/load balancer service. External services can be created only in the \"system\" application.  Load balancer services in the \"system\" application act as shared load balancers for the entire cluster, while those under user created applications act as a dedicated load balancer for that application. Defaults to internal."
+        },
+        "lbSettings": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.LBRouteSettings",
+          "description": "allowed only if the service is of type load balancer."
+        },
+        "internalRoutes": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.InternalRouteSettings",
+          "description": "allowed only if the service is of type internal."
+        },
+        "externalRoutes": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.ExternalRouteSettings",
+          "description": "allowed only if the service is of type external."
         }
       }
     },
@@ -3959,6 +3975,25 @@
       },
       "description": "Environment is a collection of applications, services, load balancers, and clusters where they are deployed.",
       "title": "Environment"
+    },
+    "tetrate.api.tcc.core.v1.ExternalRouteSettings": {
+      "type": "object",
+      "properties": {
+        "tls": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.TLSSettings",
+          "description": "TLS certificate info for the external service. If nil, the gateway will communicate with the external service over plain text."
+        },
+        "httpSettings": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.HttpSettings",
+          "description": "HTTP specific settings, transformations and routing rules associated with HTTP traffic to this service."
+        },
+        "tcpSettings": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.TcpSettings",
+          "description": "TCP specific settings, transformations and routing rules associated with non-HTTP traffic to this service."
+        }
+      },
+      "description": "HTTP/TCP routing settings for an external service in the \"system\" application. Enforced at the external facing gateway in the \"system\" application.",
+      "title": "ExternalRouteSettings"
     },
     "tetrate.api.tcc.core.v1.HTTPRetry": {
       "type": "object",
@@ -4151,6 +4186,62 @@
         }
       },
       "description": "If set, the load balancer will route all requests from a particular client to the same backend of the service."
+    },
+    "tetrate.api.tcc.core.v1.InternalRouteSettings": {
+      "type": "object",
+      "properties": {
+        "httpSettings": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.HttpSettings",
+          "description": "HTTP specific settings, transformations and routing rules associated with HTTP traffic to this service."
+        },
+        "tcpSettings": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.TcpSettings",
+          "description": "TCP specific settings, transformations and routing rules associated with non-HTTP traffic to this service."
+        }
+      },
+      "description": "HTTP/TCP routing settings for an internal service in an application. Enforced at the sidecars for services inside the same application.",
+      "title": "InternalRouteSettings"
+    },
+    "tetrate.api.tcc.core.v1.LBRouteSettings": {
+      "type": "object",
+      "properties": {
+        "enableWorkflows": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "loadBalancerClass": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.LoadBalancerClass"
+        },
+        "routes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.core.v1.LBRouteSettings.LBRoute"
+          }
+        }
+      },
+      "description": "HTTP/TCP routing settings for application exposed via a load balancer service. Enforced at load balancer only.",
+      "title": "LBRouteSettings"
+    },
+    "tetrate.api.tcc.core.v1.LBRouteSettings.LBRoute": {
+      "type": "object",
+      "properties": {
+        "hostname": {
+          "type": "string",
+          "description": "Hostname with which the application is exposed on this load balancer."
+        },
+        "tls": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.TLSSettings",
+          "description": "TLS certificate info for the application. If nil, the gateway will expose the application on port 80 only."
+        },
+        "httpSettings": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.HttpSettings",
+          "description": "HTTP specific settings, transformations and routing rules associated with HTTP traffic to this service."
+        },
+        "tcpSettings": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.TcpSettings",
+          "description": "TCP specific settings, transformations and routing rules associated with non-HTTP traffic to this service."
+        }
+      }
     },
     "tetrate.api.tcc.core.v1.ListApplicationsResponse": {
       "type": "object",
@@ -4527,6 +4618,14 @@
           "type": "integer",
           "format": "int64",
           "description": "Optional."
+        },
+        "application": {
+          "type": "string",
+          "description": "If omitted, will route to same application as the service. The application field is used by load balancers in the system application to route to other applications."
+        },
+        "service": {
+          "type": "string",
+          "description": "If omitted, will route to the service owning this route.  When used with a Load Balancer (shared or dedicated), traffic can be routed to another service in the same application or a different application."
         }
       }
     },
@@ -4550,7 +4649,7 @@
         }
       },
       "description": "HTTP routing settings for application or service. Subsets of a service should be declared here as well.",
-      "title": "RoutingInfo"
+      "title": "RoutingInfo (Deprecated)"
     },
     "tetrate.api.tcc.core.v1.Service": {
       "type": "object",
@@ -4612,8 +4711,34 @@
             "$ref": "#/definitions/tetrate.api.tcc.core.v1.Subset"
           },
           "description": "One or more versions of the service. Each version has a distinct name and a set of labels that help uniquely identify the pods/VMs of that version."
+        },
+        "serviceType": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.ServiceType",
+          "description": "Internal/external/load balancer service. External services can be created only in the \"system\" application.  Load balancer services in the \"system\" application act as shared load balancers for the entire cluster, while those under user created applications act as a dedicated load balancer for that application. Defaults to internal."
+        },
+        "lbSettings": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.LBRouteSettings",
+          "description": "allowed only if the service is of type load balancer."
+        },
+        "internalRoutes": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.InternalRouteSettings",
+          "description": "allowed only if the service is of type internal."
+        },
+        "externalRoutes": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.ExternalRouteSettings",
+          "description": "allowed only if the service is of type external."
         }
       }
+    },
+    "tetrate.api.tcc.core.v1.ServiceType": {
+      "type": "string",
+      "enum": [
+        "INTERNAL",
+        "LOADBALANCER",
+        "EXTERNAL"
+      ],
+      "default": "INTERNAL",
+      "description": " - INTERNAL: An internal service in an application that is not exposed to the outside world.  - LOADBALANCER: A load balancer service running only the proxy as the workload. A load balancer service inside an user application forwards traffic to other services in the application. A load balancer service inside the \"system\" application forwards traffic to services in other user applications.  - EXTERNAL: An external service (not in the mesh) accessed by the services in the application."
     },
     "tetrate.api.tcc.core.v1.StringMatch": {
       "type": "object",

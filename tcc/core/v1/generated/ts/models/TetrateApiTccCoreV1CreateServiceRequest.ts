@@ -13,12 +13,24 @@
 
 import { exists, mapValues } from '../runtime';
 import {
+    TetrateApiTccCoreV1ExternalRouteSettings,
+    TetrateApiTccCoreV1ExternalRouteSettingsFromJSON,
+    TetrateApiTccCoreV1ExternalRouteSettingsToJSON,
+    TetrateApiTccCoreV1InternalRouteSettings,
+    TetrateApiTccCoreV1InternalRouteSettingsFromJSON,
+    TetrateApiTccCoreV1InternalRouteSettingsToJSON,
+    TetrateApiTccCoreV1LBRouteSettings,
+    TetrateApiTccCoreV1LBRouteSettingsFromJSON,
+    TetrateApiTccCoreV1LBRouteSettingsToJSON,
     TetrateApiTccCoreV1Port,
     TetrateApiTccCoreV1PortFromJSON,
     TetrateApiTccCoreV1PortToJSON,
     TetrateApiTccCoreV1RoutingInfo,
     TetrateApiTccCoreV1RoutingInfoFromJSON,
     TetrateApiTccCoreV1RoutingInfoToJSON,
+    TetrateApiTccCoreV1ServiceType,
+    TetrateApiTccCoreV1ServiceTypeFromJSON,
+    TetrateApiTccCoreV1ServiceTypeToJSON,
     TetrateApiTccCoreV1Subset,
     TetrateApiTccCoreV1SubsetFromJSON,
     TetrateApiTccCoreV1SubsetToJSON,
@@ -102,6 +114,30 @@ export interface TetrateApiTccCoreV1CreateServiceRequest {
      * @memberof TetrateApiTccCoreV1CreateServiceRequest
      */
     subsets?: Array<TetrateApiTccCoreV1Subset>;
+    /**
+     * 
+     * @type {TetrateApiTccCoreV1ServiceType}
+     * @memberof TetrateApiTccCoreV1CreateServiceRequest
+     */
+    serviceType?: TetrateApiTccCoreV1ServiceType;
+    /**
+     * 
+     * @type {TetrateApiTccCoreV1LBRouteSettings}
+     * @memberof TetrateApiTccCoreV1CreateServiceRequest
+     */
+    lbSettings?: TetrateApiTccCoreV1LBRouteSettings;
+    /**
+     * 
+     * @type {TetrateApiTccCoreV1InternalRouteSettings}
+     * @memberof TetrateApiTccCoreV1CreateServiceRequest
+     */
+    internalRoutes?: TetrateApiTccCoreV1InternalRouteSettings;
+    /**
+     * 
+     * @type {TetrateApiTccCoreV1ExternalRouteSettings}
+     * @memberof TetrateApiTccCoreV1CreateServiceRequest
+     */
+    externalRoutes?: TetrateApiTccCoreV1ExternalRouteSettings;
 }
 
 export function TetrateApiTccCoreV1CreateServiceRequestFromJSON(json: any): TetrateApiTccCoreV1CreateServiceRequest {
@@ -118,6 +154,10 @@ export function TetrateApiTccCoreV1CreateServiceRequestFromJSON(json: any): Tetr
         'routingInfo': !exists(json, 'routingInfo') ? undefined : TetrateApiTccCoreV1RoutingInfoFromJSON(json['routingInfo']),
         'namespace': !exists(json, 'namespace') ? undefined : json['namespace'],
         'subsets': !exists(json, 'subsets') ? undefined : (json['subsets'] as Array<any>).map(TetrateApiTccCoreV1SubsetFromJSON),
+        'serviceType': !exists(json, 'serviceType') ? undefined : TetrateApiTccCoreV1ServiceTypeFromJSON(json['serviceType']),
+        'lbSettings': !exists(json, 'lbSettings') ? undefined : TetrateApiTccCoreV1LBRouteSettingsFromJSON(json['lbSettings']),
+        'internalRoutes': !exists(json, 'internalRoutes') ? undefined : TetrateApiTccCoreV1InternalRouteSettingsFromJSON(json['internalRoutes']),
+        'externalRoutes': !exists(json, 'externalRoutes') ? undefined : TetrateApiTccCoreV1ExternalRouteSettingsFromJSON(json['externalRoutes']),
     };
 }
 
@@ -138,6 +178,10 @@ export function TetrateApiTccCoreV1CreateServiceRequestToJSON(value?: TetrateApi
         'routingInfo': TetrateApiTccCoreV1RoutingInfoToJSON(value.routingInfo),
         'namespace': value.namespace,
         'subsets': value.subsets === undefined ? undefined : (value.subsets as Array<any>).map(TetrateApiTccCoreV1SubsetToJSON),
+        'serviceType': TetrateApiTccCoreV1ServiceTypeToJSON(value.serviceType),
+        'lbSettings': TetrateApiTccCoreV1LBRouteSettingsToJSON(value.lbSettings),
+        'internalRoutes': TetrateApiTccCoreV1InternalRouteSettingsToJSON(value.internalRoutes),
+        'externalRoutes': TetrateApiTccCoreV1ExternalRouteSettingsToJSON(value.externalRoutes),
     };
 }
 

@@ -338,7 +338,6 @@
     },
     "/v1/tenants/{tenant}/environments/{environment}/workflows/loadbalancers/{loadbalancer}/requests/{id}/publish": {
       "post": {
-        "summary": "LB owner calls this API with additional settings like TLS, to finally expose the service on the load balancer or remove a detached service",
         "operationId": "Publish",
         "responses": {
           "200": {

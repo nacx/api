@@ -148,6 +148,320 @@ var _ interface {
 	ErrorName() string
 } = RoutingInfoValidationError{}
 
+// Validate checks the field values on LBRouteSettings with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *LBRouteSettings) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for EnableWorkflows
+
+	if _, ok := _LBRouteSettings_LoadBalancerClass_NotInLookup[m.GetLoadBalancerClass()]; ok {
+		return LBRouteSettingsValidationError{
+			field:  "LoadBalancerClass",
+			reason: "value must not be in list [0]",
+		}
+	}
+
+	if _, ok := LoadBalancerClass_name[int32(m.GetLoadBalancerClass())]; !ok {
+		return LBRouteSettingsValidationError{
+			field:  "LoadBalancerClass",
+			reason: "value must be one of the defined enum values",
+		}
+	}
+
+	for idx, item := range m.GetRoutes() {
+		_, _ = idx, item
+
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return LBRouteSettingsValidationError{
+						field:  fmt.Sprintf("Routes[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// LBRouteSettingsValidationError is the validation error returned by
+// LBRouteSettings.Validate if the designated constraints aren't met.
+type LBRouteSettingsValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e LBRouteSettingsValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e LBRouteSettingsValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e LBRouteSettingsValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e LBRouteSettingsValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e LBRouteSettingsValidationError) ErrorName() string { return "LBRouteSettingsValidationError" }
+
+// Error satisfies the builtin error interface
+func (e LBRouteSettingsValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sLBRouteSettings.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = LBRouteSettingsValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = LBRouteSettingsValidationError{}
+
+var _LBRouteSettings_LoadBalancerClass_NotInLookup = map[LoadBalancerClass]struct{}{
+	0: {},
+}
+
+// Validate checks the field values on InternalRouteSettings with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *InternalRouteSettings) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	{
+		tmp := m.GetHttpSettings()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return InternalRouteSettingsValidationError{
+					field:  "HttpSettings",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+	}
+
+	{
+		tmp := m.GetTcpSettings()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return InternalRouteSettingsValidationError{
+					field:  "TcpSettings",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+	}
+
+	return nil
+}
+
+// InternalRouteSettingsValidationError is the validation error returned by
+// InternalRouteSettings.Validate if the designated constraints aren't met.
+type InternalRouteSettingsValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e InternalRouteSettingsValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e InternalRouteSettingsValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e InternalRouteSettingsValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e InternalRouteSettingsValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e InternalRouteSettingsValidationError) ErrorName() string {
+	return "InternalRouteSettingsValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e InternalRouteSettingsValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sInternalRouteSettings.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = InternalRouteSettingsValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = InternalRouteSettingsValidationError{}
+
+// Validate checks the field values on ExternalRouteSettings with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *ExternalRouteSettings) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	{
+		tmp := m.GetTls()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return ExternalRouteSettingsValidationError{
+					field:  "Tls",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+	}
+
+	{
+		tmp := m.GetHttpSettings()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return ExternalRouteSettingsValidationError{
+					field:  "HttpSettings",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+	}
+
+	{
+		tmp := m.GetTcpSettings()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return ExternalRouteSettingsValidationError{
+					field:  "TcpSettings",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+	}
+
+	return nil
+}
+
+// ExternalRouteSettingsValidationError is the validation error returned by
+// ExternalRouteSettings.Validate if the designated constraints aren't met.
+type ExternalRouteSettingsValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ExternalRouteSettingsValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ExternalRouteSettingsValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ExternalRouteSettingsValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ExternalRouteSettingsValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ExternalRouteSettingsValidationError) ErrorName() string {
+	return "ExternalRouteSettingsValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ExternalRouteSettingsValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sExternalRouteSettings.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ExternalRouteSettingsValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ExternalRouteSettingsValidationError{}
+
 // Validate checks the field values on Port with the rules defined in the proto
 // definition for this message. If any rules are violated, an error is returned.
 func (m *Port) Validate() error {
@@ -1370,6 +1684,125 @@ var _ interface {
 	ErrorName() string
 } = CorsPolicyValidationError{}
 
+// Validate checks the field values on LBRouteSettings_LBRoute with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *LBRouteSettings_LBRoute) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if utf8.RuneCountInString(m.GetHostname()) < 1 {
+		return LBRouteSettings_LBRouteValidationError{
+			field:  "Hostname",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	{
+		tmp := m.GetTls()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return LBRouteSettings_LBRouteValidationError{
+					field:  "Tls",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+	}
+
+	{
+		tmp := m.GetHttpSettings()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return LBRouteSettings_LBRouteValidationError{
+					field:  "HttpSettings",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+	}
+
+	{
+		tmp := m.GetTcpSettings()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return LBRouteSettings_LBRouteValidationError{
+					field:  "TcpSettings",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+	}
+
+	return nil
+}
+
+// LBRouteSettings_LBRouteValidationError is the validation error returned by
+// LBRouteSettings_LBRoute.Validate if the designated constraints aren't met.
+type LBRouteSettings_LBRouteValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e LBRouteSettings_LBRouteValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e LBRouteSettings_LBRouteValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e LBRouteSettings_LBRouteValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e LBRouteSettings_LBRouteValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e LBRouteSettings_LBRouteValidationError) ErrorName() string {
+	return "LBRouteSettings_LBRouteValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e LBRouteSettings_LBRouteValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sLBRouteSettings_LBRoute.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = LBRouteSettings_LBRouteValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = LBRouteSettings_LBRouteValidationError{}
+
 // Validate checks the field values on HttpSettings_HTTPCookie with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
@@ -1659,6 +2092,10 @@ func (m *Route_Destination) Validate() error {
 	// no validation rules for Weight
 
 	// no validation rules for Port
+
+	// no validation rules for Application
+
+	// no validation rules for Service
 
 	return nil
 }

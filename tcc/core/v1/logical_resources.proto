@@ -392,6 +392,21 @@ message Service {
   // name and a set of labels that help uniquely identify the pods/VMs
   // of that version.
   repeated Subset subsets = 13;
+  // Internal/external/load balancer service. External services can be
+  // created only in the "system" application.  Load balancer services
+  // in the "system" application act as shared load balancers for the
+  // entire cluster, while those under user created applications act
+  // as a dedicated load balancer for that application. Defaults to internal.
+  ServiceType service_type = 14;
+
+  oneof routing {
+    // allowed only if the service is of type load balancer.
+    LBRouteSettings lb_settings = 15;
+    // allowed only if the service is of type internal.
+    InternalRouteSettings internal_routes = 16;
+    // allowed only if the service is of type external.
+    ExternalRouteSettings external_routes = 17;
+  }
 }
 
 message CreateServiceRequest {
@@ -423,6 +438,22 @@ message CreateServiceRequest {
   // name and a set of labels that help uniquely identify the pods/VMs
   // of that version.
   repeated Subset subsets = 12;
+
+  // Internal/external/load balancer service. External services can be
+  // created only in the "system" application.  Load balancer services
+  // in the "system" application act as shared load balancers for the
+  // entire cluster, while those under user created applications act
+  // as a dedicated load balancer for that application. Defaults to internal.
+  ServiceType service_type = 13;
+
+  oneof routing {
+    // allowed only if the service is of type load balancer.
+    LBRouteSettings lb_settings = 14;
+    // allowed only if the service is of type internal.
+    InternalRouteSettings internal_routes = 15;
+    // allowed only if the service is of type external.
+    ExternalRouteSettings external_routes = 16;
+  }  
 }
 
 message GetServiceRequest {
@@ -453,12 +484,6 @@ message DeleteServiceRequest {
   string environment = 3 [(validate.rules).string.min_len = 1];
   string application = 4 [(validate.rules).string.min_len = 1];
   string id = 5 [(validate.rules).string.min_len = 1];
-}
-
-enum LoadBalancerClass {
-  NONE = 0;
-  ENVOY = 1;
-  F5 = 2;
 }
 
 message LoadBalancer {

@@ -42,6 +42,18 @@ export interface TetrateApiTccCoreV1RouteDestination {
      * @memberof TetrateApiTccCoreV1RouteDestination
      */
     port?: number;
+    /**
+     * If omitted, will route to same application as the service. The application field is used by load balancers in the system application to route to other applications.
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1RouteDestination
+     */
+    application?: string;
+    /**
+     * If omitted, will route to the service owning this route.  When used with a Load Balancer (shared or dedicated), traffic can be routed to another service in the same application or a different application.
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1RouteDestination
+     */
+    service?: string;
 }
 
 export function TetrateApiTccCoreV1RouteDestinationFromJSON(json: any): TetrateApiTccCoreV1RouteDestination {
@@ -50,6 +62,8 @@ export function TetrateApiTccCoreV1RouteDestinationFromJSON(json: any): TetrateA
         'subset': !exists(json, 'subset') ? undefined : json['subset'],
         'weight': !exists(json, 'weight') ? undefined : json['weight'],
         'port': !exists(json, 'port') ? undefined : json['port'],
+        'application': !exists(json, 'application') ? undefined : json['application'],
+        'service': !exists(json, 'service') ? undefined : json['service'],
     };
 }
 
@@ -62,6 +76,8 @@ export function TetrateApiTccCoreV1RouteDestinationToJSON(value?: TetrateApiTccC
         'subset': value.subset,
         'weight': value.weight,
         'port': value.port,
+        'application': value.application,
+        'service': value.service,
     };
 }
 

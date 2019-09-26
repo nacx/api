@@ -8,8 +8,9 @@ option go_package = "github.com/tetrateio/tetrate/api/tcc/core/v1";
 import "google/protobuf/duration.proto";
 import "google/protobuf/wrappers.proto";
 import "validate/validate.proto";
+import "tlssettings.proto";
 
-// RoutingInfo
+// RoutingInfo (Deprecated)
 //
 // HTTP routing settings for application or service. Subsets of a service should be declared here as well.
 message RoutingInfo {
@@ -23,6 +24,67 @@ message RoutingInfo {
   // TCP specific settings, transformations and routing rules associated with non-HTTP traffic to this service.
   TcpSettings tcp_settings = 3;
 }
+
+enum ServiceType {
+  // An internal service in an application that is not exposed to the outside world.
+  INTERNAL = 0;
+  // A load balancer service running only the proxy as the workload. A load balancer service inside an user application forwards traffic to other services in the application. A load balancer service inside the "system" application forwards traffic to services in other user applications.
+  LOADBALANCER = 1;
+  // An external service (not in the mesh) accessed by the services in the application.
+  EXTERNAL = 2;
+}
+
+enum LoadBalancerClass {
+  NONE = 0;
+  ENVOY = 1;
+  F5 = 2;
+}
+
+// LBRouteSettings
+//
+// HTTP/TCP routing settings for application exposed via a load balancer service. Enforced at load balancer only.
+message LBRouteSettings {
+  bool enable_workflows = 1;
+
+  LoadBalancerClass load_balancer_class = 2 [(validate.rules).enum = {defined_only: true, not_in : [0]}];
+
+  message LBRoute {
+    // Hostname with which the application is exposed on this load balancer.
+    string hostname = 1 [(validate.rules).string.min_len = 1];
+    // TLS certificate info for the application. If nil, the gateway will expose the application on port 80 only.
+    TLSSettings tls = 2;
+    // HTTP specific settings, transformations and routing rules associated with HTTP traffic to this service.
+    HttpSettings http_settings = 3;
+    // TCP specific settings, transformations and routing rules associated with non-HTTP traffic to this service.
+    TcpSettings tcp_settings = 4;
+  };
+  repeated LBRoute routes = 3;
+}
+
+// InternalRouteSettings
+//
+// HTTP/TCP routing settings for an internal service in an application. Enforced at the sidecars for services inside the same application.
+message InternalRouteSettings {
+  // HTTP specific settings, transformations and routing rules associated with HTTP traffic to this service.
+  HttpSettings http_settings = 1;
+
+  // TCP specific settings, transformations and routing rules associated with non-HTTP traffic to this service.
+  TcpSettings tcp_settings = 2;
+};
+
+// ExternalRouteSettings
+//
+// HTTP/TCP routing settings for an external service in the "system" application. Enforced at the external facing gateway in the "system" application.
+message ExternalRouteSettings {
+  // TLS certificate info for the external service. If nil, the gateway will communicate with the external service over plain text.
+  TLSSettings tls = 1;
+
+  // HTTP specific settings, transformations and routing rules associated with HTTP traffic to this service.
+  HttpSettings http_settings = 2;
+
+  // TCP specific settings, transformations and routing rules associated with non-HTTP traffic to this service.
+  TcpSettings tcp_settings = 3;
+};
 
 enum Registry {
   UNKNOWN = 0;
@@ -95,7 +157,7 @@ message TcpSettings {
 }
 
 
-  // A single HTTP rule.
+// A single HTTP rule.
 message HttpRule {
   // One or more match conditions (OR-ed).
   repeated HttpMatchCondition match = 1;
@@ -180,12 +242,20 @@ message Route {
 
   message Destination {
     // If omitted, will route to same host as the service.
-    string host = 1;
+    string host = 1 [deprecated=true];
     string subset = 2;
     // 100 if omitted. sum of all weights should add up to 100.
     uint32 weight = 3;
     // Optional.
     uint32 port = 4;
+    // If omitted, will route to same application as the service.
+    // The application field is used by load balancers in the system application to route to other applications.
+    string application = 5;
+    // If omitted, will route to the service owning this route.  When
+    // used with a Load Balancer (shared or dedicated), traffic can be
+    // routed to another service in the same application or a
+    // different application.
+    string service = 6;
   }
   repeated Destination destinations = 1 [(validate.rules).repeated.min_items = 1];
 }
