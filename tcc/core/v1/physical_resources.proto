@@ -162,6 +162,7 @@ message Cluster {
   string availability_zone = 9;
   map<string, string> labels = 10;
   string etag = 11 [(validate.rules).string.min_len = 1];
+  string kubernetes_cluster_domain = 12;
 }
 
 message CreateClusterRequest {
@@ -179,6 +180,7 @@ message CreateClusterRequest {
   string datacenter = 8;
   string availability_zone = 9;
   map<string, string> labels = 10;
+  string kubernetes_cluster_domain = 12;
 }
 
 message GetClusterRequest {
@@ -265,9 +267,13 @@ message Deployment {
   string hostname = 7 [(validate.rules).string.min_len = 1];
   map<string, string> labels = 8;
   repeated Port ports = 9 [(validate.rules).repeated.min_items = 1];
-  // information specific to F5 load balancers if deployment refers to F5
-  string lb_management_ip = 10;
+  reserved 10;
   string etag = 11 [(validate.rules).string.min_len = 1];
+  string kubernetes_service_ip = 12;
+  // For kubernetes services of type load balancer, this field contains the list
+  // of lb hostnames or IPs assigned to the service. For services of type nodePort,
+  // this field contains the IP addresses of the nodes in the cluster.
+  repeated string kubernetes_external_addresses = 13;
 }
 
 message CreateDeploymentRequest {
@@ -282,8 +288,12 @@ message CreateDeploymentRequest {
   string hostname = 7 [(validate.rules).string.min_len = 1];
   map<string, string> labels = 8;
   repeated Port ports = 9 [(validate.rules).repeated.min_items = 1];
-  // information specific to F5 load balancers if deployment refers to F5
-  string lb_management_ip = 10;
+  reserved 10;
+  string kubernetes_service_ip = 12;
+  // For kubernetes services of type load balancer, this field contains the list
+  // of lb hostnames or IPs assigned to the service. For services of type nodePort,
+  // this field contains the IP addresses of the nodes in the cluster.
+  repeated string kubernetes_external_addresses = 13;
 }
 
 message GetDeploymentRequest {

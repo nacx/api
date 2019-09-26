@@ -106,6 +106,9 @@ message Port {
   // The endpoint port to which this service port maps to. For example, service port 80 exposed on the load balancer
   // could map to an endpoint port 9080 on a VM.
   uint32 endpoint_port = 4;
+
+  // Indicates the node port attached to a physical deployment on a kubernetes cluster.
+  uint32 kubernetes_node_port = 5;
 }
 
 message Subset {
@@ -152,7 +155,7 @@ message HttpSettings {
 
 // TCP settings for a service. Applicable to ports receiving non-HTTP traffic.
 message TcpSettings {
-  // The destination to which the connection should be forwarded to.
+  // The destination to which the connection should be routed.
   Route route = 1 [(validate.rules).message.required = true];
 }
 
@@ -237,26 +240,54 @@ message HttpModifyAction {
   Headers headers = 2;
 }
 
-// One or more destinations for the given request.
+// One or more destinations in a local cluster for the given request.
 message Route {
-
-  message Destination {
-    // If omitted, will route to same host as the service.
-    string host = 1 [deprecated=true];
-    string subset = 2;
-    // 100 if omitted. sum of all weights should add up to 100.
-    uint32 weight = 3;
-    // Optional.
-    uint32 port = 4;
-    // If omitted, will route to same application as the service.
-    // The application field is used by load balancers in the system application to route to other applications.
-    string application = 5;
+  // A destination local to the cluster where the load balancer or sidecar is present.
+  message LocalDestination {
+    // If omitted, will route to same application as the service.  The
+    // application field is used by load balancers in the system
+    // application to route to other applications.
+    string application = 1;
     // If omitted, will route to the service owning this route.  When
     // used with a Load Balancer (shared or dedicated), traffic can be
     // routed to another service in the same application or a
     // different application.
-    string service = 6;
+    string service = 2;
+    // If omitted, will route to same host as the service.
+    string host = 3 [deprecated=true];
+    string subset = 4;
   }
+
+  // A destination load balancer service in another cluster. This
+  // destination type is applicable only when used with a load
+  // balancer service.
+  message RemoteDestination {
+    // If omitted, defaults to system application.
+    string application = 1;
+    // The load balancer service to route the traffic to.
+    string service = 2 [(validate.rules).string.min_len = 1];
+  }
+
+  message Destination {
+    oneof target {
+      option (validate.required) = true;
+      // A local destination.
+      LocalDestination local = 1;
+      // A remote destination.
+      RemoteDestination remote = 2;
+      // Instead of specifying local/remote services, you can specify
+      // the hostname/IP address to which traffic should be routed
+      // to. This address should be reachable from the load balancer.
+      // This destination type is applicable only when used with a
+      // load balancer service.
+      string address = 3;
+    }
+    // 100 if omitted. sum of all weights should add up to 100.
+    uint32 weight = 4;
+    // Optional.
+    uint32 port = 5;
+  }
+
   repeated Destination destinations = 1 [(validate.rules).repeated.min_items = 1];
 }
 

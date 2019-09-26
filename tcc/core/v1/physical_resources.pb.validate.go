@@ -87,6 +87,8 @@ func (m *Cluster) Validate() error {
 		}
 	}
 
+	// no validation rules for KubernetesClusterDomain
+
 	return nil
 }
 
@@ -186,6 +188,8 @@ func (m *CreateClusterRequest) Validate() error {
 	// no validation rules for AvailabilityZone
 
 	// no validation rules for Labels
+
+	// no validation rules for KubernetesClusterDomain
 
 	return nil
 }
@@ -1248,14 +1252,14 @@ func (m *Deployment) Validate() error {
 
 	}
 
-	// no validation rules for LbManagementIp
-
 	if utf8.RuneCountInString(m.GetEtag()) < 1 {
 		return DeploymentValidationError{
 			field:  "Etag",
 			reason: "value length must be at least 1 runes",
 		}
 	}
+
+	// no validation rules for KubernetesServiceIp
 
 	return nil
 }
@@ -1390,7 +1394,7 @@ func (m *CreateDeploymentRequest) Validate() error {
 
 	}
 
-	// no validation rules for LbManagementIp
+	// no validation rules for KubernetesServiceIp
 
 	return nil
 }

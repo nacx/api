@@ -2167,334 +2167,6 @@
         ]
       }
     },
-    "/v1/tenants/{tenant}/environments/{environment}/loadbalancers": {
-      "get": {
-        "operationId": "ListLoadBalancers",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.ListLoadBalancersResponse"
-            }
-          },
-          "404": {
-            "description": "Returned when the resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "tenant",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "environment",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "parent",
-            "description": "Internal use only. Auto populated field.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "LogicalResourceModel"
-        ]
-      },
-      "post": {
-        "operationId": "CreateLoadBalancer",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.LoadBalancer"
-            }
-          },
-          "404": {
-            "description": "Returned when the resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "tenant",
-            "description": "Tenant.Id.",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "environment",
-            "description": "Environment.Id.",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.CreateLoadBalancerRequest"
-            }
-          }
-        ],
-        "tags": [
-          "LogicalResourceModel"
-        ]
-      }
-    },
-    "/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{id}": {
-      "get": {
-        "operationId": "GetLoadBalancer",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.LoadBalancer"
-            }
-          },
-          "404": {
-            "description": "Returned when the resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "tenant",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "environment",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "name",
-            "description": "Internal use only. Auto populated field.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "LogicalResourceModel"
-        ]
-      },
-      "delete": {
-        "operationId": "DeleteLoadBalancer",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
-          },
-          "404": {
-            "description": "Returned when the resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "tenant",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "environment",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "name",
-            "description": "Internal use only. Auto populated field.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "LogicalResourceModel"
-        ]
-      },
-      "put": {
-        "operationId": "UpdateLoadBalancer",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.LoadBalancer"
-            }
-          },
-          "404": {
-            "description": "Returned when the resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "tenant",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "environment",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.LoadBalancer"
-            }
-          }
-        ],
-        "tags": [
-          "LogicalResourceModel"
-        ]
-      }
-    },
-    "/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{id}/policy": {
-      "get": {
-        "operationId": "GetLoadBalancerPolicy",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.Policy"
-            }
-          },
-          "404": {
-            "description": "Returned when the resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "tenant",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "environment",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "name",
-            "description": "Internal use only. Auto populated field.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "LogicalResourceModel"
-        ]
-      },
-      "put": {
-        "operationId": "SetLoadBalancerPolicy",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
-          },
-          "404": {
-            "description": "Returned when the resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "tenant",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "environment",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.Policy"
-            }
-          }
-        ],
-        "tags": [
-          "LogicalResourceModel"
-        ]
-      }
-    },
     "/v1/tenants/{tenant}/environments/{id}": {
       "get": {
         "operationId": "GetEnvironment",
@@ -3351,6 +3023,9 @@
         },
         "etag": {
           "type": "string"
+        },
+        "kubernetesClusterDomain": {
+          "type": "string"
         }
       }
     },
@@ -3502,6 +3177,9 @@
           "additionalProperties": {
             "type": "string"
           }
+        },
+        "kubernetesClusterDomain": {
+          "type": "string"
         }
       }
     },
@@ -3542,9 +3220,15 @@
             "$ref": "#/definitions/tetrate.api.tcc.core.v1.Port"
           }
         },
-        "lbManagementIp": {
-          "type": "string",
-          "title": "information specific to F5 load balancers if deployment refers to F5"
+        "kubernetesServiceIp": {
+          "type": "string"
+        },
+        "kubernetesExternalAddresses": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "For kubernetes services of type load balancer, this field contains the list of lb hostnames or IPs assigned to the service. For services of type nodePort, this field contains the IP addresses of the nodes in the cluster."
         }
       }
     },
@@ -3624,62 +3308,6 @@
         "clientSettings": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.ClientSettings",
           "description": "Resilience settings that apply to all clusters in the environment."
-        }
-      }
-    },
-    "tetrate.api.tcc.core.v1.CreateLoadBalancerRequest": {
-      "type": "object",
-      "properties": {
-        "parent": {
-          "type": "string",
-          "description": "Internal use only. Auto populated field."
-        },
-        "tenant": {
-          "type": "string",
-          "description": "Tenant.Id."
-        },
-        "environment": {
-          "type": "string",
-          "description": "Environment.Id."
-        },
-        "id": {
-          "type": "string",
-          "description": "If present, this will be used as the id for the created object."
-        },
-        "description": {
-          "type": "string"
-        },
-        "enableWorkflows": {
-          "type": "boolean",
-          "format": "boolean"
-        },
-        "loadBalancerClass": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.LoadBalancerClass"
-        },
-        "registry": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Registry"
-        },
-        "namespace": {
-          "type": "string",
-          "description": "The namespace where the load balancer is/will be scoped (deployed in a given cluster)."
-        },
-        "labels": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          },
-          "description": "Labels that uniquely identify the cluster loadbalancer. If gateway was created using TCC helm charts, use app: {namespace}-tcclb."
-        },
-        "applications": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/tetrate.api.tcc.core.v1.ListOfLBRoutingInfo"
-          },
-          "description": "Map of applications attached to this loadbalancer in the form applicationId: ListOfLBRoutingInfo."
-        },
-        "clientSettings": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.ClientSettings",
-          "description": "Client settings are applicable for traffic from the load balancer's cluster namespace to the application's namespaces."
         }
       }
     },
@@ -3882,12 +3510,18 @@
             "$ref": "#/definitions/tetrate.api.tcc.core.v1.Port"
           }
         },
-        "lbManagementIp": {
-          "type": "string",
-          "title": "information specific to F5 load balancers if deployment refers to F5"
-        },
         "etag": {
           "type": "string"
+        },
+        "kubernetesServiceIp": {
+          "type": "string"
+        },
+        "kubernetesExternalAddresses": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "For kubernetes services of type load balancer, this field contains the list of lb hostnames or IPs assigned to the service. For services of type nodePort, this field contains the IP addresses of the nodes in the cluster."
         }
       }
     },
@@ -4298,17 +3932,6 @@
         }
       }
     },
-    "tetrate.api.tcc.core.v1.ListLoadBalancersResponse": {
-      "type": "object",
-      "properties": {
-        "loadbalancers": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/tetrate.api.tcc.core.v1.LoadBalancer"
-          }
-        }
-      }
-    },
     "tetrate.api.tcc.core.v1.ListNamespacesResponse": {
       "type": "object",
       "properties": {
@@ -4317,35 +3940,6 @@
           "items": {
             "$ref": "#/definitions/tetrate.api.tcc.core.v1.Namespace"
           }
-        }
-      }
-    },
-    "tetrate.api.tcc.core.v1.ListOfLBRoutingInfo": {
-      "type": "object",
-      "properties": {
-        "lbSettings": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/tetrate.api.tcc.core.v1.ListOfLBRoutingInfo.LBRoutingInfo"
-          }
-        }
-      },
-      "description": "Traffic routing settings for various hostnames exposed at the cluster load balancer."
-    },
-    "tetrate.api.tcc.core.v1.ListOfLBRoutingInfo.LBRoutingInfo": {
-      "type": "object",
-      "properties": {
-        "hostname": {
-          "type": "string",
-          "description": "Hostname with which the application is exposed on this load balancer."
-        },
-        "tls": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.TLSSettings",
-          "description": "TLS certificate info for the application. If nil, the gateway will expose the application on port 80 only."
-        },
-        "routingInfo": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.RoutingInfo",
-          "description": "HTTP Routing settings for the hostname. Note that subsets should not be defined at LB hostname level."
         }
       }
     },
@@ -4390,62 +3984,6 @@
           "items": {
             "$ref": "#/definitions/tetrate.api.tcc.core.v1.User"
           }
-        }
-      }
-    },
-    "tetrate.api.tcc.core.v1.LoadBalancer": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "description": "Internal use only. Auto populated field."
-        },
-        "tenant": {
-          "type": "string"
-        },
-        "environment": {
-          "type": "string"
-        },
-        "id": {
-          "type": "string"
-        },
-        "description": {
-          "type": "string"
-        },
-        "enableWorkflows": {
-          "type": "boolean",
-          "format": "boolean"
-        },
-        "loadBalancerClass": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.LoadBalancerClass"
-        },
-        "registry": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Registry"
-        },
-        "namespace": {
-          "type": "string",
-          "description": "The namespace where the load balancer is/will be scoped (deployed in a given cluster)."
-        },
-        "labels": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          },
-          "description": "Labels that uniquely identify the cluster loadbalancer. If gateway was created using TCC helm charts, use app: {namespace}-tcclb."
-        },
-        "applications": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/tetrate.api.tcc.core.v1.ListOfLBRoutingInfo"
-          },
-          "description": "Map of applications attached to this loadbalancer in the form applicationName: ListOfLBRoutingInfo."
-        },
-        "clientSettings": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.ClientSettings",
-          "description": "Client settings are applicable for traffic from this load balancer's namespace to the application's namespaces."
-        },
-        "etag": {
-          "type": "string"
         }
       }
     },
@@ -4524,6 +4062,11 @@
           "type": "integer",
           "format": "int64",
           "description": "The endpoint port to which this service port maps to. For example, service port 80 exposed on the load balancer could map to an endpoint port 9080 on a VM."
+        },
+        "kubernetesNodePort": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Indicates the node port attached to a physical deployment on a kubernetes cluster."
         }
       }
     },
@@ -4597,17 +4140,22 @@
           }
         }
       },
-      "description": "One or more destinations for the given request."
+      "description": "One or more destinations in a local cluster for the given request."
     },
     "tetrate.api.tcc.core.v1.Route.Destination": {
       "type": "object",
       "properties": {
-        "host": {
-          "type": "string",
-          "description": "If omitted, will route to same host as the service."
+        "local": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Route.LocalDestination",
+          "description": "A local destination."
         },
-        "subset": {
-          "type": "string"
+        "remote": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Route.RemoteDestination",
+          "description": "A remote destination."
+        },
+        "address": {
+          "type": "string",
+          "description": "Instead of specifying local/remote services, you can specify the hostname/IP address to which traffic should be routed to. This address should be reachable from the load balancer. This destination type is applicable only when used with a load balancer service."
         },
         "weight": {
           "type": "integer",
@@ -4618,16 +4166,43 @@
           "type": "integer",
           "format": "int64",
           "description": "Optional."
-        },
+        }
+      }
+    },
+    "tetrate.api.tcc.core.v1.Route.LocalDestination": {
+      "type": "object",
+      "properties": {
         "application": {
           "type": "string",
-          "description": "If omitted, will route to same application as the service. The application field is used by load balancers in the system application to route to other applications."
+          "description": "If omitted, will route to same application as the service.  The application field is used by load balancers in the system application to route to other applications."
         },
         "service": {
           "type": "string",
           "description": "If omitted, will route to the service owning this route.  When used with a Load Balancer (shared or dedicated), traffic can be routed to another service in the same application or a different application."
+        },
+        "host": {
+          "type": "string",
+          "description": "If omitted, will route to same host as the service."
+        },
+        "subset": {
+          "type": "string"
         }
-      }
+      },
+      "description": "A destination local to the cluster where the load balancer or sidecar is present."
+    },
+    "tetrate.api.tcc.core.v1.Route.RemoteDestination": {
+      "type": "object",
+      "properties": {
+        "application": {
+          "type": "string",
+          "description": "If omitted, defaults to system application."
+        },
+        "service": {
+          "type": "string",
+          "description": "The load balancer service to route the traffic to."
+        }
+      },
+      "description": "A destination load balancer service in another cluster. This destination type is applicable only when used with a load balancer service."
     },
     "tetrate.api.tcc.core.v1.RoutingInfo": {
       "type": "object",
@@ -4823,7 +4398,7 @@
       "properties": {
         "route": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.Route",
-          "description": "The destination to which the connection should be forwarded to."
+          "description": "The destination to which the connection should be routed."
         }
       },
       "description": "TCP settings for a service. Applicable to ports receiving non-HTTP traffic."

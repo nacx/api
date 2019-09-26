@@ -84,6 +84,12 @@ export interface TetrateApiTccCoreV1CreateClusterRequest {
      * @memberof TetrateApiTccCoreV1CreateClusterRequest
      */
     labels?: { [key: string]: string; };
+    /**
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1CreateClusterRequest
+     */
+    kubernetesClusterDomain?: string;
 }
 
 export function TetrateApiTccCoreV1CreateClusterRequestFromJSON(json: any): TetrateApiTccCoreV1CreateClusterRequest {
@@ -98,6 +104,7 @@ export function TetrateApiTccCoreV1CreateClusterRequestFromJSON(json: any): Tetr
         'datacenter': !exists(json, 'datacenter') ? undefined : json['datacenter'],
         'availabilityZone': !exists(json, 'availabilityZone') ? undefined : json['availabilityZone'],
         'labels': !exists(json, 'labels') ? undefined : json['labels'],
+        'kubernetesClusterDomain': !exists(json, 'kubernetesClusterDomain') ? undefined : json['kubernetesClusterDomain'],
     };
 }
 
@@ -116,6 +123,7 @@ export function TetrateApiTccCoreV1CreateClusterRequestToJSON(value?: TetrateApi
         'datacenter': value.datacenter,
         'availabilityZone': value.availabilityZone,
         'labels': value.labels,
+        'kubernetesClusterDomain': value.kubernetesClusterDomain,
     };
 }
 

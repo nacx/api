@@ -482,6 +482,8 @@ func (m *Port) Validate() error {
 
 	// no validation rules for EndpointPort
 
+	// no validation rules for KubernetesNodePort
+
 	return nil
 }
 
@@ -2077,6 +2079,157 @@ var _ interface {
 	ErrorName() string
 } = Headers_HeaderOperationsValidationError{}
 
+// Validate checks the field values on Route_LocalDestination with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *Route_LocalDestination) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Application
+
+	// no validation rules for Service
+
+	// no validation rules for Host
+
+	// no validation rules for Subset
+
+	return nil
+}
+
+// Route_LocalDestinationValidationError is the validation error returned by
+// Route_LocalDestination.Validate if the designated constraints aren't met.
+type Route_LocalDestinationValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e Route_LocalDestinationValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e Route_LocalDestinationValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e Route_LocalDestinationValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e Route_LocalDestinationValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e Route_LocalDestinationValidationError) ErrorName() string {
+	return "Route_LocalDestinationValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e Route_LocalDestinationValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sRoute_LocalDestination.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = Route_LocalDestinationValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = Route_LocalDestinationValidationError{}
+
+// Validate checks the field values on Route_RemoteDestination with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *Route_RemoteDestination) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Application
+
+	if utf8.RuneCountInString(m.GetService()) < 1 {
+		return Route_RemoteDestinationValidationError{
+			field:  "Service",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	return nil
+}
+
+// Route_RemoteDestinationValidationError is the validation error returned by
+// Route_RemoteDestination.Validate if the designated constraints aren't met.
+type Route_RemoteDestinationValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e Route_RemoteDestinationValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e Route_RemoteDestinationValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e Route_RemoteDestinationValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e Route_RemoteDestinationValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e Route_RemoteDestinationValidationError) ErrorName() string {
+	return "Route_RemoteDestinationValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e Route_RemoteDestinationValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sRoute_RemoteDestination.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = Route_RemoteDestinationValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = Route_RemoteDestinationValidationError{}
+
 // Validate checks the field values on Route_Destination with the rules defined
 // in the proto definition for this message. If any rules are violated, an
 // error is returned.
@@ -2085,17 +2238,56 @@ func (m *Route_Destination) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Host
-
-	// no validation rules for Subset
-
 	// no validation rules for Weight
 
 	// no validation rules for Port
 
-	// no validation rules for Application
+	switch m.Target.(type) {
 
-	// no validation rules for Service
+	case *Route_Destination_Local:
+
+		{
+			tmp := m.GetLocal()
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return Route_DestinationValidationError{
+						field:  "Local",
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+		}
+
+	case *Route_Destination_Remote:
+
+		{
+			tmp := m.GetRemote()
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return Route_DestinationValidationError{
+						field:  "Remote",
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+		}
+
+	case *Route_Destination_Address:
+		// no validation rules for Address
+
+	default:
+		return Route_DestinationValidationError{
+			field:  "Target",
+			reason: "value is required",
+		}
+
+	}
 
 	return nil
 }

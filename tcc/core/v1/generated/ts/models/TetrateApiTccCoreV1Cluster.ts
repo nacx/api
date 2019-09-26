@@ -90,6 +90,12 @@ export interface TetrateApiTccCoreV1Cluster {
      * @memberof TetrateApiTccCoreV1Cluster
      */
     etag?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1Cluster
+     */
+    kubernetesClusterDomain?: string;
 }
 
 export function TetrateApiTccCoreV1ClusterFromJSON(json: any): TetrateApiTccCoreV1Cluster {
@@ -105,6 +111,7 @@ export function TetrateApiTccCoreV1ClusterFromJSON(json: any): TetrateApiTccCore
         'availabilityZone': !exists(json, 'availabilityZone') ? undefined : json['availabilityZone'],
         'labels': !exists(json, 'labels') ? undefined : json['labels'],
         'etag': !exists(json, 'etag') ? undefined : json['etag'],
+        'kubernetesClusterDomain': !exists(json, 'kubernetesClusterDomain') ? undefined : json['kubernetesClusterDomain'],
     };
 }
 
@@ -124,6 +131,7 @@ export function TetrateApiTccCoreV1ClusterToJSON(value?: TetrateApiTccCoreV1Clus
         'availabilityZone': value.availabilityZone,
         'labels': value.labels,
         'etag': value.etag,
+        'kubernetesClusterDomain': value.kubernetesClusterDomain,
     };
 }
 

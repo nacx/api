@@ -12,6 +12,15 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import {
+    TetrateApiTccCoreV1RouteLocalDestination,
+    TetrateApiTccCoreV1RouteLocalDestinationFromJSON,
+    TetrateApiTccCoreV1RouteLocalDestinationToJSON,
+    TetrateApiTccCoreV1RouteRemoteDestination,
+    TetrateApiTccCoreV1RouteRemoteDestinationFromJSON,
+    TetrateApiTccCoreV1RouteRemoteDestinationToJSON,
+} from './';
+
 /**
  * 
  * @export
@@ -19,17 +28,23 @@ import { exists, mapValues } from '../runtime';
  */
 export interface TetrateApiTccCoreV1RouteDestination {
     /**
-     * If omitted, will route to same host as the service.
-     * @type {string}
+     * 
+     * @type {TetrateApiTccCoreV1RouteLocalDestination}
      * @memberof TetrateApiTccCoreV1RouteDestination
      */
-    host?: string;
+    local?: TetrateApiTccCoreV1RouteLocalDestination;
     /**
      * 
+     * @type {TetrateApiTccCoreV1RouteRemoteDestination}
+     * @memberof TetrateApiTccCoreV1RouteDestination
+     */
+    remote?: TetrateApiTccCoreV1RouteRemoteDestination;
+    /**
+     * Instead of specifying local/remote services, you can specify the hostname/IP address to which traffic should be routed to. This address should be reachable from the load balancer. This destination type is applicable only when used with a load balancer service.
      * @type {string}
      * @memberof TetrateApiTccCoreV1RouteDestination
      */
-    subset?: string;
+    address?: string;
     /**
      * 100 if omitted. sum of all weights should add up to 100.
      * @type {number}
@@ -42,28 +57,15 @@ export interface TetrateApiTccCoreV1RouteDestination {
      * @memberof TetrateApiTccCoreV1RouteDestination
      */
     port?: number;
-    /**
-     * If omitted, will route to same application as the service. The application field is used by load balancers in the system application to route to other applications.
-     * @type {string}
-     * @memberof TetrateApiTccCoreV1RouteDestination
-     */
-    application?: string;
-    /**
-     * If omitted, will route to the service owning this route.  When used with a Load Balancer (shared or dedicated), traffic can be routed to another service in the same application or a different application.
-     * @type {string}
-     * @memberof TetrateApiTccCoreV1RouteDestination
-     */
-    service?: string;
 }
 
 export function TetrateApiTccCoreV1RouteDestinationFromJSON(json: any): TetrateApiTccCoreV1RouteDestination {
     return {
-        'host': !exists(json, 'host') ? undefined : json['host'],
-        'subset': !exists(json, 'subset') ? undefined : json['subset'],
+        'local': !exists(json, 'local') ? undefined : TetrateApiTccCoreV1RouteLocalDestinationFromJSON(json['local']),
+        'remote': !exists(json, 'remote') ? undefined : TetrateApiTccCoreV1RouteRemoteDestinationFromJSON(json['remote']),
+        'address': !exists(json, 'address') ? undefined : json['address'],
         'weight': !exists(json, 'weight') ? undefined : json['weight'],
         'port': !exists(json, 'port') ? undefined : json['port'],
-        'application': !exists(json, 'application') ? undefined : json['application'],
-        'service': !exists(json, 'service') ? undefined : json['service'],
     };
 }
 
@@ -72,12 +74,11 @@ export function TetrateApiTccCoreV1RouteDestinationToJSON(value?: TetrateApiTccC
         return undefined;
     }
     return {
-        'host': value.host,
-        'subset': value.subset,
+        'local': TetrateApiTccCoreV1RouteLocalDestinationToJSON(value.local),
+        'remote': TetrateApiTccCoreV1RouteRemoteDestinationToJSON(value.remote),
+        'address': value.address,
         'weight': value.weight,
         'port': value.port,
-        'application': value.application,
-        'service': value.service,
     };
 }
 

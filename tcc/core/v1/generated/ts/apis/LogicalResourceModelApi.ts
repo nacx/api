@@ -23,9 +23,6 @@ import {
     TetrateApiTccCoreV1CreateEnvironmentRequest,
     TetrateApiTccCoreV1CreateEnvironmentRequestFromJSON,
     TetrateApiTccCoreV1CreateEnvironmentRequestToJSON,
-    TetrateApiTccCoreV1CreateLoadBalancerRequest,
-    TetrateApiTccCoreV1CreateLoadBalancerRequestFromJSON,
-    TetrateApiTccCoreV1CreateLoadBalancerRequestToJSON,
     TetrateApiTccCoreV1CreateServiceRequest,
     TetrateApiTccCoreV1CreateServiceRequestFromJSON,
     TetrateApiTccCoreV1CreateServiceRequestToJSON,
@@ -38,15 +35,9 @@ import {
     TetrateApiTccCoreV1ListEnvironmentsResponse,
     TetrateApiTccCoreV1ListEnvironmentsResponseFromJSON,
     TetrateApiTccCoreV1ListEnvironmentsResponseToJSON,
-    TetrateApiTccCoreV1ListLoadBalancersResponse,
-    TetrateApiTccCoreV1ListLoadBalancersResponseFromJSON,
-    TetrateApiTccCoreV1ListLoadBalancersResponseToJSON,
     TetrateApiTccCoreV1ListServicesResponse,
     TetrateApiTccCoreV1ListServicesResponseFromJSON,
     TetrateApiTccCoreV1ListServicesResponseToJSON,
-    TetrateApiTccCoreV1LoadBalancer,
-    TetrateApiTccCoreV1LoadBalancerFromJSON,
-    TetrateApiTccCoreV1LoadBalancerToJSON,
     TetrateApiTccCoreV1Policy,
     TetrateApiTccCoreV1PolicyFromJSON,
     TetrateApiTccCoreV1PolicyToJSON,
@@ -66,12 +57,6 @@ export interface CreateEnvironmentRequest {
     body: TetrateApiTccCoreV1CreateEnvironmentRequest;
 }
 
-export interface CreateLoadBalancerRequest {
-    tenant: string;
-    environment: string;
-    body: TetrateApiTccCoreV1CreateLoadBalancerRequest;
-}
-
 export interface CreateServiceRequest {
     tenant: string;
     environment: string;
@@ -88,13 +73,6 @@ export interface DeleteApplicationRequest {
 
 export interface DeleteEnvironmentRequest {
     tenant: string;
-    id: string;
-    name?: string;
-}
-
-export interface DeleteLoadBalancerRequest {
-    tenant: string;
-    environment: string;
     id: string;
     name?: string;
 }
@@ -133,20 +111,6 @@ export interface GetEnvironmentPolicyRequest {
     name?: string;
 }
 
-export interface GetLoadBalancerRequest {
-    tenant: string;
-    environment: string;
-    id: string;
-    name?: string;
-}
-
-export interface GetLoadBalancerPolicyRequest {
-    tenant: string;
-    environment: string;
-    id: string;
-    name?: string;
-}
-
 export interface GetServiceRequest {
     tenant: string;
     environment: string;
@@ -163,12 +127,6 @@ export interface ListApplicationsRequest {
 
 export interface ListEnvironmentsRequest {
     tenant: string;
-    parent?: string;
-}
-
-export interface ListLoadBalancersRequest {
-    tenant: string;
-    environment: string;
     parent?: string;
 }
 
@@ -192,13 +150,6 @@ export interface SetEnvironmentPolicyRequest {
     body: TetrateApiTccCoreV1Policy;
 }
 
-export interface SetLoadBalancerPolicyRequest {
-    tenant: string;
-    environment: string;
-    id: string;
-    body: TetrateApiTccCoreV1Policy;
-}
-
 export interface UpdateApplicationRequest {
     tenant: string;
     environment: string;
@@ -210,13 +161,6 @@ export interface UpdateEnvironmentRequest {
     tenant: string;
     id: string;
     body: TetrateApiTccCoreV1Environment;
-}
-
-export interface UpdateLoadBalancerRequest {
-    tenant: string;
-    environment: string;
-    id: string;
-    body: TetrateApiTccCoreV1LoadBalancer;
 }
 
 export interface UpdateServiceRequest {
@@ -303,45 +247,6 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
      */
     async createEnvironment(requestParameters: CreateEnvironmentRequest): Promise<TetrateApiTccCoreV1Environment> {
         const response = await this.createEnvironmentRaw(requestParameters);
-        return await response.value();
-    }
-
-    /**
-     */
-    async createLoadBalancerRaw(requestParameters: CreateLoadBalancerRequest): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
-            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling createLoadBalancer.');
-        }
-
-        if (requestParameters.environment === null || requestParameters.environment === undefined) {
-            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling createLoadBalancer.');
-        }
-
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling createLoadBalancer.');
-        }
-
-        const queryParameters: runtime.HTTPQuery = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        const response = await this.request({
-            path: `/v1/tenants/{tenant}/environments/{environment}/loadbalancers`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))),
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-            body: TetrateApiTccCoreV1CreateLoadBalancerRequestToJSON(requestParameters.body),
-        });
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccCoreV1LoadBalancerFromJSON(jsonValue));
-    }
-
-    /**
-     */
-    async createLoadBalancer(requestParameters: CreateLoadBalancerRequest): Promise<TetrateApiTccCoreV1LoadBalancer> {
-        const response = await this.createLoadBalancerRaw(requestParameters);
         return await response.value();
     }
 
@@ -461,46 +366,6 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
      */
     async deleteEnvironment(requestParameters: DeleteEnvironmentRequest): Promise<object> {
         const response = await this.deleteEnvironmentRaw(requestParameters);
-        return await response.value();
-    }
-
-    /**
-     */
-    async deleteLoadBalancerRaw(requestParameters: DeleteLoadBalancerRequest): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
-            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling deleteLoadBalancer.');
-        }
-
-        if (requestParameters.environment === null || requestParameters.environment === undefined) {
-            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling deleteLoadBalancer.');
-        }
-
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteLoadBalancer.');
-        }
-
-        const queryParameters: runtime.HTTPQuery = {};
-
-        if (requestParameters.name !== undefined) {
-            queryParameters['name'] = requestParameters.name;
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        const response = await this.request({
-            path: `/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
-            method: 'DELETE',
-            headers: headerParameters,
-            query: queryParameters,
-        });
-
-        return new runtime.TextApiResponse(response);
-    }
-
-    /**
-     */
-    async deleteLoadBalancer(requestParameters: DeleteLoadBalancerRequest): Promise<object> {
-        const response = await this.deleteLoadBalancerRaw(requestParameters);
         return await response.value();
     }
 
@@ -702,86 +567,6 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
 
     /**
      */
-    async getLoadBalancerRaw(requestParameters: GetLoadBalancerRequest): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
-            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling getLoadBalancer.');
-        }
-
-        if (requestParameters.environment === null || requestParameters.environment === undefined) {
-            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling getLoadBalancer.');
-        }
-
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getLoadBalancer.');
-        }
-
-        const queryParameters: runtime.HTTPQuery = {};
-
-        if (requestParameters.name !== undefined) {
-            queryParameters['name'] = requestParameters.name;
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        const response = await this.request({
-            path: `/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        });
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccCoreV1LoadBalancerFromJSON(jsonValue));
-    }
-
-    /**
-     */
-    async getLoadBalancer(requestParameters: GetLoadBalancerRequest): Promise<TetrateApiTccCoreV1LoadBalancer> {
-        const response = await this.getLoadBalancerRaw(requestParameters);
-        return await response.value();
-    }
-
-    /**
-     */
-    async getLoadBalancerPolicyRaw(requestParameters: GetLoadBalancerPolicyRequest): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
-            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling getLoadBalancerPolicy.');
-        }
-
-        if (requestParameters.environment === null || requestParameters.environment === undefined) {
-            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling getLoadBalancerPolicy.');
-        }
-
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getLoadBalancerPolicy.');
-        }
-
-        const queryParameters: runtime.HTTPQuery = {};
-
-        if (requestParameters.name !== undefined) {
-            queryParameters['name'] = requestParameters.name;
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        const response = await this.request({
-            path: `/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{id}/policy`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        });
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccCoreV1PolicyFromJSON(jsonValue));
-    }
-
-    /**
-     */
-    async getLoadBalancerPolicy(requestParameters: GetLoadBalancerPolicyRequest): Promise<TetrateApiTccCoreV1Policy> {
-        const response = await this.getLoadBalancerPolicyRaw(requestParameters);
-        return await response.value();
-    }
-
-    /**
-     */
     async getServiceRaw(requestParameters: GetServiceRequest): Promise<runtime.ApiResponse<any>> {
         if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling getService.');
@@ -889,42 +674,6 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
      */
     async listEnvironments(requestParameters: ListEnvironmentsRequest): Promise<TetrateApiTccCoreV1ListEnvironmentsResponse> {
         const response = await this.listEnvironmentsRaw(requestParameters);
-        return await response.value();
-    }
-
-    /**
-     */
-    async listLoadBalancersRaw(requestParameters: ListLoadBalancersRequest): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
-            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling listLoadBalancers.');
-        }
-
-        if (requestParameters.environment === null || requestParameters.environment === undefined) {
-            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling listLoadBalancers.');
-        }
-
-        const queryParameters: runtime.HTTPQuery = {};
-
-        if (requestParameters.parent !== undefined) {
-            queryParameters['parent'] = requestParameters.parent;
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        const response = await this.request({
-            path: `/v1/tenants/{tenant}/environments/{environment}/loadbalancers`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        });
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccCoreV1ListLoadBalancersResponseFromJSON(jsonValue));
-    }
-
-    /**
-     */
-    async listLoadBalancers(requestParameters: ListLoadBalancersRequest): Promise<TetrateApiTccCoreV1ListLoadBalancersResponse> {
-        const response = await this.listLoadBalancersRaw(requestParameters);
         return await response.value();
     }
 
@@ -1052,49 +801,6 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
 
     /**
      */
-    async setLoadBalancerPolicyRaw(requestParameters: SetLoadBalancerPolicyRequest): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
-            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling setLoadBalancerPolicy.');
-        }
-
-        if (requestParameters.environment === null || requestParameters.environment === undefined) {
-            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling setLoadBalancerPolicy.');
-        }
-
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling setLoadBalancerPolicy.');
-        }
-
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling setLoadBalancerPolicy.');
-        }
-
-        const queryParameters: runtime.HTTPQuery = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        const response = await this.request({
-            path: `/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{id}/policy`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
-            method: 'PUT',
-            headers: headerParameters,
-            query: queryParameters,
-            body: TetrateApiTccCoreV1PolicyToJSON(requestParameters.body),
-        });
-
-        return new runtime.TextApiResponse(response);
-    }
-
-    /**
-     */
-    async setLoadBalancerPolicy(requestParameters: SetLoadBalancerPolicyRequest): Promise<object> {
-        const response = await this.setLoadBalancerPolicyRaw(requestParameters);
-        return await response.value();
-    }
-
-    /**
-     */
     async updateApplicationRaw(requestParameters: UpdateApplicationRequest): Promise<runtime.ApiResponse<any>> {
         if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
             throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling updateApplication.');
@@ -1172,49 +878,6 @@ export class LogicalResourceModelApi extends runtime.BaseAPI {
      */
     async updateEnvironment(requestParameters: UpdateEnvironmentRequest): Promise<TetrateApiTccCoreV1Environment> {
         const response = await this.updateEnvironmentRaw(requestParameters);
-        return await response.value();
-    }
-
-    /**
-     */
-    async updateLoadBalancerRaw(requestParameters: UpdateLoadBalancerRequest): Promise<runtime.ApiResponse<any>> {
-        if (requestParameters.tenant === null || requestParameters.tenant === undefined) {
-            throw new runtime.RequiredError('tenant','Required parameter requestParameters.tenant was null or undefined when calling updateLoadBalancer.');
-        }
-
-        if (requestParameters.environment === null || requestParameters.environment === undefined) {
-            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling updateLoadBalancer.');
-        }
-
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling updateLoadBalancer.');
-        }
-
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling updateLoadBalancer.');
-        }
-
-        const queryParameters: runtime.HTTPQuery = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        const response = await this.request({
-            path: `/v1/tenants/{tenant}/environments/{environment}/loadbalancers/{id}`.replace(`{${"tenant"}}`, encodeURIComponent(String(requestParameters.tenant))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
-            method: 'PUT',
-            headers: headerParameters,
-            query: queryParameters,
-            body: TetrateApiTccCoreV1LoadBalancerToJSON(requestParameters.body),
-        });
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => TetrateApiTccCoreV1LoadBalancerFromJSON(jsonValue));
-    }
-
-    /**
-     */
-    async updateLoadBalancer(requestParameters: UpdateLoadBalancerRequest): Promise<TetrateApiTccCoreV1LoadBalancer> {
-        const response = await this.updateLoadBalancerRaw(requestParameters);
         return await response.value();
     }
 

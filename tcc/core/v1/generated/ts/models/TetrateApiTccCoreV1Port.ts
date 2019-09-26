@@ -42,6 +42,12 @@ export interface TetrateApiTccCoreV1Port {
      * @memberof TetrateApiTccCoreV1Port
      */
     endpointPort?: number;
+    /**
+     * Indicates the node port attached to a physical deployment on a kubernetes cluster.
+     * @type {number}
+     * @memberof TetrateApiTccCoreV1Port
+     */
+    kubernetesNodePort?: number;
 }
 
 export function TetrateApiTccCoreV1PortFromJSON(json: any): TetrateApiTccCoreV1Port {
@@ -50,6 +56,7 @@ export function TetrateApiTccCoreV1PortFromJSON(json: any): TetrateApiTccCoreV1P
         'protocol': !exists(json, 'protocol') ? undefined : json['protocol'],
         'name': !exists(json, 'name') ? undefined : json['name'],
         'endpointPort': !exists(json, 'endpointPort') ? undefined : json['endpointPort'],
+        'kubernetesNodePort': !exists(json, 'kubernetesNodePort') ? undefined : json['kubernetesNodePort'],
     };
 }
 
@@ -62,6 +69,7 @@ export function TetrateApiTccCoreV1PortToJSON(value?: TetrateApiTccCoreV1Port): 
         'protocol': value.protocol,
         'name': value.name,
         'endpointPort': value.endpointPort,
+        'kubernetesNodePort': value.kubernetesNodePort,
     };
 }
 

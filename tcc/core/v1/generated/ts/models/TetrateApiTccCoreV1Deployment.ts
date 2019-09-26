@@ -83,13 +83,19 @@ export interface TetrateApiTccCoreV1Deployment {
      * @type {string}
      * @memberof TetrateApiTccCoreV1Deployment
      */
-    lbManagementIp?: string;
+    etag?: string;
     /**
      * 
      * @type {string}
      * @memberof TetrateApiTccCoreV1Deployment
      */
-    etag?: string;
+    kubernetesServiceIp?: string;
+    /**
+     * For kubernetes services of type load balancer, this field contains the list of lb hostnames or IPs assigned to the service. For services of type nodePort, this field contains the IP addresses of the nodes in the cluster.
+     * @type {Array<string>}
+     * @memberof TetrateApiTccCoreV1Deployment
+     */
+    kubernetesExternalAddresses?: Array<string>;
 }
 
 export function TetrateApiTccCoreV1DeploymentFromJSON(json: any): TetrateApiTccCoreV1Deployment {
@@ -103,8 +109,9 @@ export function TetrateApiTccCoreV1DeploymentFromJSON(json: any): TetrateApiTccC
         'hostname': !exists(json, 'hostname') ? undefined : json['hostname'],
         'labels': !exists(json, 'labels') ? undefined : json['labels'],
         'ports': !exists(json, 'ports') ? undefined : (json['ports'] as Array<any>).map(TetrateApiTccCoreV1PortFromJSON),
-        'lbManagementIp': !exists(json, 'lbManagementIp') ? undefined : json['lbManagementIp'],
         'etag': !exists(json, 'etag') ? undefined : json['etag'],
+        'kubernetesServiceIp': !exists(json, 'kubernetesServiceIp') ? undefined : json['kubernetesServiceIp'],
+        'kubernetesExternalAddresses': !exists(json, 'kubernetesExternalAddresses') ? undefined : json['kubernetesExternalAddresses'],
     };
 }
 
@@ -122,8 +129,9 @@ export function TetrateApiTccCoreV1DeploymentToJSON(value?: TetrateApiTccCoreV1D
         'hostname': value.hostname,
         'labels': value.labels,
         'ports': value.ports === undefined ? undefined : (value.ports as Array<any>).map(TetrateApiTccCoreV1PortToJSON),
-        'lbManagementIp': value.lbManagementIp,
         'etag': value.etag,
+        'kubernetesServiceIp': value.kubernetesServiceIp,
+        'kubernetesExternalAddresses': value.kubernetesExternalAddresses,
     };
 }
 
