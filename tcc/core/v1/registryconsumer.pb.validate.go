@@ -41,6 +41,8 @@ func (m *RegistryUpdateResourcesRequest) Validate() error {
 		return nil
 	}
 
+	// no validation rules for Parent
+
 	if utf8.RuneCountInString(m.GetTenant()) < 1 {
 		return RegistryUpdateResourcesRequestValidationError{
 			field:  "Tenant",

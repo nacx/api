@@ -892,7 +892,6 @@
           },
           {
             "name": "cluster",
-            "description": "A unique identifier for the k8s cluster or VM cluster\nTypically we have multiple k8s clusters and one big giant VM cluster\nin a DC.",
             "in": "path",
             "required": true,
             "type": "string"
@@ -902,6 +901,12 @@
             "description": "currently accepted values are istio or f5",
             "in": "path",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "parent",
+            "in": "query",
+            "required": false,
             "type": "string"
           }
         ],
@@ -3780,6 +3785,9 @@
     "tetrate.api.tcc.core.v1.RegistryUpdateResourcesRequest": {
       "type": "object",
       "properties": {
+        "parent": {
+          "type": "string"
+        },
         "tenant": {
           "type": "string",
           "title": "Tenant where this service is residing e.g Tetrate"

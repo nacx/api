@@ -41,16 +41,11 @@ func (m *ConfigDownloadRequest) Validate() error {
 		return nil
 	}
 
-	if _, ok := _ConfigDownloadRequest_Configtype_InLookup[m.GetConfigtype()]; !ok {
-		return ConfigDownloadRequestValidationError{
-			field:  "Configtype",
-			reason: "value must be in list [istio f5]",
-		}
-	}
+	// no validation rules for Parent
 
-	if utf8.RuneCountInString(m.GetCluster()) < 1 {
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
 		return ConfigDownloadRequestValidationError{
-			field:  "Cluster",
+			field:  "Tenant",
 			reason: "value length must be at least 1 runes",
 		}
 	}
@@ -62,10 +57,17 @@ func (m *ConfigDownloadRequest) Validate() error {
 		}
 	}
 
-	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+	if utf8.RuneCountInString(m.GetCluster()) < 1 {
 		return ConfigDownloadRequestValidationError{
-			field:  "Tenant",
+			field:  "Cluster",
 			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if _, ok := _ConfigDownloadRequest_Configtype_InLookup[m.GetConfigtype()]; !ok {
+		return ConfigDownloadRequestValidationError{
+			field:  "Configtype",
+			reason: "value must be in list [istio f5]",
 		}
 	}
 

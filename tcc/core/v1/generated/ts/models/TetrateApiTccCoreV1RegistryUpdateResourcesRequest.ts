@@ -23,6 +23,12 @@ export interface TetrateApiTccCoreV1RegistryUpdateResourcesRequest {
      * @type {string}
      * @memberof TetrateApiTccCoreV1RegistryUpdateResourcesRequest
      */
+    parent?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TetrateApiTccCoreV1RegistryUpdateResourcesRequest
+     */
     tenant?: string;
     /**
      * environment are higher-level isolations e.g. prod, staging, development, etc.
@@ -52,6 +58,7 @@ export interface TetrateApiTccCoreV1RegistryUpdateResourcesRequest {
 
 export function TetrateApiTccCoreV1RegistryUpdateResourcesRequestFromJSON(json: any): TetrateApiTccCoreV1RegistryUpdateResourcesRequest {
     return {
+        'parent': !exists(json, 'parent') ? undefined : json['parent'],
         'tenant': !exists(json, 'tenant') ? undefined : json['tenant'],
         'environment': !exists(json, 'environment') ? undefined : json['environment'],
         'cluster': !exists(json, 'cluster') ? undefined : json['cluster'],
@@ -65,6 +72,7 @@ export function TetrateApiTccCoreV1RegistryUpdateResourcesRequestToJSON(value?: 
         return undefined;
     }
     return {
+        'parent': value.parent,
         'tenant': value.tenant,
         'environment': value.environment,
         'cluster': value.cluster,

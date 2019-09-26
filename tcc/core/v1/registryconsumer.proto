@@ -25,20 +25,22 @@ service RegistryConsumer {
 
 // RegistryUpdateResourcesRequest request object
 message RegistryUpdateResourcesRequest {
+  string parent = 1;
+
   // Tenant where this service is residing e.g Tetrate
-  string tenant = 1 [(validate.rules).string.min_len = 1];
+  string tenant = 2 [(validate.rules).string.min_len = 1];
 
   // environment are higher-level isolations e.g. prod, staging, development, etc.
-  string environment = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
 
   // Unique cluster acting as a source
-  string cluster = 3 [(validate.rules).string.min_len = 1];
+  string cluster = 4 [(validate.rules).string.min_len = 1];
 
   // registrytype indicates source of entry. Currently accepted values "kubernetes", "f5"
-  string registrytype = 4  [(validate.rules).string = {in: ["k8s", "vm"]}];
+  string registrytype = 5 [(validate.rules).string = {in: ["k8s", "vm"]}];
 
   // JSON bulk payload of all physical resources
-  string payload = 5 [(validate.rules).string.min_len = 1];
+  string payload = 6 [(validate.rules).string.min_len = 1];
 }
 
 // RegistryConsumerResponse response returned by server

@@ -28,6 +28,10 @@ var _ status.Status
 var _ = runtime.String
 var _ = utilities.NewDoubleArray
 
+var (
+	filter_ConfigProducer_Download_0 = &utilities.DoubleArray{Encoding: map[string]int{"tenant": 0, "environment": 1, "cluster": 2, "configtype": 3}, Base: []int{1, 1, 2, 3, 4, 0, 0, 0, 0}, Check: []int{0, 1, 1, 1, 1, 2, 3, 4, 5}}
+)
+
 func request_ConfigProducer_Download_0(ctx context.Context, marshaler runtime.Marshaler, client ConfigProducerClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ConfigDownloadRequest
 	var metadata runtime.ServerMetadata
@@ -81,6 +85,10 @@ func request_ConfigProducer_Download_0(ctx context.Context, marshaler runtime.Ma
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "configtype", err)
+	}
+
+	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_ConfigProducer_Download_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := client.Download(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))

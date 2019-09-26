@@ -24,6 +24,7 @@ export interface DownloadRequest {
     environment: string;
     cluster: string;
     configtype: string;
+    parent?: string;
 }
 
 /**
@@ -51,6 +52,10 @@ export class ConfigProducerApi extends runtime.BaseAPI {
         }
 
         const queryParameters: runtime.HTTPQuery = {};
+
+        if (requestParameters.parent !== undefined) {
+            queryParameters['parent'] = requestParameters.parent;
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
