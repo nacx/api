@@ -15,7 +15,7 @@ all: $(DESCRIPTOR) $(ENVOYFILTER)
 
 $(DESCRIPTOR):
 	@echo "building protos..."
-	@protoc -I ./ \
+	protoc -I ./ \
 		-I$(VENDOR) \
 		--go_out=paths=source_relative,plugins=grpc:. \
 		--descriptor_set_out=$(DESCRIPTOR) --include_imports \
@@ -23,12 +23,12 @@ $(DESCRIPTOR):
 
 $(ENVOYFILTER): $(DESCRIPTOR)
 	@echo "generating Envoy filter..."
-	@GO111MODULE=off go get -u github.com/tetratelabs/istio-tools/grpc-transcoder
-	@GO111MODULE=off go run github.com/tetratelabs/istio-tools/grpc-transcoder \
+	GO111MODULE=off go get -u github.com/tetratelabs/istio-tools/grpc-transcoder
+	GO111MODULE=off go run github.com/tetratelabs/istio-tools/grpc-transcoder \
 		--descriptor $(DESCRIPTOR) \
 		--service inventory-server \
 		--port 9080 >$(ENVOYFILTER)
 
 clean:
-	@rm -f $(PROTO_GO_SOURCES) $(DESCRIPTOR) $(ENVOYFILTER)
+	rm -f $(PROTO_GO_SOURCES) $(DESCRIPTOR) $(ENVOYFILTER)
 	@echo "Cleaned $(PROTO_GO_SOURCES) $(DESCRIPTOR) $(ENVOYFILTER)"
