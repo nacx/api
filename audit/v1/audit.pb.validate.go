@@ -40,6 +40,13 @@ func (m *AuditLog) Validate() error {
 		return nil
 	}
 
+	if m.GetCreateTime() == nil {
+		return AuditLogValidationError{
+			field:  "CreateTime",
+			reason: "value is required",
+		}
+	}
+
 	if v, ok := interface{}(m.GetCreateTime()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
 			return AuditLogValidationError{
@@ -50,13 +57,33 @@ func (m *AuditLog) Validate() error {
 		}
 	}
 
-	// no validation rules for Severity
+	if utf8.RuneCountInString(m.GetSeverity()) < 1 {
+		return AuditLogValidationError{
+			field:  "Severity",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Kind
+	if utf8.RuneCountInString(m.GetKind()) < 1 {
+		return AuditLogValidationError{
+			field:  "Kind",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Message
+	if utf8.RuneCountInString(m.GetMessage()) < 1 {
+		return AuditLogValidationError{
+			field:  "Message",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for TriggeredBy
+	if utf8.RuneCountInString(m.GetTriggeredBy()) < 1 {
+		return AuditLogValidationError{
+			field:  "TriggeredBy",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	// no validation rules for Properties
 
