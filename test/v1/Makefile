@@ -8,6 +8,7 @@ include $(TOPDIR)/api/gogo.mk
 PROTO_SOURCES = $(wildcard *.proto)
 PROTO_GO_SOURCES = $(patsubst %.proto,%.pb.go,$(PROTO_SOURCES))
 PROTO_GO_VALIDATE_SOURCES := $(patsubst %.proto,%.pb.validate.go,$(PROTO_SOURCES))
+PROTO_GO_GW_SOURCES = $(patsubst %.proto,%.pb.gw.go,$(PROTO_SOURCES))
 
 DESCRIPTOR := test.proto-descriptor
 
@@ -21,6 +22,7 @@ ${DESCRIPTOR}:
 		-I /usr/include/protobuf \
 		-I $(VENDOR) \
 		--gogofast_out=paths=source_relative,plugins=grpc,$(MAPS):. \
+		--grpc-gateway_out=allow_delete_body=true,paths=source_relative,$(MAPS):. \
 		--validate_out=paths=source_relative,lang=gogo:. \
 		--descriptor_set_out=$(DESCRIPTOR) --include_imports \
 		$(PROTO_SOURCES)
@@ -28,5 +30,5 @@ ${DESCRIPTOR}:
 
 
 clean:
-	rm -f $(PROTO_GO_SOURCES) $(DESCRIPTOR) $(PROTO_GO_VALIDATE_SOURCES)
-	@echo "cleaned ${PROTO_GO_SOURCES} $(PROTO_GO_VALIDATE_SOURCES) $(DESCRIPTOR)"
+	rm -f $(PROTO_GO_SOURCES) $(DESCRIPTOR) $(PROTO_GO_VALIDATE_SOURCES) $(PROTO_GO_GW_SOURCES)
+	@echo "cleaned ${PROTO_GO_SOURCES} $(PROTO_GO_VALIDATE_SOURCES) $(DESCRIPTOR) $(PROTO_GO_GW_SOURCES)"
