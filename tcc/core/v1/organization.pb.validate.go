@@ -581,6 +581,129 @@ var _ interface {
 	ErrorName() string
 } = DeleteTenantRequestValidationError{}
 
+// Validate checks the field values on SyncTenantRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *SyncTenantRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Name
+
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return SyncTenantRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if _, ok := SourceType_name[int32(m.GetSourceType())]; !ok {
+		return SyncTenantRequestValidationError{
+			field:  "SourceType",
+			reason: "value must be one of the defined enum values",
+		}
+	}
+
+	for idx, item := range m.GetUsers() {
+		_, _ = idx, item
+
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return SyncTenantRequestValidationError{
+						field:  fmt.Sprintf("Users[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+		}
+
+	}
+
+	for idx, item := range m.GetTeams() {
+		_, _ = idx, item
+
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return SyncTenantRequestValidationError{
+						field:  fmt.Sprintf("Teams[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// SyncTenantRequestValidationError is the validation error returned by
+// SyncTenantRequest.Validate if the designated constraints aren't met.
+type SyncTenantRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SyncTenantRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SyncTenantRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SyncTenantRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SyncTenantRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SyncTenantRequestValidationError) ErrorName() string {
+	return "SyncTenantRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e SyncTenantRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSyncTenantRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SyncTenantRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SyncTenantRequestValidationError{}
+
 // Validate checks the field values on Team with the rules defined in the proto
 // definition for this message. If any rules are violated, an error is returned.
 func (m *Team) Validate() error {
@@ -610,6 +733,13 @@ func (m *Team) Validate() error {
 		return TeamValidationError{
 			field:  "Etag",
 			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if _, ok := SourceType_name[int32(m.GetSourceType())]; !ok {
+		return TeamValidationError{
+			field:  "SourceType",
+			reason: "value must be one of the defined enum values",
 		}
 	}
 
@@ -690,6 +820,13 @@ func (m *CreateTeamRequest) Validate() error {
 	// no validation rules for Id
 
 	// no validation rules for Description
+
+	if _, ok := SourceType_name[int32(m.GetSourceType())]; !ok {
+		return CreateTeamRequestValidationError{
+			field:  "SourceType",
+			reason: "value must be one of the defined enum values",
+		}
+	}
 
 	return nil
 }
@@ -1100,6 +1237,13 @@ func (m *User) Validate() error {
 
 	// no validation rules for Description
 
+	if _, ok := SourceType_name[int32(m.GetSourceType())]; !ok {
+		return UserValidationError{
+			field:  "SourceType",
+			reason: "value must be one of the defined enum values",
+		}
+	}
+
 	return nil
 }
 
@@ -1177,6 +1321,13 @@ func (m *CreateUserRequest) Validate() error {
 	// no validation rules for Id
 
 	// no validation rules for Description
+
+	if _, ok := SourceType_name[int32(m.GetSourceType())]; !ok {
+		return CreateUserRequestValidationError{
+			field:  "SourceType",
+			reason: "value must be one of the defined enum values",
+		}
+	}
 
 	return nil
 }
@@ -1561,3 +1712,155 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = DeleteUserRequestValidationError{}
+
+// Validate checks the field values on SyncTenantRequest_SyncUser with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *SyncTenantRequest_SyncUser) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return SyncTenantRequest_SyncUserValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	// no validation rules for Description
+
+	return nil
+}
+
+// SyncTenantRequest_SyncUserValidationError is the validation error returned
+// by SyncTenantRequest_SyncUser.Validate if the designated constraints aren't met.
+type SyncTenantRequest_SyncUserValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SyncTenantRequest_SyncUserValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SyncTenantRequest_SyncUserValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SyncTenantRequest_SyncUserValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SyncTenantRequest_SyncUserValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SyncTenantRequest_SyncUserValidationError) ErrorName() string {
+	return "SyncTenantRequest_SyncUserValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e SyncTenantRequest_SyncUserValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSyncTenantRequest_SyncUser.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SyncTenantRequest_SyncUserValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SyncTenantRequest_SyncUserValidationError{}
+
+// Validate checks the field values on SyncTenantRequest_SyncTeam with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *SyncTenantRequest_SyncTeam) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return SyncTenantRequest_SyncTeamValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	// no validation rules for Description
+
+	return nil
+}
+
+// SyncTenantRequest_SyncTeamValidationError is the validation error returned
+// by SyncTenantRequest_SyncTeam.Validate if the designated constraints aren't met.
+type SyncTenantRequest_SyncTeamValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SyncTenantRequest_SyncTeamValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SyncTenantRequest_SyncTeamValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SyncTenantRequest_SyncTeamValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SyncTenantRequest_SyncTeamValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SyncTenantRequest_SyncTeamValidationError) ErrorName() string {
+	return "SyncTenantRequest_SyncTeamValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e SyncTenantRequest_SyncTeamValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSyncTenantRequest_SyncTeam.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SyncTenantRequest_SyncTeamValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SyncTenantRequest_SyncTeamValidationError{}

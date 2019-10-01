@@ -57,6 +57,15 @@ service Organization {
     };
   };
 
+  // SyncTenant is used by processes that monitor the identity providers to synchronize
+  // the users and teams with the ones in TCC
+  rpc SyncTenant(SyncTenantRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/v1/tenants/{id}/sync"
+      body: "*"
+    };
+  };
+
   rpc CreateTeam(CreateTeamRequest) returns (Team) {
     option (google.api.http) = {
       post: "/v1/tenants/{tenant}/teams"
@@ -161,6 +170,50 @@ message DeleteTenantRequest {
   string id = 2 [(validate.rules).string.min_len = 1];
 }
 
+// SourceType describes where users and teams come from
+enum SourceType {
+  INVALID = 0;
+  // LDAP is used for users and teams that are automatically synchronized from LDAP
+  LDAP = 1;
+  // LOCAL is used for users and teams that are manually created using the TCC API and that
+  // are local to TCC.
+  // TODO(nacx): Users represent subjects that can be authenticated against an external identity
+  // Provider
+  // so it is unlikely that there will be local users. Instead of having local users, we should
+  // introduce the
+  // local service account concept as a proper entity in the model, and configure all TCC agents and
+  // the superuser
+  // as local service accounts.
+  LOCAL = 2;
+}
+
+message SyncTenantRequest {
+  // Internal use only. Auto populated field.
+  string name = 1;
+  string id = 2 [(validate.rules).string.min_len = 1];
+
+  SourceType source_type = 3 [(validate.rules).enum.defined_only = true];
+
+  // Information of a user as synchronized from the team source. This differs slightly from a TCC
+  // user since
+  // the fields here are raw info that does not have the context of the TCC hierarchy.
+  message SyncUser {
+    string id = 1 [(validate.rules).string.min_len = 1];
+    string description = 4;
+  };
+  repeated SyncUser users = 4;
+
+  // Information of a team as synchronized from the team source. This differs slightly from a TCC
+  // user since
+  // the fields here are raw info that does not have the context of the TCC hierarchy.
+  message SyncTeam {
+    string id = 1 [(validate.rules).string.min_len = 1];
+    string description = 2;
+    repeated string member_ids = 3;
+  };
+  repeated SyncTeam teams = 5;
+}
+
 message Team {
   // Internal use only. Auto populated field.
   string name = 1;
@@ -169,6 +222,7 @@ message Team {
   string description = 4;
   repeated string members = 5;
   string etag = 6 [(validate.rules).string.min_len = 1];
+  SourceType source_type = 7 [(validate.rules).enum.defined_only = true];
 }
 
 message CreateTeamRequest {
@@ -181,6 +235,7 @@ message CreateTeamRequest {
 
   string description = 4;
   repeated string members = 5;
+  SourceType source_type = 6 [(validate.rules).enum.defined_only = true];
 }
 
 message GetTeamRequest {
@@ -213,6 +268,7 @@ message User {
   string tenant = 2 [(validate.rules).string.min_len = 1];
   string id = 3 [(validate.rules).string.min_len = 1];
   string description = 4;
+  SourceType source_type = 7 [(validate.rules).enum.defined_only = true];
 }
 
 message CreateUserRequest {
@@ -224,6 +280,7 @@ message CreateUserRequest {
   string id = 3;
 
   string description = 4;
+  SourceType source_type = 5 [(validate.rules).enum.defined_only = true];
 }
 
 message GetUserRequest {

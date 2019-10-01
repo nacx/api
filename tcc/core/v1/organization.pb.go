@@ -30,6 +30,45 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
 
+// SourceType describes where users and teams come from
+type SourceType int32
+
+const (
+	SourceType_INVALID SourceType = 0
+	// LDAP is used for users and teams that are automatically synchronized from LDAP
+	SourceType_LDAP SourceType = 1
+	// LOCAL is used for users and teams that are manually created using the TCC API and that
+	// are local to TCC.
+	// TODO(nacx): Users represent subjects that can be authenticated against an external identity
+	// Provider
+	// so it is unlikely that there will be local users. Instead of having local users, we should
+	// introduce the
+	// local service account concept as a proper entity in the model, and configure all TCC agents and
+	// the superuser
+	// as local service accounts.
+	SourceType_LOCAL SourceType = 2
+)
+
+var SourceType_name = map[int32]string{
+	0: "INVALID",
+	1: "LDAP",
+	2: "LOCAL",
+}
+
+var SourceType_value = map[string]int32{
+	"INVALID": 0,
+	"LDAP":    1,
+	"LOCAL":   2,
+}
+
+func (x SourceType) String() string {
+	return proto.EnumName(SourceType_name, int32(x))
+}
+
+func (SourceType) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_8d10c68ef159b9ed, []int{0}
+}
+
 type Tenant struct {
 	// Internal use only. Auto populated field.
 	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
@@ -411,24 +450,229 @@ func (m *DeleteTenantRequest) GetId() string {
 	return ""
 }
 
-type Team struct {
+type SyncTenantRequest struct {
 	// Internal use only. Auto populated field.
-	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Tenant               string   `protobuf:"bytes,2,opt,name=tenant,proto3" json:"tenant,omitempty"`
-	Id                   string   `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
+	Name                 string                        `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Id                   string                        `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
+	SourceType           SourceType                    `protobuf:"varint,3,opt,name=source_type,json=sourceType,proto3,enum=tetrate.api.tcc.core.v1.SourceType" json:"source_type,omitempty"`
+	Users                []*SyncTenantRequest_SyncUser `protobuf:"bytes,4,rep,name=users,proto3" json:"users,omitempty"`
+	Teams                []*SyncTenantRequest_SyncTeam `protobuf:"bytes,5,rep,name=teams,proto3" json:"teams,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                      `json:"-"`
+	XXX_unrecognized     []byte                        `json:"-"`
+	XXX_sizecache        int32                         `json:"-"`
+}
+
+func (m *SyncTenantRequest) Reset()         { *m = SyncTenantRequest{} }
+func (m *SyncTenantRequest) String() string { return proto.CompactTextString(m) }
+func (*SyncTenantRequest) ProtoMessage()    {}
+func (*SyncTenantRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8d10c68ef159b9ed, []int{7}
+}
+func (m *SyncTenantRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *SyncTenantRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_SyncTenantRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *SyncTenantRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SyncTenantRequest.Merge(m, src)
+}
+func (m *SyncTenantRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *SyncTenantRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_SyncTenantRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SyncTenantRequest proto.InternalMessageInfo
+
+func (m *SyncTenantRequest) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *SyncTenantRequest) GetId() string {
+	if m != nil {
+		return m.Id
+	}
+	return ""
+}
+
+func (m *SyncTenantRequest) GetSourceType() SourceType {
+	if m != nil {
+		return m.SourceType
+	}
+	return SourceType_INVALID
+}
+
+func (m *SyncTenantRequest) GetUsers() []*SyncTenantRequest_SyncUser {
+	if m != nil {
+		return m.Users
+	}
+	return nil
+}
+
+func (m *SyncTenantRequest) GetTeams() []*SyncTenantRequest_SyncTeam {
+	if m != nil {
+		return m.Teams
+	}
+	return nil
+}
+
+// Information of a user as synchronized from the team source. This differs slightly from a TCC
+// user since
+// the fields here are raw info that does not have the context of the TCC hierarchy.
+type SyncTenantRequest_SyncUser struct {
+	Id                   string   `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	Description          string   `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
-	Members              []string `protobuf:"bytes,5,rep,name=members,proto3" json:"members,omitempty"`
-	Etag                 string   `protobuf:"bytes,6,opt,name=etag,proto3" json:"etag,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *SyncTenantRequest_SyncUser) Reset()         { *m = SyncTenantRequest_SyncUser{} }
+func (m *SyncTenantRequest_SyncUser) String() string { return proto.CompactTextString(m) }
+func (*SyncTenantRequest_SyncUser) ProtoMessage()    {}
+func (*SyncTenantRequest_SyncUser) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8d10c68ef159b9ed, []int{7, 0}
+}
+func (m *SyncTenantRequest_SyncUser) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *SyncTenantRequest_SyncUser) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_SyncTenantRequest_SyncUser.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *SyncTenantRequest_SyncUser) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SyncTenantRequest_SyncUser.Merge(m, src)
+}
+func (m *SyncTenantRequest_SyncUser) XXX_Size() int {
+	return m.Size()
+}
+func (m *SyncTenantRequest_SyncUser) XXX_DiscardUnknown() {
+	xxx_messageInfo_SyncTenantRequest_SyncUser.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SyncTenantRequest_SyncUser proto.InternalMessageInfo
+
+func (m *SyncTenantRequest_SyncUser) GetId() string {
+	if m != nil {
+		return m.Id
+	}
+	return ""
+}
+
+func (m *SyncTenantRequest_SyncUser) GetDescription() string {
+	if m != nil {
+		return m.Description
+	}
+	return ""
+}
+
+// Information of a team as synchronized from the team source. This differs slightly from a TCC
+// user since
+// the fields here are raw info that does not have the context of the TCC hierarchy.
+type SyncTenantRequest_SyncTeam struct {
+	Id                   string   `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Description          string   `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
+	MemberIds            []string `protobuf:"bytes,3,rep,name=member_ids,json=memberIds,proto3" json:"member_ids,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *SyncTenantRequest_SyncTeam) Reset()         { *m = SyncTenantRequest_SyncTeam{} }
+func (m *SyncTenantRequest_SyncTeam) String() string { return proto.CompactTextString(m) }
+func (*SyncTenantRequest_SyncTeam) ProtoMessage()    {}
+func (*SyncTenantRequest_SyncTeam) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8d10c68ef159b9ed, []int{7, 1}
+}
+func (m *SyncTenantRequest_SyncTeam) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *SyncTenantRequest_SyncTeam) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_SyncTenantRequest_SyncTeam.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *SyncTenantRequest_SyncTeam) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SyncTenantRequest_SyncTeam.Merge(m, src)
+}
+func (m *SyncTenantRequest_SyncTeam) XXX_Size() int {
+	return m.Size()
+}
+func (m *SyncTenantRequest_SyncTeam) XXX_DiscardUnknown() {
+	xxx_messageInfo_SyncTenantRequest_SyncTeam.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SyncTenantRequest_SyncTeam proto.InternalMessageInfo
+
+func (m *SyncTenantRequest_SyncTeam) GetId() string {
+	if m != nil {
+		return m.Id
+	}
+	return ""
+}
+
+func (m *SyncTenantRequest_SyncTeam) GetDescription() string {
+	if m != nil {
+		return m.Description
+	}
+	return ""
+}
+
+func (m *SyncTenantRequest_SyncTeam) GetMemberIds() []string {
+	if m != nil {
+		return m.MemberIds
+	}
+	return nil
+}
+
+type Team struct {
+	// Internal use only. Auto populated field.
+	Name                 string     `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Tenant               string     `protobuf:"bytes,2,opt,name=tenant,proto3" json:"tenant,omitempty"`
+	Id                   string     `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
+	Description          string     `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
+	Members              []string   `protobuf:"bytes,5,rep,name=members,proto3" json:"members,omitempty"`
+	Etag                 string     `protobuf:"bytes,6,opt,name=etag,proto3" json:"etag,omitempty"`
+	SourceType           SourceType `protobuf:"varint,7,opt,name=source_type,json=sourceType,proto3,enum=tetrate.api.tcc.core.v1.SourceType" json:"source_type,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}   `json:"-"`
+	XXX_unrecognized     []byte     `json:"-"`
+	XXX_sizecache        int32      `json:"-"`
 }
 
 func (m *Team) Reset()         { *m = Team{} }
 func (m *Team) String() string { return proto.CompactTextString(m) }
 func (*Team) ProtoMessage()    {}
 func (*Team) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8d10c68ef159b9ed, []int{7}
+	return fileDescriptor_8d10c68ef159b9ed, []int{8}
 }
 func (m *Team) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -499,25 +743,33 @@ func (m *Team) GetEtag() string {
 	return ""
 }
 
+func (m *Team) GetSourceType() SourceType {
+	if m != nil {
+		return m.SourceType
+	}
+	return SourceType_INVALID
+}
+
 type CreateTeamRequest struct {
 	// Internal use only. Auto populated field.
 	Parent string `protobuf:"bytes,1,opt,name=parent,proto3" json:"parent,omitempty"`
 	// Tenant.Id.
 	Tenant string `protobuf:"bytes,2,opt,name=tenant,proto3" json:"tenant,omitempty"`
 	// If present, this will be used as the id for the created object.
-	Id                   string   `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
-	Description          string   `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
-	Members              []string `protobuf:"bytes,5,rep,name=members,proto3" json:"members,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Id                   string     `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
+	Description          string     `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
+	Members              []string   `protobuf:"bytes,5,rep,name=members,proto3" json:"members,omitempty"`
+	SourceType           SourceType `protobuf:"varint,6,opt,name=source_type,json=sourceType,proto3,enum=tetrate.api.tcc.core.v1.SourceType" json:"source_type,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}   `json:"-"`
+	XXX_unrecognized     []byte     `json:"-"`
+	XXX_sizecache        int32      `json:"-"`
 }
 
 func (m *CreateTeamRequest) Reset()         { *m = CreateTeamRequest{} }
 func (m *CreateTeamRequest) String() string { return proto.CompactTextString(m) }
 func (*CreateTeamRequest) ProtoMessage()    {}
 func (*CreateTeamRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8d10c68ef159b9ed, []int{8}
+	return fileDescriptor_8d10c68ef159b9ed, []int{9}
 }
 func (m *CreateTeamRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -581,6 +833,13 @@ func (m *CreateTeamRequest) GetMembers() []string {
 	return nil
 }
 
+func (m *CreateTeamRequest) GetSourceType() SourceType {
+	if m != nil {
+		return m.SourceType
+	}
+	return SourceType_INVALID
+}
+
 type GetTeamRequest struct {
 	// Internal use only. Auto populated field.
 	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
@@ -595,7 +854,7 @@ func (m *GetTeamRequest) Reset()         { *m = GetTeamRequest{} }
 func (m *GetTeamRequest) String() string { return proto.CompactTextString(m) }
 func (*GetTeamRequest) ProtoMessage()    {}
 func (*GetTeamRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8d10c68ef159b9ed, []int{9}
+	return fileDescriptor_8d10c68ef159b9ed, []int{10}
 }
 func (m *GetTeamRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -658,7 +917,7 @@ func (m *ListTeamsRequest) Reset()         { *m = ListTeamsRequest{} }
 func (m *ListTeamsRequest) String() string { return proto.CompactTextString(m) }
 func (*ListTeamsRequest) ProtoMessage()    {}
 func (*ListTeamsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8d10c68ef159b9ed, []int{10}
+	return fileDescriptor_8d10c68ef159b9ed, []int{11}
 }
 func (m *ListTeamsRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -712,7 +971,7 @@ func (m *ListTeamsResponse) Reset()         { *m = ListTeamsResponse{} }
 func (m *ListTeamsResponse) String() string { return proto.CompactTextString(m) }
 func (*ListTeamsResponse) ProtoMessage()    {}
 func (*ListTeamsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8d10c68ef159b9ed, []int{11}
+	return fileDescriptor_8d10c68ef159b9ed, []int{12}
 }
 func (m *ListTeamsResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -762,7 +1021,7 @@ func (m *DeleteTeamRequest) Reset()         { *m = DeleteTeamRequest{} }
 func (m *DeleteTeamRequest) String() string { return proto.CompactTextString(m) }
 func (*DeleteTeamRequest) ProtoMessage()    {}
 func (*DeleteTeamRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8d10c68ef159b9ed, []int{12}
+	return fileDescriptor_8d10c68ef159b9ed, []int{13}
 }
 func (m *DeleteTeamRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -814,20 +1073,21 @@ func (m *DeleteTeamRequest) GetId() string {
 
 type User struct {
 	// Internal use only. Auto populated field.
-	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Tenant               string   `protobuf:"bytes,2,opt,name=tenant,proto3" json:"tenant,omitempty"`
-	Id                   string   `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
-	Description          string   `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Name                 string     `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Tenant               string     `protobuf:"bytes,2,opt,name=tenant,proto3" json:"tenant,omitempty"`
+	Id                   string     `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
+	Description          string     `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
+	SourceType           SourceType `protobuf:"varint,7,opt,name=source_type,json=sourceType,proto3,enum=tetrate.api.tcc.core.v1.SourceType" json:"source_type,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}   `json:"-"`
+	XXX_unrecognized     []byte     `json:"-"`
+	XXX_sizecache        int32      `json:"-"`
 }
 
 func (m *User) Reset()         { *m = User{} }
 func (m *User) String() string { return proto.CompactTextString(m) }
 func (*User) ProtoMessage()    {}
 func (*User) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8d10c68ef159b9ed, []int{13}
+	return fileDescriptor_8d10c68ef159b9ed, []int{14}
 }
 func (m *User) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -884,24 +1144,32 @@ func (m *User) GetDescription() string {
 	return ""
 }
 
+func (m *User) GetSourceType() SourceType {
+	if m != nil {
+		return m.SourceType
+	}
+	return SourceType_INVALID
+}
+
 type CreateUserRequest struct {
 	// Internal use only. Auto populated field.
 	Parent string `protobuf:"bytes,1,opt,name=parent,proto3" json:"parent,omitempty"`
 	// Tenant.Id.
 	Tenant string `protobuf:"bytes,2,opt,name=tenant,proto3" json:"tenant,omitempty"`
 	// If present, this will be used as the id for the created object.
-	Id                   string   `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
-	Description          string   `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Id                   string     `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
+	Description          string     `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
+	SourceType           SourceType `protobuf:"varint,5,opt,name=source_type,json=sourceType,proto3,enum=tetrate.api.tcc.core.v1.SourceType" json:"source_type,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}   `json:"-"`
+	XXX_unrecognized     []byte     `json:"-"`
+	XXX_sizecache        int32      `json:"-"`
 }
 
 func (m *CreateUserRequest) Reset()         { *m = CreateUserRequest{} }
 func (m *CreateUserRequest) String() string { return proto.CompactTextString(m) }
 func (*CreateUserRequest) ProtoMessage()    {}
 func (*CreateUserRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8d10c68ef159b9ed, []int{14}
+	return fileDescriptor_8d10c68ef159b9ed, []int{15}
 }
 func (m *CreateUserRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -958,6 +1226,13 @@ func (m *CreateUserRequest) GetDescription() string {
 	return ""
 }
 
+func (m *CreateUserRequest) GetSourceType() SourceType {
+	if m != nil {
+		return m.SourceType
+	}
+	return SourceType_INVALID
+}
+
 type GetUserRequest struct {
 	// Internal use only. Auto populated field.
 	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
@@ -972,7 +1247,7 @@ func (m *GetUserRequest) Reset()         { *m = GetUserRequest{} }
 func (m *GetUserRequest) String() string { return proto.CompactTextString(m) }
 func (*GetUserRequest) ProtoMessage()    {}
 func (*GetUserRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8d10c68ef159b9ed, []int{15}
+	return fileDescriptor_8d10c68ef159b9ed, []int{16}
 }
 func (m *GetUserRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1035,7 +1310,7 @@ func (m *ListUsersRequest) Reset()         { *m = ListUsersRequest{} }
 func (m *ListUsersRequest) String() string { return proto.CompactTextString(m) }
 func (*ListUsersRequest) ProtoMessage()    {}
 func (*ListUsersRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8d10c68ef159b9ed, []int{16}
+	return fileDescriptor_8d10c68ef159b9ed, []int{17}
 }
 func (m *ListUsersRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1089,7 +1364,7 @@ func (m *ListUsersResponse) Reset()         { *m = ListUsersResponse{} }
 func (m *ListUsersResponse) String() string { return proto.CompactTextString(m) }
 func (*ListUsersResponse) ProtoMessage()    {}
 func (*ListUsersResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8d10c68ef159b9ed, []int{17}
+	return fileDescriptor_8d10c68ef159b9ed, []int{18}
 }
 func (m *ListUsersResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1139,7 +1414,7 @@ func (m *DeleteUserRequest) Reset()         { *m = DeleteUserRequest{} }
 func (m *DeleteUserRequest) String() string { return proto.CompactTextString(m) }
 func (*DeleteUserRequest) ProtoMessage()    {}
 func (*DeleteUserRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8d10c68ef159b9ed, []int{18}
+	return fileDescriptor_8d10c68ef159b9ed, []int{19}
 }
 func (m *DeleteUserRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1190,6 +1465,7 @@ func (m *DeleteUserRequest) GetId() string {
 }
 
 func init() {
+	proto.RegisterEnum("tetrate.api.tcc.core.v1.SourceType", SourceType_name, SourceType_value)
 	proto.RegisterType((*Tenant)(nil), "tetrate.api.tcc.core.v1.Tenant")
 	proto.RegisterType((*CreateTenantRequest)(nil), "tetrate.api.tcc.core.v1.CreateTenantRequest")
 	proto.RegisterType((*GetTenantRequest)(nil), "tetrate.api.tcc.core.v1.GetTenantRequest")
@@ -1197,6 +1473,9 @@ func init() {
 	proto.RegisterType((*ListTenantsRequest)(nil), "tetrate.api.tcc.core.v1.ListTenantsRequest")
 	proto.RegisterType((*ListTenantsResponse)(nil), "tetrate.api.tcc.core.v1.ListTenantsResponse")
 	proto.RegisterType((*DeleteTenantRequest)(nil), "tetrate.api.tcc.core.v1.DeleteTenantRequest")
+	proto.RegisterType((*SyncTenantRequest)(nil), "tetrate.api.tcc.core.v1.SyncTenantRequest")
+	proto.RegisterType((*SyncTenantRequest_SyncUser)(nil), "tetrate.api.tcc.core.v1.SyncTenantRequest.SyncUser")
+	proto.RegisterType((*SyncTenantRequest_SyncTeam)(nil), "tetrate.api.tcc.core.v1.SyncTenantRequest.SyncTeam")
 	proto.RegisterType((*Team)(nil), "tetrate.api.tcc.core.v1.Team")
 	proto.RegisterType((*CreateTeamRequest)(nil), "tetrate.api.tcc.core.v1.CreateTeamRequest")
 	proto.RegisterType((*GetTeamRequest)(nil), "tetrate.api.tcc.core.v1.GetTeamRequest")
@@ -1214,69 +1493,81 @@ func init() {
 func init() { proto.RegisterFile("organization.proto", fileDescriptor_8d10c68ef159b9ed) }
 
 var fileDescriptor_8d10c68ef159b9ed = []byte{
-	// 979 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xc4, 0x58, 0xcf, 0x6f, 0x1b, 0x45,
-	0x14, 0xd6, 0xda, 0x8e, 0x23, 0x3f, 0x87, 0xd4, 0x79, 0x2e, 0x89, 0xbb, 0x6d, 0x7e, 0x74, 0x04,
-	0x6a, 0x30, 0xd1, 0xae, 0x92, 0x9e, 0xc8, 0xad, 0xa1, 0xa8, 0x1c, 0x40, 0x54, 0xa6, 0x3d, 0xc0,
-	0x6d, 0xbc, 0x1e, 0xcc, 0x4a, 0xd9, 0x1f, 0xd9, 0x1d, 0x5b, 0x4a, 0x20, 0xa8, 0xe2, 0x00, 0x12,
-	0x57, 0x6e, 0xfc, 0x1b, 0xdc, 0x38, 0x71, 0x83, 0x23, 0x12, 0xff, 0x00, 0x8a, 0xb8, 0xf0, 0x5f,
-	0xa0, 0x9d, 0x99, 0xfd, 0x61, 0x3b, 0xde, 0xb1, 0xdb, 0x46, 0x3d, 0x65, 0x3d, 0x3b, 0xef, 0x7d,
-	0xef, 0x7b, 0xef, 0xb3, 0xbf, 0xa7, 0x00, 0x06, 0xd1, 0x90, 0xfa, 0xee, 0x05, 0xe5, 0x6e, 0xe0,
-	0x5b, 0x61, 0x14, 0xf0, 0x00, 0xb7, 0x38, 0xe3, 0x11, 0xe5, 0xcc, 0xa2, 0xa1, 0x6b, 0x71, 0xc7,
-	0xb1, 0x9c, 0x20, 0x62, 0xd6, 0xf8, 0xd0, 0xbc, 0x37, 0x0c, 0x82, 0xe1, 0x29, 0xb3, 0x69, 0xe8,
-	0xda, 0xd4, 0xf7, 0x03, 0x2e, 0xa2, 0x62, 0x19, 0x66, 0xde, 0x55, 0x6f, 0xc5, 0xa7, 0xfe, 0xe8,
-	0x2b, 0x9b, 0x79, 0x21, 0x3f, 0x57, 0x2f, 0xb7, 0xc6, 0xf4, 0xd4, 0x1d, 0x50, 0xce, 0xec, 0xf4,
-	0x41, 0xbd, 0xb8, 0x7d, 0x66, 0x47, 0x7d, 0xea, 0xd8, 0xe3, 0x43, 0xf1, 0x57, 0x9e, 0x92, 0x2f,
-	0xa0, 0xfe, 0x8c, 0xf9, 0xd4, 0xe7, 0x88, 0x50, 0xf3, 0xa9, 0xc7, 0x3a, 0xc6, 0x9e, 0xb1, 0xdf,
-	0xe8, 0x89, 0x67, 0xbc, 0x03, 0x15, 0x77, 0xd0, 0xa9, 0x24, 0x27, 0x27, 0x8d, 0xdf, 0xfe, 0xfb,
-	0xbd, 0x5a, 0x8b, 0x2a, 0x2d, 0xa3, 0x57, 0x71, 0x07, 0xb8, 0x07, 0xcd, 0x01, 0x8b, 0x9d, 0xc8,
-	0x0d, 0x93, 0xd2, 0x3a, 0x55, 0x11, 0x55, 0x3c, 0x22, 0x4f, 0xa0, 0xfd, 0x61, 0xc4, 0x28, 0x67,
-	0x12, 0xa0, 0xc7, 0xce, 0x46, 0x2c, 0xe6, 0xb8, 0x2e, 0x72, 0x4a, 0x94, 0xc5, 0x12, 0x3d, 0x82,
-	0xd6, 0x13, 0xc6, 0x27, 0xb3, 0x2c, 0x57, 0x2d, 0xf9, 0xd1, 0x80, 0xb6, 0x4c, 0xf0, 0x34, 0x38,
-	0x75, 0x9d, 0xf3, 0x97, 0x4b, 0x83, 0x8f, 0xa0, 0x1e, 0x8a, 0x78, 0x51, 0x66, 0xf3, 0x68, 0xdb,
-	0x2a, 0x4e, 0xf0, 0xcc, 0x12, 0x8d, 0x1d, 0x1f, 0x5a, 0x12, 0xe4, 0x04, 0x92, 0xe8, 0x95, 0x9f,
-	0x8c, 0x24, 0x5c, 0x05, 0x92, 0xdb, 0x80, 0x9f, 0xb8, 0xb1, 0x62, 0x13, 0xab, 0x3a, 0xc8, 0x53,
-	0x68, 0x4f, 0x9c, 0xc6, 0x61, 0xe0, 0xc7, 0x0c, 0x3f, 0x80, 0x55, 0x2e, 0x8f, 0x3a, 0xc6, 0x5e,
-	0x75, 0xbf, 0x79, 0xb4, 0x6b, 0xcd, 0x91, 0x8c, 0xa5, 0xda, 0x93, 0xde, 0x27, 0x8f, 0xa1, 0xfd,
-	0x98, 0x9d, 0xb2, 0xe9, 0xee, 0x2f, 0xd9, 0xb7, 0x5f, 0x0d, 0xa8, 0x3d, 0x63, 0xd4, 0xbb, 0x36,
-	0xee, 0x3e, 0xd4, 0x25, 0xda, 0x6c, 0xac, 0x7a, 0xa1, 0x52, 0x57, 0x17, 0x10, 0x50, 0x6d, 0x66,
-	0xee, 0xd8, 0x81, 0x55, 0x8f, 0x79, 0x7d, 0x16, 0xc5, 0x9d, 0x95, 0xbd, 0xea, 0x7e, 0xa3, 0x97,
-	0x7e, 0xc4, 0x6d, 0xa8, 0x31, 0x4e, 0x87, 0x9d, 0xfa, 0x74, 0x62, 0x71, 0x4c, 0x7e, 0x31, 0x60,
-	0x23, 0x95, 0x1e, 0xf5, 0x52, 0xea, 0x9b, 0x50, 0x0f, 0x69, 0xc4, 0x7c, 0xae, 0x48, 0xa8, 0x4f,
-	0x8b, 0xd0, 0x58, 0xcf, 0x69, 0xbc, 0x6a, 0xed, 0xa4, 0x0f, 0xeb, 0x42, 0xcd, 0x79, 0x61, 0xaf,
-	0xbd, 0xb7, 0xe4, 0x53, 0x68, 0x49, 0x39, 0x51, 0x2f, 0x7e, 0x75, 0xfa, 0xe4, 0x63, 0xd8, 0x28,
-	0xa4, 0x53, 0xda, 0x7c, 0x08, 0x2b, 0x3c, 0x39, 0x50, 0xca, 0xdc, 0x2e, 0x51, 0x26, 0xf5, 0x7a,
-	0xf2, 0x2e, 0x61, 0xb0, 0x91, 0xaa, 0xf2, 0x26, 0xf9, 0x5f, 0x40, 0xed, 0x79, 0xcc, 0xa2, 0x37,
-	0xa1, 0x5a, 0xf2, 0x22, 0x13, 0x5f, 0x52, 0xc2, 0x9b, 0x10, 0x9f, 0x92, 0x58, 0x11, 0xfe, 0xc6,
-	0x24, 0x96, 0x80, 0xbc, 0x46, 0x89, 0xa9, 0x74, 0xb9, 0xc4, 0x46, 0xc9, 0x81, 0x56, 0x62, 0x82,
-	0xaa, 0xbc, 0x9b, 0x4b, 0xec, 0x46, 0xf9, 0x1f, 0xfd, 0xd1, 0x82, 0xb5, 0xcf, 0x0a, 0x96, 0x8e,
-	0x23, 0x58, 0x2b, 0xda, 0x1d, 0x1e, 0xcc, 0xad, 0xf6, 0x1a, 0x57, 0x34, 0x75, 0x3f, 0xec, 0x64,
-	0xf3, 0xfb, 0xbf, 0xff, 0xfd, 0xb9, 0xd2, 0x22, 0xcd, 0xc4, 0xc0, 0xd5, 0x8f, 0xfc, 0xb1, 0xd1,
-	0xc5, 0x33, 0x68, 0x64, 0xe6, 0x88, 0xef, 0xcd, 0xcd, 0x32, 0x6d, 0xa0, 0x7a, 0xc0, 0x8e, 0x00,
-	0x44, 0x6c, 0x15, 0x00, 0xed, 0x6f, 0xdc, 0xc1, 0x25, 0x7a, 0xb0, 0xf6, 0x3c, 0x1c, 0xe4, 0x4c,
-	0x75, 0xa9, 0xf4, 0x58, 0x77, 0x05, 0xd6, 0xdb, 0xe6, 0x0c, 0x56, 0xc2, 0xf0, 0x12, 0x9a, 0x05,
-	0x6f, 0xc4, 0xf7, 0xe7, 0x26, 0x9b, 0xf5, 0x55, 0xf3, 0x60, 0xb1, 0xcb, 0x52, 0x6f, 0xa4, 0x2d,
-	0xca, 0x78, 0x0b, 0x8b, 0x3d, 0x46, 0x1f, 0xd6, 0x8a, 0x46, 0x5a, 0x32, 0xd7, 0x6b, 0xfc, 0xd6,
-	0xdc, 0xb4, 0xe4, 0xb2, 0x66, 0xa5, 0xcb, 0x9a, 0xf5, 0x51, 0xb2, 0xac, 0xa5, 0xdd, 0xed, 0xce,
-	0x76, 0xf7, 0x5b, 0xb8, 0x95, 0x0d, 0x4b, 0xee, 0x11, 0xcb, 0x8c, 0xb5, 0x7c, 0x23, 0x21, 0xbb,
-	0x02, 0xf6, 0x0e, 0x6e, 0x4d, 0xc3, 0xda, 0x72, 0x3d, 0xc1, 0x17, 0x06, 0xdc, 0xfa, 0x7c, 0x0a,
-	0xfe, 0x40, 0x33, 0xbe, 0x89, 0x95, 0x6a, 0x2e, 0xe3, 0x07, 0x02, 0xfa, 0xbe, 0x39, 0x0f, 0xfa,
-	0x58, 0x6d, 0x48, 0xf8, 0x1d, 0x40, 0x6e, 0xde, 0xd8, 0xd5, 0x7e, 0x8d, 0x32, 0x23, 0x31, 0xcb,
-	0x3d, 0x88, 0xbc, 0x2b, 0x2a, 0xd8, 0x25, 0xe6, 0x44, 0x05, 0xf2, 0xe1, 0xd2, 0x16, 0x06, 0x95,
-	0xe8, 0x6d, 0x0c, 0x90, 0xca, 0x9b, 0x7a, 0x58, 0x9e, 0x53, 0x07, 0xd9, 0x15, 0x90, 0xef, 0x98,
-	0xbb, 0xf3, 0x21, 0x33, 0x9d, 0x5f, 0xc0, 0xaa, 0x5a, 0x0c, 0xf0, 0x41, 0xf9, 0xc0, 0x17, 0x66,
-	0xac, 0x7a, 0x8e, 0x3a, 0x78, 0xfc, 0xc1, 0x80, 0x46, 0x66, 0xf1, 0x25, 0x7a, 0x9b, 0xde, 0x2a,
-	0xcc, 0xee, 0x22, 0x57, 0xd5, 0xd7, 0x8b, 0x88, 0x6a, 0xee, 0x61, 0x49, 0xff, 0xf1, 0x1c, 0x20,
-	0x5f, 0x10, 0x4a, 0x86, 0x3f, 0xb3, 0x45, 0xe8, 0x74, 0xd7, 0xd5, 0xf6, 0x20, 0xd3, 0x9d, 0x58,
-	0x1d, 0x74, 0xba, 0x2b, 0xb8, 0x8b, 0x59, 0x6e, 0x4c, 0x1a, 0xdd, 0x09, 0xd7, 0xca, 0xe7, 0x2f,
-	0xc0, 0x4b, 0xe7, 0xbf, 0x04, 0x72, 0xf9, 0xfc, 0x05, 0xb2, 0xe4, 0x9e, 0x69, 0x5e, 0xc0, 0x97,
-	0x67, 0xd5, 0x81, 0x96, 0x6b, 0x3e, 0x07, 0x4d, 0x38, 0x67, 0xe3, 0xd6, 0xf4, 0x7c, 0xc6, 0xd1,
-	0x5f, 0x72, 0xdc, 0x05, 0xca, 0xa9, 0xe4, 0xc5, 0xca, 0xa1, 0x91, 0x7c, 0x71, 0xcb, 0xd1, 0x48,
-	0x7e, 0x62, 0x83, 0xd1, 0x48, 0x5e, 0x54, 0x73, 0x72, 0xfc, 0xe7, 0xd5, 0x8e, 0xf1, 0xd7, 0xd5,
-	0x8e, 0xf1, 0xcf, 0xd5, 0x8e, 0xf1, 0xe5, 0xc1, 0xd0, 0xe5, 0x5f, 0x8f, 0xfa, 0x96, 0x13, 0x78,
-	0xb6, 0xc2, 0x71, 0x83, 0xf4, 0x49, 0xfc, 0x43, 0x80, 0x3b, 0x8e, 0x9d, 0x20, 0xda, 0xe3, 0xc3,
-	0x7e, 0x5d, 0xb0, 0x7f, 0xf8, 0x7f, 0x00, 0x00, 0x00, 0xff, 0xff, 0xbd, 0x75, 0x28, 0xcc, 0x5e,
-	0x10, 0x00, 0x00,
+	// 1181 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xc4, 0x58, 0xcd, 0x6f, 0xe3, 0xc4,
+	0x1b, 0xfe, 0x39, 0x49, 0xd3, 0xcd, 0x9b, 0xfe, 0xba, 0xe9, 0x74, 0xb7, 0xf5, 0x7a, 0xb7, 0x1f,
+	0x6b, 0x40, 0x5b, 0x42, 0x65, 0xab, 0xed, 0x89, 0xde, 0xda, 0x2d, 0x2a, 0x95, 0x02, 0x5b, 0xa5,
+	0x5d, 0x24, 0xb8, 0xac, 0x1c, 0x67, 0x36, 0x58, 0xaa, 0x3f, 0x6a, 0x4f, 0x22, 0x65, 0xa1, 0x08,
+	0xad, 0x04, 0x48, 0x5c, 0xf9, 0x6f, 0xe0, 0xc2, 0x91, 0x03, 0x07, 0x04, 0x47, 0x2e, 0xa8, 0xe2,
+	0x82, 0xc4, 0x1f, 0x81, 0x3c, 0x33, 0xfe, 0x88, 0x5d, 0xdb, 0x49, 0xd3, 0x6a, 0x4f, 0x75, 0xc6,
+	0x9e, 0xe7, 0x99, 0xf7, 0x79, 0xdf, 0x77, 0xe6, 0x99, 0x02, 0xb2, 0xdd, 0x9e, 0x66, 0x19, 0xaf,
+	0x34, 0x62, 0xd8, 0x96, 0xe2, 0xb8, 0x36, 0xb1, 0xd1, 0x32, 0xc1, 0xc4, 0xd5, 0x08, 0x56, 0x34,
+	0xc7, 0x50, 0x88, 0xae, 0x2b, 0xba, 0xed, 0x62, 0x65, 0xb0, 0x25, 0x3d, 0xea, 0xd9, 0x76, 0xef,
+	0x0c, 0xab, 0x9a, 0x63, 0xa8, 0x9a, 0x65, 0xd9, 0x84, 0xce, 0xf2, 0xd8, 0x34, 0xe9, 0x21, 0x7f,
+	0x4b, 0x7f, 0x75, 0xfa, 0x2f, 0x55, 0x6c, 0x3a, 0x64, 0xc8, 0x5f, 0x2e, 0x0f, 0xb4, 0x33, 0xa3,
+	0xab, 0x11, 0xac, 0x06, 0x0f, 0xfc, 0xc5, 0xbd, 0x73, 0xd5, 0xed, 0x68, 0xba, 0x3a, 0xd8, 0xa2,
+	0x7f, 0xd9, 0xa8, 0xfc, 0x29, 0x54, 0x4f, 0xb1, 0xa5, 0x59, 0x04, 0x21, 0xa8, 0x58, 0x9a, 0x89,
+	0x45, 0x61, 0x5d, 0xd8, 0xa8, 0xb5, 0xe9, 0x33, 0x7a, 0x00, 0x25, 0xa3, 0x2b, 0x96, 0xfc, 0x91,
+	0xfd, 0xda, 0x8f, 0xff, 0xfc, 0x5c, 0xae, 0xb8, 0xa5, 0x86, 0xd0, 0x2e, 0x19, 0x5d, 0xb4, 0x0e,
+	0xf5, 0x2e, 0xf6, 0x74, 0xd7, 0x70, 0xfc, 0xa5, 0x89, 0x65, 0x3a, 0x2b, 0x3e, 0x24, 0x1f, 0xc2,
+	0xe2, 0x53, 0x17, 0x6b, 0x04, 0x33, 0x82, 0x36, 0x3e, 0xef, 0x63, 0x8f, 0xa0, 0x79, 0x8a, 0xc9,
+	0x58, 0xc6, 0x03, 0xda, 0x83, 0xc6, 0x21, 0x26, 0xa3, 0x28, 0x93, 0xad, 0x56, 0xfe, 0x4e, 0x80,
+	0x45, 0x06, 0x70, 0x6c, 0x9f, 0x19, 0xfa, 0xf0, 0x7a, 0x30, 0x68, 0x0f, 0xaa, 0x0e, 0x9d, 0x4f,
+	0x97, 0x59, 0xdf, 0x5e, 0x51, 0xe2, 0x19, 0x3c, 0x57, 0xa8, 0xb0, 0x83, 0x2d, 0x85, 0x91, 0xec,
+	0x83, 0x3f, 0x7b, 0xe6, 0x7b, 0xc1, 0x9f, 0xce, 0x27, 0xca, 0xf7, 0x00, 0xb5, 0x0c, 0x8f, 0x47,
+	0xe3, 0xf1, 0x75, 0xc8, 0xc7, 0xb0, 0x38, 0x32, 0xea, 0x39, 0xb6, 0xe5, 0x61, 0xf4, 0x3e, 0xcc,
+	0x12, 0x36, 0x24, 0x0a, 0xeb, 0xe5, 0x8d, 0xfa, 0xf6, 0x9a, 0x92, 0x51, 0x32, 0x0a, 0x97, 0x27,
+	0xf8, 0x5e, 0x3e, 0x80, 0xc5, 0x03, 0x7c, 0x86, 0x93, 0xea, 0x4f, 0xa8, 0xdb, 0x9f, 0x65, 0x58,
+	0x38, 0x19, 0x5a, 0xfa, 0x34, 0x20, 0xe8, 0x18, 0xea, 0x9e, 0xdd, 0x77, 0x75, 0xfc, 0x82, 0x0c,
+	0x1d, 0x4c, 0xa5, 0x9b, 0xdf, 0x7e, 0x2b, 0x33, 0x92, 0x13, 0xfa, 0xed, 0xe9, 0xd0, 0xc1, 0x5c,
+	0xc0, 0xd7, 0x54, 0x40, 0xf0, 0xc2, 0x71, 0x74, 0x04, 0x33, 0x7d, 0x0f, 0xbb, 0x9e, 0x58, 0xa1,
+	0xaa, 0xec, 0x64, 0x63, 0x25, 0xd7, 0x4e, 0x47, 0x9e, 0x7b, 0xd8, 0x6d, 0x33, 0x04, 0x1f, 0x8a,
+	0x60, 0xcd, 0xf4, 0xc4, 0x99, 0x6b, 0x41, 0x9d, 0x62, 0xcd, 0x6c, 0x33, 0x04, 0xe9, 0x10, 0xee,
+	0x04, 0xe8, 0x5c, 0x0e, 0x61, 0x8c, 0xce, 0xa9, 0xa4, 0x0a, 0x5e, 0x7a, 0xc9, 0x80, 0x7c, 0xec,
+	0x09, 0x80, 0x4a, 0x29, 0x20, 0xb4, 0x02, 0x60, 0x62, 0xb3, 0x83, 0xdd, 0x17, 0x46, 0xd7, 0x13,
+	0xcb, 0xeb, 0xe5, 0x8d, 0x5a, 0xbb, 0xc6, 0x46, 0x8e, 0xba, 0x9e, 0xfc, 0x4d, 0x09, 0x2a, 0x94,
+	0xe4, 0xaa, 0x84, 0x3e, 0x86, 0x2a, 0xab, 0xa5, 0x74, 0x52, 0xf9, 0x0b, 0xbe, 0xb6, 0xf2, 0xb5,
+	0x82, 0x44, 0x22, 0xcc, 0xb2, 0x95, 0x30, 0xe9, 0x6b, 0xed, 0xe0, 0x27, 0x5a, 0x81, 0x0a, 0x26,
+	0x5a, 0x4f, 0xac, 0x26, 0x81, 0xe9, 0x70, 0xb2, 0x9c, 0x66, 0xa7, 0x2e, 0x27, 0xf9, 0x5f, 0x01,
+	0x16, 0x82, 0xad, 0x4a, 0x33, 0x83, 0x2a, 0x5f, 0x82, 0xaa, 0xa3, 0xb9, 0xd8, 0x22, 0x5c, 0x16,
+	0xfe, 0x6b, 0x1c, 0x61, 0xe6, 0x23, 0x61, 0xa6, 0x56, 0x23, 0x11, 0x6e, 0x75, 0xfa, 0x70, 0x3b,
+	0x30, 0x4f, 0xf7, 0xd3, 0x28, 0xd4, 0x1b, 0xcf, 0xbf, 0xfc, 0x11, 0x34, 0xd8, 0x86, 0xa6, 0x99,
+	0xde, 0xf4, 0x82, 0xca, 0x1f, 0xc2, 0x42, 0x0c, 0x8e, 0xef, 0x8e, 0x3b, 0x41, 0xeb, 0xb2, 0xbd,
+	0x71, 0x25, 0x67, 0x6f, 0x0c, 0x9b, 0x54, 0xc6, 0xb0, 0x10, 0xec, 0x8b, 0xb7, 0x19, 0xff, 0xaf,
+	0x02, 0x54, 0xe8, 0x46, 0xf0, 0x26, 0x5a, 0xeb, 0xe6, 0x3b, 0xe4, 0xf7, 0xb0, 0x43, 0xe8, 0xde,
+	0xf9, 0x26, 0x3a, 0x24, 0x11, 0xd4, 0xcc, 0x4d, 0xf5, 0x41, 0x3c, 0xa0, 0x5b, 0xeb, 0x03, 0x9f,
+	0xe4, 0x06, 0xfb, 0x80, 0xc3, 0x45, 0x7d, 0xc0, 0x4e, 0xc3, 0xa2, 0x3e, 0x88, 0x9d, 0x7b, 0x51,
+	0x1f, 0xdc, 0x6a, 0xfc, 0x4d, 0x05, 0x20, 0xca, 0x04, 0xaa, 0xc3, 0xec, 0xd1, 0xc7, 0x9f, 0xec,
+	0xb5, 0x8e, 0x0e, 0x1a, 0xff, 0x43, 0x77, 0xa0, 0xd2, 0x3a, 0xd8, 0x3b, 0x6e, 0x08, 0xa8, 0x06,
+	0x33, 0xad, 0x67, 0x4f, 0xf7, 0x5a, 0x8d, 0xd2, 0xf6, 0x4f, 0x0b, 0x30, 0xf7, 0x2c, 0xe6, 0x94,
+	0x51, 0x1f, 0xe6, 0xe2, 0x2e, 0x12, 0x6d, 0x66, 0x46, 0x77, 0x85, 0xd9, 0x94, 0x8a, 0xfc, 0x92,
+	0xbc, 0xf4, 0xfa, 0x8f, 0xbf, 0x7f, 0x28, 0x35, 0xe4, 0xba, 0xef, 0x8b, 0xb9, 0x77, 0xda, 0x15,
+	0x9a, 0xe8, 0x1c, 0x6a, 0xa1, 0xe7, 0x44, 0xef, 0x66, 0xa2, 0x24, 0x7d, 0x69, 0x31, 0xa1, 0x48,
+	0x09, 0x11, 0x6a, 0xc4, 0x08, 0xd5, 0x2f, 0x8c, 0xee, 0x05, 0x32, 0x61, 0xee, 0xb9, 0xd3, 0x8d,
+	0x22, 0x2d, 0x82, 0x2a, 0xe6, 0x7a, 0x48, 0xb9, 0xee, 0x4b, 0x29, 0x2e, 0x3f, 0xc2, 0x0b, 0xa8,
+	0xc7, 0x2c, 0x27, 0x7a, 0x2f, 0x13, 0x2c, 0x6d, 0x57, 0xa5, 0xcd, 0xf1, 0x3e, 0x66, 0xf5, 0x29,
+	0x2f, 0xd2, 0x65, 0xfc, 0x1f, 0xc5, 0x35, 0x46, 0x16, 0xcc, 0xc5, 0xfd, 0x69, 0x4e, 0x5e, 0xaf,
+	0xb0, 0xb1, 0xd2, 0x92, 0xc2, 0xee, 0x40, 0x4a, 0x70, 0x07, 0x52, 0x3e, 0xf0, 0xef, 0x40, 0x81,
+	0xba, 0xcd, 0xb4, 0xba, 0x5f, 0xc2, 0xdd, 0x30, 0x59, 0xcc, 0x9e, 0x4f, 0x92, 0xd6, 0x7c, 0xa3,
+	0x2f, 0xaf, 0x51, 0xda, 0x07, 0x68, 0x39, 0x49, 0xab, 0x32, 0xd7, 0x8f, 0xbe, 0x16, 0xe0, 0xee,
+	0x49, 0x82, 0x7e, 0xb3, 0x20, 0x7d, 0x23, 0x37, 0x95, 0xcc, 0x88, 0x9f, 0x50, 0xea, 0xc7, 0x52,
+	0x16, 0xf5, 0x2e, 0xbf, 0x78, 0x20, 0x17, 0x20, 0xb2, 0xb0, 0xa8, 0x39, 0xbe, 0xcf, 0xcd, 0xa4,
+	0x5e, 0xa7, 0xd4, 0x92, 0x7c, 0x3f, 0x45, 0xed, 0x0d, 0x2d, 0xdd, 0xaf, 0xb1, 0xaf, 0x00, 0x22,
+	0x5f, 0x95, 0xc3, 0x99, 0x32, 0x5f, 0x52, 0xfe, 0x61, 0x2e, 0xbf, 0x43, 0xa9, 0xd7, 0x64, 0x69,
+	0x84, 0x9a, 0x3d, 0x5c, 0xa8, 0xf4, 0xa4, 0xf7, 0xf9, 0x07, 0x00, 0x41, 0x4b, 0x69, 0x26, 0xca,
+	0xc7, 0x2c, 0xa2, 0x6c, 0x52, 0xca, 0xb7, 0xa5, 0xb5, 0x6c, 0xca, 0xb0, 0xb7, 0x5e, 0xc1, 0x2c,
+	0x77, 0x58, 0xe8, 0x49, 0x7e, 0x91, 0x8d, 0x1d, 0x31, 0xcf, 0x33, 0x2a, 0xa2, 0x47, 0xdf, 0x0a,
+	0x50, 0x0b, 0xbd, 0x52, 0x4e, 0x8d, 0x27, 0xed, 0x99, 0xd4, 0x1c, 0xe7, 0x53, 0xde, 0xd2, 0x32,
+	0x5d, 0xcd, 0x23, 0x94, 0xa3, 0x3f, 0x1a, 0x02, 0x44, 0x4e, 0x2b, 0x27, 0xf9, 0x29, 0x3b, 0x56,
+	0x54, 0xeb, 0xcd, 0x42, 0x0d, 0xc2, 0xba, 0xa3, 0x16, 0xac, 0xa8, 0xee, 0x62, 0x27, 0xa0, 0x94,
+	0x7f, 0x78, 0x16, 0xd4, 0x1d, 0x3d, 0x59, 0xa3, 0xfc, 0x53, 0xf2, 0xdc, 0xfc, 0x4f, 0xc0, 0x9c,
+	0x9f, 0x7f, 0xca, 0xcc, 0x62, 0x0f, 0x6b, 0x9e, 0xd2, 0xe7, 0xa3, 0x16, 0x91, 0xe6, 0xd7, 0x7c,
+	0x44, 0xea, 0xc7, 0x1c, 0xa6, 0xbb, 0x40, 0xf3, 0x94, 0xeb, 0xb8, 0x66, 0xba, 0x63, 0x21, 0x07,
+	0x25, 0x4f, 0x6d, 0x51, 0x41, 0xc9, 0xc7, 0x9d, 0x58, 0x41, 0xc9, 0x8f, 0xb8, 0xac, 0x82, 0x92,
+	0xa7, 0xab, 0xd9, 0xdf, 0xfd, 0xe5, 0x72, 0x55, 0xf8, 0xed, 0x72, 0x55, 0xf8, 0xeb, 0x72, 0x55,
+	0xf8, 0x6c, 0xb3, 0x67, 0x90, 0xcf, 0xfb, 0x1d, 0x45, 0xb7, 0x4d, 0x95, 0xf3, 0x18, 0x76, 0xf0,
+	0x44, 0xff, 0xb7, 0x47, 0x74, 0x5d, 0xf5, 0x19, 0xd5, 0xc1, 0x56, 0xa7, 0x4a, 0xa3, 0xdf, 0xf9,
+	0x2f, 0x00, 0x00, 0xff, 0xff, 0xec, 0xef, 0x8d, 0x9d, 0x29, 0x14, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -1298,6 +1589,9 @@ type OrganizationClient interface {
 	DeleteTenant(ctx context.Context, in *DeleteTenantRequest, opts ...grpc.CallOption) (*types.Empty, error)
 	GetTenantPolicy(ctx context.Context, in *GetTenantRequest, opts ...grpc.CallOption) (*v1.Policy, error)
 	SetTenantPolicy(ctx context.Context, in *TenantPolicyRequest, opts ...grpc.CallOption) (*types.Empty, error)
+	// SyncTenant is used by processes that monitor the identity providers to synchronize
+	// the users and teams with the ones in TCC
+	SyncTenant(ctx context.Context, in *SyncTenantRequest, opts ...grpc.CallOption) (*types.Empty, error)
 	CreateTeam(ctx context.Context, in *CreateTeamRequest, opts ...grpc.CallOption) (*Team, error)
 	UpdateTeam(ctx context.Context, in *Team, opts ...grpc.CallOption) (*Team, error)
 	GetTeam(ctx context.Context, in *GetTeamRequest, opts ...grpc.CallOption) (*Team, error)
@@ -1375,6 +1669,15 @@ func (c *organizationClient) GetTenantPolicy(ctx context.Context, in *GetTenantR
 func (c *organizationClient) SetTenantPolicy(ctx context.Context, in *TenantPolicyRequest, opts ...grpc.CallOption) (*types.Empty, error) {
 	out := new(types.Empty)
 	err := c.cc.Invoke(ctx, "/tetrate.api.tcc.core.v1.Organization/SetTenantPolicy", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *organizationClient) SyncTenant(ctx context.Context, in *SyncTenantRequest, opts ...grpc.CallOption) (*types.Empty, error) {
+	out := new(types.Empty)
+	err := c.cc.Invoke(ctx, "/tetrate.api.tcc.core.v1.Organization/SyncTenant", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1480,6 +1783,9 @@ type OrganizationServer interface {
 	DeleteTenant(context.Context, *DeleteTenantRequest) (*types.Empty, error)
 	GetTenantPolicy(context.Context, *GetTenantRequest) (*v1.Policy, error)
 	SetTenantPolicy(context.Context, *TenantPolicyRequest) (*types.Empty, error)
+	// SyncTenant is used by processes that monitor the identity providers to synchronize
+	// the users and teams with the ones in TCC
+	SyncTenant(context.Context, *SyncTenantRequest) (*types.Empty, error)
 	CreateTeam(context.Context, *CreateTeamRequest) (*Team, error)
 	UpdateTeam(context.Context, *Team) (*Team, error)
 	GetTeam(context.Context, *GetTeamRequest) (*Team, error)
@@ -1516,6 +1822,9 @@ func (*UnimplementedOrganizationServer) GetTenantPolicy(ctx context.Context, req
 }
 func (*UnimplementedOrganizationServer) SetTenantPolicy(ctx context.Context, req *TenantPolicyRequest) (*types.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetTenantPolicy not implemented")
+}
+func (*UnimplementedOrganizationServer) SyncTenant(ctx context.Context, req *SyncTenantRequest) (*types.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SyncTenant not implemented")
 }
 func (*UnimplementedOrganizationServer) CreateTeam(ctx context.Context, req *CreateTeamRequest) (*Team, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateTeam not implemented")
@@ -1674,6 +1983,24 @@ func _Organization_SetTenantPolicy_Handler(srv interface{}, ctx context.Context,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrganizationServer).SetTenantPolicy(ctx, req.(*TenantPolicyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Organization_SyncTenant_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SyncTenantRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrganizationServer).SyncTenant(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/tetrate.api.tcc.core.v1.Organization/SyncTenant",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrganizationServer).SyncTenant(ctx, req.(*SyncTenantRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1889,6 +2216,10 @@ var _Organization_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SetTenantPolicy",
 			Handler:    _Organization_SetTenantPolicy_Handler,
+		},
+		{
+			MethodName: "SyncTenant",
+			Handler:    _Organization_SyncTenant_Handler,
 		},
 		{
 			MethodName: "CreateTeam",
@@ -2227,6 +2558,171 @@ func (m *DeleteTenantRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *SyncTenantRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *SyncTenantRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SyncTenantRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.Teams) > 0 {
+		for iNdEx := len(m.Teams) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Teams[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintOrganization(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x2a
+		}
+	}
+	if len(m.Users) > 0 {
+		for iNdEx := len(m.Users) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Users[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintOrganization(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x22
+		}
+	}
+	if m.SourceType != 0 {
+		i = encodeVarintOrganization(dAtA, i, uint64(m.SourceType))
+		i--
+		dAtA[i] = 0x18
+	}
+	if len(m.Id) > 0 {
+		i -= len(m.Id)
+		copy(dAtA[i:], m.Id)
+		i = encodeVarintOrganization(dAtA, i, uint64(len(m.Id)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Name) > 0 {
+		i -= len(m.Name)
+		copy(dAtA[i:], m.Name)
+		i = encodeVarintOrganization(dAtA, i, uint64(len(m.Name)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *SyncTenantRequest_SyncUser) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *SyncTenantRequest_SyncUser) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SyncTenantRequest_SyncUser) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.Description) > 0 {
+		i -= len(m.Description)
+		copy(dAtA[i:], m.Description)
+		i = encodeVarintOrganization(dAtA, i, uint64(len(m.Description)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.Id) > 0 {
+		i -= len(m.Id)
+		copy(dAtA[i:], m.Id)
+		i = encodeVarintOrganization(dAtA, i, uint64(len(m.Id)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *SyncTenantRequest_SyncTeam) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *SyncTenantRequest_SyncTeam) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SyncTenantRequest_SyncTeam) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.MemberIds) > 0 {
+		for iNdEx := len(m.MemberIds) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.MemberIds[iNdEx])
+			copy(dAtA[i:], m.MemberIds[iNdEx])
+			i = encodeVarintOrganization(dAtA, i, uint64(len(m.MemberIds[iNdEx])))
+			i--
+			dAtA[i] = 0x1a
+		}
+	}
+	if len(m.Description) > 0 {
+		i -= len(m.Description)
+		copy(dAtA[i:], m.Description)
+		i = encodeVarintOrganization(dAtA, i, uint64(len(m.Description)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Id) > 0 {
+		i -= len(m.Id)
+		copy(dAtA[i:], m.Id)
+		i = encodeVarintOrganization(dAtA, i, uint64(len(m.Id)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
 func (m *Team) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -2250,6 +2746,11 @@ func (m *Team) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	if m.XXX_unrecognized != nil {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.SourceType != 0 {
+		i = encodeVarintOrganization(dAtA, i, uint64(m.SourceType))
+		i--
+		dAtA[i] = 0x38
 	}
 	if len(m.Etag) > 0 {
 		i -= len(m.Etag)
@@ -2321,6 +2822,11 @@ func (m *CreateTeamRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	if m.XXX_unrecognized != nil {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.SourceType != 0 {
+		i = encodeVarintOrganization(dAtA, i, uint64(m.SourceType))
+		i--
+		dAtA[i] = 0x30
 	}
 	if len(m.Members) > 0 {
 		for iNdEx := len(m.Members) - 1; iNdEx >= 0; iNdEx-- {
@@ -2564,6 +3070,11 @@ func (m *User) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
+	if m.SourceType != 0 {
+		i = encodeVarintOrganization(dAtA, i, uint64(m.SourceType))
+		i--
+		dAtA[i] = 0x38
+	}
 	if len(m.Description) > 0 {
 		i -= len(m.Description)
 		copy(dAtA[i:], m.Description)
@@ -2618,6 +3129,11 @@ func (m *CreateUserRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	if m.XXX_unrecognized != nil {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.SourceType != 0 {
+		i = encodeVarintOrganization(dAtA, i, uint64(m.SourceType))
+		i--
+		dAtA[i] = 0x28
 	}
 	if len(m.Description) > 0 {
 		i -= len(m.Description)
@@ -2977,6 +3493,87 @@ func (m *DeleteTenantRequest) Size() (n int) {
 	return n
 }
 
+func (m *SyncTenantRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Name)
+	if l > 0 {
+		n += 1 + l + sovOrganization(uint64(l))
+	}
+	l = len(m.Id)
+	if l > 0 {
+		n += 1 + l + sovOrganization(uint64(l))
+	}
+	if m.SourceType != 0 {
+		n += 1 + sovOrganization(uint64(m.SourceType))
+	}
+	if len(m.Users) > 0 {
+		for _, e := range m.Users {
+			l = e.Size()
+			n += 1 + l + sovOrganization(uint64(l))
+		}
+	}
+	if len(m.Teams) > 0 {
+		for _, e := range m.Teams {
+			l = e.Size()
+			n += 1 + l + sovOrganization(uint64(l))
+		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *SyncTenantRequest_SyncUser) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Id)
+	if l > 0 {
+		n += 1 + l + sovOrganization(uint64(l))
+	}
+	l = len(m.Description)
+	if l > 0 {
+		n += 1 + l + sovOrganization(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *SyncTenantRequest_SyncTeam) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Id)
+	if l > 0 {
+		n += 1 + l + sovOrganization(uint64(l))
+	}
+	l = len(m.Description)
+	if l > 0 {
+		n += 1 + l + sovOrganization(uint64(l))
+	}
+	if len(m.MemberIds) > 0 {
+		for _, s := range m.MemberIds {
+			l = len(s)
+			n += 1 + l + sovOrganization(uint64(l))
+		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
 func (m *Team) Size() (n int) {
 	if m == nil {
 		return 0
@@ -3008,6 +3605,9 @@ func (m *Team) Size() (n int) {
 	l = len(m.Etag)
 	if l > 0 {
 		n += 1 + l + sovOrganization(uint64(l))
+	}
+	if m.SourceType != 0 {
+		n += 1 + sovOrganization(uint64(m.SourceType))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -3042,6 +3642,9 @@ func (m *CreateTeamRequest) Size() (n int) {
 			l = len(s)
 			n += 1 + l + sovOrganization(uint64(l))
 		}
+	}
+	if m.SourceType != 0 {
+		n += 1 + sovOrganization(uint64(m.SourceType))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -3157,6 +3760,9 @@ func (m *User) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovOrganization(uint64(l))
 	}
+	if m.SourceType != 0 {
+		n += 1 + sovOrganization(uint64(m.SourceType))
+	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
 	}
@@ -3184,6 +3790,9 @@ func (m *CreateUserRequest) Size() (n int) {
 	l = len(m.Description)
 	if l > 0 {
 		n += 1 + l + sovOrganization(uint64(l))
+	}
+	if m.SourceType != 0 {
+		n += 1 + sovOrganization(uint64(m.SourceType))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -4083,6 +4692,479 @@ func (m *DeleteTenantRequest) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+func (m *SyncTenantRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowOrganization
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SyncTenantRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SyncTenantRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowOrganization
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthOrganization
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthOrganization
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Name = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowOrganization
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthOrganization
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthOrganization
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Id = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SourceType", wireType)
+			}
+			m.SourceType = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowOrganization
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.SourceType |= SourceType(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Users", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowOrganization
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthOrganization
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthOrganization
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Users = append(m.Users, &SyncTenantRequest_SyncUser{})
+			if err := m.Users[len(m.Users)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Teams", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowOrganization
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthOrganization
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthOrganization
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Teams = append(m.Teams, &SyncTenantRequest_SyncTeam{})
+			if err := m.Teams[len(m.Teams)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipOrganization(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthOrganization
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthOrganization
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *SyncTenantRequest_SyncUser) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowOrganization
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SyncUser: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SyncUser: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowOrganization
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthOrganization
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthOrganization
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Id = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Description", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowOrganization
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthOrganization
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthOrganization
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Description = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipOrganization(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthOrganization
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthOrganization
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *SyncTenantRequest_SyncTeam) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowOrganization
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SyncTeam: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SyncTeam: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowOrganization
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthOrganization
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthOrganization
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Id = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Description", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowOrganization
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthOrganization
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthOrganization
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Description = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field MemberIds", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowOrganization
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthOrganization
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthOrganization
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.MemberIds = append(m.MemberIds, string(dAtA[iNdEx:postIndex]))
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipOrganization(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthOrganization
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthOrganization
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
 func (m *Team) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -4304,6 +5386,25 @@ func (m *Team) Unmarshal(dAtA []byte) error {
 			}
 			m.Etag = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
+		case 7:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SourceType", wireType)
+			}
+			m.SourceType = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowOrganization
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.SourceType |= SourceType(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipOrganization(dAtA[iNdEx:])
@@ -4518,6 +5619,25 @@ func (m *CreateTeamRequest) Unmarshal(dAtA []byte) error {
 			}
 			m.Members = append(m.Members, string(dAtA[iNdEx:postIndex]))
 			iNdEx = postIndex
+		case 6:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SourceType", wireType)
+			}
+			m.SourceType = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowOrganization
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.SourceType |= SourceType(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipOrganization(dAtA[iNdEx:])
@@ -5206,6 +6326,25 @@ func (m *User) Unmarshal(dAtA []byte) error {
 			}
 			m.Description = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
+		case 7:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SourceType", wireType)
+			}
+			m.SourceType = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowOrganization
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.SourceType |= SourceType(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipOrganization(dAtA[iNdEx:])
@@ -5388,6 +6527,25 @@ func (m *CreateUserRequest) Unmarshal(dAtA []byte) error {
 			}
 			m.Description = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
+		case 5:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SourceType", wireType)
+			}
+			m.SourceType = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowOrganization
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.SourceType |= SourceType(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipOrganization(dAtA[iNdEx:])

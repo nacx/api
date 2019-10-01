@@ -254,6 +254,44 @@
         ]
       }
     },
+    "/v1/tenants/{id}/sync": {
+      "post": {
+        "operationId": "SyncTenant",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.SyncTenantRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Organization"
+        ]
+      }
+    },
     "/v1/tenants/{tenant}/environments": {
       "get": {
         "operationId": "ListEnvironments",
@@ -3501,6 +3539,9 @@
           "items": {
             "type": "string"
           }
+        },
+        "sourceType": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.SourceType"
         }
       }
     },
@@ -3532,6 +3573,9 @@
         },
         "description": {
           "type": "string"
+        },
+        "sourceType": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.SourceType"
         }
       }
     },
@@ -4424,6 +4468,17 @@
       "default": "INTERNAL",
       "description": " - INTERNAL: An internal service in an application that is not exposed to the outside world.  - LOADBALANCER: A load balancer service running only the proxy as the workload. A load balancer service inside an user application forwards traffic to other services in the application. A load balancer service inside the \"system\" application forwards traffic to services in other user applications.  - EXTERNAL: An external service (not in the mesh) accessed by the services in the application."
     },
+    "tetrate.api.tcc.core.v1.SourceType": {
+      "type": "string",
+      "enum": [
+        "INVALID",
+        "LDAP",
+        "LOCAL"
+      ],
+      "default": "INVALID",
+      "description": "- LDAP: LDAP is used for users and teams that are automatically synchronized from LDAP  - LOCAL: LOCAL is used for users and teams that are manually created using the TCC API and that are local to TCC. TODO(nacx): Users represent subjects that can be authenticated against an external identity Provider so it is unlikely that there will be local users. Instead of having local users, we should introduce the local service account concept as a proper entity in the model, and configure all TCC agents and the superuser as local service accounts.",
+      "title": "SourceType describes where users and teams come from"
+    },
     "tetrate.api.tcc.core.v1.StringMatch": {
       "type": "object",
       "properties": {
@@ -4456,6 +4511,63 @@
           "description": "Labels apply a filter over the endpoints of a service in the service registry."
         }
       }
+    },
+    "tetrate.api.tcc.core.v1.SyncTenantRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Internal use only. Auto populated field."
+        },
+        "id": {
+          "type": "string"
+        },
+        "sourceType": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.SourceType"
+        },
+        "users": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.core.v1.SyncTenantRequest.SyncUser"
+          }
+        },
+        "teams": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.core.v1.SyncTenantRequest.SyncTeam"
+          }
+        }
+      }
+    },
+    "tetrate.api.tcc.core.v1.SyncTenantRequest.SyncTeam": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "memberIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "Information of a team as synchronized from the team source. This differs slightly from a TCC user since the fields here are raw info that does not have the context of the TCC hierarchy."
+    },
+    "tetrate.api.tcc.core.v1.SyncTenantRequest.SyncUser": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "description": "Information of a user as synchronized from the team source. This differs slightly from a TCC user since the fields here are raw info that does not have the context of the TCC hierarchy."
     },
     "tetrate.api.tcc.core.v1.TLSMode": {
       "type": "string",
@@ -4536,6 +4648,9 @@
         },
         "etag": {
           "type": "string"
+        },
+        "sourceType": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.SourceType"
         }
       }
     },
@@ -4569,6 +4684,9 @@
         },
         "description": {
           "type": "string"
+        },
+        "sourceType": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.SourceType"
         }
       }
     }
