@@ -52,6 +52,12 @@ service PhysicalResourceModel {
     };
   };
 
+  rpc BatchGetClusters(BatchGetClustersRequest) returns (BatchGetClustersResponse) {
+    option (google.api.http) = {
+      get: "/v1/tenants/{tenant}/environments/{environment}:batchGetClusters"
+    };
+  };
+
   rpc CreateNamespace(CreateNamespaceRequest) returns (Namespace) {
     option (google.api.http) = {
       post: "/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces"
@@ -449,4 +455,29 @@ message BulkLoadClusterRequest {
     Deployment deployment = 1 [(validate.rules).message.required = true];
     repeated Endpoint endpoints = 2;
   };
+}
+
+message BatchGetClustersRequest {
+  string parent = 1;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
+}
+
+message BatchGetClustersResponse {
+  message Deployments {
+    Deployment deployment = 1 [(validate.rules).message.required = true];
+    repeated Endpoint endpoints = 2;
+  };
+
+  message Namespaces {
+    Namespace namespace = 1 [(validate.rules).message.required = true];
+    repeated Deployments deployments = 2;
+  };
+
+  message Clusters {
+    Cluster cluster = 1 [(validate.rules).message.required = true];
+    repeated Namespaces namespaces = 2;
+  };
+
+  repeated Clusters clusters = 1;
 }

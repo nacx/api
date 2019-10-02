@@ -2211,6 +2211,48 @@
         ]
       }
     },
+    "/v1/tenants/{tenant}/environments/{environment}:batchGetClusters": {
+      "get": {
+        "operationId": "BatchGetClusters",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.BatchGetClustersResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "environment",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "parent",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "PhysicalResourceModel"
+        ]
+      }
+    },
     "/v1/tenants/{tenant}/environments/{id}": {
       "get": {
         "operationId": "GetEnvironment",
@@ -2969,6 +3011,59 @@
         },
         "password": {
           "type": "string"
+        }
+      }
+    },
+    "tetrate.api.tcc.core.v1.BatchGetClustersResponse": {
+      "type": "object",
+      "properties": {
+        "clusters": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.core.v1.BatchGetClustersResponse.Clusters"
+          }
+        }
+      }
+    },
+    "tetrate.api.tcc.core.v1.BatchGetClustersResponse.Clusters": {
+      "type": "object",
+      "properties": {
+        "cluster": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Cluster"
+        },
+        "namespaces": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.core.v1.BatchGetClustersResponse.Namespaces"
+          }
+        }
+      }
+    },
+    "tetrate.api.tcc.core.v1.BatchGetClustersResponse.Deployments": {
+      "type": "object",
+      "properties": {
+        "deployment": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Deployment"
+        },
+        "endpoints": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.core.v1.Endpoint"
+          }
+        }
+      }
+    },
+    "tetrate.api.tcc.core.v1.BatchGetClustersResponse.Namespaces": {
+      "type": "object",
+      "properties": {
+        "namespace": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Namespace"
+        },
+        "deployments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.core.v1.BatchGetClustersResponse.Deployments"
+          }
         }
       }
     },
