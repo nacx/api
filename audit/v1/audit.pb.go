@@ -29,20 +29,22 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
 
-// A system log describing something that happened in the system
+// AuditLog
+//
+// A system log describing something that happened in the system.
 type AuditLog struct {
-	// Time when the audit log was generated
+	// Time when the audit log was generated.
 	CreateTime *types.Timestamp `protobuf:"bytes,1,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
-	// Log severity (INFO, WARN, ERROR...)
+	// Log severity (INFO, WARN, ERROR...).
 	Severity string `protobuf:"bytes,2,opt,name=severity,proto3" json:"severity,omitempty"`
-	// The kind of the audit log (PolicyAssigned, ServiceOrphaned, etc)
+	// The kind of the audit log (PolicyAssigned, ServiceOrphaned, etc).
 	Kind string `protobuf:"bytes,3,opt,name=kind,proto3" json:"kind,omitempty"`
-	// Audit log details
+	// Audit log details.
 	Message string `protobuf:"bytes,4,opt,name=message,proto3" json:"message,omitempty"`
 	// Person who triggered the audit log, or "SYSTEM" if the log was automatically
-	// triggered by the system
+	// triggered by the system.
 	TriggeredBy string `protobuf:"bytes,5,opt,name=triggered_by,json=triggeredBy,proto3" json:"triggered_by,omitempty"`
-	// Key value pairs with additional information for the audit log
+	// Key value pairs with additional information for the audit log.
 	Properties           map[string]string `protobuf:"bytes,6,rep,name=properties,proto3" json:"properties,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
 	XXX_unrecognized     []byte            `json:"-"`
@@ -124,7 +126,7 @@ func (m *AuditLog) GetProperties() map[string]string {
 	return nil
 }
 
-// Request to get the audit logs
+// Request to get the audit logs.
 type ListAuditLogsRequest struct {
 	// Number of audit logs to retrieve. By default is 25.
 	Count                int32    `protobuf:"varint,1,opt,name=count,proto3" json:"count,omitempty"`
@@ -173,7 +175,7 @@ func (m *ListAuditLogsRequest) GetCount() int32 {
 	return 0
 }
 
-// The list of audit logs
+// The list of audit logs.
 type ListAuditLogsResponse struct {
 	AuditLogs            []*AuditLog `protobuf:"bytes,1,rep,name=audit_logs,json=auditLogs,proto3" json:"audit_logs,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}    `json:"-"`
@@ -280,9 +282,9 @@ const _ = grpc.SupportPackageIsVersion4
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type AuditServiceClient interface {
 	// List audit logs. If no 'count' parameter has been specified, the last 25 audit logs are
-	// returned
+	// returned.
 	ListAuditLogs(ctx context.Context, in *ListAuditLogsRequest, opts ...grpc.CallOption) (*ListAuditLogsResponse, error)
-	// Send a log to the audit system
+	// Send a log to the audit system.
 	SendAuditLog(ctx context.Context, in *AuditLog, opts ...grpc.CallOption) (*types.Empty, error)
 }
 
@@ -315,9 +317,9 @@ func (c *auditServiceClient) SendAuditLog(ctx context.Context, in *AuditLog, opt
 // AuditServiceServer is the server API for AuditService service.
 type AuditServiceServer interface {
 	// List audit logs. If no 'count' parameter has been specified, the last 25 audit logs are
-	// returned
+	// returned.
 	ListAuditLogs(context.Context, *ListAuditLogsRequest) (*ListAuditLogsResponse, error)
-	// Send a log to the audit system
+	// Send a log to the audit system.
 	SendAuditLog(context.Context, *AuditLog) (*types.Empty, error)
 }
 

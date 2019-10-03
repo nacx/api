@@ -1,0 +1,136 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Audit Logs API",
+    "version": "v1",
+    "contact": {
+      "name": "Tetrate.io, Inc.",
+      "url": "https://www.tetrate.io",
+      "email": "info@tetrate.io"
+    }
+  },
+  "host": "TCCHOST",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/logs/audit": {
+      "get": {
+        "operationId": "ListAuditLogs",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.audit.v1.ListAuditLogsResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "count",
+            "description": "Number of audit logs to retrieve. By default is 25.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "AuditService"
+        ]
+      },
+      "post": {
+        "operationId": "SendAuditLog",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.audit.v1.AuditLog"
+            }
+          }
+        ],
+        "tags": [
+          "AuditService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "tetrate.api.audit.v1.AuditLog": {
+      "type": "object",
+      "properties": {
+        "createTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Time when the audit log was generated."
+        },
+        "severity": {
+          "type": "string",
+          "description": "Log severity (INFO, WARN, ERROR...)."
+        },
+        "kind": {
+          "type": "string",
+          "description": "The kind of the audit log (PolicyAssigned, ServiceOrphaned, etc)."
+        },
+        "message": {
+          "type": "string",
+          "description": "Audit log details."
+        },
+        "triggeredBy": {
+          "type": "string",
+          "description": "Person who triggered the audit log, or \"SYSTEM\" if the log was automatically triggered by the system."
+        },
+        "properties": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Key value pairs with additional information for the audit log."
+        }
+      },
+      "description": "A system log describing something that happened in the system.",
+      "title": "AuditLog"
+    },
+    "tetrate.api.audit.v1.ListAuditLogsResponse": {
+      "type": "object",
+      "properties": {
+        "auditLogs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.audit.v1.AuditLog"
+          }
+        }
+      },
+      "description": "The list of audit logs."
+    }
+  }
+}
