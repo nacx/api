@@ -8,12 +8,18 @@ option go_package = "github.com/tetrateio/tetrate/api/tcc/core/v1";
 import "google/api/annotations.proto";
 import "validate/validate.proto";
 
+import "permissions.proto";
+
 // API that returns all istio/f5 configs for a VM or k8s cluster.  The sync agent running next to VM
 // galley or k8 galley or f5 BIGIP LTM would call this periodically. For Istio, we return all the
 // Istio YAMLs pertaining to that cluster. It should store the response in the file system path that
 // is watched by Galley for configs. For F5, it would get all the F5 configs. It should then call F5
 // management IP, and update F5 configs using the iControl rest API.
 service ConfigProducer {
+  option (tetrate.api.q.rbac.v1.default_requires) = {
+    raw_permissions: "ReadCluster"
+  };
+
   rpc Download(ConfigDownloadRequest) returns (ConfigData) {
     // clang-format off
     option (google.api.http) = {

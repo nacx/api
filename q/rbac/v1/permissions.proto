@@ -1,0 +1,48 @@
+// Copyright (c) Tetrate, Inc 2019 All Rights Reserved.
+
+syntax = "proto3";
+
+package tetrate.api.q.rbac.v1;
+option go_package = "github.com/tetrateio/tetrate/api/q/rbac/v1";
+
+import "google/protobuf/descriptor.proto";
+
+import "rbac.proto";
+
+// Extend the Service options to be able to configure the permissions that are required to call the
+// methods for this Service which do not have explicit Method permissions set.
+extend google.protobuf.ServiceOptions {
+  RequiredPermission default_requires = 2000;
+}
+
+// Extend the Method options to be able to configure Method specific permissions that are required
+// to call the method.
+//
+// Note that permissions are not accumulative. The ones defined at Method level will completely
+// override the Service ones.
+extend google.protobuf.MethodOptions {
+  RequiredPermission requires = 2000;
+}
+
+// RequiredPermission
+//
+// Configures the sets of permissions that are required to invoke the method where this option is
+// applied.
+message RequiredPermission {
+  // The required set of permissions. The full name of each permission (such as ReadApplication)
+  // will be inferred from the name of the method where this option is applied.
+  repeated Permission permissions = 1;
+
+  // Set of raw permission names values. Only use this if the method being protected does not follow
+  // the common naming convention and the proper name of the permission cannot be inferred just by
+  // using the Permission enum and the method name.
+  repeated string raw_permissions = 2;
+
+  // When this flag is set to true, the permission checks will not be made at the API surface.
+  // This is usually needed when there is not an explicit set of permissions that can be
+  // preconfigured for the API methods, so the access control checks will be implemented at runtime
+  // by the application.
+  // The default value is 'false' and will only be taken into account if the permission properties
+  // are empty. If any permission is set, this flag will be ignored.
+  bool defer_permission_check_to_application = 3;
+}

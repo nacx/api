@@ -8,21 +8,27 @@ option go_package = "github.com/tetrateio/tetrate/api/tcc/core/v1";
 import "google/api/annotations.proto";
 import "validate/validate.proto";
 
+import "permissions.proto";
+
 // RegistryConsumer
 //
 // RegistryConsumer service accepts bulk JSON payload to update resources into TCC data model. A
 // sync agent calls this API periodically to create or update deployments, namespaces, or endpoints.
 // API converts resources into appropriate TCC data model fields, and pushes to the database.
 service RegistryConsumer {
+  option (tetrate.api.q.rbac.v1.default_requires) = {
+    raw_permissions: "WriteCluster"
+  };
+
   // UpdateResources to be called periodically with a bulk payload. API detects the delta between
   // last call, and determines resources to create, modify, delete.
   rpc UpdateResources(RegistryUpdateResourcesRequest) returns (RegistryConsumerResponse) {
+    // clang-format off
     option (google.api.http) = {
-      post:
-          "/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/registryconsumer/"
-          "{registrytype}"
+      post: "/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/registryconsumer/{registrytype}"
       body: "*"
     };
+    // clang-format on
   };
 }
 

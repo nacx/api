@@ -9,11 +9,19 @@ import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 import "validate/validate.proto";
 
+import "permissions.proto";
 import "routing_info.proto";
 
 service PhysicalResourceModel {
+  option (tetrate.api.q.rbac.v1.default_requires) = {
+    permissions: READ
+  };
+
   // clang-format off
   rpc CreateCluster(CreateClusterRequest) returns (Cluster) {
+    option (tetrate.api.q.rbac.v1.requires) = {
+      permissions: CREATE
+    };
     option (google.api.http) = {
       post: "/v1/tenants/{tenant}/environments/{environment}/clusters"
       body: "*"
@@ -21,6 +29,9 @@ service PhysicalResourceModel {
   };
 
   rpc UpdateCluster(Cluster) returns (Cluster) {
+    option (tetrate.api.q.rbac.v1.requires) = {
+      permissions: WRITE
+    };
     option (google.api.http) = {
       put: "/v1/tenants/{tenant}/environments/{environment}/clusters/{id}"
       body: "*"
@@ -40,12 +51,18 @@ service PhysicalResourceModel {
   }
 
   rpc DeleteCluster(DeleteClusterRequest) returns (google.protobuf.Empty) {
+    option (tetrate.api.q.rbac.v1.requires) = {
+      permissions: DELETE
+    };
     option (google.api.http) = {
       delete: "/v1/tenants/{tenant}/environments/{environment}/clusters/{id}"
     };
   };
 
   rpc BulkLoadCluster(BulkLoadClusterRequest) returns (google.protobuf.Empty) {
+    option (tetrate.api.q.rbac.v1.requires) = {
+      permissions: WRITE
+    };
     option (google.api.http) = {
       post: "/v1/tenants/{tenant}/environments/{environment}/clusters/{id}/bulkloadcluster"
       body: "*"
@@ -59,6 +76,9 @@ service PhysicalResourceModel {
   };
 
   rpc CreateNamespace(CreateNamespaceRequest) returns (Namespace) {
+    option (tetrate.api.q.rbac.v1.requires) = {
+      permissions: CREATE
+    };
     option (google.api.http) = {
       post: "/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces"
       body: "*"
@@ -72,6 +92,9 @@ service PhysicalResourceModel {
   };
 
   rpc UpdateNamespace(Namespace) returns (Namespace) {
+    option (tetrate.api.q.rbac.v1.requires) = {
+      permissions: WRITE
+    };
     option (google.api.http) = {
       put: "/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces/{id}"
       body: "*"
@@ -85,12 +108,18 @@ service PhysicalResourceModel {
   }
 
   rpc DeleteNamespace(DeleteNamespaceRequest) returns (google.protobuf.Empty) {
+    option (tetrate.api.q.rbac.v1.requires) = {
+      permissions: DELETE
+    };
     option (google.api.http) = {
       delete: "/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces/{id}"
     };
   };
 
   rpc CreateDeployment(CreateDeploymentRequest) returns (Deployment) {
+    option (tetrate.api.q.rbac.v1.requires) = {
+      permissions: CREATE
+    };
     option (google.api.http) = {
       post: "/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces/{namespace}/deployments"
       body: "*"
@@ -110,6 +139,9 @@ service PhysicalResourceModel {
   };
 
   rpc UpdateDeployment(Deployment) returns (Deployment) {
+    option (tetrate.api.q.rbac.v1.requires) = {
+      permissions: WRITE
+    };
     option (google.api.http) = {
       put: "/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces/{namespace}/deployments/{id}"
       body: "*"
@@ -117,12 +149,18 @@ service PhysicalResourceModel {
   };
 
   rpc DeleteDeployment(DeleteDeploymentRequest) returns (google.protobuf.Empty) {
+    option (tetrate.api.q.rbac.v1.requires) = {
+      permissions: DELETE
+    };
     option (google.api.http) = {
       delete: "/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces/{namespace}/deployments/{id}"
     };
   };
 
   rpc CreateEndpoint(CreateEndpointRequest) returns (Endpoint) {
+    option (tetrate.api.q.rbac.v1.requires) = {
+      permissions: CREATE
+    };
     option (google.api.http) = {
       post: "/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces/{namespace}/deployments/{deployment}/endpoints"
       body: "*"
@@ -142,6 +180,9 @@ service PhysicalResourceModel {
   };
 
   rpc UpdateEndpoint(Endpoint) returns (Endpoint) {
+    option (tetrate.api.q.rbac.v1.requires) = {
+      permissions: WRITE
+    };
     option (google.api.http) = {
       put: "/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces/{namespace}/deployments/{deployment}/endpoints/{id}"
       body: "*"
@@ -149,6 +190,9 @@ service PhysicalResourceModel {
   };
 
   rpc DeleteEndpoint(DeleteEndpointRequest) returns (google.protobuf.Empty) {
+    option (tetrate.api.q.rbac.v1.requires) = {
+      permissions: DELETE
+    };
     option (google.api.http) = {
       delete: "/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces/{namespace}/deployments/{deployment}/endpoints/{id}"
     };
