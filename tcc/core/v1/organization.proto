@@ -250,7 +250,8 @@ message SyncTenantRequest {
   message SyncTeam {
     string id = 1 [(validate.rules).string.min_len = 1];
     string description = 2;
-    repeated string member_ids = 3;
+    repeated string member_user_ids = 3;
+    repeated string member_group_ids = 4;
   };
   repeated SyncTeam teams = 5;
 }

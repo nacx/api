@@ -4643,7 +4643,13 @@
         "description": {
           "type": "string"
         },
-        "memberIds": {
+        "memberUserIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "memberGroupIds": {
           "type": "array",
           "items": {
             "type": "string"
