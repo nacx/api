@@ -454,7 +454,8 @@
         "DISABLED",
         "SIMPLE",
         "MUTUAL",
-        "SNI_PASSTHROUGH"
+        "SNI_PASSTHROUGH",
+        "ISTIO_MUTUAL"
       ],
       "default": "DISABLED"
     },

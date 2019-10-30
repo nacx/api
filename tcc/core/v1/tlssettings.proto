@@ -10,6 +10,7 @@ enum TLSMode {
   SIMPLE = 1;
   MUTUAL = 2;
   SNI_PASSTHROUGH = 3;
+  ISTIO_MUTUAL = 4;
 }
 
 message TLSSettings {

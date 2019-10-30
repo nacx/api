@@ -158,6 +158,13 @@ message Port {
 
   // Indicates the node port attached to a physical deployment on a kubernetes cluster.
   uint32 kubernetes_node_port = 5;
+
+  // In cases where IPtables based capture is not used, the sidecar
+  // and the application could be listening on different ports in the
+  // same VM. For example, the endpoint_port of 9080 is the port where Envoy listens for inbound
+  // traffic and
+  // forwards incoming traffic to the the weblogic application server listening on 127.0.0.1:7070
+  uint32 application_port = 6;
 }
 
 message Subset {

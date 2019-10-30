@@ -486,6 +486,8 @@ func (m *Port) Validate() error {
 
 	// no validation rules for KubernetesNodePort
 
+	// no validation rules for ApplicationPort
+
 	return nil
 }
 

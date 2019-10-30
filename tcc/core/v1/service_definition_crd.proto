@@ -1,0 +1,310 @@
+syntax = "proto3";
+
+package tetrate.api.tcc.core.v1;
+option go_package = "github.com/tetrateio/tetrate/api/tcc/core/v1";
+
+import "google/api/annotations.proto";
+import "google/protobuf/wrappers.proto";
+import "validate/validate.proto";
+
+import "routing_info.proto";
+import "tlssettings.proto";
+
+// ServiceDefinition describes the properties of services running on
+// VMs or services outside the mesh. This service definition is
+// intended to be authored by the cluster operator where access to
+// this service is desired.
+//
+// The following example declares a VM service called `details` in the
+// `bookinfo` namespace. The service has no sidecars and requires
+// simple TLS connections. The VM service is expected to receive
+// traffic from the ingress Gateway.
+//
+// ```yaml
+// apiVersion: registry.tetrate.io/v1alpha1
+// kind: ServiceDefinition
+// metadata:
+//   name: details
+//   namespace: bookinfo
+// spec:
+//   hostname: details.prod.internal.company.com
+//   ports:
+//   - number: 80
+//     name: http
+//     protocol: HTTP
+//   - number: 443
+//     name: https
+//     protocol: HTTPS
+//   sidecarsPresent: false
+//   externalServiceTLSSettings:
+//     tlsMode: SIMPLE
+//     caCertificates: /path/to/ca/cert/to/verify/server/cert
+//   endpointSource:
+//     manual:
+//       values:
+//       - address: 1.1.1.1
+//       - address: 2.2.2.2
+// ```
+//
+// In the above example, services in the bookinfo namespace can access
+// the details service by using
+// https://details.prod.internal.company.com . The sidecar would do a
+// SNI Passthrough and load balance the traffic among the two
+// endpoints. Alternatively, they could also access the service as
+// plaintext http://details.prod.internal.company.com. The Sidecar in
+// a kubernetes pod would intercept the traffic, and initiate simple
+// TLS connection to the destination appropriately.
+//
+// The following example declares a `ratings` service in the
+// `bookinfo` namespace that represents workloads running on a VM with
+// sidecars installed with IPtables traffic capture, with access to
+// mutual TLS certificates.
+//
+// ```yaml
+// apiVersion: registry.tetrate.io/v1alpha1
+// kind: ServiceDefinition
+// metadata:
+//   name: ratings
+//   namespace: bookinfo
+// spec:
+//   hostname: ratings.prod.internal.company.com
+//   ports:
+//   - number: 80
+//     name: http
+//     protocol: HTTP
+//   sidecarsPresent: true
+//   endpointSource:
+//     manual:
+//       values:
+//       - address: 3.3.3.3
+//       - address: 4.4.4.4
+// ```
+//
+// In the above example, services in the bookinfo namespace can access
+// the ratings service by using
+// http://ratings.prod.internal.company.com . The sidecar on
+// kubernetes would intercept the traffic and initiate mutual TLS
+// connection to the VM sidecar on port 80. The VM sidecar, after TLS
+// termination, would forward the traffic to the application process
+// on 127.0.0.1:80.
+//
+// Developing on the previous example, if the VM Service does not have
+// IPtables based traffic capture, the application process has to
+// either listen on a different port than port 80, or it has to listen
+// only on 127.0.0.1 and not on 0.0.0.0. Let us assume that the
+// application process is listening on port 9080. The sidecar would
+// receive traffic on port 80, do TLS termination and forward the
+// traffic to the application process on 127.0.0.1:9080.
+//
+// ```yaml
+// apiVersion: registry.tetrate.io/v1alpha1
+// kind: ServiceDefinition
+// metadata:
+//   name: ratings
+//   namespace: bookinfo
+// spec:
+//   hostname: ratings.prod.internal.company.com
+//   ports:
+//   - number: 80
+//     name: http
+//     protocol: HTTP
+//     applicationPort: 9080 # where the app process is listening
+//   sidecarsPresent: true
+//   sideSettings:
+//     usingIptablesCapture: false
+//   endpointSource:
+//     manual:
+//       values:
+//       - address: 3.3.3.3
+//       - address: 4.4.4.4
+// ```
+//
+// In the above example, all outbound traffic from the application
+// process will not transit through the sidecar. Let us assume that
+// the application wishes to interact with the `details` VM services in the
+// same namespace using the sidecar. The application process can
+// choose to use the sidecar in the outbound path as well by treating
+// it as a HTTP Proxy on localhost. By setting the HTTP_PROXY
+// environment variable to http://localhost:15080, or using a language
+// runtime specific option, all outbound plaintext HTTP traffic from
+// the application process will be forwarded to the sidecar on port
+// 15080. The sidecar would then initiate mutual TLS connections or simple TLS connections as
+// appropriate to other services in the mesh.
+//
+// ```yaml
+// apiVersion: registry.tetrate.io/v1alpha1
+// kind: ServiceDefinition
+// metadata:
+//   name: ratings
+//   namespace: bookinfo
+// spec:
+//   hostname: ratings.prod.internal.company.com
+//   ports:
+//   - number: 80
+//     name: http
+//     protocol: HTTP
+//     applicationPort: 9080 # where the app process is listening
+//   sidecarsPresent: true
+//   sideSettings:
+//     usingIptablesCapture: false
+//     egressHttpProxyPort: 15080 # outbound traffic explicitly sent here.
+//   endpointSource:
+//     manual:
+//       values:
+//       - address: 3.3.3.3
+//       - address: 4.4.4.4
+// ```
+//
+// Instead of specifying the endpoints manually, it is possible to automatically obtain the
+// list of endpoints from external sources. The appropriate endpoint controller must be installed
+// in TSB Local Control Plane for this to work. The following example demonstrates reading the
+// endpoints of the ratings service directly from VMware vCenter. The association of endpoints to
+// their respective services is done based on the tags associated with the vSphere VMs.
+//
+// ```yaml
+// apiVersion: registry.tetrate.io/v1alpha1
+// kind: ServiceDefinition
+// metadata:
+//   name: ratings
+//   namespace: bookinfo
+// spec:
+//   hostname: ratings.prod.internal.company.com
+//   ports:
+//   - number: 80
+//     name: http
+//     protocol: HTTP
+//     applicationPort: 9080 # where the app process is listening
+//   sidecarsPresent: true
+//   sideSettings:
+//     usingIptablesCapture: false
+//     egressHttpProxyPort: 15080 # outbound traffic explicitly sent here.
+//   endpointSource:
+//     vmware:
+//       tags:
+//       - prod-ratings-bookinfo
+// ```
+//
+// In the above example, all VMs with the tag `prod-ratings-bookinfo` will be automatically added
+// to the ratings service and populated in the TSB catalog.
+//
+message ServiceDefinition {
+  // Hostname by which this service will be accessed.
+  string hostname = 1;
+
+  // List of ports and protocols associated with the service.
+  repeated Port ports = 2;
+
+  // If set to true, all communication with the endpoints will be over
+  // mutual TLS. If set to false, TLS settings for communicating with
+  // the service must be specified explicitly.
+  bool sidecars_present = 3;
+
+  // Settings for the sidecar on the VM. If omitted, and
+  // sidecarsPresent is set to true, the VM will
+  // be assumed to have sidecars with Istio mutual TLS enabled.
+  SidecarSettings sidecar_settings = 4;
+
+  // When sidecars are not present, the service is assumed to be
+  // outside the mesh. Specify the TLS settings that client side
+  // proxies such as Gateways or Sidecars should use to talk to this
+  // service.
+  TLSSettings external_service_tls_settings = 5;
+
+  // The list of subject alternate names allowed for workload
+  // instances that implement this service. This information is used
+  // to enforce
+  // [secure-naming](https://istio.io/docs/concepts/security/#secure-naming)
+  // on the client side.  If specified, the client side proxy will
+  // verify that the server certificate's subject alternate name
+  // matches one of the specified values.  If omitted, defaults to the
+  // SAN corresponding to the default service account in the namespace
+  // where this resource is defined.
+  repeated string subject_alt_names = 6;
+
+  message ManualSource {
+    repeated StaticEndpoint values = 1;
+  };
+  message AWSSource {
+  };
+  message GCPSource {
+  };
+  message AzureSource {
+  };
+  message VMwareSource {
+    repeated string tags = 1;
+  };
+  message RESTSource {
+    // TSB Local will call out to the API endpoint specified here
+    // with details of the application/service and will expect
+    // a list of endpoints in return.
+  };
+  message EndpointSource {
+    ManualSource manual = 1;
+    AWSSource aws = 2;
+    GCPSource gcp = 3;
+    AzureSource azure = 4;
+    VMwareSource vmware = 5;
+    RESTSource other = 6;
+  };
+
+  EndpointSource endpoint_source = 7;
+}
+
+// Settings for the sidecar running on the VMs corresponding to the
+// service.
+message SidecarSettings {
+  // Set to true if the sidecar has IPtables to capture all inbound
+  // and outbound traffic from the user application
+  // process. Defaults to true.
+  google.protobuf.BoolValue using_iptables_capture = 1;
+
+  // In workloads where IPtables capture is not used, outbound HTTP
+  // traffic from the application can be proxied though the local
+  // sidecar on a specific port. To utilize this feature, HTTP proxy
+  // should be enabled (either via environment variable
+  // `HTTP_PROXY=http://localhost:PORT/`, or language runtime
+  // specific options). Calls from the application for
+  // http://foo.bar.com will be routed to the local sidecar, which
+  // in turn will route the call appropriately to the destination
+  // over mutual TLS.
+  uint32 egress_http_proxy_port = 2;
+}
+
+// Endpoint defines a network IP address associated with the service.
+message StaticEndpoint {
+  // REQUIRED: Address associated with the network endpoint without the
+  // port.
+  string address = 1;
+
+  // Set of ports associated with the endpoint. The ports must be
+  // associated with a port name that was declared as part of the
+  // service. If omitted, the endpoint will be assumed to have the same ports
+  // as the service.
+  map<string, uint32> ports = 2;
+
+  // One or more labels associated with the endpoint.
+  map<string, string> labels = 3;
+
+  // The locality associated with the endpoint. A locality corresponds
+  // to a failure domain (e.g., country/region/zone). Arbitrary failure
+  // domain hierarchies can be represented by separating each
+  // encapsulating failure domain by /. For example, the locality of an
+  // an endpoint in US, in US-East-1 region, within availability zone
+  // az-1, in data center rack r11 can be represented as
+  // us/us-east-1/az-1/r11. Istio will configure the sidecar to route to
+  // endpoints within the same locality as the sidecar. If none of the
+  // endpoints in the locality are available, endpoints parent locality
+  // (but within the same network ID) will be chosen. For example, if
+  // there are two endpoints in same network (networkID "n1"), say e1
+  // with locality us/us-east-1/az-1/r11 and e2 with locality
+  // us/us-east-1/az-2/r12, a sidecar from us/us-east-1/az-1/r11 locality
+  // will prefer e1 from the same locality over e2 from a different
+  // locality. Endpoint e2 could be the IP associated with a gateway
+  // (that bridges networks n1 and n2), or the IP associated with a
+  // standard service endpoint.
+  string locality = 4;
+
+  // The load balancing weight associated with the endpoint. Endpoints
+  // with higher weights will receive proportionally higher traffic.
+  uint32 weight = 5;
+}

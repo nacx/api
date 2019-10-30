@@ -4286,6 +4286,11 @@
           "type": "integer",
           "format": "int64",
           "description": "Indicates the node port attached to a physical deployment on a kubernetes cluster."
+        },
+        "applicationPort": {
+          "type": "integer",
+          "format": "int64",
+          "title": "In cases where IPtables based capture is not used, the sidecar and the application could be listening on different ports in the same VM. For example, the endpoint_port of 9080 is the port where Envoy listens for inbound traffic and forwards incoming traffic to the the weblogic application server listening on 127.0.0.1:7070"
         }
       }
     },
@@ -4676,7 +4681,8 @@
         "DISABLED",
         "SIMPLE",
         "MUTUAL",
-        "SNI_PASSTHROUGH"
+        "SNI_PASSTHROUGH",
+        "ISTIO_MUTUAL"
       ],
       "default": "DISABLED"
     },
