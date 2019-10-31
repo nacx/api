@@ -250,6 +250,73 @@ var _ interface {
 	ErrorName() string
 } = CreateClusterRequestValidationError{}
 
+// Validate checks the field values on AgentTokens with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *AgentTokens) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Tokens
+
+	return nil
+}
+
+// AgentTokensValidationError is the validation error returned by
+// AgentTokens.Validate if the designated constraints aren't met.
+type AgentTokensValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e AgentTokensValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e AgentTokensValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e AgentTokensValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e AgentTokensValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e AgentTokensValidationError) ErrorName() string { return "AgentTokensValidationError" }
+
+// Error satisfies the builtin error interface
+func (e AgentTokensValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sAgentTokens.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = AgentTokensValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = AgentTokensValidationError{}
+
 // Validate checks the field values on GetClusterRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, an
 // error is returned.
@@ -339,6 +406,112 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = GetClusterRequestValidationError{}
+
+// Validate checks the field values on GenerateClusterTokensRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *GenerateClusterTokensRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Name
+
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return GenerateClusterTokensRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return GenerateClusterTokensRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return GenerateClusterTokensRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	{
+		tmp := m.GetLifetime()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return GenerateClusterTokensRequestValidationError{
+					field:  "Lifetime",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+	}
+
+	return nil
+}
+
+// GenerateClusterTokensRequestValidationError is the validation error returned
+// by GenerateClusterTokensRequest.Validate if the designated constraints
+// aren't met.
+type GenerateClusterTokensRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GenerateClusterTokensRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GenerateClusterTokensRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GenerateClusterTokensRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GenerateClusterTokensRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GenerateClusterTokensRequestValidationError) ErrorName() string {
+	return "GenerateClusterTokensRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GenerateClusterTokensRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGenerateClusterTokensRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GenerateClusterTokensRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GenerateClusterTokensRequestValidationError{}
 
 // Validate checks the field values on ListClustersRequest with the rules
 // defined in the proto definition for this message. If any rules are

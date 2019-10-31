@@ -2211,6 +2211,56 @@
         ]
       }
     },
+    "/v1/tenants/{tenant}/environments/{environment}/clusters/{id}:generateTokens": {
+      "post": {
+        "operationId": "GenerateClusterTokens",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.AgentTokens"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "environment",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.GenerateClusterTokensRequest"
+            }
+          }
+        ],
+        "tags": [
+          "PhysicalResourceModel"
+        ]
+      }
+    },
     "/v1/tenants/{tenant}/environments/{environment}:batchGetClusters": {
       "get": {
         "operationId": "BatchGetClusters",
@@ -2899,6 +2949,17 @@
       },
       "description": "A policy defines the set of subjects that can access a resource and under which conditions that access is granted.",
       "title": "Policy"
+    },
+    "tetrate.api.tcc.core.v1.AgentTokens": {
+      "type": "object",
+      "properties": {
+        "tokens": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
     },
     "tetrate.api.tcc.core.v1.Application": {
       "type": "object",
@@ -3828,6 +3889,27 @@
       },
       "description": "HTTP/TCP routing settings for an external service in the \"system\" application. Enforced at the external facing gateway in the \"system\" application.",
       "title": "ExternalRouteSettings"
+    },
+    "tetrate.api.tcc.core.v1.GenerateClusterTokensRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "tenant": {
+          "type": "string"
+        },
+        "environment": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "lifetime": {
+          "type": "string",
+          "title": "Lifetime of the tokens"
+        }
+      }
     },
     "tetrate.api.tcc.core.v1.HTTPRetry": {
       "type": "object",

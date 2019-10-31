@@ -6,6 +6,7 @@ package tetrate.api.tcc.core.v1;
 option go_package = "github.com/tetrateio/tetrate/api/tcc/core/v1";
 
 import "google/api/annotations.proto";
+import "google/protobuf/duration.proto";
 import "google/protobuf/empty.proto";
 import "validate/validate.proto";
 
@@ -65,6 +66,16 @@ service PhysicalResourceModel {
     };
     option (google.api.http) = {
       post: "/v1/tenants/{tenant}/environments/{environment}/clusters/{id}/bulkloadcluster"
+      body: "*"
+    };
+  };
+
+  rpc GenerateClusterTokens(GenerateClusterTokensRequest) returns (AgentTokens) {
+    option (tetrate.api.q.rbac.v1.requires) = {
+      raw_permissions: "WriteCluster"
+    };
+    option (google.api.http) = {
+      post: "/v1/tenants/{tenant}/environments/{environment}/clusters/{id}:generateTokens"
       body: "*"
     };
   };
@@ -235,11 +246,25 @@ message CreateClusterRequest {
   string kubernetes_cluster_domain = 12;
 }
 
+message AgentTokens {
+  map<string, string> tokens = 1;
+}
+
 message GetClusterRequest {
   string name = 1;
   string tenant = 2 [(validate.rules).string.min_len = 1];
   string environment = 3 [(validate.rules).string.min_len = 1];
   string id = 4 [(validate.rules).string.min_len = 1];
+}
+
+message GenerateClusterTokensRequest {
+  string name = 1;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  string id = 4 [(validate.rules).string.min_len = 1];
+
+  // Lifetime of the tokens
+  google.protobuf.Duration lifetime = 5;
 }
 
 message ListClustersRequest {
