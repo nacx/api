@@ -261,7 +261,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "properties": {}
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.SyncTenantResponse"
             }
           },
           "404": {
@@ -4756,6 +4756,40 @@
         }
       },
       "description": "Information of a user as synchronized from the team source. This differs slightly from a TCC user since the fields here are raw info that does not have the context of the TCC hierarchy."
+    },
+    "tetrate.api.tcc.core.v1.SyncTenantResponse": {
+      "type": "object",
+      "properties": {
+        "failedUsers": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.SyncTenantResponse.FailedIds"
+        },
+        "failedTeams": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.SyncTenantResponse.FailedIds"
+        }
+      }
+    },
+    "tetrate.api.tcc.core.v1.SyncTenantResponse.FailedIds": {
+      "type": "object",
+      "properties": {
+        "removal": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "addition": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "update": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
     },
     "tetrate.api.tcc.core.v1.TLSMode": {
       "type": "string",

@@ -12,6 +12,11 @@ import "validate/validate.proto";
 import "permissions.proto";
 import "rbac.proto";
 
+import "gogoproto/gogo.proto";
+
+// Enable generation of XXX_MessageName methods for grpc-go/status.
+option (gogoproto.messagename_all) = true;
+
 service Organization {
   option (tetrate.api.q.rbac.v1.default_requires) = {
     permissions: READ
@@ -79,7 +84,7 @@ service Organization {
 
   // SyncTenant is used by processes that monitor the identity providers to synchronize
   // the users and teams with the ones in TCC
-  rpc SyncTenant(SyncTenantRequest) returns (google.protobuf.Empty) {
+  rpc SyncTenant(SyncTenantRequest) returns (SyncTenantResponse) {
     option (tetrate.api.q.rbac.v1.requires) = {
       raw_permissions: ["CreateUser", "CreateTeam", "DeleteUser", "DeleteTeam", "WriteTeam"]
     };
@@ -254,6 +259,17 @@ message SyncTenantRequest {
     repeated string member_group_ids = 4;
   };
   repeated SyncTeam teams = 5;
+}
+
+message SyncTenantResponse {
+  message FailedIds {
+    repeated string removal = 1;
+    repeated string addition = 2;
+    repeated string update = 3;
+  }
+
+  FailedIds failed_users = 1;
+  FailedIds failed_teams = 2;
 }
 
 message Team {
