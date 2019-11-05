@@ -2828,10 +2828,10 @@ var _ interface {
 	ErrorName() string
 } = BulkLoadClusterRequestValidationError{}
 
-// Validate checks the field values on BatchGetClustersRequest with the rules
-// defined in the proto definition for this message. If any rules are
+// Validate checks the field values on GetAllPhysicalResourcesRequest with the
+// rules defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
-func (m *BatchGetClustersRequest) Validate() error {
+func (m *GetAllPhysicalResourcesRequest) Validate() error {
 	if m == nil {
 		return nil
 	}
@@ -2839,14 +2839,14 @@ func (m *BatchGetClustersRequest) Validate() error {
 	// no validation rules for Parent
 
 	if utf8.RuneCountInString(m.GetTenant()) < 1 {
-		return BatchGetClustersRequestValidationError{
+		return GetAllPhysicalResourcesRequestValidationError{
 			field:  "Tenant",
 			reason: "value length must be at least 1 runes",
 		}
 	}
 
 	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
-		return BatchGetClustersRequestValidationError{
+		return GetAllPhysicalResourcesRequestValidationError{
 			field:  "Environment",
 			reason: "value length must be at least 1 runes",
 		}
@@ -2855,9 +2855,10 @@ func (m *BatchGetClustersRequest) Validate() error {
 	return nil
 }
 
-// BatchGetClustersRequestValidationError is the validation error returned by
-// BatchGetClustersRequest.Validate if the designated constraints aren't met.
-type BatchGetClustersRequestValidationError struct {
+// GetAllPhysicalResourcesRequestValidationError is the validation error
+// returned by GetAllPhysicalResourcesRequest.Validate if the designated
+// constraints aren't met.
+type GetAllPhysicalResourcesRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -2865,24 +2866,24 @@ type BatchGetClustersRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e BatchGetClustersRequestValidationError) Field() string { return e.field }
+func (e GetAllPhysicalResourcesRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e BatchGetClustersRequestValidationError) Reason() string { return e.reason }
+func (e GetAllPhysicalResourcesRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e BatchGetClustersRequestValidationError) Cause() error { return e.cause }
+func (e GetAllPhysicalResourcesRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e BatchGetClustersRequestValidationError) Key() bool { return e.key }
+func (e GetAllPhysicalResourcesRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e BatchGetClustersRequestValidationError) ErrorName() string {
-	return "BatchGetClustersRequestValidationError"
+func (e GetAllPhysicalResourcesRequestValidationError) ErrorName() string {
+	return "GetAllPhysicalResourcesRequestValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e BatchGetClustersRequestValidationError) Error() string {
+func (e GetAllPhysicalResourcesRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -2894,14 +2895,14 @@ func (e BatchGetClustersRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sBatchGetClustersRequest.%s: %s%s",
+		"invalid %sGetAllPhysicalResourcesRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = BatchGetClustersRequestValidationError{}
+var _ error = GetAllPhysicalResourcesRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -2909,12 +2910,12 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = BatchGetClustersRequestValidationError{}
+} = GetAllPhysicalResourcesRequestValidationError{}
 
-// Validate checks the field values on BatchGetClustersResponse with the rules
-// defined in the proto definition for this message. If any rules are
+// Validate checks the field values on GetAllPhysicalResourcesResponse with the
+// rules defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
-func (m *BatchGetClustersResponse) Validate() error {
+func (m *GetAllPhysicalResourcesResponse) Validate() error {
 	if m == nil {
 		return nil
 	}
@@ -2928,8 +2929,68 @@ func (m *BatchGetClustersResponse) Validate() error {
 			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
 
 				if err := v.Validate(); err != nil {
-					return BatchGetClustersResponseValidationError{
+					return GetAllPhysicalResourcesResponseValidationError{
 						field:  fmt.Sprintf("Clusters[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+		}
+
+	}
+
+	for idx, item := range m.GetNamespaces() {
+		_, _ = idx, item
+
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return GetAllPhysicalResourcesResponseValidationError{
+						field:  fmt.Sprintf("Namespaces[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+		}
+
+	}
+
+	for idx, item := range m.GetDeployments() {
+		_, _ = idx, item
+
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return GetAllPhysicalResourcesResponseValidationError{
+						field:  fmt.Sprintf("Deployments[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+		}
+
+	}
+
+	for idx, item := range m.GetEndpoints() {
+		_, _ = idx, item
+
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return GetAllPhysicalResourcesResponseValidationError{
+						field:  fmt.Sprintf("Endpoints[%v]", idx),
 						reason: "embedded message failed validation",
 						cause:  err,
 					}
@@ -2942,9 +3003,10 @@ func (m *BatchGetClustersResponse) Validate() error {
 	return nil
 }
 
-// BatchGetClustersResponseValidationError is the validation error returned by
-// BatchGetClustersResponse.Validate if the designated constraints aren't met.
-type BatchGetClustersResponseValidationError struct {
+// GetAllPhysicalResourcesResponseValidationError is the validation error
+// returned by GetAllPhysicalResourcesResponse.Validate if the designated
+// constraints aren't met.
+type GetAllPhysicalResourcesResponseValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -2952,24 +3014,24 @@ type BatchGetClustersResponseValidationError struct {
 }
 
 // Field function returns field value.
-func (e BatchGetClustersResponseValidationError) Field() string { return e.field }
+func (e GetAllPhysicalResourcesResponseValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e BatchGetClustersResponseValidationError) Reason() string { return e.reason }
+func (e GetAllPhysicalResourcesResponseValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e BatchGetClustersResponseValidationError) Cause() error { return e.cause }
+func (e GetAllPhysicalResourcesResponseValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e BatchGetClustersResponseValidationError) Key() bool { return e.key }
+func (e GetAllPhysicalResourcesResponseValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e BatchGetClustersResponseValidationError) ErrorName() string {
-	return "BatchGetClustersResponseValidationError"
+func (e GetAllPhysicalResourcesResponseValidationError) ErrorName() string {
+	return "GetAllPhysicalResourcesResponseValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e BatchGetClustersResponseValidationError) Error() string {
+func (e GetAllPhysicalResourcesResponseValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -2981,14 +3043,14 @@ func (e BatchGetClustersResponseValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sBatchGetClustersResponse.%s: %s%s",
+		"invalid %sGetAllPhysicalResourcesResponse.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = BatchGetClustersResponseValidationError{}
+var _ error = GetAllPhysicalResourcesResponseValidationError{}
 
 var _ interface {
 	Field() string
@@ -2996,7 +3058,7 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = BatchGetClustersResponseValidationError{}
+} = GetAllPhysicalResourcesResponseValidationError{}
 
 // Validate checks the field values on
 // BulkLoadClusterRequest_ClusterWithNamespaces with the rules defined in the
@@ -3336,333 +3398,3 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = BulkLoadClusterRequest_DeploymentWithEndpointsValidationError{}
-
-// Validate checks the field values on BatchGetClustersResponse_Deployments
-// with the rules defined in the proto definition for this message. If any
-// rules are violated, an error is returned.
-func (m *BatchGetClustersResponse_Deployments) Validate() error {
-	if m == nil {
-		return nil
-	}
-
-	if m.GetDeployment() == nil {
-		return BatchGetClustersResponse_DeploymentsValidationError{
-			field:  "Deployment",
-			reason: "value is required",
-		}
-	}
-
-	{
-		tmp := m.GetDeployment()
-
-		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
-
-			if err := v.Validate(); err != nil {
-				return BatchGetClustersResponse_DeploymentsValidationError{
-					field:  "Deployment",
-					reason: "embedded message failed validation",
-					cause:  err,
-				}
-			}
-		}
-	}
-
-	for idx, item := range m.GetEndpoints() {
-		_, _ = idx, item
-
-		{
-			tmp := item
-
-			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
-
-				if err := v.Validate(); err != nil {
-					return BatchGetClustersResponse_DeploymentsValidationError{
-						field:  fmt.Sprintf("Endpoints[%v]", idx),
-						reason: "embedded message failed validation",
-						cause:  err,
-					}
-				}
-			}
-		}
-
-	}
-
-	return nil
-}
-
-// BatchGetClustersResponse_DeploymentsValidationError is the validation error
-// returned by BatchGetClustersResponse_Deployments.Validate if the designated
-// constraints aren't met.
-type BatchGetClustersResponse_DeploymentsValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e BatchGetClustersResponse_DeploymentsValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e BatchGetClustersResponse_DeploymentsValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e BatchGetClustersResponse_DeploymentsValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e BatchGetClustersResponse_DeploymentsValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e BatchGetClustersResponse_DeploymentsValidationError) ErrorName() string {
-	return "BatchGetClustersResponse_DeploymentsValidationError"
-}
-
-// Error satisfies the builtin error interface
-func (e BatchGetClustersResponse_DeploymentsValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sBatchGetClustersResponse_Deployments.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = BatchGetClustersResponse_DeploymentsValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = BatchGetClustersResponse_DeploymentsValidationError{}
-
-// Validate checks the field values on BatchGetClustersResponse_Namespaces with
-// the rules defined in the proto definition for this message. If any rules
-// are violated, an error is returned.
-func (m *BatchGetClustersResponse_Namespaces) Validate() error {
-	if m == nil {
-		return nil
-	}
-
-	if m.GetNamespace() == nil {
-		return BatchGetClustersResponse_NamespacesValidationError{
-			field:  "Namespace",
-			reason: "value is required",
-		}
-	}
-
-	{
-		tmp := m.GetNamespace()
-
-		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
-
-			if err := v.Validate(); err != nil {
-				return BatchGetClustersResponse_NamespacesValidationError{
-					field:  "Namespace",
-					reason: "embedded message failed validation",
-					cause:  err,
-				}
-			}
-		}
-	}
-
-	for idx, item := range m.GetDeployments() {
-		_, _ = idx, item
-
-		{
-			tmp := item
-
-			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
-
-				if err := v.Validate(); err != nil {
-					return BatchGetClustersResponse_NamespacesValidationError{
-						field:  fmt.Sprintf("Deployments[%v]", idx),
-						reason: "embedded message failed validation",
-						cause:  err,
-					}
-				}
-			}
-		}
-
-	}
-
-	return nil
-}
-
-// BatchGetClustersResponse_NamespacesValidationError is the validation error
-// returned by BatchGetClustersResponse_Namespaces.Validate if the designated
-// constraints aren't met.
-type BatchGetClustersResponse_NamespacesValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e BatchGetClustersResponse_NamespacesValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e BatchGetClustersResponse_NamespacesValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e BatchGetClustersResponse_NamespacesValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e BatchGetClustersResponse_NamespacesValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e BatchGetClustersResponse_NamespacesValidationError) ErrorName() string {
-	return "BatchGetClustersResponse_NamespacesValidationError"
-}
-
-// Error satisfies the builtin error interface
-func (e BatchGetClustersResponse_NamespacesValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sBatchGetClustersResponse_Namespaces.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = BatchGetClustersResponse_NamespacesValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = BatchGetClustersResponse_NamespacesValidationError{}
-
-// Validate checks the field values on BatchGetClustersResponse_Clusters with
-// the rules defined in the proto definition for this message. If any rules
-// are violated, an error is returned.
-func (m *BatchGetClustersResponse_Clusters) Validate() error {
-	if m == nil {
-		return nil
-	}
-
-	if m.GetCluster() == nil {
-		return BatchGetClustersResponse_ClustersValidationError{
-			field:  "Cluster",
-			reason: "value is required",
-		}
-	}
-
-	{
-		tmp := m.GetCluster()
-
-		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
-
-			if err := v.Validate(); err != nil {
-				return BatchGetClustersResponse_ClustersValidationError{
-					field:  "Cluster",
-					reason: "embedded message failed validation",
-					cause:  err,
-				}
-			}
-		}
-	}
-
-	for idx, item := range m.GetNamespaces() {
-		_, _ = idx, item
-
-		{
-			tmp := item
-
-			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
-
-				if err := v.Validate(); err != nil {
-					return BatchGetClustersResponse_ClustersValidationError{
-						field:  fmt.Sprintf("Namespaces[%v]", idx),
-						reason: "embedded message failed validation",
-						cause:  err,
-					}
-				}
-			}
-		}
-
-	}
-
-	return nil
-}
-
-// BatchGetClustersResponse_ClustersValidationError is the validation error
-// returned by BatchGetClustersResponse_Clusters.Validate if the designated
-// constraints aren't met.
-type BatchGetClustersResponse_ClustersValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e BatchGetClustersResponse_ClustersValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e BatchGetClustersResponse_ClustersValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e BatchGetClustersResponse_ClustersValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e BatchGetClustersResponse_ClustersValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e BatchGetClustersResponse_ClustersValidationError) ErrorName() string {
-	return "BatchGetClustersResponse_ClustersValidationError"
-}
-
-// Error satisfies the builtin error interface
-func (e BatchGetClustersResponse_ClustersValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sBatchGetClustersResponse_Clusters.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = BatchGetClustersResponse_ClustersValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = BatchGetClustersResponse_ClustersValidationError{}

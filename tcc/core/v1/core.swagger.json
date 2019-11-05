@@ -2261,14 +2261,57 @@
         ]
       }
     },
-    "/v1/tenants/{tenant}/environments/{environment}:batchGetClusters": {
+    "/v1/tenants/{tenant}/environments/{environment}:getAllLogicalResources": {
       "get": {
-        "operationId": "BatchGetClusters",
+        "operationId": "GetAllLogicalResources",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.BatchGetClustersResponse"
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.GetAllLogicalResourcesResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "environment",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "parent",
+            "description": "Internal use only. Auto populated field.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "LogicalResourceModel"
+        ]
+      }
+    },
+    "/v1/tenants/{tenant}/environments/{environment}:getAllPhysicalResources": {
+      "get": {
+        "operationId": "GetAllPhysicalResources",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.GetAllPhysicalResourcesResponse"
             }
           },
           "404": {
@@ -2300,6 +2343,49 @@
         ],
         "tags": [
           "PhysicalResourceModel"
+        ]
+      }
+    },
+    "/v1/tenants/{tenant}/environments/{environment}:getAllResources": {
+      "get": {
+        "operationId": "GetAllEnvironmentResources",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.GetAllEnvironmentResourcesResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "environment",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "parent",
+            "description": "Internal use only. Auto populated field.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "LogicalResourceModel"
         ]
       }
     },
@@ -3072,59 +3158,6 @@
         },
         "password": {
           "type": "string"
-        }
-      }
-    },
-    "tetrate.api.tcc.core.v1.BatchGetClustersResponse": {
-      "type": "object",
-      "properties": {
-        "clusters": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/tetrate.api.tcc.core.v1.BatchGetClustersResponse.Clusters"
-          }
-        }
-      }
-    },
-    "tetrate.api.tcc.core.v1.BatchGetClustersResponse.Clusters": {
-      "type": "object",
-      "properties": {
-        "cluster": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Cluster"
-        },
-        "namespaces": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/tetrate.api.tcc.core.v1.BatchGetClustersResponse.Namespaces"
-          }
-        }
-      }
-    },
-    "tetrate.api.tcc.core.v1.BatchGetClustersResponse.Deployments": {
-      "type": "object",
-      "properties": {
-        "deployment": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Deployment"
-        },
-        "endpoints": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/tetrate.api.tcc.core.v1.Endpoint"
-          }
-        }
-      }
-    },
-    "tetrate.api.tcc.core.v1.BatchGetClustersResponse.Namespaces": {
-      "type": "object",
-      "properties": {
-        "namespace": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Namespace"
-        },
-        "deployments": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/tetrate.api.tcc.core.v1.BatchGetClustersResponse.Deployments"
-          }
         }
       }
     },
@@ -3908,6 +3941,87 @@
         "lifetime": {
           "type": "string",
           "title": "Lifetime of the tokens"
+        }
+      }
+    },
+    "tetrate.api.tcc.core.v1.GetAllEnvironmentResourcesResponse": {
+      "type": "object",
+      "properties": {
+        "applications": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.core.v1.Application"
+          }
+        },
+        "services": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.core.v1.Service"
+          }
+        },
+        "clusters": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.core.v1.Cluster"
+          }
+        },
+        "namespaces": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.core.v1.Namespace"
+          }
+        },
+        "deployments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.core.v1.Deployment"
+          }
+        }
+      }
+    },
+    "tetrate.api.tcc.core.v1.GetAllLogicalResourcesResponse": {
+      "type": "object",
+      "properties": {
+        "applications": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.core.v1.Application"
+          }
+        },
+        "services": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.core.v1.Service"
+          }
+        }
+      }
+    },
+    "tetrate.api.tcc.core.v1.GetAllPhysicalResourcesResponse": {
+      "type": "object",
+      "properties": {
+        "clusters": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.core.v1.Cluster"
+          }
+        },
+        "namespaces": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.core.v1.Namespace"
+          }
+        },
+        "deployments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.core.v1.Deployment"
+          }
+        },
+        "endpoints": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.core.v1.Endpoint"
+          }
         }
       }
     },

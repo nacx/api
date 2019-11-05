@@ -13,6 +13,7 @@ import "validate/validate.proto";
 import "routing_info.proto";
 import "client_settings.proto";
 import "tlssettings.proto";
+import "physical_resources.proto";
 
 import "permissions.proto";
 import "rbac.proto";
@@ -81,6 +82,17 @@ service LogicalResourceModel {
       body: "policy"
     };
   };
+
+  rpc GetAllEnvironmentResources(GetAllEnvironmentResourcesRequest)
+      returns (GetAllEnvironmentResourcesResponse) {
+    option (tetrate.api.q.rbac.v1.requires) = {
+      raw_permissions:
+          ["ReadApplication", "ReadService", "ReadCluster", "ReadNamespace", "ReadDeployment"]
+    };
+    option (google.api.http) = {
+      get: "/v1/tenants/{tenant}/environments/{environment}:getAllResources"
+    };
+  }
 
   rpc CreateApplication(CreateApplicationRequest) returns (Application) {
     option (tetrate.api.q.rbac.v1.requires) = {
@@ -187,6 +199,16 @@ service LogicalResourceModel {
       delete: "/v1/tenants/{tenant}/environments/{environment}/applications/{application}/services/{id}"
     };
     // clang-format on
+  };
+
+  rpc GetAllLogicalResources(GetAllLogicalResourcesRequest)
+      returns (GetAllLogicalResourcesResponse) {
+    option (tetrate.api.q.rbac.v1.requires) = {
+      raw_permissions: ["ReadApplication", "ReadService"]
+    };
+    option (google.api.http) = {
+      get: "/v1/tenants/{tenant}/environments/{environment}:getAllLogicalResources"
+    };
   };
 }
 
@@ -345,6 +367,34 @@ message DeleteApplicationRequest {
   string tenant = 2 [(validate.rules).string.min_len = 1];
   string environment = 3 [(validate.rules).string.min_len = 1];
   string id = 4 [(validate.rules).string.min_len = 1];
+}
+
+message GetAllLogicalResourcesRequest {
+  // Internal use only. Auto populated field.
+  string parent = 1;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
+}
+
+message GetAllLogicalResourcesResponse {
+  repeated Application applications = 1;
+  repeated Service services = 2;
+}
+
+// Includes physical and logical
+message GetAllEnvironmentResourcesRequest {
+  // Internal use only. Auto populated field.
+  string parent = 1;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
+}
+
+message GetAllEnvironmentResourcesResponse {
+  repeated Application applications = 1;
+  repeated Service services = 2;
+  repeated Cluster clusters = 3;
+  repeated Namespace namespaces = 4;
+  repeated Deployment deployments = 5;
 }
 
 message ApplicationSpecificLB {

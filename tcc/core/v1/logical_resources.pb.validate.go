@@ -1399,6 +1399,450 @@ var _ interface {
 	ErrorName() string
 } = DeleteApplicationRequestValidationError{}
 
+// Validate checks the field values on GetAllLogicalResourcesRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *GetAllLogicalResourcesRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Parent
+
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return GetAllLogicalResourcesRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return GetAllLogicalResourcesRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	return nil
+}
+
+// GetAllLogicalResourcesRequestValidationError is the validation error
+// returned by GetAllLogicalResourcesRequest.Validate if the designated
+// constraints aren't met.
+type GetAllLogicalResourcesRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetAllLogicalResourcesRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetAllLogicalResourcesRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetAllLogicalResourcesRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetAllLogicalResourcesRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetAllLogicalResourcesRequestValidationError) ErrorName() string {
+	return "GetAllLogicalResourcesRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetAllLogicalResourcesRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetAllLogicalResourcesRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetAllLogicalResourcesRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetAllLogicalResourcesRequestValidationError{}
+
+// Validate checks the field values on GetAllLogicalResourcesResponse with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *GetAllLogicalResourcesResponse) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	for idx, item := range m.GetApplications() {
+		_, _ = idx, item
+
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return GetAllLogicalResourcesResponseValidationError{
+						field:  fmt.Sprintf("Applications[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+		}
+
+	}
+
+	for idx, item := range m.GetServices() {
+		_, _ = idx, item
+
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return GetAllLogicalResourcesResponseValidationError{
+						field:  fmt.Sprintf("Services[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// GetAllLogicalResourcesResponseValidationError is the validation error
+// returned by GetAllLogicalResourcesResponse.Validate if the designated
+// constraints aren't met.
+type GetAllLogicalResourcesResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetAllLogicalResourcesResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetAllLogicalResourcesResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetAllLogicalResourcesResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetAllLogicalResourcesResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetAllLogicalResourcesResponseValidationError) ErrorName() string {
+	return "GetAllLogicalResourcesResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetAllLogicalResourcesResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetAllLogicalResourcesResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetAllLogicalResourcesResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetAllLogicalResourcesResponseValidationError{}
+
+// Validate checks the field values on GetAllEnvironmentResourcesRequest with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, an error is returned.
+func (m *GetAllEnvironmentResourcesRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Parent
+
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return GetAllEnvironmentResourcesRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return GetAllEnvironmentResourcesRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	return nil
+}
+
+// GetAllEnvironmentResourcesRequestValidationError is the validation error
+// returned by GetAllEnvironmentResourcesRequest.Validate if the designated
+// constraints aren't met.
+type GetAllEnvironmentResourcesRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetAllEnvironmentResourcesRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetAllEnvironmentResourcesRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetAllEnvironmentResourcesRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetAllEnvironmentResourcesRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetAllEnvironmentResourcesRequestValidationError) ErrorName() string {
+	return "GetAllEnvironmentResourcesRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetAllEnvironmentResourcesRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetAllEnvironmentResourcesRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetAllEnvironmentResourcesRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetAllEnvironmentResourcesRequestValidationError{}
+
+// Validate checks the field values on GetAllEnvironmentResourcesResponse with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, an error is returned.
+func (m *GetAllEnvironmentResourcesResponse) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	for idx, item := range m.GetApplications() {
+		_, _ = idx, item
+
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return GetAllEnvironmentResourcesResponseValidationError{
+						field:  fmt.Sprintf("Applications[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+		}
+
+	}
+
+	for idx, item := range m.GetServices() {
+		_, _ = idx, item
+
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return GetAllEnvironmentResourcesResponseValidationError{
+						field:  fmt.Sprintf("Services[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+		}
+
+	}
+
+	for idx, item := range m.GetClusters() {
+		_, _ = idx, item
+
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return GetAllEnvironmentResourcesResponseValidationError{
+						field:  fmt.Sprintf("Clusters[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+		}
+
+	}
+
+	for idx, item := range m.GetNamespaces() {
+		_, _ = idx, item
+
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return GetAllEnvironmentResourcesResponseValidationError{
+						field:  fmt.Sprintf("Namespaces[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+		}
+
+	}
+
+	for idx, item := range m.GetDeployments() {
+		_, _ = idx, item
+
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return GetAllEnvironmentResourcesResponseValidationError{
+						field:  fmt.Sprintf("Deployments[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// GetAllEnvironmentResourcesResponseValidationError is the validation error
+// returned by GetAllEnvironmentResourcesResponse.Validate if the designated
+// constraints aren't met.
+type GetAllEnvironmentResourcesResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetAllEnvironmentResourcesResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetAllEnvironmentResourcesResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetAllEnvironmentResourcesResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetAllEnvironmentResourcesResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetAllEnvironmentResourcesResponseValidationError) ErrorName() string {
+	return "GetAllEnvironmentResourcesResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetAllEnvironmentResourcesResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetAllEnvironmentResourcesResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetAllEnvironmentResourcesResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetAllEnvironmentResourcesResponseValidationError{}
+
 // Validate checks the field values on ApplicationSpecificLB with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, an error is returned.

@@ -80,9 +80,12 @@ service PhysicalResourceModel {
     };
   };
 
-  rpc BatchGetClusters(BatchGetClustersRequest) returns (BatchGetClustersResponse) {
+  rpc GetAllPhysicalResources(GetAllPhysicalResourcesRequest) returns (GetAllPhysicalResourcesResponse) {
+    option (tetrate.api.q.rbac.v1.requires) = {
+            raw_permissions: ["ReadCluster", "ReadNamespace", "ReadDeployment"]
+    };
     option (google.api.http) = {
-      get: "/v1/tenants/{tenant}/environments/{environment}:batchGetClusters"
+      get: "/v1/tenants/{tenant}/environments/{environment}:getAllPhysicalResources"
     };
   };
 
@@ -526,27 +529,15 @@ message BulkLoadClusterRequest {
   };
 }
 
-message BatchGetClustersRequest {
+message GetAllPhysicalResourcesRequest {
   string parent = 1;
   string tenant = 2 [(validate.rules).string.min_len = 1];
   string environment = 3 [(validate.rules).string.min_len = 1];
 }
 
-message BatchGetClustersResponse {
-  message Deployments {
-    Deployment deployment = 1 [(validate.rules).message.required = true];
-    repeated Endpoint endpoints = 2;
-  };
-
-  message Namespaces {
-    Namespace namespace = 1 [(validate.rules).message.required = true];
-    repeated Deployments deployments = 2;
-  };
-
-  message Clusters {
-    Cluster cluster = 1 [(validate.rules).message.required = true];
-    repeated Namespaces namespaces = 2;
-  };
-
-  repeated Clusters clusters = 1;
+message GetAllPhysicalResourcesResponse {
+  repeated Cluster clusters = 1;
+  repeated Namespace namespaces = 2;
+  repeated Deployment deployments = 3;
+  repeated Endpoint endpoints = 4;
 }
