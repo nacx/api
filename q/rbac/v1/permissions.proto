@@ -7,7 +7,25 @@ option go_package = "github.com/tetrateio/tetrate/api/q/rbac/v1";
 
 import "google/protobuf/descriptor.proto";
 
-import "rbac.proto";
+// Permission
+//
+// A permission defines an action that can be performed on a resource. By default access to
+// resources is denied unless an explicit permission grants access to perform an operation against
+// it.
+enum Permission {
+  // Default value to designate no value was explicitly set for the permission.
+  INVALID = 0;
+  // The read permission grants read-only access to the resource.
+  READ = 1;
+  // The write permission allows the subject to modify an existing resource.
+  WRITE = 2;
+  // The create permission allows subjects to create child resources on the resource.
+  CREATE = 3;
+  // The delete permission grants permissions to delete the resource.
+  DELETE = 4;
+  // The set-policy permission allows subjects to manage the access policies for the resources.
+  SET_POLICY = 5;
+}
 
 // Extend the Service options to be able to configure the permissions that are required to call the
 // methods for this Service which do not have explicit Method permissions set.

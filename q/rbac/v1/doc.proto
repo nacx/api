@@ -8,7 +8,7 @@ import "protoc-gen-swagger/options/annotations.proto";
 
 option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
     info: {
-		title: "Q RBAC API";
+		title: "Q API";
 		version: "v1";
 		contact: {
 			name: "Tetrate.io, Inc.";

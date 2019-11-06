@@ -1,0 +1,439 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Q API",
+    "version": "v1",
+    "contact": {
+      "name": "Tetrate.io, Inc.",
+      "url": "https://www.tetrate.io",
+      "email": "info@tetrate.io"
+    }
+  },
+  "host": "TCCHOST",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/admin/rbac/policy": {
+      "get": {
+        "operationId": "GetRBACPolicy",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.q.rbac.v1.Policy"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "tags": [
+          "Admin"
+        ]
+      },
+      "put": {
+        "operationId": "SetRBACPolicy",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.q.rbac.v1.Policy"
+            }
+          }
+        ],
+        "tags": [
+          "Admin"
+        ]
+      }
+    },
+    "/v1/admin/rbac/roles": {
+      "get": {
+        "operationId": "ListRoles",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.q.rbac.v1.ListRolesResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "tags": [
+          "RBAC"
+        ]
+      },
+      "post": {
+        "operationId": "CreateRole",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.q.rbac.v1.Role"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.q.rbac.v1.CreateRoleRequest"
+            }
+          }
+        ],
+        "tags": [
+          "RBAC"
+        ]
+      }
+    },
+    "/v1/admin/rbac/roles/{id}": {
+      "get": {
+        "operationId": "GetRole",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.q.rbac.v1.Role"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "RBAC"
+        ]
+      },
+      "delete": {
+        "operationId": "DeleteRole",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "RBAC"
+        ]
+      },
+      "put": {
+        "operationId": "UpdateRole",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.q.rbac.v1.Role"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.q.rbac.v1.UpdateRoleRequest"
+            }
+          }
+        ],
+        "tags": [
+          "RBAC"
+        ]
+      }
+    },
+    "/v1/admin/root/policy": {
+      "get": {
+        "operationId": "GetRootPolicy",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.q.rbac.v1.Policy"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "tags": [
+          "Admin"
+        ]
+      },
+      "put": {
+        "operationId": "SetRootPolicy",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.q.rbac.v1.Policy"
+            }
+          }
+        ],
+        "tags": [
+          "Admin"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "tetrate.api.q.rbac.v1.Binding": {
+      "type": "object",
+      "properties": {
+        "role": {
+          "type": "string",
+          "description": "The role that defines the permissions that will be granted to the target resource."
+        },
+        "subjects": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The set of subjects that will be allowed to access the target resource with the permissions defined by the role."
+        }
+      },
+      "description": "A binding associates a role with a set of subjects.  Bindings are used to configure policies, where different roles can be assigned to different sets of subjects to configure a fine-grained access control to the resource protected by the policy.",
+      "title": "Binding"
+    },
+    "tetrate.api.q.rbac.v1.CreateRoleRequest": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "permissions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.q.rbac.v1.Permission"
+          }
+        },
+        "resources": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "id": {
+          "type": "string"
+        },
+        "displayName": {
+          "type": "string"
+        }
+      },
+      "description": "Request to create a role."
+    },
+    "tetrate.api.q.rbac.v1.ListRolesResponse": {
+      "type": "object",
+      "properties": {
+        "roles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.q.rbac.v1.Role"
+          }
+        }
+      },
+      "description": "Response to the list roles request with all existing roles."
+    },
+    "tetrate.api.q.rbac.v1.Permission": {
+      "type": "string",
+      "enum": [
+        "INVALID",
+        "READ",
+        "WRITE",
+        "CREATE",
+        "DELETE",
+        "SET_POLICY"
+      ],
+      "default": "INVALID",
+      "description": "A permission defines an action that can be performed on a resource. By default access to resources is denied unless an explicit permission grants access to perform an operation against it.   - INVALID: Default value to designate no value was explicitly set for the permission.  - READ: The read permission grants read-only access to the resource.  - WRITE: The write permission allows the subject to modify an existing resource.  - CREATE: The create permission allows subjects to create child resources on the resource.  - DELETE: The delete permission grants permissions to delete the resource.  - SET_POLICY: The set-policy permission allows subjects to manage the access policies for the resources.",
+      "title": "Permission"
+    },
+    "tetrate.api.q.rbac.v1.Policy": {
+      "type": "object",
+      "properties": {
+        "bindings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.q.rbac.v1.Binding"
+          },
+          "description": "The list of bindings configures the different access profiles that are allowed on the resource configured by the policy."
+        }
+      },
+      "description": "A policy defines the set of subjects that can access a resource and under which conditions that access is granted.",
+      "title": "Policy"
+    },
+    "tetrate.api.q.rbac.v1.Role": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "Unique name that identifies the role in the system"
+        },
+        "description": {
+          "type": "string",
+          "description": "Details of what the role does and what the configured permissions allow."
+        },
+        "permissions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.q.rbac.v1.Permission"
+          },
+          "description": "The list of permissions that will be granted by this role on all resources that are bound to it."
+        },
+        "resources": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of resource types where the role applies. The permission system is hierarchical and allows permissions to be applied at the root elements of the configuration hierarchy, so all child objects inherit them. This allows for easy and flexible permission configuration. There are, however, many scenarios in which permissions only make sense in certain types of resources instead of applying to the entire hierarchy. In those cases, the resources field can be populated with the types of resources that are affected by the role, and the permission set defined by the role will only apply to those resources. If this field is omitted, the permissions apply to all resource types."
+        },
+        "displayName": {
+          "type": "string",
+          "title": "Friendly name for the role"
+        }
+      },
+      "description": "A role configures a set of permissions and gives them a name. Permissions are grouped into roles and then can be bound to different resources to configure the access policies.",
+      "title": "Role"
+    },
+    "tetrate.api.q.rbac.v1.UpdateRoleRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string",
+          "description": "Details of what the role does and what the configured permissions allow."
+        },
+        "permissions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.q.rbac.v1.Permission"
+          },
+          "description": "The list of permissions that will be granted by this role on all resources that are bound to it."
+        },
+        "resources": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "name": {
+          "type": "string"
+        },
+        "displayName": {
+          "type": "string"
+        }
+      },
+      "title": "Request to update a role"
+    }
+  }
+}

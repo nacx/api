@@ -9,6 +9,8 @@ import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 import "validate/validate.proto";
 
+import "permissions.proto";
+
 // RBAC service
 //
 // The RBAC service provides a high level API to model Q RBAC policies.
@@ -19,48 +21,51 @@ import "validate/validate.proto";
 service RBAC {
   // Creates a Role in the system.
   rpc CreateRole(CreateRoleRequest) returns (Role) {
+    option (requires) = {
+      permissions: CREATE
+    };
     option (google.api.http) = {
-      post: "/v1/roles"
+      post: "/v1/admin/rbac/roles"
       body: "*"
     };
   };
 
   // List all existing roles in the system.
   rpc ListRoles(ListRolesRequest) returns (ListRolesResponse) {
-    option (google.api.http).get = "/v1/roles";
+    option (requires) = {
+      permissions: READ
+    };
+    option (google.api.http).get = "/v1/admin/rbac/roles";
   };
 
   // Get the details of the role with the given name.
   rpc GetRole(GetRoleRequest) returns (Role) {
-    option (google.api.http).get = "/v1/roles/{name}";
+    option (requires) = {
+      permissions: READ
+    };
+    option (google.api.http).get = "/v1/admin/rbac/roles/{id}";
+  };
+
+  // Modify the given role.
+  rpc UpdateRole(UpdateRoleRequest) returns (Role) {
+    option (requires) = {
+      permissions: WRITE
+    };
+    option (google.api.http) = {
+      put: "/v1/admin/rbac/roles/{id}"
+      body: "*"
+    };
   };
 
   // Delete the role with the given name.
   //
   // Roles that are assigned to policies cannot be deleted. Policies need to be deleted first
   rpc DeleteRole(DeleteRoleRequest) returns (google.protobuf.Empty) {
-    option (google.api.http).delete = "/v1/roles/{name}";
+    option (requires) = {
+      permissions: DELETE
+    };
+    option (google.api.http).delete = "/v1/admin/rbac/roles/{id}";
   };
-}
-
-// Permission
-//
-// A permission defines an action that can be performed on a resource. By default access to
-// resources is denied unless an explicit permission grants access to perform an operation against
-// it.
-enum Permission {
-  // Default value to designate no value was explicitly set for the permission.
-  INVALID = 0;
-  // The read permission grants read-only access to the resource.
-  READ = 1;
-  // The write permission allows the subject to modify an existing resource.
-  WRITE = 2;
-  // The create permission allows subjects to create child resources on the resource.
-  CREATE = 3;
-  // The delete permission grants permissions to delete the resource.
-  DELETE = 4;
-  // The set-policy permission allows subjects to manage the access policies for the resources.
-  SET_POLICY = 5;
 }
 
 // Role
@@ -68,18 +73,15 @@ enum Permission {
 // A role configures a set of permissions and gives them a name. Permissions are grouped into roles
 // and then can be bound to different resources to configure the access policies.
 message Role {
-  // A unique name for the role in the system.
-  string name = 1 [(validate.rules).string.min_len = 1];
+  // Unique name that identifies the role in the system
+  string name = 1;
 
   // Details of what the role does and what the configured permissions allow.
   string description = 2;
 
   // The list of permissions that will be granted by this role on all resources that are bound to
   // it.
-  repeated Permission permissions = 3 [(validate.rules).repeated = {
-    min_items: 1,
-    items: {enum: {defined_only: true}},
-  }];
+  repeated Permission permissions = 3;
 
   // List of resource types where the role applies.
   // The permission system is hierarchical and allows permissions to be applied at the root elements
@@ -90,6 +92,9 @@ message Role {
   // the role, and the permission set defined by the role will only apply to those resources. If
   // this field is omitted, the permissions apply to all resource types.
   repeated string resources = 4;
+
+  // Friendly name for the role
+  string display_name = 5;
 }
 
 // Policy
@@ -122,7 +127,8 @@ message Binding {
 
 // Request to create a role.
 message CreateRoleRequest {
-  string name = 1 [(validate.rules).string.pattern = "^[0-9A-Za-z]+$"];
+  // Reserve the ID to preserve compatibility with the removed name field
+  reserved 1;
   string description = 2;
   repeated Permission permissions = 3 [(validate.rules).repeated = {
     min_items: 1,
@@ -133,6 +139,28 @@ message CreateRoleRequest {
     //    /rbac.pb.validate.go:336:15: undefined: _CreateRoleRequest_Permissions_NotInLookup
   }];
   repeated string resources = 4;
+
+  string id = 5 [(validate.rules).string.min_len = 1];
+  string display_name = 6;
+}
+
+// Request to update a role
+message UpdateRoleRequest {
+  string id = 1 [(validate.rules).string.min_len = 1];
+
+  // Details of what the role does and what the configured permissions allow.
+  string description = 2;
+
+  // The list of permissions that will be granted by this role on all resources that are bound to
+  // it.
+  repeated Permission permissions = 3 [(validate.rules).repeated = {
+    min_items: 1,
+    items: {enum: {defined_only: true}},
+  }];
+  repeated string resources = 4;
+
+  string name = 5;
+  string display_name = 6;
 }
 
 // Request to get the list of all existing roles.
@@ -146,10 +174,12 @@ message ListRolesResponse {
 
 // Request to get a role by name.
 message GetRoleRequest {
-  string name = 1 [(validate.rules).string.min_len = 1];
+  string id = 1 [(validate.rules).string.min_len = 1];
+  string name = 2;
 }
 
 // Request to delete the role with the given name.
 message DeleteRoleRequest {
-  string name = 1 [(validate.rules).string.min_len = 1];
+  string id = 1 [(validate.rules).string.min_len = 1];
+  string name = 2;
 }

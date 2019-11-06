@@ -11,8 +11,8 @@ PROTO_GO_SOURCES = $(patsubst %.proto,%.pb.go,$(PROTO_SOURCES))
 PROTO_GO_VALIDATE_SOURCES := $(patsubst %.proto,%.pb.validate.go,$(PROTO_SOURCES))
 PROTO_GO_GW_SOURCES = $(patsubst %.proto,%.pb.gw.go,$(PROTO_SOURCES))
 
-DESCRIPTOR := rbac.proto-descriptor
-SWAGGER := rbac.swagger.json
+DESCRIPTOR := q.proto-descriptor
+SWAGGER := q.swagger.json
 
 all: $(DESCRIPTOR) $(SWAGGER)
 	@echo "all protos done"
@@ -38,7 +38,7 @@ $(SWAGGER):
 		-I /usr/include/protobuf \
 		-I $(VENDOR) \
 		-I $(APIS) \
-		--swagger_out=allow_delete_body=true,json_names_for_fields=true,allow_merge=true,merge_file_name=rbac,fqn_for_swagger_name=true:. \
+		--swagger_out=allow_delete_body=true,json_names_for_fields=true,allow_merge=true,merge_file_name=q,fqn_for_swagger_name=true:. \
 		$(PROTO_SOURCES)
 	sed -i -e 's/\\n/ /g' $@
 	@echo "done building swagger"

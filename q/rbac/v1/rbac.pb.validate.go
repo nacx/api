@@ -40,33 +40,11 @@ func (m *Role) Validate() error {
 		return nil
 	}
 
-	if utf8.RuneCountInString(m.GetName()) < 1 {
-		return RoleValidationError{
-			field:  "Name",
-			reason: "value length must be at least 1 runes",
-		}
-	}
+	// no validation rules for Name
 
 	// no validation rules for Description
 
-	if len(m.GetPermissions()) < 1 {
-		return RoleValidationError{
-			field:  "Permissions",
-			reason: "value must contain at least 1 item(s)",
-		}
-	}
-
-	for idx, item := range m.GetPermissions() {
-		_, _ = idx, item
-
-		if _, ok := Permission_name[int32(item)]; !ok {
-			return RoleValidationError{
-				field:  fmt.Sprintf("Permissions[%v]", idx),
-				reason: "value must be one of the defined enum values",
-			}
-		}
-
-	}
+	// no validation rules for DisplayName
 
 	return nil
 }
@@ -314,13 +292,6 @@ func (m *CreateRoleRequest) Validate() error {
 		return nil
 	}
 
-	if !_CreateRoleRequest_Name_Pattern.MatchString(m.GetName()) {
-		return CreateRoleRequestValidationError{
-			field:  "Name",
-			reason: "value does not match regex pattern \"^[0-9A-Za-z]+$\"",
-		}
-	}
-
 	// no validation rules for Description
 
 	if len(m.GetPermissions()) < 1 {
@@ -341,6 +312,15 @@ func (m *CreateRoleRequest) Validate() error {
 		}
 
 	}
+
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return CreateRoleRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	// no validation rules for DisplayName
 
 	return nil
 }
@@ -401,7 +381,104 @@ var _ interface {
 	ErrorName() string
 } = CreateRoleRequestValidationError{}
 
-var _CreateRoleRequest_Name_Pattern = regexp.MustCompile("^[0-9A-Za-z]+$")
+// Validate checks the field values on UpdateRoleRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *UpdateRoleRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return UpdateRoleRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	// no validation rules for Description
+
+	if len(m.GetPermissions()) < 1 {
+		return UpdateRoleRequestValidationError{
+			field:  "Permissions",
+			reason: "value must contain at least 1 item(s)",
+		}
+	}
+
+	for idx, item := range m.GetPermissions() {
+		_, _ = idx, item
+
+		if _, ok := Permission_name[int32(item)]; !ok {
+			return UpdateRoleRequestValidationError{
+				field:  fmt.Sprintf("Permissions[%v]", idx),
+				reason: "value must be one of the defined enum values",
+			}
+		}
+
+	}
+
+	// no validation rules for Name
+
+	// no validation rules for DisplayName
+
+	return nil
+}
+
+// UpdateRoleRequestValidationError is the validation error returned by
+// UpdateRoleRequest.Validate if the designated constraints aren't met.
+type UpdateRoleRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e UpdateRoleRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e UpdateRoleRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e UpdateRoleRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e UpdateRoleRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e UpdateRoleRequestValidationError) ErrorName() string {
+	return "UpdateRoleRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e UpdateRoleRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sUpdateRoleRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = UpdateRoleRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = UpdateRoleRequestValidationError{}
 
 // Validate checks the field values on ListRolesRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, an
@@ -563,12 +640,14 @@ func (m *GetRoleRequest) Validate() error {
 		return nil
 	}
 
-	if utf8.RuneCountInString(m.GetName()) < 1 {
+	if utf8.RuneCountInString(m.GetId()) < 1 {
 		return GetRoleRequestValidationError{
-			field:  "Name",
+			field:  "Id",
 			reason: "value length must be at least 1 runes",
 		}
 	}
+
+	// no validation rules for Name
 
 	return nil
 }
@@ -635,12 +714,14 @@ func (m *DeleteRoleRequest) Validate() error {
 		return nil
 	}
 
-	if utf8.RuneCountInString(m.GetName()) < 1 {
+	if utf8.RuneCountInString(m.GetId()) < 1 {
 		return DeleteRoleRequestValidationError{
-			field:  "Name",
+			field:  "Id",
 			reason: "value length must be at least 1 runes",
 		}
 	}
+
+	// no validation rules for Name
 
 	return nil
 }

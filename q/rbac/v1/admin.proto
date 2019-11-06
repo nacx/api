@@ -1,0 +1,63 @@
+// Copyright (c) Tetrate, Inc 2019 All Rights Reserved.
+
+syntax = "proto3";
+
+package tetrate.api.q.rbac.v1;
+option go_package = "github.com/tetrateio/tetrate/api/q/rbac/v1";
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+import "permissions.proto";
+import "rbac.proto";
+
+// Administration service
+//
+// The administration service allows to configure global access policies for the
+// core parts of the platform:
+//   - Root policy configuration: configures global access to the platform, including
+//     including access to all tenants.
+//   - RBAC access: Configures access policy to the RBAC APIs, to configure who can
+//     author roles.
+service Admin {
+  rpc GetRootPolicy(GetAdminPolicyRequest) returns (Policy) {
+    option (requires) = {
+      permissions: SET_POLICY
+    };
+    option (google.api.http) = {
+      get: "/v1/admin/root/policy"
+    };
+  };
+
+  rpc SetRootPolicy(Policy) returns (google.protobuf.Empty) {
+    option (requires) = {
+      permissions: SET_POLICY
+    };
+    option (google.api.http) = {
+      put: "/v1/admin/root/policy"
+      body: "*"
+    };
+  };
+
+  rpc GetRBACPolicy(GetAdminPolicyRequest) returns (Policy) {
+    option (requires) = {
+      permissions: SET_POLICY
+    };
+    option (google.api.http) = {
+      get: "/v1/admin/rbac/policy"
+    };
+  };
+
+  rpc SetRBACPolicy(Policy) returns (google.protobuf.Empty) {
+    option (requires) = {
+      permissions: SET_POLICY
+    };
+    option (google.api.http) = {
+      put: "/v1/admin/rbac/policy"
+      body: "*"
+    };
+  };
+}
+
+message GetAdminPolicyRequest {
+}
