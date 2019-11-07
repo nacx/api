@@ -3074,13 +3074,6 @@
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.ClientSettings",
           "description": "Resilience settings that apply to all services within the application, for outbound calls from the application's services to other services in the application or to other applications."
         },
-        "appLbs": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/tetrate.api.tcc.core.v1.ApplicationSpecificLB"
-          },
-          "description": "An application can be exposed on a shared load balancer in the cluster or a dedicated load balancer in one of the application's namespaces. Set app_lbs to indicate that the application should be exposed on the dedicated load balancers. Namespace where each of the dedicated load balancer is scoped should be unique."
-        },
         "namespaces": {
           "type": "array",
           "items": {
@@ -3096,39 +3089,6 @@
       },
       "description": "An Application is a collection of services. Each application typically corresponds to one or more kubernetes namespace or an application deployment on VMs.",
       "title": "Application"
-    },
-    "tetrate.api.tcc.core.v1.ApplicationSpecificLB": {
-      "type": "object",
-      "properties": {
-        "labels": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          },
-          "description": "Load balancer deployment labels (Kubernetes only for now). If gateway was created using TCC helm charts, use app: {namespace}-tcclb for kubernetes. The gateway will expose the application on ports 80 and 443 (if tls is configured)."
-        },
-        "tls": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.TLSSettings",
-          "description": "TLS certificate info for the application. If nil, the gateway will expose the application on port 80 only. Internal use only. Auto populated."
-        },
-        "namespace": {
-          "type": "string",
-          "description": "The namespace where this dedicated load balancer of the application is scoped. It should be one of application namespaces. This field cannot be omitted if the application has more than one namespace. If there is only one dedicated load balancer and application has only one  namespace and if this namespace field is omitted, then this field would default to the application namespace."
-        },
-        "hostname": {
-          "type": "string",
-          "description": "Hostname with which the application is exposed on this load balancer."
-        },
-        "routingInfo": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.RoutingInfo",
-          "description": "HTTP Routing settings for the hostname."
-        },
-        "isPrimary": {
-          "type": "boolean",
-          "format": "boolean",
-          "description": "Indicator whether to use this LB as primary. This is used for Metrics reporting at the App level. If there are multiple dedicated load balancers in an App, only one and mandatorily one has to be marked primary. If there is only one dedicated load balancer in an app, it will be marked as primary by default."
-        }
-      }
     },
     "tetrate.api.tcc.core.v1.BasicAuthSettings": {
       "type": "object",
@@ -3407,13 +3367,6 @@
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.ClientSettings",
           "description": "Resilience settings that apply to all services within the application, for outbound calls from the application's services to other services."
         },
-        "appLbs": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/tetrate.api.tcc.core.v1.ApplicationSpecificLB"
-          },
-          "description": "An application can be exposed on a shared load balancer in the cluster or a dedicated load balancer in one of the application's namespaces. Set app_lbs to indicate that the application should be exposed on the dedicated load balancers. Namespace where each of the dedicated load balancer is scoped should be unique."
-        },
         "namespaces": {
           "type": "array",
           "items": {
@@ -3671,10 +3624,6 @@
           "items": {
             "$ref": "#/definitions/tetrate.api.tcc.core.v1.Port"
           }
-        },
-        "routingInfo": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.RoutingInfo",
-          "description": "HTTP Routing settings for the service. Note that subsets (versions of the service) if any should be defined here."
         },
         "namespace": {
           "type": "string",
@@ -4653,28 +4602,6 @@
       },
       "description": "A destination load balancer service in another cluster. This destination type is applicable only when used with a load balancer service."
     },
-    "tetrate.api.tcc.core.v1.RoutingInfo": {
-      "type": "object",
-      "properties": {
-        "subsets": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/tetrate.api.tcc.core.v1.Subset"
-          },
-          "description": "One or more versions of the service. Each version has a distinct name and a set of labels that help uniquely identify the pods/VMs of that version."
-        },
-        "httpSettings": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.HttpSettings",
-          "description": "HTTP specific settings, transformations and routing rules associated with HTTP traffic to this service."
-        },
-        "tcpSettings": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.TcpSettings",
-          "description": "TCP specific settings, transformations and routing rules associated with non-HTTP traffic to this service."
-        }
-      },
-      "description": "HTTP routing settings for application or service. Subsets of a service should be declared here as well.",
-      "title": "RoutingInfo (Deprecated)"
-    },
     "tetrate.api.tcc.core.v1.Service": {
       "type": "object",
       "properties": {
@@ -4717,10 +4644,6 @@
           "items": {
             "$ref": "#/definitions/tetrate.api.tcc.core.v1.Port"
           }
-        },
-        "routingInfo": {
-          "$ref": "#/definitions/tetrate.api.tcc.core.v1.RoutingInfo",
-          "description": "HTTP Routing settings for the service."
         },
         "etag": {
           "type": "string"

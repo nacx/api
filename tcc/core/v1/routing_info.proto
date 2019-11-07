@@ -10,24 +10,6 @@ import "google/protobuf/wrappers.proto";
 import "validate/validate.proto";
 import "tlssettings.proto";
 
-// RoutingInfo (Deprecated)
-//
-// HTTP routing settings for application or service. Subsets of a service should be declared here as
-// well.
-message RoutingInfo {
-  // One or more versions of the service. Each version has a distinct name and a set of labels that
-  // help uniquely identify the pods/VMs of that version.
-  repeated Subset subsets = 1;
-
-  // HTTP specific settings, transformations and routing rules associated with HTTP traffic to this
-  // service.
-  HttpSettings http_settings = 2;
-
-  // TCP specific settings, transformations and routing rules associated with non-HTTP traffic to
-  // this service.
-  TcpSettings tcp_settings = 3;
-}
-
 enum ServiceType {
   // An internal service in an application that is not exposed to the outside world.
   INTERNAL = 0;
