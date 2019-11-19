@@ -51,7 +51,7 @@ const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
 //     name: https
 //     protocol: HTTPS
 //   sidecarsPresent: false
-//   externalServiceTLSSettings:
+//   externalServiceTlsSettings:
 //     tlsMode: SIMPLE
 //     caCertificates: /path/to/ca/cert/to/verify/server/cert
 //   endpointSource:
@@ -125,7 +125,7 @@ const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
 //     protocol: HTTP
 //     applicationPort: 9080 # where the app process is listening
 //   sidecarsPresent: true
-//   sideSettings:
+//   sidecarSettings:
 //     usingIptablesCapture: false
 //   endpointSource:
 //     manual:
@@ -160,7 +160,7 @@ const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
 //     protocol: HTTP
 //     applicationPort: 9080 # where the app process is listening
 //   sidecarsPresent: true
-//   sideSettings:
+//   sidecarSettings:
 //     usingIptablesCapture: false
 //     egressHttpProxyPort: 15080 # outbound traffic explicitly sent here.
 //   endpointSource:
@@ -190,7 +190,7 @@ const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
 //     protocol: HTTP
 //     applicationPort: 9080 # where the app process is listening
 //   sidecarsPresent: true
-//   sideSettings:
+//   sidecarSettings:
 //     usingIptablesCapture: false
 //     egressHttpProxyPort: 15080 # outbound traffic explicitly sent here.
 //   endpointSource:
