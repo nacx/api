@@ -17,6 +17,8 @@ import "physical_resources.proto";
 import "permissions.proto";
 import "rbac.proto";
 
+import "spm/alert/v1/settings.proto";
+
 service LogicalResourceModel {
   option (tetrate.api.q.rbac.v1.default_requires) = {
     permissions: READ
@@ -298,6 +300,8 @@ message Application {
   // not. Defaults to true if not specified. Applications with just the app specific LB should set
   // this value to false.
   google.protobuf.BoolValue use_mtls_between_services = 11;
+  // Alert settings for certain metrics of this application. E.g. SLA rule.
+  tetrate.api.tcc.spm.alert.v1.Settings alert_settings = 12;
 }
 
 message CreateApplicationRequest {

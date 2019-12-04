@@ -723,6 +723,21 @@ func (m *Application) Validate() error {
 		}
 	}
 
+	{
+		tmp := m.GetAlertSettings()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return ApplicationValidationError{
+					field:  "AlertSettings",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+	}
+
 	return nil
 }
 

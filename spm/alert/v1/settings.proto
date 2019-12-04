@@ -1,0 +1,60 @@
+// Copyright (c) Tetrate, Inc 2019 All Rights Reserved.
+
+syntax = "proto3";
+
+package tetrate.api.tcc.spm.alert.v1;
+option go_package = "github.com/tetrateio/tetrate/api/spm/alert/v1";
+
+import "google/protobuf/duration.proto";
+import "validate/validate.proto";
+
+// Settings
+//
+// A set of alarm rules.
+message Settings {
+  map<string, Rule> rules = 1;
+}
+
+// Rule
+//
+// An alert rule defines the condition when an alert should be triggered.
+message Rule {
+  // Short ID for this rule.
+  string id = 1;
+
+  // Metric name to be watched.
+  // clang-format off
+  string metric_name = 2 [(validate.rules).string = { suffix: "_rule", min_len: 6 }];
+  // clang-format on
+
+  // The threshold value of a metric; depends on the operator, it triggers alert if the metric value
+  // is not match.
+  // clang-format off
+  uint32 threshold = 3 [(validate.rules).uint32 = { gte: 0, lte: 100 }];
+  // clang-format on
+
+  // The operator. E.g. greater-than, lower-than and equal.
+  Operator operator = 4;
+
+  // The period of an alert rule should be checked.
+  google.protobuf.Duration period = 5 [(validate.rules).duration.lt.seconds = 1];
+
+  // The number of "violation" in a certain period.
+  uint32 count = 6 [(validate.rules).uint32.gte = 0];
+
+  // Keep silence for some amount of time after an alarm is triggered. By default, the value is the
+  // same as period.
+  google.protobuf.Duration silence_period = 7;
+
+  // Friendly name for a rule.
+  string display_name = 8;
+}
+
+// Operator
+//
+// Possible operators to "judge" the current metric value against a particular threshold value.
+enum Operator {
+  EQ = 0;
+  GT = 1;
+  LT = 2;
+}

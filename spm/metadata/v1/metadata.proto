@@ -1,0 +1,91 @@
+// Copyright (c) Tetrate, Inc 2019 All Rights Reserved.
+syntax = "proto3";
+
+// NOTE: This is imported AS IS from
+// https://raw.githubusercontent.com/tetrateio/SPM/spm2/spm-protocol/src/main/proto/meta-tsb.proto
+
+option java_multiple_files = true;
+option java_package = "io.tetrate.spm.tsb.meta.proto";
+// However, the following go_package entry is added.
+option go_package = "github.com/tetrateio/tetrate/api/spm/metadata/v1";
+
+// Service provided at TSB side,
+// SPM uses this as 3rd part storage implementation, to support existing query(s) from UI side.
+service TSBMetadataService {
+  // Register new service, instance and endpoint
+  // when SPM can't find it from central ES storage.
+  // This could be a concurrency OP, so implementation should use the lock to avoid duplicated IDs.
+  rpc register(EntityRegisterMetadata) returns (EntityMetadata) {
+  }
+
+  // Keep the given instances online.
+  rpc keepAlive(stream EntityPingPackage) returns (TSBDefaultResp) {
+  }
+
+  // Get all service based on TSB definition.
+  rpc getAllServices(Duration) returns (EntityList) {
+  }
+
+  // Get all online instance list.
+  rpc getServiceInstances(InstanceListCondition) returns (EntityList) {
+  }
+}
+
+// The entity requests the register.
+message EntityRegisterMetadata {
+  // This name follows SPM nouns doc, https://github.com/tetrateio/SPM/blob/spm2/doc/spm-nouns.md
+  string name = 1;
+  EntityType type = 2;
+  int32 ownerService = 3;
+}
+
+// Registered metadata. This ID should be unchanged and unique.
+message EntityMetadata {
+  int32 id = 1;
+}
+
+// Request the TSB to update last heartbeat time to current based on TSB time.
+message EntityPingPackage {
+  int32 id = 1;
+  // Only INSTANCE should be used for now.
+  EntityType type = 2;
+}
+
+// Empty response only.
+message TSBDefaultResp {
+}
+
+message InstanceListCondition {
+  Duration duration = 1;
+  int32 serviceId = 2;
+}
+
+message EntityList {
+  repeated Entity list = 1;
+}
+
+message Entity {
+  EntityType type = 1;
+  int32 id = 2;
+  string name = 3;
+}
+
+enum EntityType {
+  SERVICE = 0;
+  INSTANCE = 1;
+  ENDPOINT = 2;
+}
+
+message Duration {
+  string start = 1;
+  string end = 2;
+  Step step = 3;
+}
+
+enum Step {
+  MONTH = 0;
+  DAY = 1;
+  HOUR = 2;
+  MINUTE = 3;
+  SECOND = 4;
+}
