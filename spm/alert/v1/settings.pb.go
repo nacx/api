@@ -57,7 +57,7 @@ func (Operator) EnumDescriptor() ([]byte, []int) {
 
 // Settings
 //
-// A set of alarm rules.
+// A set of alert rules.
 type Settings struct {
 	Rules                map[string]*Rule `protobuf:"bytes,1,rep,name=rules,proto3" json:"rules,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 	XXX_NoUnkeyedLiteral struct{}         `json:"-"`

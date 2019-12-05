@@ -10,7 +10,7 @@ import "validate/validate.proto";
 
 // Settings
 //
-// A set of alarm rules.
+// A set of alert rules.
 message Settings {
   map<string, Rule> rules = 1;
 }
