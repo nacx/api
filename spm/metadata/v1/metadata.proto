@@ -8,6 +8,8 @@ option java_multiple_files = true;
 option java_package = "io.tetrate.spm.tsb.meta.proto";
 // However, the following go_package entry is added.
 option go_package = "github.com/tetrateio/tetrate/api/spm/metadata/v1";
+// However, the following validation package is added.
+import "validate/validate.proto";
 
 // Service provided at TSB side,
 // SPM uses this as 3rd part storage implementation, to support existing query(s) from UI side.
@@ -34,9 +36,9 @@ service TSBMetadataService {
 // The entity requests the register.
 message EntityRegisterMetadata {
   // This name follows SPM nouns doc, https://github.com/tetrateio/SPM/blob/spm2/doc/spm-nouns.md
-  string name = 1;
-  EntityType type = 2;
-  int32 ownerService = 3;
+  string name = 1 [(validate.rules).string.min_len = 1];
+  EntityType type = 2 [(validate.rules).enum.defined_only = true];
+  int32 ownerService = 3 [(validate.rules).int32.gte = 0];
 }
 
 // Registered metadata. This ID should be unchanged and unique.
@@ -46,9 +48,9 @@ message EntityMetadata {
 
 // Request the TSB to update last heartbeat time to current based on TSB time.
 message EntityPingPackage {
-  int32 id = 1;
+  int32 id = 1 [(validate.rules).int32.gte = 0];
   // Only INSTANCE should be used for now.
-  EntityType type = 2;
+  EntityType type = 2 [(validate.rules).enum.const = 1];
 }
 
 // Empty response only.
@@ -56,8 +58,8 @@ message TSBDefaultResp {
 }
 
 message InstanceListCondition {
-  Duration duration = 1;
-  int32 serviceId = 2;
+  Duration duration = 1 [(validate.rules).duration.required = true];
+  int32 serviceId = 2 [(validate.rules).int32.gte = 0];
 }
 
 message EntityList {
