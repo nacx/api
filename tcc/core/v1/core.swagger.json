@@ -1046,61 +1046,6 @@
         ]
       }
     },
-    "/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/configproducer/{configtype}": {
-      "get": {
-        "operationId": "Download",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.core.v1.ConfigData"
-            }
-          },
-          "404": {
-            "description": "Returned when the resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "tenant",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "environment",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "cluster",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "configtype",
-            "description": "Currently accepted values are istio or f5.",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "parent",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "ConfigProducer"
-        ]
-      }
-    },
     "/v1/tenants/{tenant}/environments/{environment}/clusters/{cluster}/namespaces": {
       "get": {
         "operationId": "ListNamespaces",
@@ -3278,27 +3223,6 @@
         },
         "kubernetesClusterDomain": {
           "type": "string"
-        }
-      }
-    },
-    "tetrate.api.tcc.core.v1.ConfigData": {
-      "type": "object",
-      "properties": {
-        "configtype": {
-          "type": "string"
-        },
-        "cluster": {
-          "type": "string"
-        },
-        "environment": {
-          "type": "string"
-        },
-        "tenant": {
-          "type": "string"
-        },
-        "payload": {
-          "type": "string",
-          "description": "For istio, this is a huge YAML dump of all Istio artifacts like virtual services, destination rules, service entries, gateways, etc. in YAML form. For F5, its all f5 config artifacts."
         }
       }
     },
