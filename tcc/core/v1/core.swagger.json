@@ -3583,6 +3583,10 @@
         "externalRoutes": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.ExternalRouteSettings",
           "description": "Allowed only if the service is of type external."
+        },
+        "alertSettings": {
+          "$ref": "#/definitions/tetrate.api.tcc.spm.alert.v1.Settings",
+          "description": "Alert settings for certain metrics of this service. E.g. SLA rule."
         }
       }
     },
@@ -4606,6 +4610,10 @@
         "externalRoutes": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.ExternalRouteSettings",
           "description": "Allowed only if the service is of type external."
+        },
+        "alertSettings": {
+          "$ref": "#/definitions/tetrate.api.tcc.spm.alert.v1.Settings",
+          "description": "Alert settings for certain metrics of this service. E.g. SLA rule."
         }
       }
     },

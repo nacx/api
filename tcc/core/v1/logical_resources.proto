@@ -438,6 +438,9 @@ message Service {
     // Allowed only if the service is of type external.
     ExternalRouteSettings external_routes = 17;
   }
+
+  // Alert settings for certain metrics of this service. E.g. SLA rule.
+  tetrate.api.tcc.spm.alert.v1.Settings alert_settings = 18;
 }
 
 message CreateServiceRequest {
@@ -484,6 +487,9 @@ message CreateServiceRequest {
     // Allowed only if the service is of type external.
     ExternalRouteSettings external_routes = 16;
   }
+
+  // Alert settings for certain metrics of this service. E.g. SLA rule.
+  tetrate.api.tcc.spm.alert.v1.Settings alert_settings = 17;
 }
 
 message GetServiceRequest {

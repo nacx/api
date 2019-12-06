@@ -1932,6 +1932,21 @@ func (m *Service) Validate() error {
 
 	// no validation rules for ServiceType
 
+	{
+		tmp := m.GetAlertSettings()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return ServiceValidationError{
+					field:  "AlertSettings",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+	}
+
 	switch m.Routing.(type) {
 
 	case *Service_LbSettings:
@@ -2131,6 +2146,21 @@ func (m *CreateServiceRequest) Validate() error {
 	}
 
 	// no validation rules for ServiceType
+
+	{
+		tmp := m.GetAlertSettings()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return CreateServiceRequestValidationError{
+					field:  "AlertSettings",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+	}
 
 	switch m.Routing.(type) {
 
