@@ -16,8 +16,10 @@ all: $(DESCRIPTOR)
 ${DESCRIPTOR}:
 	@echo "building protos"
 	protoc -I ./ \
+		-I /usr/include/protobuf \
 		--gogofast_out=paths=source_relative,plugins=grpc,$(MAPS):. \
 		--descriptor_set_out=$(DESCRIPTOR) --include_imports \
+		--validate_out=paths=source_relative,lang=gogo:. \
 		$(PROTO_SOURCES)
 	@echo "done building protos"
 

@@ -8,7 +8,7 @@ option java_multiple_files = true;
 option java_package = "io.tetrate.spm.tsb.meta.proto";
 // However, the following go_package entry is added.
 option go_package = "github.com/tetrateio/tetrate/api/spm/metadata/v1";
-// However, the following validation package is added.
+// However, the following validation package is also added.
 import "validate/validate.proto";
 
 // Service provided at TSB side,

@@ -25,6 +25,8 @@ option java_multiple_files = true;
 option java_package = "org.apache.skywalking.oap.server.configuration.service";
 // However, the following go_package entry is added.
 option go_package = "github.com/tetrateio/tetrate/api/spm/config/v1";
+// However, the following validation package is also added.
+import "validate/validate.proto";
 
 service ConfigurationService {
   rpc call(ConfigurationRequest) returns (ConfigurationResponse) {
@@ -35,7 +37,7 @@ message ConfigurationRequest {
   // Logic name of this cluster,
   // in case the remote configuration center implementation support
   // configuration management for multiple clusters.
-  string clusterName = 1;
+  string clusterName = 1 [(validate.rules).string.min_len = 1];
 }
 
 message ConfigurationResponse {
