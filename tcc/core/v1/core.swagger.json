@@ -3026,10 +3026,10 @@
           },
           "description": "List of namespaces where the application services (or components) are scoped within. If omitted, the application is assumed to be scoped in a namespace matching the Id field."
         },
-        "useMtlsBetweenServices": {
+        "forceMtlsBetweenServices": {
           "type": "boolean",
           "format": "boolean",
-          "description": "Indicates whether communication between services in the application should use mutual TLS or not. Defaults to true if not specified. Applications with just the app specific LB should set this value to false."
+          "description": "Indicates whether communication between services in the application should use ONLY mutual TLS or not. Defaults to false if not specified. Applications that have services without sidecars should set this value to false."
         },
         "alertSettings": {
           "$ref": "#/definitions/tetrate.api.tcc.spm.alert.v1.Settings",
@@ -3302,10 +3302,10 @@
           },
           "description": "List of namespaces where the application services (or components) are scoped within. If omitted, the application is assumed to be scoped in a namespace matching the Id field."
         },
-        "useMtlsBetweenServices": {
+        "forceMtlsBetweenServices": {
           "type": "boolean",
           "format": "boolean",
-          "description": "Indicates whether communication between services in the application should use mutual TLS or not. Defaults to true if not specified. Applications with just the app specific LB should set this value to false."
+          "description": "Indicates whether communication between services in the application should use ONLY mutual TLS or not. Defaults to false if not specified. Applications that have services without sidecars should set this value to false."
         },
         "alertSettings": {
           "$ref": "#/definitions/tetrate.api.tcc.spm.alert.v1.Settings",

@@ -709,13 +709,13 @@ func (m *Application) Validate() error {
 	}
 
 	{
-		tmp := m.GetUseMtlsBetweenServices()
+		tmp := m.GetForceMtlsBetweenServices()
 
 		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
 
 			if err := v.Validate(); err != nil {
 				return ApplicationValidationError{
-					field:  "UseMtlsBetweenServices",
+					field:  "ForceMtlsBetweenServices",
 					reason: "embedded message failed validation",
 					cause:  err,
 				}
@@ -839,13 +839,13 @@ func (m *CreateApplicationRequest) Validate() error {
 	}
 
 	{
-		tmp := m.GetUseMtlsBetweenServices()
+		tmp := m.GetForceMtlsBetweenServices()
 
 		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
 
 			if err := v.Validate(); err != nil {
 				return CreateApplicationRequestValidationError{
-					field:  "UseMtlsBetweenServices",
+					field:  "ForceMtlsBetweenServices",
 					reason: "embedded message failed validation",
 					cause:  err,
 				}
