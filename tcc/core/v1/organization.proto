@@ -12,11 +12,6 @@ import "validate/validate.proto";
 import "permissions.proto";
 import "rbac.proto";
 
-import "gogoproto/gogo.proto";
-
-// Enable generation of XXX_MessageName methods for grpc-go/status.
-option (gogoproto.messagename_all) = true;
-
 service Organization {
   option (tetrate.api.q.rbac.v1.default_requires) = {
     permissions: READ
