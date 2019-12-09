@@ -1,0 +1,25 @@
+// Copyright (c) Tetrate, Inc 2019 All Rights Reserved.
+
+syntax = "proto3";
+
+package tetrate.api.tcc.core.v1;
+option go_package = "github.com/tetrateio/tetrate/api/tcc/core/v1";
+
+import "google/api/annotations.proto";
+
+service Info {
+  // GetVersion returns the version of the TSB binary
+  rpc GetVersion(GetVersionRequest) returns (Version) {
+    option (google.api.http) = {
+      get: "/v1/version"
+    };
+  }
+}
+
+message Version {
+  // version is the TSB binary version
+  string version = 1;
+}
+
+message GetVersionRequest {
+}

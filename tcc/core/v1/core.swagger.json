@@ -2946,6 +2946,28 @@
           "Organization"
         ]
       }
+    },
+    "/v1/version": {
+      "get": {
+        "operationId": "GetVersion",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.core.v1.Version"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "tags": [
+          "Info"
+        ]
+      }
     }
   },
   "definitions": {
@@ -4887,6 +4909,15 @@
         },
         "sourceType": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.SourceType"
+        }
+      }
+    },
+    "tetrate.api.tcc.core.v1.Version": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "string",
+          "title": "version is the TSB binary version"
         }
       }
     },
