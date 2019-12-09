@@ -57,7 +57,12 @@ func (m *CreateTicketRequest) Validate() error {
 		}
 	}
 
-	// no validation rules for Id
+	if !_CreateTicketRequest_Id_Pattern.MatchString(m.GetId()) {
+		return CreateTicketRequestValidationError{
+			field:  "Id",
+			reason: "value does not match regex pattern \"(?i)^[0-9a-z.~\\\\-_]*$\"",
+		}
+	}
 
 	if utf8.RuneCountInString(m.GetApplication()) < 1 {
 		return CreateTicketRequestValidationError{
@@ -124,6 +129,8 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = CreateTicketRequestValidationError{}
+
+var _CreateTicketRequest_Id_Pattern = regexp.MustCompile("(?i)^[0-9a-z.~\\-_]*$")
 
 // Validate checks the field values on GetTicketStatusRequest with the rules
 // defined in the proto definition for this message. If any rules are

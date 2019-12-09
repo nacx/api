@@ -235,7 +235,11 @@ message CreateEnvironmentRequest {
   string parent = 1;
   string tenant = 2 [(validate.rules).string.min_len = 1];
   // If present, this will be used as the id for the created object.
-  string id = 3;
+  string id = 3 [(validate.rules).string = {
+    // case-insensitive matches alphanumeric characters and: '.', '~', '-', '_'
+    // as defined in https://tools.ietf.org/html/rfc3986#section-2.3
+    pattern: "(?i)^[0-9a-z.~\\-_]*$"
+  }];
   // Additional information for readability.
   string description = 4;
   // Resilience settings that apply to all clusters in the environment.
@@ -312,7 +316,11 @@ message CreateApplicationRequest {
   // Environment.Id.
   string environment = 3 [(validate.rules).string.min_len = 1];
   // short name for the application.
-  string id = 4;
+  string id = 4 [(validate.rules).string = {
+    // case-insensitive matches alphanumeric characters and: '.', '~', '-', '_'
+    // as defined in https://tools.ietf.org/html/rfc3986#section-2.3
+    pattern: "(?i)^[0-9a-z.~\\-_]*$"
+  }];
   // Additional information.
   string description = 5;
   // Resilience settings that apply to all services within the application, for outbound calls from
@@ -453,7 +461,11 @@ message CreateServiceRequest {
   // Application.Id.
   string application = 4 [(validate.rules).string.min_len = 1];
   // If present, this will be used as the id for the created object.
-  string id = 5;
+  string id = 5 [(validate.rules).string = {
+    // case-insensitive matches alphanumeric characters and: '.', '~', '-', '_'
+    // as defined in https://tools.ietf.org/html/rfc3986#section-2.3
+    pattern: "(?i)^[0-9a-z.~\\-_]*$"
+  }];
 
   string description = 6;
   // FQDN hostname of the service.

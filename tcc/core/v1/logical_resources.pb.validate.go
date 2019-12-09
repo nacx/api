@@ -148,7 +148,12 @@ func (m *CreateEnvironmentRequest) Validate() error {
 		}
 	}
 
-	// no validation rules for Id
+	if !_CreateEnvironmentRequest_Id_Pattern.MatchString(m.GetId()) {
+		return CreateEnvironmentRequestValidationError{
+			field:  "Id",
+			reason: "value does not match regex pattern \"(?i)^[0-9a-z.~\\\\-_]*$\"",
+		}
+	}
 
 	// no validation rules for Description
 
@@ -225,6 +230,8 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = CreateEnvironmentRequestValidationError{}
+
+var _CreateEnvironmentRequest_Id_Pattern = regexp.MustCompile("(?i)^[0-9a-z.~\\-_]*$")
 
 // Validate checks the field values on GetEnvironmentRequest with the rules
 // defined in the proto definition for this message. If any rules are
@@ -819,7 +826,12 @@ func (m *CreateApplicationRequest) Validate() error {
 		}
 	}
 
-	// no validation rules for Id
+	if !_CreateApplicationRequest_Id_Pattern.MatchString(m.GetId()) {
+		return CreateApplicationRequestValidationError{
+			field:  "Id",
+			reason: "value does not match regex pattern \"(?i)^[0-9a-z.~\\\\-_]*$\"",
+		}
+	}
 
 	// no validation rules for Description
 
@@ -926,6 +938,8 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = CreateApplicationRequestValidationError{}
+
+var _CreateApplicationRequest_Id_Pattern = regexp.MustCompile("(?i)^[0-9a-z.~\\-_]*$")
 
 // Validate checks the field values on GetApplicationRequest with the rules
 // defined in the proto definition for this message. If any rules are
@@ -2090,7 +2104,12 @@ func (m *CreateServiceRequest) Validate() error {
 		}
 	}
 
-	// no validation rules for Id
+	if !_CreateServiceRequest_Id_Pattern.MatchString(m.GetId()) {
+		return CreateServiceRequestValidationError{
+			field:  "Id",
+			reason: "value does not match regex pattern \"(?i)^[0-9a-z.~\\\\-_]*$\"",
+		}
+	}
 
 	// no validation rules for Description
 
@@ -2275,6 +2294,8 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = CreateServiceRequestValidationError{}
+
+var _CreateServiceRequest_Id_Pattern = regexp.MustCompile("(?i)^[0-9a-z.~\\-_]*$")
 
 // Validate checks the field values on GetServiceRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, an

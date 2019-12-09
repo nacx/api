@@ -140,7 +140,11 @@ message CreateRoleRequest {
   }];
   repeated string resources = 4;
 
-  string id = 5 [(validate.rules).string.min_len = 1];
+  string id = 5 [(validate.rules).string = {
+    // case-insensitive matches alphanumeric characters and: '.', '~', '-', '_'
+    // as defined in https://tools.ietf.org/html/rfc3986#section-2.3
+    pattern: "(?i)^[0-9a-z.~\\-_]+$"
+  }];
   string display_name = 6;
 }
 

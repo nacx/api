@@ -170,7 +170,12 @@ func (m *CreateClusterRequest) Validate() error {
 		}
 	}
 
-	// no validation rules for Id
+	if !_CreateClusterRequest_Id_Pattern.MatchString(m.GetId()) {
+		return CreateClusterRequestValidationError{
+			field:  "Id",
+			reason: "value does not match regex pattern \"(?i)^[0-9a-z.~\\\\-_]*$\"",
+		}
+	}
 
 	// no validation rules for Description
 
@@ -249,6 +254,8 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = CreateClusterRequestValidationError{}
+
+var _CreateClusterRequest_Id_Pattern = regexp.MustCompile("(?i)^[0-9a-z.~\\-_]*$")
 
 // Validate checks the field values on AgentTokens with the rules defined in
 // the proto definition for this message. If any rules are violated, an error
@@ -909,7 +916,12 @@ func (m *CreateNamespaceRequest) Validate() error {
 		}
 	}
 
-	// no validation rules for Id
+	if !_CreateNamespaceRequest_Id_Pattern.MatchString(m.GetId()) {
+		return CreateNamespaceRequestValidationError{
+			field:  "Id",
+			reason: "value does not match regex pattern \"(?i)^[0-9a-z.~\\\\-_]*$\"",
+		}
+	}
 
 	// no validation rules for Description
 
@@ -973,6 +985,8 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = CreateNamespaceRequestValidationError{}
+
+var _CreateNamespaceRequest_Id_Pattern = regexp.MustCompile("(?i)^[0-9a-z.~\\-_]*$")
 
 // Validate checks the field values on GetNamespaceRequest with the rules
 // defined in the proto definition for this message. If any rules are
@@ -1529,7 +1543,12 @@ func (m *CreateDeploymentRequest) Validate() error {
 		}
 	}
 
-	// no validation rules for Id
+	if !_CreateDeploymentRequest_Id_Pattern.MatchString(m.GetId()) {
+		return CreateDeploymentRequestValidationError{
+			field:  "Id",
+			reason: "value does not match regex pattern \"(?i)^[0-9a-z.~\\\\-_]*$\"",
+		}
+	}
 
 	if utf8.RuneCountInString(m.GetHostname()) < 1 {
 		return CreateDeploymentRequestValidationError{
@@ -1627,6 +1646,8 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = CreateDeploymentRequestValidationError{}
+
+var _CreateDeploymentRequest_Id_Pattern = regexp.MustCompile("(?i)^[0-9a-z.~\\-_]*$")
 
 // Validate checks the field values on GetDeploymentRequest with the rules
 // defined in the proto definition for this message. If any rules are
@@ -2200,7 +2221,12 @@ func (m *CreateEndpointRequest) Validate() error {
 		}
 	}
 
-	// no validation rules for Id
+	if !_CreateEndpointRequest_Id_Pattern.MatchString(m.GetId()) {
+		return CreateEndpointRequestValidationError{
+			field:  "Id",
+			reason: "value does not match regex pattern \"(?i)^[0-9a-z.~\\\\-_]*$\"",
+		}
+	}
 
 	if utf8.RuneCountInString(m.GetAddress()) < 1 {
 		return CreateEndpointRequestValidationError{
@@ -2280,6 +2306,8 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = CreateEndpointRequestValidationError{}
+
+var _CreateEndpointRequest_Id_Pattern = regexp.MustCompile("(?i)^[0-9a-z.~\\-_]*$")
 
 // Validate checks the field values on GetEndpointRequest with the rules
 // defined in the proto definition for this message. If any rules are

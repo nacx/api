@@ -185,7 +185,11 @@ message Tenant {
 }
 
 message CreateTenantRequest {
-  string id = 1;
+  string id = 1 [(validate.rules).string = {
+    // case-insensitive matches alphanumeric characters and: '.', '~', '-', '_'
+    // as defined in https://tools.ietf.org/html/rfc3986#section-2.3
+    pattern: "(?i)^[0-9a-z.~\\-_]*$"
+  }];
 
   string description = 3;
 }
@@ -289,7 +293,11 @@ message CreateTeamRequest {
   // Tenant.Id.
   string tenant = 2 [(validate.rules).string.min_len = 1];
   // If present, this will be used as the id for the created object.
-  string id = 3;
+  string id = 3 [(validate.rules).string = {
+    // case-insensitive matches alphanumeric characters and: '.', '~', '-', '_'
+    // as defined in https://tools.ietf.org/html/rfc3986#section-2.3
+    pattern: "(?i)^[0-9a-z.~\\-_]*$"
+  }];
 
   string description = 4;
   repeated string members = 5;
@@ -335,7 +343,11 @@ message CreateUserRequest {
   // Tenant.Id.
   string tenant = 2 [(validate.rules).string.min_len = 1];
   // If present, this will be used as the id for the created object.
-  string id = 3;
+  string id = 3 [(validate.rules).string = {
+    // case-insensitive matches alphanumeric characters and: '.', '~', '-', '_'
+    // as defined in https://tools.ietf.org/html/rfc3986#section-2.3
+    pattern: "(?i)^[0-9a-z.~\\-_]*$"
+  }];
 
   string description = 4;
   SourceType source_type = 5 [(validate.rules).enum.defined_only = true];

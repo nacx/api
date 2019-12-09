@@ -116,7 +116,12 @@ func (m *CreateTenantRequest) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Id
+	if !_CreateTenantRequest_Id_Pattern.MatchString(m.GetId()) {
+		return CreateTenantRequestValidationError{
+			field:  "Id",
+			reason: "value does not match regex pattern \"(?i)^[0-9a-z.~\\\\-_]*$\"",
+		}
+	}
 
 	// no validation rules for Description
 
@@ -178,6 +183,8 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = CreateTenantRequestValidationError{}
+
+var _CreateTenantRequest_Id_Pattern = regexp.MustCompile("(?i)^[0-9a-z.~\\-_]*$")
 
 // Validate checks the field values on GetTenantRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, an
@@ -914,7 +921,12 @@ func (m *CreateTeamRequest) Validate() error {
 		}
 	}
 
-	// no validation rules for Id
+	if !_CreateTeamRequest_Id_Pattern.MatchString(m.GetId()) {
+		return CreateTeamRequestValidationError{
+			field:  "Id",
+			reason: "value does not match regex pattern \"(?i)^[0-9a-z.~\\\\-_]*$\"",
+		}
+	}
 
 	// no validation rules for Description
 
@@ -983,6 +995,8 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = CreateTeamRequestValidationError{}
+
+var _CreateTeamRequest_Id_Pattern = regexp.MustCompile("(?i)^[0-9a-z.~\\-_]*$")
 
 // Validate checks the field values on GetTeamRequest with the rules defined in
 // the proto definition for this message. If any rules are violated, an error
@@ -1415,7 +1429,12 @@ func (m *CreateUserRequest) Validate() error {
 		}
 	}
 
-	// no validation rules for Id
+	if !_CreateUserRequest_Id_Pattern.MatchString(m.GetId()) {
+		return CreateUserRequestValidationError{
+			field:  "Id",
+			reason: "value does not match regex pattern \"(?i)^[0-9a-z.~\\\\-_]*$\"",
+		}
+	}
 
 	// no validation rules for Description
 
@@ -1484,6 +1503,8 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = CreateUserRequestValidationError{}
+
+var _CreateUserRequest_Id_Pattern = regexp.MustCompile("(?i)^[0-9a-z.~\\-_]*$")
 
 // Validate checks the field values on GetUserRequest with the rules defined in
 // the proto definition for this message. If any rules are violated, an error

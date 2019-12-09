@@ -313,10 +313,10 @@ func (m *CreateRoleRequest) Validate() error {
 
 	}
 
-	if utf8.RuneCountInString(m.GetId()) < 1 {
+	if !_CreateRoleRequest_Id_Pattern.MatchString(m.GetId()) {
 		return CreateRoleRequestValidationError{
 			field:  "Id",
-			reason: "value length must be at least 1 runes",
+			reason: "value does not match regex pattern \"(?i)^[0-9a-z.~\\\\-_]+$\"",
 		}
 	}
 
@@ -380,6 +380,8 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = CreateRoleRequestValidationError{}
+
+var _CreateRoleRequest_Id_Pattern = regexp.MustCompile("(?i)^[0-9a-z.~\\-_]+$")
 
 // Validate checks the field values on UpdateRoleRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, an
