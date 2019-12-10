@@ -48,6 +48,19 @@ message Rule {
 
   // Friendly name for a rule.
   string display_name = 8;
+
+  // Whether this rule is enabled or disabled. Default to false or disabled
+  bool enabled = 9;
+
+  // Included services in this rule. This will be translated into include-names in skywalking
+  // configuration response.
+  // By default, spmserver will add all services in this application.
+  repeated string include_services = 10;
+
+  // Included services in this rule. This will be translated into exclude-names in skywalking
+  // configuration response.
+  // By default, spmserver will omit this from response.
+  repeated string exclude_services = 11;
 }
 
 // Operator

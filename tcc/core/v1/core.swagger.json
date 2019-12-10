@@ -4968,6 +4968,25 @@
         "displayName": {
           "type": "string",
           "description": "Friendly name for a rule."
+        },
+        "enabled": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Whether this rule is enabled or disabled. Default to false or disabled"
+        },
+        "includeServices": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Included services in this rule. This will be translated into include-names in skywalking configuration response. By default, spmserver will add all services in this application."
+        },
+        "excludeServices": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Included services in this rule. This will be translated into exclude-names in skywalking configuration response. By default, spmserver will omit this from response."
         }
       },
       "description": "An alert rule defines the condition when an alert should be triggered.",

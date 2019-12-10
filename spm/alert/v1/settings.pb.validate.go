@@ -176,6 +176,8 @@ func (m *Rule) Validate() error {
 
 	// no validation rules for DisplayName
 
+	// no validation rules for Enabled
+
 	return nil
 }
 
