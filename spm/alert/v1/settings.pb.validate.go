@@ -108,17 +108,10 @@ func (m *Rule) Validate() error {
 
 	// no validation rules for Id
 
-	if utf8.RuneCountInString(m.GetMetricName()) < 6 {
+	if _, ok := _Rule_MetricName_InLookup[m.GetMetricName()]; !ok {
 		return RuleValidationError{
 			field:  "MetricName",
-			reason: "value length must be at least 6 runes",
-		}
-	}
-
-	if !strings.HasSuffix(m.GetMetricName(), "_rule") {
-		return RuleValidationError{
-			field:  "MetricName",
-			reason: "value does not have suffix \"_rule\"",
+			reason: "value must be in list [service_resp_time service_sla service_cpm service_apdex service_p99 service_p95 service_p90 service_p75 service_p50 service_2xx service_4xx service_5xx]",
 		}
 	}
 
@@ -178,6 +171,53 @@ func (m *Rule) Validate() error {
 
 	// no validation rules for Enabled
 
+	if len(m.GetIncludeServices()) < 1 {
+		return RuleValidationError{
+			field:  "IncludeServices",
+			reason: "value must contain at least 1 item(s)",
+		}
+	}
+
+	for idx, item := range m.GetIncludeServices() {
+		_, _ = idx, item
+
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return RuleValidationError{
+						field:  fmt.Sprintf("IncludeServices[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+		}
+
+	}
+
+	for idx, item := range m.GetExcludeServices() {
+		_, _ = idx, item
+
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return RuleValidationError{
+						field:  fmt.Sprintf("ExcludeServices[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+		}
+
+	}
+
 	return nil
 }
 
@@ -234,3 +274,92 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = RuleValidationError{}
+
+var _Rule_MetricName_InLookup = map[string]struct{}{
+	"service_resp_time": {},
+	"service_sla":       {},
+	"service_cpm":       {},
+	"service_apdex":     {},
+	"service_p99":       {},
+	"service_p95":       {},
+	"service_p90":       {},
+	"service_p75":       {},
+	"service_p50":       {},
+	"service_2xx":       {},
+	"service_4xx":       {},
+	"service_5xx":       {},
+}
+
+// Validate checks the field values on Rule_Service with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *Rule_Service) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if !_Rule_Service_Name_Pattern.MatchString(m.GetName()) {
+		return Rule_ServiceValidationError{
+			field:  "Name",
+			reason: "value does not match regex pattern \"(?i)^[0-9a-z.~_\\\\-]+\\\\/[0-9a-z.~_\\\\-]+$\"",
+		}
+	}
+
+	return nil
+}
+
+// Rule_ServiceValidationError is the validation error returned by
+// Rule_Service.Validate if the designated constraints aren't met.
+type Rule_ServiceValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e Rule_ServiceValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e Rule_ServiceValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e Rule_ServiceValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e Rule_ServiceValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e Rule_ServiceValidationError) ErrorName() string { return "Rule_ServiceValidationError" }
+
+// Error satisfies the builtin error interface
+func (e Rule_ServiceValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sRule_Service.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = Rule_ServiceValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = Rule_ServiceValidationError{}
+
+var _Rule_Service_Name_Pattern = regexp.MustCompile("(?i)^[0-9a-z.~_\\-]+\\/[0-9a-z.~_\\-]+$")
