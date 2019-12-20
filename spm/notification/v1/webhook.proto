@@ -1,0 +1,44 @@
+// Copyright (c) Tetrate, Inc 2019 All Rights Reserved.
+
+syntax = "proto3";
+
+package tetrate.api.tcc.spm.notification.v1;
+option go_package = "github.com/tetrateio/tetrate/api/spm/notification/v1";
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+// Webhook Service
+//
+// The webhook service provides service to receive alert event from spm
+service WebhookService {
+  // Send alert event to the audit system.
+  rpc SendAlert(AlertMessageRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/v1/webhook/alert"
+      body: "*"
+    };
+  }
+}
+
+// AlertMessageRequest based on
+// https://github.com/apache/skywalking/blob/master/docs/en/setup/backend/backend-alarm.md#webhook
+message AlertMessageRequest {
+  // All scopes are defined in org.apache.skywalking.oap.server.core.source.DefaultScopeDefine.
+  int32 scopeId = 1;
+  string scope = 2;
+  // Target scope entity name.
+  string name = 3;
+  // The ID of scope entity, matched the name.
+  int32 id0 = 4;
+  // Not used today.
+  int32 id1 = 5;
+  // The rule name you configured in alarm-settings
+  string ruleName = 6;
+  // Alarm text message.
+  string alarmMessage = 7;
+  // Alarm time measured in milliseconds, between the current time and midnight, January 1, 1970
+  // UTC.
+  google.protobuf.Timestamp startTime = 8;
+}

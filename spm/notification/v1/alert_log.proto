@@ -1,0 +1,87 @@
+// Copyright (c) Tetrate, Inc 2018 All Rights Reserved.
+syntax = "proto3";
+
+package tetrate.api.tcc.spm.notification.v1;
+option go_package = "github.com/tetrateio/tetrate/api/spm/notification/v1";
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "validate/validate.proto";
+
+// AlertLog Service
+//
+// The alert log service provides access to alerts.
+service AlertLogService {
+  // List alert logs.
+  // If no 'count' parameter has been specified, the last 25 alerts logs are returned.
+  // Use 'status' parameter to get only unread alert. this can be used to show recent alert count.
+  rpc ListAlertLogs(ListAlertLogsRequest) returns (ListAlertLogsResponse) {
+    option (google.api.http).get = "/v1/logs/alerts";
+  };
+
+  // Delete alert logs. This will remove alert logs from storage.
+  rpc DeleteAlertLogs(DeleteAlertLogsRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/v1/logs/alerts"
+      body: "*"
+    };
+  };
+
+  // Update alert logs read status.
+  rpc UpdateAlertLogReadStatus(UpdateAlertLogReadStatusRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/v1/logs/alerts/status"
+      body: "*"
+    };
+  };
+}
+
+// AlertLog
+//
+// Message from alert backend.
+message AlertLog {
+  // Alert id.
+  uint64 id = 1;
+  // Time when the alert log was triggered.
+  google.protobuf.Timestamp last_triggered = 2;
+  // Rule name that trigger this log.
+  string rule_name = 3;
+  // Application name where the rule belong to.
+  string application = 4;
+  // alert log message.
+  string message = 5;
+  // read status of alert.
+  bool read = 6;
+  // Key value pairs with additional information for the alert log.
+  map<string, string> properties = 7;
+}
+
+// Request to get the alert logs.
+message ListAlertLogsRequest {
+  int32 count = 1;
+  Status status = 2;
+}
+
+enum Status {
+  ALL = 0;
+  UNREAD = 1;
+  READ = 2;
+}
+
+// The list of alert logs.
+message ListAlertLogsResponse {
+  repeated AlertLog alert_logs = 1;
+}
+
+// Request to delete the alert logs.
+message DeleteAlertLogsRequest {
+  // Log ids to delete.
+  repeated uint64 ids = 1;
+}
+
+// Request to update alert logs read status.
+message UpdateAlertLogReadStatusRequest {
+  // Log ids to update.
+  repeated uint64 ids = 1;
+}

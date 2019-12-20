@@ -1,0 +1,296 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Alert Logs API",
+    "version": "v1",
+    "contact": {
+      "name": "Tetrate.io, Inc.",
+      "url": "https://www.tetrate.io",
+      "email": "info@tetrate.io"
+    }
+  },
+  "host": "TCCHOST",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/logs/alerts": {
+      "get": {
+        "operationId": "ListAlertLogs",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.spm.notification.v1.ListAlertLogsResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "count",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "ALL",
+              "UNREAD",
+              "READ"
+            ],
+            "default": "ALL"
+          }
+        ],
+        "tags": [
+          "AlertLogService"
+        ]
+      },
+      "delete": {
+        "operationId": "DeleteAlertLogs",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.spm.notification.v1.DeleteAlertLogsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "AlertLogService"
+        ]
+      }
+    },
+    "/v1/logs/alerts/status": {
+      "post": {
+        "operationId": "UpdateAlertLogReadStatus",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.spm.notification.v1.UpdateAlertLogReadStatusRequest"
+            }
+          }
+        ],
+        "tags": [
+          "AlertLogService"
+        ]
+      }
+    },
+    "/v1/webhook/alert": {
+      "post": {
+        "summary": "Send alert event to the audit system.",
+        "operationId": "SendAlert",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.spm.notification.v1.AlertMessageRequest"
+            }
+          }
+        ],
+        "tags": [
+          "WebhookService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "tetrate.api.tcc.spm.notification.v1.AlertLog": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uint64",
+          "description": "Alert id."
+        },
+        "lastTriggered": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Time when the alert log was triggered."
+        },
+        "ruleName": {
+          "type": "string",
+          "description": "Rule name that trigger this log."
+        },
+        "application": {
+          "type": "string",
+          "description": "Application name where the rule belong to."
+        },
+        "message": {
+          "type": "string",
+          "description": "alert log message."
+        },
+        "read": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": "read status of alert."
+        },
+        "properties": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Key value pairs with additional information for the alert log."
+        }
+      },
+      "description": "Message from alert backend.",
+      "title": "AlertLog"
+    },
+    "tetrate.api.tcc.spm.notification.v1.AlertMessageRequest": {
+      "type": "object",
+      "properties": {
+        "scopeId": {
+          "type": "integer",
+          "format": "int32",
+          "description": "All scopes are defined in org.apache.skywalking.oap.server.core.source.DefaultScopeDefine."
+        },
+        "scope": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string",
+          "description": "Target scope entity name."
+        },
+        "id0": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The ID of scope entity, matched the name."
+        },
+        "id1": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Not used today."
+        },
+        "ruleName": {
+          "type": "string",
+          "title": "The rule name you configured in alarm-settings"
+        },
+        "alarmMessage": {
+          "type": "string",
+          "description": "Alarm text message."
+        },
+        "startTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Alarm time measured in milliseconds, between the current time and midnight, January 1, 1970 UTC."
+        }
+      },
+      "title": "AlertMessageRequest based on https://github.com/apache/skywalking/blob/master/docs/en/setup/backend/backend-alarm.md#webhook"
+    },
+    "tetrate.api.tcc.spm.notification.v1.DeleteAlertLogsRequest": {
+      "type": "object",
+      "properties": {
+        "ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uint64"
+          },
+          "description": "Log ids to delete."
+        }
+      },
+      "description": "Request to delete the alert logs."
+    },
+    "tetrate.api.tcc.spm.notification.v1.ListAlertLogsResponse": {
+      "type": "object",
+      "properties": {
+        "alertLogs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.spm.notification.v1.AlertLog"
+          }
+        }
+      },
+      "description": "The list of alert logs."
+    },
+    "tetrate.api.tcc.spm.notification.v1.Status": {
+      "type": "string",
+      "enum": [
+        "ALL",
+        "UNREAD",
+        "READ"
+      ],
+      "default": "ALL"
+    },
+    "tetrate.api.tcc.spm.notification.v1.UpdateAlertLogReadStatusRequest": {
+      "type": "object",
+      "properties": {
+        "ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uint64"
+          },
+          "description": "Log ids to update."
+        }
+      },
+      "description": "Request to update alert logs read status."
+    }
+  }
+}

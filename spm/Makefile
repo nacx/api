@@ -1,6 +1,6 @@
 # Copyright (c) Tetrate, Inc 2019 All Rights Reserved.
 
-APIS := alert/v1 config/v1 metadata/v1
+APIS := alert/v1 config/v1 metadata/v1 notification/v1
 
 .PHONY: all
 all: format $(APIS)
