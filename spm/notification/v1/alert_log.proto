@@ -14,7 +14,6 @@ import "validate/validate.proto";
 // The alert log service provides access to alerts.
 service AlertLogService {
   // List alert logs.
-  // If no 'count' parameter has been specified, the last 25 alerts logs are returned.
   // Use 'status' parameter to get only unread alert. this can be used to show recent alert count.
   rpc ListAlertLogs(ListAlertLogsRequest) returns (ListAlertLogsResponse) {
     option (google.api.http).get = "/v1/logs/alerts";
@@ -41,25 +40,24 @@ service AlertLogService {
 //
 // Message from alert backend.
 message AlertLog {
-  // Alert id.
-  uint64 id = 1;
+  // Alert id. auto generated.
+  uint64 id = 1 [(validate.rules).uint64.gte = 0];
   // Time when the alert log was triggered.
-  google.protobuf.Timestamp last_triggered = 2;
+  google.protobuf.Timestamp last_triggered = 2 [(validate.rules).message.required = true];
   // Rule name that trigger this log.
-  string rule_name = 3;
+  string rule_name = 3 [(validate.rules).string.min_len = 1];
   // Application name where the rule belong to.
-  string application = 4;
-  // alert log message.
-  string message = 5;
-  // read status of alert.
+  string application = 4 [(validate.rules).string.min_len = 1];
+  // Alert log message.
+  string message = 5 [(validate.rules).string.min_len = 1];
+  // Read status of alert.
   bool read = 6;
   // Key value pairs with additional information for the alert log.
-  map<string, string> properties = 7;
+  map<string, string> properties = 9;
 }
 
 // Request to get the alert logs.
 message ListAlertLogsRequest {
-  int32 count = 1;
   Status status = 2;
 }
 

@@ -40,7 +40,19 @@ func (m *AlertLog) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Id
+	if m.GetId() < 0 {
+		return AlertLogValidationError{
+			field:  "Id",
+			reason: "value must be greater than or equal to 0",
+		}
+	}
+
+	if m.GetLastTriggered() == nil {
+		return AlertLogValidationError{
+			field:  "LastTriggered",
+			reason: "value is required",
+		}
+	}
 
 	{
 		tmp := m.GetLastTriggered()
@@ -57,11 +69,26 @@ func (m *AlertLog) Validate() error {
 		}
 	}
 
-	// no validation rules for RuleName
+	if utf8.RuneCountInString(m.GetRuleName()) < 1 {
+		return AlertLogValidationError{
+			field:  "RuleName",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Application
+	if utf8.RuneCountInString(m.GetApplication()) < 1 {
+		return AlertLogValidationError{
+			field:  "Application",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Message
+	if utf8.RuneCountInString(m.GetMessage()) < 1 {
+		return AlertLogValidationError{
+			field:  "Message",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	// no validation rules for Read
 
@@ -131,8 +158,6 @@ func (m *ListAlertLogsRequest) Validate() error {
 	if m == nil {
 		return nil
 	}
-
-	// no validation rules for Count
 
 	// no validation rules for Status
 

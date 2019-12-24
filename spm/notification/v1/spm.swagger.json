@@ -23,6 +23,7 @@
   "paths": {
     "/v1/logs/alerts": {
       "get": {
+        "summary": "List alert logs. Use 'status' parameter to get only unread alert. this can be used to show recent alert count.",
         "operationId": "ListAlertLogs",
         "responses": {
           "200": {
@@ -39,13 +40,6 @@
           }
         },
         "parameters": [
-          {
-            "name": "count",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32"
-          },
           {
             "name": "status",
             "in": "query",
@@ -64,6 +58,7 @@
         ]
       },
       "delete": {
+        "summary": "Delete alert logs. This will remove alert logs from storage.",
         "operationId": "DeleteAlertLogs",
         "responses": {
           "200": {
@@ -96,6 +91,7 @@
     },
     "/v1/logs/alerts/status": {
       "post": {
+        "summary": "Update alert logs read status.",
         "operationId": "UpdateAlertLogReadStatus",
         "responses": {
           "200": {
@@ -125,39 +121,6 @@
           "AlertLogService"
         ]
       }
-    },
-    "/v1/webhook/alert": {
-      "post": {
-        "summary": "Send alert event to the audit system.",
-        "operationId": "SendAlert",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
-          },
-          "404": {
-            "description": "Returned when the resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/tetrate.api.tcc.spm.notification.v1.AlertMessageRequest"
-            }
-          }
-        ],
-        "tags": [
-          "WebhookService"
-        ]
-      }
     }
   },
   "definitions": {
@@ -167,7 +130,7 @@
         "id": {
           "type": "string",
           "format": "uint64",
-          "description": "Alert id."
+          "description": "Alert id. auto generated."
         },
         "lastTriggered": {
           "type": "string",
@@ -184,12 +147,12 @@
         },
         "message": {
           "type": "string",
-          "description": "alert log message."
+          "description": "Alert log message."
         },
         "read": {
           "type": "boolean",
           "format": "boolean",
-          "description": "read status of alert."
+          "description": "Read status of alert."
         },
         "properties": {
           "type": "object",
@@ -201,47 +164,6 @@
       },
       "description": "Message from alert backend.",
       "title": "AlertLog"
-    },
-    "tetrate.api.tcc.spm.notification.v1.AlertMessageRequest": {
-      "type": "object",
-      "properties": {
-        "scopeId": {
-          "type": "integer",
-          "format": "int32",
-          "description": "All scopes are defined in org.apache.skywalking.oap.server.core.source.DefaultScopeDefine."
-        },
-        "scope": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string",
-          "description": "Target scope entity name."
-        },
-        "id0": {
-          "type": "integer",
-          "format": "int32",
-          "description": "The ID of scope entity, matched the name."
-        },
-        "id1": {
-          "type": "integer",
-          "format": "int32",
-          "description": "Not used today."
-        },
-        "ruleName": {
-          "type": "string",
-          "title": "The rule name you configured in alarm-settings"
-        },
-        "alarmMessage": {
-          "type": "string",
-          "description": "Alarm text message."
-        },
-        "startTime": {
-          "type": "string",
-          "format": "date-time",
-          "description": "Alarm time measured in milliseconds, between the current time and midnight, January 1, 1970 UTC."
-        }
-      },
-      "title": "AlertMessageRequest based on https://github.com/apache/skywalking/blob/master/docs/en/setup/backend/backend-alarm.md#webhook"
     },
     "tetrate.api.tcc.spm.notification.v1.DeleteAlertLogsRequest": {
       "type": "object",

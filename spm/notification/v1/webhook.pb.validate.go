@@ -33,49 +33,71 @@ var (
 	_ = types.DynamicAny{}
 )
 
-// Validate checks the field values on AlertMessageRequest with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, an error is returned.
-func (m *AlertMessageRequest) Validate() error {
+// Validate checks the field values on AlertMessage with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *AlertMessage) Validate() error {
 	if m == nil {
 		return nil
 	}
 
-	// no validation rules for ScopeId
+	if m.GetScopeId() < 0 {
+		return AlertMessageValidationError{
+			field:  "ScopeId",
+			reason: "value must be greater than or equal to 0",
+		}
+	}
 
-	// no validation rules for Scope
+	if utf8.RuneCountInString(m.GetScope()) < 1 {
+		return AlertMessageValidationError{
+			field:  "Scope",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Name
+	if utf8.RuneCountInString(m.GetName()) < 1 {
+		return AlertMessageValidationError{
+			field:  "Name",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id0
+	if m.GetId0() < 0 {
+		return AlertMessageValidationError{
+			field:  "Id0",
+			reason: "value must be greater than or equal to 0",
+		}
+	}
 
 	// no validation rules for Id1
 
-	// no validation rules for RuleName
+	if utf8.RuneCountInString(m.GetRuleName()) < 1 {
+		return AlertMessageValidationError{
+			field:  "RuleName",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for AlarmMessage
+	if utf8.RuneCountInString(m.GetAlarmMessage()) < 1 {
+		return AlertMessageValidationError{
+			field:  "AlarmMessage",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	{
-		tmp := m.GetStartTime()
-
-		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
-
-			if err := v.Validate(); err != nil {
-				return AlertMessageRequestValidationError{
-					field:  "StartTime",
-					reason: "embedded message failed validation",
-					cause:  err,
-				}
-			}
+	if m.GetStartTime() < 0 {
+		return AlertMessageValidationError{
+			field:  "StartTime",
+			reason: "value must be greater than or equal to 0",
 		}
 	}
 
 	return nil
 }
 
-// AlertMessageRequestValidationError is the validation error returned by
-// AlertMessageRequest.Validate if the designated constraints aren't met.
-type AlertMessageRequestValidationError struct {
+// AlertMessageValidationError is the validation error returned by
+// AlertMessage.Validate if the designated constraints aren't met.
+type AlertMessageValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -83,24 +105,22 @@ type AlertMessageRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e AlertMessageRequestValidationError) Field() string { return e.field }
+func (e AlertMessageValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e AlertMessageRequestValidationError) Reason() string { return e.reason }
+func (e AlertMessageValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e AlertMessageRequestValidationError) Cause() error { return e.cause }
+func (e AlertMessageValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e AlertMessageRequestValidationError) Key() bool { return e.key }
+func (e AlertMessageValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e AlertMessageRequestValidationError) ErrorName() string {
-	return "AlertMessageRequestValidationError"
-}
+func (e AlertMessageValidationError) ErrorName() string { return "AlertMessageValidationError" }
 
 // Error satisfies the builtin error interface
-func (e AlertMessageRequestValidationError) Error() string {
+func (e AlertMessageValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -112,14 +132,14 @@ func (e AlertMessageRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sAlertMessageRequest.%s: %s%s",
+		"invalid %sAlertMessage.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = AlertMessageRequestValidationError{}
+var _ error = AlertMessageValidationError{}
 
 var _ interface {
 	Field() string
@@ -127,4 +147,4 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = AlertMessageRequestValidationError{}
+} = AlertMessageValidationError{}
