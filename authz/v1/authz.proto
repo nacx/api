@@ -1,0 +1,188 @@
+// Copyright (c) Tetrate, Inc 2019 All Rights Reserved.
+
+syntax = "proto3";
+
+package tetrate.api.authz.v1;
+option go_package = "github.com/tetrateio/tetrate/api/authz/v1";
+
+import "validate/validate.proto";
+
+// Runtime Authorization Policy
+//
+// Runtime authorization policies are attached to specific resources and define which subjects,
+// and under which conditions, are allowed to access them.
+// Different subjects can be configured to access the target resource with different conditions
+// by setting multiple bindings in the same policy.
+//
+// The default authorization policy allows access between services within an application, and denies
+// cross-application traffic. Traffic between applications must be explicitly enabled by applying
+// the corresponding access policy in the target application.
+//
+// THe following examples show some common policies:
+//
+//     # Default deny policy for applications. The absence of bindings means that there is no
+//     # access allowed from outside the application.
+//     policy:
+//
+//     # Allow access from the 'bookinfo' application. Requests from the client application
+//     # present a JWT token for the 'bookinfo' application.
+//     policy:
+//       bindings:
+//       - from:
+//         - jwt:
+//             principal: bookinfo
+//             audience: tsb
+//             claims:
+//               group: applications
+//
+//     # Allow access from the 'bookinfo' application, but only to the '/v1/*'
+//     # HTTP paths, and only for GET and HEAD requests, on the 'bookinfo.com' host.
+//     policy:
+//       bindings:
+//       - from:
+//         - jwt:
+//             principal: bookinfo
+//             audience: tsb
+//             claims:
+//               group: applications
+//         allow_http:
+//           to:
+//           - paths:
+//             - /v1/*
+//             hosts:
+//             - bookinfo.com
+//             methods:
+//             - GET
+//             - HEAD
+//
+//     # Allow access from the 'bookinfo' application, but only to the '/v1/*'
+//     # HTTP paths, and only for GET and HEAD requests, on the 'bookinfo.com' host.
+//     # In this example the client application is identified by checking the value of
+//     # the 'X-App-Id' request header.
+//     policy:
+//       bindings:
+//       - from:
+//         - request_headers:
+//             X-App-Id: bookinfo
+//         allow_http:
+//           to:
+//           - paths:
+//             - /v1/*
+//             hosts:
+//             - bookinfo.com
+//             methods:
+//             - GET
+//             - HEAD
+message Policy {
+  // List of bindings that configure access to the target resource.
+  repeated Binding bindings = 1;
+  // Etag to guard concurrent modifications to the policy.
+  string etag = 2;
+}
+
+// Binding
+//
+// Bindings define the subjects that can access the resource a policy is attached to,
+// and the conditions that need to be met for that access to be granted.
+// A policy can have multiple bindings to configure different access controls for specific
+// subjects.
+message Binding {
+  // A friendly name to identify the binding.
+  string display_name = 1 [(validate.rules).string.min_len = 1];
+  // A detailed description of the purpose of the binding.
+  string description = 2;
+
+  message HTTP_Rules {
+    // HTTP Rule
+    //
+    // HTTP rules configure specific matching conditions on the HTTP requests made to the
+    // target resource. Access to the resource will only be allowed if all the conditions
+    // expressed in all the HTTP rules are met.
+    //
+    // All fields are optional, and only the relevant ones have to be configured.
+    message Http {
+      // When applying policies to applications, the hosts field can be used to restrict
+      // the hosts each rule applies to. Applications can be exposed on multiple
+      // hostnames in the corresponding load balancers, and rules may only target some of them.
+      // E.g. ["bookinfo.com"].
+      repeated string hosts = 1 [(validate.rules).repeated = {
+        items: {string: {hostname: true}},
+      }];
+      // The request path where the request is made against. E.g. ["/accounts"].
+      repeated string paths = 2 [(validate.rules).repeated = {
+        items: {string: {min_len: 1}},
+      }];
+      // The HTTP methods that are allowed by this rule. E.g. ["GET", "HEAD"].
+      repeated string methods = 3 [(validate.rules).repeated = {
+        items: {string: {in: ["GET", "HEAD", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]}},
+      }];
+      // A set of request headers that are required in this rule.
+      // Note that this set of headers is different than the headers that can be configured in
+      // the subject, as these headers will only apply to the configured paths and other fields
+      // in this HTTP rule.
+      // E.g. "X-App-Id": "bookinfo".
+      map<string, string> request_headers = 4 [(validate.rules).map.keys.string.min_len = 1];
+      // The ports in the target service this rule will apply for. E.g. ["80", "443"].
+      repeated int32 ports = 5 [(validate.rules).repeated = {
+        items: {
+          int32: {
+            gte: 0,
+            lte: 65535
+          }
+        },
+      }];
+    }
+
+    // A set of HTTP rules that need to be satisfied by the HTTP requests to get access to the
+    // target resource.
+    repeated Http to = 1;
+  }
+
+  // Bindings can be for HTTP or DB but not both.
+  // If a policy must enforce HTTP and DB multiple bindings have to be added to the policy.
+  oneof rule {
+    // HTTP rules to be enforced by this binding in order to grant access to the target resource.
+    HTTP_Rules allow_http = 3;
+    // TODO: Add DB rules when we have support for that
+  }
+
+  // Subjects configure the actors (end users, other services)  that are allowed to access the
+  // target resource.
+  repeated Subject from = 5;
+}
+
+// Subject
+//
+// A subject designates an actor (user, service, etc) that attempts to access a target resource.
+// Subjects can be modeled with JWT tokens, service accounts, and decorated with attributes such as
+// HTTP request headers, JWT token claims, etc.
+// The fields that define a subject will be matched to incoming requests, to fully qualify where the
+// request comes from, and to decide if the given request is allowed or not for the target resource.
+// All the fields in a subject are evaluated as AND expressions.
+message Subject {
+  // JWT based subject
+  //
+  // JWT based subjects qualify a subject by matching against a JWT token present in the request.
+  // By default the token is expected to be present in the 'Authorization' HTTP header, with the
+  // 'Bearer" prefix.
+  message JWT {
+    // The principal qualifies the authority under which the request is made.
+    // In Istio environments this is the value of the Issuer claim (iss) concatenated with the
+    // value of teh Subject (sub) claim, separated with a '/'.
+    string principal = 1;
+    // Audience intended for the token. This is the value of the 'aud' claim.
+    string audience = 2;
+    // The authorized presenter of the token. This takes the value of the 'azp' claim.
+    string presenter = 3;
+    // A set of arbitrary claims that are required to qualify the subject.
+    // E.g. "iss": "*@foo.com".
+    map<string, string> claims = 4 [(validate.rules).map.keys.string.min_len = 1];
+  }
+
+  // JWT configuration to identity the subject.
+  JWT jwt = 1;
+
+  // Request headers used to qualify a subject.
+  // E.g. "User-Agent": "Mozilla/*".
+  map<string, string> request_headers = 5 [(validate.rules).map.keys.string.min_len = 1];
+}

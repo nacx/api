@@ -1143,6 +1143,119 @@ var _ interface {
 	ErrorName() string
 } = ApplicationPolicyRequestValidationError{}
 
+// Validate checks the field values on ApplicationAuthzPolicyRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *ApplicationAuthzPolicyRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Name
+
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return ApplicationAuthzPolicyRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return ApplicationAuthzPolicyRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return ApplicationAuthzPolicyRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if m.GetPolicy() == nil {
+		return ApplicationAuthzPolicyRequestValidationError{
+			field:  "Policy",
+			reason: "value is required",
+		}
+	}
+
+	{
+		tmp := m.GetPolicy()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return ApplicationAuthzPolicyRequestValidationError{
+					field:  "Policy",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+	}
+
+	return nil
+}
+
+// ApplicationAuthzPolicyRequestValidationError is the validation error
+// returned by ApplicationAuthzPolicyRequest.Validate if the designated
+// constraints aren't met.
+type ApplicationAuthzPolicyRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ApplicationAuthzPolicyRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ApplicationAuthzPolicyRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ApplicationAuthzPolicyRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ApplicationAuthzPolicyRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ApplicationAuthzPolicyRequestValidationError) ErrorName() string {
+	return "ApplicationAuthzPolicyRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ApplicationAuthzPolicyRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sApplicationAuthzPolicyRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ApplicationAuthzPolicyRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ApplicationAuthzPolicyRequestValidationError{}
+
 // Validate checks the field values on ListApplicationsRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
@@ -2667,3 +2780,109 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = DeleteServiceRequestValidationError{}
+
+// Validate checks the field values on
+// GetAllEnvironmentResourcesResponse_ApplicationDetails with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *GetAllEnvironmentResourcesResponse_ApplicationDetails) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	{
+		tmp := m.GetApplication()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return GetAllEnvironmentResourcesResponse_ApplicationDetailsValidationError{
+					field:  "Application",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+	}
+
+	{
+		tmp := m.GetPolicy()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return GetAllEnvironmentResourcesResponse_ApplicationDetailsValidationError{
+					field:  "Policy",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+	}
+
+	return nil
+}
+
+// GetAllEnvironmentResourcesResponse_ApplicationDetailsValidationError is the
+// validation error returned by
+// GetAllEnvironmentResourcesResponse_ApplicationDetails.Validate if the
+// designated constraints aren't met.
+type GetAllEnvironmentResourcesResponse_ApplicationDetailsValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetAllEnvironmentResourcesResponse_ApplicationDetailsValidationError) Field() string {
+	return e.field
+}
+
+// Reason function returns reason value.
+func (e GetAllEnvironmentResourcesResponse_ApplicationDetailsValidationError) Reason() string {
+	return e.reason
+}
+
+// Cause function returns cause value.
+func (e GetAllEnvironmentResourcesResponse_ApplicationDetailsValidationError) Cause() error {
+	return e.cause
+}
+
+// Key function returns key value.
+func (e GetAllEnvironmentResourcesResponse_ApplicationDetailsValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetAllEnvironmentResourcesResponse_ApplicationDetailsValidationError) ErrorName() string {
+	return "GetAllEnvironmentResourcesResponse_ApplicationDetailsValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetAllEnvironmentResourcesResponse_ApplicationDetailsValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetAllEnvironmentResourcesResponse_ApplicationDetails.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetAllEnvironmentResourcesResponse_ApplicationDetailsValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetAllEnvironmentResourcesResponse_ApplicationDetailsValidationError{}

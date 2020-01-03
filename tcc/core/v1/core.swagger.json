@@ -962,6 +962,103 @@
         ]
       }
     },
+    "/v1/tenants/{tenant}/environments/{environment}/applications/{id}:authz": {
+      "get": {
+        "operationId": "GetApplicationAuthzPolicy",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.authz.v1.Policy"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "environment",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "description": "Internal use only. Auto populated field.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "LogicalResourceModel"
+        ]
+      },
+      "put": {
+        "operationId": "SetApplicationAuthzPolicy",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "environment",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.authz.v1.Policy"
+            }
+          }
+        ],
+        "tags": [
+          "LogicalResourceModel"
+        ]
+      }
+    },
     "/v1/tenants/{tenant}/environments/{environment}/clusters": {
       "get": {
         "operationId": "ListClusters",
@@ -2971,6 +3068,149 @@
     }
   },
   "definitions": {
+    "tetrate.api.authz.v1.Binding": {
+      "type": "object",
+      "properties": {
+        "displayName": {
+          "type": "string",
+          "description": "A friendly name to identify the binding."
+        },
+        "description": {
+          "type": "string",
+          "description": "A detailed description of the purpose of the binding."
+        },
+        "allowHttp": {
+          "$ref": "#/definitions/tetrate.api.authz.v1.Binding.HTTP_Rules",
+          "description": "HTTP rules to be enforced by this binding in order to grant access to the target resource."
+        },
+        "from": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.authz.v1.Subject"
+          },
+          "description": "Subjects configure the actors (end users, other services)  that are allowed to access the target resource."
+        }
+      },
+      "description": "Bindings define the subjects that can access the resource a policy is attached to, and the conditions that need to be met for that access to be granted. A policy can have multiple bindings to configure different access controls for specific subjects.",
+      "title": "Binding"
+    },
+    "tetrate.api.authz.v1.Binding.HTTP_Rules": {
+      "type": "object",
+      "properties": {
+        "to": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.authz.v1.Binding.HTTP_Rules.Http"
+          },
+          "description": "A set of HTTP rules that need to be satisfied by the HTTP requests to get access to the target resource."
+        }
+      }
+    },
+    "tetrate.api.authz.v1.Binding.HTTP_Rules.Http": {
+      "type": "object",
+      "properties": {
+        "hosts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "When applying policies to applications, the hosts field can be used to restrict the hosts each rule applies to. Applications can be exposed on multiple hostnames in the corresponding load balancers, and rules may only target some of them. E.g. [\"bookinfo.com\"]."
+        },
+        "paths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The request path where the request is made against. E.g. [\"/accounts\"]."
+        },
+        "methods": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The HTTP methods that are allowed by this rule. E.g. [\"GET\", \"HEAD\"]."
+        },
+        "requestHeaders": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "A set of request headers that are required in this rule. Note that this set of headers is different than the headers that can be configured in the subject, as these headers will only apply to the configured paths and other fields in this HTTP rule. E.g. \"X-App-Id\": \"bookinfo\"."
+        },
+        "ports": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "description": "The ports in the target service this rule will apply for. E.g. [\"80\", \"443\"]."
+        }
+      },
+      "description": "HTTP rules configure specific matching conditions on the HTTP requests made to the target resource. Access to the resource will only be allowed if all the conditions expressed in all the HTTP rules are met.  All fields are optional, and only the relevant ones have to be configured.",
+      "title": "HTTP Rule"
+    },
+    "tetrate.api.authz.v1.Policy": {
+      "type": "object",
+      "properties": {
+        "bindings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.authz.v1.Binding"
+          },
+          "description": "List of bindings that configure access to the target resource."
+        },
+        "etag": {
+          "type": "string",
+          "description": "Etag to guard concurrent modifications to the policy."
+        }
+      },
+      "description": "Runtime authorization policies are attached to specific resources and define which subjects, and under which conditions, are allowed to access them. Different subjects can be configured to access the target resource with different conditions by setting multiple bindings in the same policy.  The default authorization policy allows access between services within an application, and denies cross-application traffic. Traffic between applications must be explicitly enabled by applying the corresponding access policy in the target application.  THe following examples show some common policies:      # Default deny policy for applications. The absence of bindings means that there is no     # access allowed from outside the application.     policy:      # Allow access from the 'bookinfo' application. Requests from the client application     # present a JWT token for the 'bookinfo' application.     policy:       bindings:       - from:         - jwt:             principal: bookinfo             audience: tsb             claims:               group: applications      # Allow access from the 'bookinfo' application, but only to the '/v1/*'     # HTTP paths, and only for GET and HEAD requests, on the 'bookinfo.com' host.     policy:       bindings:       - from:         - jwt:             principal: bookinfo             audience: tsb             claims:               group: applications         allow_http:           to:           - paths:             - /v1/*             hosts:             - bookinfo.com             methods:             - GET             - HEAD      # Allow access from the 'bookinfo' application, but only to the '/v1/*'     # HTTP paths, and only for GET and HEAD requests, on the 'bookinfo.com' host.     # In this example the client application is identified by checking the value of     # the 'X-App-Id' request header.     policy:       bindings:       - from:         - request_headers:             X-App-Id: bookinfo         allow_http:           to:           - paths:             - /v1/*             hosts:             - bookinfo.com             methods:             - GET             - HEAD",
+      "title": "Runtime Authorization Policy"
+    },
+    "tetrate.api.authz.v1.Subject": {
+      "type": "object",
+      "properties": {
+        "jwt": {
+          "$ref": "#/definitions/tetrate.api.authz.v1.Subject.JWT",
+          "description": "JWT configuration to identity the subject."
+        },
+        "requestHeaders": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Request headers used to qualify a subject. E.g. \"User-Agent\": \"Mozilla/*\"."
+        }
+      },
+      "description": "A subject designates an actor (user, service, etc) that attempts to access a target resource. Subjects can be modeled with JWT tokens, service accounts, and decorated with attributes such as HTTP request headers, JWT token claims, etc. The fields that define a subject will be matched to incoming requests, to fully qualify where the request comes from, and to decide if the given request is allowed or not for the target resource. All the fields in a subject are evaluated as AND expressions.",
+      "title": "Subject"
+    },
+    "tetrate.api.authz.v1.Subject.JWT": {
+      "type": "object",
+      "properties": {
+        "principal": {
+          "type": "string",
+          "description": "The principal qualifies the authority under which the request is made. In Istio environments this is the value of the Issuer claim (iss) concatenated with the value of teh Subject (sub) claim, separated with a '/'."
+        },
+        "audience": {
+          "type": "string",
+          "description": "Audience intended for the token. This is the value of the 'aud' claim."
+        },
+        "presenter": {
+          "type": "string",
+          "description": "The authorized presenter of the token. This takes the value of the 'azp' claim."
+        },
+        "claims": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "A set of arbitrary claims that are required to qualify the subject. E.g. \"iss\": \"*@foo.com\"."
+        }
+      },
+      "description": "JWT based subjects qualify a subject by matching against a JWT token present in the request. By default the token is expected to be present in the 'Authorization' HTTP header, with the 'Bearer\" prefix.",
+      "title": "JWT based subject"
+    },
     "tetrate.api.q.rbac.v1.Binding": {
       "type": "object",
       "properties": {
@@ -3857,7 +4097,7 @@
         "applications": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/tetrate.api.tcc.core.v1.Application"
+            "$ref": "#/definitions/tetrate.api.tcc.core.v1.GetAllEnvironmentResourcesResponse.ApplicationDetails"
           }
         },
         "services": {
@@ -3883,6 +4123,17 @@
           "items": {
             "$ref": "#/definitions/tetrate.api.tcc.core.v1.Deployment"
           }
+        }
+      }
+    },
+    "tetrate.api.tcc.core.v1.GetAllEnvironmentResourcesResponse.ApplicationDetails": {
+      "type": "object",
+      "properties": {
+        "application": {
+          "$ref": "#/definitions/tetrate.api.tcc.core.v1.Application"
+        },
+        "policy": {
+          "$ref": "#/definitions/tetrate.api.authz.v1.Policy"
         }
       }
     },

@@ -14,6 +14,7 @@ import "routing_info.proto";
 import "client_settings.proto";
 import "physical_resources.proto";
 
+import "authz/v1/authz.proto";
 import "permissions.proto";
 import "rbac.proto";
 
@@ -87,8 +88,14 @@ service LogicalResourceModel {
   rpc GetAllEnvironmentResources(GetAllEnvironmentResourcesRequest)
       returns (GetAllEnvironmentResourcesResponse) {
     option (tetrate.api.q.rbac.v1.requires) = {
-      raw_permissions:
-          ["ReadApplication", "ReadService", "ReadCluster", "ReadNamespace", "ReadDeployment"]
+      raw_permissions: [
+        "ReadApplication",
+        "ReadService",
+        "ReadCluster",
+        "ReadNamespace",
+        "ReadDeployment",
+        "ReadAuthzPolicy"
+      ]
     };
     option (google.api.http) = {
       get: "/v1/tenants/{tenant}/environments/{environment}:getAllResources"
@@ -151,6 +158,25 @@ service LogicalResourceModel {
     };
     option (google.api.http) = {
       put: "/v1/tenants/{tenant}/environments/{environment}/applications/{id}/policy"
+      body: "policy"
+    };
+  };
+
+  rpc GetApplicationAuthzPolicy(GetApplicationRequest) returns (tetrate.api.authz.v1.Policy) {
+    option (tetrate.api.q.rbac.v1.requires) = {
+      raw_permissions: "ReadAuthzPolicy"
+    };
+    option (google.api.http) = {
+      get: "/v1/tenants/{tenant}/environments/{environment}/applications/{id}:authz"
+    };
+  };
+
+  rpc SetApplicationAuthzPolicy(ApplicationAuthzPolicyRequest) returns (google.protobuf.Empty) {
+    option (tetrate.api.q.rbac.v1.requires) = {
+      raw_permissions: "WriteAuthzPolicy"
+    };
+    option (google.api.http) = {
+      put: "/v1/tenants/{tenant}/environments/{environment}/applications/{id}:authz"
       body: "policy"
     };
   };
@@ -355,6 +381,15 @@ message ApplicationPolicyRequest {
   tetrate.api.q.rbac.v1.Policy policy = 5 [(validate.rules).message.required = true];
 }
 
+message ApplicationAuthzPolicyRequest {
+  // Internal use only. Auto populated field.
+  string name = 1;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  string id = 4 [(validate.rules).string.min_len = 1];
+  tetrate.api.authz.v1.Policy policy = 5 [(validate.rules).message.required = true];
+}
+
 message ListApplicationsRequest {
   // Internal use only. Auto populated field.
   string parent = 1;
@@ -395,7 +430,12 @@ message GetAllEnvironmentResourcesRequest {
 }
 
 message GetAllEnvironmentResourcesResponse {
-  repeated Application applications = 1;
+  message ApplicationDetails {
+    Application application = 1;
+    tetrate.api.authz.v1.Policy policy = 2;
+  }
+
+  repeated ApplicationDetails applications = 1;
   repeated Service services = 2;
   repeated Cluster clusters = 3;
   repeated Namespace namespaces = 4;
