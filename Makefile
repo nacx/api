@@ -3,7 +3,7 @@
 # Allow consumers to add targets or override variables in this Makefile.
 -include ../api.mk
 
-APIS := audit/v1 test/v1 q/rbac/v1 tcc/core/v1 tcc/workflows/loadbalancer/v1 regsource/v1 spm authz/v1
+APIS := audit/v1 test/v1 q/rbac/v1 tcc/core/v1 tcc/workflows/loadbalancer/v1 regsource/v1 spm authz/v1 troubleshoot/cluster/v1
 
 .PHONY: all
 all: format $(APIS)

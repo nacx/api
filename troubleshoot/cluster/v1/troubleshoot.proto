@@ -1,0 +1,90 @@
+// Copyright (c) Tetrate, Inc 2019 All Rights Reserved.
+
+syntax = "proto3";
+
+package tetrate.api.troubleshoot.cluster.v1;
+option go_package = "github.com/tetrateio/tetrate/api/troubleshoot/cluster/v1;clustertroubleshootv1";
+
+import "google/protobuf/duration.proto";
+import "validate/validate.proto";
+
+// Cluster Troubleshooting Service
+//
+// A streaming client-server troubleshooting service to retrieve status information about workloads
+// in an individual cluster
+service ClusterTroubleshootingService {
+  // TODO: Enforce authz with Q when feasible (i.e. has a cluster local enforcement point).
+  rpc Troubleshoot(stream ClusterTroubleshootRequest) returns (stream ClusterTroubleshootResponse) {
+  }
+}
+
+// Reverse Cluster Troubleshooting Service
+//
+// A "reverse" streaming troubleshooting service to retrieve status information about workloads in
+// an individual cluster. Here, the producer dials into the consumer and responds to the stream of
+// incoming requests.
+service ReverseClusterTroubleshootingService {
+  rpc TroubleshootDial(stream ClusterTroubleshootResponse)
+      returns (stream ClusterTroubleshootRequest) {
+  }
+}
+
+message ClusterTroubleshootRequest {
+  // Must be unique for a given connection, used to map requests to responses.
+  // Think TCP sequence number.
+  uint64 request_id = 1;
+  // The time after which the requester will assume the request is lost, used to avoid unecessary
+  // computation.
+  google.protobuf.Duration timeout = 2;
+
+  oneof request {
+    GetResourcesRequest get_resources = 101;
+  }
+}
+
+message ClusterTroubleshootResponse {
+  // Matches the request ID that triggered this response.
+  uint64 request_id = 1;
+
+  oneof request {
+    ResourcesStatusResponse resources_status = 101;
+  }
+}
+
+message GetResourcesRequest {
+  // An array of logical resources to retrieve the propagation status of
+  repeated ResourceRequest resources = 1;
+}
+
+message ResourceRequest {
+  // The name of the logical resource. Needs to be fully qualified to determine resource type.
+  // e.g. tenants/tetrate/environments/staging/applications/bookinfo/services/reviews
+  string name = 1 [(validate.rules).string.min_len = 1];
+  // Version of the logical resource to check propagation of. This will be resource type specific.
+  // For environment, application and service it is Etag.
+  // If no version is provided, the propagation status of all configuration in that domain at the
+  // latest version received by tsbd is returned. For example, if the bookinfo application
+  // is requested the response will include the application object as well as every service that
+  // belongs to the bookinfo application.
+  string version = 2 [(validate.rules).string.min_len = 1];
+}
+
+message ResourcesStatusResponse {
+  // Map of resource name (fully qualified) to resource propagation status
+  map<string, ResourceStatus> resources = 1;
+}
+
+message ResourceStatus {
+  // The name of the logical resource. This will match the name in the request.
+  string name = 1 [(validate.rules).string.min_len = 1];
+  // Version of the logical resource. This will match the version in the request.
+  string version = 2 [(validate.rules).string.min_len = 1];
+
+  // Number of endpoints with configuration that matches the logical name/version tuple provided.
+  // Endpoints here is anything Pilot configures: Envoys or any other xDS clients
+  // Note: this is across all endpoints, NOT just the number of endpoints the config is relevant to.
+  uint64 active_endpoints = 100;
+  // Total number of endpoints in the system/cluster
+  // Note: this is all endpoints, NOT the number of endpoints the config is relevant to.
+  uint64 total_endpoints = 101;
+}
