@@ -3296,6 +3296,9 @@
         "alertSettings": {
           "$ref": "#/definitions/tetrate.api.tcc.spm.alert.v1.Settings",
           "description": "Alert settings for certain metrics of this application. E.g. SLA rule."
+        },
+        "etag": {
+          "type": "string"
         }
       },
       "description": "An Application is a collection of services. Each application typically corresponds to one or more kubernetes namespace or an application deployment on VMs.",
@@ -4046,6 +4049,9 @@
         "clientSettings": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.ClientSettings",
           "description": "Resilience settings that apply to all clusters in the environment."
+        },
+        "etag": {
+          "type": "string"
         }
       },
       "description": "Environment is a collection of applications, services, load balancers, and clusters where they are deployed.",
@@ -5139,6 +5145,9 @@
         },
         "description": {
           "type": "string"
+        },
+        "etag": {
+          "type": "string"
         }
       }
     },
@@ -5156,6 +5165,9 @@
           "type": "string"
         },
         "description": {
+          "type": "string"
+        },
+        "etag": {
           "type": "string"
         },
         "sourceType": {

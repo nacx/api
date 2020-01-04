@@ -74,6 +74,13 @@ func (m *Environment) Validate() error {
 		}
 	}
 
+	if utf8.RuneCountInString(m.GetEtag()) < 1 {
+		return EnvironmentValidationError{
+			field:  "Etag",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
 	return nil
 }
 
@@ -742,6 +749,13 @@ func (m *Application) Validate() error {
 					cause:  err,
 				}
 			}
+		}
+	}
+
+	if utf8.RuneCountInString(m.GetEtag()) < 1 {
+		return ApplicationValidationError{
+			field:  "Etag",
+			reason: "value length must be at least 1 runes",
 		}
 	}
 

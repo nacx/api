@@ -51,6 +51,13 @@ func (m *Tenant) Validate() error {
 
 	// no validation rules for Description
 
+	if utf8.RuneCountInString(m.GetEtag()) < 1 {
+		return TenantValidationError{
+			field:  "Etag",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
 	return nil
 }
 
@@ -1347,6 +1354,13 @@ func (m *User) Validate() error {
 	}
 
 	// no validation rules for Description
+
+	if utf8.RuneCountInString(m.GetEtag()) < 1 {
+		return UserValidationError{
+			field:  "Etag",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	if _, ok := SourceType_name[int32(m.GetSourceType())]; !ok {
 		return UserValidationError{

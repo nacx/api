@@ -254,6 +254,7 @@ message Environment {
   string description = 4;
   // Resilience settings that apply to all clusters in the environment.
   ClientSettings client_settings = 5;
+  string etag = 6 [(validate.rules).string.min_len = 1];
 }
 
 message CreateEnvironmentRequest {
@@ -332,6 +333,7 @@ message Application {
   google.protobuf.BoolValue force_mtls_between_services = 11;
   // Alert settings for certain metrics of this application. E.g. SLA rule.
   tetrate.api.tcc.spm.alert.v1.Settings alert_settings = 12;
+  string etag = 13 [(validate.rules).string.min_len = 1];
 }
 
 message CreateApplicationRequest {

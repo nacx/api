@@ -177,6 +177,7 @@ message Tenant {
   string name = 1;
   string id = 2 [(validate.rules).string.min_len = 1];
   string description = 3;
+  string etag = 4 [(validate.rules).string.min_len = 1];
 }
 
 message CreateTenantRequest {
@@ -329,6 +330,7 @@ message User {
   string tenant = 2 [(validate.rules).string.min_len = 1];
   string id = 3 [(validate.rules).string.min_len = 1];
   string description = 4;
+  string etag = 5 [(validate.rules).string.min_len = 1];
   SourceType source_type = 7 [(validate.rules).enum.defined_only = true];
 }
 
