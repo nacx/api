@@ -11,6 +11,7 @@ import "validate/validate.proto";
 
 // AlertLog Service
 //
+// [DEPRECATED] This service is deprecated. Use new AlertService that support personalization.
 // The alert log service provides access to alerts.
 service AlertLogService {
   // List alert logs.

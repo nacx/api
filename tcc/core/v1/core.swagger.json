@@ -5264,6 +5264,10 @@
             "$ref": "#/definitions/tetrate.api.tcc.spm.alert.v1.Rule.Service"
           },
           "description": "Excluded services from this rule. This will be translated into exclude-names in skywalking configuration response. spmserver will omit this from response if empty."
+        },
+        "severity": {
+          "$ref": "#/definitions/tetrate.api.tcc.spm.alert.v1.Severity",
+          "description": "Alert severity. Default to MEDIUM."
         }
       },
       "description": "An alert rule defines the condition when an alert should be triggered.",
@@ -5291,6 +5295,19 @@
       },
       "description": "A set of alert rules.",
       "title": "Settings"
+    },
+    "tetrate.api.tcc.spm.alert.v1.Severity": {
+      "type": "string",
+      "enum": [
+        "CRITICAL",
+        "HIGH",
+        "MEDIUM",
+        "LOW",
+        "INFORMATIONAL"
+      ],
+      "default": "CRITICAL",
+      "description": "Alert severity level from Informational to Critical.",
+      "title": "Severity"
     }
   }
 }

@@ -3,6 +3,7 @@
 TOPDIR := ../../../..
 
 VENDOR := $(TOPDIR)/third_party/protobuf/
+SPM := $(TOPDIR)/api/spm
 
 include $(TOPDIR)/api/gogo.mk
 
@@ -23,6 +24,7 @@ $(DESCRIPTOR):
 	protoc -I ./ \
 		-I /usr/include/protobuf \
 		-I $(VENDOR) \
+		-I $(SPM) \
 		--grpc-gateway_out=allow_delete_body=true,paths=source_relative,$(MAPS):. \
 		--gogofast_out=paths=source_relative,plugins=grpc,$(MAPS):. \
 		--validate_out=paths=source_relative,lang=gogo:. \
@@ -37,6 +39,7 @@ $(SWAGGER):
 	protoc -I ./ \
 		-I /usr/include/protobuf \
 		-I $(VENDOR) \
+		-I $(SPM) \
 		--swagger_out=allow_delete_body=true,json_names_for_fields=true,allow_merge=true,merge_file_name=spm,fqn_for_swagger_name=true:. \
 		$(PROTO_SOURCES)
 	sed -i -e 's/\\n/ /g' $@

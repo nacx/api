@@ -1,0 +1,89 @@
+// Copyright (c) Tetrate, Inc 2018 All Rights Reserved.
+syntax = "proto3";
+
+package tetrate.api.tcc.spm.notification.v1;
+option go_package = "github.com/tetrateio/tetrate/api/spm/notification/v1";
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "validate/validate.proto";
+
+import "alert_log.proto";
+
+// Notification Service
+//
+// The activity service provides access to notifications.
+service NotificationService {
+  // List Notifications. Notifications must be filtered by user and optionally by read status.
+  rpc ListNotifications(ListNotificationRequest) returns (ListNotificationResponse) {
+    option (google.api.http).get = "/v1/tenants/{tenant}/notifications";
+  };
+
+  // Update notifications read status.
+  rpc UpdateNotificationsReadStatus(UpdateNotificationReadStatusRequest)
+      returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/v1/tenants/{tenant}/notifications:status"
+      body: "*"
+    };
+  };
+}
+
+// Notification
+//
+// Notification sent to user when Activity happened.
+// Currently all notifications are sent to user. In the future we might want to have
+// notification settings where user can watch or subscribe to specific resource or event.
+message Notification {
+  // Activity id. auto generated.
+  uint64 id = 1;
+  // User name that own this notification.
+  string user = 2;
+  // Tenant. Tenant is obtained from user.
+  string tenant = 3;
+  // Notification message.
+  string message = 4;
+  // Notification type.
+  NotificationType type = 5;
+  // Notification read status.
+  bool read = 6;
+  // Activity name.
+  string activity = 7;
+}
+
+// Notification type could be RESOURCE or ALERT. Alert is one type of resource.
+// We differentiate type here to allow different user experience for "normal" Activity and Alert.
+enum NotificationType {
+  RESOURCE = 0;
+  ALERT = 1;
+}
+
+// List notification request.
+message ListNotificationRequest {
+  string tenant = 1 [(validate.rules).string.min_len = 1];
+  // User name that has notification.
+  string user = 2 [(validate.rules).string.min_len = 1];
+  // Type of notification.
+  NotificationType type = 3;
+  // Read status of notification.
+  Status status = 4;
+  // Maximum number of results to be returned. Default is 20.
+  int32 page_size = 5;
+  // Page token to request a specific page of the list results. Set to "" for first page.
+  string page_token = 6;
+}
+
+message ListNotificationResponse {
+  repeated Notification notifications = 1;
+  // Pagination token to retrieve the next page of results.
+  // If the value is "", it means no further results for the request.
+  string next_page_token = 2;
+}
+
+// Request to update notifications read status.
+message UpdateNotificationReadStatusRequest {
+  string tenant = 1 [(validate.rules).string.min_len = 1];
+  string user = 2 [(validate.rules).string.min_len = 1];
+  // Notification ids to update.
+  repeated uint64 ids = 3;
+}

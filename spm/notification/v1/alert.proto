@@ -1,0 +1,121 @@
+// Copyright (c) Tetrate, Inc 2018 All Rights Reserved.
+syntax = "proto3";
+
+package tetrate.api.tcc.spm.notification.v1;
+option go_package = "github.com/tetrateio/tetrate/api/spm/notification/v1";
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "validate/validate.proto";
+
+import "alert/v1/settings.proto";
+
+// Alert Service
+//
+// The alert service provides access to alerts.
+// In TSB, Alert is defined in Application. Access to Alert is allowed for any role
+// that has READ access to Application.
+service AlertService {
+  // List alerts.
+  // Alert can be filtered by both Status and Priority.
+  rpc ListAlerts(ListAlertsRequest) returns (ListAlertsResponse) {
+    option (google.api.http).get = "/v1/tenants/{tenant}/alerts";
+  };
+
+  // Get single alerts.
+  rpc GetAlert(GetAlertRequest) returns (Alert) {
+    option (google.api.http).get = "/v1/tenants/{tenant}/alerts/{id}";
+  };
+
+  // Update alert. User can update alert status, ack, and owners.
+  rpc UpdateAlert(UpdateAlertRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/v1/tenants/{tenant}/alerts/{id}"
+      body: "*"
+    };
+  };
+
+  // Delete alert. This will remove alert from storage.
+  rpc DeleteAlert(DeleteAlertRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/v1/tenants/{tenant}/alerts/{id}"
+      body: "*"
+    };
+  };
+}
+
+// Alert
+//
+// Alert that created because of alert rule violation.
+// Alert is defined as a resource under tenant.
+message Alert {
+  // Alert id. auto generated.
+  string id = 1;
+  // Alert name. auto generated. Name will be set to /tenants/tetrate/alerts/id.
+  string name = 2;
+  // Tenant. Tenant is obtained from application name where alert rule defined.
+  string tenant = 3;
+  // Rule name that trigger this alert.
+  string rule_name = 4;
+  // Application name where the rule belong to.
+  string application = 5;
+  // Alert message.
+  string message = 6;
+  // Alert status.
+  AlertStatus status = 7;
+  // Alert acked or not. When alert acked, it means someone is working on it and
+  // notification will not be sent.
+  bool acknowledged = 8;
+  // Time when the alert was triggered.
+  google.protobuf.Timestamp timestamp = 9;
+  // Alert severity.
+  tetrate.api.tcc.spm.alert.v1.Severity severity = 10;
+  // Alert owner is user responsible to resolve alert.
+  // User who acked will be added to owners.
+  repeated string owners = 11;
+  // Key value pairs with additional information for the alert.
+  map<string, string> properties = 12;
+}
+
+// Request to get the alert. If not set, will return all available enum values.
+message ListAlertsRequest {
+  string tenant = 1 [(validate.rules).string.min_len = 1];
+  AlertStatus status = 2;
+  tetrate.api.tcc.spm.alert.v1.Severity severity = 3;
+  // Maximum number of results to be returned. Default is 20.
+  int32 page_size = 4;
+  // Page token to request a specific page of the list results. Set to "" for first page.
+  string page_token = 5;
+}
+
+// The list of alert.
+message ListAlertsResponse {
+  repeated Alert alerts = 1;
+  // Pagination token to retrieve the next page of results.
+  // If the value is "", it means no further results for the request.
+  string next_page_token = 2;
+}
+
+enum AlertStatus {
+  OPEN = 0;
+  CLOSED = 1;
+}
+
+message UpdateAlertRequest {
+  string tenant = 1 [(validate.rules).string.min_len = 1];
+  string id = 2 [(validate.rules).string.min_len = 1];
+  AlertStatus status = 3;
+  bool acknowledged = 4;
+  repeated string owners = 5;
+}
+
+message DeleteAlertRequest {
+  string tenant = 1 [(validate.rules).string.min_len = 1];
+  string id = 2 [(validate.rules).string.min_len = 1];
+}
+
+message GetAlertRequest {
+  string tenant = 1 [(validate.rules).string.min_len = 1];
+  string id = 2 [(validate.rules).string.min_len = 1];
+}

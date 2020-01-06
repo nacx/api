@@ -82,6 +82,9 @@ message Rule {
     // Service name. Expected format is service/namespace and is validated by following pattern.
     string name = 1 [(validate.rules).string.pattern = "(?i)^[0-9a-z.~_\\-]+\\/[0-9a-z.~_\\-]+$"];
   }
+
+  // Alert severity. Default to MEDIUM.
+  Severity severity = 14;
 }
 
 // Operator
@@ -91,4 +94,15 @@ enum Operator {
   EQ = 0;
   GT = 1;
   LT = 2;
+}
+
+// Severity
+//
+// Alert severity level from Informational to Critical.
+enum Severity {
+  CRITICAL = 0;
+  HIGH = 1;
+  MEDIUM = 2;
+  LOW = 3;
+  INFORMATIONAL = 4;
 }

@@ -218,6 +218,8 @@ func (m *Rule) Validate() error {
 
 	}
 
+	// no validation rules for Severity
+
 	return nil
 }
 

@@ -23,7 +23,6 @@
   "paths": {
     "/v1/logs/alerts": {
       "get": {
-        "summary": "List alert logs. Use 'status' parameter to get only unread alert. this can be used to show recent alert count.",
         "operationId": "ListAlertLogs",
         "responses": {
           "200": {
@@ -58,7 +57,6 @@
         ]
       },
       "delete": {
-        "summary": "Delete alert logs. This will remove alert logs from storage.",
         "operationId": "DeleteAlertLogs",
         "responses": {
           "200": {
@@ -91,7 +89,6 @@
     },
     "/v1/logs/alerts/status": {
       "post": {
-        "summary": "Update alert logs read status.",
         "operationId": "UpdateAlertLogReadStatus",
         "responses": {
           "200": {
@@ -121,9 +118,495 @@
           "AlertLogService"
         ]
       }
+    },
+    "/v1/tenants/{tenant}/activities": {
+      "get": {
+        "operationId": "ListActivities",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.spm.notification.v1.ListActivitiesResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "actor",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "objectOrTarget",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pageSize",
+            "description": "Maximum number of results to be returned. Default is 20.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageToken",
+            "description": "Page token to request a specific page of the list results. Set to \"\" for first page.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ActivityService"
+        ]
+      }
+    },
+    "/v1/tenants/{tenant}/alerts": {
+      "get": {
+        "operationId": "ListAlerts",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.spm.notification.v1.ListAlertsResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "OPEN",
+              "CLOSED"
+            ],
+            "default": "OPEN"
+          },
+          {
+            "name": "severity",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "CRITICAL",
+              "HIGH",
+              "MEDIUM",
+              "LOW",
+              "INFORMATIONAL"
+            ],
+            "default": "CRITICAL"
+          },
+          {
+            "name": "pageSize",
+            "description": "Maximum number of results to be returned. Default is 20.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageToken",
+            "description": "Page token to request a specific page of the list results. Set to \"\" for first page.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "AlertService"
+        ]
+      }
+    },
+    "/v1/tenants/{tenant}/alerts/{id}": {
+      "get": {
+        "operationId": "GetAlert",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.spm.notification.v1.Alert"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "AlertService"
+        ]
+      },
+      "delete": {
+        "operationId": "DeleteAlert",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.spm.notification.v1.DeleteAlertRequest"
+            }
+          }
+        ],
+        "tags": [
+          "AlertService"
+        ]
+      },
+      "post": {
+        "operationId": "UpdateAlert",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.spm.notification.v1.UpdateAlertRequest"
+            }
+          }
+        ],
+        "tags": [
+          "AlertService"
+        ]
+      }
+    },
+    "/v1/tenants/{tenant}/notifications": {
+      "get": {
+        "operationId": "ListNotifications",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.spm.notification.v1.ListNotificationResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "user",
+            "description": "User name that has notification.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "description": "Type of notification.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "RESOURCE",
+              "ALERT"
+            ],
+            "default": "RESOURCE"
+          },
+          {
+            "name": "status",
+            "description": "Read status of notification.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "ALL",
+              "UNREAD",
+              "READ"
+            ],
+            "default": "ALL"
+          },
+          {
+            "name": "pageSize",
+            "description": "Maximum number of results to be returned. Default is 20.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageToken",
+            "description": "Page token to request a specific page of the list results. Set to \"\" for first page.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "NotificationService"
+        ]
+      }
+    },
+    "/v1/tenants/{tenant}/notifications:status": {
+      "post": {
+        "operationId": "UpdateNotificationsReadStatus",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.tcc.spm.notification.v1.UpdateNotificationReadStatusRequest"
+            }
+          }
+        ],
+        "tags": [
+          "NotificationService"
+        ]
+      }
     }
   },
   "definitions": {
+    "tetrate.api.tcc.spm.alert.v1.Severity": {
+      "type": "string",
+      "enum": [
+        "CRITICAL",
+        "HIGH",
+        "MEDIUM",
+        "LOW",
+        "INFORMATIONAL"
+      ],
+      "default": "CRITICAL",
+      "description": "Alert severity level from Informational to Critical.",
+      "title": "Severity"
+    },
+    "tetrate.api.tcc.spm.notification.v1.Activity": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uint64",
+          "description": "Activity id. auto generated."
+        },
+        "name": {
+          "type": "string",
+          "description": "Activity name. auto generated. Name will be set to /tenants/tetrate/activities/id."
+        },
+        "tenant": {
+          "type": "string",
+          "description": "Tenant. Tenant is obtained from Actor."
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Time when the activity created."
+        },
+        "actor": {
+          "$ref": "#/definitions/tetrate.api.tcc.spm.notification.v1.Object",
+          "description": "Actor is entity capable of carrying out an Activity. Often this will be user or system."
+        },
+        "verb": {
+          "type": "string",
+          "description": "Verb is action that entity do. e.g. create, update, delete."
+        },
+        "object": {
+          "$ref": "#/definitions/tetrate.api.tcc.spm.notification.v1.Object",
+          "description": "Object is primary object of the Activity carried out by Actor."
+        },
+        "target": {
+          "$ref": "#/definitions/tetrate.api.tcc.spm.notification.v1.Object",
+          "description": "Target is the target of the Activity. The precise meaning of the activity's target is dependent on the activities verb, but will often be the object the English preposition \"to\"."
+        },
+        "properties": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Key value pairs with additional information for the activity."
+        }
+      },
+      "description": "Activity is events happened in system that record user/system action to resources. Activity has three main components: actor, verb and object. Example of activities: - arif update application httpbin with alert rule - system create service_resp alert with id #1 - dhi acked alert #1 - dhi close alert #1  Activity will trigger notification that sent to user. User will get notification for all activities related to resources where user has READ access. Example: - If user has READ access to Application httpbin.   User will get notification for all activities related to Application httpbin including Alerts.",
+      "title": "Activity"
+    },
+    "tetrate.api.tcc.spm.notification.v1.Alert": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Alert id. auto generated."
+        },
+        "name": {
+          "type": "string",
+          "description": "Alert name. auto generated. Name will be set to /tenants/tetrate/alerts/id."
+        },
+        "tenant": {
+          "type": "string",
+          "description": "Tenant. Tenant is obtained from application name where alert rule defined."
+        },
+        "ruleName": {
+          "type": "string",
+          "description": "Rule name that trigger this alert."
+        },
+        "application": {
+          "type": "string",
+          "description": "Application name where the rule belong to."
+        },
+        "message": {
+          "type": "string",
+          "description": "Alert message."
+        },
+        "status": {
+          "$ref": "#/definitions/tetrate.api.tcc.spm.notification.v1.AlertStatus",
+          "description": "Alert status."
+        },
+        "acknowledged": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": "Alert acked or not. When alert acked, it means someone is working on it and notification will not be sent."
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Time when the alert was triggered."
+        },
+        "severity": {
+          "$ref": "#/definitions/tetrate.api.tcc.spm.alert.v1.Severity",
+          "description": "Alert severity."
+        },
+        "owners": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Alert owner is user responsible to resolve alert. User who acked will be added to owners."
+        },
+        "properties": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Key value pairs with additional information for the alert."
+        }
+      },
+      "description": "Alert that created because of alert rule violation. Alert is defined as a resource under tenant.",
+      "title": "Alert"
+    },
     "tetrate.api.tcc.spm.notification.v1.AlertLog": {
       "type": "object",
       "properties": {
@@ -165,6 +648,14 @@
       "description": "Message from alert backend.",
       "title": "AlertLog"
     },
+    "tetrate.api.tcc.spm.notification.v1.AlertStatus": {
+      "type": "string",
+      "enum": [
+        "OPEN",
+        "CLOSED"
+      ],
+      "default": "OPEN"
+    },
     "tetrate.api.tcc.spm.notification.v1.DeleteAlertLogsRequest": {
       "type": "object",
       "properties": {
@@ -179,6 +670,33 @@
       },
       "description": "Request to delete the alert logs."
     },
+    "tetrate.api.tcc.spm.notification.v1.DeleteAlertRequest": {
+      "type": "object",
+      "properties": {
+        "tenant": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "tetrate.api.tcc.spm.notification.v1.ListActivitiesResponse": {
+      "type": "object",
+      "properties": {
+        "activities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.spm.notification.v1.Activity"
+          }
+        },
+        "nextPageToken": {
+          "type": "string",
+          "description": "Pagination token to retrieve the next page of results. If the value is \"\", it means no further results for the request."
+        }
+      },
+      "description": "List of activities."
+    },
     "tetrate.api.tcc.spm.notification.v1.ListAlertLogsResponse": {
       "type": "object",
       "properties": {
@@ -190,6 +708,97 @@
         }
       },
       "description": "The list of alert logs."
+    },
+    "tetrate.api.tcc.spm.notification.v1.ListAlertsResponse": {
+      "type": "object",
+      "properties": {
+        "alerts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.spm.notification.v1.Alert"
+          }
+        },
+        "nextPageToken": {
+          "type": "string",
+          "description": "Pagination token to retrieve the next page of results. If the value is \"\", it means no further results for the request."
+        }
+      },
+      "description": "The list of alert."
+    },
+    "tetrate.api.tcc.spm.notification.v1.ListNotificationResponse": {
+      "type": "object",
+      "properties": {
+        "notifications": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.spm.notification.v1.Notification"
+          }
+        },
+        "nextPageToken": {
+          "type": "string",
+          "description": "Pagination token to retrieve the next page of results. If the value is \"\", it means no further results for the request."
+        }
+      }
+    },
+    "tetrate.api.tcc.spm.notification.v1.Notification": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uint64",
+          "description": "Activity id. auto generated."
+        },
+        "user": {
+          "type": "string",
+          "description": "User name that own this notification."
+        },
+        "tenant": {
+          "type": "string",
+          "description": "Tenant. Tenant is obtained from user."
+        },
+        "message": {
+          "type": "string",
+          "description": "Notification message."
+        },
+        "type": {
+          "$ref": "#/definitions/tetrate.api.tcc.spm.notification.v1.NotificationType",
+          "description": "Notification type."
+        },
+        "read": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": "Notification read status."
+        },
+        "activity": {
+          "type": "string",
+          "description": "Activity name."
+        }
+      },
+      "description": "Notification sent to user when Activity happened. Currently all notifications are sent to user. In the future we might want to have notification settings where user can watch or subscribe to specific resource or event.",
+      "title": "Notification"
+    },
+    "tetrate.api.tcc.spm.notification.v1.NotificationType": {
+      "type": "string",
+      "enum": [
+        "RESOURCE",
+        "ALERT"
+      ],
+      "default": "RESOURCE",
+      "description": "Notification type could be RESOURCE or ALERT. Alert is one type of resource. We differentiate type here to allow different user experience for \"normal\" Activity and Alert."
+    },
+    "tetrate.api.tcc.spm.notification.v1.Object": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name is TSB name (e.g. /tenants/tetrate/users/dhi)."
+        },
+        "type": {
+          "type": "string",
+          "description": "Type is TSB resource type (e.g. User, Team, Application, etc)."
+        }
+      },
+      "description": "Object represent entity involved in Activity."
     },
     "tetrate.api.tcc.spm.notification.v1.Status": {
       "type": "string",
@@ -213,6 +822,50 @@
         }
       },
       "description": "Request to update alert logs read status."
+    },
+    "tetrate.api.tcc.spm.notification.v1.UpdateAlertRequest": {
+      "type": "object",
+      "properties": {
+        "tenant": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/definitions/tetrate.api.tcc.spm.notification.v1.AlertStatus"
+        },
+        "acknowledged": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "owners": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "tetrate.api.tcc.spm.notification.v1.UpdateNotificationReadStatusRequest": {
+      "type": "object",
+      "properties": {
+        "tenant": {
+          "type": "string"
+        },
+        "user": {
+          "type": "string"
+        },
+        "ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uint64"
+          },
+          "description": "Notification ids to update."
+        }
+      },
+      "description": "Request to update notifications read status."
     }
   }
 }

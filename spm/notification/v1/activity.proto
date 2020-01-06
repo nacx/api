@@ -1,0 +1,91 @@
+// Copyright (c) Tetrate, Inc 2018 All Rights Reserved.
+syntax = "proto3";
+
+package tetrate.api.tcc.spm.notification.v1;
+option go_package = "github.com/tetrateio/tetrate/api/spm/notification/v1";
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "validate/validate.proto";
+
+// Activity Service
+//
+// The activity service provides access to activities.
+service ActivityService {
+  // List Activities. Activities can be filtered by actor or object name.
+  rpc ListActivities(ListActivitiesRequest) returns (ListActivitiesResponse) {
+    option (google.api.http).get = "/v1/tenants/{tenant}/activities";
+  };
+}
+
+// Activity
+//
+// Activity is events happened in system that record user/system action to resources.
+// Activity has three main components: actor, verb and object.
+// Example of activities:
+// - arif update application httpbin with alert rule
+// - system create service_resp alert with id #1
+// - dhi acked alert #1
+// - dhi close alert #1
+//
+// Activity will trigger notification that sent to user.
+// User will get notification for all activities related to resources where user has READ access.
+// Example:
+// - If user has READ access to Application httpbin.
+//   User will get notification for all activities related to Application httpbin including Alerts.
+//
+message Activity {
+  // Activity id. auto generated.
+  uint64 id = 1;
+  // Activity name. auto generated. Name will be set to /tenants/tetrate/activities/id.
+  string name = 2;
+  // Tenant. Tenant is obtained from Actor.
+  string tenant = 4;
+  // Time when the activity created.
+  google.protobuf.Timestamp timestamp = 5;
+  // Actor is entity capable of carrying out an Activity. Often this will be user or system.
+  Object actor = 6;
+  // Verb is action that entity do. e.g. create, update, delete.
+  string verb = 7;
+  // Object is primary object of the Activity carried out by Actor.
+  Object object = 8;
+  // Target is the target of the Activity. The precise meaning of the activity's target
+  // is dependent on the activities verb, but will often be the object the English preposition "to".
+  Object target = 9;
+  // Key value pairs with additional information for the activity.
+  map<string, string> properties = 10;
+}
+
+// Object represent entity involved in Activity.
+message Object {
+  // Name is TSB name (e.g. /tenants/tetrate/users/dhi).
+  string name = 1;
+  // Type is TSB resource type (e.g. User, Team, Application, etc).
+  string type = 2;
+}
+
+// Request to get the list activities. Support following query:
+// - List all activities from an actor by name (e.g. list all activities for user
+// /tenants/tetrate/users/dhi).
+// - List all activities to object or target by name (e.g. list all activities for alert
+// /tenants/tetrate/alerts/1).
+message ListActivitiesRequest {
+  string tenant = 1 [(validate.rules).string.min_len = 1];
+  // Supported filter.
+  oneof filter {
+    string actor = 2;
+    string object_or_target = 3;
+  }
+  // Maximum number of results to be returned. Default is 20.
+  int32 page_size = 4;
+  // Page token to request a specific page of the list results. Set to "" for first page.
+  string page_token = 5;
+}
+
+// List of activities.
+message ListActivitiesResponse {
+  repeated Activity activities = 1;
+  // Pagination token to retrieve the next page of results.
+  // If the value is "", it means no further results for the request.
+  string next_page_token = 2;
+}
