@@ -3412,27 +3412,27 @@
       "properties": {
         "httpRequestTimeout": {
           "type": "string",
-          "description": "Timeout for HTTP requests."
+          "description": "Timeout for HTTP requests. Disabled if not set."
         },
         "httpRetries": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.HTTPRetry",
-          "description": "Retry policy for HTTP requests."
+          "description": "Retry policy for HTTP requests. Disabled if not set."
         },
         "tcpConnectTimeout": {
           "type": "string",
-          "description": "TCP connection timeout."
+          "description": "TCP connection timeout. Disabled if not set."
         },
         "tcpKeepalive": {
           "type": "boolean",
           "format": "boolean",
-          "description": "If set then set SO_KEEPALIVE on the socket to enable TCP Keepalives."
+          "description": "If enabled, sets SO_KEEPALIVE on the socket to enable TCP Keepalives."
         },
         "circuitBreakerSensitivity": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.ClientSettings.Sensitivity",
-          "description": "The sensitivity levels will translate to specific values of dest rule outlier detection."
+          "description": "Circuit breakers in Envoy are applied per endpoint in a load balancing pool. By default, circuit breakers are disabled. If set, the sensitivity level determines the maximum number of consecutive failures that Envoy will tolerate before ejecting an endpoint from the load balancing pool."
         }
       },
-      "description": "All the timeouts, retries, circuit breakers etc. that consumers want to set to guard against failures of their dependencies. These roughly translate to pieces of istio virtual service, destination rules, etc. At runtime, for a given namespace, for the namespace's dependencies, we combine the client specified reliability settings with the virtual service/dest rule for the dependencies to produce an updated virtual service/dest rule per dependent service. All these client customized virtual services/dest rules will be private to the namespace i.e. will have an exportTo setting '.' . Doing so will make Pilot apply these customizations only to the namespace concerned without leaking it to all other namespaces.",
+      "description": "ClientSettings control the reliability knobs in Envoy when making outbound connections from a gateway or sidecar.",
       "title": "ClientSettings"
     },
     "tetrate.api.tcc.core.v1.ClientSettings.Sensitivity": {
@@ -3444,7 +3444,7 @@
         "HIGH"
       ],
       "default": "UNSET",
-      "description": "Available sensitivity levels."
+      "description": "Available sensitivity levels for the circuit breaker.   - LOW: Tolerate upto 20 consecutive 5xx or connection failures from an endpoint before ejecting it temporarily from the load balancing pool.  - MEDIUM: Tolerate upto 10 consecutive 5xx or connection failures from an endpoint before ejecting it temporarily from the load balancing pool.  - HIGH: Tolerate upto 5 consecutive 5xx or connection failures from an endpoint before ejecting it temporarily from the load balancing pool."
     },
     "tetrate.api.tcc.core.v1.Cluster": {
       "type": "object",

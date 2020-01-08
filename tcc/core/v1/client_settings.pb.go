@@ -24,14 +24,23 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
 
-// Available sensitivity levels.
+// Available sensitivity levels for the circuit breaker.
 type ClientSettings_Sensitivity int32
 
 const (
-	ClientSettings_UNSET  ClientSettings_Sensitivity = 0
-	ClientSettings_LOW    ClientSettings_Sensitivity = 1
+	ClientSettings_UNSET ClientSettings_Sensitivity = 0
+	// Tolerate upto 20 consecutive 5xx or connection failures from an
+	// endpoint before ejecting it temporarily from the load balancing
+	// pool.
+	ClientSettings_LOW ClientSettings_Sensitivity = 1
+	// Tolerate upto 10 consecutive 5xx or connection failures from an
+	// endpoint before ejecting it temporarily from the load balancing
+	// pool.
 	ClientSettings_MEDIUM ClientSettings_Sensitivity = 2
-	ClientSettings_HIGH   ClientSettings_Sensitivity = 3
+	// Tolerate upto 5 consecutive 5xx or connection failures from an
+	// endpoint before ejecting it temporarily from the load balancing
+	// pool.
+	ClientSettings_HIGH ClientSettings_Sensitivity = 3
 )
 
 var ClientSettings_Sensitivity_name = map[int32]string{
@@ -58,24 +67,22 @@ func (ClientSettings_Sensitivity) EnumDescriptor() ([]byte, []int) {
 
 // ClientSettings
 //
-// All the timeouts, retries, circuit breakers etc. that consumers want to set to guard against
-// failures of their dependencies. These roughly translate to pieces of istio virtual service,
-// destination rules, etc. At runtime, for a given namespace, for the namespace's dependencies, we
-// combine the client specified reliability settings with the virtual service/dest rule for the
-// dependencies to produce an updated virtual service/dest rule per dependent service. All these
-// client customized virtual services/dest rules will be private to the namespace i.e. will have an
-// exportTo setting '.' . Doing so will make Pilot apply these customizations only to the namespace
-// concerned without leaking it to all other namespaces.
+// ClientSettings control the reliability knobs in Envoy when making
+// outbound connections from a gateway or sidecar.
 type ClientSettings struct {
-	// Timeout for HTTP requests.
+	// Timeout for HTTP requests. Disabled if not set.
 	HttpRequestTimeout *types.Duration `protobuf:"bytes,1,opt,name=http_request_timeout,json=httpRequestTimeout,proto3" json:"http_request_timeout,omitempty"`
-	// Retry policy for HTTP requests.
+	// Retry policy for HTTP requests. Disabled if not set.
 	HttpRetries *HTTPRetry `protobuf:"bytes,2,opt,name=http_retries,json=httpRetries,proto3" json:"http_retries,omitempty"`
-	// TCP connection timeout.
+	// TCP connection timeout. Disabled if not set.
 	TcpConnectTimeout *types.Duration `protobuf:"bytes,3,opt,name=tcp_connect_timeout,json=tcpConnectTimeout,proto3" json:"tcp_connect_timeout,omitempty"`
-	// If set then set SO_KEEPALIVE on the socket to enable TCP Keepalives.
+	// If enabled, sets SO_KEEPALIVE on the socket to enable TCP Keepalives.
 	TcpKeepalive *types.BoolValue `protobuf:"bytes,4,opt,name=tcp_keepalive,json=tcpKeepalive,proto3" json:"tcp_keepalive,omitempty"`
-	// The sensitivity levels will translate to specific values of dest rule outlier detection.
+	// Circuit breakers in Envoy are applied per endpoint in a load
+	// balancing pool. By default, circuit breakers are disabled. If
+	// set, the sensitivity level determines the maximum number of
+	// consecutive failures that Envoy will tolerate before ejecting an
+	// endpoint from the load balancing pool.
 	CircuitBreakerSensitivity ClientSettings_Sensitivity `protobuf:"varint,5,opt,name=circuit_breaker_sensitivity,json=circuitBreakerSensitivity,proto3,enum=tetrate.api.tcc.core.v1.ClientSettings_Sensitivity" json:"circuit_breaker_sensitivity,omitempty"`
 	XXX_NoUnkeyedLiteral      struct{}                   `json:"-"`
 	XXX_unrecognized          []byte                     `json:"-"`

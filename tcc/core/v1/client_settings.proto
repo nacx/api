@@ -11,36 +11,43 @@ import "validate/validate.proto";
 
 // ClientSettings
 //
-// All the timeouts, retries, circuit breakers etc. that consumers want to set to guard against
-// failures of their dependencies. These roughly translate to pieces of istio virtual service,
-// destination rules, etc. At runtime, for a given namespace, for the namespace's dependencies, we
-// combine the client specified reliability settings with the virtual service/dest rule for the
-// dependencies to produce an updated virtual service/dest rule per dependent service. All these
-// client customized virtual services/dest rules will be private to the namespace i.e. will have an
-// exportTo setting '.' . Doing so will make Pilot apply these customizations only to the namespace
-// concerned without leaking it to all other namespaces.
+// ClientSettings control the reliability knobs in Envoy when making
+// outbound connections from a gateway or sidecar.
 message ClientSettings {
-  // Timeout for HTTP requests.
+  // Timeout for HTTP requests. Disabled if not set.
   google.protobuf.Duration http_request_timeout = 1;
 
-  // Retry policy for HTTP requests.
+  // Retry policy for HTTP requests. Disabled if not set.
   HTTPRetry http_retries = 2;
 
-  // TCP connection timeout.
+  // TCP connection timeout. Disabled if not set.
   google.protobuf.Duration tcp_connect_timeout = 3;
 
-  // If set then set SO_KEEPALIVE on the socket to enable TCP Keepalives.
+  // If enabled, sets SO_KEEPALIVE on the socket to enable TCP Keepalives.
   google.protobuf.BoolValue tcp_keepalive = 4;
 
-  // Available sensitivity levels.
+  // Available sensitivity levels for the circuit breaker.
   enum Sensitivity {
     UNSET = 0;
+    // Tolerate upto 20 consecutive 5xx or connection failures from an
+    // endpoint before ejecting it temporarily from the load balancing
+    // pool.
     LOW = 1;
+    // Tolerate upto 10 consecutive 5xx or connection failures from an
+    // endpoint before ejecting it temporarily from the load balancing
+    // pool.
     MEDIUM = 2;
+    // Tolerate upto 5 consecutive 5xx or connection failures from an
+    // endpoint before ejecting it temporarily from the load balancing
+    // pool.
     HIGH = 3;
   }
 
-  // The sensitivity levels will translate to specific values of dest rule outlier detection.
+  // Circuit breakers in Envoy are applied per endpoint in a load
+  // balancing pool. By default, circuit breakers are disabled. If
+  // set, the sensitivity level determines the maximum number of
+  // consecutive failures that Envoy will tolerate before ejecting an
+  // endpoint from the load balancing pool.
   Sensitivity circuit_breaker_sensitivity = 5;
 }
 
