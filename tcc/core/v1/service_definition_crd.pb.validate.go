@@ -626,6 +626,10 @@ func (m *ServiceDefinition_VMwareSource) Validate() error {
 		return nil
 	}
 
+	// no validation rules for Context
+
+	// no validation rules for GuestNetwork
+
 	return nil
 }
 

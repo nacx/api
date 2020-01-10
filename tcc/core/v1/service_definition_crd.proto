@@ -5,7 +5,6 @@ option go_package = "github.com/tetrateio/tetrate/api/tcc/core/v1";
 
 import "google/api/annotations.proto";
 import "google/protobuf/wrappers.proto";
-import "validate/validate.proto";
 
 import "routing_info.proto";
 import "tlssettings.proto";
@@ -158,8 +157,7 @@ import "tlssettings.proto";
 // Instead of specifying the endpoints manually, it is possible to automatically obtain the
 // list of endpoints from external sources. The appropriate endpoint controller must be installed
 // in TSB Local Control Plane for this to work. The following example demonstrates reading the
-// endpoints of the ratings service directly from VMware vCenter. The association of endpoints to
-// their respective services is done based on the tags associated with the vSphere VMs.
+// endpoints of the ratings service directly from VMware vCenter.
 //
 // ```yaml
 // apiVersion: registry.tetrate.io/v1alpha1
@@ -180,12 +178,19 @@ import "tlssettings.proto";
 //     egressHttpProxyPort: 15080 # outbound traffic explicitly sent here.
 //   endpointSource:
 //     vmware:
-//       tags:
-//       - prod-ratings-bookinfo
+//       context: us-dal01 # must match key in the secrets containing the list of vCenter URLs with
+//       username/passwords.
+//       guestNetwork: "vm-prod-1" # Only get the IPs of VM NICs in this network.
+//       vmResourcePaths: # the inventory path
+//       - /dal01/vm/apps/bookinfo/ratings-01
+//       - /dal01/vm/apps/bookinfo/ratings-02
+//       - /dal01/vm/apps/bookinfo/ratings-03
 // ```
 //
-// In the above example, all VMs with the tag `prod-ratings-bookinfo` will be automatically added
-// to the ratings service and populated in the TSB catalog.
+// In the above example, the IP addresses assigned to the NICs
+// belonging to the "vm-prod-1" network in the VMs with the specified
+// inventory paths will be automatically added as endpoints to the
+// ratings service and populated in the TSB catalog.
 //
 message ServiceDefinition {
   // Hostname by which this service will be accessed.
@@ -231,7 +236,24 @@ message ServiceDefinition {
   message AzureSource {
   };
   message VMwareSource {
-    repeated string tags = 1;
+    // REQUIRED. The key in the secret that maps to the vCenter to
+    // use. A kubernetes secret with a map of key->vCenter URLs (in
+    // https://user:password@host:port/sdk format) must be mounted in
+    // tsbd pod and supplied using the vmware-credentials-file command
+    // line argument.
+    string context = 1;
+
+    // When selecting the VM IP address to use on a VM with multiple
+    // NICs where each NIC is attached to a different network, the
+    // guestNetwork field determines the network/NIC whose IP
+    // addresses can be used. If omitted, the IP address from
+    // guest.IpAddress property (i.e. the default reported in vCenter)
+    // will be used. Can be omitted if VMs have only one NIC.
+    string guest_network = 2;
+
+    // The full (case sensitive) inventory path to the VM resources in
+    // the vCenter inventory. E.g., /dc0/vm/folder1/folder2/vm-name
+    repeated string vm_resource_paths = 3;
   };
   message RESTSource {
     // TSB Local will call out to the API endpoint specified here
