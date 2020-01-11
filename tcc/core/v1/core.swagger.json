@@ -3206,10 +3206,38 @@
             "type": "string"
           },
           "description": "A set of arbitrary claims that are required to qualify the subject. E.g. \"iss\": \"*@foo.com\"."
+        },
+        "validation": {
+          "$ref": "#/definitions/tetrate.api.authz.v1.Subject.JWT.Validation",
+          "description": "Configuration to validate the JWT tokens for this subject."
         }
       },
       "description": "JWT based subjects qualify a subject by matching against a JWT token present in the request. By default the token is expected to be present in the 'Authorization' HTTP header, with the 'Bearer\" prefix.",
       "title": "JWT based subject"
+    },
+    "tetrate.api.authz.v1.Subject.JWT.Validation": {
+      "type": "object",
+      "properties": {
+        "issuer": {
+          "type": "string",
+          "description": "The issuer that is expected for this JWT subject."
+        },
+        "audiences": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Optional audiences to validate the JWT token against."
+        },
+        "jwksUri": {
+          "type": "string",
+          "description": "The URI of a JWKS file that can be used to validate the JWT token."
+        },
+        "jwks": {
+          "type": "string",
+          "description": "The literal JWKS to be used to validate teh token. The format of this string is described in https://tools.ietf.org/html/rfc7517."
+        }
+      }
     },
     "tetrate.api.q.rbac.v1.Binding": {
       "type": "object",

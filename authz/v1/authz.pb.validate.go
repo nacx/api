@@ -608,6 +608,28 @@ func (m *Subject_JWT) Validate() error {
 		// no validation rules for Claims[key]
 	}
 
+	if m.GetValidation() == nil {
+		return Subject_JWTValidationError{
+			field:  "Validation",
+			reason: "value is required",
+		}
+	}
+
+	{
+		tmp := m.GetValidation()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return Subject_JWTValidationError{
+					field:  "Validation",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+	}
+
 	return nil
 }
 
@@ -664,3 +686,117 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = Subject_JWTValidationError{}
+
+// Validate checks the field values on Subject_JWT_Validation with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *Subject_JWT_Validation) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if utf8.RuneCountInString(m.GetIssuer()) < 1 {
+		return Subject_JWT_ValidationValidationError{
+			field:  "Issuer",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	for idx, item := range m.GetAudiences() {
+		_, _ = idx, item
+
+		if utf8.RuneCountInString(item) < 1 {
+			return Subject_JWT_ValidationValidationError{
+				field:  fmt.Sprintf("Audiences[%v]", idx),
+				reason: "value length must be at least 1 runes",
+			}
+		}
+
+	}
+
+	switch m.Keys.(type) {
+
+	case *Subject_JWT_Validation_JwksUri:
+
+		if uri, err := url.Parse(m.GetJwksUri()); err != nil {
+			return Subject_JWT_ValidationValidationError{
+				field:  "JwksUri",
+				reason: "value must be a valid URI",
+				cause:  err,
+			}
+		} else if !uri.IsAbs() {
+			return Subject_JWT_ValidationValidationError{
+				field:  "JwksUri",
+				reason: "value must be absolute",
+			}
+		}
+
+	case *Subject_JWT_Validation_Jwks:
+
+		if utf8.RuneCountInString(m.GetJwks()) < 1 {
+			return Subject_JWT_ValidationValidationError{
+				field:  "Jwks",
+				reason: "value length must be at least 1 runes",
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// Subject_JWT_ValidationValidationError is the validation error returned by
+// Subject_JWT_Validation.Validate if the designated constraints aren't met.
+type Subject_JWT_ValidationValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e Subject_JWT_ValidationValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e Subject_JWT_ValidationValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e Subject_JWT_ValidationValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e Subject_JWT_ValidationValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e Subject_JWT_ValidationValidationError) ErrorName() string {
+	return "Subject_JWT_ValidationValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e Subject_JWT_ValidationValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSubject_JWT_Validation.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = Subject_JWT_ValidationValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = Subject_JWT_ValidationValidationError{}

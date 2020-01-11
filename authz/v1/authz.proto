@@ -177,6 +177,27 @@ message Subject {
     // A set of arbitrary claims that are required to qualify the subject.
     // E.g. "iss": "*@foo.com".
     map<string, string> claims = 4 [(validate.rules).map.keys.string.min_len = 1];
+
+    message Validation {
+      // The issuer that is expected for this JWT subject.
+      string issuer = 1 [(validate.rules).string.min_len = 1];
+
+      // Optional audiences to validate the JWT token against.
+      repeated string audiences = 2 [(validate.rules).repeated = {
+        items: {string: {min_len: 1}},
+      }];
+
+      oneof keys {
+        // The URI of a JWKS file that can be used to validate the JWT token.
+        string jwksUri = 3 [(validate.rules).string.uri = true];
+        // The literal JWKS to be used to validate teh token. The format of this string
+        // is described in https://tools.ietf.org/html/rfc7517.
+        string jwks = 4 [(validate.rules).string.min_len = 1];
+      }
+    }
+
+    // Configuration to validate the JWT tokens for this subject.
+    Validation validation = 5 [(validate.rules).message.required = true];
   }
 
   // JWT configuration to identity the subject.
