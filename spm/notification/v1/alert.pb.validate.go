@@ -318,10 +318,10 @@ func (m *UpdateAlertRequest) Validate() error {
 		}
 	}
 
-	if utf8.RuneCountInString(m.GetId()) < 1 {
+	if m.GetId() < 0 {
 		return UpdateAlertRequestValidationError{
 			field:  "Id",
-			reason: "value length must be at least 1 runes",
+			reason: "value must be greater than or equal to 0",
 		}
 	}
 
@@ -403,10 +403,10 @@ func (m *DeleteAlertRequest) Validate() error {
 		}
 	}
 
-	if utf8.RuneCountInString(m.GetId()) < 1 {
+	if m.GetId() < 0 {
 		return DeleteAlertRequestValidationError{
 			field:  "Id",
-			reason: "value length must be at least 1 runes",
+			reason: "value must be greater than or equal to 0",
 		}
 	}
 
@@ -484,10 +484,10 @@ func (m *GetAlertRequest) Validate() error {
 		}
 	}
 
-	if utf8.RuneCountInString(m.GetId()) < 1 {
+	if m.GetId() < 0 {
 		return GetAlertRequestValidationError{
 			field:  "Id",
-			reason: "value length must be at least 1 runes",
+			reason: "value must be greater than or equal to 0",
 		}
 	}
 

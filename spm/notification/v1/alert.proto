@@ -51,7 +51,7 @@ service AlertService {
 // Alert is defined as a resource under tenant.
 message Alert {
   // Alert id. auto generated.
-  string id = 1;
+  uint64 id = 1;
   // Alert name. auto generated. Name will be set to /tenants/tetrate/alerts/id.
   string name = 2;
   // Tenant. Tenant is obtained from application name where alert rule defined.
@@ -97,14 +97,17 @@ message ListAlertsResponse {
   string next_page_token = 2;
 }
 
+// Alert status is OPEN or CLOSED.
+// ALL_STATUSES is used in list request, to include all values.
 enum AlertStatus {
   OPEN = 0;
   CLOSED = 1;
+  ALL_STATUSES = 2;
 }
 
 message UpdateAlertRequest {
   string tenant = 1 [(validate.rules).string.min_len = 1];
-  string id = 2 [(validate.rules).string.min_len = 1];
+  uint64 id = 2 [(validate.rules).uint64.gte = 0];
   AlertStatus status = 3;
   bool acknowledged = 4;
   repeated string owners = 5;
@@ -112,10 +115,10 @@ message UpdateAlertRequest {
 
 message DeleteAlertRequest {
   string tenant = 1 [(validate.rules).string.min_len = 1];
-  string id = 2 [(validate.rules).string.min_len = 1];
+  uint64 id = 2 [(validate.rules).uint64.gte = 0];
 }
 
 message GetAlertRequest {
   string tenant = 1 [(validate.rules).string.min_len = 1];
-  string id = 2 [(validate.rules).string.min_len = 1];
+  uint64 id = 2 [(validate.rules).uint64.gte = 0];
 }

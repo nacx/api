@@ -5327,14 +5327,15 @@
     "tetrate.api.tcc.spm.alert.v1.Severity": {
       "type": "string",
       "enum": [
+        "MEDIUM",
         "CRITICAL",
         "HIGH",
-        "MEDIUM",
         "LOW",
-        "INFORMATIONAL"
+        "INFORMATIONAL",
+        "ALL_SEVERITIES"
       ],
-      "default": "CRITICAL",
-      "description": "Alert severity level from Informational to Critical.",
+      "default": "MEDIUM",
+      "description": "Alert severity level from Informational to Critical. ALL_SEVERITIES is used for list Alert request to include all values.",
       "title": "Severity"
     }
   }

@@ -99,10 +99,12 @@ enum Operator {
 // Severity
 //
 // Alert severity level from Informational to Critical.
+// ALL_SEVERITIES is used for list Alert request to include all values.
 enum Severity {
-  CRITICAL = 0;
-  HIGH = 1;
-  MEDIUM = 2;
+  MEDIUM = 0;
+  CRITICAL = 1;
+  HIGH = 2;
   LOW = 3;
   INFORMATIONAL = 4;
+  ALL_SEVERITIES = 5;
 }

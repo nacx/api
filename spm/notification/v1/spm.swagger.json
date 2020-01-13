@@ -207,7 +207,8 @@
             "type": "string",
             "enum": [
               "OPEN",
-              "CLOSED"
+              "CLOSED",
+              "ALL_STATUSES"
             ],
             "default": "OPEN"
           },
@@ -217,13 +218,14 @@
             "required": false,
             "type": "string",
             "enum": [
+              "MEDIUM",
               "CRITICAL",
               "HIGH",
-              "MEDIUM",
               "LOW",
-              "INFORMATIONAL"
+              "INFORMATIONAL",
+              "ALL_SEVERITIES"
             ],
-            "default": "CRITICAL"
+            "default": "MEDIUM"
           },
           {
             "name": "pageSize",
@@ -274,7 +276,8 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "format": "uint64"
           }
         ],
         "tags": [
@@ -308,7 +311,8 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "format": "uint64"
           },
           {
             "name": "body",
@@ -350,7 +354,8 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "format": "uint64"
           },
           {
             "name": "body",
@@ -486,14 +491,15 @@
     "tetrate.api.tcc.spm.alert.v1.Severity": {
       "type": "string",
       "enum": [
+        "MEDIUM",
         "CRITICAL",
         "HIGH",
-        "MEDIUM",
         "LOW",
-        "INFORMATIONAL"
+        "INFORMATIONAL",
+        "ALL_SEVERITIES"
       ],
-      "default": "CRITICAL",
-      "description": "Alert severity level from Informational to Critical.",
+      "default": "MEDIUM",
+      "description": "Alert severity level from Informational to Critical. ALL_SEVERITIES is used for list Alert request to include all values.",
       "title": "Severity"
     },
     "tetrate.api.tcc.spm.notification.v1.Activity": {
@@ -549,6 +555,7 @@
       "properties": {
         "id": {
           "type": "string",
+          "format": "uint64",
           "description": "Alert id. auto generated."
         },
         "name": {
@@ -652,9 +659,11 @@
       "type": "string",
       "enum": [
         "OPEN",
-        "CLOSED"
+        "CLOSED",
+        "ALL_STATUSES"
       ],
-      "default": "OPEN"
+      "default": "OPEN",
+      "description": "Alert status is OPEN or CLOSED. ALL_STATUSES is used in list request, to include all values."
     },
     "tetrate.api.tcc.spm.notification.v1.DeleteAlertLogsRequest": {
       "type": "object",
@@ -677,7 +686,8 @@
           "type": "string"
         },
         "id": {
-          "type": "string"
+          "type": "string",
+          "format": "uint64"
         }
       }
     },
@@ -830,7 +840,8 @@
           "type": "string"
         },
         "id": {
-          "type": "string"
+          "type": "string",
+          "format": "uint64"
         },
         "status": {
           "$ref": "#/definitions/tetrate.api.tcc.spm.notification.v1.AlertStatus"
