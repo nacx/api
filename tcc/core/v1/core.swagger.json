@@ -5306,7 +5306,7 @@
       "properties": {
         "name": {
           "type": "string",
-          "description": "Service name. Expected format is service/namespace and is validated by following pattern."
+          "description": "Service name. Service name follows SPM noun. https://github.com/tetrateio/SPM/blob/spm2/doc/spm-nouns.md#mapping Example: subset|service|namespace|cluster|env, *|service|namespace|*|env, subset|service|namespace|*|env. Allowed characters are 0-9, a-z, .~_*-."
         }
       },
       "description": "Service to be included or excluded."

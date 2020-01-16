@@ -303,7 +303,7 @@ func (m *Rule_Service) Validate() error {
 	if !_Rule_Service_Name_Pattern.MatchString(m.GetName()) {
 		return Rule_ServiceValidationError{
 			field:  "Name",
-			reason: "value does not match regex pattern \"(?i)^[0-9a-z.~_\\\\-]+\\\\/[0-9a-z.~_\\\\-]+$\"",
+			reason: "value does not match regex pattern \"(?i)^[0-9a-z.~_*\\\\-]+\\\\|[0-9a-z.~_*\\\\-]+\\\\|[0-9a-z.~_*\\\\-]+\\\\|[0-9a-z.~_*\\\\-]+\\\\|[0-9a-z.~_*\\\\-]+$\"",
 		}
 	}
 
@@ -364,4 +364,4 @@ var _ interface {
 	ErrorName() string
 } = Rule_ServiceValidationError{}
 
-var _Rule_Service_Name_Pattern = regexp.MustCompile("(?i)^[0-9a-z.~_\\-]+\\/[0-9a-z.~_\\-]+$")
+var _Rule_Service_Name_Pattern = regexp.MustCompile("(?i)^[0-9a-z.~_*\\-]+\\|[0-9a-z.~_*\\-]+\\|[0-9a-z.~_*\\-]+\\|[0-9a-z.~_*\\-]+\\|[0-9a-z.~_*\\-]+$")

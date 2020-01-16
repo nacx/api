@@ -79,8 +79,13 @@ message Rule {
 
   // Service to be included or excluded.
   message Service {
-    // Service name. Expected format is service/namespace and is validated by following pattern.
-    string name = 1 [(validate.rules).string.pattern = "(?i)^[0-9a-z.~_\\-]+\\/[0-9a-z.~_\\-]+$"];
+    // Service name. Service name follows SPM noun.
+    // https://github.com/tetrateio/SPM/blob/spm2/doc/spm-nouns.md#mapping Example:
+    // subset|service|namespace|cluster|env, *|service|namespace|*|env,
+    // subset|service|namespace|*|env. Allowed characters are 0-9, a-z, .~_*-.
+    string name = 1 [(validate.rules).string.pattern =
+                         "(?i)^[0-9a-z.~_*\\-]+\\|[0-9a-z.~_*\\-]+\\|[0-9a-z.~_*\\-]+\\|[0-9a-z.~_*"
+                         "\\-]+\\|[0-9a-z.~_*\\-]+$"];
   }
 
   // Alert severity. Default to MEDIUM.
