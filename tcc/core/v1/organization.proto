@@ -241,11 +241,11 @@ message SyncTenantRequest {
   SourceType source_type = 3 [(validate.rules).enum.defined_only = true];
 
   // Information of a user as synchronized from the team source. This differs slightly from a TCC
-  // user since
-  // the fields here are raw info that does not have the context of the TCC hierarchy.
+  // user since the fields here are raw info that does not have the context of the TCC hierarchy.
   message SyncUser {
     string id = 1 [(validate.rules).string.min_len = 1];
     string description = 4;
+    string email = 5;
   };
   repeated SyncUser users = 4;
 
@@ -332,6 +332,7 @@ message User {
   string description = 4;
   string etag = 5 [(validate.rules).string.min_len = 1];
   SourceType source_type = 7 [(validate.rules).enum.defined_only = true];
+  string email = 8;
 }
 
 message CreateUserRequest {
@@ -348,6 +349,7 @@ message CreateUserRequest {
 
   string description = 4;
   SourceType source_type = 5 [(validate.rules).enum.defined_only = true];
+  string email = 6;
 }
 
 message GetUserRequest {

@@ -3943,6 +3943,9 @@
         },
         "sourceType": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.SourceType"
+        },
+        "email": {
+          "type": "string"
         }
       }
     },
@@ -5037,6 +5040,9 @@
         },
         "description": {
           "type": "string"
+        },
+        "email": {
+          "type": "string"
         }
       },
       "description": "Information of a user as synchronized from the team source. This differs slightly from a TCC user since the fields here are raw info that does not have the context of the TCC hierarchy."
@@ -5200,6 +5206,9 @@
         },
         "sourceType": {
           "$ref": "#/definitions/tetrate.api.tcc.core.v1.SourceType"
+        },
+        "email": {
+          "type": "string"
         }
       }
     },

@@ -1369,6 +1369,8 @@ func (m *User) Validate() error {
 		}
 	}
 
+	// no validation rules for Email
+
 	return nil
 }
 
@@ -1458,6 +1460,8 @@ func (m *CreateUserRequest) Validate() error {
 			reason: "value must be one of the defined enum values",
 		}
 	}
+
+	// no validation rules for Email
 
 	return nil
 }
@@ -1861,6 +1865,8 @@ func (m *SyncTenantRequest_SyncUser) Validate() error {
 	}
 
 	// no validation rules for Description
+
+	// no validation rules for Email
 
 	return nil
 }
