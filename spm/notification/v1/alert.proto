@@ -52,7 +52,7 @@ service AlertService {
 message Alert {
   // Alert id. auto generated.
   uint64 id = 1;
-  // Alert name. auto generated. Name will be set to /tenants/tetrate/alerts/id.
+  // Alert name. auto generated. Name will be set to tenants/tetrate/alerts/id.
   string name = 2;
   // Tenant. Tenant is obtained from application name where alert rule defined.
   string tenant = 3;

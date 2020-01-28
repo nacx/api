@@ -43,6 +43,8 @@ func (m *Notification) Validate() error {
 
 	// no validation rules for Id
 
+	// no validation rules for Name
+
 	// no validation rules for User
 
 	// no validation rules for Tenant
@@ -53,7 +55,22 @@ func (m *Notification) Validate() error {
 
 	// no validation rules for Read
 
-	// no validation rules for Activity
+	// no validation rules for ResourceName
+
+	{
+		tmp := m.GetTimestamp()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return NotificationValidationError{
+					field:  "Timestamp",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -134,7 +151,12 @@ func (m *ListNotificationRequest) Validate() error {
 		}
 	}
 
-	// no validation rules for Type
+	if _, ok := NotificationType_name[int32(m.GetType())]; !ok {
+		return ListNotificationRequestValidationError{
+			field:  "Type",
+			reason: "value must be one of the defined enum values",
+		}
+	}
 
 	// no validation rules for Status
 

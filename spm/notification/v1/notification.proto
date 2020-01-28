@@ -6,13 +6,14 @@ option go_package = "github.com/tetrateio/tetrate/api/spm/notification/v1";
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
 import "validate/validate.proto";
 
 import "alert_log.proto";
 
 // Notification Service
 //
-// The activity service provides access to notifications.
+// The notification service provides access to notifications.
 service NotificationService {
   // List Notifications. Notifications must be filtered by user and optionally by read status.
   rpc ListNotifications(ListNotificationRequest) returns (ListNotificationResponse) {
@@ -31,28 +32,33 @@ service NotificationService {
 
 // Notification
 //
-// Notification sent to user when Activity happened.
+// Notification sent to user when something of interest happened.
 // Currently all notifications are sent to user. In the future we might want to have
 // notification settings where user can watch or subscribe to specific resource or event.
 message Notification {
-  // Activity id. auto generated.
+  // Notification id. auto generated.
   uint64 id = 1;
+  // Notification name. auto generated. Name will be set to tenants/tetrate/notifications/id.
+  string name = 2;
   // User name that own this notification.
-  string user = 2;
+  string user = 3;
   // Tenant. Tenant is obtained from user.
-  string tenant = 3;
+  string tenant = 4;
   // Notification message.
-  string message = 4;
+  string message = 5;
   // Notification type.
-  NotificationType type = 5;
+  NotificationType type = 6;
   // Notification read status.
-  bool read = 6;
-  // Activity name.
-  string activity = 7;
+  bool read = 7;
+  // Resource name is resource name that notification refer to.
+  // For example if notification triggered because of new alert, resource_name is alert name.
+  string resource_name = 8;
+  // Time when the notification was created.
+  google.protobuf.Timestamp timestamp = 9;
 }
 
 // Notification type could be RESOURCE or ALERT. Alert is one type of resource.
-// We differentiate type here to allow different user experience for "normal" Activity and Alert.
+// We differentiate type here to allow different user experience for "normal" event and Alert.
 enum NotificationType {
   RESOURCE = 0;
   ALERT = 1;
@@ -64,7 +70,7 @@ message ListNotificationRequest {
   // User name that has notification.
   string user = 2 [(validate.rules).string.min_len = 1];
   // Type of notification.
-  NotificationType type = 3;
+  NotificationType type = 3 [(validate.rules).enum.defined_only = true];
   // Read status of notification.
   Status status = 4;
   // Maximum number of results to be returned. Default is 20.

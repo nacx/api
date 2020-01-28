@@ -67,7 +67,7 @@ func (AlertStatus) EnumDescriptor() ([]byte, []int) {
 type Alert struct {
 	// Alert id. auto generated.
 	Id uint64 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	// Alert name. auto generated. Name will be set to /tenants/tetrate/alerts/id.
+	// Alert name. auto generated. Name will be set to tenants/tetrate/alerts/id.
 	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	// Tenant. Tenant is obtained from application name where alert rule defined.
 	Tenant string `protobuf:"bytes,3,opt,name=tenant,proto3" json:"tenant,omitempty"`

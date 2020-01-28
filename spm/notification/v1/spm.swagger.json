@@ -560,7 +560,7 @@
         },
         "name": {
           "type": "string",
-          "description": "Alert name. auto generated. Name will be set to /tenants/tetrate/alerts/id."
+          "description": "Alert name. auto generated. Name will be set to tenants/tetrate/alerts/id."
         },
         "tenant": {
           "type": "string",
@@ -756,7 +756,11 @@
         "id": {
           "type": "string",
           "format": "uint64",
-          "description": "Activity id. auto generated."
+          "description": "Notification id. auto generated."
+        },
+        "name": {
+          "type": "string",
+          "description": "Notification name. auto generated. Name will be set to tenants/tetrate/notifications/id."
         },
         "user": {
           "type": "string",
@@ -779,12 +783,17 @@
           "format": "boolean",
           "description": "Notification read status."
         },
-        "activity": {
+        "resourceName": {
           "type": "string",
-          "description": "Activity name."
+          "description": "Resource name is resource name that notification refer to. For example if notification triggered because of new alert, resource_name is alert name."
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Time when the notification was created."
         }
       },
-      "description": "Notification sent to user when Activity happened. Currently all notifications are sent to user. In the future we might want to have notification settings where user can watch or subscribe to specific resource or event.",
+      "description": "Notification sent to user when something of interest happened. Currently all notifications are sent to user. In the future we might want to have notification settings where user can watch or subscribe to specific resource or event.",
       "title": "Notification"
     },
     "tetrate.api.tcc.spm.notification.v1.NotificationType": {
@@ -794,7 +803,7 @@
         "ALERT"
       ],
       "default": "RESOURCE",
-      "description": "Notification type could be RESOURCE or ALERT. Alert is one type of resource. We differentiate type here to allow different user experience for \"normal\" Activity and Alert."
+      "description": "Notification type could be RESOURCE or ALERT. Alert is one type of resource. We differentiate type here to allow different user experience for \"normal\" event and Alert."
     },
     "tetrate.api.tcc.spm.notification.v1.Object": {
       "type": "object",
