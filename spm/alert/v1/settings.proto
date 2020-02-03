@@ -31,14 +31,15 @@ message Rule {
   string metric_name = 2 [(validate.rules).string = {in: 
     ["service_resp_time", "service_sla", "service_cpm", "service_apdex",
     "service_p99", "service_p95", "service_p90", "service_p75", "service_p50",
-    "service_2xx", "service_4xx", "service_5xx"]}];
+    "service_2xx", "service_4xx", "service_5xx", "service_percentile"]}];
   // clang-format on
 
   // clang-format off
 
   // The threshold value of a metric; depends on the operator, it triggers alert if the metric value
-  // is not match.
-  uint32 threshold = 3 [(validate.rules).uint32 = { gte: 0, lte: 100 }];
+  // is not match. 
+  // This field is deprecated and will be ignored. Use thresholds that support multiple values.
+  uint32 threshold = 3 [deprecated = true, (validate.rules).uint32 = { gte: 0, lte: 100 }];
   // clang-format on
 
   // The operator. E.g. greater-than, lower-than and equal.
@@ -90,6 +91,19 @@ message Rule {
 
   // Alert severity. Default to MEDIUM.
   Severity severity = 14;
+
+  // Thresholds value as array to set multiple threshold values.
+  repeated AlertThreshold thresholds = 15 [(validate.rules).repeated = {
+    min_items: 1,
+    max_items: 5
+  }];
+
+  message AlertThreshold {
+    // The threshold value of a metric; depends on the operator, it triggers alert if the metric
+    // value
+    // is not match.
+    string value = 1 [(validate.rules).string.min_len = 1];
+  }
 }
 
 // Operator
@@ -99,6 +113,8 @@ enum Operator {
   EQ = 0;
   GT = 1;
   LT = 2;
+  GTE = 3;
+  LTE = 4;
 }
 
 // Severity

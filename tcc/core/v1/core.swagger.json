@@ -5226,7 +5226,9 @@
       "enum": [
         "EQ",
         "GT",
-        "LT"
+        "LT",
+        "GTE",
+        "LTE"
       ],
       "default": "EQ",
       "description": "Possible operators to \"judge\" the current metric value against a particular threshold value.",
@@ -5246,7 +5248,7 @@
         "threshold": {
           "type": "integer",
           "format": "int64",
-          "description": "The threshold value of a metric; depends on the operator, it triggers alert if the metric value is not match."
+          "description": "The threshold value of a metric; depends on the operator, it triggers alert if the metric value is not match.  This field is deprecated and will be ignored. Use thresholds that support multiple values."
         },
         "operator": {
           "$ref": "#/definitions/tetrate.api.tcc.spm.alert.v1.Operator",
@@ -5305,10 +5307,26 @@
         "severity": {
           "$ref": "#/definitions/tetrate.api.tcc.spm.alert.v1.Severity",
           "description": "Alert severity. Default to MEDIUM."
+        },
+        "thresholds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.spm.alert.v1.Rule.AlertThreshold"
+          },
+          "description": "Thresholds value as array to set multiple threshold values."
         }
       },
       "description": "An alert rule defines the condition when an alert should be triggered.",
       "title": "Rule"
+    },
+    "tetrate.api.tcc.spm.alert.v1.Rule.AlertThreshold": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string",
+          "description": "The threshold value of a metric; depends on the operator, it triggers alert if the metric value is not match."
+        }
+      }
     },
     "tetrate.api.tcc.spm.alert.v1.Rule.Service": {
       "type": "object",

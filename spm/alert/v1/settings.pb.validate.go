@@ -111,7 +111,7 @@ func (m *Rule) Validate() error {
 	if _, ok := _Rule_MetricName_InLookup[m.GetMetricName()]; !ok {
 		return RuleValidationError{
 			field:  "MetricName",
-			reason: "value must be in list [service_resp_time service_sla service_cpm service_apdex service_p99 service_p95 service_p90 service_p75 service_p50 service_2xx service_4xx service_5xx]",
+			reason: "value must be in list [service_resp_time service_sla service_cpm service_apdex service_p99 service_p95 service_p90 service_p75 service_p50 service_2xx service_4xx service_5xx service_percentile]",
 		}
 	}
 
@@ -220,6 +220,33 @@ func (m *Rule) Validate() error {
 
 	// no validation rules for Severity
 
+	if l := len(m.GetThresholds()); l < 1 || l > 5 {
+		return RuleValidationError{
+			field:  "Thresholds",
+			reason: "value must contain between 1 and 5 items, inclusive",
+		}
+	}
+
+	for idx, item := range m.GetThresholds() {
+		_, _ = idx, item
+
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return RuleValidationError{
+						field:  fmt.Sprintf("Thresholds[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+		}
+
+	}
+
 	return nil
 }
 
@@ -278,18 +305,19 @@ var _ interface {
 } = RuleValidationError{}
 
 var _Rule_MetricName_InLookup = map[string]struct{}{
-	"service_resp_time": {},
-	"service_sla":       {},
-	"service_cpm":       {},
-	"service_apdex":     {},
-	"service_p99":       {},
-	"service_p95":       {},
-	"service_p90":       {},
-	"service_p75":       {},
-	"service_p50":       {},
-	"service_2xx":       {},
-	"service_4xx":       {},
-	"service_5xx":       {},
+	"service_resp_time":  {},
+	"service_sla":        {},
+	"service_cpm":        {},
+	"service_apdex":      {},
+	"service_p99":        {},
+	"service_p95":        {},
+	"service_p90":        {},
+	"service_p75":        {},
+	"service_p50":        {},
+	"service_2xx":        {},
+	"service_4xx":        {},
+	"service_5xx":        {},
+	"service_percentile": {},
 }
 
 // Validate checks the field values on Rule_Service with the rules defined in
@@ -365,3 +393,77 @@ var _ interface {
 } = Rule_ServiceValidationError{}
 
 var _Rule_Service_Name_Pattern = regexp.MustCompile("(?i)^[0-9a-z.~_*\\-]+\\|[0-9a-z.~_*\\-]+\\|[0-9a-z.~_*\\-]+\\|[0-9a-z.~_*\\-]+\\|[0-9a-z.~_*\\-]+$")
+
+// Validate checks the field values on Rule_AlertThreshold with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *Rule_AlertThreshold) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if utf8.RuneCountInString(m.GetValue()) < 1 {
+		return Rule_AlertThresholdValidationError{
+			field:  "Value",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	return nil
+}
+
+// Rule_AlertThresholdValidationError is the validation error returned by
+// Rule_AlertThreshold.Validate if the designated constraints aren't met.
+type Rule_AlertThresholdValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e Rule_AlertThresholdValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e Rule_AlertThresholdValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e Rule_AlertThresholdValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e Rule_AlertThresholdValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e Rule_AlertThresholdValidationError) ErrorName() string {
+	return "Rule_AlertThresholdValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e Rule_AlertThresholdValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sRule_AlertThreshold.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = Rule_AlertThresholdValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = Rule_AlertThresholdValidationError{}
