@@ -13,6 +13,14 @@ import "validate/validate.proto";
 // A set of alert rules.
 message Settings {
   map<string, Rule> rules = 1;
+
+  // Recipient list at application level. Support list of emails as recipient.
+  repeated Recipient recipients = 2;
+}
+
+// Alert recipient.
+message Recipient {
+  string email = 1 [(validate.rules).string.email = true];
 }
 
 // Rule
@@ -100,8 +108,7 @@ message Rule {
 
   message AlertThreshold {
     // The threshold value of a metric; depends on the operator, it triggers alert if the metric
-    // value
-    // is not match.
+    // value is not match.
     string value = 1 [(validate.rules).string.min_len = 1];
   }
 }

@@ -5234,6 +5234,15 @@
       "description": "Possible operators to \"judge\" the current metric value against a particular threshold value.",
       "title": "Operator"
     },
+    "tetrate.api.tcc.spm.alert.v1.Recipient": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        }
+      },
+      "description": "Alert recipient."
+    },
     "tetrate.api.tcc.spm.alert.v1.Rule": {
       "type": "object",
       "properties": {
@@ -5346,6 +5355,13 @@
           "additionalProperties": {
             "$ref": "#/definitions/tetrate.api.tcc.spm.alert.v1.Rule"
           }
+        },
+        "recipients": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.spm.alert.v1.Recipient"
+          },
+          "description": "Recipient list at application level. Support list of emails as recipient."
         }
       },
       "description": "A set of alert rules.",

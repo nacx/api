@@ -1,0 +1,156 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Settings API",
+    "version": "v1",
+    "contact": {
+      "name": "Tetrate.io, Inc.",
+      "url": "https://www.tetrate.io",
+      "email": "info@tetrate.io"
+    }
+  },
+  "host": "TCCHOST",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/tenants/{tenant}/settings/system": {
+      "get": {
+        "operationId": "GetSystemSettings",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.settings.v1.SystemSettings"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "description": "Tenant name.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "SettingsService"
+        ]
+      },
+      "put": {
+        "operationId": "SetSystemSettings",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "description": "Tenant name.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.settings.v1.SystemSettings"
+            }
+          }
+        ],
+        "tags": [
+          "SettingsService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "tetrate.api.settings.v1.SMTPAuthentication": {
+      "type": "string",
+      "enum": [
+        "PLAIN",
+        "LOGIN",
+        "CRAM_MD5"
+      ],
+      "default": "PLAIN",
+      "description": "Supported SMTP Authentication."
+    },
+    "tetrate.api.settings.v1.SMTPSettings": {
+      "type": "object",
+      "properties": {
+        "host": {
+          "type": "string",
+          "description": "SMTP host."
+        },
+        "port": {
+          "type": "integer",
+          "format": "int64",
+          "description": "SMTP port."
+        },
+        "username": {
+          "type": "string",
+          "description": "SMTP Username."
+        },
+        "password": {
+          "type": "string",
+          "description": "SMTP Password."
+        },
+        "useTls": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": "Use TLS or not. Default to false."
+        },
+        "authentication": {
+          "$ref": "#/definitions/tetrate.api.settings.v1.SMTPAuthentication",
+          "title": "Authentication methods. Default to PLAIN"
+        },
+        "fromAddress": {
+          "type": "string",
+          "description": "From email address."
+        }
+      },
+      "description": "Settings for SMTP client.",
+      "title": "SMTPSettings"
+    },
+    "tetrate.api.settings.v1.SystemSettings": {
+      "type": "object",
+      "properties": {
+        "tenant": {
+          "type": "string",
+          "description": "Tenant name."
+        },
+        "smtpSettings": {
+          "$ref": "#/definitions/tetrate.api.settings.v1.SMTPSettings",
+          "description": "SMTP Settings."
+        }
+      },
+      "description": "System settings consisted of SMTP settings and another system settings to be added in the future."
+    }
+  }
+}

@@ -1,0 +1,68 @@
+// Copyright (c) Tetrate, Inc 2020 All Rights Reserved.
+
+syntax = "proto3";
+
+package tetrate.api.settings.v1;
+option go_package = "github.com/tetrateio/tetrate/api/settings/v1;settingsv1";
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "validate/validate.proto";
+
+// Settings Service
+//
+// The settings service provides access to the system settings.
+service SettingsService {
+  // Get system settings return system settings for specific tenant.
+  rpc GetSystemSettings(GetSystemSettingsRequest) returns (SystemSettings) {
+    option (google.api.http).get = "/v1/tenants/{tenant}/settings/system";
+  };
+
+  // Set system settings set system settings for specific tenant.
+  rpc SetSystemSettings(SystemSettings) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      put: "/v1/tenants/{tenant}/settings/system"
+      body: "*"
+    };
+  }
+}
+
+message GetSystemSettingsRequest {
+  // Tenant name.
+  string tenant = 1 [(validate.rules).string.min_len = 1];
+}
+
+// System settings consisted of SMTP settings and another system settings to be added in the future.
+message SystemSettings {
+  // Tenant name.
+  string tenant = 1 [(validate.rules).string.min_len = 1];
+  // SMTP Settings.
+  SMTPSettings smtp_settings = 3;
+}
+
+// SMTPSettings
+//
+// Settings for SMTP client.
+message SMTPSettings {
+  // SMTP host.
+  string host = 1 [(validate.rules).string.min_len = 1];
+  // SMTP port.
+  uint32 port = 2 [(validate.rules).uint32.gte = 0];
+  // SMTP Username.
+  string username = 3 [(validate.rules).string.min_len = 1];
+  // SMTP Password.
+  string password = 4 [(validate.rules).string.min_len = 1];
+  // Use TLS or not. Default to false.
+  bool use_tls = 5;
+  // Authentication methods. Default to PLAIN
+  SMTPAuthentication authentication = 6 [(validate.rules).enum.defined_only = true];
+  // From email address.
+  string from_address = 7 [(validate.rules).string.min_len = 1];
+}
+
+// Supported SMTP Authentication.
+enum SMTPAuthentication {
+  PLAIN = 0;
+  LOGIN = 1;
+  CRAM_MD5 = 2;
+}
