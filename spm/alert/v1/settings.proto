@@ -46,8 +46,7 @@ message Rule {
 
   // The threshold value of a metric; depends on the operator, it triggers alert if the metric value
   // is not match. 
-  // This field is deprecated and will be ignored. Use thresholds that support multiple values.
-  uint32 threshold = 3 [deprecated = true, (validate.rules).uint32 = { gte: 0, lte: 100 }];
+  uint32 threshold = 3 [(validate.rules).uint32 = { gte: 0, lte: 100 }];
   // clang-format on
 
   // The operator. E.g. greater-than, lower-than and equal.
@@ -101,8 +100,9 @@ message Rule {
   Severity severity = 14;
 
   // Thresholds value as array to set multiple threshold values.
+  // If this value is set, single value threshold will be ignored
   repeated AlertThreshold thresholds = 15 [(validate.rules).repeated = {
-    min_items: 1,
+    min_items: 0,
     max_items: 5
   }];
 

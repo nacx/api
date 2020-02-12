@@ -362,10 +362,10 @@ func (m *Rule) Validate() error {
 
 	// no validation rules for Severity
 
-	if l := len(m.GetThresholds()); l < 1 || l > 5 {
+	if len(m.GetThresholds()) > 5 {
 		return RuleValidationError{
 			field:  "Thresholds",
-			reason: "value must contain between 1 and 5 items, inclusive",
+			reason: "value must contain no more than 5 item(s)",
 		}
 	}
 

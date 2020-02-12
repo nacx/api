@@ -5257,7 +5257,7 @@
         "threshold": {
           "type": "integer",
           "format": "int64",
-          "description": "The threshold value of a metric; depends on the operator, it triggers alert if the metric value is not match.  This field is deprecated and will be ignored. Use thresholds that support multiple values."
+          "description": "The threshold value of a metric; depends on the operator, it triggers alert if the metric value is not match."
         },
         "operator": {
           "$ref": "#/definitions/tetrate.api.tcc.spm.alert.v1.Operator",
@@ -5322,7 +5322,7 @@
           "items": {
             "$ref": "#/definitions/tetrate.api.tcc.spm.alert.v1.Rule.AlertThreshold"
           },
-          "description": "Thresholds value as array to set multiple threshold values."
+          "title": "Thresholds value as array to set multiple threshold values. If this value is set, single value threshold will be ignored"
         }
       },
       "description": "An alert rule defines the condition when an alert should be triggered.",
