@@ -5221,6 +5221,30 @@
         }
       }
     },
+    "tetrate.api.tcc.spm.alert.v1.Notification": {
+      "type": "object",
+      "properties": {
+        "condition": {
+          "$ref": "#/definitions/tetrate.api.tcc.spm.alert.v1.NotificationCondition",
+          "description": "Notification condition type."
+        },
+        "recipients": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.spm.alert.v1.Recipient"
+          },
+          "description": "Recipient list. Support list of email addresses as recipient."
+        }
+      }
+    },
+    "tetrate.api.tcc.spm.alert.v1.NotificationCondition": {
+      "type": "string",
+      "enum": [
+        "METRIC_ALERT_CREATED"
+      ],
+      "default": "METRIC_ALERT_CREATED",
+      "description": "Supported notification condition type.   - METRIC_ALERT_CREATED: Send notification when there are alert."
+    },
     "tetrate.api.tcc.spm.alert.v1.Operator": {
       "type": "string",
       "enum": [
@@ -5361,7 +5385,14 @@
           "items": {
             "$ref": "#/definitions/tetrate.api.tcc.spm.alert.v1.Recipient"
           },
-          "description": "Recipient list at application level. Support list of emails as recipient."
+          "description": "Recipient list. This field is deprecated."
+        },
+        "notifications": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.spm.alert.v1.Notification"
+          },
+          "description": "Application level notification settings."
         }
       },
       "description": "A set of alert rules.",

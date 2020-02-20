@@ -14,13 +14,28 @@ import "validate/validate.proto";
 message Settings {
   map<string, Rule> rules = 1;
 
-  // Recipient list at application level. Support list of emails as recipient.
+  // Recipient list. This field is deprecated.
+  repeated Recipient recipients = 2 [deprecated = true];
+  // Application level notification settings.
+  repeated Notification notifications = 3;
+}
+
+message Notification {
+  // Notification condition type.
+  NotificationCondition condition = 1 [(validate.rules).enum.defined_only = true];
+  // Recipient list. Support list of email addresses as recipient.
   repeated Recipient recipients = 2;
 }
 
 // Alert recipient.
 message Recipient {
   string email = 1 [(validate.rules).string.email = true];
+}
+
+// Supported notification condition type.
+enum NotificationCondition {
+  // Send notification when there are alert.
+  METRIC_ALERT_CREATED = 0;
 }
 
 // Rule

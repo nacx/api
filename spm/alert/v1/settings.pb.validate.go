@@ -62,6 +62,26 @@ func (m *Settings) Validate() error {
 
 	}
 
+	for idx, item := range m.GetNotifications() {
+		_, _ = idx, item
+
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return SettingsValidationError{
+						field:  fmt.Sprintf("Notifications[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+		}
+
+	}
+
 	return nil
 }
 
@@ -118,6 +138,98 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = SettingsValidationError{}
+
+// Validate checks the field values on Notification with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *Notification) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if _, ok := NotificationCondition_name[int32(m.GetCondition())]; !ok {
+		return NotificationValidationError{
+			field:  "Condition",
+			reason: "value must be one of the defined enum values",
+		}
+	}
+
+	for idx, item := range m.GetRecipients() {
+		_, _ = idx, item
+
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return NotificationValidationError{
+						field:  fmt.Sprintf("Recipients[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// NotificationValidationError is the validation error returned by
+// Notification.Validate if the designated constraints aren't met.
+type NotificationValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e NotificationValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e NotificationValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e NotificationValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e NotificationValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e NotificationValidationError) ErrorName() string { return "NotificationValidationError" }
+
+// Error satisfies the builtin error interface
+func (e NotificationValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sNotification.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = NotificationValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = NotificationValidationError{}
 
 // Validate checks the field values on Recipient with the rules defined in the
 // proto definition for this message. If any rules are violated, an error is returned.
