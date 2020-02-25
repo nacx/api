@@ -1,0 +1,166 @@
+// Copyright (c) Tetrate, Inc 2020 All Rights Reserved.
+
+syntax = "proto3";
+
+package tetrate.api.tsboperator.v1alpha1;
+option go_package = "github.com/tetrateio/tetrate/api/operator/tsboperator/v1alpha1";
+
+import "component.proto";
+// heavily influenced by istio operator proto
+/*
+TsbUserOperatorSpec is an API for managing a TSB management plane. It is used to overlay user
+configuration over prebuilt TSB configuration.
+
+Deeper customization is possible at three levels:
+
+1. TSBComponentSpec
+
+Components can be enabled/disabled and Kubernetes resources can be modified. Core components of TSB
+will alway
+stay enabled irrespective of user configuration
+
+2. values.yaml
+
+The entirety of values.yaml settings is accessible through TsbOperatorSpec.values. This API should
+be used if K8s
+overlays are not available
+
+
+3. Kubernetes resource overlays
+
+Once a manifest is rendered, a further customization can be applied by specifying Kubernetes
+resource overlays.
+
+EXAMPLES
+
+1. Default TSB install
+
+    ```yaml
+    spec:
+    ```
+
+1. Default install with all components explicitly enabled.
+
+    ```yaml
+    spec:
+      components:
+        api_server:
+          enabled: true
+        iam_server:
+          enabled: true
+        web_ui:
+          enabled: true
+        front_envoy:
+          enabled: true
+        spm_server:
+          enabled: true
+        spm_sync:
+          enabled: true
+        team_sync:
+          enabled: true
+        ldap:
+          enabled: true
+        oap:
+          enabled: true
+        postgres:
+          enabled: true
+        elasticsearch:
+          enabled: true
+        zipkin:
+          enabled: true
+        health:
+          enabled: true
+    ```
+
+1. Default install with specialized Kubernetes settings for elasticsearch
+
+    ```yaml
+    spec:
+      components:
+        elasticsearch:
+          k8s:
+            resources:
+              limits:
+                memory: 9Gi
+              requests:
+                memory: 7Gi
+    ```
+
+1. Default install with values.yaml customizations for elasticsearch access
+
+    ```yaml
+    spec:
+      values:
+        global:
+          elasticsearch:
+            protocol: https
+            ssl:
+              enabled: true
+    ```
+
+*/
+
+// TsbUserOperatorSpec defines the desired installed state of TSB management plane components.
+// The spec is a used to define a customization of the prebuilt configuration that is supplied with
+// TSB release. Because the spec is a customization API, specifying an empty TsbOperatorSpec
+// results in a default TSB component values.
+message TsbUserOperatorSpec {
+  // Default root for docker image paths e.g. docker.io/tetrate
+  string hub = 11;
+  // Default version tag for docker images e.g. 0.6.9
+  string tag = 12;
+  // Namespace for TSB
+  string tsb_namespace = 13;
+
+  // Kubernetes resource settings, enablement and component-specific settings that are not internal
+  // to the component.
+  TsbComponentSetSpec components = 50;
+
+  // Overrides for default values.yaml. This is a validated pass-through to Helm templates.
+  // See the Helm installation options for schema details:
+  // Most of the thing that is available in TsbOperatorSpec should be set above rather than using
+  // the
+  // passthrough. This includes Kubernetes resource settings for components in
+  // KubernetesResourcesSpec.
+  TypeMapStringInterface values = 100;
+}
+
+// Observed state of TsbOperator
+message InstallStatus {
+  // Status describes the current state of a component.
+  enum Status {
+    // Component is not present.
+    NONE = 0;
+    // Component is being updated to a different version.
+    UPDATING = 1;
+    // Controller has started but not yet completed reconciliation loop for the component.
+    RECONCILING = 2;
+    // Component is healthy.
+    HEALTHY = 3;
+    // Component is in an error state.
+    ERROR = 4;
+  }
+  // VersionStatus is the status and version of a component.
+  message VersionStatus {
+    string version = 1;
+    Status status = 2;
+    string status_string = 3;
+    string error = 4;
+  }
+  // Overall status of all components controlled by the operator.
+  // - If all components have status NONE, overall status is NONE.
+  // - If all components are HEALTHY, overall status is HEALTHY.
+  // - If one or more components are RECONCILING and others are HEALTHY, overall status is
+  // RECONCILING.
+  // - If one or more components are UPDATING and others are HEALTHY, overall status is UPDATING.
+  // - If components are a mix of RECONCILING, UPDATING and HEALTHY, overall status is UPDATING.
+  // - If any component is in ERROR state, overall status is ERROR.
+  Status status = 1;
+  // Individual status of each component controlled by the operator. The map key is the name of the
+  // component.
+  map<string, VersionStatus> component_status = 2;
+}
+
+// GOTYPE: map[string]interface{}
+message TypeMapStringInterface {
+}

@@ -1,0 +1,93 @@
+// Copyright (c) Tetrate, Inc 2020 All Rights Reserved.
+
+syntax = "proto3";
+
+package tetrate.api.tsboperator.v1alpha1;
+option go_package = "github.com/tetrateio/tetrate/api/operator/tsboperator/v1alpha1";
+
+import "operator/common/kubernetes.proto";
+
+// heavily influenced by istio operator proto
+
+// TsbComponentSpec defines the desired installed state of TSB components.
+message TsbComponentSetSpec {
+  BaseComponentSpec base = 1;
+  ComponentSpec api_server = 2;
+  ComponentSpec iam_server = 3;
+  ComponentSpec web_ui = 4;
+  ComponentSpec front_envoy = 5;
+  ComponentSpec spm_server = 6;
+  ComponentSpec spm_sync = 7;
+  ComponentSpec team_sync = 8;
+  ComponentSpec ldap = 9;
+  ComponentSpec oap = 10;
+  ComponentSpec postgres = 11;
+  ComponentSpec elasticsearch = 12;
+  ComponentSpec zipkin = 13;
+  ComponentSpec health = 14;
+}
+
+// Configuration for base component.
+message BaseComponentSpec {
+  // Selects whether this component is installed.
+  TypeBoolValueForPB enabled = 1;
+}
+
+// Configuration for internal components.
+message ComponentSpec {
+  // Selects whether this component is installed.
+  TypeBoolValueForPB enabled = 1;
+  // Namespace for the component. If left empty, this will default to top level namespace
+  string namespace = 2;
+  // Hub for the component (overrides top level hub setting).
+  string hub = 3;
+  // Tag for the component (overrides top level tag setting).
+  string tag = 4;
+
+  // Arbitrary install time configuration for the component.
+  TypeInterface spec = 30;
+
+  // Kubernetes resource spec.
+  KubernetesResourcesSpec k8s = 50;
+}
+
+// KubernetesResourcesConfig is a common set of k8s resource configs for components.
+// This spec should eventually replace the values.yaml of the helm template
+message KubernetesResourcesSpec {
+  // Deployment environment variables.
+  // https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/
+  repeated operator.common.EnvVar env = 2;
+  // k8s imagePullPolicy.
+  // https://kubernetes.io/docs/concepts/containers/images/
+  string image_pull_policy = 4;
+  // k8s pod annotations.
+  // https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+  map<string, string> pod_annotations = 7;
+  // k8s readinessProbe settings.
+  // https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
+  // k8s.io.api.core.v1.Probe readiness_probe = 9;
+  operator.common.ReadinessProbe readiness_probe = 9;
+  // k8s Deployment replicas setting.
+  // https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+  uint32 replica_count = 10;
+  // k8s resources settings.
+  // https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container
+  operator.common.Resources resources = 11;
+  // k8s Service settings.
+  // https://kubernetes.io/docs/concepts/services-networking/service/
+  operator.common.ServiceSpec service = 12;
+  // k8s deployment strategy.
+  // https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+  operator.common.DeploymentStrategy strategy = 13;
+  // k8s service annotations.
+  // https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+  map<string, string> service_annotations = 15;
+}
+
+// GOTYPE: *BoolValueForPB
+message TypeBoolValueForPB {
+}
+
+// GOTYPE: interface{}
+message TypeInterface {
+}
