@@ -33,27 +33,36 @@ var (
 	_ = types.DynamicAny{}
 )
 
-// Validate checks the field values on GetSystemSettingsRequest with the rules
+// Validate checks the field values on GetSettingsRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
-func (m *GetSystemSettingsRequest) Validate() error {
+func (m *GetSettingsRequest) Validate() error {
 	if m == nil {
 		return nil
 	}
 
+	// no validation rules for Name
+
 	if utf8.RuneCountInString(m.GetTenant()) < 1 {
-		return GetSystemSettingsRequestValidationError{
+		return GetSettingsRequestValidationError{
 			field:  "Tenant",
 			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if _, ok := _GetSettingsRequest_Id_InLookup[m.GetId()]; !ok {
+		return GetSettingsRequestValidationError{
+			field:  "Id",
+			reason: "value must be in list [system]",
 		}
 	}
 
 	return nil
 }
 
-// GetSystemSettingsRequestValidationError is the validation error returned by
-// GetSystemSettingsRequest.Validate if the designated constraints aren't met.
-type GetSystemSettingsRequestValidationError struct {
+// GetSettingsRequestValidationError is the validation error returned by
+// GetSettingsRequest.Validate if the designated constraints aren't met.
+type GetSettingsRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -61,24 +70,24 @@ type GetSystemSettingsRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e GetSystemSettingsRequestValidationError) Field() string { return e.field }
+func (e GetSettingsRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e GetSystemSettingsRequestValidationError) Reason() string { return e.reason }
+func (e GetSettingsRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e GetSystemSettingsRequestValidationError) Cause() error { return e.cause }
+func (e GetSettingsRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e GetSystemSettingsRequestValidationError) Key() bool { return e.key }
+func (e GetSettingsRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e GetSystemSettingsRequestValidationError) ErrorName() string {
-	return "GetSystemSettingsRequestValidationError"
+func (e GetSettingsRequestValidationError) ErrorName() string {
+	return "GetSettingsRequestValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e GetSystemSettingsRequestValidationError) Error() string {
+func (e GetSettingsRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -90,14 +99,14 @@ func (e GetSystemSettingsRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sGetSystemSettingsRequest.%s: %s%s",
+		"invalid %sGetSettingsRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = GetSystemSettingsRequestValidationError{}
+var _ error = GetSettingsRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -105,7 +114,118 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = GetSystemSettingsRequestValidationError{}
+} = GetSettingsRequestValidationError{}
+
+var _GetSettingsRequest_Id_InLookup = map[string]struct{}{
+	"system": {},
+}
+
+// Validate checks the field values on Settings with the rules defined in the
+// proto definition for this message. If any rules are violated, an error is returned.
+func (m *Settings) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Name
+
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return SettingsValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if _, ok := _Settings_Id_InLookup[m.GetId()]; !ok {
+		return SettingsValidationError{
+			field:  "Id",
+			reason: "value must be in list [system]",
+		}
+	}
+
+	// no validation rules for Etag
+
+	switch m.Settings.(type) {
+
+	case *Settings_SystemSettings:
+
+		{
+			tmp := m.GetSystemSettings()
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return SettingsValidationError{
+						field:  "SystemSettings",
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// SettingsValidationError is the validation error returned by
+// Settings.Validate if the designated constraints aren't met.
+type SettingsValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SettingsValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SettingsValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SettingsValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SettingsValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SettingsValidationError) ErrorName() string { return "SettingsValidationError" }
+
+// Error satisfies the builtin error interface
+func (e SettingsValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSettings.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SettingsValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SettingsValidationError{}
+
+var _Settings_Id_InLookup = map[string]struct{}{
+	"system": {},
+}
 
 // Validate checks the field values on SystemSettings with the rules defined in
 // the proto definition for this message. If any rules are violated, an error
@@ -113,13 +233,6 @@ var _ interface {
 func (m *SystemSettings) Validate() error {
 	if m == nil {
 		return nil
-	}
-
-	if utf8.RuneCountInString(m.GetTenant()) < 1 {
-		return SystemSettingsValidationError{
-			field:  "Tenant",
-			reason: "value length must be at least 1 runes",
-		}
 	}
 
 	{
@@ -302,3 +415,199 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = SMTPSettingsValidationError{}
+
+// Validate checks the field values on GetSettingsPolicyRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *GetSettingsPolicyRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Name
+
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return GetSettingsPolicyRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if _, ok := _GetSettingsPolicyRequest_Id_InLookup[m.GetId()]; !ok {
+		return GetSettingsPolicyRequestValidationError{
+			field:  "Id",
+			reason: "value must be in list [system]",
+		}
+	}
+
+	return nil
+}
+
+// GetSettingsPolicyRequestValidationError is the validation error returned by
+// GetSettingsPolicyRequest.Validate if the designated constraints aren't met.
+type GetSettingsPolicyRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetSettingsPolicyRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetSettingsPolicyRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetSettingsPolicyRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetSettingsPolicyRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetSettingsPolicyRequestValidationError) ErrorName() string {
+	return "GetSettingsPolicyRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetSettingsPolicyRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetSettingsPolicyRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetSettingsPolicyRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetSettingsPolicyRequestValidationError{}
+
+var _GetSettingsPolicyRequest_Id_InLookup = map[string]struct{}{
+	"system": {},
+}
+
+// Validate checks the field values on SetSettingsPolicyRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *SetSettingsPolicyRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Name
+
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return SetSettingsPolicyRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if _, ok := _SetSettingsPolicyRequest_Id_InLookup[m.GetId()]; !ok {
+		return SetSettingsPolicyRequestValidationError{
+			field:  "Id",
+			reason: "value must be in list [system]",
+		}
+	}
+
+	if m.GetPolicy() == nil {
+		return SetSettingsPolicyRequestValidationError{
+			field:  "Policy",
+			reason: "value is required",
+		}
+	}
+
+	{
+		tmp := m.GetPolicy()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return SetSettingsPolicyRequestValidationError{
+					field:  "Policy",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+	}
+
+	return nil
+}
+
+// SetSettingsPolicyRequestValidationError is the validation error returned by
+// SetSettingsPolicyRequest.Validate if the designated constraints aren't met.
+type SetSettingsPolicyRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SetSettingsPolicyRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SetSettingsPolicyRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SetSettingsPolicyRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SetSettingsPolicyRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SetSettingsPolicyRequestValidationError) ErrorName() string {
+	return "SetSettingsPolicyRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e SetSettingsPolicyRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSetSettingsPolicyRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SetSettingsPolicyRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SetSettingsPolicyRequestValidationError{}
+
+var _SetSettingsPolicyRequest_Id_InLookup = map[string]struct{}{
+	"system": {},
+}

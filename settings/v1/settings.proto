@@ -9,35 +9,81 @@ import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 import "validate/validate.proto";
 
+import "permissions.proto";
+import "rbac.proto";
+
 // Settings Service
 //
-// The settings service provides access to the system settings.
+// The settings service provides access to the settings.
+// Currently support system settings. Other settings will be added in the future.
 service SettingsService {
-  // Get system settings return system settings for specific tenant.
-  rpc GetSystemSettings(GetSystemSettingsRequest) returns (SystemSettings) {
-    option (google.api.http).get = "/v1/tenants/{tenant}/settings/system";
+  // Get settings return settings with specified id for specific tenant.
+  rpc GetSettings(GetSettingsRequest) returns (Settings) {
+    option (tetrate.api.q.rbac.v1.requires) = {
+      permissions: READ
+    };
+    option (google.api.http).get = "/v1/tenants/{tenant}/settings/{id}";
   };
 
-  // Set system settings set system settings for specific tenant.
-  rpc SetSystemSettings(SystemSettings) returns (google.protobuf.Empty) {
+  // Set settings set settings with specified id for specific tenant.
+  rpc SetSettings(Settings) returns (google.protobuf.Empty) {
+    option (tetrate.api.q.rbac.v1.requires) = {
+      permissions: WRITE
+    };
     option (google.api.http) = {
-      put: "/v1/tenants/{tenant}/settings/system"
+      put: "/v1/tenants/{tenant}/settings/{id}"
       body: "*"
     };
   }
+
+  rpc GetSettingsPolicy(GetSettingsPolicyRequest) returns (tetrate.api.q.rbac.v1.Policy) {
+    option (tetrate.api.q.rbac.v1.requires) = {
+      permissions: SET_POLICY
+    };
+    option (google.api.http) = {
+      get: "/v1/tenants/{tenant}/settings/{id}/policy"
+    };
+  };
+
+  rpc SetSettingsPolicy(SetSettingsPolicyRequest) returns (google.protobuf.Empty) {
+    option (tetrate.api.q.rbac.v1.requires) = {
+      permissions: SET_POLICY
+    };
+    option (google.api.http) = {
+      put: "/v1/tenants/{tenant}/settings/{id}/policy"
+      body: "policy"
+    };
+  };
 }
 
-message GetSystemSettingsRequest {
-  // Tenant name.
-  string tenant = 1 [(validate.rules).string.min_len = 1];
+message GetSettingsRequest {
+  // Internal use only. Auto populated field.
+  string name = 1;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string id = 3 [(validate.rules).string = {in: ["system"]}];
+}
+
+// Settings consisted of SMTP settings and another settings to be added in the future.
+message Settings {
+  // Internal use only. Auto populated field.
+  string name = 1;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string id = 3 [(validate.rules).string = {in: ["system"]}];
+  // Etag to guard concurrent modifications to the settings.
+  string etag = 4;
+
+  // Available settings. This corresponds to tab in settings page.
+  // Note that message type in oneof must match with id in the request.
+  // For example, SystemSettings only valid for id "system".
+  oneof settings {
+    // System Settings.
+    SystemSettings system_settings = 5;
+  }
 }
 
 // System settings consisted of SMTP settings and another system settings to be added in the future.
 message SystemSettings {
-  // Tenant name.
-  string tenant = 1 [(validate.rules).string.min_len = 1];
-  // SMTP Settings.
-  SMTPSettings smtp_settings = 3;
+  SMTPSettings smtp_settings = 1;
 }
 
 // SMTPSettings
@@ -65,4 +111,19 @@ enum SMTPAuthentication {
   PLAIN = 0;
   LOGIN = 1;
   CRAM_MD5 = 2;
+}
+
+message GetSettingsPolicyRequest {
+  // Internal use only. Auto populated field.
+  string name = 1;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string id = 3 [(validate.rules).string = {in: ["system"]}];
+}
+
+message SetSettingsPolicyRequest {
+  // Internal use only. Auto populated field.
+  string name = 1;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string id = 3 [(validate.rules).string = {in: ["system"]}];
+  tetrate.api.q.rbac.v1.Policy policy = 4 [(validate.rules).message.required = true];
 }

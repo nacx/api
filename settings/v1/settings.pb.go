@@ -9,6 +9,7 @@ import (
 	_ "github.com/envoyproxy/protoc-gen-validate/validate"
 	proto "github.com/gogo/protobuf/proto"
 	types "github.com/gogo/protobuf/types"
+	v1 "github.com/tetrateio/tetrate/api/q/rbac/v1"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -58,26 +59,28 @@ func (SMTPAuthentication) EnumDescriptor() ([]byte, []int) {
 	return fileDescriptor_6c7cab62fa432213, []int{0}
 }
 
-type GetSystemSettingsRequest struct {
-	// Tenant name.
-	Tenant               string   `protobuf:"bytes,1,opt,name=tenant,proto3" json:"tenant,omitempty"`
+type GetSettingsRequest struct {
+	// Internal use only. Auto populated field.
+	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Tenant               string   `protobuf:"bytes,2,opt,name=tenant,proto3" json:"tenant,omitempty"`
+	Id                   string   `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *GetSystemSettingsRequest) Reset()         { *m = GetSystemSettingsRequest{} }
-func (m *GetSystemSettingsRequest) String() string { return proto.CompactTextString(m) }
-func (*GetSystemSettingsRequest) ProtoMessage()    {}
-func (*GetSystemSettingsRequest) Descriptor() ([]byte, []int) {
+func (m *GetSettingsRequest) Reset()         { *m = GetSettingsRequest{} }
+func (m *GetSettingsRequest) String() string { return proto.CompactTextString(m) }
+func (*GetSettingsRequest) ProtoMessage()    {}
+func (*GetSettingsRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_6c7cab62fa432213, []int{0}
 }
-func (m *GetSystemSettingsRequest) XXX_Unmarshal(b []byte) error {
+func (m *GetSettingsRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *GetSystemSettingsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *GetSettingsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_GetSystemSettingsRequest.Marshal(b, m, deterministic)
+		return xxx_messageInfo_GetSettingsRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -87,31 +90,204 @@ func (m *GetSystemSettingsRequest) XXX_Marshal(b []byte, deterministic bool) ([]
 		return b[:n], nil
 	}
 }
-func (m *GetSystemSettingsRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetSystemSettingsRequest.Merge(m, src)
+func (m *GetSettingsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetSettingsRequest.Merge(m, src)
 }
-func (m *GetSystemSettingsRequest) XXX_Size() int {
+func (m *GetSettingsRequest) XXX_Size() int {
 	return m.Size()
 }
-func (m *GetSystemSettingsRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_GetSystemSettingsRequest.DiscardUnknown(m)
+func (m *GetSettingsRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetSettingsRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_GetSystemSettingsRequest proto.InternalMessageInfo
+var xxx_messageInfo_GetSettingsRequest proto.InternalMessageInfo
 
-func (m *GetSystemSettingsRequest) GetTenant() string {
+func (m *GetSettingsRequest) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *GetSettingsRequest) GetTenant() string {
 	if m != nil {
 		return m.Tenant
 	}
 	return ""
 }
 
+func (m *GetSettingsRequest) GetId() string {
+	if m != nil {
+		return m.Id
+	}
+	return ""
+}
+
+// Settings consisted of SMTP settings and another settings to be added in the future.
+type Settings struct {
+	// Internal use only. Auto populated field.
+	Name   string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Tenant string `protobuf:"bytes,2,opt,name=tenant,proto3" json:"tenant,omitempty"`
+	Id     string `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
+	// Etag to guard concurrent modifications to the settings.
+	Etag string `protobuf:"bytes,4,opt,name=etag,proto3" json:"etag,omitempty"`
+	// Available settings. This corresponds to tab in settings page.
+	// Note that message type in oneof must match with id in the request.
+	// For example, SystemSettings only valid for id "system".
+	//
+	// Types that are valid to be assigned to Settings:
+	//	*Settings_SystemSettings
+	Settings             isSettings_Settings `protobuf_oneof:"settings"`
+	XXX_NoUnkeyedLiteral struct{}            `json:"-"`
+	XXX_unrecognized     []byte              `json:"-"`
+	XXX_sizecache        int32               `json:"-"`
+}
+
+func (m *Settings) Reset()         { *m = Settings{} }
+func (m *Settings) String() string { return proto.CompactTextString(m) }
+func (*Settings) ProtoMessage()    {}
+func (*Settings) Descriptor() ([]byte, []int) {
+	return fileDescriptor_6c7cab62fa432213, []int{1}
+}
+func (m *Settings) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *Settings) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_Settings.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *Settings) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Settings.Merge(m, src)
+}
+func (m *Settings) XXX_Size() int {
+	return m.Size()
+}
+func (m *Settings) XXX_DiscardUnknown() {
+	xxx_messageInfo_Settings.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Settings proto.InternalMessageInfo
+
+type isSettings_Settings interface {
+	isSettings_Settings()
+	MarshalTo([]byte) (int, error)
+	Size() int
+}
+
+type Settings_SystemSettings struct {
+	SystemSettings *SystemSettings `protobuf:"bytes,5,opt,name=system_settings,json=systemSettings,proto3,oneof"`
+}
+
+func (*Settings_SystemSettings) isSettings_Settings() {}
+
+func (m *Settings) GetSettings() isSettings_Settings {
+	if m != nil {
+		return m.Settings
+	}
+	return nil
+}
+
+func (m *Settings) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *Settings) GetTenant() string {
+	if m != nil {
+		return m.Tenant
+	}
+	return ""
+}
+
+func (m *Settings) GetId() string {
+	if m != nil {
+		return m.Id
+	}
+	return ""
+}
+
+func (m *Settings) GetEtag() string {
+	if m != nil {
+		return m.Etag
+	}
+	return ""
+}
+
+func (m *Settings) GetSystemSettings() *SystemSettings {
+	if x, ok := m.GetSettings().(*Settings_SystemSettings); ok {
+		return x.SystemSettings
+	}
+	return nil
+}
+
+// XXX_OneofFuncs is for the internal use of the proto package.
+func (*Settings) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
+	return _Settings_OneofMarshaler, _Settings_OneofUnmarshaler, _Settings_OneofSizer, []interface{}{
+		(*Settings_SystemSettings)(nil),
+	}
+}
+
+func _Settings_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
+	m := msg.(*Settings)
+	// settings
+	switch x := m.Settings.(type) {
+	case *Settings_SystemSettings:
+		_ = b.EncodeVarint(5<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.SystemSettings); err != nil {
+			return err
+		}
+	case nil:
+	default:
+		return fmt.Errorf("Settings.Settings has unexpected type %T", x)
+	}
+	return nil
+}
+
+func _Settings_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
+	m := msg.(*Settings)
+	switch tag {
+	case 5: // settings.system_settings
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(SystemSettings)
+		err := b.DecodeMessage(msg)
+		m.Settings = &Settings_SystemSettings{msg}
+		return true, err
+	default:
+		return false, nil
+	}
+}
+
+func _Settings_OneofSizer(msg proto.Message) (n int) {
+	m := msg.(*Settings)
+	// settings
+	switch x := m.Settings.(type) {
+	case *Settings_SystemSettings:
+		s := proto.Size(x.SystemSettings)
+		n += 1 // tag and wire
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case nil:
+	default:
+		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
+	}
+	return n
+}
+
 // System settings consisted of SMTP settings and another system settings to be added in the future.
 type SystemSettings struct {
-	// Tenant name.
-	Tenant string `protobuf:"bytes,1,opt,name=tenant,proto3" json:"tenant,omitempty"`
-	// SMTP Settings.
-	SmtpSettings         *SMTPSettings `protobuf:"bytes,3,opt,name=smtp_settings,json=smtpSettings,proto3" json:"smtp_settings,omitempty"`
+	SmtpSettings         *SMTPSettings `protobuf:"bytes,1,opt,name=smtp_settings,json=smtpSettings,proto3" json:"smtp_settings,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
 	XXX_unrecognized     []byte        `json:"-"`
 	XXX_sizecache        int32         `json:"-"`
@@ -121,7 +297,7 @@ func (m *SystemSettings) Reset()         { *m = SystemSettings{} }
 func (m *SystemSettings) String() string { return proto.CompactTextString(m) }
 func (*SystemSettings) ProtoMessage()    {}
 func (*SystemSettings) Descriptor() ([]byte, []int) {
-	return fileDescriptor_6c7cab62fa432213, []int{1}
+	return fileDescriptor_6c7cab62fa432213, []int{2}
 }
 func (m *SystemSettings) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -149,13 +325,6 @@ func (m *SystemSettings) XXX_DiscardUnknown() {
 }
 
 var xxx_messageInfo_SystemSettings proto.InternalMessageInfo
-
-func (m *SystemSettings) GetTenant() string {
-	if m != nil {
-		return m.Tenant
-	}
-	return ""
-}
 
 func (m *SystemSettings) GetSmtpSettings() *SMTPSettings {
 	if m != nil {
@@ -191,7 +360,7 @@ func (m *SMTPSettings) Reset()         { *m = SMTPSettings{} }
 func (m *SMTPSettings) String() string { return proto.CompactTextString(m) }
 func (*SMTPSettings) ProtoMessage()    {}
 func (*SMTPSettings) Descriptor() ([]byte, []int) {
-	return fileDescriptor_6c7cab62fa432213, []int{2}
+	return fileDescriptor_6c7cab62fa432213, []int{3}
 }
 func (m *SMTPSettings) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -269,52 +438,203 @@ func (m *SMTPSettings) GetFromAddress() string {
 	return ""
 }
 
+type GetSettingsPolicyRequest struct {
+	// Internal use only. Auto populated field.
+	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Tenant               string   `protobuf:"bytes,2,opt,name=tenant,proto3" json:"tenant,omitempty"`
+	Id                   string   `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *GetSettingsPolicyRequest) Reset()         { *m = GetSettingsPolicyRequest{} }
+func (m *GetSettingsPolicyRequest) String() string { return proto.CompactTextString(m) }
+func (*GetSettingsPolicyRequest) ProtoMessage()    {}
+func (*GetSettingsPolicyRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_6c7cab62fa432213, []int{4}
+}
+func (m *GetSettingsPolicyRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *GetSettingsPolicyRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_GetSettingsPolicyRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *GetSettingsPolicyRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetSettingsPolicyRequest.Merge(m, src)
+}
+func (m *GetSettingsPolicyRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *GetSettingsPolicyRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetSettingsPolicyRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetSettingsPolicyRequest proto.InternalMessageInfo
+
+func (m *GetSettingsPolicyRequest) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *GetSettingsPolicyRequest) GetTenant() string {
+	if m != nil {
+		return m.Tenant
+	}
+	return ""
+}
+
+func (m *GetSettingsPolicyRequest) GetId() string {
+	if m != nil {
+		return m.Id
+	}
+	return ""
+}
+
+type SetSettingsPolicyRequest struct {
+	// Internal use only. Auto populated field.
+	Name                 string     `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Tenant               string     `protobuf:"bytes,2,opt,name=tenant,proto3" json:"tenant,omitempty"`
+	Id                   string     `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
+	Policy               *v1.Policy `protobuf:"bytes,4,opt,name=policy,proto3" json:"policy,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}   `json:"-"`
+	XXX_unrecognized     []byte     `json:"-"`
+	XXX_sizecache        int32      `json:"-"`
+}
+
+func (m *SetSettingsPolicyRequest) Reset()         { *m = SetSettingsPolicyRequest{} }
+func (m *SetSettingsPolicyRequest) String() string { return proto.CompactTextString(m) }
+func (*SetSettingsPolicyRequest) ProtoMessage()    {}
+func (*SetSettingsPolicyRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_6c7cab62fa432213, []int{5}
+}
+func (m *SetSettingsPolicyRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *SetSettingsPolicyRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_SetSettingsPolicyRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *SetSettingsPolicyRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SetSettingsPolicyRequest.Merge(m, src)
+}
+func (m *SetSettingsPolicyRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *SetSettingsPolicyRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_SetSettingsPolicyRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SetSettingsPolicyRequest proto.InternalMessageInfo
+
+func (m *SetSettingsPolicyRequest) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *SetSettingsPolicyRequest) GetTenant() string {
+	if m != nil {
+		return m.Tenant
+	}
+	return ""
+}
+
+func (m *SetSettingsPolicyRequest) GetId() string {
+	if m != nil {
+		return m.Id
+	}
+	return ""
+}
+
+func (m *SetSettingsPolicyRequest) GetPolicy() *v1.Policy {
+	if m != nil {
+		return m.Policy
+	}
+	return nil
+}
+
 func init() {
 	proto.RegisterEnum("tetrate.api.settings.v1.SMTPAuthentication", SMTPAuthentication_name, SMTPAuthentication_value)
-	proto.RegisterType((*GetSystemSettingsRequest)(nil), "tetrate.api.settings.v1.GetSystemSettingsRequest")
+	proto.RegisterType((*GetSettingsRequest)(nil), "tetrate.api.settings.v1.GetSettingsRequest")
+	proto.RegisterType((*Settings)(nil), "tetrate.api.settings.v1.Settings")
 	proto.RegisterType((*SystemSettings)(nil), "tetrate.api.settings.v1.SystemSettings")
 	proto.RegisterType((*SMTPSettings)(nil), "tetrate.api.settings.v1.SMTPSettings")
+	proto.RegisterType((*GetSettingsPolicyRequest)(nil), "tetrate.api.settings.v1.GetSettingsPolicyRequest")
+	proto.RegisterType((*SetSettingsPolicyRequest)(nil), "tetrate.api.settings.v1.SetSettingsPolicyRequest")
 }
 
 func init() { proto.RegisterFile("settings.proto", fileDescriptor_6c7cab62fa432213) }
 
 var fileDescriptor_6c7cab62fa432213 = []byte{
-	// 550 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x93, 0xcf, 0x6f, 0x12, 0x41,
-	0x14, 0xc7, 0x3b, 0x5b, 0xa0, 0x30, 0xa5, 0x48, 0xe7, 0x20, 0x1b, 0x54, 0x82, 0xc4, 0xea, 0x8a,
-	0xcd, 0x4e, 0xc0, 0x18, 0x8d, 0xc6, 0x03, 0x68, 0xd3, 0xd4, 0x94, 0xda, 0x40, 0x4f, 0x5e, 0x36,
-	0x03, 0x4c, 0x61, 0x13, 0x76, 0x67, 0xdd, 0x79, 0xbb, 0xa6, 0x31, 0xc6, 0xa4, 0x89, 0x7f, 0x81,
-	0x67, 0xff, 0x10, 0x3d, 0x19, 0x4f, 0x1e, 0x4d, 0xfc, 0x07, 0x0c, 0xf1, 0xe2, 0x7f, 0x61, 0xf6,
-	0x17, 0x91, 0x22, 0x0d, 0xb7, 0xb7, 0xf3, 0x99, 0xef, 0x7b, 0xdf, 0x79, 0xfb, 0x1e, 0x2e, 0x48,
-	0x0e, 0x60, 0xda, 0x23, 0xa9, 0x3b, 0xae, 0x00, 0x41, 0x4a, 0xc0, 0xc1, 0x65, 0xc0, 0x75, 0xe6,
-	0x98, 0xfa, 0x8c, 0xf9, 0x8d, 0xf2, 0xf5, 0x91, 0x10, 0xa3, 0x09, 0xa7, 0xcc, 0x31, 0x29, 0xb3,
-	0x6d, 0x01, 0x0c, 0x4c, 0x61, 0xc7, 0xb2, 0xf2, 0xb5, 0x98, 0x86, 0x5f, 0x7d, 0xef, 0x94, 0x72,
-	0xcb, 0x81, 0xb3, 0x18, 0x96, 0x7c, 0x36, 0x31, 0x87, 0x0c, 0x38, 0x4d, 0x82, 0x08, 0xd4, 0x9e,
-	0x62, 0x75, 0x9f, 0x43, 0xef, 0x4c, 0x02, 0xb7, 0x7a, 0x71, 0xad, 0x2e, 0x7f, 0xed, 0x71, 0x09,
-	0xe4, 0x26, 0xce, 0x00, 0xb7, 0x99, 0x0d, 0x2a, 0xaa, 0x22, 0x2d, 0xd7, 0xce, 0x7d, 0xf9, 0xf3,
-	0x75, 0x3d, 0xe5, 0x2a, 0x45, 0xd4, 0x8d, 0x41, 0xed, 0x3d, 0x2e, 0xcc, 0x6b, 0x57, 0x10, 0x91,
-	0x17, 0x78, 0x4b, 0x5a, 0xe0, 0x18, 0xc9, 0xdb, 0xd4, 0xf5, 0x2a, 0xd2, 0x36, 0x9b, 0x3b, 0xfa,
-	0x92, 0x87, 0xeb, 0xbd, 0xce, 0xc9, 0xf1, 0xcc, 0x5c, 0x3e, 0xd0, 0x26, 0x5f, 0xb5, 0x6f, 0x0a,
-	0xce, 0xff, 0x8b, 0xc9, 0x0d, 0x9c, 0x1a, 0x0b, 0xf9, 0x9f, 0xea, 0xe1, 0x71, 0x80, 0x1d, 0xe1,
-	0x82, 0xaa, 0x54, 0x91, 0xb6, 0x15, 0xe3, 0xba, 0xa2, 0xad, 0x75, 0xc3, 0x63, 0xb2, 0x83, 0xb3,
-	0x9e, 0xe4, 0xae, 0xcd, 0x2c, 0x1e, 0xba, 0x9a, 0xcb, 0x30, 0x43, 0xc1, 0x35, 0x87, 0x49, 0xf9,
-	0x46, 0xb8, 0x43, 0x35, 0xb5, 0x70, 0x2d, 0x41, 0xa4, 0x84, 0x37, 0x3c, 0xc9, 0x0d, 0x98, 0x48,
-	0x35, 0x5d, 0x45, 0x5a, 0xb6, 0x9b, 0xf1, 0x24, 0x3f, 0x99, 0x48, 0x62, 0xe0, 0x02, 0xf3, 0x60,
-	0xcc, 0x6d, 0x30, 0x07, 0xe1, 0x4f, 0x54, 0x33, 0x55, 0xa4, 0x15, 0x9a, 0xf7, 0x2e, 0x6d, 0x41,
-	0x6b, 0x4e, 0xd2, 0xc6, 0x41, 0xc9, 0xf4, 0x39, 0x0a, 0x6a, 0x5e, 0x48, 0x47, 0x76, 0x71, 0xfe,
-	0xd4, 0x15, 0x96, 0xc1, 0x86, 0x43, 0x97, 0x4b, 0xa9, 0x6e, 0x5c, 0x34, 0xb9, 0x19, 0xe0, 0x56,
-	0x44, 0xeb, 0x8f, 0x30, 0x59, 0xcc, 0x4f, 0x72, 0x38, 0x7d, 0x7c, 0xd8, 0x3a, 0x38, 0x2a, 0xae,
-	0x05, 0xe1, 0xe1, 0xcb, 0xfd, 0x83, 0xa3, 0x22, 0x22, 0x79, 0x9c, 0x7d, 0xd6, 0x6d, 0x75, 0x8c,
-	0xce, 0xf3, 0x07, 0x45, 0xa5, 0xf9, 0x59, 0xc1, 0x57, 0x92, 0xd6, 0xf7, 0xb8, 0xeb, 0x9b, 0x03,
-	0x4e, 0x3e, 0x21, 0xbc, 0xbd, 0x30, 0x53, 0xa4, 0xb1, 0xf4, 0x69, 0xcb, 0xe6, 0xaf, 0x7c, 0x67,
-	0x79, 0x37, 0xe6, 0xee, 0xd7, 0x76, 0xcf, 0x7f, 0xfe, 0xfe, 0xa8, 0xdc, 0x26, 0xb7, 0xa8, 0xdf,
-	0xa0, 0xd1, 0x90, 0x49, 0xfa, 0x36, 0x0a, 0xde, 0xd1, 0x44, 0x48, 0x65, 0xa8, 0x22, 0x1f, 0x10,
-	0xde, 0xee, 0x2d, 0xf8, 0x5b, 0xb5, 0x58, 0xf9, 0xaa, 0x1e, 0x2d, 0x9a, 0x9e, 0x2c, 0x9a, 0xbe,
-	0x17, 0x2c, 0x5a, 0x8d, 0x86, 0x26, 0xee, 0x96, 0x57, 0x32, 0xf1, 0x18, 0xd5, 0xdb, 0x7b, 0xdf,
-	0xa7, 0x15, 0xf4, 0x63, 0x5a, 0x41, 0xbf, 0xa6, 0x15, 0xf4, 0xea, 0xe1, 0xc8, 0x84, 0xb1, 0xd7,
-	0xd7, 0x07, 0xc2, 0xa2, 0xb1, 0x13, 0x53, 0x24, 0x51, 0xb8, 0xf2, 0xb3, 0x14, 0x7e, 0xe3, 0x49,
-	0x12, 0xfb, 0x8d, 0x7e, 0x26, 0xf4, 0x71, 0xff, 0x6f, 0x00, 0x00, 0x00, 0xff, 0xff, 0x4b, 0x7e,
-	0x9c, 0x65, 0x47, 0x04, 0x00, 0x00,
+	// 750 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x55, 0xcf, 0x4f, 0x13, 0x5b,
+	0x14, 0xe6, 0x4e, 0x7f, 0x50, 0x4e, 0x4b, 0x29, 0x77, 0xf1, 0x98, 0xf4, 0x3d, 0x78, 0x30, 0x79,
+	0x84, 0x3e, 0x30, 0x33, 0xb6, 0xc4, 0x60, 0x70, 0x61, 0x5a, 0x25, 0x88, 0x01, 0x24, 0x53, 0x56,
+	0xc6, 0xa4, 0xb9, 0x6d, 0x2f, 0xe5, 0x26, 0xed, 0xcc, 0x30, 0xf7, 0xb6, 0x86, 0x90, 0x6e, 0x58,
+	0xba, 0x71, 0xe1, 0x5e, 0xff, 0x0a, 0x37, 0xae, 0x8c, 0x2b, 0x97, 0x26, 0x26, 0xae, 0x0d, 0xd1,
+	0x85, 0xff, 0x85, 0x99, 0x3b, 0x33, 0x75, 0x0a, 0x29, 0xe0, 0x02, 0x77, 0x67, 0xee, 0x77, 0xce,
+	0xf9, 0xbe, 0x7e, 0xe7, 0xdc, 0x5b, 0xc8, 0x72, 0x2a, 0x04, 0xb3, 0x5a, 0x5c, 0x77, 0x5c, 0x5b,
+	0xd8, 0x78, 0x46, 0x50, 0xe1, 0x12, 0x41, 0x75, 0xe2, 0x30, 0x7d, 0x80, 0xf5, 0x8a, 0xf9, 0x7f,
+	0x5a, 0xb6, 0xdd, 0x6a, 0x53, 0x83, 0x38, 0xcc, 0x20, 0x96, 0x65, 0x0b, 0x22, 0x98, 0x6d, 0x05,
+	0x65, 0xf9, 0xbf, 0x03, 0x54, 0x7e, 0xd5, 0xbb, 0x07, 0x06, 0xed, 0x38, 0xe2, 0x38, 0x00, 0x67,
+	0x7a, 0xa4, 0xcd, 0x9a, 0x44, 0x50, 0x23, 0x0c, 0x02, 0x60, 0xda, 0xa1, 0x6e, 0x87, 0x71, 0x1e,
+	0x69, 0x04, 0x6e, 0x9d, 0x34, 0xfc, 0x58, 0x6b, 0x03, 0xde, 0xa4, 0xa2, 0x1a, 0x88, 0x30, 0xe9,
+	0x51, 0x97, 0x72, 0x81, 0x31, 0xc4, 0x2d, 0xd2, 0xa1, 0x2a, 0x9a, 0x47, 0x85, 0x09, 0x53, 0xc6,
+	0x78, 0x01, 0x92, 0x82, 0x5a, 0xc4, 0x12, 0xaa, 0xe2, 0x9d, 0x56, 0x26, 0xde, 0xfd, 0x78, 0x1f,
+	0x8b, 0xbb, 0x4a, 0x0e, 0x99, 0x01, 0x80, 0xff, 0x05, 0x85, 0x35, 0xd5, 0x98, 0x84, 0xa7, 0x3c,
+	0x18, 0xdc, 0x94, 0x99, 0xe4, 0xc7, 0x5c, 0xd0, 0x8e, 0xa9, 0xb0, 0xa6, 0xf6, 0x05, 0x41, 0x2a,
+	0xe4, 0xba, 0x29, 0x12, 0xaf, 0x2f, 0x15, 0xa4, 0xa5, 0xc6, 0xfd, 0xbe, 0x5e, 0x8c, 0x4d, 0x98,
+	0xf2, 0x33, 0x6a, 0xa1, 0xdf, 0x6a, 0x62, 0x1e, 0x15, 0xd2, 0xa5, 0x25, 0x7d, 0xc4, 0x30, 0xf4,
+	0xaa, 0xcc, 0x0f, 0xd5, 0x3e, 0x1a, 0x33, 0xb3, 0x7c, 0xe8, 0xa4, 0x02, 0x90, 0x0a, 0xf3, 0xb5,
+	0x67, 0x90, 0x1d, 0xce, 0xc7, 0x8f, 0x61, 0x92, 0x77, 0x84, 0xf3, 0x8b, 0x0f, 0x49, 0xbe, 0xc5,
+	0xd1, 0x7c, 0x3b, 0xfb, 0x7b, 0x83, 0x39, 0x64, 0xbc, 0xda, 0xf0, 0x4b, 0xfb, 0xa0, 0x40, 0x26,
+	0x0a, 0xe3, 0x59, 0x88, 0x1f, 0xda, 0x5c, 0xf8, 0xd6, 0x45, 0x4d, 0x92, 0xc7, 0x1e, 0xec, 0xd8,
+	0xae, 0xef, 0xe1, 0x64, 0x00, 0x2f, 0x2b, 0x85, 0x31, 0x53, 0x1e, 0xe3, 0x45, 0x48, 0x75, 0x39,
+	0x75, 0xa5, 0xf9, 0xb1, 0xf3, 0x1d, 0x06, 0x90, 0x97, 0xe6, 0x10, 0xce, 0x9f, 0xdb, 0x6e, 0xd3,
+	0xf7, 0x72, 0x28, 0x2d, 0x84, 0xf0, 0x0c, 0x8c, 0x77, 0x39, 0xad, 0x89, 0xb6, 0x6f, 0x69, 0xca,
+	0x4c, 0x76, 0x39, 0xdd, 0x6f, 0x73, 0x5c, 0x83, 0x2c, 0xe9, 0x8a, 0x43, 0x6a, 0x09, 0xd6, 0x90,
+	0x8b, 0xac, 0x26, 0xe7, 0x51, 0x21, 0x5b, 0x5a, 0xb9, 0xd4, 0x82, 0xf2, 0x50, 0x49, 0x05, 0x3c,
+	0xca, 0xc4, 0x29, 0xf2, 0x38, 0xcf, 0xb5, 0xc3, 0xb7, 0x20, 0x73, 0xe0, 0xda, 0x9d, 0x1a, 0x69,
+	0x36, 0x5d, 0xca, 0xb9, 0x3a, 0x7e, 0x5e, 0x64, 0xda, 0x83, 0xcb, 0x3e, 0xaa, 0xb9, 0xa0, 0x46,
+	0x36, 0x7d, 0xcf, 0x6e, 0xb3, 0xc6, 0xf1, 0x4d, 0xef, 0xfb, 0x5b, 0x04, 0x6a, 0xf5, 0x0f, 0x93,
+	0xe2, 0x32, 0x24, 0x1d, 0x49, 0x24, 0xa7, 0x96, 0x2e, 0xcd, 0x0e, 0xf9, 0x7d, 0xa4, 0xcb, 0xdb,
+	0xdf, 0x2b, 0xea, 0xbe, 0x9a, 0xc0, 0xe1, 0x17, 0xd2, 0xe1, 0xa0, 0x70, 0xf9, 0x2e, 0xe0, 0x8b,
+	0xb3, 0xc0, 0x13, 0x90, 0xd8, 0xdb, 0x2e, 0x6f, 0xed, 0xe6, 0xc6, 0xbc, 0x70, 0xfb, 0xc9, 0xe6,
+	0xd6, 0x6e, 0x0e, 0xe1, 0x0c, 0xa4, 0x1e, 0x98, 0xe5, 0x9d, 0xda, 0xce, 0xc3, 0x3b, 0x39, 0xa5,
+	0xf4, 0x3d, 0x0e, 0x53, 0xe1, 0xcf, 0xad, 0x52, 0xb7, 0xc7, 0x1a, 0x14, 0xbf, 0x44, 0x90, 0x8e,
+	0x58, 0x8f, 0x47, 0x2f, 0xc0, 0xc5, 0xa7, 0x28, 0xbf, 0x30, 0x7a, 0x5b, 0xc2, 0xeb, 0x71, 0xfb,
+	0xb4, 0x1f, 0x03, 0x84, 0x4e, 0x3f, 0x7f, 0x7b, 0xa5, 0xfc, 0x87, 0x35, 0xa3, 0x57, 0x34, 0x7c,
+	0xaf, 0xb8, 0x71, 0xe2, 0x07, 0x7d, 0x23, 0x2c, 0x34, 0x4e, 0x58, 0xb3, 0x8f, 0xfb, 0x90, 0x8e,
+	0x8c, 0x05, 0x5f, 0xcd, 0x91, 0xff, 0x4b, 0xf7, 0x5f, 0x5f, 0x3d, 0x7c, 0x7d, 0xf5, 0x0d, 0xef,
+	0xf5, 0xd5, 0x56, 0x25, 0xb7, 0x22, 0xb9, 0x97, 0xf2, 0xd7, 0xe0, 0x5e, 0x47, 0xcb, 0xf8, 0x35,
+	0x82, 0xe9, 0x0b, 0xbb, 0x88, 0x8b, 0xd7, 0xb1, 0x65, 0x68, 0x85, 0xf2, 0x97, 0x8f, 0x56, 0x5b,
+	0x93, 0xe2, 0x12, 0x52, 0xdc, 0x0a, 0xfe, 0xff, 0x6a, 0x71, 0x86, 0x3f, 0x7f, 0xfc, 0x06, 0xc1,
+	0x74, 0xf5, 0x37, 0x04, 0x8e, 0xda, 0xf1, 0x91, 0xb6, 0xdd, 0x8f, 0x28, 0x5b, 0xcd, 0x5f, 0x5f,
+	0xd9, 0x7a, 0xb0, 0xa1, 0x95, 0x8d, 0x8f, 0x67, 0x73, 0xe8, 0xd3, 0xd9, 0x1c, 0xfa, 0x7a, 0x36,
+	0x87, 0x9e, 0xae, 0xb5, 0x98, 0x38, 0xec, 0xd6, 0xf5, 0x86, 0xdd, 0x31, 0x02, 0x8d, 0xcc, 0x0e,
+	0x23, 0xf9, 0x77, 0x3a, 0x68, 0xd6, 0x2b, 0xde, 0x0b, 0xe3, 0x5e, 0xb1, 0x9e, 0x94, 0xba, 0x56,
+	0x7f, 0x06, 0x00, 0x00, 0xff, 0xff, 0xde, 0xff, 0xff, 0xf5, 0xa3, 0x07, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -329,10 +649,12 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type SettingsServiceClient interface {
-	// Get system settings return system settings for specific tenant.
-	GetSystemSettings(ctx context.Context, in *GetSystemSettingsRequest, opts ...grpc.CallOption) (*SystemSettings, error)
-	// Set system settings set system settings for specific tenant.
-	SetSystemSettings(ctx context.Context, in *SystemSettings, opts ...grpc.CallOption) (*types.Empty, error)
+	// Get settings return settings with specified id for specific tenant.
+	GetSettings(ctx context.Context, in *GetSettingsRequest, opts ...grpc.CallOption) (*Settings, error)
+	// Set settings set settings with specified id for specific tenant.
+	SetSettings(ctx context.Context, in *Settings, opts ...grpc.CallOption) (*types.Empty, error)
+	GetSettingsPolicy(ctx context.Context, in *GetSettingsPolicyRequest, opts ...grpc.CallOption) (*v1.Policy, error)
+	SetSettingsPolicy(ctx context.Context, in *SetSettingsPolicyRequest, opts ...grpc.CallOption) (*types.Empty, error)
 }
 
 type settingsServiceClient struct {
@@ -343,18 +665,36 @@ func NewSettingsServiceClient(cc *grpc.ClientConn) SettingsServiceClient {
 	return &settingsServiceClient{cc}
 }
 
-func (c *settingsServiceClient) GetSystemSettings(ctx context.Context, in *GetSystemSettingsRequest, opts ...grpc.CallOption) (*SystemSettings, error) {
-	out := new(SystemSettings)
-	err := c.cc.Invoke(ctx, "/tetrate.api.settings.v1.SettingsService/GetSystemSettings", in, out, opts...)
+func (c *settingsServiceClient) GetSettings(ctx context.Context, in *GetSettingsRequest, opts ...grpc.CallOption) (*Settings, error) {
+	out := new(Settings)
+	err := c.cc.Invoke(ctx, "/tetrate.api.settings.v1.SettingsService/GetSettings", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *settingsServiceClient) SetSystemSettings(ctx context.Context, in *SystemSettings, opts ...grpc.CallOption) (*types.Empty, error) {
+func (c *settingsServiceClient) SetSettings(ctx context.Context, in *Settings, opts ...grpc.CallOption) (*types.Empty, error) {
 	out := new(types.Empty)
-	err := c.cc.Invoke(ctx, "/tetrate.api.settings.v1.SettingsService/SetSystemSettings", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/tetrate.api.settings.v1.SettingsService/SetSettings", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *settingsServiceClient) GetSettingsPolicy(ctx context.Context, in *GetSettingsPolicyRequest, opts ...grpc.CallOption) (*v1.Policy, error) {
+	out := new(v1.Policy)
+	err := c.cc.Invoke(ctx, "/tetrate.api.settings.v1.SettingsService/GetSettingsPolicy", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *settingsServiceClient) SetSettingsPolicy(ctx context.Context, in *SetSettingsPolicyRequest, opts ...grpc.CallOption) (*types.Empty, error) {
+	out := new(types.Empty)
+	err := c.cc.Invoke(ctx, "/tetrate.api.settings.v1.SettingsService/SetSettingsPolicy", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -363,59 +703,103 @@ func (c *settingsServiceClient) SetSystemSettings(ctx context.Context, in *Syste
 
 // SettingsServiceServer is the server API for SettingsService service.
 type SettingsServiceServer interface {
-	// Get system settings return system settings for specific tenant.
-	GetSystemSettings(context.Context, *GetSystemSettingsRequest) (*SystemSettings, error)
-	// Set system settings set system settings for specific tenant.
-	SetSystemSettings(context.Context, *SystemSettings) (*types.Empty, error)
+	// Get settings return settings with specified id for specific tenant.
+	GetSettings(context.Context, *GetSettingsRequest) (*Settings, error)
+	// Set settings set settings with specified id for specific tenant.
+	SetSettings(context.Context, *Settings) (*types.Empty, error)
+	GetSettingsPolicy(context.Context, *GetSettingsPolicyRequest) (*v1.Policy, error)
+	SetSettingsPolicy(context.Context, *SetSettingsPolicyRequest) (*types.Empty, error)
 }
 
 // UnimplementedSettingsServiceServer can be embedded to have forward compatible implementations.
 type UnimplementedSettingsServiceServer struct {
 }
 
-func (*UnimplementedSettingsServiceServer) GetSystemSettings(ctx context.Context, req *GetSystemSettingsRequest) (*SystemSettings, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetSystemSettings not implemented")
+func (*UnimplementedSettingsServiceServer) GetSettings(ctx context.Context, req *GetSettingsRequest) (*Settings, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSettings not implemented")
 }
-func (*UnimplementedSettingsServiceServer) SetSystemSettings(ctx context.Context, req *SystemSettings) (*types.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SetSystemSettings not implemented")
+func (*UnimplementedSettingsServiceServer) SetSettings(ctx context.Context, req *Settings) (*types.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetSettings not implemented")
+}
+func (*UnimplementedSettingsServiceServer) GetSettingsPolicy(ctx context.Context, req *GetSettingsPolicyRequest) (*v1.Policy, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSettingsPolicy not implemented")
+}
+func (*UnimplementedSettingsServiceServer) SetSettingsPolicy(ctx context.Context, req *SetSettingsPolicyRequest) (*types.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetSettingsPolicy not implemented")
 }
 
 func RegisterSettingsServiceServer(s *grpc.Server, srv SettingsServiceServer) {
 	s.RegisterService(&_SettingsService_serviceDesc, srv)
 }
 
-func _SettingsService_GetSystemSettings_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetSystemSettingsRequest)
+func _SettingsService_GetSettings_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetSettingsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SettingsServiceServer).GetSystemSettings(ctx, in)
+		return srv.(SettingsServiceServer).GetSettings(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tetrate.api.settings.v1.SettingsService/GetSystemSettings",
+		FullMethod: "/tetrate.api.settings.v1.SettingsService/GetSettings",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SettingsServiceServer).GetSystemSettings(ctx, req.(*GetSystemSettingsRequest))
+		return srv.(SettingsServiceServer).GetSettings(ctx, req.(*GetSettingsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _SettingsService_SetSystemSettings_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SystemSettings)
+func _SettingsService_SetSettings_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Settings)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SettingsServiceServer).SetSystemSettings(ctx, in)
+		return srv.(SettingsServiceServer).SetSettings(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tetrate.api.settings.v1.SettingsService/SetSystemSettings",
+		FullMethod: "/tetrate.api.settings.v1.SettingsService/SetSettings",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SettingsServiceServer).SetSystemSettings(ctx, req.(*SystemSettings))
+		return srv.(SettingsServiceServer).SetSettings(ctx, req.(*Settings))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SettingsService_GetSettingsPolicy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetSettingsPolicyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingsServiceServer).GetSettingsPolicy(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/tetrate.api.settings.v1.SettingsService/GetSettingsPolicy",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingsServiceServer).GetSettingsPolicy(ctx, req.(*GetSettingsPolicyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SettingsService_SetSettingsPolicy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetSettingsPolicyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingsServiceServer).SetSettingsPolicy(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/tetrate.api.settings.v1.SettingsService/SetSettingsPolicy",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingsServiceServer).SetSettingsPolicy(ctx, req.(*SetSettingsPolicyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -425,19 +809,27 @@ var _SettingsService_serviceDesc = grpc.ServiceDesc{
 	HandlerType: (*SettingsServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetSystemSettings",
-			Handler:    _SettingsService_GetSystemSettings_Handler,
+			MethodName: "GetSettings",
+			Handler:    _SettingsService_GetSettings_Handler,
 		},
 		{
-			MethodName: "SetSystemSettings",
-			Handler:    _SettingsService_SetSystemSettings_Handler,
+			MethodName: "SetSettings",
+			Handler:    _SettingsService_SetSettings_Handler,
+		},
+		{
+			MethodName: "GetSettingsPolicy",
+			Handler:    _SettingsService_GetSettingsPolicy_Handler,
+		},
+		{
+			MethodName: "SetSettingsPolicy",
+			Handler:    _SettingsService_SetSettingsPolicy_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "settings.proto",
 }
 
-func (m *GetSystemSettingsRequest) Marshal() (dAtA []byte, err error) {
+func (m *GetSettingsRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -447,12 +839,12 @@ func (m *GetSystemSettingsRequest) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *GetSystemSettingsRequest) MarshalTo(dAtA []byte) (int, error) {
+func (m *GetSettingsRequest) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *GetSystemSettingsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *GetSettingsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -461,16 +853,114 @@ func (m *GetSystemSettingsRequest) MarshalToSizedBuffer(dAtA []byte) (int, error
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
+	if len(m.Id) > 0 {
+		i -= len(m.Id)
+		copy(dAtA[i:], m.Id)
+		i = encodeVarintSettings(dAtA, i, uint64(len(m.Id)))
+		i--
+		dAtA[i] = 0x1a
+	}
 	if len(m.Tenant) > 0 {
 		i -= len(m.Tenant)
 		copy(dAtA[i:], m.Tenant)
 		i = encodeVarintSettings(dAtA, i, uint64(len(m.Tenant)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Name) > 0 {
+		i -= len(m.Name)
+		copy(dAtA[i:], m.Name)
+		i = encodeVarintSettings(dAtA, i, uint64(len(m.Name)))
 		i--
 		dAtA[i] = 0xa
 	}
 	return len(dAtA) - i, nil
 }
 
+func (m *Settings) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *Settings) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Settings) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Settings != nil {
+		{
+			size := m.Settings.Size()
+			i -= size
+			if _, err := m.Settings.MarshalTo(dAtA[i:]); err != nil {
+				return 0, err
+			}
+		}
+	}
+	if len(m.Etag) > 0 {
+		i -= len(m.Etag)
+		copy(dAtA[i:], m.Etag)
+		i = encodeVarintSettings(dAtA, i, uint64(len(m.Etag)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.Id) > 0 {
+		i -= len(m.Id)
+		copy(dAtA[i:], m.Id)
+		i = encodeVarintSettings(dAtA, i, uint64(len(m.Id)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.Tenant) > 0 {
+		i -= len(m.Tenant)
+		copy(dAtA[i:], m.Tenant)
+		i = encodeVarintSettings(dAtA, i, uint64(len(m.Tenant)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Name) > 0 {
+		i -= len(m.Name)
+		copy(dAtA[i:], m.Name)
+		i = encodeVarintSettings(dAtA, i, uint64(len(m.Name)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *Settings_SystemSettings) MarshalTo(dAtA []byte) (int, error) {
+	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+}
+
+func (m *Settings_SystemSettings) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	if m.SystemSettings != nil {
+		{
+			size, err := m.SystemSettings.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintSettings(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x2a
+	}
+	return len(dAtA) - i, nil
+}
 func (m *SystemSettings) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -504,13 +994,6 @@ func (m *SystemSettings) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			i -= size
 			i = encodeVarintSettings(dAtA, i, uint64(size))
 		}
-		i--
-		dAtA[i] = 0x1a
-	}
-	if len(m.Tenant) > 0 {
-		i -= len(m.Tenant)
-		copy(dAtA[i:], m.Tenant)
-		i = encodeVarintSettings(dAtA, i, uint64(len(m.Tenant)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -592,6 +1075,114 @@ func (m *SMTPSettings) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *GetSettingsPolicyRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *GetSettingsPolicyRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *GetSettingsPolicyRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.Id) > 0 {
+		i -= len(m.Id)
+		copy(dAtA[i:], m.Id)
+		i = encodeVarintSettings(dAtA, i, uint64(len(m.Id)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.Tenant) > 0 {
+		i -= len(m.Tenant)
+		copy(dAtA[i:], m.Tenant)
+		i = encodeVarintSettings(dAtA, i, uint64(len(m.Tenant)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Name) > 0 {
+		i -= len(m.Name)
+		copy(dAtA[i:], m.Name)
+		i = encodeVarintSettings(dAtA, i, uint64(len(m.Name)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *SetSettingsPolicyRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *SetSettingsPolicyRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SetSettingsPolicyRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Policy != nil {
+		{
+			size, err := m.Policy.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintSettings(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.Id) > 0 {
+		i -= len(m.Id)
+		copy(dAtA[i:], m.Id)
+		i = encodeVarintSettings(dAtA, i, uint64(len(m.Id)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.Tenant) > 0 {
+		i -= len(m.Tenant)
+		copy(dAtA[i:], m.Tenant)
+		i = encodeVarintSettings(dAtA, i, uint64(len(m.Tenant)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Name) > 0 {
+		i -= len(m.Name)
+		copy(dAtA[i:], m.Name)
+		i = encodeVarintSettings(dAtA, i, uint64(len(m.Name)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintSettings(dAtA []byte, offset int, v uint64) int {
 	offset -= sovSettings(v)
 	base := offset
@@ -603,13 +1194,21 @@ func encodeVarintSettings(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return base
 }
-func (m *GetSystemSettingsRequest) Size() (n int) {
+func (m *GetSettingsRequest) Size() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
+	l = len(m.Name)
+	if l > 0 {
+		n += 1 + l + sovSettings(uint64(l))
+	}
 	l = len(m.Tenant)
+	if l > 0 {
+		n += 1 + l + sovSettings(uint64(l))
+	}
+	l = len(m.Id)
 	if l > 0 {
 		n += 1 + l + sovSettings(uint64(l))
 	}
@@ -619,16 +1218,55 @@ func (m *GetSystemSettingsRequest) Size() (n int) {
 	return n
 }
 
+func (m *Settings) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Name)
+	if l > 0 {
+		n += 1 + l + sovSettings(uint64(l))
+	}
+	l = len(m.Tenant)
+	if l > 0 {
+		n += 1 + l + sovSettings(uint64(l))
+	}
+	l = len(m.Id)
+	if l > 0 {
+		n += 1 + l + sovSettings(uint64(l))
+	}
+	l = len(m.Etag)
+	if l > 0 {
+		n += 1 + l + sovSettings(uint64(l))
+	}
+	if m.Settings != nil {
+		n += m.Settings.Size()
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *Settings_SystemSettings) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.SystemSettings != nil {
+		l = m.SystemSettings.Size()
+		n += 1 + l + sovSettings(uint64(l))
+	}
+	return n
+}
 func (m *SystemSettings) Size() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	l = len(m.Tenant)
-	if l > 0 {
-		n += 1 + l + sovSettings(uint64(l))
-	}
 	if m.SmtpSettings != nil {
 		l = m.SmtpSettings.Size()
 		n += 1 + l + sovSettings(uint64(l))
@@ -676,13 +1314,65 @@ func (m *SMTPSettings) Size() (n int) {
 	return n
 }
 
+func (m *GetSettingsPolicyRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Name)
+	if l > 0 {
+		n += 1 + l + sovSettings(uint64(l))
+	}
+	l = len(m.Tenant)
+	if l > 0 {
+		n += 1 + l + sovSettings(uint64(l))
+	}
+	l = len(m.Id)
+	if l > 0 {
+		n += 1 + l + sovSettings(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *SetSettingsPolicyRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Name)
+	if l > 0 {
+		n += 1 + l + sovSettings(uint64(l))
+	}
+	l = len(m.Tenant)
+	if l > 0 {
+		n += 1 + l + sovSettings(uint64(l))
+	}
+	l = len(m.Id)
+	if l > 0 {
+		n += 1 + l + sovSettings(uint64(l))
+	}
+	if m.Policy != nil {
+		l = m.Policy.Size()
+		n += 1 + l + sovSettings(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
 func sovSettings(x uint64) (n int) {
 	return (math_bits.Len64(x|1) + 6) / 7
 }
 func sozSettings(x uint64) (n int) {
 	return sovSettings(uint64((x << 1) ^ uint64((int64(x) >> 63))))
 }
-func (m *GetSystemSettingsRequest) Unmarshal(dAtA []byte) error {
+func (m *GetSettingsRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -705,13 +1395,45 @@ func (m *GetSystemSettingsRequest) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: GetSystemSettingsRequest: wiretype end group for non-group")
+			return fmt.Errorf("proto: GetSettingsRequest: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: GetSystemSettingsRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: GetSettingsRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSettings
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSettings
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSettings
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Name = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Tenant", wireType)
 			}
@@ -742,6 +1464,255 @@ func (m *GetSystemSettingsRequest) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			m.Tenant = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSettings
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSettings
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSettings
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Id = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipSettings(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthSettings
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthSettings
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *Settings) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowSettings
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Settings: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Settings: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSettings
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSettings
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSettings
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Name = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Tenant", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSettings
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSettings
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSettings
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Tenant = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSettings
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSettings
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSettings
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Id = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Etag", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSettings
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSettings
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSettings
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Etag = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SystemSettings", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSettings
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSettings
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthSettings
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			v := &SystemSettings{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.Settings = &Settings_SystemSettings{v}
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -798,38 +1769,6 @@ func (m *SystemSettings) Unmarshal(dAtA []byte) error {
 		}
 		switch fieldNum {
 		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Tenant", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowSettings
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthSettings
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthSettings
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Tenant = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 3:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field SmtpSettings", wireType)
 			}
@@ -1104,6 +2043,342 @@ func (m *SMTPSettings) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			m.FromAddress = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipSettings(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthSettings
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthSettings
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *GetSettingsPolicyRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowSettings
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: GetSettingsPolicyRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: GetSettingsPolicyRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSettings
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSettings
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSettings
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Name = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Tenant", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSettings
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSettings
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSettings
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Tenant = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSettings
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSettings
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSettings
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Id = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipSettings(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthSettings
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthSettings
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *SetSettingsPolicyRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowSettings
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SetSettingsPolicyRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SetSettingsPolicyRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSettings
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSettings
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSettings
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Name = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Tenant", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSettings
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSettings
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSettings
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Tenant = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSettings
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthSettings
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthSettings
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Id = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Policy", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSettings
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSettings
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthSettings
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Policy == nil {
+				m.Policy = &v1.Policy{}
+			}
+			if err := m.Policy.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
