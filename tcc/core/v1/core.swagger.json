@@ -5234,6 +5234,11 @@
             "$ref": "#/definitions/tetrate.api.tcc.spm.alert.v1.Recipient"
           },
           "description": "Recipient list. Support list of email addresses as recipient."
+        },
+        "enabled": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": "Enable flag. When disabled, notification is not sent. Default is false or disabled."
         }
       }
     },

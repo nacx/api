@@ -25,6 +25,8 @@ message Notification {
   NotificationCondition condition = 1 [(validate.rules).enum.defined_only = true];
   // Recipient list. Support list of email addresses as recipient.
   repeated Recipient recipients = 2;
+  // Enable flag. When disabled, notification is not sent. Default is false or disabled.
+  bool enabled = 3;
 }
 
 // Alert recipient.

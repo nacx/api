@@ -174,6 +174,8 @@ func (m *Notification) Validate() error {
 
 	}
 
+	// no validation rules for Enabled
+
 	return nil
 }
 
