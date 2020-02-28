@@ -24,7 +24,6 @@ message TsbComponentSetSpec {
   ComponentSpec postgres = 11;
   ComponentSpec elasticsearch = 12;
   ComponentSpec zipkin = 13;
-  ComponentSpec health = 14;
 }
 
 // Configuration for base component.

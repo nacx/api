@@ -68,8 +68,6 @@ EXAMPLES
           enabled: true
         zipkin:
           enabled: true
-        health:
-          enabled: true
     ```
 
 1. Default install with specialized Kubernetes settings for elasticsearch

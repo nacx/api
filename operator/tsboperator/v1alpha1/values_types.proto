@@ -24,7 +24,6 @@ message Values {
   PostgresConfig postgres = 11;
   ElasticsearchConfig elasticsearch = 12;
   ZipkinConfig zipkin = 13;
-  HealthConfig health = 14;
 }
 
 // For readability with the preexisting values yaml keys, camel case vars are used
@@ -66,10 +65,6 @@ message GlobalConfig {
 
   // If openshift enabled
   google.protobuf.BoolValue ocEnabled = 27;
-}
-
-message HealthConfig {
-  google.protobuf.BoolValue enabled = 1;
 }
 
 message IamServerConfig {
