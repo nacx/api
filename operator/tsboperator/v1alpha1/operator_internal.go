@@ -24,7 +24,7 @@ type TsbOperatorSpec struct {
 	Values map[string]interface{} `protobuf:"bytes,100,opt,name=values,proto3" json:"values,omitempty"`
 	// Unvalidated overrides for default values.yaml. Used for custom templates where new parameters
 	// are added.
-	UnvalidatedValues    map[string]interface{} `protobuf:"bytes,101,opt,name=unvalidated_values,json=unvalidatedValues,proto3" json:"unvalidated_values,omitempty"`
+	UnvalidatedValues map[string]interface{} `protobuf:"bytes,101,opt,name=unvalidated_values,json=unvalidatedValues,proto3" json:"unvalidated_values,omitempty"`
 }
 
 func (m *TsbOperatorSpec) Reset()         { *m = TsbOperatorSpec{} }
