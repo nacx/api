@@ -26,7 +26,7 @@ service SettingsService {
   };
 
   // Set settings set settings with specified id for specific tenant.
-  rpc SetSettings(Settings) returns (google.protobuf.Empty) {
+  rpc SetSettings(Settings) returns (Settings) {
     option (tetrate.api.q.rbac.v1.requires) = {
       permissions: WRITE
     };
