@@ -36,16 +36,6 @@ message GlobalConfig {
   // default tenant
   string tenant = 13;
 
-  // ServiceType for FrontEnvoy
-  string lbServiceType = 15;
-  // If HostPort to be used for FrontEnvoy
-  int32 lbHostPort = 16;
-  // FrontEnvoy Service port
-  message TSB {
-    int32 port = 1;
-  }
-  TSB tcc = 17;
-
   // elasticsearch related values
   message ElasticSearch {
     string protocol = 1;
@@ -79,6 +69,14 @@ message ApiServerConfig {
 
 message FrontEnvoyConfig {
   string iamtimeout = 4;
+  // ServiceType for FrontEnvoy
+  string lbServiceType = 5;
+  // If HostPort to be used for FrontEnvoy
+  int32 lbHostPort = 6;
+  // Front envoy service port
+  int32 port = 7;
+  // Min TLS Protocol to use
+  string tlsMinProtocolVer = 8;
 }
 
 message TeamSyncConfig {
