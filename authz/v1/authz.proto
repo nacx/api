@@ -73,6 +73,14 @@ import "validate/validate.proto";
 //             methods:
 //             - GET
 //             - HEAD
+//
+//     # When applied to a service, allows traffic only from the configured identities.
+//     policy:
+//       bindings:
+//       - from:
+//         - cluster_local_service_account: default/bookinfo-sa
+//         - subject_alt_name: spiffe://cluster.local/ns/default/sa/bookinfo-sa
+//
 message Policy {
   // List of bindings that configure access to the target resource.
   repeated Binding bindings = 1;
@@ -206,4 +214,23 @@ message Subject {
   // Request headers used to qualify a subject.
   // E.g. "User-Agent": "Mozilla/*".
   map<string, string> request_headers = 5 [(validate.rules).map.keys.string.min_len = 1];
+
+  // TLS Identity
+  //
+  // Defines the identities that can access the targets of the AuthZ policy.
+  // Identities can be expressed by providing:
+  //   - The service accounts in `namespace/service-account-name` format.
+  //   - A Subject Alternate Name (SAN). This will be directly checked against the SAN contained
+  //     in the peer certificate.
+  oneof tls_identity {
+    // A cluster service account in 'namespace/service-account-name' format.
+    string cluster_local_service_account = 6 [(validate.rules).string = {
+      // Match empty strings (if other identity types are specified) or
+      // enforces the 'namespace/service-account-name' pattern
+      pattern: "^$|^[^/]+/[^/]+$"
+    }];
+    // A SPIFFe URL or any Subject Alternative Name (SAN).
+    // In future, we can add other x509 fields here.
+    string subject_alt_name = 7;
+  }
 }

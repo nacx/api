@@ -14,6 +14,10 @@ $(APIS):
 	@echo "--- $@: all ---"
 	$(MAKE) all -C $@
 
+.PHONY: test
+test:
+	go test `go list -f '{{if .TestGoFiles}}{{.ImportPath}}{{end}}' ./...`
+
 .PHONY: format
 format:
 	../scripts/format-protos.sh

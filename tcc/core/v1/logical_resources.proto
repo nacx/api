@@ -251,6 +251,29 @@ service LogicalResourceModel {
     // clang-format on
   };
 
+  rpc GetServiceAuthzPolicy(GetServiceRequest) returns (tetrate.api.authz.v1.Policy) {
+    option (tetrate.api.q.rbac.v1.requires) = {
+      raw_permissions: "ReadAuthzPolicy"
+    };
+    // clang-format off
+    option (google.api.http) = {
+      get: "/v1/tenants/{tenant}/environments/{environment}/applications/{application}/services/{id}:authz"
+    };
+    // clang-format on
+  };
+
+  rpc SetServiceAuthzPolicy(ServiceAuthzPolicyRequest) returns (google.protobuf.Empty) {
+    option (tetrate.api.q.rbac.v1.requires) = {
+      raw_permissions: "WriteAuthzPolicy"
+    };
+    // clang-format off
+    option (google.api.http) = {
+      put: "/v1/tenants/{tenant}/environments/{environment}/applications/{application}/services/{id}:authz"
+      body: "policy"
+    };
+    // clang-format on
+  };
+
   rpc GetAllLogicalResources(GetAllLogicalResourcesRequest)
       returns (GetAllLogicalResourcesResponse) {
     option (tetrate.api.q.rbac.v1.requires) = {
@@ -459,12 +482,16 @@ message GetAllEnvironmentResourcesResponse {
     Application application = 1;
     tetrate.api.authz.v1.Policy policy = 2;
   }
+  repeated ApplicationDetails applications = 1 [deprecated = true];
 
-  repeated ApplicationDetails applications = 1;
   repeated Service services = 2;
   repeated Cluster clusters = 3;
   repeated Namespace namespaces = 4;
   repeated Deployment deployments = 5;
+  repeated Application apps = 6;
+  // authz_policies contains the AuthZ policies for the different resources (Applications, Services)
+  // indexed by the resource fully qualified name.
+  map<string, tetrate.api.authz.v1.Policy> authz_policies = 7;
 }
 
 message Service {
@@ -586,6 +613,16 @@ message ServicePolicyRequest {
   string application = 4 [(validate.rules).string.min_len = 1];
   string id = 5 [(validate.rules).string.min_len = 1];
   tetrate.api.q.rbac.v1.Policy policy = 6 [(validate.rules).message.required = true];
+}
+
+message ServiceAuthzPolicyRequest {
+  // Internal use only. Auto populated field.
+  string name = 1;
+  string tenant = 2 [(validate.rules).string.min_len = 1];
+  string environment = 3 [(validate.rules).string.min_len = 1];
+  string application = 4 [(validate.rules).string.min_len = 1];
+  string id = 5 [(validate.rules).string.min_len = 1];
+  tetrate.api.authz.v1.Policy policy = 6 [(validate.rules).message.required = true];
 }
 
 message ListServicesRequest {

@@ -827,6 +827,115 @@
         ]
       }
     },
+    "/v1/tenants/{tenant}/environments/{environment}/applications/{application}/services/{id}:authz": {
+      "get": {
+        "operationId": "GetServiceAuthzPolicy",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.authz.v1.Policy"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "environment",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "application",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "description": "Internal use only. Auto populated field.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "LogicalResourceModel"
+        ]
+      },
+      "put": {
+        "operationId": "SetServiceAuthzPolicy",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "environment",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "application",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/tetrate.api.authz.v1.Policy"
+            }
+          }
+        ],
+        "tags": [
+          "LogicalResourceModel"
+        ]
+      }
+    },
     "/v1/tenants/{tenant}/environments/{environment}/applications/{id}": {
       "get": {
         "operationId": "GetApplication",
@@ -3273,7 +3382,7 @@
           "description": "Etag to guard concurrent modifications to the policy."
         }
       },
-      "description": "Runtime authorization policies are attached to specific resources and define which subjects, and under which conditions, are allowed to access them. Different subjects can be configured to access the target resource with different conditions by setting multiple bindings in the same policy.  The default authorization policy allows access between services within an application, and denies cross-application traffic. Traffic between applications must be explicitly enabled by applying the corresponding access policy in the target application.  THe following examples show some common policies:      # Default deny policy for applications. The absence of bindings means that there is no     # access allowed from outside the application.     policy:      # Allow access from the 'bookinfo' application. Requests from the client application     # present a JWT token for the 'bookinfo' application.     policy:       bindings:       - from:         - jwt:             principal: bookinfo             audience: tsb             claims:               group: applications      # Allow access from the 'bookinfo' application, but only to the '/v1/*'     # HTTP paths, and only for GET and HEAD requests, on the 'bookinfo.com' host.     policy:       bindings:       - from:         - jwt:             principal: bookinfo             audience: tsb             claims:               group: applications         allow_http:           to:           - paths:             - /v1/*             hosts:             - bookinfo.com             methods:             - GET             - HEAD      # Allow access from the 'bookinfo' application, but only to the '/v1/*'     # HTTP paths, and only for GET and HEAD requests, on the 'bookinfo.com' host.     # In this example the client application is identified by checking the value of     # the 'X-App-Id' request header.     policy:       bindings:       - from:         - request_headers:             X-App-Id: bookinfo         allow_http:           to:           - paths:             - /v1/*             hosts:             - bookinfo.com             methods:             - GET             - HEAD",
+      "description": "Runtime authorization policies are attached to specific resources and define which subjects, and under which conditions, are allowed to access them. Different subjects can be configured to access the target resource with different conditions by setting multiple bindings in the same policy.  The default authorization policy allows access between services within an application, and denies cross-application traffic. Traffic between applications must be explicitly enabled by applying the corresponding access policy in the target application.  THe following examples show some common policies:      # Default deny policy for applications. The absence of bindings means that there is no     # access allowed from outside the application.     policy:      # Allow access from the 'bookinfo' application. Requests from the client application     # present a JWT token for the 'bookinfo' application.     policy:       bindings:       - from:         - jwt:             principal: bookinfo             audience: tsb             claims:               group: applications      # Allow access from the 'bookinfo' application, but only to the '/v1/*'     # HTTP paths, and only for GET and HEAD requests, on the 'bookinfo.com' host.     policy:       bindings:       - from:         - jwt:             principal: bookinfo             audience: tsb             claims:               group: applications         allow_http:           to:           - paths:             - /v1/*             hosts:             - bookinfo.com             methods:             - GET             - HEAD      # Allow access from the 'bookinfo' application, but only to the '/v1/*'     # HTTP paths, and only for GET and HEAD requests, on the 'bookinfo.com' host.     # In this example the client application is identified by checking the value of     # the 'X-App-Id' request header.     policy:       bindings:       - from:         - request_headers:             X-App-Id: bookinfo         allow_http:           to:           - paths:             - /v1/*             hosts:             - bookinfo.com             methods:             - GET             - HEAD      # When applied to a service, allows traffic only from the configured identities.     policy:       bindings:       - from:         - cluster_local_service_account: default/bookinfo-sa         - subject_alt_name: spiffe://cluster.local/ns/default/sa/bookinfo-sa",
       "title": "Runtime Authorization Policy"
     },
     "tetrate.api.authz.v1.Subject": {
@@ -3289,6 +3398,14 @@
             "type": "string"
           },
           "description": "Request headers used to qualify a subject. E.g. \"User-Agent\": \"Mozilla/*\"."
+        },
+        "clusterLocalServiceAccount": {
+          "type": "string",
+          "description": "A cluster service account in 'namespace/service-account-name' format."
+        },
+        "subjectAltName": {
+          "type": "string",
+          "description": "A SPIFFe URL or any Subject Alternative Name (SAN). In future, we can add other x509 fields here."
         }
       },
       "description": "A subject designates an actor (user, service, etc) that attempts to access a target resource. Subjects can be modeled with JWT tokens, service accounts, and decorated with attributes such as HTTP request headers, JWT token claims, etc. The fields that define a subject will be matched to incoming requests, to fully qualify where the request comes from, and to decide if the given request is allowed or not for the target resource. All the fields in a subject are evaluated as AND expressions.",
@@ -4269,6 +4386,19 @@
           "items": {
             "$ref": "#/definitions/tetrate.api.tcc.core.v1.Deployment"
           }
+        },
+        "apps": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tetrate.api.tcc.core.v1.Application"
+          }
+        },
+        "authzPolicies": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/tetrate.api.authz.v1.Policy"
+          },
+          "description": "authz_policies contains the AuthZ policies for the different resources (Applications, Services) indexed by the resource fully qualified name."
         }
       }
     },

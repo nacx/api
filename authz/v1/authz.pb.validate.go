@@ -268,6 +268,22 @@ func (m *Subject) Validate() error {
 		// no validation rules for RequestHeaders[key]
 	}
 
+	switch m.TlsIdentity.(type) {
+
+	case *Subject_ClusterLocalServiceAccount:
+
+		if !_Subject_ClusterLocalServiceAccount_Pattern.MatchString(m.GetClusterLocalServiceAccount()) {
+			return SubjectValidationError{
+				field:  "ClusterLocalServiceAccount",
+				reason: "value does not match regex pattern \"^$|^[^/]+/[^/]+$\"",
+			}
+		}
+
+	case *Subject_SubjectAltName:
+		// no validation rules for SubjectAltName
+
+	}
+
 	return nil
 }
 
@@ -324,6 +340,8 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = SubjectValidationError{}
+
+var _Subject_ClusterLocalServiceAccount_Pattern = regexp.MustCompile("^$|^[^/]+/[^/]+$")
 
 // Validate checks the field values on Binding_HTTP_Rules with the rules
 // defined in the proto definition for this message. If any rules are
