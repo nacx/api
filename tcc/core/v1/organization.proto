@@ -2,6 +2,20 @@
 
 syntax = "proto3";
 
+// $title: Organizational Resources
+// $description: Configuration for modeling organizational entities.
+// $location: https://tetrate.io/docs/reference/config/organization/v1/resources.html
+
+// This is how you model a team in TSB.
+//
+// ```yaml
+// id: bookinfo
+// environment: dev
+// tenant: test
+// members:
+// - nacx
+// - rshriram
+//```
 package tetrate.api.tcc.core.v1;
 option go_package = "github.com/tetrateio/tetrate/api/tcc/core/v1";
 

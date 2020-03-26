@@ -1,0 +1,106 @@
+---
+title: tetrate.api.tcc.core.v1
+layout: protoc-gen-docs
+generator: protoc-gen-docs
+number_of_entries: 3
+---
+<h2 id="Services">Services</h2>
+<h3 id="RegistryConsumer">RegistryConsumer</h3>
+<section>
+<p>RegistryConsumer</p>
+
+<p>RegistryConsumer service accepts bulk JSON payload to update resources into TCC data model. A
+sync agent calls this API periodically to create or update deployments, namespaces, or endpoints.
+API converts resources into appropriate TCC data model fields, and pushes to the database.</p>
+
+<pre id="RegistryConsumer-UpdateResources"><code class="language-proto">rpc UpdateResources(RegistryUpdateResourcesRequest) returns (RegistryConsumerResponse)
+</code></pre>
+<p>UpdateResources to be called periodically with a bulk payload. API detects the delta between
+last call, and determines resources to create, modify, delete.</p>
+
+</section>
+<h2 id="Types">Types</h2>
+<h3 id="RegistryConsumerResponse">RegistryConsumerResponse</h3>
+<section>
+<p>RegistryConsumerResponse response returned by server.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="RegistryConsumerResponse-status">
+<td><code>status</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="RegistryUpdateResourcesRequest">RegistryUpdateResourcesRequest</h3>
+<section>
+<p>RegistryUpdateResourcesRequest request object.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="RegistryUpdateResourcesRequest-parent">
+<td><code>parent</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="RegistryUpdateResourcesRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+<p>Tenant where this service is residing e.g Tetrate.</p>
+
+</td>
+</tr>
+<tr id="RegistryUpdateResourcesRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+<p>environment are higher-level isolations e.g. prod, staging, development, etc.</p>
+
+</td>
+</tr>
+<tr id="RegistryUpdateResourcesRequest-cluster">
+<td><code>cluster</code></td>
+<td><code>string</code></td>
+<td>
+<p>Unique cluster acting as a source.</p>
+
+</td>
+</tr>
+<tr id="RegistryUpdateResourcesRequest-registrytype">
+<td><code>registrytype</code></td>
+<td><code>string</code></td>
+<td>
+<p>registrytype indicates source of entry. Currently accepted values &ldquo;kubernetes&rdquo;, &ldquo;f5&rdquo;.</p>
+
+</td>
+</tr>
+<tr id="RegistryUpdateResourcesRequest-payload">
+<td><code>payload</code></td>
+<td><code>string</code></td>
+<td>
+<p>JSON bulk payload of all physical resources.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>

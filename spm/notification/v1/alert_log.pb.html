@@ -1,0 +1,223 @@
+---
+title: tetrate.api.tcc.spm.notification.v1
+layout: protoc-gen-docs
+generator: protoc-gen-docs
+number_of_entries: 7
+---
+<h2 id="Services">Services</h2>
+<h3 id="AlertLogService">AlertLogService</h3>
+<section>
+<p>AlertLog Service</p>
+
+<p>[DEPRECATED] This service is deprecated. Use new AlertService that support personalization.
+The alert log service provides access to alerts.</p>
+
+<pre id="AlertLogService-ListAlertLogs"><code class="language-proto">rpc ListAlertLogs(ListAlertLogsRequest) returns (ListAlertLogsResponse)
+</code></pre>
+<p>List alert logs.
+Use &lsquo;status&rsquo; parameter to get only unread alert. this can be used to show recent alert count.</p>
+
+<pre id="AlertLogService-DeleteAlertLogs"><code class="language-proto">rpc DeleteAlertLogs(DeleteAlertLogsRequest) returns (google.protobuf.Empty)
+</code></pre>
+<p>Delete alert logs. This will remove alert logs from storage.</p>
+
+<pre id="AlertLogService-UpdateAlertLogReadStatus"><code class="language-proto">rpc UpdateAlertLogReadStatus(UpdateAlertLogReadStatusRequest) returns (google.protobuf.Empty)
+</code></pre>
+<p>Update alert logs read status.</p>
+
+</section>
+<h2 id="Types">Types</h2>
+<h3 id="AlertLog">AlertLog</h3>
+<section>
+<p>AlertLog</p>
+
+<p>Message from alert backend.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="AlertLog-id">
+<td><code>id</code></td>
+<td><code>uint64</code></td>
+<td>
+<p>Alert id. auto generated.</p>
+
+</td>
+</tr>
+<tr id="AlertLog-last_triggered">
+<td><code>lastTriggered</code></td>
+<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#timestamp">google.protobuf.Timestamp</a></code></td>
+<td>
+<p>Time when the alert log was triggered.</p>
+
+</td>
+</tr>
+<tr id="AlertLog-rule_name">
+<td><code>ruleName</code></td>
+<td><code>string</code></td>
+<td>
+<p>Rule name that trigger this log.</p>
+
+</td>
+</tr>
+<tr id="AlertLog-application">
+<td><code>application</code></td>
+<td><code>string</code></td>
+<td>
+<p>Application name where the rule belong to.</p>
+
+</td>
+</tr>
+<tr id="AlertLog-message">
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>
+<p>Alert log message.</p>
+
+</td>
+</tr>
+<tr id="AlertLog-read">
+<td><code>read</code></td>
+<td><code>bool</code></td>
+<td>
+<p>Read status of alert.</p>
+
+</td>
+</tr>
+<tr id="AlertLog-properties">
+<td><code>properties</code></td>
+<td><code>map&lt;string,&nbsp;string&gt;</code></td>
+<td>
+<p>Key value pairs with additional information for the alert log.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="DeleteAlertLogsRequest">DeleteAlertLogsRequest</h3>
+<section>
+<p>Request to delete the alert logs.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="DeleteAlertLogsRequest-ids">
+<td><code>ids</code></td>
+<td><code>uint64[]</code></td>
+<td>
+<p>Log ids to delete.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ListAlertLogsRequest">ListAlertLogsRequest</h3>
+<section>
+<p>Request to get the alert logs.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ListAlertLogsRequest-status">
+<td><code>status</code></td>
+<td><code><a href="#Status">Status</a></code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ListAlertLogsResponse">ListAlertLogsResponse</h3>
+<section>
+<p>The list of alert logs.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ListAlertLogsResponse-alert_logs">
+<td><code>alertLogs</code></td>
+<td><code><a href="#AlertLog">AlertLog[]</a></code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Status">Status</h3>
+<section>
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Status-ALL">
+<td><code>ALL</code></td>
+<td>
+</td>
+</tr>
+<tr id="Status-UNREAD">
+<td><code>UNREAD</code></td>
+<td>
+</td>
+</tr>
+<tr id="Status-READ">
+<td><code>READ</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="UpdateAlertLogReadStatusRequest">UpdateAlertLogReadStatusRequest</h3>
+<section>
+<p>Request to update alert logs read status.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="UpdateAlertLogReadStatusRequest-ids">
+<td><code>ids</code></td>
+<td><code>uint64[]</code></td>
+<td>
+<p>Log ids to update.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>

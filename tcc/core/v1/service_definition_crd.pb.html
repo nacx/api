@@ -1,0 +1,669 @@
+---
+title: tetrate.api.tcc.core.v1
+layout: protoc-gen-docs
+generator: protoc-gen-docs
+number_of_entries: 12
+---
+<h2 id="Port">Port</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Port-number">
+<td><code>number</code></td>
+<td><code>uint32</code></td>
+<td>
+<p>A valid non-negative integer port number.</p>
+
+</td>
+</tr>
+<tr id="Port-protocol">
+<td><code>protocol</code></td>
+<td><code>string</code></td>
+<td>
+<p>The protocol exposed on the port. MUST BE one of HTTP|GRPC|HTTP2|HTTPS|TCP|TLS.</p>
+
+<p>TLS implies the connection will be routed based on the SNI header to the destination without
+terminating the TLS connection.</p>
+
+</td>
+</tr>
+<tr id="Port-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Name assigned to the port.</p>
+
+</td>
+</tr>
+<tr id="Port-endpoint_port">
+<td><code>endpointPort</code></td>
+<td><code>uint32</code></td>
+<td>
+<p>The endpoint port to which this service port maps to. For example, service port 80 exposed on
+the load balancer could map to an endpoint port 9080 on a VM.</p>
+
+</td>
+</tr>
+<tr id="Port-kubernetes_node_port">
+<td><code>kubernetesNodePort</code></td>
+<td><code>uint32</code></td>
+<td>
+<p>Indicates the node port attached to a physical deployment on a kubernetes cluster.</p>
+
+</td>
+</tr>
+<tr id="Port-application_port">
+<td><code>applicationPort</code></td>
+<td><code>uint32</code></td>
+<td>
+<p>In cases where IPtables based capture is not used, the sidecar
+and the application could be listening on different ports in the
+same VM. For example, the endpoint_port of 9080 is the port where Envoy listens for inbound
+traffic and
+forwards incoming traffic to the the weblogic application server listening on 127.0.0.1:7070</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="ServiceDefinition">ServiceDefinition</h2>
+<section>
+<p>ServiceDefinition describes the properties of services running on
+VMs or services outside the mesh. This service definition is
+intended to be authored by the cluster operator where access to
+this service is desired.</p>
+
+<p>The following example declares a VM service called <code>details</code> in the
+<code>bookinfo</code> namespace. The service has no sidecars and requires
+simple TLS connections. The VM service is expected to receive
+traffic from the ingress Gateway.</p>
+
+<pre><code class="language-yaml">apiVersion: registry.tetrate.io/v1alpha1
+kind: ServiceDefinition
+metadata:
+  name: details
+  namespace: bookinfo
+spec:
+  hostname: details.prod.internal.company.com
+  ports:
+  - number: 80
+    name: http
+    protocol: HTTP
+  - number: 443
+    name: https
+    protocol: HTTPS
+  sidecarsPresent: false
+  externalServiceTlsSettings:
+    tlsMode: SIMPLE
+    caCertificates: /path/to/ca/cert/to/verify/server/cert
+  endpointSource:
+    manual:
+      values:
+      - address: 1.1.1.1
+      - address: 2.2.2.2
+</code></pre>
+
+<p>In the above example, services in the bookinfo namespace can access
+the details service by using
+https://details.prod.internal.company.com . The sidecar would do a
+SNI Passthrough and load balance the traffic among the two
+endpoints. Alternatively, they could also access the service as
+plaintext http://details.prod.internal.company.com. The Sidecar in
+a kubernetes pod would intercept the traffic, and initiate simple
+TLS connection to the destination appropriately.</p>
+
+<p>The following example declares a <code>ratings</code> service in the
+<code>bookinfo</code> namespace that represents workloads running on a VM with
+sidecars installed with IPtables traffic capture, with access to
+mutual TLS certificates.</p>
+
+<pre><code class="language-yaml">apiVersion: registry.tetrate.io/v1alpha1
+kind: ServiceDefinition
+metadata:
+  name: ratings
+  namespace: bookinfo
+spec:
+  hostname: ratings.prod.internal.company.com
+  ports:
+  - number: 80
+    name: http
+    protocol: HTTP
+  sidecarsPresent: true
+  endpointSource:
+    manual:
+      values:
+      - address: 3.3.3.3
+      - address: 4.4.4.4
+</code></pre>
+
+<p>In the above example, services in the bookinfo namespace can access
+the ratings service by using
+http://ratings.prod.internal.company.com . The sidecar on
+kubernetes would intercept the traffic and initiate mutual TLS
+connection to the VM sidecar on port 80. The VM sidecar, after TLS
+termination, would forward the traffic to the application process
+on 127.0.0.1:80.</p>
+
+<p>Developing on the previous example, if the VM Service does not have
+IPtables based traffic capture, the application process has to
+either listen on a different port than port 80, or it has to listen
+only on 127.0.0.1 and not on 0.0.0.0. Let us assume that the
+application process is listening on port 9080. The sidecar would
+receive traffic on port 80, do TLS termination and forward the
+traffic to the application process on 127.0.0.1:9080.</p>
+
+<pre><code class="language-yaml">apiVersion: registry.tetrate.io/v1alpha1
+kind: ServiceDefinition
+metadata:
+  name: ratings
+  namespace: bookinfo
+spec:
+  hostname: ratings.prod.internal.company.com
+  ports:
+  - number: 80
+    name: http
+    protocol: HTTP
+    applicationPort: 9080 # where the app process is listening
+  sidecarsPresent: true
+  sidecarSettings:
+    usingIptablesCapture: false
+  endpointSource:
+    manual:
+      values:
+      - address: 3.3.3.3
+      - address: 4.4.4.4
+</code></pre>
+
+<p>In the above example, all outbound traffic from the application
+process will not transit through the sidecar. Let us assume that
+the application wishes to interact with the <code>details</code> VM services in the
+same namespace using the sidecar. The application process can
+choose to use the sidecar in the outbound path as well by treating
+it as a HTTP Proxy on localhost. By setting the HTTP_PROXY
+environment variable to http://localhost:15080, or using a language
+runtime specific option, all outbound plaintext HTTP traffic from
+the application process will be forwarded to the sidecar on port
+15080. The sidecar would then initiate mutual TLS connections or simple TLS connections as
+appropriate to other services in the mesh.</p>
+
+<pre><code class="language-yaml">apiVersion: registry.tetrate.io/v1alpha1
+kind: ServiceDefinition
+metadata:
+  name: ratings
+  namespace: bookinfo
+spec:
+  hostname: ratings.prod.internal.company.com
+  ports:
+  - number: 80
+    name: http
+    protocol: HTTP
+    applicationPort: 9080 # where the app process is listening
+  sidecarsPresent: true
+  sidecarSettings:
+    usingIptablesCapture: false
+    egressHttpProxyPort: 15080 # outbound traffic explicitly sent here.
+  endpointSource:
+    manual:
+      values:
+      - address: 3.3.3.3
+      - address: 4.4.4.4
+</code></pre>
+
+<p>Instead of specifying the endpoints manually, it is possible to automatically obtain the
+list of endpoints from external sources. The appropriate endpoint controller must be installed
+in TSB Local Control Plane for this to work. The following example demonstrates reading the
+endpoints of the ratings service directly from VMware vCenter.</p>
+
+<pre><code class="language-yaml">apiVersion: registry.tetrate.io/v1alpha1
+kind: ServiceDefinition
+metadata:
+  name: ratings
+  namespace: bookinfo
+spec:
+  hostname: ratings.prod.internal.company.com
+  ports:
+  - number: 80
+    name: http
+    protocol: HTTP
+    applicationPort: 9080 # where the app process is listening
+  sidecarsPresent: true
+  sidecarSettings:
+    usingIptablesCapture: false
+    egressHttpProxyPort: 15080 # outbound traffic explicitly sent here.
+  endpointSource:
+    vmware:
+      context: us-dal01 # must match key in the secrets containing the list of vCenter URLs with
+      username/passwords.
+      guestNetwork: &quot;vm-prod-1&quot; # Only get the IPs of VM NICs in this network.
+      vmResourcePaths: # the inventory path
+      - /dal01/vm/apps/bookinfo/ratings-01
+      - /dal01/vm/apps/bookinfo/ratings-02
+      - /dal01/vm/apps/bookinfo/ratings-03
+</code></pre>
+
+<p>In the above example, the IP addresses assigned to the NICs
+belonging to the &ldquo;vm-prod-1&rdquo; network in the VMs with the specified
+inventory paths will be automatically added as endpoints to the
+ratings service and populated in the TSB catalog.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ServiceDefinition-hostname">
+<td><code>hostname</code></td>
+<td><code>string</code></td>
+<td>
+<p>Hostname by which this service will be accessed.</p>
+
+</td>
+</tr>
+<tr id="ServiceDefinition-ports">
+<td><code>ports</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/organization/v1/resources.html#Port">Port[]</a></code></td>
+<td>
+<p>List of ports and protocols associated with the service.</p>
+
+</td>
+</tr>
+<tr id="ServiceDefinition-sidecars_present">
+<td><code>sidecarsPresent</code></td>
+<td><code>bool</code></td>
+<td>
+<p>If set to true, all communication with the endpoints will be over
+mutual TLS. If set to false, TLS settings for communicating with
+the service must be specified explicitly.</p>
+
+</td>
+</tr>
+<tr id="ServiceDefinition-sidecar_settings">
+<td><code>sidecarSettings</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/organization/v1/resources.html#SidecarSettings">SidecarSettings</a></code></td>
+<td>
+<p>Settings for the sidecar on the VM. If omitted, and
+sidecarsPresent is set to true, the VM will
+be assumed to have sidecars with Istio mutual TLS enabled.</p>
+
+</td>
+</tr>
+<tr id="ServiceDefinition-external_service_tls_settings">
+<td><code>externalServiceTlsSettings</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/organization/v1/resources.html#TLSSettings">TLSSettings</a></code></td>
+<td>
+<p>When sidecars are not present, the service is assumed to be
+outside the mesh. Specify the TLS settings that client side
+proxies such as Gateways or Sidecars should use to talk to this
+service.</p>
+
+</td>
+</tr>
+<tr id="ServiceDefinition-subject_alt_names">
+<td><code>subjectAltNames</code></td>
+<td><code>string[]</code></td>
+<td>
+<p>The list of subject alternate names allowed for workload
+instances that implement this service. This information is used
+to enforce
+<a href="https://istio.io/docs/concepts/security/#secure-naming">secure-naming</a>
+on the client side.  If specified, the client side proxy will
+verify that the server certificate&rsquo;s subject alternate name
+matches one of the specified values.  If omitted, defaults to the
+SAN corresponding to the default service account in the namespace
+where this resource is defined.</p>
+
+</td>
+</tr>
+<tr id="ServiceDefinition-endpoint_source">
+<td><code>endpointSource</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/organization/v1/resources.html#ServiceDefinition-EndpointSource">ServiceDefinition.EndpointSource</a></code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="ServiceDefinition-AWSSource">ServiceDefinition.AWSSource</h2>
+<section>
+</section>
+<h2 id="ServiceDefinition-AzureSource">ServiceDefinition.AzureSource</h2>
+<section>
+</section>
+<h2 id="ServiceDefinition-EndpointSource">ServiceDefinition.EndpointSource</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ServiceDefinition-EndpointSource-manual">
+<td><code>manual</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/organization/v1/resources.html#ServiceDefinition-ManualSource">ServiceDefinition.ManualSource</a></code></td>
+<td>
+</td>
+</tr>
+<tr id="ServiceDefinition-EndpointSource-aws">
+<td><code>aws</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/organization/v1/resources.html#ServiceDefinition-AWSSource">ServiceDefinition.AWSSource</a></code></td>
+<td>
+</td>
+</tr>
+<tr id="ServiceDefinition-EndpointSource-gcp">
+<td><code>gcp</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/organization/v1/resources.html#ServiceDefinition-GCPSource">ServiceDefinition.GCPSource</a></code></td>
+<td>
+</td>
+</tr>
+<tr id="ServiceDefinition-EndpointSource-azure">
+<td><code>azure</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/organization/v1/resources.html#ServiceDefinition-AzureSource">ServiceDefinition.AzureSource</a></code></td>
+<td>
+</td>
+</tr>
+<tr id="ServiceDefinition-EndpointSource-vmware">
+<td><code>vmware</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/organization/v1/resources.html#ServiceDefinition-VMwareSource">ServiceDefinition.VMwareSource</a></code></td>
+<td>
+</td>
+</tr>
+<tr id="ServiceDefinition-EndpointSource-other">
+<td><code>other</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/organization/v1/resources.html#ServiceDefinition-RESTSource">ServiceDefinition.RESTSource</a></code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="ServiceDefinition-GCPSource">ServiceDefinition.GCPSource</h2>
+<section>
+</section>
+<h2 id="ServiceDefinition-ManualSource">ServiceDefinition.ManualSource</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ServiceDefinition-ManualSource-values">
+<td><code>values</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/organization/v1/resources.html#StaticEndpoint">StaticEndpoint[]</a></code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="ServiceDefinition-RESTSource">ServiceDefinition.RESTSource</h2>
+<section>
+<p>TSB Local will call out to the API endpoint specified here
+with details of the application/service and will expect
+a list of endpoints in return.</p>
+
+</section>
+<h2 id="ServiceDefinition-VMwareSource">ServiceDefinition.VMwareSource</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ServiceDefinition-VMwareSource-context">
+<td><code>context</code></td>
+<td><code>string</code></td>
+<td>
+<p>REQUIRED. The key in the secret that maps to the vCenter to
+use. A kubernetes secret with a map of key-&gt;vCenter URLs (in
+https://user:password@host:port/sdk format) must be mounted in
+tsbd pod and supplied using the vmware-credentials-file command
+line argument.</p>
+
+</td>
+</tr>
+<tr id="ServiceDefinition-VMwareSource-guest_network">
+<td><code>guestNetwork</code></td>
+<td><code>string</code></td>
+<td>
+<p>When selecting the VM IP address to use on a VM with multiple
+NICs where each NIC is attached to a different network, the
+guestNetwork field determines the network/NIC whose IP
+addresses can be used. If omitted, the IP address from
+guest.IpAddress property (i.e. the default reported in vCenter)
+will be used. Can be omitted if VMs have only one NIC.</p>
+
+</td>
+</tr>
+<tr id="ServiceDefinition-VMwareSource-vm_resource_paths">
+<td><code>vmResourcePaths</code></td>
+<td><code>string[]</code></td>
+<td>
+<p>The full (case sensitive) inventory path to the VM resources in
+the vCenter inventory. E.g., /dc0/vm/folder1/folder2/vm-name</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="SidecarSettings">SidecarSettings</h2>
+<section>
+<p>Settings for the sidecar running on the VMs corresponding to the
+service.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="SidecarSettings-using_iptables_capture">
+<td><code>usingIptablesCapture</code></td>
+<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#boolvalue">google.protobuf.BoolValue</a></code></td>
+<td>
+<p>Set to true if the sidecar has IPtables to capture all inbound
+and outbound traffic from the user application
+process. Defaults to true.</p>
+
+</td>
+</tr>
+<tr id="SidecarSettings-egress_http_proxy_port">
+<td><code>egressHttpProxyPort</code></td>
+<td><code>uint32</code></td>
+<td>
+<p>In workloads where IPtables capture is not used, outbound HTTP
+traffic from the application can be proxied though the local
+sidecar on a specific port. To utilize this feature, HTTP proxy
+should be enabled (either via environment variable
+<code>HTTP_PROXY=http://localhost:PORT/</code>, or language runtime
+specific options). Calls from the application for
+http://foo.bar.com will be routed to the local sidecar, which
+in turn will route the call appropriately to the destination
+over mutual TLS.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="StaticEndpoint">StaticEndpoint</h2>
+<section>
+<p>Endpoint defines a network IP address associated with the service.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="StaticEndpoint-address">
+<td><code>address</code></td>
+<td><code>string</code></td>
+<td>
+<p>REQUIRED: Address associated with the network endpoint without the
+port.</p>
+
+</td>
+</tr>
+<tr id="StaticEndpoint-ports">
+<td><code>ports</code></td>
+<td><code>map&lt;string,&nbsp;uint32&gt;</code></td>
+<td>
+<p>Set of ports associated with the endpoint. The ports must be
+associated with a port name that was declared as part of the
+service. If omitted, the endpoint will be assumed to have the same ports
+as the service.</p>
+
+</td>
+</tr>
+<tr id="StaticEndpoint-labels">
+<td><code>labels</code></td>
+<td><code>map&lt;string,&nbsp;string&gt;</code></td>
+<td>
+<p>One or more labels associated with the endpoint.</p>
+
+</td>
+</tr>
+<tr id="StaticEndpoint-locality">
+<td><code>locality</code></td>
+<td><code>string</code></td>
+<td>
+<p>The locality associated with the endpoint. A locality corresponds
+to a failure domain (e.g., country/region/zone). Arbitrary failure
+domain hierarchies can be represented by separating each
+encapsulating failure domain by /. For example, the locality of an
+an endpoint in US, in US-East-1 region, within availability zone
+az-1, in data center rack r11 can be represented as
+us/us-east-1/az-1/r11. Istio will configure the sidecar to route to
+endpoints within the same locality as the sidecar. If none of the
+endpoints in the locality are available, endpoints parent locality
+(but within the same network ID) will be chosen. For example, if
+there are two endpoints in same network (networkID &ldquo;n1&rdquo;), say e1
+with locality us/us-east-1/az-1/r11 and e2 with locality
+us/us-east-1/az-2/r12, a sidecar from us/us-east-1/az-1/r11 locality
+will prefer e1 from the same locality over e2 from a different
+locality. Endpoint e2 could be the IP associated with a gateway
+(that bridges networks n1 and n2), or the IP associated with a
+standard service endpoint.</p>
+
+</td>
+</tr>
+<tr id="StaticEndpoint-weight">
+<td><code>weight</code></td>
+<td><code>uint32</code></td>
+<td>
+<p>The load balancing weight associated with the endpoint. Endpoints
+with higher weights will receive proportionally higher traffic.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="TLSSettings">TLSSettings</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="TLSSettings-tls_mode">
+<td><code>tlsMode</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/organization/v1/resources.html#TLSMode">TLSMode</a></code></td>
+<td>
+<p>Set this to SIMPLE, MUTUAL, or SNI_PASSTHROUGH for one-way TLS, mutual TLS, or client sni-based
+TLS passthrough respectively. The hostname in the load balancer will be used as the SNI in the
+TLS passthrough mode.</p>
+
+</td>
+</tr>
+<tr id="TLSSettings-tls_enabled" class="deprecated ">
+<td><code>tlsEnabled</code></td>
+<td><code>bool</code></td>
+<td>
+<p>Enable TLS settings for the application.</p>
+
+</td>
+</tr>
+<tr id="TLSSettings-redirect_to_https">
+<td><code>redirectToHttps</code></td>
+<td><code>bool</code></td>
+<td>
+<p>If set, the load balancer will redirect HTTP connections on port 80 to HTTPS port 443.</p>
+
+</td>
+</tr>
+<tr id="TLSSettings-server_certificate">
+<td><code>serverCertificate</code></td>
+<td><code>string</code></td>
+<td>
+<p>For proxies running on VMs, the path to the file holding the server-side TLS certificate to
+use.</p>
+
+</td>
+</tr>
+<tr id="TLSSettings-private_key">
+<td><code>privateKey</code></td>
+<td><code>string</code></td>
+<td>
+<p>For proxies running on VMs, the path to the file holding the server&rsquo;s private key.</p>
+
+</td>
+</tr>
+<tr id="TLSSettings-ca_certificates">
+<td><code>caCertificates</code></td>
+<td><code>string</code></td>
+<td>
+<p>For proxies running on VMs, the path to a file containing certificate authority certificates to
+use in verifying a presented client side certificate for mutual TLS connections.</p>
+
+</td>
+</tr>
+<tr id="TLSSettings-secret_name">
+<td><code>secretName</code></td>
+<td><code>string</code></td>
+<td>
+<p>For proxies running on Kubernetes, the name of the secret that holds the TLS certs including
+the CA certificates. Currently applicable only on Kubernetes. The secret (type generic) should
+contain the following keys and values: key: &lt;privateKey&gt;, cert: &lt;serverCert&gt;, cacert:
+&lt;CACertificate&gt;.  If the service is exposed via a load balancer, the secret must be accessible
+to it.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>

@@ -1,0 +1,722 @@
+---
+title: tetrate.api.tsboperator.v1alpha1
+layout: protoc-gen-docs
+generator: protoc-gen-docs
+number_of_entries: 23
+---
+<h2 id="ApiServerConfig">ApiServerConfig</h2>
+<section>
+</section>
+<h2 id="ElasticsearchConfig">ElasticsearchConfig</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ElasticsearchConfig-enabled">
+<td><code>enabled</code></td>
+<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#boolvalue">google.protobuf.BoolValue</a></code></td>
+<td>
+</td>
+</tr>
+<tr id="ElasticsearchConfig-replicas">
+<td><code>replicas</code></td>
+<td><code>int32</code></td>
+<td>
+</td>
+</tr>
+<tr id="ElasticsearchConfig-minimumMasterNodes">
+<td><code>minimumMasterNodes</code></td>
+<td><code>int32</code></td>
+<td>
+</td>
+</tr>
+<tr id="ElasticsearchConfig-esJavaOpts">
+<td><code>esJavaOpts</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="ElasticsearchConfig-resources">
+<td><code>resources</code></td>
+<td><code><a href="#tetrate-api-operator-common-Resources">tetrate.api.operator.common.Resources</a></code></td>
+<td>
+</td>
+</tr>
+<tr id="ElasticsearchConfig-volumeClaimTemplate">
+<td><code>volumeClaimTemplate</code></td>
+<td><code><a href="#tetrate-api-operator-common-VolumeClaimTemplate">tetrate.api.operator.common.VolumeClaimTemplate</a></code></td>
+<td>
+</td>
+</tr>
+<tr id="ElasticsearchConfig-initResources">
+<td><code>initResources</code></td>
+<td><code><a href="#tetrate-api-operator-common-Resources">tetrate.api.operator.common.Resources</a></code></td>
+<td>
+</td>
+</tr>
+<tr id="ElasticsearchConfig-sysctlInitContainer">
+<td><code>sysctlInitContainer</code></td>
+<td><code><a href="#ElasticsearchConfig-SysctlInitContainer">ElasticsearchConfig.SysctlInitContainer</a></code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="ElasticsearchConfig-SysctlInitContainer">ElasticsearchConfig.SysctlInitContainer</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ElasticsearchConfig-SysctlInitContainer-enabled">
+<td><code>enabled</code></td>
+<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#boolvalue">google.protobuf.BoolValue</a></code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="FrontEnvoyConfig">FrontEnvoyConfig</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="FrontEnvoyConfig-iamtimeout">
+<td><code>iamtimeout</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="FrontEnvoyConfig-lbServiceType">
+<td><code>lbServiceType</code></td>
+<td><code>string</code></td>
+<td>
+<p>ServiceType for FrontEnvoy</p>
+
+</td>
+</tr>
+<tr id="FrontEnvoyConfig-lbHostPort">
+<td><code>lbHostPort</code></td>
+<td><code>int32</code></td>
+<td>
+<p>If HostPort to be used for FrontEnvoy</p>
+
+</td>
+</tr>
+<tr id="FrontEnvoyConfig-port">
+<td><code>port</code></td>
+<td><code>int32</code></td>
+<td>
+<p>Front envoy service port</p>
+
+</td>
+</tr>
+<tr id="FrontEnvoyConfig-tlsMinProtocolVer">
+<td><code>tlsMinProtocolVer</code></td>
+<td><code>string</code></td>
+<td>
+<p>Min TLS Protocol to use</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="GlobalConfig">GlobalConfig</h2>
+<section>
+<p>Global Configuration for TSB Management Plane components.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="GlobalConfig-hub">
+<td><code>hub</code></td>
+<td><code>string</code></td>
+<td>
+<p>Specifies the docker hub for TSB images.</p>
+
+</td>
+</tr>
+<tr id="GlobalConfig-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+<p>default tenant</p>
+
+</td>
+</tr>
+<tr id="GlobalConfig-elasticsearch">
+<td><code>elasticsearch</code></td>
+<td><code><a href="#GlobalConfig-ElasticSearch">GlobalConfig.ElasticSearch</a></code></td>
+<td>
+</td>
+</tr>
+<tr id="GlobalConfig-authagents">
+<td><code>authagents</code></td>
+<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#boolvalue">google.protobuf.BoolValue</a></code></td>
+<td>
+<p>If authagents enabled</p>
+
+</td>
+</tr>
+<tr id="GlobalConfig-ocEnabled">
+<td><code>ocEnabled</code></td>
+<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#boolvalue">google.protobuf.BoolValue</a></code></td>
+<td>
+<p>If openshift enabled</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="GlobalConfig-ElasticSearch">GlobalConfig.ElasticSearch</h2>
+<section>
+<p>elasticsearch related values</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="GlobalConfig-ElasticSearch-protocol">
+<td><code>protocol</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="GlobalConfig-ElasticSearch-host">
+<td><code>host</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="GlobalConfig-ElasticSearch-port">
+<td><code>port</code></td>
+<td><code>int32</code></td>
+<td>
+</td>
+</tr>
+<tr id="GlobalConfig-ElasticSearch-user">
+<td><code>user</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="GlobalConfig-ElasticSearch-password">
+<td><code>password</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="GlobalConfig-ElasticSearch-ssl">
+<td><code>ssl</code></td>
+<td><code><a href="#GlobalConfig-ElasticSearch-Ssl">GlobalConfig.ElasticSearch.Ssl</a></code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="GlobalConfig-ElasticSearch-Ssl">GlobalConfig.ElasticSearch.Ssl</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="GlobalConfig-ElasticSearch-Ssl-enabled">
+<td><code>enabled</code></td>
+<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#boolvalue">google.protobuf.BoolValue</a></code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="IamServerConfig">IamServerConfig</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="IamServerConfig-adminPassword">
+<td><code>adminPassword</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="LdapConfig">LdapConfig</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="LdapConfig-enabled">
+<td><code>enabled</code></td>
+<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#boolvalue">google.protobuf.BoolValue</a></code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="OapConfig">OapConfig</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="OapConfig-javaOpts">
+<td><code>javaOpts</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="OapConfig-logLevel">
+<td><code>logLevel</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="OapConfig-initResources">
+<td><code>initResources</code></td>
+<td><code><a href="#tetrate-api-operator-common-Resources">tetrate.api.operator.common.Resources</a></code></td>
+<td>
+</td>
+</tr>
+<tr id="OapConfig-externalServices">
+<td><code>externalServices</code></td>
+<td><code><a href="#OapExternalServices">OapExternalServices</a></code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="OapExternalServices">OapExternalServices</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="OapExternalServices-metadata">
+<td><code>metadata</code></td>
+<td><code><a href="#OapExternalServices-MetaData">OapExternalServices.MetaData</a></code></td>
+<td>
+</td>
+</tr>
+<tr id="OapExternalServices-configuration">
+<td><code>configuration</code></td>
+<td><code><a href="#OapExternalServices-Configuration">OapExternalServices.Configuration</a></code></td>
+<td>
+</td>
+</tr>
+<tr id="OapExternalServices-webhook">
+<td><code>webhook</code></td>
+<td><code>map&lt;string,&nbsp;string&gt;</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="OapExternalServices-Configuration">OapExternalServices.Configuration</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="OapExternalServices-Configuration-clusterName">
+<td><code>clusterName</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="OapExternalServices-Configuration-period">
+<td><code>period</code></td>
+<td><code>int32</code></td>
+<td>
+</td>
+</tr>
+<tr id="OapExternalServices-Configuration-host">
+<td><code>host</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="OapExternalServices-Configuration-port">
+<td><code>port</code></td>
+<td><code>int32</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="OapExternalServices-MetaData">OapExternalServices.MetaData</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="OapExternalServices-MetaData-host">
+<td><code>host</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="OapExternalServices-MetaData-port">
+<td><code>port</code></td>
+<td><code>int32</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="PostgresConfig">PostgresConfig</h2>
+<section>
+</section>
+<h2 id="SpmServerConfig">SpmServerConfig</h2>
+<section>
+</section>
+<h2 id="SpmSyncConfig">SpmSyncConfig</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="SpmSyncConfig-cron">
+<td><code>cron</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="SpmSyncConfig-token">
+<td><code>token</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="TeamSyncConfig">TeamSyncConfig</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="TeamSyncConfig-cron">
+<td><code>cron</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="TeamSyncConfig-token">
+<td><code>token</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="Values">Values</h2>
+<section>
+<p>Values configuration composition</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Values-global">
+<td><code>global</code></td>
+<td><code><a href="#GlobalConfig">GlobalConfig</a></code></td>
+<td>
+</td>
+</tr>
+<tr id="Values-apiserver">
+<td><code>apiserver</code></td>
+<td><code><a href="#ApiServerConfig">ApiServerConfig</a></code></td>
+<td>
+</td>
+</tr>
+<tr id="Values-iamserver">
+<td><code>iamserver</code></td>
+<td><code><a href="#IamServerConfig">IamServerConfig</a></code></td>
+<td>
+</td>
+</tr>
+<tr id="Values-webUi">
+<td><code>webUi</code></td>
+<td><code><a href="#WebUiConfig">WebUiConfig</a></code></td>
+<td>
+</td>
+</tr>
+<tr id="Values-frontenvoy">
+<td><code>frontenvoy</code></td>
+<td><code><a href="#FrontEnvoyConfig">FrontEnvoyConfig</a></code></td>
+<td>
+</td>
+</tr>
+<tr id="Values-spmserver">
+<td><code>spmserver</code></td>
+<td><code><a href="#SpmServerConfig">SpmServerConfig</a></code></td>
+<td>
+</td>
+</tr>
+<tr id="Values-spmsync">
+<td><code>spmsync</code></td>
+<td><code><a href="#SpmSyncConfig">SpmSyncConfig</a></code></td>
+<td>
+</td>
+</tr>
+<tr id="Values-teamsync">
+<td><code>teamsync</code></td>
+<td><code><a href="#TeamSyncConfig">TeamSyncConfig</a></code></td>
+<td>
+</td>
+</tr>
+<tr id="Values-ldap">
+<td><code>ldap</code></td>
+<td><code><a href="#LdapConfig">LdapConfig</a></code></td>
+<td>
+</td>
+</tr>
+<tr id="Values-oap">
+<td><code>oap</code></td>
+<td><code><a href="#OapConfig">OapConfig</a></code></td>
+<td>
+</td>
+</tr>
+<tr id="Values-postgres">
+<td><code>postgres</code></td>
+<td><code><a href="#PostgresConfig">PostgresConfig</a></code></td>
+<td>
+</td>
+</tr>
+<tr id="Values-elasticsearch">
+<td><code>elasticsearch</code></td>
+<td><code><a href="#ElasticsearchConfig">ElasticsearchConfig</a></code></td>
+<td>
+</td>
+</tr>
+<tr id="Values-zipkin">
+<td><code>zipkin</code></td>
+<td><code><a href="#ZipkinConfig">ZipkinConfig</a></code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="WebUiConfig">WebUiConfig</h2>
+<section>
+</section>
+<h2 id="ZipkinConfig">ZipkinConfig</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ZipkinConfig-probeStartupDelay">
+<td><code>probeStartupDelay</code></td>
+<td><code>int32</code></td>
+<td>
+</td>
+</tr>
+<tr id="ZipkinConfig-queryPort">
+<td><code>queryPort</code></td>
+<td><code>int32</code></td>
+<td>
+</td>
+</tr>
+<tr id="ZipkinConfig-javaOptsHeap">
+<td><code>javaOptsHeap</code></td>
+<td><code>int32</code></td>
+<td>
+</td>
+</tr>
+<tr id="ZipkinConfig-ttlCount">
+<td><code>ttlCount</code></td>
+<td><code>int32</code></td>
+<td>
+</td>
+</tr>
+<tr id="ZipkinConfig-ttlUnit">
+<td><code>ttlUnit</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="ZipkinConfig-node">
+<td><code>node</code></td>
+<td><code><a href="#ZipkinNode">ZipkinNode</a></code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="ZipkinNode">ZipkinNode</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ZipkinNode-cpus">
+<td><code>cpus</code></td>
+<td><code>int32</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="tetrate-api-operator-common-Resources">tetrate.api.operator.common.Resources</h2>
+<section>
+<p>Mirrors k8s.io.api.core.v1.ResourceRequirements for unmarshalling.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="tetrate-api-operator-common-Resources-limits">
+<td><code>limits</code></td>
+<td><code>map&lt;string,&nbsp;string&gt;</code></td>
+<td>
+</td>
+</tr>
+<tr id="tetrate-api-operator-common-Resources-requests">
+<td><code>requests</code></td>
+<td><code>map&lt;string,&nbsp;string&gt;</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="tetrate-api-operator-common-VolumeClaimTemplate">tetrate.api.operator.common.VolumeClaimTemplate</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="tetrate-api-operator-common-VolumeClaimTemplate-accessModes">
+<td><code>accessModes</code></td>
+<td><code>string[]</code></td>
+<td>
+</td>
+</tr>
+<tr id="tetrate-api-operator-common-VolumeClaimTemplate-resources">
+<td><code>resources</code></td>
+<td><code><a href="#tetrate-api-operator-common-Resources">tetrate.api.operator.common.Resources</a></code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>

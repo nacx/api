@@ -1,0 +1,2029 @@
+---
+title: Logical Resources
+description: Configuration for modeling logical entities.
+location: https://tetrate.io/docs/reference/config/logical/v1/resources.html
+layout: protoc-gen-docs
+generator: protoc-gen-docs
+number_of_entries: 39
+---
+<p>This is how you model logical application in TSB.</p>
+
+<pre><code class="language-yaml">#### modeling application
+id: bookinfo
+environment: dev
+tenant: test
+namespaces:
+- foo
+- bar
+- baz
+</code></pre>
+
+<p>And this is how you model logical services:</p>
+
+<pre><code class="language-yaml">id: tier2-gateway
+serviceType: LOADBALANCER
+application: bookinfo
+namespace: bookinfo-eks
+hostname: tier2-gateway.bookinfo-eks.svc.cluster.local
+lbSettings:
+  routes:
+  - hostname: foo.bar.com
+    tls:
+      tlsMode: SIMPLE
+      redirectToHttps: true
+      secretName: foo-bar-com
+    httpSettings:
+      routeRules:
+      - match:
+        - uri:
+            exact: /productpage
+        route:
+          destinations:
+          - local:
+              service: productpage
+</code></pre>
+
+<h2 id="Services">Services</h2>
+<h3 id="LogicalResourceModel">LogicalResourceModel</h3>
+<section>
+<pre id="LogicalResourceModel-CreateEnvironment"><code class="language-proto">rpc CreateEnvironment(CreateEnvironmentRequest) returns (Environment)
+</code></pre>
+<pre id="LogicalResourceModel-GetEnvironment"><code class="language-proto">rpc GetEnvironment(GetEnvironmentRequest) returns (Environment)
+</code></pre>
+<pre id="LogicalResourceModel-UpdateEnvironment"><code class="language-proto">rpc UpdateEnvironment(Environment) returns (Environment)
+</code></pre>
+<pre id="LogicalResourceModel-ListEnvironments"><code class="language-proto">rpc ListEnvironments(ListEnvironmentsRequest) returns (ListEnvironmentsResponse)
+</code></pre>
+<pre id="LogicalResourceModel-DeleteEnvironment"><code class="language-proto">rpc DeleteEnvironment(DeleteEnvironmentRequest) returns (google.protobuf.Empty)
+</code></pre>
+<pre id="LogicalResourceModel-GetEnvironmentPolicy"><code class="language-proto">rpc GetEnvironmentPolicy(GetEnvironmentRequest) returns (tetrate.api.q.rbac.v1.Policy)
+</code></pre>
+<pre id="LogicalResourceModel-SetEnvironmentPolicy"><code class="language-proto">rpc SetEnvironmentPolicy(EnvironmentPolicyRequest) returns (google.protobuf.Empty)
+</code></pre>
+<pre id="LogicalResourceModel-GetAllEnvironmentResources"><code class="language-proto">rpc GetAllEnvironmentResources(GetAllEnvironmentResourcesRequest) returns (GetAllEnvironmentResourcesResponse)
+</code></pre>
+<pre id="LogicalResourceModel-CreateApplication"><code class="language-proto">rpc CreateApplication(CreateApplicationRequest) returns (Application)
+</code></pre>
+<pre id="LogicalResourceModel-GetApplication"><code class="language-proto">rpc GetApplication(GetApplicationRequest) returns (Application)
+</code></pre>
+<pre id="LogicalResourceModel-UpdateApplication"><code class="language-proto">rpc UpdateApplication(Application) returns (Application)
+</code></pre>
+<pre id="LogicalResourceModel-ListApplications"><code class="language-proto">rpc ListApplications(ListApplicationsRequest) returns (ListApplicationsResponse)
+</code></pre>
+<pre id="LogicalResourceModel-DeleteApplication"><code class="language-proto">rpc DeleteApplication(DeleteApplicationRequest) returns (google.protobuf.Empty)
+</code></pre>
+<pre id="LogicalResourceModel-GetApplicationPolicy"><code class="language-proto">rpc GetApplicationPolicy(GetApplicationRequest) returns (tetrate.api.q.rbac.v1.Policy)
+</code></pre>
+<pre id="LogicalResourceModel-SetApplicationPolicy"><code class="language-proto">rpc SetApplicationPolicy(ApplicationPolicyRequest) returns (google.protobuf.Empty)
+</code></pre>
+<pre id="LogicalResourceModel-GetApplicationAuthzPolicy"><code class="language-proto">rpc GetApplicationAuthzPolicy(GetApplicationRequest) returns (tetrate.api.authz.v1.Policy)
+</code></pre>
+<pre id="LogicalResourceModel-SetApplicationAuthzPolicy"><code class="language-proto">rpc SetApplicationAuthzPolicy(ApplicationAuthzPolicyRequest) returns (google.protobuf.Empty)
+</code></pre>
+<pre id="LogicalResourceModel-CreateService"><code class="language-proto">rpc CreateService(CreateServiceRequest) returns (Service)
+</code></pre>
+<pre id="LogicalResourceModel-GetService"><code class="language-proto">rpc GetService(GetServiceRequest) returns (Service)
+</code></pre>
+<pre id="LogicalResourceModel-ListServices"><code class="language-proto">rpc ListServices(ListServicesRequest) returns (ListServicesResponse)
+</code></pre>
+<pre id="LogicalResourceModel-UpdateService"><code class="language-proto">rpc UpdateService(Service) returns (Service)
+</code></pre>
+<pre id="LogicalResourceModel-DeleteService"><code class="language-proto">rpc DeleteService(DeleteServiceRequest) returns (google.protobuf.Empty)
+</code></pre>
+<pre id="LogicalResourceModel-GetServicePolicy"><code class="language-proto">rpc GetServicePolicy(GetServiceRequest) returns (tetrate.api.q.rbac.v1.Policy)
+</code></pre>
+<pre id="LogicalResourceModel-SetServicePolicy"><code class="language-proto">rpc SetServicePolicy(ServicePolicyRequest) returns (google.protobuf.Empty)
+</code></pre>
+<pre id="LogicalResourceModel-GetServiceAuthzPolicy"><code class="language-proto">rpc GetServiceAuthzPolicy(GetServiceRequest) returns (tetrate.api.authz.v1.Policy)
+</code></pre>
+<pre id="LogicalResourceModel-SetServiceAuthzPolicy"><code class="language-proto">rpc SetServiceAuthzPolicy(ServiceAuthzPolicyRequest) returns (google.protobuf.Empty)
+</code></pre>
+<pre id="LogicalResourceModel-GetAllLogicalResources"><code class="language-proto">rpc GetAllLogicalResources(GetAllLogicalResourcesRequest) returns (GetAllLogicalResourcesResponse)
+</code></pre>
+</section>
+<h2 id="Types">Types</h2>
+<h3 id="Application">Application</h3>
+<section>
+<p>Application</p>
+
+<p>An Application is a collection of services. Each application typically corresponds to one or more
+kubernetes namespace or an application deployment on VMs.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Application-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+</tr>
+<tr id="Application-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+<p>Tenant.Id.</p>
+
+</td>
+</tr>
+<tr id="Application-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+<p>Environment.Id.</p>
+
+</td>
+</tr>
+<tr id="Application-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+<p>short name for the application.</p>
+
+</td>
+</tr>
+<tr id="Application-description">
+<td><code>description</code></td>
+<td><code>string</code></td>
+<td>
+<p>Additional information.</p>
+
+</td>
+</tr>
+<tr id="Application-client_settings">
+<td><code>clientSettings</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/organization/v1/resources.html#ClientSettings">ClientSettings</a></code></td>
+<td>
+<p>Resilience settings that apply to all services within the application, for outbound calls from
+the application&rsquo;s services to other services in the application or to other applications.</p>
+
+</td>
+</tr>
+<tr id="Application-namespaces">
+<td><code>namespaces</code></td>
+<td><code>string[]</code></td>
+<td>
+<p>List of namespaces where the application services (or components) are scoped within. If
+omitted, the application is assumed to be scoped in a namespace matching the Id field.</p>
+
+</td>
+</tr>
+<tr id="Application-force_mtls_between_services">
+<td><code>forceMtlsBetweenServices</code></td>
+<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#boolvalue">google.protobuf.BoolValue</a></code></td>
+<td>
+<p>Indicates whether communication between services in the application should use ONLY mutual TLS
+or not. Defaults to false if not specified. Applications that have services without sidecars
+should set this value to false.</p>
+
+</td>
+</tr>
+<tr id="Application-alert_settings">
+<td><code>alertSettings</code></td>
+<td><code><a href="#tetrate-api-tcc-spm-alert-v1-Settings">tetrate.api.tcc.spm.alert.v1.Settings</a></code></td>
+<td>
+<p>Alert settings for certain metrics of this application. E.g. SLA rule.</p>
+
+</td>
+</tr>
+<tr id="Application-etag">
+<td><code>etag</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ApplicationAuthzPolicyRequest">ApplicationAuthzPolicyRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ApplicationAuthzPolicyRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+</tr>
+<tr id="ApplicationAuthzPolicyRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="ApplicationAuthzPolicyRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="ApplicationAuthzPolicyRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="ApplicationAuthzPolicyRequest-policy">
+<td><code>policy</code></td>
+<td><code><a href="#tetrate-api-authz-v1-Policy">tetrate.api.authz.v1.Policy</a></code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ApplicationPolicyRequest">ApplicationPolicyRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ApplicationPolicyRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+</tr>
+<tr id="ApplicationPolicyRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="ApplicationPolicyRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="ApplicationPolicyRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="ApplicationPolicyRequest-policy">
+<td><code>policy</code></td>
+<td><code><a href="#tetrate-api-q-rbac-v1-Policy">tetrate.api.q.rbac.v1.Policy</a></code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ClientSettings">ClientSettings</h3>
+<section>
+<p>ClientSettings</p>
+
+<p>ClientSettings control the reliability knobs in Envoy when making
+outbound connections from a gateway or sidecar.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ClientSettings-http_request_timeout">
+<td><code>httpRequestTimeout</code></td>
+<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#duration">google.protobuf.Duration</a></code></td>
+<td>
+<p>Timeout for HTTP requests. Disabled if not set.</p>
+
+</td>
+</tr>
+<tr id="ClientSettings-http_retries">
+<td><code>httpRetries</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/organization/v1/resources.html#HTTPRetry">HTTPRetry</a></code></td>
+<td>
+<p>Retry policy for HTTP requests. Disabled if not set.</p>
+
+</td>
+</tr>
+<tr id="ClientSettings-tcp_connect_timeout">
+<td><code>tcpConnectTimeout</code></td>
+<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#duration">google.protobuf.Duration</a></code></td>
+<td>
+<p>TCP connection timeout. Disabled if not set.</p>
+
+</td>
+</tr>
+<tr id="ClientSettings-tcp_keepalive">
+<td><code>tcpKeepalive</code></td>
+<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#boolvalue">google.protobuf.BoolValue</a></code></td>
+<td>
+<p>If enabled, sets SO_KEEPALIVE on the socket to enable TCP Keepalives.</p>
+
+</td>
+</tr>
+<tr id="ClientSettings-circuit_breaker_sensitivity">
+<td><code>circuitBreakerSensitivity</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/organization/v1/resources.html#ClientSettings-Sensitivity">ClientSettings.Sensitivity</a></code></td>
+<td>
+<p>Circuit breakers in Envoy are applied per endpoint in a load
+balancing pool. By default, circuit breakers are disabled. If
+set, the sensitivity level determines the maximum number of
+consecutive failures that Envoy will tolerate before ejecting an
+endpoint from the load balancing pool.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="CreateApplicationRequest">CreateApplicationRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="CreateApplicationRequest-parent">
+<td><code>parent</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+</tr>
+<tr id="CreateApplicationRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+<p>Tenant.Id.</p>
+
+</td>
+</tr>
+<tr id="CreateApplicationRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+<p>Environment.Id.</p>
+
+</td>
+</tr>
+<tr id="CreateApplicationRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+<p>short name for the application.</p>
+
+</td>
+</tr>
+<tr id="CreateApplicationRequest-description">
+<td><code>description</code></td>
+<td><code>string</code></td>
+<td>
+<p>Additional information.</p>
+
+</td>
+</tr>
+<tr id="CreateApplicationRequest-client_settings">
+<td><code>clientSettings</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/organization/v1/resources.html#ClientSettings">ClientSettings</a></code></td>
+<td>
+<p>Resilience settings that apply to all services within the application, for outbound calls from
+the application&rsquo;s services to other services.</p>
+
+</td>
+</tr>
+<tr id="CreateApplicationRequest-namespaces">
+<td><code>namespaces</code></td>
+<td><code>string[]</code></td>
+<td>
+<p>List of namespaces where the application services (or components) are scoped within. If
+omitted, the application is assumed to be scoped in a namespace matching the Id field.</p>
+
+</td>
+</tr>
+<tr id="CreateApplicationRequest-force_mtls_between_services">
+<td><code>forceMtlsBetweenServices</code></td>
+<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#boolvalue">google.protobuf.BoolValue</a></code></td>
+<td>
+<p>Indicates whether communication between services in the application should use ONLY mutual TLS
+or not. Defaults to false if not specified. Applications that have services without sidecars
+should set this value to false.</p>
+
+</td>
+</tr>
+<tr id="CreateApplicationRequest-alert_settings">
+<td><code>alertSettings</code></td>
+<td><code><a href="#tetrate-api-tcc-spm-alert-v1-Settings">tetrate.api.tcc.spm.alert.v1.Settings</a></code></td>
+<td>
+<p>Alert settings for certain metrics of this application. E.g. SLA rule.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="CreateEnvironmentRequest">CreateEnvironmentRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="CreateEnvironmentRequest-parent">
+<td><code>parent</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+</tr>
+<tr id="CreateEnvironmentRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="CreateEnvironmentRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+<p>If present, this will be used as the id for the created object.</p>
+
+</td>
+</tr>
+<tr id="CreateEnvironmentRequest-description">
+<td><code>description</code></td>
+<td><code>string</code></td>
+<td>
+<p>Additional information for readability.</p>
+
+</td>
+</tr>
+<tr id="CreateEnvironmentRequest-client_settings">
+<td><code>clientSettings</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/organization/v1/resources.html#ClientSettings">ClientSettings</a></code></td>
+<td>
+<p>Resilience settings that apply to all clusters in the environment.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="CreateServiceRequest">CreateServiceRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="CreateServiceRequest-parent">
+<td><code>parent</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+</tr>
+<tr id="CreateServiceRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+<p>Tenant.Id.</p>
+
+</td>
+</tr>
+<tr id="CreateServiceRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+<p>Environment.Id.</p>
+
+</td>
+</tr>
+<tr id="CreateServiceRequest-application">
+<td><code>application</code></td>
+<td><code>string</code></td>
+<td>
+<p>Application.Id.</p>
+
+</td>
+</tr>
+<tr id="CreateServiceRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+<p>If present, this will be used as the id for the created object.</p>
+
+</td>
+</tr>
+<tr id="CreateServiceRequest-description">
+<td><code>description</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="CreateServiceRequest-hostname">
+<td><code>hostname</code></td>
+<td><code>string</code></td>
+<td>
+<p>FQDN hostname of the service.</p>
+
+</td>
+</tr>
+<tr id="CreateServiceRequest-labels">
+<td><code>labels</code></td>
+<td><code>map&lt;string,&nbsp;string&gt;</code></td>
+<td>
+<p>User identifiable tags associated with this service.</p>
+
+</td>
+</tr>
+<tr id="CreateServiceRequest-ports">
+<td><code>ports</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/organization/v1/resources.html#Port">Port[]</a></code></td>
+<td>
+</td>
+</tr>
+<tr id="CreateServiceRequest-namespace">
+<td><code>namespace</code></td>
+<td><code>string</code></td>
+<td>
+<p>Namespace where the service is scoped. It should be one of application namespaces. If the
+application has only one namespace and if this field is omitted, this filed would default to
+the application namespace. This field cannot be omitted if the application has more than one
+namespace.</p>
+
+</td>
+</tr>
+<tr id="CreateServiceRequest-subsets">
+<td><code>subsets</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/organization/v1/resources.html#Subset">Subset[]</a></code></td>
+<td>
+<p>One or more versions of the service. Each version has a distinct name and a set of labels that
+help uniquely identify the pods/VMs of that version.</p>
+
+</td>
+</tr>
+<tr id="CreateServiceRequest-service_type">
+<td><code>serviceType</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/organization/v1/resources.html#ServiceType">ServiceType</a></code></td>
+<td>
+<p>Internal/external/load balancer service. External services can be created only in the &ldquo;system&rdquo;
+application.  Load balancer services in the &ldquo;system&rdquo; application act as shared load balancers
+for the entire cluster, while those under user created applications act as a dedicated load
+balancer for that application. Defaults to internal.</p>
+
+</td>
+</tr>
+<tr id="CreateServiceRequest-lb_settings" class="oneof oneof-start">
+<td><code>lbSettings</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/organization/v1/resources.html#LBRouteSettings">LBRouteSettings (oneof)</a></code></td>
+<td>
+<p>Allowed only if the service is of type load balancer.</p>
+
+</td>
+</tr>
+<tr id="CreateServiceRequest-internal_routes" class="oneof">
+<td><code>internalRoutes</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/organization/v1/resources.html#InternalRouteSettings">InternalRouteSettings (oneof)</a></code></td>
+<td>
+<p>Allowed only if the service is of type internal.</p>
+
+</td>
+</tr>
+<tr id="CreateServiceRequest-external_routes" class="oneof">
+<td><code>externalRoutes</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/organization/v1/resources.html#ExternalRouteSettings">ExternalRouteSettings (oneof)</a></code></td>
+<td>
+<p>Allowed only if the service is of type external.</p>
+
+</td>
+</tr>
+<tr id="CreateServiceRequest-alert_settings">
+<td><code>alertSettings</code></td>
+<td><code><a href="#tetrate-api-tcc-spm-alert-v1-Settings">tetrate.api.tcc.spm.alert.v1.Settings</a></code></td>
+<td>
+<p>Alert settings for certain metrics of this service. E.g. SLA rule.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="DeleteApplicationRequest">DeleteApplicationRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="DeleteApplicationRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+</tr>
+<tr id="DeleteApplicationRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="DeleteApplicationRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="DeleteApplicationRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="DeleteEnvironmentRequest">DeleteEnvironmentRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="DeleteEnvironmentRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+</tr>
+<tr id="DeleteEnvironmentRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="DeleteEnvironmentRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="DeleteServiceRequest">DeleteServiceRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="DeleteServiceRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+</tr>
+<tr id="DeleteServiceRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="DeleteServiceRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="DeleteServiceRequest-application">
+<td><code>application</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="DeleteServiceRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Environment">Environment</h3>
+<section>
+<p>Environment</p>
+
+<p>Environment is a collection of applications, services, load balancers, and clusters where they
+are deployed.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Environment-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+</tr>
+<tr id="Environment-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+<p>Tenant.Id.</p>
+
+</td>
+</tr>
+<tr id="Environment-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+<p>A short name for the environment (e.g,, dev, stage, us-1, etc.).</p>
+
+</td>
+</tr>
+<tr id="Environment-description">
+<td><code>description</code></td>
+<td><code>string</code></td>
+<td>
+<p>Additional information for readability.</p>
+
+</td>
+</tr>
+<tr id="Environment-client_settings">
+<td><code>clientSettings</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/organization/v1/resources.html#ClientSettings">ClientSettings</a></code></td>
+<td>
+<p>Resilience settings that apply to all clusters in the environment.</p>
+
+</td>
+</tr>
+<tr id="Environment-etag">
+<td><code>etag</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="EnvironmentPolicyRequest">EnvironmentPolicyRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="EnvironmentPolicyRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+</tr>
+<tr id="EnvironmentPolicyRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="EnvironmentPolicyRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="EnvironmentPolicyRequest-policy">
+<td><code>policy</code></td>
+<td><code><a href="#tetrate-api-q-rbac-v1-Policy">tetrate.api.q.rbac.v1.Policy</a></code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ExternalRouteSettings">ExternalRouteSettings</h3>
+<section>
+<p>ExternalRouteSettings</p>
+
+<p>HTTP/TCP routing settings for an external service in the &ldquo;system&rdquo; application. Enforced at the
+external facing gateway in the &ldquo;system&rdquo; application.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ExternalRouteSettings-tls">
+<td><code>tls</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/organization/v1/resources.html#TLSSettings">TLSSettings</a></code></td>
+<td>
+<p>TLS certificate info for the external service. If nil, the gateway will communicate with the
+external service over plain text.</p>
+
+</td>
+</tr>
+<tr id="ExternalRouteSettings-http_settings">
+<td><code>httpSettings</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/organization/v1/resources.html#HttpSettings">HttpSettings</a></code></td>
+<td>
+<p>HTTP specific settings, transformations and routing rules associated with HTTP traffic to this
+service.</p>
+
+</td>
+</tr>
+<tr id="ExternalRouteSettings-tcp_settings">
+<td><code>tcpSettings</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/organization/v1/resources.html#TcpSettings">TcpSettings</a></code></td>
+<td>
+<p>TCP specific settings, transformations and routing rules associated with non-HTTP traffic to
+this service.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="GetAllEnvironmentResourcesRequest">GetAllEnvironmentResourcesRequest</h3>
+<section>
+<p>Includes physical and logical</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="GetAllEnvironmentResourcesRequest-parent">
+<td><code>parent</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+</tr>
+<tr id="GetAllEnvironmentResourcesRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="GetAllEnvironmentResourcesRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="GetAllEnvironmentResourcesResponse">GetAllEnvironmentResourcesResponse</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="GetAllEnvironmentResourcesResponse-applications" class="deprecated ">
+<td><code>applications</code></td>
+<td><code><a href="#GetAllEnvironmentResourcesResponse-ApplicationDetails">GetAllEnvironmentResourcesResponse.ApplicationDetails[]</a></code></td>
+<td>
+</td>
+</tr>
+<tr id="GetAllEnvironmentResourcesResponse-services">
+<td><code>services</code></td>
+<td><code><a href="#Service">Service[]</a></code></td>
+<td>
+</td>
+</tr>
+<tr id="GetAllEnvironmentResourcesResponse-clusters">
+<td><code>clusters</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/physical/v1/resources.html#Cluster">Cluster[]</a></code></td>
+<td>
+</td>
+</tr>
+<tr id="GetAllEnvironmentResourcesResponse-namespaces">
+<td><code>namespaces</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/physical/v1/resources.html#Namespace">Namespace[]</a></code></td>
+<td>
+</td>
+</tr>
+<tr id="GetAllEnvironmentResourcesResponse-deployments">
+<td><code>deployments</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/physical/v1/resources.html#Deployment">Deployment[]</a></code></td>
+<td>
+</td>
+</tr>
+<tr id="GetAllEnvironmentResourcesResponse-apps">
+<td><code>apps</code></td>
+<td><code><a href="#Application">Application[]</a></code></td>
+<td>
+</td>
+</tr>
+<tr id="GetAllEnvironmentResourcesResponse-authz_policies">
+<td><code>authzPolicies</code></td>
+<td><code>map&lt;string,&nbsp;<a href="#tetrate-api-authz-v1-Policy">tetrate.api.authz.v1.Policy</a>&gt;</code></td>
+<td>
+<p>authz_policies contains the AuthZ policies for the different resources (Applications, Services)
+indexed by the resource fully qualified name.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="GetAllEnvironmentResourcesResponse-ApplicationDetails">GetAllEnvironmentResourcesResponse.ApplicationDetails</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="GetAllEnvironmentResourcesResponse-ApplicationDetails-application">
+<td><code>application</code></td>
+<td><code><a href="#Application">Application</a></code></td>
+<td>
+</td>
+</tr>
+<tr id="GetAllEnvironmentResourcesResponse-ApplicationDetails-policy">
+<td><code>policy</code></td>
+<td><code><a href="#tetrate-api-authz-v1-Policy">tetrate.api.authz.v1.Policy</a></code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="GetAllLogicalResourcesRequest">GetAllLogicalResourcesRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="GetAllLogicalResourcesRequest-parent">
+<td><code>parent</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+</tr>
+<tr id="GetAllLogicalResourcesRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="GetAllLogicalResourcesRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="GetAllLogicalResourcesResponse">GetAllLogicalResourcesResponse</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="GetAllLogicalResourcesResponse-applications">
+<td><code>applications</code></td>
+<td><code><a href="#Application">Application[]</a></code></td>
+<td>
+</td>
+</tr>
+<tr id="GetAllLogicalResourcesResponse-services">
+<td><code>services</code></td>
+<td><code><a href="#Service">Service[]</a></code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="GetApplicationRequest">GetApplicationRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="GetApplicationRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+</tr>
+<tr id="GetApplicationRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="GetApplicationRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="GetApplicationRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="GetEnvironmentRequest">GetEnvironmentRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="GetEnvironmentRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+</tr>
+<tr id="GetEnvironmentRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="GetEnvironmentRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="GetServiceRequest">GetServiceRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="GetServiceRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+</tr>
+<tr id="GetServiceRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="GetServiceRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="GetServiceRequest-application">
+<td><code>application</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="GetServiceRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="InternalRouteSettings">InternalRouteSettings</h3>
+<section>
+<p>InternalRouteSettings</p>
+
+<p>HTTP/TCP routing settings for an internal service in an application. Enforced at the sidecars for
+services inside the same application.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="InternalRouteSettings-http_settings">
+<td><code>httpSettings</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/organization/v1/resources.html#HttpSettings">HttpSettings</a></code></td>
+<td>
+<p>HTTP specific settings, transformations and routing rules associated with HTTP traffic to this
+service.</p>
+
+</td>
+</tr>
+<tr id="InternalRouteSettings-tcp_settings">
+<td><code>tcpSettings</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/organization/v1/resources.html#TcpSettings">TcpSettings</a></code></td>
+<td>
+<p>TCP specific settings, transformations and routing rules associated with non-HTTP traffic to
+this service.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="LBRouteSettings">LBRouteSettings</h3>
+<section>
+<p>LBRouteSettings</p>
+
+<p>HTTP/TCP routing settings for application exposed via a load balancer service. Enforced at load
+balancer only.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="LBRouteSettings-enable_workflows">
+<td><code>enableWorkflows</code></td>
+<td><code>bool</code></td>
+<td>
+</td>
+</tr>
+<tr id="LBRouteSettings-load_balancer_class">
+<td><code>loadBalancerClass</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/organization/v1/resources.html#LoadBalancerClass">LoadBalancerClass</a></code></td>
+<td>
+</td>
+</tr>
+<tr id="LBRouteSettings-load_balancer_tier">
+<td><code>loadBalancerTier</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/organization/v1/resources.html#LoadBalancerTier">LoadBalancerTier</a></code></td>
+<td>
+<p>Current restrictions: Tier1 load balancers can only route to other tier2 load balancers in any
+cluster (local/remote). They cannot route to internal services in their local clusters. Tier2
+load balancers can route to internal services in the same cluster only.</p>
+
+</td>
+</tr>
+<tr id="LBRouteSettings-routes">
+<td><code>routes</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/organization/v1/resources.html#LBRouteSettings-LBRoute">LBRouteSettings.LBRoute[]</a></code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ListApplicationsRequest">ListApplicationsRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ListApplicationsRequest-parent">
+<td><code>parent</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+</tr>
+<tr id="ListApplicationsRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="ListApplicationsRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ListApplicationsResponse">ListApplicationsResponse</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ListApplicationsResponse-applications">
+<td><code>applications</code></td>
+<td><code><a href="#Application">Application[]</a></code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ListEnvironmentsRequest">ListEnvironmentsRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ListEnvironmentsRequest-parent">
+<td><code>parent</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+</tr>
+<tr id="ListEnvironmentsRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ListEnvironmentsResponse">ListEnvironmentsResponse</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ListEnvironmentsResponse-environments">
+<td><code>environments</code></td>
+<td><code><a href="#Environment">Environment[]</a></code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ListServicesRequest">ListServicesRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ListServicesRequest-parent">
+<td><code>parent</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+</tr>
+<tr id="ListServicesRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="ListServicesRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="ListServicesRequest-application">
+<td><code>application</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ListServicesResponse">ListServicesResponse</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ListServicesResponse-services">
+<td><code>services</code></td>
+<td><code><a href="#Service">Service[]</a></code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Port">Port</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Port-number">
+<td><code>number</code></td>
+<td><code>uint32</code></td>
+<td>
+<p>A valid non-negative integer port number.</p>
+
+</td>
+</tr>
+<tr id="Port-protocol">
+<td><code>protocol</code></td>
+<td><code>string</code></td>
+<td>
+<p>The protocol exposed on the port. MUST BE one of HTTP|GRPC|HTTP2|HTTPS|TCP|TLS.</p>
+
+<p>TLS implies the connection will be routed based on the SNI header to the destination without
+terminating the TLS connection.</p>
+
+</td>
+</tr>
+<tr id="Port-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Name assigned to the port.</p>
+
+</td>
+</tr>
+<tr id="Port-endpoint_port">
+<td><code>endpointPort</code></td>
+<td><code>uint32</code></td>
+<td>
+<p>The endpoint port to which this service port maps to. For example, service port 80 exposed on
+the load balancer could map to an endpoint port 9080 on a VM.</p>
+
+</td>
+</tr>
+<tr id="Port-kubernetes_node_port">
+<td><code>kubernetesNodePort</code></td>
+<td><code>uint32</code></td>
+<td>
+<p>Indicates the node port attached to a physical deployment on a kubernetes cluster.</p>
+
+</td>
+</tr>
+<tr id="Port-application_port">
+<td><code>applicationPort</code></td>
+<td><code>uint32</code></td>
+<td>
+<p>In cases where IPtables based capture is not used, the sidecar
+and the application could be listening on different ports in the
+same VM. For example, the endpoint_port of 9080 is the port where Envoy listens for inbound
+traffic and
+forwards incoming traffic to the the weblogic application server listening on 127.0.0.1:7070</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Service">Service</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Service-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+</tr>
+<tr id="Service-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+<p>Tenant.Id.</p>
+
+</td>
+</tr>
+<tr id="Service-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+<p>Environment.Id.</p>
+
+</td>
+</tr>
+<tr id="Service-application">
+<td><code>application</code></td>
+<td><code>string</code></td>
+<td>
+<p>Application.Id.</p>
+
+</td>
+</tr>
+<tr id="Service-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+<p>Short name for the service. Clusters are expected to have namespaces that match the
+application, and services that match the Id, especially on Kubernetes.</p>
+
+</td>
+</tr>
+<tr id="Service-description">
+<td><code>description</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="Service-hostname">
+<td><code>hostname</code></td>
+<td><code>string</code></td>
+<td>
+<p>FQDN hostname of the service.</p>
+
+</td>
+</tr>
+<tr id="Service-labels">
+<td><code>labels</code></td>
+<td><code>map&lt;string,&nbsp;string&gt;</code></td>
+<td>
+<p>User identifiable tags associated with this service.</p>
+
+</td>
+</tr>
+<tr id="Service-ports">
+<td><code>ports</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/organization/v1/resources.html#Port">Port[]</a></code></td>
+<td>
+</td>
+</tr>
+<tr id="Service-etag">
+<td><code>etag</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="Service-namespace">
+<td><code>namespace</code></td>
+<td><code>string</code></td>
+<td>
+<p>Namespace where the service is scoped and should be one of application namespaces. If the
+application has only one namespace and if this field is omitted, this filed would default to
+the application namespace. This field cannot be omitted if the application has more than one
+namespace.</p>
+
+</td>
+</tr>
+<tr id="Service-subsets">
+<td><code>subsets</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/organization/v1/resources.html#Subset">Subset[]</a></code></td>
+<td>
+<p>One or more versions of the service. Each version has a distinct name and a set of labels that
+help uniquely identify the pods/VMs of that version.</p>
+
+</td>
+</tr>
+<tr id="Service-service_type">
+<td><code>serviceType</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/organization/v1/resources.html#ServiceType">ServiceType</a></code></td>
+<td>
+<p>Internal/external/load balancer service. External services can be created only in the &ldquo;system&rdquo;
+application.  Load balancer services in the &ldquo;system&rdquo; application act as shared load balancers
+for the entire cluster, while those under user created applications act as a dedicated load
+balancer for that application. Defaults to internal.</p>
+
+</td>
+</tr>
+<tr id="Service-lb_settings" class="oneof oneof-start">
+<td><code>lbSettings</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/organization/v1/resources.html#LBRouteSettings">LBRouteSettings (oneof)</a></code></td>
+<td>
+<p>Allowed only if the service is of type load balancer.</p>
+
+</td>
+</tr>
+<tr id="Service-internal_routes" class="oneof">
+<td><code>internalRoutes</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/organization/v1/resources.html#InternalRouteSettings">InternalRouteSettings (oneof)</a></code></td>
+<td>
+<p>Allowed only if the service is of type internal.</p>
+
+</td>
+</tr>
+<tr id="Service-external_routes" class="oneof">
+<td><code>externalRoutes</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/organization/v1/resources.html#ExternalRouteSettings">ExternalRouteSettings (oneof)</a></code></td>
+<td>
+<p>Allowed only if the service is of type external.</p>
+
+</td>
+</tr>
+<tr id="Service-alert_settings">
+<td><code>alertSettings</code></td>
+<td><code><a href="#tetrate-api-tcc-spm-alert-v1-Settings">tetrate.api.tcc.spm.alert.v1.Settings</a></code></td>
+<td>
+<p>Alert settings for certain metrics of this service. E.g. SLA rule.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ServiceAuthzPolicyRequest">ServiceAuthzPolicyRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ServiceAuthzPolicyRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+</tr>
+<tr id="ServiceAuthzPolicyRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="ServiceAuthzPolicyRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="ServiceAuthzPolicyRequest-application">
+<td><code>application</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="ServiceAuthzPolicyRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="ServiceAuthzPolicyRequest-policy">
+<td><code>policy</code></td>
+<td><code><a href="#tetrate-api-authz-v1-Policy">tetrate.api.authz.v1.Policy</a></code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ServicePolicyRequest">ServicePolicyRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ServicePolicyRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+</tr>
+<tr id="ServicePolicyRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="ServicePolicyRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="ServicePolicyRequest-application">
+<td><code>application</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="ServicePolicyRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="ServicePolicyRequest-policy">
+<td><code>policy</code></td>
+<td><code><a href="#tetrate-api-q-rbac-v1-Policy">tetrate.api.q.rbac.v1.Policy</a></code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ServiceType">ServiceType</h3>
+<section>
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ServiceType-INTERNAL">
+<td><code>INTERNAL</code></td>
+<td>
+<p>An internal service in an application that is not exposed to the outside world.</p>
+
+</td>
+</tr>
+<tr id="ServiceType-LOADBALANCER">
+<td><code>LOADBALANCER</code></td>
+<td>
+<p>A load balancer service running only the proxy as the workload. A load balancer service inside
+an user application forwards traffic to other services in the application. A load balancer
+service inside the &ldquo;system&rdquo; application forwards traffic to services in other user
+applications.</p>
+
+</td>
+</tr>
+<tr id="ServiceType-EXTERNAL">
+<td><code>EXTERNAL</code></td>
+<td>
+<p>An external service (not in the mesh) accessed by the services in the application.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Subset">Subset</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Subset-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="Subset-labels">
+<td><code>labels</code></td>
+<td><code>map&lt;string,&nbsp;string&gt;</code></td>
+<td>
+<p>Labels apply a filter over the endpoints of a service in the service registry.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="tetrate-api-authz-v1-Policy">tetrate.api.authz.v1.Policy</h3>
+<section>
+<p>Runtime Authorization Policy</p>
+
+<p>Runtime authorization policies are attached to specific resources and define which subjects,
+and under which conditions, are allowed to access them.
+Different subjects can be configured to access the target resource with different conditions
+by setting multiple bindings in the same policy.</p>
+
+<p>The default authorization policy allows access between services within an application, and denies
+cross-application traffic. Traffic between applications must be explicitly enabled by applying
+the corresponding access policy in the target application.</p>
+
+<p>THe following examples show some common policies:</p>
+
+<pre><code># Default deny policy for applications. The absence of bindings means that there is no
+# access allowed from outside the application.
+policy:
+
+# Allow access from the 'bookinfo' application. Requests from the client application
+# present a JWT token for the 'bookinfo' application.
+policy:
+  bindings:
+  - from:
+    - jwt:
+        principal: bookinfo
+        audience: tsb
+        claims:
+          group: applications
+
+# Allow access from the 'bookinfo' application, but only to the '/v1/*'
+# HTTP paths, and only for GET and HEAD requests, on the 'bookinfo.com' host.
+policy:
+  bindings:
+  - from:
+    - jwt:
+        principal: bookinfo
+        audience: tsb
+        claims:
+          group: applications
+    allow_http:
+      to:
+      - paths:
+        - /v1/*
+        hosts:
+        - bookinfo.com
+        methods:
+        - GET
+        - HEAD
+
+# Allow access from the 'bookinfo' application, but only to the '/v1/*'
+# HTTP paths, and only for GET and HEAD requests, on the 'bookinfo.com' host.
+# In this example the client application is identified by checking the value of
+# the 'X-App-Id' request header.
+policy:
+  bindings:
+  - from:
+    - request_headers:
+        X-App-Id: bookinfo
+    allow_http:
+      to:
+      - paths:
+        - /v1/*
+        hosts:
+        - bookinfo.com
+        methods:
+        - GET
+        - HEAD
+
+# When applied to a service, allows traffic only from the configured identities.
+policy:
+  bindings:
+  - from:
+    - cluster_local_service_account: default/bookinfo-sa
+    - subject_alt_name: spiffe://cluster.local/ns/default/sa/bookinfo-sa
+</code></pre>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="tetrate-api-authz-v1-Policy-bindings">
+<td><code>bindings</code></td>
+<td><code><a href="#tetrate-api-authz-v1-Binding">tetrate.api.authz.v1.Binding[]</a></code></td>
+<td>
+<p>List of bindings that configure access to the target resource.</p>
+
+</td>
+</tr>
+<tr id="tetrate-api-authz-v1-Policy-etag">
+<td><code>etag</code></td>
+<td><code>string</code></td>
+<td>
+<p>Etag to guard concurrent modifications to the policy.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="tetrate-api-q-rbac-v1-Policy">tetrate.api.q.rbac.v1.Policy</h3>
+<section>
+<p>Policy</p>
+
+<p>A policy defines the set of subjects that can access a resource and under which conditions that
+access is granted.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="tetrate-api-q-rbac-v1-Policy-bindings">
+<td><code>bindings</code></td>
+<td><code><a href="#tetrate-api-q-rbac-v1-Binding">tetrate.api.q.rbac.v1.Binding[]</a></code></td>
+<td>
+<p>The list of bindings configures the different access profiles that are allowed on the resource
+configured by the policy.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="tetrate-api-tcc-spm-alert-v1-Settings">tetrate.api.tcc.spm.alert.v1.Settings</h3>
+<section>
+<p>Settings</p>
+
+<p>A set of alert rules.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="tetrate-api-tcc-spm-alert-v1-Settings-rules">
+<td><code>rules</code></td>
+<td><code>map&lt;string,&nbsp;<a href="#tetrate-api-tcc-spm-alert-v1-Rule">tetrate.api.tcc.spm.alert.v1.Rule</a>&gt;</code></td>
+<td>
+</td>
+</tr>
+<tr id="tetrate-api-tcc-spm-alert-v1-Settings-recipients" class="deprecated ">
+<td><code>recipients</code></td>
+<td><code><a href="#tetrate-api-tcc-spm-alert-v1-Recipient">tetrate.api.tcc.spm.alert.v1.Recipient[]</a></code></td>
+<td>
+<p>Recipient list. This field is deprecated.</p>
+
+</td>
+</tr>
+<tr id="tetrate-api-tcc-spm-alert-v1-Settings-notifications">
+<td><code>notifications</code></td>
+<td><code><a href="#tetrate-api-tcc-spm-alert-v1-Notification">tetrate.api.tcc.spm.alert.v1.Notification[]</a></code></td>
+<td>
+<p>Application level notification settings.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>

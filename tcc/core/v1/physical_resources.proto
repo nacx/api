@@ -2,6 +2,31 @@
 
 syntax = "proto3";
 
+// $title: Physical Resources
+// $description: Configuration for modeling physical entities.
+// $location: https://tetrate.io/docs/reference/config/physical/v1/resources.html
+
+// This is how you model a physical namespace in TSB.
+//
+// ```yaml
+// id: bookinfo-eks
+// environment: dev
+// tenant: test
+// labels:
+//   foo: bar
+//```
+//
+// And this is how you model physical deployments:
+//
+//```yaml
+// id: tier2-gateway
+// namespace: bookinfo-eks
+// hostname: tier2-gateway.bookinfo-eks.svc.cluster.local
+// ports:
+// - name: http
+//   number: 80
+//   protocol: HTTP
+// ```
 package tetrate.api.tcc.core.v1;
 option go_package = "github.com/tetrateio/tetrate/api/tcc/core/v1";
 

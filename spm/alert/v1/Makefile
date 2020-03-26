@@ -28,6 +28,7 @@ ${DESCRIPTOR}:
 		--grpc-gateway_out=allow_delete_body=true,paths=source_relative,$(MAPS):. \
 		--validate_out=paths=source_relative,lang=gogo:. \
 		--descriptor_set_out=$(DESCRIPTOR) --include_imports \
+		--docs_out=warnings=true,per_file=true,mode=html_fragment_with_front_matter:. \
 		$(PROTO_SOURCES)
 	@echo "done building protos"
 

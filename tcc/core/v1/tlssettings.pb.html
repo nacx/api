@@ -1,0 +1,122 @@
+---
+title: tetrate.api.tcc.core.v1
+layout: protoc-gen-docs
+generator: protoc-gen-docs
+number_of_entries: 2
+---
+<h2 id="TLSMode">TLSMode</h2>
+<section>
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="TLSMode-DISABLED">
+<td><code>DISABLED</code></td>
+<td>
+</td>
+</tr>
+<tr id="TLSMode-SIMPLE">
+<td><code>SIMPLE</code></td>
+<td>
+</td>
+</tr>
+<tr id="TLSMode-MUTUAL">
+<td><code>MUTUAL</code></td>
+<td>
+</td>
+</tr>
+<tr id="TLSMode-SNI_PASSTHROUGH">
+<td><code>SNI_PASSTHROUGH</code></td>
+<td>
+</td>
+</tr>
+<tr id="TLSMode-ISTIO_MUTUAL">
+<td><code>ISTIO_MUTUAL</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="TLSSettings">TLSSettings</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="TLSSettings-tls_mode">
+<td><code>tlsMode</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/organization/v1/resources.html#TLSMode">TLSMode</a></code></td>
+<td>
+<p>Set this to SIMPLE, MUTUAL, or SNI_PASSTHROUGH for one-way TLS, mutual TLS, or client sni-based
+TLS passthrough respectively. The hostname in the load balancer will be used as the SNI in the
+TLS passthrough mode.</p>
+
+</td>
+</tr>
+<tr id="TLSSettings-tls_enabled" class="deprecated ">
+<td><code>tlsEnabled</code></td>
+<td><code>bool</code></td>
+<td>
+<p>Enable TLS settings for the application.</p>
+
+</td>
+</tr>
+<tr id="TLSSettings-redirect_to_https">
+<td><code>redirectToHttps</code></td>
+<td><code>bool</code></td>
+<td>
+<p>If set, the load balancer will redirect HTTP connections on port 80 to HTTPS port 443.</p>
+
+</td>
+</tr>
+<tr id="TLSSettings-server_certificate">
+<td><code>serverCertificate</code></td>
+<td><code>string</code></td>
+<td>
+<p>For proxies running on VMs, the path to the file holding the server-side TLS certificate to
+use.</p>
+
+</td>
+</tr>
+<tr id="TLSSettings-private_key">
+<td><code>privateKey</code></td>
+<td><code>string</code></td>
+<td>
+<p>For proxies running on VMs, the path to the file holding the server&rsquo;s private key.</p>
+
+</td>
+</tr>
+<tr id="TLSSettings-ca_certificates">
+<td><code>caCertificates</code></td>
+<td><code>string</code></td>
+<td>
+<p>For proxies running on VMs, the path to a file containing certificate authority certificates to
+use in verifying a presented client side certificate for mutual TLS connections.</p>
+
+</td>
+</tr>
+<tr id="TLSSettings-secret_name">
+<td><code>secretName</code></td>
+<td><code>string</code></td>
+<td>
+<p>For proxies running on Kubernetes, the name of the secret that holds the TLS certs including
+the CA certificates. Currently applicable only on Kubernetes. The secret (type generic) should
+contain the following keys and values: key: &lt;privateKey&gt;, cert: &lt;serverCert&gt;, cacert:
+&lt;CACertificate&gt;.  If the service is exposed via a load balancer, the secret must be accessible
+to it.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>

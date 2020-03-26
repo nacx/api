@@ -2,6 +2,48 @@
 
 syntax = "proto3";
 
+// $title: Logical Resources
+// $description: Configuration for modeling logical entities.
+// $location: https://tetrate.io/docs/reference/config/logical/v1/resources.html
+
+// This is how you model logical application in TSB.
+//
+// ```yaml
+// # modeling application
+// id: bookinfo
+// environment: dev
+// tenant: test
+// namespaces:
+// - foo
+// - bar
+// - baz
+//```
+//
+// And this is how you model logical services:
+//
+//```yaml
+// id: tier2-gateway
+// serviceType: LOADBALANCER
+// application: bookinfo
+// namespace: bookinfo-eks
+// hostname: tier2-gateway.bookinfo-eks.svc.cluster.local
+// lbSettings:
+//   routes:
+//   - hostname: foo.bar.com
+//     tls:
+//       tlsMode: SIMPLE
+//       redirectToHttps: true
+//       secretName: foo-bar-com
+//     httpSettings:
+//       routeRules:
+//       - match:
+//         - uri:
+//             exact: /productpage
+//         route:
+//           destinations:
+//           - local:
+//               service: productpage
+// ```
 package tetrate.api.tcc.core.v1;
 option go_package = "github.com/tetrateio/tetrate/api/tcc/core/v1";
 

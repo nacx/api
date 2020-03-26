@@ -21,6 +21,7 @@ $(DONE):
 		-I $(VENDOR) \
 		-I $(APIS) \
 		--go_out=paths=source_relative,plugins=grpc,$(MAPS):. \
+		--docs_out=warnings=true,per_file=true,mode=html_fragment_with_front_matter:. \
 		--include_imports $(PROTO_SOURCES)
 	@echo "done building protos"
 	@echo "running values_types.pb.go fixup structs"

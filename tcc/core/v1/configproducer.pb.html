@@ -1,0 +1,112 @@
+---
+title: tetrate.api.tcc.core.v1
+layout: protoc-gen-docs
+generator: protoc-gen-docs
+number_of_entries: 3
+---
+<h2 id="Services">Services</h2>
+<h3 id="ConfigProducer">ConfigProducer</h3>
+<section>
+<p>API that returns all istio/f5 configs for a VM or k8s cluster.  The sync agent running next to VM
+galley or k8 galley or f5 BIGIP LTM would call this periodically. For Istio, we return all the
+Istio YAMLs pertaining to that cluster. It should store the response in the file system path that
+is watched by Galley for configs. For F5, it would get all the F5 configs. It should then call F5
+management IP, and update F5 configs using the iControl rest API.</p>
+
+<pre id="ConfigProducer-Download"><code class="language-proto">rpc Download(ConfigDownloadRequest) returns (ConfigData)
+</code></pre>
+</section>
+<h2 id="Types">Types</h2>
+<h3 id="ConfigData">ConfigData</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ConfigData-configtype">
+<td><code>configtype</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="ConfigData-cluster">
+<td><code>cluster</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="ConfigData-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="ConfigData-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="ConfigData-payload">
+<td><code>payload</code></td>
+<td><code>string</code></td>
+<td>
+<p>For istio, this is a huge YAML dump of all Istio artifacts like virtual services, destination
+rules, service entries, gateways, etc. in YAML form. For F5, its all f5 config artifacts.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ConfigDownloadRequest">ConfigDownloadRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ConfigDownloadRequest-parent">
+<td><code>parent</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="ConfigDownloadRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="ConfigDownloadRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="ConfigDownloadRequest-cluster">
+<td><code>cluster</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="ConfigDownloadRequest-configtype">
+<td><code>configtype</code></td>
+<td><code>string</code></td>
+<td>
+<p>Currently accepted values are istio or f5.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>
