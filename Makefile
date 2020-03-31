@@ -16,7 +16,7 @@ $(APIS):
 
 .PHONY: test
 test:
-	go test `go list -f '{{if .TestGoFiles}}{{.ImportPath}}{{end}}' ./...`
+	go test ./...
 
 .PHONY: format
 format:
