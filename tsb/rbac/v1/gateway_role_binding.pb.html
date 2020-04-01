@@ -1,0 +1,67 @@
+---
+title: Gateway Role Binding
+description: Configuration for assigning access roles to users of gateway groups.
+location: https://tetrate.io/docs/reference/config/rbac/v1/gateway-role-binding.html
+layout: protoc-gen-docs
+generator: protoc-gen-docs
+number_of_entries: 1
+---
+<p><code>GatewayRoleBinding</code> is an assignment of roles to a set of users or
+teams to access resources under a Gateway group.  The user or team
+information is obtained from an LDAP server that should have been
+configured as part of Service Bridge installation. Note that a
+<code>GatewayRoleBinding</code> can be created or modified only by users who
+have <code>set_rbac</code> permission on the Gateway group.</p>
+
+<p>The following example assigns the <code>gateway-admin</code> role to users
+<code>alice</code>, <code>bob</code>, and members of the <code>gateway-ops</code> team for all the
+gateways in group <code>g1</code> under workspace <code>w1</code> owned by the tenant
+<code>mycompany</code>.</p>
+
+<pre><code class="language-yaml">apiVersion: rbac.tsb.tetrate.io/v1
+kind: GatewayRoleBinding
+metadata:
+  name: gateway-g1
+  tenant: mycompany
+  workspace: w1
+  group: g1
+spec:
+  role: gateway-admin
+  subjects:
+  - user: alice
+  - user: bob
+  - team: gateway-ops
+</code></pre>
+
+<h2 id="GatewayRoleBinding">GatewayRoleBinding</h2>
+<section>
+<p><code>GatewayRoleBinding</code> assigns permissions to users of gateway groups.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="GatewayRoleBinding-role">
+<td><code>role</code></td>
+<td><code>string</code></td>
+<td>
+<p>The role being assinged to the subjects.</p>
+
+</td>
+</tr>
+<tr id="GatewayRoleBinding-subjects">
+<td><code>subjects</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/rbac/v1/role.html#Subject">Subject[]</a></code></td>
+<td>
+<p>The set of users who are being assigned the role.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>

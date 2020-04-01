@@ -1,0 +1,51 @@
+// Copyright (c) Tetrate, Inc 2019 All Rights Reserved.
+
+syntax = "proto3";
+
+// $title: Security Role Binding
+// $description: Configuration for assigning access roles to users of security groups.
+// $location: https://tetrate.io/docs/reference/config/rbac/v1/security-role-binding.html
+
+// `SecurityRoleBinding` is an assignment of roles to a set of users or
+// teams to access resources under a Security group.  The user or team
+// information is obtained from an LDAP server that should have been
+// configured as part of Service Bridge installation. Note that a
+// `SecurityRoleBinding` can be created or modified only by users who
+// have `set_rbac` permission on the Security group.
+//
+// The following example assigns the `security-admin` role to users
+// `alice`, `bob`, and members of the `security-ops` team for
+// the security group `g1` under workspace `w1` owned by the tenant
+// `mycompany`.
+//
+// ```yaml
+// apiVersion: rbac.tsb.tetrate.io/v1
+// kind: SecurityRoleBinding
+// metadata:
+//   name: security-g1
+//   tenant: mycompany
+//   workspace: w1
+//   group: g1
+// spec:
+//   role: security-admin
+//   subjects:
+//   - user: alice
+//   - user: bob
+//   - team: security-ops
+//```
+//
+package tetrate.api.tsb.rbac.v1;
+option go_package = "github.com/tetrateio/tetrate/api/tsb/rbac/v1";
+
+import "google/api/field_behavior.proto";
+import "validate/validate.proto";
+import "role.proto";
+
+// `SecurityRoleBinding` assigns permissions to users of security groups.
+message SecurityRoleBinding {
+  // The role being assinged to the subjects.
+  string role = 1 [(google.api.field_behavior) = REQUIRED, (validate.rules).string.min_len = 1];
+  // The set of users who are being assigned the role.
+  repeated Subject subjects = 2
+      [(google.api.field_behavior) = REQUIRED, (validate.rules).repeated = {min_items: 1}];
+}

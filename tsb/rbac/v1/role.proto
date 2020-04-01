@@ -1,0 +1,112 @@
+// Copyright (c) Tetrate, Inc 2019 All Rights Reserved.
+
+syntax = "proto3";
+
+// $title: Role
+// $description: Configuration for creating various access roles.
+// $location: https://tetrate.io/docs/reference/config/rbac/v1/role.html
+
+// `Role` is a named collection of permissions that can be assigned to
+// any user or team in the system. The set of actions that can be
+// performed by a user, such as the ability to create, delete, or
+// update configuration will depend on the permissions associated with
+// the user's role. Roles are tenant level resources that are defined
+// once. `RoleBindings` in each configuration group will bind a user
+// to a specific role defined apriori.
+//
+// The following example declares a `workspace-admin` role with the
+// ability to create, delete configurations and the ability to set
+// RBAC policies on the groups within the workspace.
+//
+// ```yaml
+// apiVersion: rbac.tsb.tetrate.io/v1
+// kind: Role
+// metadata:
+//   name: role1
+//   tenant: mycompany
+// spec:
+//   rules:
+//   - types:
+//     - apiGroup: api.tsb.tetrate.io/v1
+//       kinds:
+//       - workspaceSetting
+//     permissions:
+//     - create
+//     - read
+//     - delete
+//     - write
+//     - set_rbac
+//   - types:
+//     - apiGroup: traffic.tsb.tetrate.io/v1
+//     - apiGroup: security.tsb.tetrate.io/v1
+//     - apiGroup: gateway.tsb.tetrate.io/v1
+//     permissions:
+//     - create
+//     - delete
+//     - read
+//     - write
+//     - set_rbac
+//```
+//
+package tetrate.api.tsb.rbac.v1;
+option go_package = "github.com/tetrateio/tetrate/api/tsb/rbac/v1";
+
+import "google/api/field_behavior.proto";
+import "validate/validate.proto";
+
+// `Role` is a named collection of permissions that can be assigned to
+// any user or team in the system.
+message Role {
+  // The type of API resource for which the role is being created.
+  message ResourceType {
+    // A specific API group such as traffic.tsb.tetrate.io/v1.
+    string api_group = 1
+        [(google.api.field_behavior) = REQUIRED, (validate.rules).string.min_len = 1];
+    // Specific kinds of APIs under the API group. If omitted, the
+    // role will apply to all kinds under the group.
+    repeated string kinds = 2;
+  }
+
+  // A rule defines the set of api groups
+  message Rule {
+    // The set of API groups and the api Kinds within the group on which this rule is applicable.
+    repeated ResourceType types = 1
+        [(google.api.field_behavior) = REQUIRED, (validate.rules).repeated = {min_items: 1}];
+    // The set of actions allowed for these APIs.
+    repeated Permission permissions = 2
+        [(google.api.field_behavior) = REQUIRED, (validate.rules).repeated = {min_items: 1}];
+  }
+
+  // A set of rules that define the permissions associated with each API group.
+  repeated Rule rules = 1 [(validate.rules).repeated = {min_items: 1}];
+}
+
+// A permission defines an action that can be performed on a
+// resource. By default access to resources is denied unless an
+// explicit permission grants access to perform an operation against
+// it.
+enum Permission {
+  // Default value to designate no value was explicitly set for the permission.
+  INVALID = 0;
+  // The read permission grants read-only access to the resource.
+  READ = 1;
+  // The write permission allows the subject to modify an existing resource.
+  WRITE = 2;
+  // The create permission allows subjects to create child resources on the resource.
+  CREATE = 3;
+  // The delete permission grants permissions to delete the resource.
+  DELETE = 4;
+  // The set-rbac permission allows subjects to manage the access policies for the resources.
+  SET_RBAC = 5;
+}
+
+// Subject identifies a user or a team under a tenant. Roles are
+// assigned to subjects for specific resources in the system.
+message Subject {
+  oneof s {
+    // The user extracted from LDAP server.
+    string user = 1;
+    // A team defined in service bridge.
+    string team = 2;
+  }
+}

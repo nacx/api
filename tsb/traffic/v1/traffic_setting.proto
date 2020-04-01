@@ -1,0 +1,211 @@
+// Copyright (c) Tetrate, Inc 2019 All Rights Reserved.
+
+syntax = "proto3";
+
+// $title: Traffic Setting
+// $description: Traffic settings for sidecars in a traffic group.
+// $location: https://tetrate.io/docs/reference/config/traffic/v1/traffic-setting.html
+
+// Traffic Settings allow configuring the behavior of the sidecars in
+// a set of namespaces owned by a traffic group. Specifically, it
+// allows configuring the dependencies of sidecars on namespaces
+// outside the traffic group as well as reliability settings for
+// outbound calls made by the sidecars to other services.
+//
+// The following example creates a traffic group for the sidecars in
+// `ns1`, `ns2` and `ns3` namespaces owned by its parent workspace
+// `w1` under tenant `mycompany`. It then defines a traffic setting
+// for the all workloads in these namespaces, adding a dependency on
+// all the services in the shared `db` namespace, and forwarding all
+// unknown traffic via the egress gateway in the `istio-system`
+// namespace.
+//
+// ```yaml
+// apiVersion: traffic.tsb.tetrate.io/v1
+// kind: Group
+// metadata:
+//   name: t1
+//   workspace: w1
+//   tenant: mycompany
+// spec:
+//   namespaceSelectors:
+//   - name: */ns1
+//   - name: */ns2
+//   - name: */ns3
+//   configMode: TETRATE
+//```
+//
+// And the associated traffic settings for the sidecars:
+//
+// ```yaml
+// apiVersion: traffic.tsb.tetrate.io/v1
+// kind: TrafficSetting
+// metadata:
+//   name: defaults
+//   group: t1
+//   workspace: w1
+//   tenant: mycompany
+// spec:
+//   reachability:
+//     mode: CUSTOM
+//     hosts:
+//     - ns1/*
+//     - ns2/*
+//     - ns3/*
+//     - db/*
+//   resilience:
+//     circuitBreakerSensitivity: MEDIUM
+//   egressGateway: istio-system/istio-egressgateway
+//```
+//
+// The following traffic setting confines the reachability of sidecars
+// in the traffic group `t1` to other namespaces inside the group. The
+// resilience and egress gateway settings will be inherited from the
+// workspace wide traffic setting.
+//
+// ```yaml
+// apiVersion: traffic.tsb.tetrate.io/v1
+// kind: TrafficSetting
+// metadata:
+//   name: defaults
+//   group: t1
+//   workspace: w1
+//   tenant: mycompany
+// spec:
+//   reachability:
+//     mode: GROUP
+//```
+//
+package tetrate.api.tsb.traffic.v1;
+option go_package = "github.com/tetrateio/tetrate/api/tsb/traffic/v1";
+
+import "google/api/field_behavior.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/wrappers.proto";
+import "validate/validate.proto";
+
+// A traffic setting applies configuration to a set of sidecars in a
+// traffic group or a workspace. When applied to a traffic group,
+// missing fields will inherit values from the workspace-wide setting.
+message TrafficSetting {
+  // The set of services and hosts accessed by a workload (and hence
+  // its sidecar) in the mesh. Defining the set of services accessed
+  // by a workload (i.e. its dependencies) in advance reduces the
+  // memory and CPU consumption both the Istio control plane and the
+  // individual Envoy sidecars in the data plane.
+  ReachabilitySettings reachability = 1;
+
+  // Specifies the details of the egress proxy to which unknown
+  // traffic should be forwarded to from the sidecar. If not
+  // specified, the sidecar will send the unknown traffic directly to
+  // the IP requested by the application. Must be in
+  // <namespace>/<fqdn> format.
+  string egress_gateway = 2 [(validate.rules).string.pattern = "^[^/]+/[^/]+$"];
+
+  // Resilience settings such as timeouts, retries, etc., affecting
+  // outbound traffic from sidecars.
+  ResilienceSettings resilience = 3;
+}
+
+// ResilienceSettings control the reliability knobs in Envoy when making
+// outbound connections from a gateway or sidecar.
+// TODO(@rshriram): Need more examples here.
+message ResilienceSettings {
+  // Timeout for HTTP requests. Disabled if not set.
+  google.protobuf.Duration http_request_timeout = 1;
+
+  // Retry policy for HTTP requests. Disabled if not set.
+  HTTPRetry http_retries = 2;
+
+  // If enabled, sets SO_KEEPALIVE on the socket to enable TCP Keepalives.
+  google.protobuf.BoolValue tcp_keepalive = 3;
+
+  // Available sensitivity levels for the circuit breaker.
+  enum Sensitivity {
+    UNSET = 0;
+    // Tolerate upto 20 consecutive 5xx or connection failures from an
+    // endpoint before ejecting it temporarily from the load balancing
+    // pool.
+    LOW = 1;
+    // Tolerate upto 10 consecutive 5xx or connection failures from an
+    // endpoint before ejecting it temporarily from the load balancing
+    // pool.
+    MEDIUM = 2;
+    // Tolerate upto 5 consecutive 5xx or connection failures from an
+    // endpoint before ejecting it temporarily from the load balancing
+    // pool.
+    HIGH = 3;
+  }
+
+  // Circuit breakers in Envoy are applied per endpoint in a load
+  // balancing pool. By default, circuit breakers are disabled. If
+  // set, the sensitivity level determines the maximum number of
+  // consecutive failures that Envoy will tolerate before ejecting an
+  // endpoint from the load balancing pool.
+  Sensitivity circuit_breaker_sensitivity = 4;
+}
+
+// HTTPRetry defines the parameters for retrying API calls to a service.
+message HTTPRetry {
+  // Number of retries for a given request. The interval between retries will be determined
+  // automatically (25ms+).
+  //
+  // Actual number of retries attempted depends on the httpReqTimeout.
+  int32 attempts = 1 [(validate.rules).int32.gte = 1, (google.api.field_behavior) = REQUIRED];
+
+  // Timeout per retry attempt for a given request. format: 1h/1m/1s/1ms. MUST BE >=1ms.
+  google.protobuf.Duration per_try_timeout = 2;
+
+  // Specifies the conditions under which retry takes place.
+  // One or more policies can be specified using a ‘,’ delimited list.
+  // See the [retry
+  // policies](https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_filters/router_filter#x-envoy-retry-on)
+  // and [gRPC retry
+  // policies](https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_filters/router_filter#x-envoy-retry-grpc-on)
+  // for more details.
+  string retry_on = 3;
+}
+
+// `ReachabilitySettings` define the set of services and hosts
+// accessed by a workload (and hence its sidecar) in the
+// mesh. Defining the set of services accessed by a workload (i.e. its
+// dependencies) in advance reduces the memory and CPU consumption
+// both the Istio control plane and the individual Envoy sidecars in
+// the data plane.
+//
+// **NOTE**: When used in `WorkspaceSetting`, reachability if not
+// specified defaults to `NAMESPACE` mode, i.e. workloads will be
+// able to reach only services within their namespace.
+message ReachabilitySettings {
+  // A short cut for defining the common reachability patterns
+  enum Mode {
+    // Inherit from parent if possible. Otherwise treated as NAMESPACE.
+    UNSET = 0;
+    // The workload may talk to any service in its own namespace.
+    NAMESPACE = 1;
+    // The workload may talk to any service in the traffic group.
+    GROUP = 2;
+    // The workload may talk to any service in the workspace.
+    WORKSPACE = 3;
+    // The workload may talk to any service in the cluster.
+    CLUSTER = 4;
+    // The workload may talk to services defined explicitly.
+    CUSTOM = 5;
+  };
+
+  // A short cut for specifying the set of services accessed by the workload.
+  Mode mode = 1;
+
+  // When the mode is `CUSTOM`, `hosts` specify the set of services
+  // that the sidecar should be able to reach. Must be in the
+  // `<namespace>/<fqdn>` format.
+  //
+  // - `./*` indicates all services in the namespace where the sidecar resides.
+  //
+  // - `ns1/*` indicates all services in the `ns1` namespace.
+  //
+  // - `ns1/svc1.com` indicates `svc1.com` service in `ns1` namespace.
+  //
+  // - `*/svc1.com` indicates `svc1.com` service in any namespace.
+  repeated string hosts = 2;
+};

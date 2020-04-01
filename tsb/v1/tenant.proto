@@ -1,0 +1,27 @@
+// Copyright (c) Tetrate, Inc 2019 All Rights Reserved.
+
+syntax = "proto3";
+
+// $title: Tenant
+// $description: Configuration for creating a tenant in Service Bridge.
+// $location: https://tetrate.io/docs/reference/config/v1/tenant.html
+
+// `Tenant` is a root of the Service Bridge object hierarchy. Each
+// tenant is completely independent of the other with its own set of
+// users, teams, clusters and workspaces.
+//
+// The following example creates a tenant named `mycompany`.
+//
+// ```yaml
+// apiVersion: api.tsb.tetrate.io/v1
+// kind: Tenant
+// metadata:
+//   name: mycompany
+//```
+//
+package tetrate.api.tsb.v1;
+option go_package = "github.com/tetrateio/tetrate/api/tsb/v1";
+
+// `Tenant` is the root of the Service Bridge object hierarchy.
+message Tenant {
+}

@@ -1,0 +1,89 @@
+// Copyright (c) Tetrate, Inc 2019 All Rights Reserved.
+
+syntax = "proto3";
+
+// $title: Service Route
+// $description: Configuration affecting routing for services in a traffic group.
+// $location: https://tetrate.io/docs/reference/config/traffic/v1/service-route.html
+
+// Service Routes can be used by service owners to configure traffic
+// shifting across different versions of a service in a traffic
+// group. Traffic to this service can originate from sidecars in same
+// or different traffic groups as well as gateways.
+//
+// The following example creates a traffic group for the sidecars in
+// `ns1`, `ns2` and `ns3` namespaces owned by its parent workspace
+// `w1` under tenant `mycompany` and defines a service route for the
+// `reviews` service in `ns1` namespace with two subsets `v1` and
+// `v2`. 80% of the traffic to the reviews service is sent to `v1`
+// while the remaining 20% is sent to `v2`.
+//
+// ```yaml
+// apiVersion: traffic.tsb.io/v1
+// kind: Group
+// metadata:
+//   name: t1
+//   workspace: w1
+//   tenant: mycompany
+// spec:
+//   namespaceSelectors:
+//   - name: */ns1
+//   - name: */ns2
+//   - name: */ns3
+//   configMode: TETRATE
+//```
+//
+// And the service route for `reviews.com` service in `ns1` namespace
+//
+// ```yaml
+// apiVersion: traffic.tsb.io/v1
+// kind: ServiceRoute
+// metadata:
+//   name: reviews
+//   group: t1
+//   workspace: w1
+//   tenant: mycompany
+// spec:
+//   service: ns1/reviews.com
+//   subsets:
+//   - name: v1
+//     labels:
+//       version: v1
+//     weight: 80
+//   - name: v2
+//     labels:
+//       version: v2
+//     weight: 20
+//```
+//
+package tetrate.api.tsb.traffic.v1;
+option go_package = "github.com/tetrateio/tetrate/api/tsb/traffic/v1";
+
+import "google/api/field_behavior.proto";
+import "validate/validate.proto";
+
+// A service route controls routing configurations for traffic to a
+// service in a traffic group.
+message ServiceRoute {
+  // The service on which the configuration is being applied. Must be in namespace/FQDN format.
+  string service = 1
+      [(google.api.field_behavior) = REQUIRED, (validate.rules).string.pattern = "^[^/]+/[^/]+$"];
+
+  // Subset denotes a specific version of a service. The pods/VMs of a
+  // subset should be uniquely identifiable using their labels.
+  message Subset {
+    // Name used to refer to the subset.
+    string name = 1 [(google.api.field_behavior) = REQUIRED];
+
+    // Labels apply a filter over the endpoints of a service in the service registry.
+    map<string, string> labels = 2 [(google.api.field_behavior) = REQUIRED];
+
+    // Percentage of traffic to be sent to this subset. The sum of
+    // weights across all subsets should add up to 100.
+    uint32 weight = 3 [(google.api.field_behavior) = REQUIRED];
+  };
+
+  // The set of versions of a service and the percentage of traffic to
+  // send to each version.
+  repeated Subset subsets = 2;
+}

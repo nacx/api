@@ -1,0 +1,88 @@
+// Copyright (c) Tetrate, Inc 2019 All Rights Reserved.
+
+syntax = "proto3";
+
+// $title: Clusters
+// $description: Configuration for onboarding clusters.
+// $location: https://tetrate.io/docs/reference/config/v1/cluster.html
+
+// Each Kubernetes cluster managed by Service Bridge should be
+// onboarded first before configurations can be applied to the
+// services in the cluster. Onboarding a cluster is a two step
+// process. First, create a cluster object under the appropriate
+// tenant. Once a cluster object is created, its status field should
+// provide the set of join tokens that will be used by the Service
+// Bridge agent on the cluster to talk to Service Bridge management
+// plane. The second step is to deploy the Service Bridge agent on the
+// cluster with the join tokens and deploy Istio on the cluster. The
+// following example creates a cluster named c1 under the tenant
+// mycompany.
+//
+// ```yaml
+// apiVersion: api.tsb.tetrate.io/v1
+// kind: Cluster
+// metadata:
+//   name: c1
+//   tenant: mycompany
+// spec:
+//   tokenTtl: "1hr"
+//```
+//
+// Note that configuration profiles such as traffic, security and
+// gateway groups will flow to the Bridge agents in the cluster as
+// long their requested cluster exists in the Service Bridge
+// hierarchy.
+package tetrate.api.tsb.v1;
+option go_package = "github.com/tetrateio/tetrate/api/tsb/v1";
+
+import "google/api/field_behavior.proto";
+import "google/protobuf/duration.proto";
+
+// A Kubernetes cluster managing both pods and VMs.
+message Cluster {
+  // Lifetime of the tokens. Defaults to 1hr.
+  google.protobuf.Duration token_ttl = 1;
+
+  // Read-only data for informational purposes. Any user provided
+  // value will be ignored. The data here may be stale depending on
+  // the update frequency from the Bridge agents in the cluster.
+  repeated Namespace namespaces = 2 [(google.api.field_behavior) = OUTPUT_ONLY];
+}
+
+// The status message for a cluster resource contains the set of join
+// tokens that should be used by Service Bridge's agents on the
+// cluster.
+message ClusterStatus {
+  // Tokens for various agents.
+  map<string, string> tokens = 1;
+}
+
+// A Kubernetes namespace. These are automatically discovered by the
+// Service Bridge agents in the cluster.
+message Namespace {
+  string name = 1;
+  repeated Service services = 2;
+}
+
+// A Kubernetes or a VM service. These are automatically discovered by
+// the Service Bridge agents in the cluster.
+message Service {
+  string hostname = 1;
+
+  message Port {
+    // A valid non-negative integer port number.
+    uint32 number = 1;
+    // Name assigned to the port.
+    string name = 2;
+    // Indicates the node port attached to a physical deployment on a kubernetes cluster.
+    uint32 kubernetes_node_port = 3;
+  }
+  // The set of ports on which this service is exposed.
+  repeated Port ports = 2;
+  // For services running on Kubernetes, the cluster IP of the service in the cluster.
+  string kubernetes_service_ip = 3;
+  // For kubernetes services of type load balancer, this field contains the list of lb hostnames or
+  // IPs assigned to the service. For services of type nodePort, this field contains the IP
+  // addresses of the nodes in the cluster.
+  repeated string kubernetes_external_addresses = 4;
+}

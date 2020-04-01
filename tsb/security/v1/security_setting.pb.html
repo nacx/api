@@ -1,0 +1,256 @@
+---
+title: Security Setting
+description: Security settings for sidecars in a security group.
+location: https://tetrate.io/docs/reference/config/security/v1/security-setting.html
+layout: protoc-gen-docs
+generator: protoc-gen-docs
+number_of_entries: 4
+---
+<p><code>SecuritySetting</code> allows configuring security related properties
+such as TLS authentication and access control for traffic arriving
+at a sidecar in a security group.</p>
+
+<p>The following example creates a security group for the sidecars in
+<code>ns1</code>, <code>ns2</code> and <code>ns3</code> namespaces owned by its parent workspace
+<code>w1</code> under tenant <code>mycompany</code> and defines a security setting that
+only allows mutual TLS authenticated traffic from other sidecars in
+the same group.</p>
+
+<pre><code class="language-yaml">apiVersion: security.tsb.tetrate.io/v1
+kind: Group
+metadata:
+  name: t1
+  workspace: w1
+  tenant: mycompany
+spec:
+  namespaceSelectors:
+  - name: */ns1
+  - name: */ns2
+  - name: */ns3
+  configMode: TETRATE
+</code></pre>
+
+<p>And the associated security settings for all sidecars in the group</p>
+
+<pre><code class="language-yaml">apiVersion: security.tsb.tetrate.io/v1
+kind: SecuritySetting
+metadata:
+  name: defaults
+  group: t1
+  workspace: w1
+  tenant: mycompany
+spec:
+  authentication: REQUIRED
+  authorization:
+    mode: GROUP
+</code></pre>
+
+<p>The following example customizes the <code>allowedSources</code> to allow
+traffic from the namespaces within the group as well as the
+<code>catalog-sa</code> service account from <code>ns4</code> namespace.</p>
+
+<pre><code class="language-yaml">apiVersion: security.tsb.tetrate.io/v1
+kind: SecuritySetting
+metadata:
+  name: custom
+  group: t1
+  workspace: w1
+  tenant: mycompany
+spec:
+  authentication: REQUIRED
+  authorization:
+    mode: CUSTOM
+    serviceAccounts:
+    - ns1/*
+    - ns2/*
+    - ns3/*
+    - ns4/catalog-sa
+</code></pre>
+
+<h2 id="AuthorizationSettings">AuthorizationSettings</h2>
+<section>
+<p><code>AuthorizationSettings</code> define the set of service accounts in one
+or more namespaces allowed to access a workload (and hence its
+sidecar) in the mesh.</p>
+
+<p><strong>NOTE</strong>: When used in <code>WorkspaceSetting</code>, authorization if not
+specified defaults to <code>NAMESPACE</code> mode, i.e. workloads will only
+allow traffic from other workloads in the same namespace.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="AuthorizationSettings-mode">
+<td><code>mode</code></td>
+<td><code><a href="#AuthorizationSettings-Mode">AuthorizationSettings.Mode</a></code></td>
+<td>
+<p>A short cut for specifying the set of allowed callers.</p>
+
+</td>
+</tr>
+<tr id="AuthorizationSettings-service_accounts">
+<td><code>serviceAccounts</code></td>
+<td><code>string[]</code></td>
+<td>
+<p>When the mode is <code>CUSTOM</code>, <code>serviceAccounts</code> specify the allowed
+set of service accounts (and the workloads using them). Must be
+in the <code>&lt;namespace&gt;/&lt;service-account-name&gt;</code> format.</p>
+
+<ul>
+<li><p><code>./*</code> indicates all service accounts in the namespace where the sidecar resides.</p></li>
+
+<li><p><code>ns1/*</code> indicates all service accounts in the <code>ns1</code> namespace.</p></li>
+
+<li><p><code>ns1/svc1-sa</code> indicates <code>svc1-sa</code> service account in <code>ns1</code> namespace.</p></li>
+</ul>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="AuthorizationSettings-Mode">AuthorizationSettings.Mode</h2>
+<section>
+<p>A short cut for defining the common authorization patterns</p>
+
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="AuthorizationSettings-Mode-UNSET">
+<td><code>UNSET</code></td>
+<td>
+<p>Inherit from parent if possible. Otherwise treated as <code>DISABLED</code>.</p>
+
+</td>
+</tr>
+<tr id="AuthorizationSettings-Mode-NAMESPACE">
+<td><code>NAMESPACE</code></td>
+<td>
+<p>The workload allows traffic from any other authenticated workload in its own
+namespace.</p>
+
+</td>
+</tr>
+<tr id="AuthorizationSettings-Mode-GROUP">
+<td><code>GROUP</code></td>
+<td>
+<p>The workload allows traffic from any other authenticated workload in the security group.</p>
+
+</td>
+</tr>
+<tr id="AuthorizationSettings-Mode-WORKSPACE">
+<td><code>WORKSPACE</code></td>
+<td>
+<p>The workload allows traffic from any other authenticated workload in the workspace.</p>
+
+</td>
+</tr>
+<tr id="AuthorizationSettings-Mode-CLUSTER">
+<td><code>CLUSTER</code></td>
+<td>
+<p>The workload allows traffic from any other authenticated workload in the cluster.</p>
+
+</td>
+</tr>
+<tr id="AuthorizationSettings-Mode-DISABLED">
+<td><code>DISABLED</code></td>
+<td>
+<p>Authorization is disabled.</p>
+
+</td>
+</tr>
+<tr id="AuthorizationSettings-Mode-CUSTOM">
+<td><code>CUSTOM</code></td>
+<td>
+<p>The workload allows traffic from service accounts defined explicitly.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="SecuritySetting">SecuritySetting</h2>
+<section>
+<p>A security setting applies configuration to a set of sidecars in a
+security group or a workspace. When applied to a security group,
+missing fields will inherit values from the workspace-wide setting.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="SecuritySetting-authentication">
+<td><code>authentication</code></td>
+<td><code><a href="#SecuritySetting-AuthenticationMode">SecuritySetting.AuthenticationMode</a></code></td>
+<td>
+<p>Specifies whether the sidecars should accept only mutual TLS
+authenticated traffic or allow legacy plaintext traffic as well.</p>
+
+</td>
+</tr>
+<tr id="SecuritySetting-authorization">
+<td><code>authorization</code></td>
+<td><code><a href="#AuthorizationSettings">AuthorizationSettings</a></code></td>
+<td>
+<p>The set of service accounts in one or more namespaces allowed to
+access a workload (and hence its sidecar) in the mesh.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="SecuritySetting-AuthenticationMode">SecuritySetting.AuthenticationMode</h2>
+<section>
+<p>AuthenticationMode indicates whether to accept only Istio mutual
+TLS authenticated traffic or allow legacy plaintext traffic as
+well.</p>
+
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="SecuritySetting-AuthenticationMode-UNSET">
+<td><code>UNSET</code></td>
+<td>
+<p>Inherit from parent, if has one. Otherwise treated as OPTIONAL.</p>
+
+</td>
+</tr>
+<tr id="SecuritySetting-AuthenticationMode-OPTIONAL">
+<td><code>OPTIONAL</code></td>
+<td>
+<p>Accept both plaintext and mTLS authenticated connections.</p>
+
+</td>
+</tr>
+<tr id="SecuritySetting-AuthenticationMode-REQUIRED">
+<td><code>REQUIRED</code></td>
+<td>
+<p>Accept only mutual TLS authenticated connections.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>

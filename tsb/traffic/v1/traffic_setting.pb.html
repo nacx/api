@@ -1,0 +1,386 @@
+---
+title: Traffic Setting
+description: Traffic settings for sidecars in a traffic group.
+location: https://tetrate.io/docs/reference/config/traffic/v1/traffic-setting.html
+layout: protoc-gen-docs
+generator: protoc-gen-docs
+number_of_entries: 6
+---
+<p>Traffic Settings allow configuring the behavior of the sidecars in
+a set of namespaces owned by a traffic group. Specifically, it
+allows configuring the dependencies of sidecars on namespaces
+outside the traffic group as well as reliability settings for
+outbound calls made by the sidecars to other services.</p>
+
+<p>The following example creates a traffic group for the sidecars in
+<code>ns1</code>, <code>ns2</code> and <code>ns3</code> namespaces owned by its parent workspace
+<code>w1</code> under tenant <code>mycompany</code>. It then defines a traffic setting
+for the all workloads in these namespaces, adding a dependency on
+all the services in the shared <code>db</code> namespace, and forwarding all
+unknown traffic via the egress gateway in the <code>istio-system</code>
+namespace.</p>
+
+<pre><code class="language-yaml">apiVersion: traffic.tsb.tetrate.io/v1
+kind: Group
+metadata:
+  name: t1
+  workspace: w1
+  tenant: mycompany
+spec:
+  namespaceSelectors:
+  - name: */ns1
+  - name: */ns2
+  - name: */ns3
+  configMode: TETRATE
+</code></pre>
+
+<p>And the associated traffic settings for the sidecars:</p>
+
+<pre><code class="language-yaml">apiVersion: traffic.tsb.tetrate.io/v1
+kind: TrafficSetting
+metadata:
+  name: defaults
+  group: t1
+  workspace: w1
+  tenant: mycompany
+spec:
+  reachability:
+    mode: CUSTOM
+    hosts:
+    - ns1/*
+    - ns2/*
+    - ns3/*
+    - db/*
+  resilience:
+    circuitBreakerSensitivity: MEDIUM
+  egressGateway: istio-system/istio-egressgateway
+</code></pre>
+
+<p>The following traffic setting confines the reachability of sidecars
+in the traffic group <code>t1</code> to other namespaces inside the group. The
+resilience and egress gateway settings will be inherited from the
+workspace wide traffic setting.</p>
+
+<pre><code class="language-yaml">apiVersion: traffic.tsb.tetrate.io/v1
+kind: TrafficSetting
+metadata:
+  name: defaults
+  group: t1
+  workspace: w1
+  tenant: mycompany
+spec:
+  reachability:
+    mode: GROUP
+</code></pre>
+
+<h2 id="HTTPRetry">HTTPRetry</h2>
+<section>
+<p>HTTPRetry defines the parameters for retrying API calls to a service.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="HTTPRetry-attempts">
+<td><code>attempts</code></td>
+<td><code>int32</code></td>
+<td>
+<p>Number of retries for a given request. The interval between retries will be determined
+automatically (25ms+).</p>
+
+<p>Actual number of retries attempted depends on the httpReqTimeout.</p>
+
+</td>
+</tr>
+<tr id="HTTPRetry-per_try_timeout">
+<td><code>perTryTimeout</code></td>
+<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#duration">google.protobuf.Duration</a></code></td>
+<td>
+<p>Timeout per retry attempt for a given request. format: 1h/1m/1s/1ms. MUST BE &gt;=1ms.</p>
+
+</td>
+</tr>
+<tr id="HTTPRetry-retry_on">
+<td><code>retryOn</code></td>
+<td><code>string</code></td>
+<td>
+<p>Specifies the conditions under which retry takes place.
+One or more policies can be specified using a ‘,’ delimited list.
+See the <a href="https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_filters/router_filter#x-envoy-retry-on">retry
+policies</a>
+and <a href="https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_filters/router_filter#x-envoy-retry-grpc-on">gRPC retry
+policies</a>
+for more details.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="ReachabilitySettings">ReachabilitySettings</h2>
+<section>
+<p><code>ReachabilitySettings</code> define the set of services and hosts
+accessed by a workload (and hence its sidecar) in the
+mesh. Defining the set of services accessed by a workload (i.e. its
+dependencies) in advance reduces the memory and CPU consumption
+both the Istio control plane and the individual Envoy sidecars in
+the data plane.</p>
+
+<p><strong>NOTE</strong>: When used in <code>WorkspaceSetting</code>, reachability if not
+specified defaults to <code>NAMESPACE</code> mode, i.e. workloads will be
+able to reach only services within their namespace.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ReachabilitySettings-mode">
+<td><code>mode</code></td>
+<td><code><a href="#ReachabilitySettings-Mode">ReachabilitySettings.Mode</a></code></td>
+<td>
+<p>A short cut for specifying the set of services accessed by the workload.</p>
+
+</td>
+</tr>
+<tr id="ReachabilitySettings-hosts">
+<td><code>hosts</code></td>
+<td><code>string[]</code></td>
+<td>
+<p>When the mode is <code>CUSTOM</code>, <code>hosts</code> specify the set of services
+that the sidecar should be able to reach. Must be in the
+<code>&lt;namespace&gt;/&lt;fqdn&gt;</code> format.</p>
+
+<ul>
+<li><p><code>./*</code> indicates all services in the namespace where the sidecar resides.</p></li>
+
+<li><p><code>ns1/*</code> indicates all services in the <code>ns1</code> namespace.</p></li>
+
+<li><p><code>ns1/svc1.com</code> indicates <code>svc1.com</code> service in <code>ns1</code> namespace.</p></li>
+
+<li><p><code>*/svc1.com</code> indicates <code>svc1.com</code> service in any namespace.</p></li>
+</ul>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="ReachabilitySettings-Mode">ReachabilitySettings.Mode</h2>
+<section>
+<p>A short cut for defining the common reachability patterns</p>
+
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ReachabilitySettings-Mode-UNSET">
+<td><code>UNSET</code></td>
+<td>
+<p>Inherit from parent if possible. Otherwise treated as NAMESPACE.</p>
+
+</td>
+</tr>
+<tr id="ReachabilitySettings-Mode-NAMESPACE">
+<td><code>NAMESPACE</code></td>
+<td>
+<p>The workload may talk to any service in its own namespace.</p>
+
+</td>
+</tr>
+<tr id="ReachabilitySettings-Mode-GROUP">
+<td><code>GROUP</code></td>
+<td>
+<p>The workload may talk to any service in the traffic group.</p>
+
+</td>
+</tr>
+<tr id="ReachabilitySettings-Mode-WORKSPACE">
+<td><code>WORKSPACE</code></td>
+<td>
+<p>The workload may talk to any service in the workspace.</p>
+
+</td>
+</tr>
+<tr id="ReachabilitySettings-Mode-CLUSTER">
+<td><code>CLUSTER</code></td>
+<td>
+<p>The workload may talk to any service in the cluster.</p>
+
+</td>
+</tr>
+<tr id="ReachabilitySettings-Mode-CUSTOM">
+<td><code>CUSTOM</code></td>
+<td>
+<p>The workload may talk to services defined explicitly.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="ResilienceSettings">ResilienceSettings</h2>
+<section>
+<p>ResilienceSettings control the reliability knobs in Envoy when making
+outbound connections from a gateway or sidecar.
+TODO(@rshriram): Need more examples here.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ResilienceSettings-http_request_timeout">
+<td><code>httpRequestTimeout</code></td>
+<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#duration">google.protobuf.Duration</a></code></td>
+<td>
+<p>Timeout for HTTP requests. Disabled if not set.</p>
+
+</td>
+</tr>
+<tr id="ResilienceSettings-http_retries">
+<td><code>httpRetries</code></td>
+<td><code><a href="#HTTPRetry">HTTPRetry</a></code></td>
+<td>
+<p>Retry policy for HTTP requests. Disabled if not set.</p>
+
+</td>
+</tr>
+<tr id="ResilienceSettings-tcp_keepalive">
+<td><code>tcpKeepalive</code></td>
+<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#boolvalue">google.protobuf.BoolValue</a></code></td>
+<td>
+<p>If enabled, sets SO_KEEPALIVE on the socket to enable TCP Keepalives.</p>
+
+</td>
+</tr>
+<tr id="ResilienceSettings-circuit_breaker_sensitivity">
+<td><code>circuitBreakerSensitivity</code></td>
+<td><code><a href="#ResilienceSettings-Sensitivity">ResilienceSettings.Sensitivity</a></code></td>
+<td>
+<p>Circuit breakers in Envoy are applied per endpoint in a load
+balancing pool. By default, circuit breakers are disabled. If
+set, the sensitivity level determines the maximum number of
+consecutive failures that Envoy will tolerate before ejecting an
+endpoint from the load balancing pool.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="ResilienceSettings-Sensitivity">ResilienceSettings.Sensitivity</h2>
+<section>
+<p>Available sensitivity levels for the circuit breaker.</p>
+
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ResilienceSettings-Sensitivity-UNSET">
+<td><code>UNSET</code></td>
+<td>
+</td>
+</tr>
+<tr id="ResilienceSettings-Sensitivity-LOW">
+<td><code>LOW</code></td>
+<td>
+<p>Tolerate upto 20 consecutive 5xx or connection failures from an
+endpoint before ejecting it temporarily from the load balancing
+pool.</p>
+
+</td>
+</tr>
+<tr id="ResilienceSettings-Sensitivity-MEDIUM">
+<td><code>MEDIUM</code></td>
+<td>
+<p>Tolerate upto 10 consecutive 5xx or connection failures from an
+endpoint before ejecting it temporarily from the load balancing
+pool.</p>
+
+</td>
+</tr>
+<tr id="ResilienceSettings-Sensitivity-HIGH">
+<td><code>HIGH</code></td>
+<td>
+<p>Tolerate upto 5 consecutive 5xx or connection failures from an
+endpoint before ejecting it temporarily from the load balancing
+pool.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="TrafficSetting">TrafficSetting</h2>
+<section>
+<p>A traffic setting applies configuration to a set of sidecars in a
+traffic group or a workspace. When applied to a traffic group,
+missing fields will inherit values from the workspace-wide setting.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="TrafficSetting-reachability">
+<td><code>reachability</code></td>
+<td><code><a href="#ReachabilitySettings">ReachabilitySettings</a></code></td>
+<td>
+<p>The set of services and hosts accessed by a workload (and hence
+its sidecar) in the mesh. Defining the set of services accessed
+by a workload (i.e. its dependencies) in advance reduces the
+memory and CPU consumption both the Istio control plane and the
+individual Envoy sidecars in the data plane.</p>
+
+</td>
+</tr>
+<tr id="TrafficSetting-egress_gateway">
+<td><code>egressGateway</code></td>
+<td><code>string</code></td>
+<td>
+<p>Specifies the details of the egress proxy to which unknown
+traffic should be forwarded to from the sidecar. If not
+specified, the sidecar will send the unknown traffic directly to
+the IP requested by the application. Must be in
+&lt;namespace&gt;/&lt;fqdn&gt; format.</p>
+
+</td>
+</tr>
+<tr id="TrafficSetting-resilience">
+<td><code>resilience</code></td>
+<td><code><a href="#ResilienceSettings">ResilienceSettings</a></code></td>
+<td>
+<p>Resilience settings such as timeouts, retries, etc., affecting
+outbound traffic from sidecars.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>

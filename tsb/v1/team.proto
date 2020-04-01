@@ -1,0 +1,49 @@
+// Copyright (c) Tetrate, Inc 2019 All Rights Reserved.
+
+syntax = "proto3";
+
+// $title: Team
+// $description: Configuration for creating teams of users.
+// $location: https://tetrate.io/docs/reference/config/v1/team.html
+
+// `Team` is a named collection of users, service accounts, and other
+// teams. Teams can be assigned access permissions on various
+// resources. All members of a team inherit the access permissions
+// assigned to the team.
+//
+// The following example creates a team named `org` under the tenant
+// `mycompany` with all members of `product1` and `product2` teams,
+// users `alice` and `bob`, and the service account
+// `cluster1-tsb-agent` used by the service bridge agents in cluster
+// `cluster1`.
+//
+// ```yaml
+// apiVersion: api.tsb.tetrate.io/v1
+// kind: Team
+// metadata:
+//   name: org
+//   tenant: mycompany
+// spec:
+//   users:
+//   - alice
+//   - bob
+//   teams:
+//   - product1
+//   - product2
+//   serviceAccounts:
+//   - cluster1-tsb-agent
+//```
+//
+package tetrate.api.tsb.v1;
+option go_package = "github.com/tetrateio/tetrate/api/tsb/v1";
+
+// `Team` is a named collection of users under a tenant.
+message Team {
+  // List of users under the team. These users should be present in
+  // the LDAP server.
+  repeated string users = 1;
+  // List of automation processes whose user names are local to service bridge.
+  repeated string service_accounts = 2;
+  // Teams can compose of other teams.
+  repeated Team teams = 3;
+}

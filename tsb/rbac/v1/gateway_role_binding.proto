@@ -1,0 +1,51 @@
+// Copyright (c) Tetrate, Inc 2019 All Rights Reserved.
+
+syntax = "proto3";
+
+// $title: Gateway Role Binding
+// $description: Configuration for assigning access roles to users of gateway groups.
+// $location: https://tetrate.io/docs/reference/config/rbac/v1/gateway-role-binding.html
+
+// `GatewayRoleBinding` is an assignment of roles to a set of users or
+// teams to access resources under a Gateway group.  The user or team
+// information is obtained from an LDAP server that should have been
+// configured as part of Service Bridge installation. Note that a
+// `GatewayRoleBinding` can be created or modified only by users who
+// have `set_rbac` permission on the Gateway group.
+//
+// The following example assigns the `gateway-admin` role to users
+// `alice`, `bob`, and members of the `gateway-ops` team for all the
+// gateways in group `g1` under workspace `w1` owned by the tenant
+// `mycompany`.
+//
+// ```yaml
+// apiVersion: rbac.tsb.tetrate.io/v1
+// kind: GatewayRoleBinding
+// metadata:
+//   name: gateway-g1
+//   tenant: mycompany
+//   workspace: w1
+//   group: g1
+// spec:
+//   role: gateway-admin
+//   subjects:
+//   - user: alice
+//   - user: bob
+//   - team: gateway-ops
+//```
+//
+package tetrate.api.tsb.rbac.v1;
+option go_package = "github.com/tetrateio/tetrate/api/tsb/rbac/v1";
+
+import "google/api/field_behavior.proto";
+import "validate/validate.proto";
+import "role.proto";
+
+// `GatewayRoleBinding` assigns permissions to users of gateway groups.
+message GatewayRoleBinding {
+  // The role being assinged to the subjects.
+  string role = 1 [(google.api.field_behavior) = REQUIRED, (validate.rules).string.min_len = 1];
+  // The set of users who are being assigned the role.
+  repeated Subject subjects = 2
+      [(google.api.field_behavior) = REQUIRED, (validate.rules).repeated = {min_items: 1}];
+}

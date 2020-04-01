@@ -1,0 +1,52 @@
+// Copyright (c) Tetrate, Inc 2019 All Rights Reserved.
+
+syntax = "proto3";
+
+import "google/api/field_behavior.proto";
+import "validate/validate.proto";
+
+// $title: Common Object Types
+// $description: Definition of objects shared by different APIs.
+// $location: https://tetrate.io/docs/reference/config/types/v1/types.html
+
+package tetrate.api.tsb.types.v1;
+option go_package = "github.com/tetrateio/tetrate/api/tsb/types/v1";
+
+// `NamespaceSelector` selects a set of namespaces across one or more
+// clusters in a tenant. Namespace selectors can be used at Workspace
+// level to carve out a chunk of resources under a tenant into an
+// isolated configuration domain. They can be used in a Traffic,
+// Security, or a Gateway group to further scope the set of namespaces
+// that will belong to a specific configuration group.
+message NamespaceSelector {
+  // - `*/ns1` implies `ns1` namespace in any cluster under the tenant.
+  //
+  // - `c1/ns1` implies `ns1` namespace from `c1` cluster.
+  //
+  // - `c1/*` implies all namespaces in `c1` cluster.
+  string name = 1 [(google.api.field_behavior) = REQUIRED, (validate.rules).string.min_len = 1];
+}
+
+// `WorkloadSelector` selects one or more workloads in a
+// namespace. `WorkloadSelector` can be used in TrafficSetting,
+// SecuritySetting, and Gateway APIs in `TETRATE` mode to scope the
+// configuration to a specific set of workloads.
+message WorkloadSelector {
+  // The namespace where the workload resides.
+  string namespace = 1
+      [(google.api.field_behavior) = REQUIRED, (validate.rules).string.min_len = 1];
+
+  // One or more labels that indicate a specific set of pods/VMs in
+  // the namespace. If omitted, the TrafficSetting or SecuritySetting
+  // configuration will apply to all workloads in the
+  // namespace. Labels are required for Gateway API resources.
+  map<string, string> labels = 2;
+}
+
+// The configuration mode used by a traffic, security or a gateway group.
+enum ConfigMode {
+  // Indicates that the configurations to be added to the group will use Tetrate APIs.
+  TETRATE = 0;
+  // Indicates that the configurations to be added to the group will use Istio APIs.
+  ISTIO = 1;
+}

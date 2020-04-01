@@ -1,0 +1,86 @@
+---
+title: Workspace Setting
+description: Configuration for specifying default traffic and security settings in a workspace.
+location: https://tetrate.io/docs/reference/config/v1/workspace-setting.html
+layout: protoc-gen-docs
+generator: protoc-gen-docs
+number_of_entries: 1
+---
+<p>Workspace Setting allows configuring the default traffic and
+security settings for all the workloads in the namespaces owned by
+the workspace. Any namespace in the workspace that is not part of a
+traffic or security group will use these default settings.</p>
+
+<p>The following example sets the default security policy to accept
+either mutual TLS or plaintext traffic, and only accept connections
+at a sidecar from services within the same namespace. The default
+traffic policy allows unknown traffic from a sidecar to be
+forwarded via an egress gateway <code>tsb-egress</code> in the <code>perimeter</code>
+namespace in the same cluster.</p>
+
+<pre><code class="language-yaml">apiVersion: api.tsb.io/v1
+kind: WorkspaceSetting
+metadata:
+  name: w1-settings
+  workspace: w1
+  tenant: mycompany
+spec:
+  defaultSecuritySetting:
+    authentication: OPTIONAL
+  defaultTrafficSetting:
+    egressGateway: bookinfo-perimeter/tsb-egress
+</code></pre>
+
+<h2 id="WorkspaceSetting">WorkspaceSetting</h2>
+<section>
+<p>Default security and traffic settings for all sidecars in the workspace.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="WorkspaceSetting-default_security_setting">
+<td><code>defaultSecuritySetting</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/security/v1/security-setting.html#SecuritySetting">tetrate.api.tsb.security.v1.SecuritySetting</a></code></td>
+<td>
+<p>Security settings for all sidecars in this workspace. Sidecars
+without a specific security group will inherit these settings. If
+omitted, the following semantics apply:</p>
+
+<ol>
+<li><p>Sidecars will accept connections from clients using
+Istio Mutual TLS as well as legacy clients using plaintext
+(i.e. any traffic not using Istio Mutual TLS authentication)</p></li>
+
+<li><p>No authorization will be performed.</p></li>
+</ol>
+
+</td>
+</tr>
+<tr id="WorkspaceSetting-default_traffic_setting">
+<td><code>defaultTrafficSetting</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/traffic/v1/traffic-setting.html#TrafficSetting">tetrate.api.tsb.traffic.v1.TrafficSetting</a></code></td>
+<td>
+<p>Traffic settings for all sidecars in this workspace. Sidecars
+without a specific traffic group will inherit these settings. If
+omitted, the following semantics apply:</p>
+
+<ol>
+<li><p>Sidecars will be able to reach only services within their
+namespace in the cluster, i.e. reachability mode defaults to
+<code>NAMESPACE</code>.</p></li>
+
+<li><p>Traffic to unknown destinations will be directly routed from
+the sidecar to the destination.</p></li>
+</ol>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>

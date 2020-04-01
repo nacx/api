@@ -1,0 +1,65 @@
+// Copyright (c) Tetrate, Inc 2019 All Rights Reserved.
+
+syntax = "proto3";
+
+// $title: Workspace Setting
+// $description: Configuration for specifying default traffic and security settings in a workspace.
+// $location: https://tetrate.io/docs/reference/config/v1/workspace-setting.html
+
+// Workspace Setting allows configuring the default traffic and
+// security settings for all the workloads in the namespaces owned by
+// the workspace. Any namespace in the workspace that is not part of a
+// traffic or security group will use these default settings.
+//
+// The following example sets the default security policy to accept
+// either mutual TLS or plaintext traffic, and only accept connections
+// at a sidecar from services within the same namespace. The default
+// traffic policy allows unknown traffic from a sidecar to be
+// forwarded via an egress gateway `tsb-egress` in the `perimeter`
+// namespace in the same cluster.
+//
+// ```yaml
+// apiVersion: api.tsb.io/v1
+// kind: WorkspaceSetting
+// metadata:
+//   name: w1-settings
+//   workspace: w1
+//   tenant: mycompany
+// spec:
+//   defaultSecuritySetting:
+//     authentication: OPTIONAL
+//   defaultTrafficSetting:
+//     egressGateway: bookinfo-perimeter/tsb-egress
+//```
+//
+package tetrate.api.tsb.v1;
+option go_package = "github.com/tetrateio/tetrate/api/tsb/v1";
+
+import "tsb/traffic/v1/traffic_setting.proto";
+import "tsb/security/v1/security_setting.proto";
+
+// Default security and traffic settings for all sidecars in the workspace.
+message WorkspaceSetting {
+  // Security settings for all sidecars in this workspace. Sidecars
+  // without a specific security group will inherit these settings. If
+  // omitted, the following semantics apply:
+  //
+  // 1. Sidecars will accept connections from clients using
+  // Istio Mutual TLS as well as legacy clients using plaintext
+  // (i.e. any traffic not using Istio Mutual TLS authentication)
+  //
+  // 2. No authorization will be performed.
+  tetrate.api.tsb.security.v1.SecuritySetting default_security_setting = 1;
+
+  // Traffic settings for all sidecars in this workspace. Sidecars
+  // without a specific traffic group will inherit these settings. If
+  // omitted, the following semantics apply:
+  //
+  // 1. Sidecars will be able to reach only services within their
+  // namespace in the cluster, i.e. reachability mode defaults to
+  // `NAMESPACE`.
+  //
+  // 2. Traffic to unknown destinations will be directly routed from
+  // the sidecar to the destination.
+  tetrate.api.tsb.traffic.v1.TrafficSetting default_traffic_setting = 2;
+}

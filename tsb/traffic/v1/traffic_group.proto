@@ -1,0 +1,140 @@
+// Copyright (c) Tetrate, Inc 2019 All Rights Reserved.
+
+syntax = "proto3";
+
+// $title: Traffic Group
+// $description: Configurations to group a set of sidecars in a workspace for traffic management.
+// $location: https://tetrate.io/docs/reference/config/traffic/v1/group.html
+
+// Traffic Groups allow grouping the sidecars in a set of namespaces
+// owned by its parent workspace. Networking and routing related
+// configurations can then be applied on the group to control the
+// behavior of these sidecars. The group can be in one of two modes:
+// `TETRATE` and `ISTIO`. `TETRATE` mode is a minimalistic mode that
+// allows users to quickly configure the most commonly used features
+// in the service mesh using Tetrate specific APIs, while the `ISTIO`
+// mode provides more flexibility for power users by allowing them to
+// configure the sidecar behavior using a restricted subset of Istio
+// Networking APIs.
+//
+// The following example creates a traffic group for the sidecars in
+// `ns1`, `ns2` and `ns3` namespaces owned by its parent workspace
+// `w1` under tenant `mycompany` and sets up a `TrafficSetting`
+// defining the resilience properties for sidecars in these
+// namespaces.
+//
+// ```yaml
+// apiVersion: traffic.tsb.tetrate.io/v1
+// kind: Group
+// metadata:
+//   name: t1
+//   workspace: w1
+//   tenant: mycompany
+// spec:
+//   namespaceSelectors:
+//   - name: */ns1
+//   - name: */ns2
+//   - name: */ns3
+//   configMode: TETRATE
+//```
+//
+// And the associated traffic settings for the sidecars in the group
+//
+// ```yaml
+// apiVersion: traffic.tsb.tetrate.io/v1
+// kind: TrafficSetting
+// metadata:
+//   name: defaults
+//   group: t1
+//   workspace: w1
+//   tenant: mycompany
+// spec:
+//   resilience:
+//     circuitBreakerSensitivity: MEDIUM
+//```
+//
+// Under the hood, Service Bridge translates these minimalistic
+// settings into Istio APIs such as `Sidecar`, `DestinationRule`,
+// etc. for the namespaces managed by the traffic group. These APIs
+// are then pushed to the Istio control planes of clusters where the
+// workspace is applicable.
+//
+// It is possible to create a traffic group for namespaces in a
+// specific cluster as long as the parent workspace owns those
+// namespaces in that cluster. For example,
+//
+// ```yaml
+// apiVersion: traffic.tsb.tetrate.io/v1
+// kind: Group
+// metadata:
+//   name: t1
+//   workspace: w1
+//   tenant: mycompany
+// spec:
+//   namespaceSelectors:
+//   - name: c1/ns1 # pick ns1 namespace only from c1 cluster
+//   - name: */ns2
+//   - name: */ns3
+//   configMode: TETRATE
+//```
+//
+// In the `ISTIO` mode, it is possible to directly attach Istio APIs
+// such as `VirtualService`, `DestinationRule`, and `Sidecar` to the
+// traffic group. These configurations will be validated for
+// correctness and conflict free operations and then pushed to the
+// appropriate Istio control planes.
+//
+// The following example declares a `DestinationRule` with two
+// subsets, for the `ratings` service in the `ns1` namespace:
+//
+// ```yaml
+// apiVersion: networking.istio.io/v1beta1
+// kind: DestinationRule
+// metadata:
+//   name: ratings-subsets
+//   namespace: ns1
+//   annotations:
+//     tsb.tetrate.io/tenant: mycompany
+//     tsb.tetrate.io/workspace: w1
+//     tsb.tetrate.io/trafficGroup: t1
+// spec:
+//   host: ratings.ns1.svc.cluster.local
+//   subsets:
+//   - name: stableversion
+//     labels:
+//       app: ratings
+//       env: prod
+//   - name: testversion
+//     labels:
+//       app: ratings
+//       env: uat
+// ```
+//
+// The namespace where the Istio APIs are applied will need to be part
+// of the parent traffic group. In addition, each API object will need
+// to have annotations to indicate the tenant, workspace and the
+// traffic group to which it belongs to.
+//
+// TODO(rshriram): Document the list of fields in Istio APIs that are
+// disallowed.
+package tetrate.api.tsb.traffic.v1;
+option go_package = "github.com/tetrateio/tetrate/api/tsb/traffic/v1";
+
+import "tsb/types/v1/types.proto";
+
+// A traffic group manages the routing properties of sidecars in a
+// group of namespaces owned by the parent workspace.
+message Group {
+  // Set of namespaces owned exclusively by this group. If omitted,
+  // applies to all resources owned by the workspace.
+  repeated tetrate.api.tsb.types.v1.NamespaceSelector namespace_selectors = 1;
+
+  // The Configuration types that will be added to this
+  // group. `TETRATE` mode indicates that configurations added to this
+  // group will use Tetrate APIs such as `TrafficSetting` and
+  // `ServiceRoute`. `ISTIO` mode indicates that configurations added
+  // to this group will use Istio Networking APIs such as
+  // `VirtualService`, `DestinationRule`, and `Sidecar`. Defaults to
+  // `TETRATE` mode.
+  tetrate.api.tsb.types.v1.ConfigMode config_mode = 2;
+}

@@ -1,0 +1,76 @@
+---
+title: Team
+description: Configuration for creating teams of users.
+location: https://tetrate.io/docs/reference/config/v1/team.html
+layout: protoc-gen-docs
+generator: protoc-gen-docs
+number_of_entries: 1
+---
+<p><code>Team</code> is a named collection of users, service accounts, and other
+teams. Teams can be assigned access permissions on various
+resources. All members of a team inherit the access permissions
+assigned to the team.</p>
+
+<p>The following example creates a team named <code>org</code> under the tenant
+<code>mycompany</code> with all members of <code>product1</code> and <code>product2</code> teams,
+users <code>alice</code> and <code>bob</code>, and the service account
+<code>cluster1-tsb-agent</code> used by the service bridge agents in cluster
+<code>cluster1</code>.</p>
+
+<pre><code class="language-yaml">apiVersion: api.tsb.tetrate.io/v1
+kind: Team
+metadata:
+  name: org
+  tenant: mycompany
+spec:
+  users:
+  - alice
+  - bob
+  teams:
+  - product1
+  - product2
+  serviceAccounts:
+  - cluster1-tsb-agent
+</code></pre>
+
+<h2 id="Team">Team</h2>
+<section>
+<p><code>Team</code> is a named collection of users under a tenant.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Team-users">
+<td><code>users</code></td>
+<td><code>string[]</code></td>
+<td>
+<p>List of users under the team. These users should be present in
+the LDAP server.</p>
+
+</td>
+</tr>
+<tr id="Team-service_accounts">
+<td><code>serviceAccounts</code></td>
+<td><code>string[]</code></td>
+<td>
+<p>List of automation processes whose user names are local to service bridge.</p>
+
+</td>
+</tr>
+<tr id="Team-teams">
+<td><code>teams</code></td>
+<td><code><a href="#Team">Team[]</a></code></td>
+<td>
+<p>Teams can compose of other teams.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>

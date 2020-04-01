@@ -4,7 +4,8 @@
 -include ../api.mk
 
 APIS := audit/v1 test/v1 q/rbac/v1 tcc/core/v1 tcc/workflows/loadbalancer/v1 regsource/v1 spm authz/v1 \
-	troubleshoot/cluster/v1 settings/v1 operator/common operator/tsboperator/v1alpha1
+	troubleshoot/cluster/v1 settings/v1 operator/common operator/tsboperator/v1alpha1 \
+	tsb/gateway/v1 tsb/security/v1 tsb/traffic/v1 tsb/types/v1 tsb/v1 tsb/rbac/v1
 
 .PHONY: all
 all: format $(APIS)

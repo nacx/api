@@ -1,0 +1,379 @@
+// Copyright (c) Tetrate, Inc 2019 All Rights Reserved.
+
+syntax = "proto3";
+
+// $title: Ingress Gateway
+// $description: Configurations to build an ingress gateway.
+// $location: https://tetrate.io/docs/reference/config/gateway/v1/ingress-gateway.html
+
+// `IngressGateway` configures a workload to act as a gateway for
+// traffic entering the mesh. The ingress gateway also provides basic
+// API gateway functionalities such as JWT token validation, rate
+// limiting, and request authorization. Gateways in privileged
+// workspaces can route to services outside the workspace while those
+// in unprivileged workspaces can only route to services inside the
+// workspace.
+//
+// The following example declares an ingress gateway running on pods
+// with `app: gateway` labels in the `ns1` namespace. The gateway
+// exposes a host `bookinfo.com` on https port 8443. TLS is terminated
+// using the certificates in the Kubernetes secret
+// `bookinfo-certs`. Clients are authenticated using JWT tokens, whose
+// keys are obtained from the OIDC provider `www.googleapis.com`. The
+// request is then authorized by an the user's authorization engine
+// hosted at `https://internal.example.com` before being forwarded to
+// the `productpage` service in the backend.
+//
+// ```yaml
+// apiVersion: gateway.tsb.tetrate.io/v1
+// kind: IngressGateway
+// metadata:
+//   name: ingress-bookinfo
+//   group: g1
+//   workspace: w1
+//   tenant: mycompany
+// spec:
+//   workloadSelector:
+//     namespace: ns1
+//     labels:
+//       app: gateway
+//   http:
+//   - hostname: bookinfo.com
+//     tls:
+//       mode: SIMPLE
+//       secretName: bookinfo-certs
+//     authentication:
+//       jwt:
+//         issuer: https://www.googleapis.com/oauth2/v1/certs
+//         audience: bookinfo
+//     authorization:
+//       external:
+//         uri: https://company.com/authz
+//         includeRequestHeaders:
+//         - Authorization # forwards the header to the authorization service.
+//     routing:
+//       rules:
+//       - route:
+//           host: ns1/productpage.ns1.svc.cluster.local
+//```
+//
+// If the `productpage.ns1` service on Kubernetes has a `ServiceRoute`
+// with multiple subsets and weights, the traffic will be split across
+// the subsets accordingly.
+//
+// TODO(rshriram): Add lot more examples in the gateway section.
+package tetrate.api.tsb.gateway.v1;
+option go_package = "github.com/tetrateio/tetrate/api/tsb/gateway/v1";
+
+import "google/api/field_behavior.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/wrappers.proto";
+import "validate/validate.proto";
+import "tsb/types/v1/types.proto";
+
+// `IngressGateway` configures a workload to act as an ingress gateway into the mesh.
+message IngressGateway {
+  // Specify the gateway workloads (pod labels and Kubernetes
+  // namespace) under the gateway group that should be configured with
+  // this ingress gateway. There can be only one ingress gateway for a
+  // given workload selector.
+  tetrate.api.tsb.types.v1.WorkloadSelector workload_selector = 1
+      [(google.api.field_behavior) = REQUIRED];
+
+  // One or more HTTP or HTTPS servers exposed by the gateway. The
+  // server exposes configuration for TLS termination, request
+  // authentication/authorization, HTTP routing, etc.
+  repeated HttpServer http = 2;
+}
+
+message HttpServer {
+  // Hostname with which the service can be expected to be accessed by clients.
+  string hostname = 1 [(validate.rules).string.min_len = 1];
+  // TLS certificate info. If omitted, the gateway will expose the host on port 80.
+  ServerTLSSettings tls = 2;
+  // Configuration to authenticate clients.
+  Authentication authentication = 3;
+  // Configuration to authorize a request.
+  Authorization authorization = 4;
+  // Routing rules associated with HTTP traffic to this service.
+  HttpRouting routing = 5;
+};
+
+message HttpRouting {
+  // Describes a HTTP cookie that will be used for sticky sessions. If the cookie is not present, it
+  // will be generated.
+  message HTTPCookie {
+    // Name of the cookie.
+    string name = 1 [(validate.rules).string.min_len = 1];
+
+    // Path to set for the cookie.
+    string path = 2 [(validate.rules).string.min_len = 1];
+
+    // Lifetime of the cookie.
+    google.protobuf.Duration ttl = 3 [(validate.rules).message.required = true];
+  }
+
+  // If set, the load balancer will route all requests from a particular client to the same backend
+  // of the service.
+  message StickySession {
+    oneof hash_key {
+      // Hash based on a specific HTTP header.
+      string header = 1 [(validate.rules).string.min_len = 1];
+
+      // Hash based on HTTP cookie.
+      HTTPCookie cookie = 2;
+
+      // Hash based on the source IP address.
+      bool use_source_ip = 3;
+    }
+  }
+
+  StickySession sticky_session = 1;
+  CorsPolicy cors_policy = 2;
+  repeated HttpRule rules = 3;
+}
+
+// A single HTTP rule.
+message HttpRule {
+  // One or more match conditions (OR-ed).
+  repeated HttpMatchCondition match = 1;
+
+  // One or more mutations to be performed before forwarding. Includes typical modifications to be
+  // done on a single request like URL rewrite, host rewrite, headers to add/remove/append.
+  HttpModifyAction modify = 2;
+
+  oneof route_or_redirect {
+    Route route = 3;
+    Redirect redirect = 4;
+  }
+}
+
+// A single match clause to match all aspects of a request.
+message HttpMatchCondition {
+  // URI to match.
+  StringMatch uri = 1;
+
+  // The header keys must be lowercase and use hyphen as the separator, e.g. x-request-id.
+  map<string, StringMatch> headers = 2;
+}
+
+// Describes how to match a given string in HTTP headers. Match is case-sensitive.
+message StringMatch {
+  oneof match_type {
+    // Exact string match.
+    string exact = 1;
+
+    // Prefix-based match.
+    string prefix = 2;
+
+    // ECMAscript style regex-based match.
+    string regex = 3;
+  }
+}
+
+message HTTPRewrite {
+  // Rewrite the path (or the prefix) portion of the URI with this value. If the original URI was
+  // matched based on prefix, the value provided in this field will replace the corresponding
+  // matched prefix.
+  string uri = 1;
+
+  // Rewrite the Authority/Host header with this value.
+  string authority = 2;
+}
+
+// Header manipulation rules.
+message Headers {
+  // Header manipulation rules to apply before forwarding a request to the destination service.
+  HeaderOperations request = 1;
+  // Header manipulation rules to apply before returning a response to the caller.
+  HeaderOperations response = 2;
+
+  // HeaderOperations Describes the header manipulations to apply.
+  message HeaderOperations {
+    // Overwrite the headers specified by key with the given values.
+    map<string, string> set = 1;
+    // Append the given values to the headers specified by keys (will create a comma-separated list
+    // of values).
+    map<string, string> add = 2;
+    // Remove a the specified headers.
+    repeated string remove = 3;
+  }
+}
+
+// HTTP path/url/header modification.
+message HttpModifyAction {
+  HTTPRewrite rewrite = 1;
+  Headers headers = 2;
+}
+
+// One or more destinations in a local cluster for the given request.
+message Route {
+  // The destination service in `<namespace>/<fqdn>` format.
+  string host = 1 [(validate.rules).string.pattern = "^[^/]+/[^/]+$"];
+  uint32 port = 2;
+}
+
+message Redirect {
+  // On a redirect, overwrite the Path portion of the URL with this value.
+  string uri = 1;
+  // On a redirect, overwrite the Authority/Host portion of the URL with this value.
+  string authority = 2;
+}
+
+message CorsPolicy {
+  // The list of origins that are allowed to perform CORS requests. The content will be serialized
+  // into the Access-Control-Allow-Origin header. Wildcard * will allow all origins.
+  repeated string allow_origin = 1;
+  // List of HTTP methods allowed to access the resource. The content will be serialized into the
+  // Access-Control-Allow-Methods header.
+  repeated string allow_methods = 2;
+  // List of HTTP headers that can be used when requesting the resource. Serialized to
+  // Access-Control-Allow-Headers header.
+  repeated string allow_headers = 3;
+  // A white list of HTTP headers that the browsers are allowed to access. Serialized into
+  // Access-Control-Expose-Headers header.
+  repeated string expose_headers = 4;
+  // Specifies how long the results of a preflight request can be cached. Translates to the
+  // Access-Control-Max-Age header.
+  google.protobuf.Duration max_age = 5;
+  // Indicates whether the caller is allowed to send the actual request (not the preflight) using
+  // credentials. Translates to Access-Control-Allow-Credentials header.
+  google.protobuf.BoolValue allow_credentials = 6;
+}
+
+message ServerTLSSettings {
+  enum TLSMode {
+    DISABLED = 0;
+    SIMPLE = 1;
+    MUTUAL = 2;
+  };
+
+  // Set this to SIMPLE, or MUTUAL for one-way TLS, mutual TLS
+  // respectively.
+  TLSMode mode = 1;
+
+  // The name of the secret in Kubernetes that holds the TLS certs
+  // including the CA certificates. The secret (type generic) should
+  // contain the following keys and values: key: <privateKey>, cert:
+  // <serverCert>, cacert: <CACertificate>.
+  string secret_name = 2;
+}
+
+message Authentication {
+  message JWT {
+    // Identifies the issuer that issued the JWT. See
+    // [issuer](https://tools.ietf.org/html/rfc7519#section-4.1.1)
+    // A JWT with different `iss` claim will be rejected.
+    //
+    // Example: https://foobar.auth0.com
+    // Example: 1234567-compute@developer.gserviceaccount.com
+    string issuer = 1 [(google.api.field_behavior) = REQUIRED];
+
+    // The list of JWT
+    // [audiences](https://tools.ietf.org/html/rfc7519#section-4.1.3).
+    // that are allowed to access. A JWT containing any of these
+    // audiences will be accepted.
+    //
+    // The service name will be accepted if audiences is empty.
+    repeated string audiences = 2;
+
+    oneof keys {
+      // URL of the provider's public key set to validate signature of
+      // the JWT. See [OpenID
+      // Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata).
+      //
+      // Optional if the key set document can either (a) be retrieved
+      // from [OpenID
+      // Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html)
+      // of the issuer or (b) inferred from the email domain of the
+      // issuer (e.g. a Google service account).
+      //
+      // Example: `https://www.googleapis.com/oauth2/v1/certs`
+      //
+      // Note: Only one of jwks_uri and jwks should be used. jwks_uri
+      // will be ignored if it does.
+      string jwks_uri = 3;
+
+      // JSON Web Key Set of public keys to validate signature of the JWT.
+      // See https://auth0.com/docs/jwks.
+      //
+      // Note: Only one of jwks_uri and jwks should be used. jwks_uri will be ignored if it does.
+      string jwks = 4;
+    }
+  }
+
+  oneof authn {
+    JWT jwt = 1;
+  }
+}
+
+message Authorization {
+  message ExternalAuthzBackend {
+    string uri = 1;
+    repeated string include_request_headers = 2;
+  }
+
+  message LocalAuthz {
+    repeated LocalAuthzRule rules = 1;
+  }
+
+  oneof authz {
+    ExternalAuthzBackend external = 1;
+    LocalAuthz local = 2;
+  }
+}
+
+// LocalAuthzRule
+//
+// Bindings define the subjects that can access the resource a policy is attached to,
+// and the conditions that need to be met for that access to be granted.
+// A policy can have multiple bindings to configure different access controls for specific
+// subjects.
+message LocalAuthzRule {
+  // A friendly name to identify the binding.
+  string name = 1 [(validate.rules).string.min_len = 1];
+
+  message HttpOperation {
+    // The request path where the request is made against. E.g. ["/accounts"].
+    repeated string paths = 2 [(validate.rules).repeated = {
+      items: {string: {min_len: 1}},
+    }];
+    // The HTTP methods that are allowed by this rule. E.g. ["GET", "HEAD"].
+    repeated string methods = 3 [(validate.rules).repeated = {
+      items: {string: {in: ["GET", "HEAD", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]}},
+    }];
+  }
+
+  // Subjects configure the actors (end users, other services)  that are allowed to access the
+  // target resource.
+  repeated Subject from = 2;
+  // A set of HTTP rules that need to be satisfied by the HTTP requests to get access to the
+  // target resource.
+  repeated HttpOperation to = 3;
+}
+
+// Subject
+//
+// A subject designates an actor (user, service, etc) that attempts to access a target resource.
+// Subjects can be modeled with JWT tokens, service accounts, and decorated with attributes such as
+// HTTP request headers, JWT token claims, etc.
+// The fields that define a subject will be matched to incoming requests, to fully qualify where the
+// request comes from, and to decide if the given request is allowed or not for the target resource.
+// All the fields in a subject are evaluated as AND expressions.
+message Subject {
+  // JWT based subject
+  //
+  // JWT based subjects qualify a subject by matching against a JWT token present in the request.
+  // By default the token is expected to be present in the 'Authorization' HTTP header, with the
+  // 'Bearer" prefix.
+  message JWTClaims {
+    string iss = 1;
+    string sub = 2;
+    // A set of arbitrary claims that are required to qualify the subject.
+    // E.g. "iss": "*@foo.com".
+    map<string, string> other = 3 [(validate.rules).map.keys.string.min_len = 1];
+  }
+
+  // JWT configuration to identity the subject.
+  JWTClaims jwt = 1;
+}

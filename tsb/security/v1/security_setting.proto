@@ -1,0 +1,145 @@
+// Copyright (c) Tetrate, Inc 2019 All Rights Reserved.
+
+syntax = "proto3";
+
+// $title: Security Setting
+// $description: Security settings for sidecars in a security group.
+// $location: https://tetrate.io/docs/reference/config/security/v1/security-setting.html
+
+// `SecuritySetting` allows configuring security related properties
+// such as TLS authentication and access control for traffic arriving
+// at a sidecar in a security group.
+//
+// The following example creates a security group for the sidecars in
+// `ns1`, `ns2` and `ns3` namespaces owned by its parent workspace
+// `w1` under tenant `mycompany` and defines a security setting that
+// only allows mutual TLS authenticated traffic from other sidecars in
+// the same group.
+//
+// ```yaml
+// apiVersion: security.tsb.tetrate.io/v1
+// kind: Group
+// metadata:
+//   name: t1
+//   workspace: w1
+//   tenant: mycompany
+// spec:
+//   namespaceSelectors:
+//   - name: */ns1
+//   - name: */ns2
+//   - name: */ns3
+//   configMode: TETRATE
+//```
+//
+// And the associated security settings for all sidecars in the group
+//
+// ```yaml
+// apiVersion: security.tsb.tetrate.io/v1
+// kind: SecuritySetting
+// metadata:
+//   name: defaults
+//   group: t1
+//   workspace: w1
+//   tenant: mycompany
+// spec:
+//   authentication: REQUIRED
+//   authorization:
+//     mode: GROUP
+//```
+//
+// The following example customizes the `allowedSources` to allow
+// traffic from the namespaces within the group as well as the
+// `catalog-sa` service account from `ns4` namespace.
+//
+// ```yaml
+// apiVersion: security.tsb.tetrate.io/v1
+// kind: SecuritySetting
+// metadata:
+//   name: custom
+//   group: t1
+//   workspace: w1
+//   tenant: mycompany
+// spec:
+//   authentication: REQUIRED
+//   authorization:
+//     mode: CUSTOM
+//     serviceAccounts:
+//     - ns1/*
+//     - ns2/*
+//     - ns3/*
+//     - ns4/catalog-sa
+//```
+//
+package tetrate.api.tsb.security.v1;
+option go_package = "github.com/tetrateio/tetrate/api/tsb/security/v1";
+
+import "validate/validate.proto";
+
+// A security setting applies configuration to a set of sidecars in a
+// security group or a workspace. When applied to a security group,
+// missing fields will inherit values from the workspace-wide setting.
+message SecuritySetting {
+  // AuthenticationMode indicates whether to accept only Istio mutual
+  // TLS authenticated traffic or allow legacy plaintext traffic as
+  // well.
+  enum AuthenticationMode {
+    // Inherit from parent, if has one. Otherwise treated as OPTIONAL.
+    UNSET = 0;
+
+    // Accept both plaintext and mTLS authenticated connections.
+    OPTIONAL = 1;
+
+    // Accept only mutual TLS authenticated connections.
+    REQUIRED = 2;
+  }
+
+  // Specifies whether the sidecars should accept only mutual TLS
+  // authenticated traffic or allow legacy plaintext traffic as well.
+  AuthenticationMode authentication = 1;
+
+  // The set of service accounts in one or more namespaces allowed to
+  // access a workload (and hence its sidecar) in the mesh.
+  AuthorizationSettings authorization = 2;
+}
+
+// `AuthorizationSettings` define the set of service accounts in one
+// or more namespaces allowed to access a workload (and hence its
+// sidecar) in the mesh.
+//
+// **NOTE**: When used in `WorkspaceSetting`, authorization if not
+// specified defaults to `NAMESPACE` mode, i.e. workloads will only
+// allow traffic from other workloads in the same namespace.
+message AuthorizationSettings {
+  // A short cut for defining the common authorization patterns
+  enum Mode {
+    // Inherit from parent if possible. Otherwise treated as `DISABLED`.
+    UNSET = 0;
+    // The workload allows traffic from any other authenticated workload in its own
+    // namespace.
+    NAMESPACE = 1;
+    // The workload allows traffic from any other authenticated workload in the security group.
+    GROUP = 2;
+    // The workload allows traffic from any other authenticated workload in the workspace.
+    WORKSPACE = 3;
+    // The workload allows traffic from any other authenticated workload in the cluster.
+    CLUSTER = 4;
+    // Authorization is disabled.
+    DISABLED = 5;
+    // The workload allows traffic from service accounts defined explicitly.
+    CUSTOM = 6;
+  };
+
+  // A short cut for specifying the set of allowed callers.
+  Mode mode = 1;
+
+  // When the mode is `CUSTOM`, `serviceAccounts` specify the allowed
+  // set of service accounts (and the workloads using them). Must be
+  // in the `<namespace>/<service-account-name>` format.
+  //
+  // - `./*` indicates all service accounts in the namespace where the sidecar resides.
+  //
+  // - `ns1/*` indicates all service accounts in the `ns1` namespace.
+  //
+  // - `ns1/svc1-sa` indicates `svc1-sa` service account in `ns1` namespace.
+  repeated string service_accounts = 2;
+};
