@@ -2,10 +2,103 @@
 title: tetrate.api.tsboperator.v1alpha1
 layout: protoc-gen-docs
 generator: protoc-gen-docs
-number_of_entries: 23
+number_of_entries: 28
 ---
+<h2 id="ApiLog">ApiLog</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ApiLog-target">
+<td><code>target</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="ApiLog-auditTarget">
+<td><code>auditTarget</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="ApiLog-levels">
+<td><code>levels</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
 <h2 id="ApiServerConfig">ApiServerConfig</h2>
 <section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ApiServerConfig-log">
+<td><code>log</code></td>
+<td><code><a href="#ApiLog">ApiLog</a></code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="DbParams">DbParams</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="DbParams-username">
+<td><code>username</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="DbParams-password">
+<td><code>password</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="DbParams-host">
+<td><code>host</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+<tr id="DbParams-port">
+<td><code>port</code></td>
+<td><code>int32</code></td>
+<td>
+</td>
+</tr>
+<tr id="DbParams-parameters">
+<td><code>parameters</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
 </section>
 <h2 id="ElasticsearchConfig">ElasticsearchConfig</h2>
 <section>
@@ -176,6 +269,12 @@ number_of_entries: 23
 <td>
 </td>
 </tr>
+<tr id="GlobalConfig-db">
+<td><code>db</code></td>
+<td><code><a href="#DbParams">DbParams</a></code></td>
+<td>
+</td>
+</tr>
 <tr id="GlobalConfig-authagents">
 <td><code>authagents</code></td>
 <td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#boolvalue">google.protobuf.BoolValue</a></code></td>
@@ -190,6 +289,12 @@ number_of_entries: 23
 <td>
 <p>If openshift enabled</p>
 
+</td>
+</tr>
+<tr id="GlobalConfig-imagePullPolicy">
+<td><code>imagePullPolicy</code></td>
+<td><code>string</code></td>
+<td>
 </td>
 </tr>
 </tbody>
@@ -267,6 +372,9 @@ number_of_entries: 23
 </tbody>
 </table>
 </section>
+<h2 id="GrafanaConfig">GrafanaConfig</h2>
+<section>
+</section>
 <h2 id="IamServerConfig">IamServerConfig</h2>
 <section>
 <table class="message-fields">
@@ -330,8 +438,8 @@ number_of_entries: 23
 <td>
 </td>
 </tr>
-<tr id="OapConfig-initResources">
-<td><code>initResources</code></td>
+<tr id="OapConfig-resources">
+<td><code>resources</code></td>
 <td><code><a href="#tetrate-api-operator-common-Resources">tetrate.api.operator.common.Resources</a></code></td>
 <td>
 </td>
@@ -339,6 +447,18 @@ number_of_entries: 23
 <tr id="OapConfig-externalServices">
 <td><code>externalServices</code></td>
 <td><code><a href="#OapExternalServices">OapExternalServices</a></code></td>
+<td>
+</td>
+</tr>
+<tr id="OapConfig-enabledPackedDownsampling">
+<td><code>enabledPackedDownsampling</code></td>
+<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#boolvalue">google.protobuf.BoolValue</a></code></td>
+<td>
+</td>
+</tr>
+<tr id="OapConfig-dayStep">
+<td><code>dayStep</code></td>
+<td><code>int32</code></td>
 <td>
 </td>
 </tr>
@@ -370,6 +490,12 @@ number_of_entries: 23
 </tr>
 <tr id="OapExternalServices-webhook">
 <td><code>webhook</code></td>
+<td><code>map&lt;string,&nbsp;string&gt;</code></td>
+<td>
+</td>
+</tr>
+<tr id="OapExternalServices-elasticsearch">
+<td><code>elasticsearch</code></td>
 <td><code>map&lt;string,&nbsp;string&gt;</code></td>
 <td>
 </td>
@@ -441,7 +567,47 @@ number_of_entries: 23
 </tbody>
 </table>
 </section>
+<h2 id="OpentelConfig">OpentelConfig</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="OpentelConfig-scrapeInterval">
+<td><code>scrapeInterval</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
 <h2 id="PostgresConfig">PostgresConfig</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="PostgresConfig-enabled">
+<td><code>enabled</code></td>
+<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#boolvalue">google.protobuf.BoolValue</a></code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="PrometheusConfig">PrometheusConfig</h2>
 <section>
 </section>
 <h2 id="SpmServerConfig">SpmServerConfig</h2>
@@ -587,6 +753,24 @@ number_of_entries: 23
 <tr id="Values-zipkin">
 <td><code>zipkin</code></td>
 <td><code><a href="#ZipkinConfig">ZipkinConfig</a></code></td>
+<td>
+</td>
+</tr>
+<tr id="Values-opentelemetry">
+<td><code>opentelemetry</code></td>
+<td><code><a href="#OpentelConfig">OpentelConfig</a></code></td>
+<td>
+</td>
+</tr>
+<tr id="Values-prometheus">
+<td><code>prometheus</code></td>
+<td><code><a href="#PrometheusConfig">PrometheusConfig</a></code></td>
+<td>
+</td>
+</tr>
+<tr id="Values-grafana">
+<td><code>grafana</code></td>
+<td><code><a href="#GrafanaConfig">GrafanaConfig</a></code></td>
 <td>
 </td>
 </tr>

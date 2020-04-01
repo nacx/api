@@ -123,42 +123,6 @@ message TsbUserOperatorSpec {
   TypeMapStringInterface values = 100;
 }
 
-// Observed state of TsbOperator
-message InstallStatus {
-  // Status describes the current state of a component.
-  enum Status {
-    // Component is not present.
-    NONE = 0;
-    // Component is being updated to a different version.
-    UPDATING = 1;
-    // Controller has started but not yet completed reconciliation loop for the component.
-    RECONCILING = 2;
-    // Component is healthy.
-    HEALTHY = 3;
-    // Component is in an error state.
-    ERROR = 4;
-  }
-  // VersionStatus is the status and version of a component.
-  message VersionStatus {
-    string version = 1;
-    Status status = 2;
-    string status_string = 3;
-    string error = 4;
-  }
-  // Overall status of all components controlled by the operator.
-  // - If all components have status NONE, overall status is NONE.
-  // - If all components are HEALTHY, overall status is HEALTHY.
-  // - If one or more components are RECONCILING and others are HEALTHY, overall status is
-  // RECONCILING.
-  // - If one or more components are UPDATING and others are HEALTHY, overall status is UPDATING.
-  // - If components are a mix of RECONCILING, UPDATING and HEALTHY, overall status is UPDATING.
-  // - If any component is in ERROR state, overall status is ERROR.
-  Status status = 1;
-  // Individual status of each component controlled by the operator. The map key is the name of the
-  // component.
-  map<string, VersionStatus> component_status = 2;
-}
-
 // GOTYPE: map[string]interface{}
 message TypeMapStringInterface {
 }

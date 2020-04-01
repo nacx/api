@@ -24,6 +24,9 @@ message TsbComponentSetSpec {
   ComponentSpec postgres = 11;
   ComponentSpec elasticsearch = 12;
   ComponentSpec zipkin = 13;
+  ComponentSpec open_telemetry = 14;
+  ComponentSpec prometheus = 15;
+  ComponentSpec grafana = 16;
 }
 
 // Configuration for base component.
