@@ -394,12 +394,7 @@ func (m *Rule) Validate() error {
 		}
 	}
 
-	if val := m.GetThreshold(); val < 0 || val > 100 {
-		return RuleValidationError{
-			field:  "Threshold",
-			reason: "value must be inside range [0, 100]",
-		}
-	}
+	// no validation rules for Threshold
 
 	// no validation rules for Operator
 
@@ -413,12 +408,12 @@ func (m *Rule) Validate() error {
 			}
 		}
 
-		lt := time.Duration(1*time.Second + 0*time.Nanosecond)
+		gte := time.Duration(60*time.Second + 0*time.Nanosecond)
 
-		if dur >= lt {
+		if dur < gte {
 			return RuleValidationError{
 				field:  "Period",
-				reason: "value must be less than 1s",
+				reason: "value must be greater than or equal to 1m0s",
 			}
 		}
 

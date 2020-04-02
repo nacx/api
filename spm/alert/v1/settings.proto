@@ -63,14 +63,14 @@ message Rule {
 
   // The threshold value of a metric; depends on the operator, it triggers alert if the metric value
   // is not match.
-  uint32 threshold = 3 [(validate.rules).uint32 = { gte: 0, lte: 100 }];
+  uint32 threshold = 3;
   // clang-format on
 
   // The operator. E.g. greater-than, lower-than and equal.
   Operator operator = 4;
 
   // The period of an alert rule should be checked.
-  google.protobuf.Duration period = 5 [(validate.rules).duration.lt.seconds = 1];
+  google.protobuf.Duration period = 5 [(validate.rules).duration.gte.seconds = 60];
 
   // The number of "violation" in a certain period.
   uint32 count = 6 [(validate.rules).uint32.gte = 0];
