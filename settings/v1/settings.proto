@@ -2,15 +2,15 @@
 
 syntax = "proto3";
 
-package tetrate.api.settings.v1;
-option go_package = "github.com/tetrateio/tetrate/api/settings/v1;settingsv1";
+package tetrateio.api.settings.v1;
+option go_package = "github.com/tetrateio/api/settings/v1;settingsv1";
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
-import "validate/validate.proto";
+import "github.com/envoyproxy/protoc-gen-validate/validate/validate.proto";
 
-import "permissions.proto";
-import "rbac.proto";
+import "q/rbac/v1/permissions.proto";
+import "q/rbac/v1/rbac.proto";
 
 // Settings Service
 //
@@ -19,7 +19,7 @@ import "rbac.proto";
 service SettingsService {
   // Get settings return settings with specified id for specific tenant.
   rpc GetSettings(GetSettingsRequest) returns (Settings) {
-    option (tetrate.api.q.rbac.v1.requires) = {
+    option (tetrateio.api.q.rbac.v1.requires) = {
       permissions: READ
     };
     option (google.api.http).get = "/v1/tenants/{tenant}/settings/{id}";
@@ -27,7 +27,7 @@ service SettingsService {
 
   // Set settings set settings with specified id for specific tenant.
   rpc SetSettings(Settings) returns (Settings) {
-    option (tetrate.api.q.rbac.v1.requires) = {
+    option (tetrateio.api.q.rbac.v1.requires) = {
       permissions: WRITE
     };
     option (google.api.http) = {
@@ -36,8 +36,8 @@ service SettingsService {
     };
   }
 
-  rpc GetSettingsPolicy(GetSettingsPolicyRequest) returns (tetrate.api.q.rbac.v1.Policy) {
-    option (tetrate.api.q.rbac.v1.requires) = {
+  rpc GetSettingsPolicy(GetSettingsPolicyRequest) returns (tetrateio.api.q.rbac.v1.Policy) {
+    option (tetrateio.api.q.rbac.v1.requires) = {
       permissions: SET_POLICY
     };
     option (google.api.http) = {
@@ -46,7 +46,7 @@ service SettingsService {
   };
 
   rpc SetSettingsPolicy(SetSettingsPolicyRequest) returns (google.protobuf.Empty) {
-    option (tetrate.api.q.rbac.v1.requires) = {
+    option (tetrateio.api.q.rbac.v1.requires) = {
       permissions: SET_POLICY
     };
     option (google.api.http) = {
@@ -125,5 +125,5 @@ message SetSettingsPolicyRequest {
   string name = 1;
   string tenant = 2 [(validate.rules).string.min_len = 1];
   string id = 3 [(validate.rules).string = {in: ["system"]}];
-  tetrate.api.q.rbac.v1.Policy policy = 4 [(validate.rules).message.required = true];
+  tetrateio.api.q.rbac.v1.Policy policy = 4 [(validate.rules).message.required = true];
 }

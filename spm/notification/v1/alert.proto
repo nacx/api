@@ -1,15 +1,15 @@
 // Copyright (c) Tetrate, Inc 2018 All Rights Reserved.
 syntax = "proto3";
 
-package tetrate.api.tcc.spm.notification.v1;
-option go_package = "github.com/tetrateio/tetrate/api/spm/notification/v1";
+package tetrateio.api.tcc.spm.notification.v1;
+option go_package = "github.com/tetrateio/api/spm/notification/v1";
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
-import "validate/validate.proto";
+import "github.com/envoyproxy/protoc-gen-validate/validate/validate.proto";
 
-import "alert/v1/settings.proto";
+import "spm/alert/v1/settings.proto";
 
 // Alert Service
 //
@@ -70,7 +70,7 @@ message Alert {
   // Time when the alert was triggered.
   google.protobuf.Timestamp timestamp = 9;
   // Alert severity.
-  tetrate.api.tcc.spm.alert.v1.Severity severity = 10;
+  tetrateio.api.tcc.spm.alert.v1.Severity severity = 10;
   // Alert owner is user responsible to resolve alert.
   // User who acked will be added to owners.
   repeated string owners = 11;
@@ -82,7 +82,7 @@ message Alert {
 message ListAlertsRequest {
   string tenant = 1 [(validate.rules).string.min_len = 1];
   AlertStatus status = 2;
-  tetrate.api.tcc.spm.alert.v1.Severity severity = 3;
+  tetrateio.api.tcc.spm.alert.v1.Severity severity = 3;
   // Maximum number of results to be returned. Default is 20.
   int32 page_size = 4;
   // Page token to request a specific page of the list results. Set to "" for first page.

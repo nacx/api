@@ -1,0 +1,106 @@
+---
+title: config
+layout: protoc-gen-docs
+generator: protoc-gen-docs
+number_of_entries: 4
+---
+<h2 id="Services">Services</h2>
+<h3 id="ConfigurationService">ConfigurationService</h3>
+<section>
+<pre id="ConfigurationService-call"><code class="language-proto">rpc call(ConfigurationRequest) returns (ConfigurationResponse)
+</code></pre>
+</section>
+<h2 id="Types">Types</h2>
+<h3 id="ConfigurationRequest">ConfigurationRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ConfigurationRequest-clusterName">
+<td><code>clusterName</code></td>
+<td><code>string</code></td>
+<td>
+<p>Logic name of this cluster,
+in case the remote configuration center implementation support
+configuration management for multiple clusters.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ConfigurationResponse">ConfigurationResponse</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ConfigurationResponse-configTable">
+<td><code>configTable</code></td>
+<td><code><a href="#Config">Config[]</a></code></td>
+<td>
+<p>Include all config items.
+All config name should be not empty,
+the name is composed by &ldquo;module name&rdquo;.&ldquo;provider name&rdquo;.&ldquo;item name&rdquo;.
+Each watcher implementor provides this, and it will be notified when the value changed.</p>
+
+<p>If the config center wants to set the value to NULL or empty,
+must set the name with empty value explicitly.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Config">Config</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Config-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Config-value">
+<td><code>value</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>

@@ -2,10 +2,10 @@
 
 syntax = "proto3";
 
-package tetrate.api.tcc.spm.notification.v1;
-option go_package = "github.com/tetrateio/tetrate/api/spm/notification/v1";
+package tetrateio.api.tcc.spm.notification.v1;
+option go_package = "github.com/tetrateio/api/spm/notification/v1";
 
-import "validate/validate.proto";
+import "github.com/envoyproxy/protoc-gen-validate/validate/validate.proto";
 
 // AlertMessageRequest based on
 // https://github.com/apache/skywalking/blob/master/docs/en/setup/backend/backend-alarm.md#webhook

@@ -44,31 +44,31 @@ syntax = "proto3";
 //           - local:
 //               service: productpage
 // ```
-package tetrate.api.tcc.core.v1;
-option go_package = "github.com/tetrateio/tetrate/api/tcc/core/v1";
+package tetrateio.api.tcc.core.v1;
+option go_package = "github.com/tetrateio/api/tcc/core/v1";
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 import "google/protobuf/wrappers.proto";
-import "validate/validate.proto";
+import "github.com/envoyproxy/protoc-gen-validate/validate/validate.proto";
 
-import "routing_info.proto";
-import "client_settings.proto";
-import "physical_resources.proto";
+import "tcc/core/v1/routing_info.proto";
+import "tcc/core/v1/client_settings.proto";
+import "tcc/core/v1/physical_resources.proto";
 
 import "authz/v1/authz.proto";
-import "permissions.proto";
-import "rbac.proto";
+import "q/rbac/v1/permissions.proto";
+import "q/rbac/v1/rbac.proto";
 
 import "spm/alert/v1/settings.proto";
 
 service LogicalResourceModel {
-  option (tetrate.api.q.rbac.v1.default_requires) = {
+  option (tetrateio.api.q.rbac.v1.default_requires) = {
     permissions: READ
   };
 
   rpc CreateEnvironment(CreateEnvironmentRequest) returns (Environment) {
-    option (tetrate.api.q.rbac.v1.requires) = {
+    option (tetrateio.api.q.rbac.v1.requires) = {
       permissions: CREATE
     };
     option (google.api.http) = {
@@ -84,7 +84,7 @@ service LogicalResourceModel {
   };
 
   rpc UpdateEnvironment(Environment) returns (Environment) {
-    option (tetrate.api.q.rbac.v1.requires) = {
+    option (tetrateio.api.q.rbac.v1.requires) = {
       permissions: WRITE
     };
     option (google.api.http) = {
@@ -100,7 +100,7 @@ service LogicalResourceModel {
   }
 
   rpc DeleteEnvironment(DeleteEnvironmentRequest) returns (google.protobuf.Empty) {
-    option (tetrate.api.q.rbac.v1.requires) = {
+    option (tetrateio.api.q.rbac.v1.requires) = {
       permissions: DELETE
     };
     option (google.api.http) = {
@@ -108,8 +108,8 @@ service LogicalResourceModel {
     };
   };
 
-  rpc GetEnvironmentPolicy(GetEnvironmentRequest) returns (tetrate.api.q.rbac.v1.Policy) {
-    option (tetrate.api.q.rbac.v1.requires) = {
+  rpc GetEnvironmentPolicy(GetEnvironmentRequest) returns (tetrateio.api.q.rbac.v1.Policy) {
+    option (tetrateio.api.q.rbac.v1.requires) = {
       permissions: SET_POLICY
     };
     option (google.api.http) = {
@@ -118,7 +118,7 @@ service LogicalResourceModel {
   };
 
   rpc SetEnvironmentPolicy(EnvironmentPolicyRequest) returns (google.protobuf.Empty) {
-    option (tetrate.api.q.rbac.v1.requires) = {
+    option (tetrateio.api.q.rbac.v1.requires) = {
       permissions: SET_POLICY
     };
     option (google.api.http) = {
@@ -129,7 +129,7 @@ service LogicalResourceModel {
 
   rpc GetAllEnvironmentResources(GetAllEnvironmentResourcesRequest)
       returns (GetAllEnvironmentResourcesResponse) {
-    option (tetrate.api.q.rbac.v1.requires) = {
+    option (tetrateio.api.q.rbac.v1.requires) = {
       raw_permissions: [
         "ReadApplication",
         "ReadService",
@@ -145,7 +145,7 @@ service LogicalResourceModel {
   }
 
   rpc CreateApplication(CreateApplicationRequest) returns (Application) {
-    option (tetrate.api.q.rbac.v1.requires) = {
+    option (tetrateio.api.q.rbac.v1.requires) = {
       permissions: CREATE
     };
     option (google.api.http) = {
@@ -161,7 +161,7 @@ service LogicalResourceModel {
   };
 
   rpc UpdateApplication(Application) returns (Application) {
-    option (tetrate.api.q.rbac.v1.requires) = {
+    option (tetrateio.api.q.rbac.v1.requires) = {
       permissions: WRITE
     };
     option (google.api.http) = {
@@ -177,7 +177,7 @@ service LogicalResourceModel {
   }
 
   rpc DeleteApplication(DeleteApplicationRequest) returns (google.protobuf.Empty) {
-    option (tetrate.api.q.rbac.v1.requires) = {
+    option (tetrateio.api.q.rbac.v1.requires) = {
       permissions: DELETE
     };
     option (google.api.http) = {
@@ -185,8 +185,8 @@ service LogicalResourceModel {
     };
   };
 
-  rpc GetApplicationPolicy(GetApplicationRequest) returns (tetrate.api.q.rbac.v1.Policy) {
-    option (tetrate.api.q.rbac.v1.requires) = {
+  rpc GetApplicationPolicy(GetApplicationRequest) returns (tetrateio.api.q.rbac.v1.Policy) {
+    option (tetrateio.api.q.rbac.v1.requires) = {
       permissions: SET_POLICY
     };
     option (google.api.http) = {
@@ -195,7 +195,7 @@ service LogicalResourceModel {
   };
 
   rpc SetApplicationPolicy(ApplicationPolicyRequest) returns (google.protobuf.Empty) {
-    option (tetrate.api.q.rbac.v1.requires) = {
+    option (tetrateio.api.q.rbac.v1.requires) = {
       permissions: SET_POLICY
     };
     option (google.api.http) = {
@@ -204,8 +204,8 @@ service LogicalResourceModel {
     };
   };
 
-  rpc GetApplicationAuthzPolicy(GetApplicationRequest) returns (tetrate.api.authz.v1.Policy) {
-    option (tetrate.api.q.rbac.v1.requires) = {
+  rpc GetApplicationAuthzPolicy(GetApplicationRequest) returns (tetrateio.api.authz.v1.Policy) {
+    option (tetrateio.api.q.rbac.v1.requires) = {
       raw_permissions: "ReadAuthzPolicy"
     };
     option (google.api.http) = {
@@ -214,7 +214,7 @@ service LogicalResourceModel {
   };
 
   rpc SetApplicationAuthzPolicy(ApplicationAuthzPolicyRequest) returns (google.protobuf.Empty) {
-    option (tetrate.api.q.rbac.v1.requires) = {
+    option (tetrateio.api.q.rbac.v1.requires) = {
       raw_permissions: "WriteAuthzPolicy"
     };
     option (google.api.http) = {
@@ -224,7 +224,7 @@ service LogicalResourceModel {
   };
 
   rpc CreateService(CreateServiceRequest) returns (Service) {
-    option (tetrate.api.q.rbac.v1.requires) = {
+    option (tetrateio.api.q.rbac.v1.requires) = {
       permissions: CREATE
     };
     option (google.api.http) = {
@@ -248,7 +248,7 @@ service LogicalResourceModel {
   };
 
   rpc UpdateService(Service) returns (Service) {
-    option (tetrate.api.q.rbac.v1.requires) = {
+    option (tetrateio.api.q.rbac.v1.requires) = {
       permissions: WRITE
     };
     // clang-format off
@@ -260,7 +260,7 @@ service LogicalResourceModel {
   };
 
   rpc DeleteService(DeleteServiceRequest) returns (google.protobuf.Empty) {
-    option (tetrate.api.q.rbac.v1.requires) = {
+    option (tetrateio.api.q.rbac.v1.requires) = {
       permissions: DELETE
     };
     // clang-format off
@@ -270,8 +270,8 @@ service LogicalResourceModel {
     // clang-format on
   };
 
-  rpc GetServicePolicy(GetServiceRequest) returns (tetrate.api.q.rbac.v1.Policy) {
-    option (tetrate.api.q.rbac.v1.requires) = {
+  rpc GetServicePolicy(GetServiceRequest) returns (tetrateio.api.q.rbac.v1.Policy) {
+    option (tetrateio.api.q.rbac.v1.requires) = {
       permissions: SET_POLICY
     };
     // clang-format off
@@ -282,7 +282,7 @@ service LogicalResourceModel {
   };
 
   rpc SetServicePolicy(ServicePolicyRequest) returns (google.protobuf.Empty) {
-    option (tetrate.api.q.rbac.v1.requires) = {
+    option (tetrateio.api.q.rbac.v1.requires) = {
       permissions: SET_POLICY
     };
     // clang-format off
@@ -293,8 +293,8 @@ service LogicalResourceModel {
     // clang-format on
   };
 
-  rpc GetServiceAuthzPolicy(GetServiceRequest) returns (tetrate.api.authz.v1.Policy) {
-    option (tetrate.api.q.rbac.v1.requires) = {
+  rpc GetServiceAuthzPolicy(GetServiceRequest) returns (tetrateio.api.authz.v1.Policy) {
+    option (tetrateio.api.q.rbac.v1.requires) = {
       raw_permissions: "ReadAuthzPolicy"
     };
     // clang-format off
@@ -305,7 +305,7 @@ service LogicalResourceModel {
   };
 
   rpc SetServiceAuthzPolicy(ServiceAuthzPolicyRequest) returns (google.protobuf.Empty) {
-    option (tetrate.api.q.rbac.v1.requires) = {
+    option (tetrateio.api.q.rbac.v1.requires) = {
       raw_permissions: "WriteAuthzPolicy"
     };
     // clang-format off
@@ -318,7 +318,7 @@ service LogicalResourceModel {
 
   rpc GetAllLogicalResources(GetAllLogicalResourcesRequest)
       returns (GetAllLogicalResourcesResponse) {
-    option (tetrate.api.q.rbac.v1.requires) = {
+    option (tetrateio.api.q.rbac.v1.requires) = {
       raw_permissions: ["ReadApplication", "ReadService"]
     };
     option (google.api.http) = {
@@ -373,7 +373,7 @@ message EnvironmentPolicyRequest {
   string name = 1;
   string tenant = 2 [(validate.rules).string.min_len = 1];
   string id = 3 [(validate.rules).string.min_len = 1];
-  tetrate.api.q.rbac.v1.Policy policy = 4 [(validate.rules).message.required = true];
+  tetrateio.api.q.rbac.v1.Policy policy = 4 [(validate.rules).message.required = true];
 }
 
 message ListEnvironmentsRequest {
@@ -420,7 +420,7 @@ message Application {
   // should set this value to false.
   google.protobuf.BoolValue force_mtls_between_services = 11;
   // Alert settings for certain metrics of this application. E.g. SLA rule.
-  tetrate.api.tcc.spm.alert.v1.Settings alert_settings = 12;
+  tetrateio.api.tcc.spm.alert.v1.Settings alert_settings = 12;
   string etag = 13 [(validate.rules).string.min_len = 1];
 }
 
@@ -451,7 +451,7 @@ message CreateApplicationRequest {
   // should set this value to false.
   google.protobuf.BoolValue force_mtls_between_services = 11;
   // Alert settings for certain metrics of this application. E.g. SLA rule.
-  tetrate.api.tcc.spm.alert.v1.Settings alert_settings = 12;
+  tetrateio.api.tcc.spm.alert.v1.Settings alert_settings = 12;
 }
 
 message GetApplicationRequest {
@@ -468,7 +468,7 @@ message ApplicationPolicyRequest {
   string tenant = 2 [(validate.rules).string.min_len = 1];
   string environment = 3 [(validate.rules).string.min_len = 1];
   string id = 4 [(validate.rules).string.min_len = 1];
-  tetrate.api.q.rbac.v1.Policy policy = 5 [(validate.rules).message.required = true];
+  tetrateio.api.q.rbac.v1.Policy policy = 5 [(validate.rules).message.required = true];
 }
 
 message ApplicationAuthzPolicyRequest {
@@ -477,7 +477,7 @@ message ApplicationAuthzPolicyRequest {
   string tenant = 2 [(validate.rules).string.min_len = 1];
   string environment = 3 [(validate.rules).string.min_len = 1];
   string id = 4 [(validate.rules).string.min_len = 1];
-  tetrate.api.authz.v1.Policy policy = 5 [(validate.rules).message.required = true];
+  tetrateio.api.authz.v1.Policy policy = 5 [(validate.rules).message.required = true];
 }
 
 message ListApplicationsRequest {
@@ -522,7 +522,7 @@ message GetAllEnvironmentResourcesRequest {
 message GetAllEnvironmentResourcesResponse {
   message ApplicationDetails {
     Application application = 1;
-    tetrate.api.authz.v1.Policy policy = 2;
+    tetrateio.api.authz.v1.Policy policy = 2;
   }
   repeated ApplicationDetails applications = 1 [deprecated = true];
 
@@ -533,7 +533,7 @@ message GetAllEnvironmentResourcesResponse {
   repeated Application apps = 6;
   // authz_policies contains the AuthZ policies for the different resources (Applications, Services)
   // indexed by the resource fully qualified name.
-  map<string, tetrate.api.authz.v1.Policy> authz_policies = 7;
+  map<string, tetrateio.api.authz.v1.Policy> authz_policies = 7;
 }
 
 message Service {
@@ -582,7 +582,7 @@ message Service {
   }
 
   // Alert settings for certain metrics of this service. E.g. SLA rule.
-  tetrate.api.tcc.spm.alert.v1.Settings alert_settings = 18;
+  tetrateio.api.tcc.spm.alert.v1.Settings alert_settings = 18;
 }
 
 message CreateServiceRequest {
@@ -635,7 +635,7 @@ message CreateServiceRequest {
   }
 
   // Alert settings for certain metrics of this service. E.g. SLA rule.
-  tetrate.api.tcc.spm.alert.v1.Settings alert_settings = 17;
+  tetrateio.api.tcc.spm.alert.v1.Settings alert_settings = 17;
 }
 
 message GetServiceRequest {
@@ -654,7 +654,7 @@ message ServicePolicyRequest {
   string environment = 3 [(validate.rules).string.min_len = 1];
   string application = 4 [(validate.rules).string.min_len = 1];
   string id = 5 [(validate.rules).string.min_len = 1];
-  tetrate.api.q.rbac.v1.Policy policy = 6 [(validate.rules).message.required = true];
+  tetrateio.api.q.rbac.v1.Policy policy = 6 [(validate.rules).message.required = true];
 }
 
 message ServiceAuthzPolicyRequest {
@@ -664,7 +664,7 @@ message ServiceAuthzPolicyRequest {
   string environment = 3 [(validate.rules).string.min_len = 1];
   string application = 4 [(validate.rules).string.min_len = 1];
   string id = 5 [(validate.rules).string.min_len = 1];
-  tetrate.api.authz.v1.Policy policy = 6 [(validate.rules).message.required = true];
+  tetrateio.api.authz.v1.Policy policy = 6 [(validate.rules).message.required = true];
 }
 
 message ListServicesRequest {

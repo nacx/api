@@ -1,12 +1,12 @@
 syntax = "proto3";
 
-package tetrate.api.test.v1;
-option go_package = "testv1";
+package tetrateio.api.test.v1;
+option go_package = "github.com/tetrateio/api/test/v1";
 
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 
-import "validate/validate.proto";
+import "github.com/envoyproxy/protoc-gen-validate/validate/validate.proto";
 
 service Service {
   rpc Echo(EchoRequest) returns (EchoResponse) {

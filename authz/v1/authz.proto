@@ -2,10 +2,10 @@
 
 syntax = "proto3";
 
-package tetrate.api.authz.v1;
-option go_package = "github.com/tetrateio/tetrate/api/authz/v1";
+package tetrateio.api.authz.v1;
+option go_package = "github.com/tetrateio/api/authz/v1";
 
-import "validate/validate.proto";
+import "github.com/envoyproxy/protoc-gen-validate/validate/validate.proto";
 
 // Runtime Authorization Policy
 //

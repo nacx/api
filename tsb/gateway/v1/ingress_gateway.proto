@@ -62,13 +62,13 @@ syntax = "proto3";
 // the subsets accordingly.
 //
 // TODO(rshriram): Add lot more examples in the gateway section.
-package tetrate.api.tsb.gateway.v1;
-option go_package = "github.com/tetrateio/tetrate/api/tsb/gateway/v1";
+package tetrateio.api.tsb.gateway.v1;
+option go_package = "github.com/tetrateio/api/tsb/gateway/v1";
 
 import "google/api/field_behavior.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/wrappers.proto";
-import "validate/validate.proto";
+import "github.com/envoyproxy/protoc-gen-validate/validate/validate.proto";
 import "tsb/types/v1/types.proto";
 
 // `IngressGateway` configures a workload to act as an ingress gateway into the mesh.
@@ -77,7 +77,7 @@ message IngressGateway {
   // namespace) under the gateway group that should be configured with
   // this ingress gateway. There can be only one ingress gateway for a
   // given workload selector.
-  tetrate.api.tsb.types.v1.WorkloadSelector workload_selector = 1
+  tetrateio.api.tsb.types.v1.WorkloadSelector workload_selector = 1
       [(google.api.field_behavior) = REQUIRED];
 
   // One or more HTTP or HTTPS servers exposed by the gateway. The

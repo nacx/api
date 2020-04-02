@@ -3,14 +3,14 @@
 syntax = "proto3";
 
 import "google/api/field_behavior.proto";
-import "validate/validate.proto";
+import "github.com/envoyproxy/protoc-gen-validate/validate/validate.proto";
 
 // $title: Common Object Types
 // $description: Definition of objects shared by different APIs.
 // $location: https://tetrate.io/docs/reference/config/types/v1/types.html
 
-package tetrate.api.tsb.types.v1;
-option go_package = "github.com/tetrateio/tetrate/api/tsb/types/v1";
+package tetrateio.api.tsb.types.v1;
+option go_package = "github.com/tetrateio/api/tsb/types/v1";
 
 // `NamespaceSelector` selects a set of namespaces across one or more
 // clusters in a tenant. Namespace selectors can be used at Workspace

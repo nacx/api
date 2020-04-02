@@ -48,11 +48,11 @@ syntax = "proto3";
 //     - set_rbac
 //```
 //
-package tetrate.api.tsb.rbac.v1;
-option go_package = "github.com/tetrateio/tetrate/api/tsb/rbac/v1";
+package tetrateio.api.tsb.rbac.v1;
+option go_package = "github.com/tetrateio/api/tsb/rbac/v1";
 
 import "google/api/field_behavior.proto";
-import "validate/validate.proto";
+import "github.com/envoyproxy/protoc-gen-validate/validate/validate.proto";
 
 // `Role` is a named collection of permissions that can be assigned to
 // any user or team in the system.

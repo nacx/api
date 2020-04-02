@@ -56,11 +56,11 @@ syntax = "proto3";
 //     weight: 20
 //```
 //
-package tetrate.api.tsb.traffic.v1;
-option go_package = "github.com/tetrateio/tetrate/api/tsb/traffic/v1";
+package tetrateio.api.tsb.traffic.v1;
+option go_package = "github.com/tetrateio/api/tsb/traffic/v1";
 
 import "google/api/field_behavior.proto";
-import "validate/validate.proto";
+import "github.com/envoyproxy/protoc-gen-validate/validate/validate.proto";
 
 // A service route controls routing configurations for traffic to a
 // service in a traffic group.

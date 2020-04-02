@@ -1,0 +1,752 @@
+---
+title: tetrateio.api.tcc.workflows.loadbalancer.v1
+layout: protoc-gen-docs
+generator: protoc-gen-docs
+number_of_entries: 14
+---
+<h2 id="Services">Services</h2>
+<h3 id="LoadBalancerWorkflow">LoadBalancerWorkflow</h3>
+<section>
+<p>namespace members of the service being requested &amp; admins. The API call must be made either by
+the admin or by owners of the namespaces whose services are being exposed. It is assumed that the
+load balancer has been created, deployed and imported into TCC through out of band mechanisms
+[for F5] or through service registry imports. The parameters should list the set of services that
+need to be exposed. Services will not be exposed until its approved by the namespace owner where
+the load balancer resides.</p>
+
+<pre id="LoadBalancerWorkflow-Attach"><code class="language-proto">rpc Attach(CreateTicketRequest) returns (TicketStatus)
+</code></pre>
+<p>clang-format off</p>
+
+<pre id="LoadBalancerWorkflow-Detach"><code class="language-proto">rpc Detach(CreateTicketRequest) returns (TicketStatus)
+</code></pre>
+<pre id="LoadBalancerWorkflow-GetTicketStatus"><code class="language-proto">rpc GetTicketStatus(GetTicketStatusRequest) returns (TicketStatus)
+</code></pre>
+<pre id="LoadBalancerWorkflow-ListPendingTickets"><code class="language-proto">rpc ListPendingTickets(ListTicketsRequest) returns (ListTicketsResponse)
+</code></pre>
+<pre id="LoadBalancerWorkflow-Approve"><code class="language-proto">rpc Approve(ResolveTicketRequest) returns (TicketStatus)
+</code></pre>
+<pre id="LoadBalancerWorkflow-Deny"><code class="language-proto">rpc Deny(ResolveTicketRequest) returns (TicketStatus)
+</code></pre>
+<pre id="LoadBalancerWorkflow-Cancel"><code class="language-proto">rpc Cancel(CancelTicketRequest) returns (google.protobuf.Empty)
+</code></pre>
+<pre id="LoadBalancerWorkflow-Publish"><code class="language-proto">rpc Publish(PublishTicketRequest) returns (google.protobuf.Empty)
+</code></pre>
+<p>LB owner calls this API with additional settings like TLS, to finally expose the service on the
+load balancer or remove a detached service</p>
+
+</section>
+<h2 id="Types">Types</h2>
+<h3 id="CreateTicketRequest">CreateTicketRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="CreateTicketRequest-parent">
+<td><code>parent</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateTicketRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateTicketRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateTicketRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateTicketRequest-application">
+<td><code>application</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="GetTicketStatusRequest">GetTicketStatusRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="GetTicketStatusRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetTicketStatusRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetTicketStatusRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetTicketStatusRequest-loadbalancer">
+<td><code>loadbalancer</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetTicketStatusRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="CancelTicketRequest">CancelTicketRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="CancelTicketRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CancelTicketRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CancelTicketRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CancelTicketRequest-loadbalancer">
+<td><code>loadbalancer</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CancelTicketRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="TicketStatus">TicketStatus</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="TicketStatus-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="TicketStatus-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="TicketStatus-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="TicketStatus-loadbalancer">
+<td><code>loadbalancer</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="TicketStatus-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="TicketStatus-application">
+<td><code>application</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="TicketStatus-action">
+<td><code>action</code></td>
+<td><code><a href="#Action">Action</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="TicketStatus-state">
+<td><code>state</code></td>
+<td><code><a href="#TicketStatus-RequestState">RequestState</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="TicketStatus-note">
+<td><code>note</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ListTicketsRequest">ListTicketsRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ListTicketsRequest-parent">
+<td><code>parent</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ListTicketsRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ListTicketsRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ListTicketsRequest-loadbalancer">
+<td><code>loadbalancer</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ListTicketsResponse">ListTicketsResponse</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ListTicketsResponse-tickets">
+<td><code>tickets</code></td>
+<td><code><a href="#TicketStatus">TicketStatus[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ResolveTicketRequest">ResolveTicketRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ResolveTicketRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ResolveTicketRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ResolveTicketRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ResolveTicketRequest-loadbalancer">
+<td><code>loadbalancer</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ResolveTicketRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ResolveTicketRequest-note">
+<td><code>note</code></td>
+<td><code>string</code></td>
+<td>
+<p>optional description (e.g. to be recorded in audit logs)</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="PublishTicketRequest">PublishTicketRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="PublishTicketRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="PublishTicketRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="PublishTicketRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="PublishTicketRequest-loadbalancer">
+<td><code>loadbalancer</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="PublishTicketRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="PublishTicketRequest-tls">
+<td><code>tls</code></td>
+<td><code><a href="#tetrateio-api-tcc-core-v1-TLSSettings">TLSSettings</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="tetrateio-api-tcc-core-v1-TLSSettings">tetrateio.api.tcc.core.v1.TLSSettings</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="tetrateio-api-tcc-core-v1-TLSSettings-tls_mode">
+<td><code>tlsMode</code></td>
+<td><code><a href="#tetrateio-api-tcc-core-v1-TLSMode">TLSMode</a></code></td>
+<td>
+<p>Set this to SIMPLE, MUTUAL, or SNI_PASSTHROUGH for one-way TLS, mutual TLS, or client sni-based
+TLS passthrough respectively. The hostname in the load balancer will be used as the SNI in the
+TLS passthrough mode.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="tetrateio-api-tcc-core-v1-TLSSettings-redirect_to_https">
+<td><code>redirectToHttps</code></td>
+<td><code>bool</code></td>
+<td>
+<p>If set, the load balancer will redirect HTTP connections on port 80 to HTTPS port 443.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="tetrateio-api-tcc-core-v1-TLSSettings-server_certificate">
+<td><code>serverCertificate</code></td>
+<td><code>string</code></td>
+<td>
+<p>For proxies running on VMs, the path to the file holding the server-side TLS certificate to
+use.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="tetrateio-api-tcc-core-v1-TLSSettings-private_key">
+<td><code>privateKey</code></td>
+<td><code>string</code></td>
+<td>
+<p>For proxies running on VMs, the path to the file holding the server&rsquo;s private key.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="tetrateio-api-tcc-core-v1-TLSSettings-ca_certificates">
+<td><code>caCertificates</code></td>
+<td><code>string</code></td>
+<td>
+<p>For proxies running on VMs, the path to a file containing certificate authority certificates to
+use in verifying a presented client side certificate for mutual TLS connections.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="tetrateio-api-tcc-core-v1-TLSSettings-secret_name">
+<td><code>secretName</code></td>
+<td><code>string</code></td>
+<td>
+<p>For proxies running on Kubernetes, the name of the secret that holds the TLS certs including
+the CA certificates. Currently applicable only on Kubernetes. The secret (type generic) should
+contain the following keys and values: key: <privateKey>, cert: <serverCert>, cacert:
+<CACertificate>.  If the service is exposed via a load balancer, the secret must be accessible
+to it.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="tetrateio-api-tcc-core-v1-TLSSettings-tls_enabled" class="deprecated ">
+<td><code>tlsEnabled</code></td>
+<td><code>bool</code></td>
+<td>
+<p>Enable TLS settings for the application.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="TicketStatus-RequestState">TicketStatus.RequestState</h3>
+<section>
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="TicketStatus-RequestState-PENDING">
+<td><code>PENDING</code></td>
+<td>
+</td>
+</tr>
+<tr id="TicketStatus-RequestState-APPROVED">
+<td><code>APPROVED</code></td>
+<td>
+</td>
+</tr>
+<tr id="TicketStatus-RequestState-DENIED">
+<td><code>DENIED</code></td>
+<td>
+</td>
+</tr>
+<tr id="TicketStatus-RequestState-PUBLISHED">
+<td><code>PUBLISHED</code></td>
+<td>
+</td>
+</tr>
+<tr id="TicketStatus-RequestState-CANCELED">
+<td><code>CANCELED</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Action">Action</h3>
+<section>
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Action-ATTACH">
+<td><code>ATTACH</code></td>
+<td>
+</td>
+</tr>
+<tr id="Action-DETACH">
+<td><code>DETACH</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Action">Action</h3>
+<section>
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Action-ATTACH">
+<td><code>ATTACH</code></td>
+<td>
+</td>
+</tr>
+<tr id="Action-DETACH">
+<td><code>DETACH</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="TicketStatus-RequestState">TicketStatus.RequestState</h3>
+<section>
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="TicketStatus-RequestState-PENDING">
+<td><code>PENDING</code></td>
+<td>
+</td>
+</tr>
+<tr id="TicketStatus-RequestState-APPROVED">
+<td><code>APPROVED</code></td>
+<td>
+</td>
+</tr>
+<tr id="TicketStatus-RequestState-DENIED">
+<td><code>DENIED</code></td>
+<td>
+</td>
+</tr>
+<tr id="TicketStatus-RequestState-PUBLISHED">
+<td><code>PUBLISHED</code></td>
+<td>
+</td>
+</tr>
+<tr id="TicketStatus-RequestState-CANCELED">
+<td><code>CANCELED</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>

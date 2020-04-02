@@ -32,8 +32,8 @@ syntax = "proto3";
 //     egressGateway: bookinfo-perimeter/tsb-egress
 //```
 //
-package tetrate.api.tsb.v1;
-option go_package = "github.com/tetrateio/tetrate/api/tsb/v1";
+package tetrateio.api.tsb.v1;
+option go_package = "github.com/tetrateio/api/tsb/v1";
 
 import "tsb/traffic/v1/traffic_setting.proto";
 import "tsb/security/v1/security_setting.proto";
@@ -49,7 +49,7 @@ message WorkspaceSetting {
   // (i.e. any traffic not using Istio Mutual TLS authentication)
   //
   // 2. No authorization will be performed.
-  tetrate.api.tsb.security.v1.SecuritySetting default_security_setting = 1;
+  tetrateio.api.tsb.security.v1.SecuritySetting default_security_setting = 1;
 
   // Traffic settings for all sidecars in this workspace. Sidecars
   // without a specific traffic group will inherit these settings. If
@@ -61,5 +61,5 @@ message WorkspaceSetting {
   //
   // 2. Traffic to unknown destinations will be directly routed from
   // the sidecar to the destination.
-  tetrate.api.tsb.traffic.v1.TrafficSetting default_traffic_setting = 2;
+  tetrateio.api.tsb.traffic.v1.TrafficSetting default_traffic_setting = 2;
 }

@@ -34,12 +34,12 @@ syntax = "proto3";
 //   - team: security-ops
 //```
 //
-package tetrate.api.tsb.rbac.v1;
-option go_package = "github.com/tetrateio/tetrate/api/tsb/rbac/v1";
+package tetrateio.api.tsb.rbac.v1;
+option go_package = "github.com/tetrateio/api/tsb/rbac/v1";
 
 import "google/api/field_behavior.proto";
-import "validate/validate.proto";
-import "role.proto";
+import "github.com/envoyproxy/protoc-gen-validate/validate/validate.proto";
+import "tsb/rbac/v1/role.proto";
 
 // `SecurityRoleBinding` assigns permissions to users of security groups.
 message SecurityRoleBinding {

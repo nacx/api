@@ -2,13 +2,13 @@
 
 syntax = "proto3";
 
-package tetrate.api.tcc.core.v1;
-option go_package = "github.com/tetrateio/tetrate/api/tcc/core/v1";
+package tetrateio.api.tcc.core.v1;
+option go_package = "github.com/tetrateio/api/tcc/core/v1";
 
 import "google/api/annotations.proto";
-import "validate/validate.proto";
+import "github.com/envoyproxy/protoc-gen-validate/validate/validate.proto";
 
-import "permissions.proto";
+import "q/rbac/v1/permissions.proto";
 
 // RegistryConsumer
 //
@@ -16,7 +16,7 @@ import "permissions.proto";
 // sync agent calls this API periodically to create or update deployments, namespaces, or endpoints.
 // API converts resources into appropriate TCC data model fields, and pushes to the database.
 service RegistryConsumer {
-  option (tetrate.api.q.rbac.v1.default_requires) = {
+  option (tetrateio.api.q.rbac.v1.default_requires) = {
     raw_permissions: "WriteCluster"
   };
 

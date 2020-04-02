@@ -1,0 +1,1718 @@
+---
+title: tetrateio.api.tcc.spm.notification.v1
+layout: protoc-gen-docs
+generator: protoc-gen-docs
+number_of_entries: 36
+---
+<h2 id="Services">Services</h2>
+<h3 id="ActivityService">ActivityService</h3>
+<section>
+<p>Activity Service</p>
+
+<p>The activity service provides access to activities.</p>
+
+<pre id="ActivityService-ListActivities"><code class="language-proto">rpc ListActivities(ListActivitiesRequest) returns (ListActivitiesResponse)
+</code></pre>
+<p>List Activities. Activities can be filtered by actor or object name.</p>
+
+</section>
+<h3 id="AlertLogService">AlertLogService</h3>
+<section>
+<p>AlertLog Service</p>
+
+<p>[DEPRECATED] This service is deprecated. Use new AlertService that support personalization.
+The alert log service provides access to alerts.</p>
+
+<pre id="AlertLogService-ListAlertLogs"><code class="language-proto">rpc ListAlertLogs(ListAlertLogsRequest) returns (ListAlertLogsResponse)
+</code></pre>
+<p>List alert logs.
+Use &lsquo;status&rsquo; parameter to get only unread alert. this can be used to show recent alert count.</p>
+
+<pre id="AlertLogService-DeleteAlertLogs"><code class="language-proto">rpc DeleteAlertLogs(DeleteAlertLogsRequest) returns (google.protobuf.Empty)
+</code></pre>
+<p>Delete alert logs. This will remove alert logs from storage.</p>
+
+<pre id="AlertLogService-UpdateAlertLogReadStatus"><code class="language-proto">rpc UpdateAlertLogReadStatus(UpdateAlertLogReadStatusRequest) returns (google.protobuf.Empty)
+</code></pre>
+<p>Update alert logs read status.</p>
+
+</section>
+<h3 id="NotificationService">NotificationService</h3>
+<section>
+<p>Notification Service</p>
+
+<p>The notification service provides access to notifications.</p>
+
+<pre id="NotificationService-ListNotifications"><code class="language-proto">rpc ListNotifications(ListNotificationRequest) returns (ListNotificationResponse)
+</code></pre>
+<p>List Notifications. Notifications must be filtered by user and optionally by read status.</p>
+
+<pre id="NotificationService-UpdateNotificationsReadStatus"><code class="language-proto">rpc UpdateNotificationsReadStatus(UpdateNotificationReadStatusRequest) returns (google.protobuf.Empty)
+</code></pre>
+<p>Update notifications read status.</p>
+
+</section>
+<h3 id="AlertService">AlertService</h3>
+<section>
+<p>Alert Service</p>
+
+<p>The alert service provides access to alerts.
+In TSB, Alert is defined in Application. Access to Alert is allowed for any role
+that has READ access to Application.</p>
+
+<pre id="AlertService-ListAlerts"><code class="language-proto">rpc ListAlerts(ListAlertsRequest) returns (ListAlertsResponse)
+</code></pre>
+<p>List alerts.
+Alert can be filtered by both Status and Priority.</p>
+
+<pre id="AlertService-GetAlert"><code class="language-proto">rpc GetAlert(GetAlertRequest) returns (Alert)
+</code></pre>
+<p>Get single alerts.</p>
+
+<pre id="AlertService-UpdateAlert"><code class="language-proto">rpc UpdateAlert(UpdateAlertRequest) returns (google.protobuf.Empty)
+</code></pre>
+<p>Update alert. User can update alert status, ack, and owners.</p>
+
+<pre id="AlertService-DeleteAlert"><code class="language-proto">rpc DeleteAlert(DeleteAlertRequest) returns (google.protobuf.Empty)
+</code></pre>
+<p>Delete alert. This will remove alert from storage.</p>
+
+</section>
+<h2 id="Types">Types</h2>
+<h3 id="Activity">Activity</h3>
+<section>
+<p>Activity</p>
+
+<p>Activity is events happened in system that record user/system action to resources.
+Activity has three main components: actor, verb and object.
+Example of activities:
+- arif update application httpbin with alert rule
+- system create service_resp alert with id #1
+- dhi acked alert #1
+- dhi close alert #1</p>
+
+<p>Activity will trigger notification that sent to user.
+User will get notification for all activities related to resources where user has READ access.
+Example:
+- If user has READ access to Application httpbin.
+  User will get notification for all activities related to Application httpbin including Alerts.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Activity-id">
+<td><code>id</code></td>
+<td><code>uint64</code></td>
+<td>
+<p>Activity id. auto generated.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Activity-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Activity name. auto generated. Name will be set to /tenants/tetrate/activities/id.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Activity-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+<p>Tenant. Tenant is obtained from Actor.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Activity-timestamp">
+<td><code>timestamp</code></td>
+<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#timestamp">Timestamp</a></code></td>
+<td>
+<p>Time when the activity created.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Activity-actor">
+<td><code>actor</code></td>
+<td><code><a href="#Object">Object</a></code></td>
+<td>
+<p>Actor is entity capable of carrying out an Activity. Often this will be user or system.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Activity-verb">
+<td><code>verb</code></td>
+<td><code>string</code></td>
+<td>
+<p>Verb is action that entity do. e.g. create, update, delete.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Activity-object">
+<td><code>object</code></td>
+<td><code><a href="#Object">Object</a></code></td>
+<td>
+<p>Object is primary object of the Activity carried out by Actor.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Activity-target">
+<td><code>target</code></td>
+<td><code><a href="#Object">Object</a></code></td>
+<td>
+<p>Target is the target of the Activity. The precise meaning of the activity&rsquo;s target
+is dependent on the activities verb, but will often be the object the English preposition &ldquo;to&rdquo;.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Activity-properties">
+<td><code>properties</code></td>
+<td><code>map&lt;string,&nbsp;string&gt;</code></td>
+<td>
+<p>Key value pairs with additional information for the activity.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Object">Object</h3>
+<section>
+<p>Object represent entity involved in Activity.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Object-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Name is TSB name (e.g. /tenants/tetrate/users/dhi).</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Object-type">
+<td><code>type</code></td>
+<td><code>string</code></td>
+<td>
+<p>Type is TSB resource type (e.g. User, Team, Application, etc).</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ListActivitiesRequest">ListActivitiesRequest</h3>
+<section>
+<p>Request to get the list activities. Support following query:
+- List all activities from an actor by name (e.g. list all activities for user
+/tenants/tetrate/users/dhi).
+- List all activities to object or target by name (e.g. list all activities for alert
+/tenants/tetrate/alerts/1).</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ListActivitiesRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ListActivitiesRequest-actor" class="oneof oneof-start">
+<td><code>actor</code></td>
+<td><code>string (oneof)</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ListActivitiesRequest-object_or_target" class="oneof">
+<td><code>objectOrTarget</code></td>
+<td><code>string (oneof)</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ListActivitiesRequest-page_size">
+<td><code>pageSize</code></td>
+<td><code>int32</code></td>
+<td>
+<p>Maximum number of results to be returned. Default is 20.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ListActivitiesRequest-page_token">
+<td><code>pageToken</code></td>
+<td><code>string</code></td>
+<td>
+<p>Page token to request a specific page of the list results. Set to &ldquo;&rdquo; for first page.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ListActivitiesResponse">ListActivitiesResponse</h3>
+<section>
+<p>List of activities.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ListActivitiesResponse-activities">
+<td><code>activities</code></td>
+<td><code><a href="#Activity">Activity[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ListActivitiesResponse-next_page_token">
+<td><code>nextPageToken</code></td>
+<td><code>string</code></td>
+<td>
+<p>Pagination token to retrieve the next page of results.
+If the value is &ldquo;&rdquo;, it means no further results for the request.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="AlertLog">AlertLog</h3>
+<section>
+<p>AlertLog</p>
+
+<p>Message from alert backend.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="AlertLog-id">
+<td><code>id</code></td>
+<td><code>uint64</code></td>
+<td>
+<p>Alert id. auto generated.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="AlertLog-last_triggered">
+<td><code>lastTriggered</code></td>
+<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#timestamp">Timestamp</a></code></td>
+<td>
+<p>Time when the alert log was triggered.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="AlertLog-rule_name">
+<td><code>ruleName</code></td>
+<td><code>string</code></td>
+<td>
+<p>Rule name that trigger this log.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="AlertLog-application">
+<td><code>application</code></td>
+<td><code>string</code></td>
+<td>
+<p>Application name where the rule belong to.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="AlertLog-message">
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>
+<p>Alert log message.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="AlertLog-read">
+<td><code>read</code></td>
+<td><code>bool</code></td>
+<td>
+<p>Read status of alert.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="AlertLog-properties">
+<td><code>properties</code></td>
+<td><code>map&lt;string,&nbsp;string&gt;</code></td>
+<td>
+<p>Key value pairs with additional information for the alert log.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ListAlertLogsRequest">ListAlertLogsRequest</h3>
+<section>
+<p>Request to get the alert logs.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ListAlertLogsRequest-status">
+<td><code>status</code></td>
+<td><code><a href="#Status">Status</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ListAlertLogsResponse">ListAlertLogsResponse</h3>
+<section>
+<p>The list of alert logs.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ListAlertLogsResponse-alert_logs">
+<td><code>alertLogs</code></td>
+<td><code><a href="#AlertLog">AlertLog[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="DeleteAlertLogsRequest">DeleteAlertLogsRequest</h3>
+<section>
+<p>Request to delete the alert logs.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="DeleteAlertLogsRequest-ids">
+<td><code>ids</code></td>
+<td><code>uint64[]</code></td>
+<td>
+<p>Log ids to delete.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="UpdateAlertLogReadStatusRequest">UpdateAlertLogReadStatusRequest</h3>
+<section>
+<p>Request to update alert logs read status.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="UpdateAlertLogReadStatusRequest-ids">
+<td><code>ids</code></td>
+<td><code>uint64[]</code></td>
+<td>
+<p>Log ids to update.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="AlertMessage">AlertMessage</h3>
+<section>
+<p>AlertMessageRequest based on
+https://github.com/apache/skywalking/blob/master/docs/en/setup/backend/backend-alarm.md#webhook</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="AlertMessage-scopeId">
+<td><code>scopeId</code></td>
+<td><code>int32</code></td>
+<td>
+<p>All scopes are defined in org.apache.skywalking.oap.server.core.source.DefaultScopeDefine.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="AlertMessage-scope">
+<td><code>scope</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="AlertMessage-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Target scope entity name.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="AlertMessage-id0">
+<td><code>id0</code></td>
+<td><code>int32</code></td>
+<td>
+<p>The ID of scope entity, matched the name.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="AlertMessage-id1">
+<td><code>id1</code></td>
+<td><code>int32</code></td>
+<td>
+<p>Not used today.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="AlertMessage-ruleName">
+<td><code>ruleName</code></td>
+<td><code>string</code></td>
+<td>
+<p>The rule name you configured in alarm-settings</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="AlertMessage-alarmMessage">
+<td><code>alarmMessage</code></td>
+<td><code>string</code></td>
+<td>
+<p>Alarm text message.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="AlertMessage-startTime">
+<td><code>startTime</code></td>
+<td><code>int64</code></td>
+<td>
+<p>Alarm time measured in milliseconds, between the current time and midnight, January 1, 1970
+UTC.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Notification">Notification</h3>
+<section>
+<p>Notification</p>
+
+<p>Notification sent to user when something of interest happened.
+Currently all notifications are sent to user. In the future we might want to have
+notification settings where user can watch or subscribe to specific resource or event.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Notification-id">
+<td><code>id</code></td>
+<td><code>uint64</code></td>
+<td>
+<p>Notification id. auto generated.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Notification-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Notification name. auto generated. Name will be set to tenants/tetrate/notifications/id.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Notification-user">
+<td><code>user</code></td>
+<td><code>string</code></td>
+<td>
+<p>User name that own this notification.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Notification-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+<p>Tenant. Tenant is obtained from user.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Notification-message">
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>
+<p>Notification message.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Notification-type">
+<td><code>type</code></td>
+<td><code><a href="#NotificationType">NotificationType</a></code></td>
+<td>
+<p>Notification type.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Notification-read">
+<td><code>read</code></td>
+<td><code>bool</code></td>
+<td>
+<p>Notification read status.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Notification-resource_name">
+<td><code>resourceName</code></td>
+<td><code>string</code></td>
+<td>
+<p>Resource name is resource name that notification refer to.
+For example if notification triggered because of new alert, resource_name is alert name.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Notification-timestamp">
+<td><code>timestamp</code></td>
+<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#timestamp">Timestamp</a></code></td>
+<td>
+<p>Time when the notification was created.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ListNotificationRequest">ListNotificationRequest</h3>
+<section>
+<p>List notification request.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ListNotificationRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ListNotificationRequest-user">
+<td><code>user</code></td>
+<td><code>string</code></td>
+<td>
+<p>User name that has notification.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ListNotificationRequest-type">
+<td><code>type</code></td>
+<td><code><a href="#NotificationType">NotificationType</a></code></td>
+<td>
+<p>Type of notification.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ListNotificationRequest-status">
+<td><code>status</code></td>
+<td><code><a href="#Status">Status</a></code></td>
+<td>
+<p>Read status of notification.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ListNotificationRequest-page_size">
+<td><code>pageSize</code></td>
+<td><code>int32</code></td>
+<td>
+<p>Maximum number of results to be returned. Default is 20.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ListNotificationRequest-page_token">
+<td><code>pageToken</code></td>
+<td><code>string</code></td>
+<td>
+<p>Page token to request a specific page of the list results. Set to &ldquo;&rdquo; for first page.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ListNotificationResponse">ListNotificationResponse</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ListNotificationResponse-notifications">
+<td><code>notifications</code></td>
+<td><code><a href="#Notification">Notification[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ListNotificationResponse-next_page_token">
+<td><code>nextPageToken</code></td>
+<td><code>string</code></td>
+<td>
+<p>Pagination token to retrieve the next page of results.
+If the value is &ldquo;&rdquo;, it means no further results for the request.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="UpdateNotificationReadStatusRequest">UpdateNotificationReadStatusRequest</h3>
+<section>
+<p>Request to update notifications read status.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="UpdateNotificationReadStatusRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="UpdateNotificationReadStatusRequest-user">
+<td><code>user</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="UpdateNotificationReadStatusRequest-ids">
+<td><code>ids</code></td>
+<td><code>uint64[]</code></td>
+<td>
+<p>Notification ids to update.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Alert">Alert</h3>
+<section>
+<p>Alert</p>
+
+<p>Alert that created because of alert rule violation.
+Alert is defined as a resource under tenant.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Alert-id">
+<td><code>id</code></td>
+<td><code>uint64</code></td>
+<td>
+<p>Alert id. auto generated.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Alert-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Alert name. auto generated. Name will be set to tenants/tetrate/alerts/id.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Alert-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+<p>Tenant. Tenant is obtained from application name where alert rule defined.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Alert-rule_name">
+<td><code>ruleName</code></td>
+<td><code>string</code></td>
+<td>
+<p>Rule name that trigger this alert.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Alert-application">
+<td><code>application</code></td>
+<td><code>string</code></td>
+<td>
+<p>Application name where the rule belong to.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Alert-message">
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>
+<p>Alert message.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Alert-status">
+<td><code>status</code></td>
+<td><code><a href="#AlertStatus">AlertStatus</a></code></td>
+<td>
+<p>Alert status.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Alert-acknowledged">
+<td><code>acknowledged</code></td>
+<td><code>bool</code></td>
+<td>
+<p>Alert acked or not. When alert acked, it means someone is working on it and
+notification will not be sent.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Alert-timestamp">
+<td><code>timestamp</code></td>
+<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#timestamp">Timestamp</a></code></td>
+<td>
+<p>Time when the alert was triggered.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Alert-severity">
+<td><code>severity</code></td>
+<td><code><a href="#tetrateio-api-tcc-spm-alert-v1-Severity">Severity</a></code></td>
+<td>
+<p>Alert severity.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Alert-owners">
+<td><code>owners</code></td>
+<td><code>string[]</code></td>
+<td>
+<p>Alert owner is user responsible to resolve alert.
+User who acked will be added to owners.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Alert-properties">
+<td><code>properties</code></td>
+<td><code>map&lt;string,&nbsp;string&gt;</code></td>
+<td>
+<p>Key value pairs with additional information for the alert.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ListAlertsRequest">ListAlertsRequest</h3>
+<section>
+<p>Request to get the alert. If not set, will return all available enum values.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ListAlertsRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ListAlertsRequest-status">
+<td><code>status</code></td>
+<td><code><a href="#AlertStatus">AlertStatus</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ListAlertsRequest-severity">
+<td><code>severity</code></td>
+<td><code><a href="#tetrateio-api-tcc-spm-alert-v1-Severity">Severity</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ListAlertsRequest-page_size">
+<td><code>pageSize</code></td>
+<td><code>int32</code></td>
+<td>
+<p>Maximum number of results to be returned. Default is 20.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ListAlertsRequest-page_token">
+<td><code>pageToken</code></td>
+<td><code>string</code></td>
+<td>
+<p>Page token to request a specific page of the list results. Set to &ldquo;&rdquo; for first page.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ListAlertsResponse">ListAlertsResponse</h3>
+<section>
+<p>The list of alert.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ListAlertsResponse-alerts">
+<td><code>alerts</code></td>
+<td><code><a href="#Alert">Alert[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ListAlertsResponse-next_page_token">
+<td><code>nextPageToken</code></td>
+<td><code>string</code></td>
+<td>
+<p>Pagination token to retrieve the next page of results.
+If the value is &ldquo;&rdquo;, it means no further results for the request.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="UpdateAlertRequest">UpdateAlertRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="UpdateAlertRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="UpdateAlertRequest-id">
+<td><code>id</code></td>
+<td><code>uint64</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="UpdateAlertRequest-status">
+<td><code>status</code></td>
+<td><code><a href="#AlertStatus">AlertStatus</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="UpdateAlertRequest-acknowledged">
+<td><code>acknowledged</code></td>
+<td><code>bool</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="UpdateAlertRequest-owners">
+<td><code>owners</code></td>
+<td><code>string[]</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="DeleteAlertRequest">DeleteAlertRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="DeleteAlertRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="DeleteAlertRequest-id">
+<td><code>id</code></td>
+<td><code>uint64</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="GetAlertRequest">GetAlertRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="GetAlertRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetAlertRequest-id">
+<td><code>id</code></td>
+<td><code>uint64</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Status">Status</h3>
+<section>
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Status-ALL">
+<td><code>ALL</code></td>
+<td>
+</td>
+</tr>
+<tr id="Status-UNREAD">
+<td><code>UNREAD</code></td>
+<td>
+</td>
+</tr>
+<tr id="Status-READ">
+<td><code>READ</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Status">Status</h3>
+<section>
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Status-ALL">
+<td><code>ALL</code></td>
+<td>
+</td>
+</tr>
+<tr id="Status-UNREAD">
+<td><code>UNREAD</code></td>
+<td>
+</td>
+</tr>
+<tr id="Status-READ">
+<td><code>READ</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="NotificationType">NotificationType</h3>
+<section>
+<p>Notification type could be RESOURCE or ALERT. Alert is one type of resource.
+We differentiate type here to allow different user experience for &ldquo;normal&rdquo; event and Alert.</p>
+
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="NotificationType-RESOURCE">
+<td><code>RESOURCE</code></td>
+<td>
+</td>
+</tr>
+<tr id="NotificationType-ALERT">
+<td><code>ALERT</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="NotificationType">NotificationType</h3>
+<section>
+<p>Notification type could be RESOURCE or ALERT. Alert is one type of resource.
+We differentiate type here to allow different user experience for &ldquo;normal&rdquo; event and Alert.</p>
+
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="NotificationType-RESOURCE">
+<td><code>RESOURCE</code></td>
+<td>
+</td>
+</tr>
+<tr id="NotificationType-ALERT">
+<td><code>ALERT</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="NotificationType">NotificationType</h3>
+<section>
+<p>Notification type could be RESOURCE or ALERT. Alert is one type of resource.
+We differentiate type here to allow different user experience for &ldquo;normal&rdquo; event and Alert.</p>
+
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="NotificationType-RESOURCE">
+<td><code>RESOURCE</code></td>
+<td>
+</td>
+</tr>
+<tr id="NotificationType-ALERT">
+<td><code>ALERT</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Status">Status</h3>
+<section>
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Status-ALL">
+<td><code>ALL</code></td>
+<td>
+</td>
+</tr>
+<tr id="Status-UNREAD">
+<td><code>UNREAD</code></td>
+<td>
+</td>
+</tr>
+<tr id="Status-READ">
+<td><code>READ</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="AlertStatus">AlertStatus</h3>
+<section>
+<p>Alert status is OPEN or CLOSED.
+ALL_STATUSES is used in list request, to include all values.</p>
+
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="AlertStatus-OPEN">
+<td><code>OPEN</code></td>
+<td>
+</td>
+</tr>
+<tr id="AlertStatus-CLOSED">
+<td><code>CLOSED</code></td>
+<td>
+</td>
+</tr>
+<tr id="AlertStatus-ALL_STATUSES">
+<td><code>ALL_STATUSES</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="AlertStatus">AlertStatus</h3>
+<section>
+<p>Alert status is OPEN or CLOSED.
+ALL_STATUSES is used in list request, to include all values.</p>
+
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="AlertStatus-OPEN">
+<td><code>OPEN</code></td>
+<td>
+</td>
+</tr>
+<tr id="AlertStatus-CLOSED">
+<td><code>CLOSED</code></td>
+<td>
+</td>
+</tr>
+<tr id="AlertStatus-ALL_STATUSES">
+<td><code>ALL_STATUSES</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="tetrateio-api-tcc-spm-alert-v1-Severity">tetrateio.api.tcc.spm.alert.v1.Severity</h3>
+<section>
+<p>Severity</p>
+
+<p>Alert severity level from Informational to Critical.
+ALL_SEVERITIES is used for list Alert request to include all values.</p>
+
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="tetrateio-api-tcc-spm-alert-v1-Severity-MEDIUM">
+<td><code>MEDIUM</code></td>
+<td>
+</td>
+</tr>
+<tr id="tetrateio-api-tcc-spm-alert-v1-Severity-CRITICAL">
+<td><code>CRITICAL</code></td>
+<td>
+</td>
+</tr>
+<tr id="tetrateio-api-tcc-spm-alert-v1-Severity-HIGH">
+<td><code>HIGH</code></td>
+<td>
+</td>
+</tr>
+<tr id="tetrateio-api-tcc-spm-alert-v1-Severity-LOW">
+<td><code>LOW</code></td>
+<td>
+</td>
+</tr>
+<tr id="tetrateio-api-tcc-spm-alert-v1-Severity-INFORMATIONAL">
+<td><code>INFORMATIONAL</code></td>
+<td>
+</td>
+</tr>
+<tr id="tetrateio-api-tcc-spm-alert-v1-Severity-ALL_SEVERITIES">
+<td><code>ALL_SEVERITIES</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="AlertStatus">AlertStatus</h3>
+<section>
+<p>Alert status is OPEN or CLOSED.
+ALL_STATUSES is used in list request, to include all values.</p>
+
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="AlertStatus-OPEN">
+<td><code>OPEN</code></td>
+<td>
+</td>
+</tr>
+<tr id="AlertStatus-CLOSED">
+<td><code>CLOSED</code></td>
+<td>
+</td>
+</tr>
+<tr id="AlertStatus-ALL_STATUSES">
+<td><code>ALL_STATUSES</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="tetrateio-api-tcc-spm-alert-v1-Severity">tetrateio.api.tcc.spm.alert.v1.Severity</h3>
+<section>
+<p>Severity</p>
+
+<p>Alert severity level from Informational to Critical.
+ALL_SEVERITIES is used for list Alert request to include all values.</p>
+
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="tetrateio-api-tcc-spm-alert-v1-Severity-MEDIUM">
+<td><code>MEDIUM</code></td>
+<td>
+</td>
+</tr>
+<tr id="tetrateio-api-tcc-spm-alert-v1-Severity-CRITICAL">
+<td><code>CRITICAL</code></td>
+<td>
+</td>
+</tr>
+<tr id="tetrateio-api-tcc-spm-alert-v1-Severity-HIGH">
+<td><code>HIGH</code></td>
+<td>
+</td>
+</tr>
+<tr id="tetrateio-api-tcc-spm-alert-v1-Severity-LOW">
+<td><code>LOW</code></td>
+<td>
+</td>
+</tr>
+<tr id="tetrateio-api-tcc-spm-alert-v1-Severity-INFORMATIONAL">
+<td><code>INFORMATIONAL</code></td>
+<td>
+</td>
+</tr>
+<tr id="tetrateio-api-tcc-spm-alert-v1-Severity-ALL_SEVERITIES">
+<td><code>ALL_SEVERITIES</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="AlertStatus">AlertStatus</h3>
+<section>
+<p>Alert status is OPEN or CLOSED.
+ALL_STATUSES is used in list request, to include all values.</p>
+
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="AlertStatus-OPEN">
+<td><code>OPEN</code></td>
+<td>
+</td>
+</tr>
+<tr id="AlertStatus-CLOSED">
+<td><code>CLOSED</code></td>
+<td>
+</td>
+</tr>
+<tr id="AlertStatus-ALL_STATUSES">
+<td><code>ALL_STATUSES</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>

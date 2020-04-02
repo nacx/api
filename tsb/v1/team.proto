@@ -34,8 +34,8 @@ syntax = "proto3";
 //   - cluster1-tsb-agent
 //```
 //
-package tetrate.api.tsb.v1;
-option go_package = "github.com/tetrateio/tetrate/api/tsb/v1";
+package tetrateio.api.tsb.v1;
+option go_package = "github.com/tetrateio/api/tsb/v1";
 
 // `Team` is a named collection of users under a tenant.
 message Team {

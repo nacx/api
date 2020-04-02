@@ -1,0 +1,164 @@
+---
+title: tetrateio.api.audit.v1
+layout: protoc-gen-docs
+generator: protoc-gen-docs
+number_of_entries: 4
+---
+<h2 id="Services">Services</h2>
+<h3 id="AuditService">AuditService</h3>
+<section>
+<p>Audit Service</p>
+
+<p>The audit service provides access to the system events</p>
+
+<pre id="AuditService-ListAuditLogs"><code class="language-proto">rpc ListAuditLogs(ListAuditLogsRequest) returns (ListAuditLogsResponse)
+</code></pre>
+<p>List audit logs. If no &lsquo;count&rsquo; parameter has been specified, the last 25 audit logs are
+returned.</p>
+
+<pre id="AuditService-SendAuditLog"><code class="language-proto">rpc SendAuditLog(AuditLog) returns (google.protobuf.Empty)
+</code></pre>
+<p>Send a log to the audit system.</p>
+
+</section>
+<h2 id="Types">Types</h2>
+<h3 id="AuditLog">AuditLog</h3>
+<section>
+<p>AuditLog</p>
+
+<p>A system log describing something that happened in the system.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="AuditLog-create_time">
+<td><code>createTime</code></td>
+<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#timestamp">Timestamp</a></code></td>
+<td>
+<p>Time when the audit log was generated.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="AuditLog-severity">
+<td><code>severity</code></td>
+<td><code>string</code></td>
+<td>
+<p>Log severity (INFO, WARN, ERROR&hellip;).</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="AuditLog-kind">
+<td><code>kind</code></td>
+<td><code>string</code></td>
+<td>
+<p>The kind of the audit log (PolicyAssigned, ServiceOrphaned, etc).</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="AuditLog-message">
+<td><code>message</code></td>
+<td><code>string</code></td>
+<td>
+<p>Audit log details.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="AuditLog-triggered_by">
+<td><code>triggeredBy</code></td>
+<td><code>string</code></td>
+<td>
+<p>Person who triggered the audit log, or &ldquo;SYSTEM&rdquo; if the log was automatically
+triggered by the system.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="AuditLog-properties">
+<td><code>properties</code></td>
+<td><code>map&lt;string,&nbsp;string&gt;</code></td>
+<td>
+<p>Key value pairs with additional information for the audit log.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ListAuditLogsRequest">ListAuditLogsRequest</h3>
+<section>
+<p>Request to get the audit logs.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ListAuditLogsRequest-count">
+<td><code>count</code></td>
+<td><code>int32</code></td>
+<td>
+<p>Number of audit logs to retrieve. By default is 25.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ListAuditLogsResponse">ListAuditLogsResponse</h3>
+<section>
+<p>The list of audit logs.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ListAuditLogsResponse-audit_logs">
+<td><code>auditLogs</code></td>
+<td><code><a href="#AuditLog">AuditLog[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>

@@ -1,15 +1,15 @@
 // Copyright (c) Tetrate, Inc 2018 All Rights Reserved.
 syntax = "proto3";
 
-package tetrate.api.tcc.spm.notification.v1;
-option go_package = "github.com/tetrateio/tetrate/api/spm/notification/v1";
+package tetrateio.api.tcc.spm.notification.v1;
+option go_package = "github.com/tetrateio/api/spm/notification/v1";
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
-import "validate/validate.proto";
+import "github.com/envoyproxy/protoc-gen-validate/validate/validate.proto";
 
-import "alert_log.proto";
+import "spm/notification/v1/alert_log.proto";
 
 // Notification Service
 //

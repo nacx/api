@@ -2,8 +2,8 @@
 
 syntax = "proto3";
 
-package tetrate.api.tsb.v1;
-option go_package = "github.com/tetrateio/tetrate/api/tsb/v1";
+package tetrateio.api.tsb.v1;
+option go_package = "github.com/tetrateio/api/tsb/v1";
 
 service TSB {
   // used by bridge apply -f, the UI

@@ -39,8 +39,8 @@ syntax = "proto3";
 //   - name: c2/*
 //```
 //
-package tetrate.api.tsb.v1;
-option go_package = "github.com/tetrateio/tetrate/api/tsb/v1";
+package tetrateio.api.tsb.v1;
+option go_package = "github.com/tetrateio/api/tsb/v1";
 
 import "google/api/field_behavior.proto";
 import "google/protobuf/wrappers.proto";
@@ -52,7 +52,7 @@ message Workspace {
   // workspace can own all namespaces of a cluster or a set of
   // namespaces across any cluster or a set of namespaces in a
   // specific cluster.
-  repeated tetrate.api.tsb.types.v1.NamespaceSelector namespace_selectors = 1
+  repeated tetrateio.api.tsb.types.v1.NamespaceSelector namespace_selectors = 1
       [(google.api.field_behavior) = REQUIRED];
 
   // If set to true, allows Gateways in the workspace to route to

@@ -2,8 +2,8 @@
 
 syntax = "proto3";
 
-package tetrate.api.q.rbac.v1;
-option go_package = "github.com/tetrateio/tetrate/api/q/rbac/v1";
+package tetrateio.api.q.rbac.v1;
+option go_package = "github.com/tetrateio/api/q/rbac/v1";
 
 import "google/protobuf/descriptor.proto";
 

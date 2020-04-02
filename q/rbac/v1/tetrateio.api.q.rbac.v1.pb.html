@@ -1,0 +1,829 @@
+---
+title: tetrateio.api.q.rbac.v1
+layout: protoc-gen-docs
+generator: protoc-gen-docs
+number_of_entries: 18
+---
+<h2 id="Services">Services</h2>
+<h3 id="RBAC">RBAC</h3>
+<section>
+<p>RBAC service</p>
+
+<p>The RBAC service provides a high level API to model Q RBAC policies.</p>
+
+<p>Policies in this API are resource centric; i.e. they are applied to a resource. All resources
+will have one and only one policy that describes how the resource can be accessed and under in
+which conditions.</p>
+
+<pre id="RBAC-CreateRole"><code class="language-proto">rpc CreateRole(CreateRoleRequest) returns (Role)
+</code></pre>
+<p>Creates a Role in the system.</p>
+
+<pre id="RBAC-ListRoles"><code class="language-proto">rpc ListRoles(ListRolesRequest) returns (ListRolesResponse)
+</code></pre>
+<p>List all existing roles in the system.</p>
+
+<pre id="RBAC-GetRole"><code class="language-proto">rpc GetRole(GetRoleRequest) returns (Role)
+</code></pre>
+<p>Get the details of the role with the given name.</p>
+
+<pre id="RBAC-UpdateRole"><code class="language-proto">rpc UpdateRole(UpdateRoleRequest) returns (Role)
+</code></pre>
+<p>Modify the given role.</p>
+
+<pre id="RBAC-DeleteRole"><code class="language-proto">rpc DeleteRole(DeleteRoleRequest) returns (google.protobuf.Empty)
+</code></pre>
+<p>Delete the role with the given name.</p>
+
+<p>Roles that are assigned to policies cannot be deleted. Policies need to be deleted first</p>
+
+</section>
+<h3 id="Admin">Admin</h3>
+<section>
+<p>Administration service</p>
+
+<p>The administration service allows to configure global access policies for the
+core parts of the platform:
+  - Root policy configuration: configures global access to the platform, including
+    including access to all tenants.
+  - RBAC access: Configures access policy to the RBAC APIs, to configure who can
+    author roles.</p>
+
+<pre id="Admin-GetRootPolicy"><code class="language-proto">rpc GetRootPolicy(GetAdminPolicyRequest) returns (Policy)
+</code></pre>
+<pre id="Admin-SetRootPolicy"><code class="language-proto">rpc SetRootPolicy(Policy) returns (google.protobuf.Empty)
+</code></pre>
+<pre id="Admin-GetRBACPolicy"><code class="language-proto">rpc GetRBACPolicy(GetAdminPolicyRequest) returns (Policy)
+</code></pre>
+<pre id="Admin-SetRBACPolicy"><code class="language-proto">rpc SetRBACPolicy(Policy) returns (google.protobuf.Empty)
+</code></pre>
+</section>
+<h2 id="Types">Types</h2>
+<h3 id="RequiredPermission">RequiredPermission</h3>
+<section>
+<p>RequiredPermission</p>
+
+<p>Configures the sets of permissions that are required to invoke the method where this option is
+applied.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="RequiredPermission-permissions">
+<td><code>permissions</code></td>
+<td><code><a href="#Permission">Permission[]</a></code></td>
+<td>
+<p>The required set of permissions. The full name of each permission (such as ReadApplication)
+will be inferred from the name of the method where this option is applied.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="RequiredPermission-raw_permissions">
+<td><code>rawPermissions</code></td>
+<td><code>string[]</code></td>
+<td>
+<p>Set of raw permission names values. Only use this if the method being protected does not follow
+the common naming convention and the proper name of the permission cannot be inferred just by
+using the Permission enum and the method name.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="RequiredPermission-defer_permission_check_to_application">
+<td><code>deferPermissionCheckToApplication</code></td>
+<td><code>bool</code></td>
+<td>
+<p>When this flag is set to true, the permission checks will not be made at the API surface.
+This is usually needed when there is not an explicit set of permissions that can be
+preconfigured for the API methods, so the access control checks will be implemented at runtime
+by the application.
+The default value is &lsquo;false&rsquo; and will only be taken into account if the permission properties
+are empty. If any permission is set, this flag will be ignored.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Role">Role</h3>
+<section>
+<p>Role</p>
+
+<p>A role configures a set of permissions and gives them a name. Permissions are grouped into roles
+and then can be bound to different resources to configure the access policies.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Role-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Unique name that identifies the role in the system</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Role-description">
+<td><code>description</code></td>
+<td><code>string</code></td>
+<td>
+<p>Details of what the role does and what the configured permissions allow.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Role-permissions">
+<td><code>permissions</code></td>
+<td><code><a href="#Permission">Permission[]</a></code></td>
+<td>
+<p>The list of permissions that will be granted by this role on all resources that are bound to
+it.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Role-resources">
+<td><code>resources</code></td>
+<td><code>string[]</code></td>
+<td>
+<p>List of resource types where the role applies.
+The permission system is hierarchical and allows permissions to be applied at the root elements
+of the configuration hierarchy, so all child objects inherit them. This allows for easy and
+flexible permission configuration. There are, however, many scenarios in which permissions only
+make sense in certain types of resources instead of applying to the entire hierarchy. In those
+cases, the resources field can be populated with the types of resources that are affected by
+the role, and the permission set defined by the role will only apply to those resources. If
+this field is omitted, the permissions apply to all resource types.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Role-display_name">
+<td><code>displayName</code></td>
+<td><code>string</code></td>
+<td>
+<p>Friendly name for the role</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Policy">Policy</h3>
+<section>
+<p>Policy</p>
+
+<p>A policy defines the set of subjects that can access a resource and under which conditions that
+access is granted.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Policy-bindings">
+<td><code>bindings</code></td>
+<td><code><a href="#Binding">Binding[]</a></code></td>
+<td>
+<p>The list of bindings configures the different access profiles that are allowed on the resource
+configured by the policy.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Binding">Binding</h3>
+<section>
+<p>Binding</p>
+
+<p>A binding associates a role with a set of subjects.</p>
+
+<p>Bindings are used to configure policies, where different roles can be assigned to different sets
+of subjects to configure a fine-grained access control to the resource protected by the policy.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Binding-role">
+<td><code>role</code></td>
+<td><code>string</code></td>
+<td>
+<p>The role that defines the permissions that will be granted to the target resource.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Binding-subjects">
+<td><code>subjects</code></td>
+<td><code>string[]</code></td>
+<td>
+<p>The set of subjects that will be allowed to access the target resource with the permissions
+defined by the role.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="CreateRoleRequest">CreateRoleRequest</h3>
+<section>
+<p>Request to create a role.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="CreateRoleRequest-description">
+<td><code>description</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateRoleRequest-permissions">
+<td><code>permissions</code></td>
+<td><code><a href="#Permission">Permission[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateRoleRequest-resources">
+<td><code>resources</code></td>
+<td><code>string[]</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateRoleRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateRoleRequest-display_name">
+<td><code>displayName</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="UpdateRoleRequest">UpdateRoleRequest</h3>
+<section>
+<p>Request to update a role</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="UpdateRoleRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="UpdateRoleRequest-description">
+<td><code>description</code></td>
+<td><code>string</code></td>
+<td>
+<p>Details of what the role does and what the configured permissions allow.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="UpdateRoleRequest-permissions">
+<td><code>permissions</code></td>
+<td><code><a href="#Permission">Permission[]</a></code></td>
+<td>
+<p>The list of permissions that will be granted by this role on all resources that are bound to
+it.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="UpdateRoleRequest-resources">
+<td><code>resources</code></td>
+<td><code>string[]</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="UpdateRoleRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="UpdateRoleRequest-display_name">
+<td><code>displayName</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ListRolesRequest">ListRolesRequest</h3>
+<section>
+<p>Request to get the list of all existing roles.</p>
+
+</section>
+<h3 id="ListRolesResponse">ListRolesResponse</h3>
+<section>
+<p>Response to the list roles request with all existing roles.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ListRolesResponse-roles">
+<td><code>roles</code></td>
+<td><code><a href="#Role">Role[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="GetRoleRequest">GetRoleRequest</h3>
+<section>
+<p>Request to get a role by name.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="GetRoleRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetRoleRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="DeleteRoleRequest">DeleteRoleRequest</h3>
+<section>
+<p>Request to delete the role with the given name.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="DeleteRoleRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="DeleteRoleRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="GetAdminPolicyRequest">GetAdminPolicyRequest</h3>
+<section>
+</section>
+<h3 id="Permission">Permission</h3>
+<section>
+<p>Permission</p>
+
+<p>A permission defines an action that can be performed on a resource. By default access to
+resources is denied unless an explicit permission grants access to perform an operation against
+it.</p>
+
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Permission-INVALID">
+<td><code>INVALID</code></td>
+<td>
+<p>Default value to designate no value was explicitly set for the permission.</p>
+
+</td>
+</tr>
+<tr id="Permission-READ">
+<td><code>READ</code></td>
+<td>
+<p>The read permission grants read-only access to the resource.</p>
+
+</td>
+</tr>
+<tr id="Permission-WRITE">
+<td><code>WRITE</code></td>
+<td>
+<p>The write permission allows the subject to modify an existing resource.</p>
+
+</td>
+</tr>
+<tr id="Permission-CREATE">
+<td><code>CREATE</code></td>
+<td>
+<p>The create permission allows subjects to create child resources on the resource.</p>
+
+</td>
+</tr>
+<tr id="Permission-DELETE">
+<td><code>DELETE</code></td>
+<td>
+<p>The delete permission grants permissions to delete the resource.</p>
+
+</td>
+</tr>
+<tr id="Permission-SET_POLICY">
+<td><code>SET_POLICY</code></td>
+<td>
+<p>The set-policy permission allows subjects to manage the access policies for the resources.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Permission">Permission</h3>
+<section>
+<p>Permission</p>
+
+<p>A permission defines an action that can be performed on a resource. By default access to
+resources is denied unless an explicit permission grants access to perform an operation against
+it.</p>
+
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Permission-INVALID">
+<td><code>INVALID</code></td>
+<td>
+<p>Default value to designate no value was explicitly set for the permission.</p>
+
+</td>
+</tr>
+<tr id="Permission-READ">
+<td><code>READ</code></td>
+<td>
+<p>The read permission grants read-only access to the resource.</p>
+
+</td>
+</tr>
+<tr id="Permission-WRITE">
+<td><code>WRITE</code></td>
+<td>
+<p>The write permission allows the subject to modify an existing resource.</p>
+
+</td>
+</tr>
+<tr id="Permission-CREATE">
+<td><code>CREATE</code></td>
+<td>
+<p>The create permission allows subjects to create child resources on the resource.</p>
+
+</td>
+</tr>
+<tr id="Permission-DELETE">
+<td><code>DELETE</code></td>
+<td>
+<p>The delete permission grants permissions to delete the resource.</p>
+
+</td>
+</tr>
+<tr id="Permission-SET_POLICY">
+<td><code>SET_POLICY</code></td>
+<td>
+<p>The set-policy permission allows subjects to manage the access policies for the resources.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Permission">Permission</h3>
+<section>
+<p>Permission</p>
+
+<p>A permission defines an action that can be performed on a resource. By default access to
+resources is denied unless an explicit permission grants access to perform an operation against
+it.</p>
+
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Permission-INVALID">
+<td><code>INVALID</code></td>
+<td>
+<p>Default value to designate no value was explicitly set for the permission.</p>
+
+</td>
+</tr>
+<tr id="Permission-READ">
+<td><code>READ</code></td>
+<td>
+<p>The read permission grants read-only access to the resource.</p>
+
+</td>
+</tr>
+<tr id="Permission-WRITE">
+<td><code>WRITE</code></td>
+<td>
+<p>The write permission allows the subject to modify an existing resource.</p>
+
+</td>
+</tr>
+<tr id="Permission-CREATE">
+<td><code>CREATE</code></td>
+<td>
+<p>The create permission allows subjects to create child resources on the resource.</p>
+
+</td>
+</tr>
+<tr id="Permission-DELETE">
+<td><code>DELETE</code></td>
+<td>
+<p>The delete permission grants permissions to delete the resource.</p>
+
+</td>
+</tr>
+<tr id="Permission-SET_POLICY">
+<td><code>SET_POLICY</code></td>
+<td>
+<p>The set-policy permission allows subjects to manage the access policies for the resources.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Permission">Permission</h3>
+<section>
+<p>Permission</p>
+
+<p>A permission defines an action that can be performed on a resource. By default access to
+resources is denied unless an explicit permission grants access to perform an operation against
+it.</p>
+
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Permission-INVALID">
+<td><code>INVALID</code></td>
+<td>
+<p>Default value to designate no value was explicitly set for the permission.</p>
+
+</td>
+</tr>
+<tr id="Permission-READ">
+<td><code>READ</code></td>
+<td>
+<p>The read permission grants read-only access to the resource.</p>
+
+</td>
+</tr>
+<tr id="Permission-WRITE">
+<td><code>WRITE</code></td>
+<td>
+<p>The write permission allows the subject to modify an existing resource.</p>
+
+</td>
+</tr>
+<tr id="Permission-CREATE">
+<td><code>CREATE</code></td>
+<td>
+<p>The create permission allows subjects to create child resources on the resource.</p>
+
+</td>
+</tr>
+<tr id="Permission-DELETE">
+<td><code>DELETE</code></td>
+<td>
+<p>The delete permission grants permissions to delete the resource.</p>
+
+</td>
+</tr>
+<tr id="Permission-SET_POLICY">
+<td><code>SET_POLICY</code></td>
+<td>
+<p>The set-policy permission allows subjects to manage the access policies for the resources.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Permission">Permission</h3>
+<section>
+<p>Permission</p>
+
+<p>A permission defines an action that can be performed on a resource. By default access to
+resources is denied unless an explicit permission grants access to perform an operation against
+it.</p>
+
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Permission-INVALID">
+<td><code>INVALID</code></td>
+<td>
+<p>Default value to designate no value was explicitly set for the permission.</p>
+
+</td>
+</tr>
+<tr id="Permission-READ">
+<td><code>READ</code></td>
+<td>
+<p>The read permission grants read-only access to the resource.</p>
+
+</td>
+</tr>
+<tr id="Permission-WRITE">
+<td><code>WRITE</code></td>
+<td>
+<p>The write permission allows the subject to modify an existing resource.</p>
+
+</td>
+</tr>
+<tr id="Permission-CREATE">
+<td><code>CREATE</code></td>
+<td>
+<p>The create permission allows subjects to create child resources on the resource.</p>
+
+</td>
+</tr>
+<tr id="Permission-DELETE">
+<td><code>DELETE</code></td>
+<td>
+<p>The delete permission grants permissions to delete the resource.</p>
+
+</td>
+</tr>
+<tr id="Permission-SET_POLICY">
+<td><code>SET_POLICY</code></td>
+<td>
+<p>The set-policy permission allows subjects to manage the access policies for the resources.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>

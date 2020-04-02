@@ -2,11 +2,11 @@
 
 syntax = "proto3";
 
-package tetrate.api.tcc.spm.alert.v1;
-option go_package = "github.com/tetrateio/tetrate/api/spm/alert/v1";
+package tetrateio.api.tcc.spm.alert.v1;
+option go_package = "github.com/tetrateio/api/spm/alert/v1";
 
 import "google/protobuf/duration.proto";
-import "validate/validate.proto";
+import "github.com/envoyproxy/protoc-gen-validate/validate/validate.proto";
 
 // Settings
 //
@@ -53,7 +53,7 @@ message Rule {
 
   // Metric name to be watched. Metric name is defined in
   // https://github.com/tetrateio/tetrate/blob/master/install/helm/tcc/charts/oap/templates/01-config.yml#L125-L139.
-  string metric_name = 2 [(validate.rules).string = {in: 
+  string metric_name = 2 [(validate.rules).string = {in:
     ["service_resp_time", "service_sla", "service_cpm", "service_apdex",
     "service_p99", "service_p95", "service_p90", "service_p75", "service_p50",
     "service_2xx", "service_4xx", "service_5xx", "service_percentile"]}];
@@ -62,7 +62,7 @@ message Rule {
   // clang-format off
 
   // The threshold value of a metric; depends on the operator, it triggers alert if the metric value
-  // is not match. 
+  // is not match.
   uint32 threshold = 3 [(validate.rules).uint32 = { gte: 0, lte: 100 }];
   // clang-format on
 

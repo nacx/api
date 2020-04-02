@@ -76,13 +76,13 @@ syntax = "proto3";
 //     mode: GROUP
 //```
 //
-package tetrate.api.tsb.traffic.v1;
-option go_package = "github.com/tetrateio/tetrate/api/tsb/traffic/v1";
+package tetrateio.api.tsb.traffic.v1;
+option go_package = "github.com/tetrateio/api/tsb/traffic/v1";
 
 import "google/api/field_behavior.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/wrappers.proto";
-import "validate/validate.proto";
+import "github.com/envoyproxy/protoc-gen-validate/validate/validate.proto";
 
 // A traffic setting applies configuration to a set of sidecars in a
 // traffic group or a workspace. When applied to a traffic group,

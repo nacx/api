@@ -1,0 +1,475 @@
+---
+title: metadata
+layout: protoc-gen-docs
+generator: protoc-gen-docs
+number_of_entries: 15
+---
+<h2 id="Services">Services</h2>
+<h3 id="TSBMetadataService">TSBMetadataService</h3>
+<section>
+<p>Service provided at TSB side,
+SPM uses this as 3rd part storage implementation, to support existing query(s) from UI side.</p>
+
+<pre id="TSBMetadataService-register"><code class="language-proto">rpc register(EntityRegisterMetadata) returns (EntityMetadata)
+</code></pre>
+<p>Register new service, instance and endpoint
+when SPM can&rsquo;t find it from central ES storage.
+This could be a concurrency OP, so implementation should use the lock to avoid duplicated IDs.</p>
+
+<pre id="TSBMetadataService-keepAlive"><code class="language-proto">rpc keepAlive(EntityPingPackage) returns (TSBDefaultResp)
+</code></pre>
+<p>Keep the given instances online.</p>
+
+<pre id="TSBMetadataService-getAllServices"><code class="language-proto">rpc getAllServices(Duration) returns (EntityList)
+</code></pre>
+<p>Get all service based on TSB definition.</p>
+
+<pre id="TSBMetadataService-getServiceInstances"><code class="language-proto">rpc getServiceInstances(InstanceListCondition) returns (EntityList)
+</code></pre>
+<p>Get all online instance list.</p>
+
+</section>
+<h2 id="Types">Types</h2>
+<h3 id="EntityRegisterMetadata">EntityRegisterMetadata</h3>
+<section>
+<p>The entity requests the register.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="EntityRegisterMetadata-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>This name follows SPM nouns doc, https://github.com/tetrateio/SPM/blob/spm2/doc/spm-nouns.md</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="EntityRegisterMetadata-type">
+<td><code>type</code></td>
+<td><code><a href="#EntityType">EntityType</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="EntityRegisterMetadata-ownerService">
+<td><code>ownerService</code></td>
+<td><code>int32</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="EntityMetadata">EntityMetadata</h3>
+<section>
+<p>Registered metadata. This ID should be unchanged and unique.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="EntityMetadata-id">
+<td><code>id</code></td>
+<td><code>int32</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="EntityPingPackage">EntityPingPackage</h3>
+<section>
+<p>Request the TSB to update last heartbeat time to current based on TSB time.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="EntityPingPackage-id">
+<td><code>id</code></td>
+<td><code>int32</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="EntityPingPackage-type">
+<td><code>type</code></td>
+<td><code><a href="#EntityType">EntityType</a></code></td>
+<td>
+<p>Only INSTANCE should be used for now.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="TSBDefaultResp">TSBDefaultResp</h3>
+<section>
+<p>Empty response only.</p>
+
+</section>
+<h3 id="InstanceListCondition">InstanceListCondition</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="InstanceListCondition-duration">
+<td><code>duration</code></td>
+<td><code><a href="#Duration">Duration</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="InstanceListCondition-serviceId">
+<td><code>serviceId</code></td>
+<td><code>int32</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="EntityList">EntityList</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="EntityList-list">
+<td><code>list</code></td>
+<td><code><a href="#Entity">Entity[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Entity">Entity</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Entity-type">
+<td><code>type</code></td>
+<td><code><a href="#EntityType">EntityType</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Entity-id">
+<td><code>id</code></td>
+<td><code>int32</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Entity-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Duration">Duration</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Duration-start">
+<td><code>start</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Duration-end">
+<td><code>end</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Duration-step">
+<td><code>step</code></td>
+<td><code><a href="#Step">Step</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="EntityType">EntityType</h3>
+<section>
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="EntityType-SERVICE">
+<td><code>SERVICE</code></td>
+<td>
+</td>
+</tr>
+<tr id="EntityType-INSTANCE">
+<td><code>INSTANCE</code></td>
+<td>
+</td>
+</tr>
+<tr id="EntityType-ENDPOINT">
+<td><code>ENDPOINT</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Step">Step</h3>
+<section>
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Step-MONTH">
+<td><code>MONTH</code></td>
+<td>
+</td>
+</tr>
+<tr id="Step-DAY">
+<td><code>DAY</code></td>
+<td>
+</td>
+</tr>
+<tr id="Step-HOUR">
+<td><code>HOUR</code></td>
+<td>
+</td>
+</tr>
+<tr id="Step-MINUTE">
+<td><code>MINUTE</code></td>
+<td>
+</td>
+</tr>
+<tr id="Step-SECOND">
+<td><code>SECOND</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="EntityType">EntityType</h3>
+<section>
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="EntityType-SERVICE">
+<td><code>SERVICE</code></td>
+<td>
+</td>
+</tr>
+<tr id="EntityType-INSTANCE">
+<td><code>INSTANCE</code></td>
+<td>
+</td>
+</tr>
+<tr id="EntityType-ENDPOINT">
+<td><code>ENDPOINT</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="EntityType">EntityType</h3>
+<section>
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="EntityType-SERVICE">
+<td><code>SERVICE</code></td>
+<td>
+</td>
+</tr>
+<tr id="EntityType-INSTANCE">
+<td><code>INSTANCE</code></td>
+<td>
+</td>
+</tr>
+<tr id="EntityType-ENDPOINT">
+<td><code>ENDPOINT</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="EntityType">EntityType</h3>
+<section>
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="EntityType-SERVICE">
+<td><code>SERVICE</code></td>
+<td>
+</td>
+</tr>
+<tr id="EntityType-INSTANCE">
+<td><code>INSTANCE</code></td>
+<td>
+</td>
+</tr>
+<tr id="EntityType-ENDPOINT">
+<td><code>ENDPOINT</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Step">Step</h3>
+<section>
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Step-MONTH">
+<td><code>MONTH</code></td>
+<td>
+</td>
+</tr>
+<tr id="Step-DAY">
+<td><code>DAY</code></td>
+<td>
+</td>
+</tr>
+<tr id="Step-HOUR">
+<td><code>HOUR</code></td>
+<td>
+</td>
+</tr>
+<tr id="Step-MINUTE">
+<td><code>MINUTE</code></td>
+<td>
+</td>
+</tr>
+<tr id="Step-SECOND">
+<td><code>SECOND</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>

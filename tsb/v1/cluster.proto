@@ -32,8 +32,8 @@ syntax = "proto3";
 // gateway groups will flow to the Bridge agents in the cluster as
 // long their requested cluster exists in the Service Bridge
 // hierarchy.
-package tetrate.api.tsb.v1;
-option go_package = "github.com/tetrateio/tetrate/api/tsb/v1";
+package tetrateio.api.tsb.v1;
+option go_package = "github.com/tetrateio/api/tsb/v1";
 
 import "google/api/field_behavior.proto";
 import "google/protobuf/duration.proto";

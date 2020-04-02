@@ -1,34 +1,64 @@
-# Copyright (c) Tetrate, Inc 2019 All Rights Reserved.
+# Copyright Istio Authors
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
-# Allow consumers to add targets or override variables in this Makefile.
--include ../api.mk
+SHELL := /bin/bash
 
-APIS := audit/v1 test/v1 q/rbac/v1 tcc/core/v1 tcc/workflows/loadbalancer/v1 regsource/v1 spm authz/v1 \
-	troubleshoot/cluster/v1 settings/v1 operator/common operator/tsboperator/v1alpha1 \
-	tsb/gateway/v1 tsb/security/v1 tsb/traffic/v1 tsb/types/v1 tsb/v1 tsb/rbac/v1
+# allow optional per-repo overrides
+-include Makefile.overrides.mk
 
-.PHONY: all
-all: format $(APIS)
+# Set the environment variable BUILD_WITH_CONTAINER to use a container
+# to build the repo. The only dependencies in this mode are to have make and
+# docker. If you'd rather build with a local tool chain instead, you'll need to
+# figure out all the tools you need in your environment to make that work.
+export BUILD_WITH_CONTAINER ?= 0
 
-.PHONY: $(APIS)
-$(APIS):
-	@echo "--- $@: all ---"
-	$(MAKE) all -C $@
+ifeq ($(BUILD_WITH_CONTAINER),1)
 
-.PHONY: test
-test:
-	go test ./...
+# An export free of arugments in a Makefile places all variables in the Makefile into the
+# environment. This is needed to allow overrides from Makefile.overrides.mk.
+export
 
-.PHONY: format
-format:
-	../scripts/format-protos.sh
+$(shell $(shell pwd)/common/scripts/setup_env.sh)
 
-.PHONY: clean
-clean:
-	@for API in $(APIS); do \
-		echo "--- $$API: $@ ---"; \
-		$(MAKE) $@ -C $$API; \
-		if [ $$? -ne 0 ]; then \
-			exit 1; \
-		fi; \
-	done
+RUN = ./common/scripts/run.sh
+
+MAKE = $(RUN) make --no-print-directory -e -f Makefile.core.mk
+
+%:
+	@$(MAKE) $@
+
+default:
+	@$(MAKE)
+
+shell:
+	@$(RUN) /bin/bash
+
+.PHONY: default
+
+else
+
+# If we are not in build container, we need a workaround to get environment properly set
+# Write to file, then include
+$(shell mkdir -p out)
+$(shell $(shell pwd)/common/scripts/setup_env.sh envfile > out/.env)
+include out/.env
+# An export free of arugments in a Makefile places all variables in the Makefile into the
+# environment. This behavior may be surprising to many that use shell often, which simply
+# displays the existing environment
+export
+
+export GOBIN ?= $(GOPATH)/bin
+include Makefile.core.mk
+
+endif

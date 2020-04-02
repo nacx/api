@@ -24,9 +24,9 @@ syntax = "proto3";
 option java_multiple_files = true;
 option java_package = "org.apache.skywalking.oap.server.configuration.service";
 // However, the following go_package entry is added.
-option go_package = "github.com/tetrateio/tetrate/api/spm/config/v1";
+option go_package = "github.com/tetrateio/api/spm/config/v1";
 // However, the following validation package is also added.
-import "validate/validate.proto";
+import "github.com/envoyproxy/protoc-gen-validate/validate/validate.proto";
 
 service ConfigurationService {
   rpc call(ConfigurationRequest) returns (ConfigurationResponse) {

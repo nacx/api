@@ -1,0 +1,451 @@
+---
+title: tetrateio.api.settings.v1
+layout: protoc-gen-docs
+generator: protoc-gen-docs
+number_of_entries: 10
+---
+<h2 id="Services">Services</h2>
+<h3 id="SettingsService">SettingsService</h3>
+<section>
+<p>Settings Service</p>
+
+<p>The settings service provides access to the settings.
+Currently support system settings. Other settings will be added in the future.</p>
+
+<pre id="SettingsService-GetSettings"><code class="language-proto">rpc GetSettings(GetSettingsRequest) returns (Settings)
+</code></pre>
+<p>Get settings return settings with specified id for specific tenant.</p>
+
+<pre id="SettingsService-SetSettings"><code class="language-proto">rpc SetSettings(Settings) returns (Settings)
+</code></pre>
+<p>Set settings set settings with specified id for specific tenant.</p>
+
+<pre id="SettingsService-GetSettingsPolicy"><code class="language-proto">rpc GetSettingsPolicy(GetSettingsPolicyRequest) returns (tetrateio.api.q.rbac.v1.Policy)
+</code></pre>
+<pre id="SettingsService-SetSettingsPolicy"><code class="language-proto">rpc SetSettingsPolicy(SetSettingsPolicyRequest) returns (google.protobuf.Empty)
+</code></pre>
+</section>
+<h2 id="Types">Types</h2>
+<h3 id="GetSettingsRequest">GetSettingsRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="GetSettingsRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetSettingsRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetSettingsRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Settings">Settings</h3>
+<section>
+<p>Settings consisted of SMTP settings and another settings to be added in the future.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Settings-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Settings-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Settings-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Settings-etag">
+<td><code>etag</code></td>
+<td><code>string</code></td>
+<td>
+<p>Etag to guard concurrent modifications to the settings.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Settings-system_settings" class="oneof oneof-start">
+<td><code>systemSettings</code></td>
+<td><code><a href="#SystemSettings">SystemSettings (oneof)</a></code></td>
+<td>
+<p>System Settings.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="SystemSettings">SystemSettings</h3>
+<section>
+<p>System settings consisted of SMTP settings and another system settings to be added in the future.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="SystemSettings-smtp_settings">
+<td><code>smtpSettings</code></td>
+<td><code><a href="#SMTPSettings">SMTPSettings</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="SMTPSettings">SMTPSettings</h3>
+<section>
+<p>SMTPSettings</p>
+
+<p>Settings for SMTP client.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="SMTPSettings-host">
+<td><code>host</code></td>
+<td><code>string</code></td>
+<td>
+<p>SMTP host.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="SMTPSettings-port">
+<td><code>port</code></td>
+<td><code>uint32</code></td>
+<td>
+<p>SMTP port.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="SMTPSettings-username">
+<td><code>username</code></td>
+<td><code>string</code></td>
+<td>
+<p>SMTP Username.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="SMTPSettings-password">
+<td><code>password</code></td>
+<td><code>string</code></td>
+<td>
+<p>SMTP Password.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="SMTPSettings-use_tls">
+<td><code>useTls</code></td>
+<td><code>bool</code></td>
+<td>
+<p>Use TLS or not. Default to false.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="SMTPSettings-authentication">
+<td><code>authentication</code></td>
+<td><code><a href="#SMTPAuthentication">SMTPAuthentication</a></code></td>
+<td>
+<p>Authentication methods. Default to PLAIN</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="SMTPSettings-from_address">
+<td><code>fromAddress</code></td>
+<td><code>string</code></td>
+<td>
+<p>From email address.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="GetSettingsPolicyRequest">GetSettingsPolicyRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="GetSettingsPolicyRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetSettingsPolicyRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetSettingsPolicyRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="SetSettingsPolicyRequest">SetSettingsPolicyRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="SetSettingsPolicyRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="SetSettingsPolicyRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="SetSettingsPolicyRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="SetSettingsPolicyRequest-policy">
+<td><code>policy</code></td>
+<td><code><a href="#tetrateio-api-q-rbac-v1-Policy">Policy</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="tetrateio-api-q-rbac-v1-Policy">tetrateio.api.q.rbac.v1.Policy</h3>
+<section>
+<p>Policy</p>
+
+<p>A policy defines the set of subjects that can access a resource and under which conditions that
+access is granted.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="tetrateio-api-q-rbac-v1-Policy-bindings">
+<td><code>bindings</code></td>
+<td><code><a href="#tetrateio-api-q-rbac-v1-Binding">Binding[]</a></code></td>
+<td>
+<p>The list of bindings configures the different access profiles that are allowed on the resource
+configured by the policy.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="SMTPAuthentication">SMTPAuthentication</h3>
+<section>
+<p>Supported SMTP Authentication.</p>
+
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="SMTPAuthentication-PLAIN">
+<td><code>PLAIN</code></td>
+<td>
+</td>
+</tr>
+<tr id="SMTPAuthentication-LOGIN">
+<td><code>LOGIN</code></td>
+<td>
+</td>
+</tr>
+<tr id="SMTPAuthentication-CRAM_MD5">
+<td><code>CRAM_MD5</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="SMTPAuthentication">SMTPAuthentication</h3>
+<section>
+<p>Supported SMTP Authentication.</p>
+
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="SMTPAuthentication-PLAIN">
+<td><code>PLAIN</code></td>
+<td>
+</td>
+</tr>
+<tr id="SMTPAuthentication-LOGIN">
+<td><code>LOGIN</code></td>
+<td>
+</td>
+</tr>
+<tr id="SMTPAuthentication-CRAM_MD5">
+<td><code>CRAM_MD5</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>

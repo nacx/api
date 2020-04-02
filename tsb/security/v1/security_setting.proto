@@ -70,10 +70,10 @@ syntax = "proto3";
 //     - ns4/catalog-sa
 //```
 //
-package tetrate.api.tsb.security.v1;
-option go_package = "github.com/tetrateio/tetrate/api/tsb/security/v1";
+package tetrateio.api.tsb.security.v1;
+option go_package = "github.com/tetrateio/api/tsb/security/v1";
 
-import "validate/validate.proto";
+import "github.com/envoyproxy/protoc-gen-validate/validate/validate.proto";
 
 // A security setting applies configuration to a set of sidecars in a
 // security group or a workspace. When applied to a security group,

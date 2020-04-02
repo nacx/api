@@ -2,14 +2,14 @@
 
 syntax = "proto3";
 
-package tetrate.api.q.rbac.v1;
-option go_package = "github.com/tetrateio/tetrate/api/q/rbac/v1";
+package tetrateio.api.q.rbac.v1;
+option go_package = "github.com/tetrateio/api/q/rbac/v1";
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
-import "validate/validate.proto";
+import "github.com/envoyproxy/protoc-gen-validate/validate/validate.proto";
 
-import "permissions.proto";
+import "q/rbac/v1/permissions.proto";
 
 // RBAC service
 //

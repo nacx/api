@@ -1,0 +1,8086 @@
+---
+title: Organizational Resources
+description: Configuration for modeling organizational entities.
+location: https://tetrate.io/docs/reference/config/organization/v1/resources.html
+layout: protoc-gen-docs
+generator: protoc-gen-docs
+number_of_entries: 144
+---
+<p>This is how you model a team in TSB.</p>
+
+<pre><code class="language-yaml">id: bookinfo
+environment: dev
+tenant: test
+members:
+- nacx
+- rshriram
+</code></pre>
+
+<h2 id="Services">Services</h2>
+<h3 id="Organization">Organization</h3>
+<section>
+<pre id="Organization-CreateTenant"><code class="language-proto">rpc CreateTenant(CreateTenantRequest) returns (Tenant)
+</code></pre>
+<pre id="Organization-GetTenant"><code class="language-proto">rpc GetTenant(GetTenantRequest) returns (Tenant)
+</code></pre>
+<pre id="Organization-UpdateTenant"><code class="language-proto">rpc UpdateTenant(Tenant) returns (Tenant)
+</code></pre>
+<pre id="Organization-ListTenants"><code class="language-proto">rpc ListTenants(ListTenantsRequest) returns (ListTenantsResponse)
+</code></pre>
+<pre id="Organization-DeleteTenant"><code class="language-proto">rpc DeleteTenant(DeleteTenantRequest) returns (google.protobuf.Empty)
+</code></pre>
+<pre id="Organization-GetTenantPolicy"><code class="language-proto">rpc GetTenantPolicy(GetTenantRequest) returns (tetrateio.api.q.rbac.v1.Policy)
+</code></pre>
+<pre id="Organization-SetTenantPolicy"><code class="language-proto">rpc SetTenantPolicy(TenantPolicyRequest) returns (google.protobuf.Empty)
+</code></pre>
+<pre id="Organization-SyncTenant"><code class="language-proto">rpc SyncTenant(SyncTenantRequest) returns (SyncTenantResponse)
+</code></pre>
+<p>SyncTenant is used by processes that monitor the identity providers to synchronize
+the users and teams with the ones in TCC</p>
+
+<pre id="Organization-CreateTeam"><code class="language-proto">rpc CreateTeam(CreateTeamRequest) returns (Team)
+</code></pre>
+<pre id="Organization-UpdateTeam"><code class="language-proto">rpc UpdateTeam(Team) returns (Team)
+</code></pre>
+<pre id="Organization-GetTeam"><code class="language-proto">rpc GetTeam(GetTeamRequest) returns (Team)
+</code></pre>
+<pre id="Organization-ListTeams"><code class="language-proto">rpc ListTeams(ListTeamsRequest) returns (ListTeamsResponse)
+</code></pre>
+<pre id="Organization-DeleteTeam"><code class="language-proto">rpc DeleteTeam(DeleteTeamRequest) returns (google.protobuf.Empty)
+</code></pre>
+<pre id="Organization-CreateUser"><code class="language-proto">rpc CreateUser(CreateUserRequest) returns (User)
+</code></pre>
+<pre id="Organization-GetUser"><code class="language-proto">rpc GetUser(GetUserRequest) returns (User)
+</code></pre>
+<pre id="Organization-UpdateUser"><code class="language-proto">rpc UpdateUser(User) returns (User)
+</code></pre>
+<pre id="Organization-DeleteUser"><code class="language-proto">rpc DeleteUser(DeleteUserRequest) returns (google.protobuf.Empty)
+</code></pre>
+<pre id="Organization-ListUsers"><code class="language-proto">rpc ListUsers(ListUsersRequest) returns (ListUsersResponse)
+</code></pre>
+</section>
+<h3 id="PhysicalResourceModel">PhysicalResourceModel</h3>
+<section>
+<pre id="PhysicalResourceModel-CreateCluster"><code class="language-proto">rpc CreateCluster(CreateClusterRequest) returns (Cluster)
+</code></pre>
+<p>clang-format off</p>
+
+<pre id="PhysicalResourceModel-UpdateCluster"><code class="language-proto">rpc UpdateCluster(Cluster) returns (Cluster)
+</code></pre>
+<pre id="PhysicalResourceModel-GetCluster"><code class="language-proto">rpc GetCluster(GetClusterRequest) returns (Cluster)
+</code></pre>
+<pre id="PhysicalResourceModel-ListClusters"><code class="language-proto">rpc ListClusters(ListClustersRequest) returns (ListClustersResponse)
+</code></pre>
+<pre id="PhysicalResourceModel-DeleteCluster"><code class="language-proto">rpc DeleteCluster(DeleteClusterRequest) returns (google.protobuf.Empty)
+</code></pre>
+<pre id="PhysicalResourceModel-BulkLoadCluster"><code class="language-proto">rpc BulkLoadCluster(BulkLoadClusterRequest) returns (google.protobuf.Empty)
+</code></pre>
+<pre id="PhysicalResourceModel-GenerateClusterTokens"><code class="language-proto">rpc GenerateClusterTokens(GenerateClusterTokensRequest) returns (AgentTokens)
+</code></pre>
+<pre id="PhysicalResourceModel-GetAllPhysicalResources"><code class="language-proto">rpc GetAllPhysicalResources(GetAllPhysicalResourcesRequest) returns (GetAllPhysicalResourcesResponse)
+</code></pre>
+<pre id="PhysicalResourceModel-CreateNamespace"><code class="language-proto">rpc CreateNamespace(CreateNamespaceRequest) returns (Namespace)
+</code></pre>
+<pre id="PhysicalResourceModel-GetNamespace"><code class="language-proto">rpc GetNamespace(GetNamespaceRequest) returns (Namespace)
+</code></pre>
+<pre id="PhysicalResourceModel-UpdateNamespace"><code class="language-proto">rpc UpdateNamespace(Namespace) returns (Namespace)
+</code></pre>
+<pre id="PhysicalResourceModel-ListNamespaces"><code class="language-proto">rpc ListNamespaces(ListNamespacesRequest) returns (ListNamespacesResponse)
+</code></pre>
+<pre id="PhysicalResourceModel-DeleteNamespace"><code class="language-proto">rpc DeleteNamespace(DeleteNamespaceRequest) returns (google.protobuf.Empty)
+</code></pre>
+<pre id="PhysicalResourceModel-CreateDeployment"><code class="language-proto">rpc CreateDeployment(CreateDeploymentRequest) returns (Deployment)
+</code></pre>
+<pre id="PhysicalResourceModel-GetDeployment"><code class="language-proto">rpc GetDeployment(GetDeploymentRequest) returns (Deployment)
+</code></pre>
+<pre id="PhysicalResourceModel-ListDeployments"><code class="language-proto">rpc ListDeployments(ListDeploymentsRequest) returns (ListDeploymentsResponse)
+</code></pre>
+<pre id="PhysicalResourceModel-UpdateDeployment"><code class="language-proto">rpc UpdateDeployment(Deployment) returns (Deployment)
+</code></pre>
+<pre id="PhysicalResourceModel-DeleteDeployment"><code class="language-proto">rpc DeleteDeployment(DeleteDeploymentRequest) returns (google.protobuf.Empty)
+</code></pre>
+<pre id="PhysicalResourceModel-CreateEndpoint"><code class="language-proto">rpc CreateEndpoint(CreateEndpointRequest) returns (Endpoint)
+</code></pre>
+<pre id="PhysicalResourceModel-GetEndpoint"><code class="language-proto">rpc GetEndpoint(GetEndpointRequest) returns (Endpoint)
+</code></pre>
+<pre id="PhysicalResourceModel-ListEndpoints"><code class="language-proto">rpc ListEndpoints(ListEndpointsRequest) returns (ListEndpointsResponse)
+</code></pre>
+<pre id="PhysicalResourceModel-UpdateEndpoint"><code class="language-proto">rpc UpdateEndpoint(Endpoint) returns (Endpoint)
+</code></pre>
+<pre id="PhysicalResourceModel-DeleteEndpoint"><code class="language-proto">rpc DeleteEndpoint(DeleteEndpointRequest) returns (google.protobuf.Empty)
+</code></pre>
+</section>
+<h3 id="Info">Info</h3>
+<section>
+<pre id="Info-GetVersion"><code class="language-proto">rpc GetVersion(GetVersionRequest) returns (Version)
+</code></pre>
+<p>GetVersion returns the version of the TSB binary</p>
+
+</section>
+<h3 id="RegistryConsumer">RegistryConsumer</h3>
+<section>
+<p>RegistryConsumer</p>
+
+<p>RegistryConsumer service accepts bulk JSON payload to update resources into TCC data model. A
+sync agent calls this API periodically to create or update deployments, namespaces, or endpoints.
+API converts resources into appropriate TCC data model fields, and pushes to the database.</p>
+
+<pre id="RegistryConsumer-UpdateResources"><code class="language-proto">rpc UpdateResources(RegistryUpdateResourcesRequest) returns (RegistryConsumerResponse)
+</code></pre>
+<p>UpdateResources to be called periodically with a bulk payload. API detects the delta between
+last call, and determines resources to create, modify, delete.</p>
+
+</section>
+<h3 id="LogicalResourceModel">LogicalResourceModel</h3>
+<section>
+<pre id="LogicalResourceModel-CreateEnvironment"><code class="language-proto">rpc CreateEnvironment(CreateEnvironmentRequest) returns (Environment)
+</code></pre>
+<pre id="LogicalResourceModel-GetEnvironment"><code class="language-proto">rpc GetEnvironment(GetEnvironmentRequest) returns (Environment)
+</code></pre>
+<pre id="LogicalResourceModel-UpdateEnvironment"><code class="language-proto">rpc UpdateEnvironment(Environment) returns (Environment)
+</code></pre>
+<pre id="LogicalResourceModel-ListEnvironments"><code class="language-proto">rpc ListEnvironments(ListEnvironmentsRequest) returns (ListEnvironmentsResponse)
+</code></pre>
+<pre id="LogicalResourceModel-DeleteEnvironment"><code class="language-proto">rpc DeleteEnvironment(DeleteEnvironmentRequest) returns (google.protobuf.Empty)
+</code></pre>
+<pre id="LogicalResourceModel-GetEnvironmentPolicy"><code class="language-proto">rpc GetEnvironmentPolicy(GetEnvironmentRequest) returns (tetrateio.api.q.rbac.v1.Policy)
+</code></pre>
+<pre id="LogicalResourceModel-SetEnvironmentPolicy"><code class="language-proto">rpc SetEnvironmentPolicy(EnvironmentPolicyRequest) returns (google.protobuf.Empty)
+</code></pre>
+<pre id="LogicalResourceModel-GetAllEnvironmentResources"><code class="language-proto">rpc GetAllEnvironmentResources(GetAllEnvironmentResourcesRequest) returns (GetAllEnvironmentResourcesResponse)
+</code></pre>
+<pre id="LogicalResourceModel-CreateApplication"><code class="language-proto">rpc CreateApplication(CreateApplicationRequest) returns (Application)
+</code></pre>
+<pre id="LogicalResourceModel-GetApplication"><code class="language-proto">rpc GetApplication(GetApplicationRequest) returns (Application)
+</code></pre>
+<pre id="LogicalResourceModel-UpdateApplication"><code class="language-proto">rpc UpdateApplication(Application) returns (Application)
+</code></pre>
+<pre id="LogicalResourceModel-ListApplications"><code class="language-proto">rpc ListApplications(ListApplicationsRequest) returns (ListApplicationsResponse)
+</code></pre>
+<pre id="LogicalResourceModel-DeleteApplication"><code class="language-proto">rpc DeleteApplication(DeleteApplicationRequest) returns (google.protobuf.Empty)
+</code></pre>
+<pre id="LogicalResourceModel-GetApplicationPolicy"><code class="language-proto">rpc GetApplicationPolicy(GetApplicationRequest) returns (tetrateio.api.q.rbac.v1.Policy)
+</code></pre>
+<pre id="LogicalResourceModel-SetApplicationPolicy"><code class="language-proto">rpc SetApplicationPolicy(ApplicationPolicyRequest) returns (google.protobuf.Empty)
+</code></pre>
+<pre id="LogicalResourceModel-GetApplicationAuthzPolicy"><code class="language-proto">rpc GetApplicationAuthzPolicy(GetApplicationRequest) returns (tetrateio.api.authz.v1.Policy)
+</code></pre>
+<pre id="LogicalResourceModel-SetApplicationAuthzPolicy"><code class="language-proto">rpc SetApplicationAuthzPolicy(ApplicationAuthzPolicyRequest) returns (google.protobuf.Empty)
+</code></pre>
+<pre id="LogicalResourceModel-CreateService"><code class="language-proto">rpc CreateService(CreateServiceRequest) returns (Service)
+</code></pre>
+<pre id="LogicalResourceModel-GetService"><code class="language-proto">rpc GetService(GetServiceRequest) returns (Service)
+</code></pre>
+<pre id="LogicalResourceModel-ListServices"><code class="language-proto">rpc ListServices(ListServicesRequest) returns (ListServicesResponse)
+</code></pre>
+<pre id="LogicalResourceModel-UpdateService"><code class="language-proto">rpc UpdateService(Service) returns (Service)
+</code></pre>
+<pre id="LogicalResourceModel-DeleteService"><code class="language-proto">rpc DeleteService(DeleteServiceRequest) returns (google.protobuf.Empty)
+</code></pre>
+<pre id="LogicalResourceModel-GetServicePolicy"><code class="language-proto">rpc GetServicePolicy(GetServiceRequest) returns (tetrateio.api.q.rbac.v1.Policy)
+</code></pre>
+<pre id="LogicalResourceModel-SetServicePolicy"><code class="language-proto">rpc SetServicePolicy(ServicePolicyRequest) returns (google.protobuf.Empty)
+</code></pre>
+<pre id="LogicalResourceModel-GetServiceAuthzPolicy"><code class="language-proto">rpc GetServiceAuthzPolicy(GetServiceRequest) returns (tetrateio.api.authz.v1.Policy)
+</code></pre>
+<pre id="LogicalResourceModel-SetServiceAuthzPolicy"><code class="language-proto">rpc SetServiceAuthzPolicy(ServiceAuthzPolicyRequest) returns (google.protobuf.Empty)
+</code></pre>
+<pre id="LogicalResourceModel-GetAllLogicalResources"><code class="language-proto">rpc GetAllLogicalResources(GetAllLogicalResourcesRequest) returns (GetAllLogicalResourcesResponse)
+</code></pre>
+</section>
+<h2 id="Types">Types</h2>
+<h3 id="TLSSettings">TLSSettings</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="TLSSettings-tls_mode">
+<td><code>tlsMode</code></td>
+<td><code><a href="#TLSMode">TLSMode</a></code></td>
+<td>
+<p>Set this to SIMPLE, MUTUAL, or SNI_PASSTHROUGH for one-way TLS, mutual TLS, or client sni-based
+TLS passthrough respectively. The hostname in the load balancer will be used as the SNI in the
+TLS passthrough mode.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="TLSSettings-redirect_to_https">
+<td><code>redirectToHttps</code></td>
+<td><code>bool</code></td>
+<td>
+<p>If set, the load balancer will redirect HTTP connections on port 80 to HTTPS port 443.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="TLSSettings-server_certificate">
+<td><code>serverCertificate</code></td>
+<td><code>string</code></td>
+<td>
+<p>For proxies running on VMs, the path to the file holding the server-side TLS certificate to
+use.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="TLSSettings-private_key">
+<td><code>privateKey</code></td>
+<td><code>string</code></td>
+<td>
+<p>For proxies running on VMs, the path to the file holding the server&rsquo;s private key.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="TLSSettings-ca_certificates">
+<td><code>caCertificates</code></td>
+<td><code>string</code></td>
+<td>
+<p>For proxies running on VMs, the path to a file containing certificate authority certificates to
+use in verifying a presented client side certificate for mutual TLS connections.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="TLSSettings-secret_name">
+<td><code>secretName</code></td>
+<td><code>string</code></td>
+<td>
+<p>For proxies running on Kubernetes, the name of the secret that holds the TLS certs including
+the CA certificates. Currently applicable only on Kubernetes. The secret (type generic) should
+contain the following keys and values: key: <privateKey>, cert: <serverCert>, cacert:
+<CACertificate>.  If the service is exposed via a load balancer, the secret must be accessible
+to it.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="TLSSettings-tls_enabled" class="deprecated ">
+<td><code>tlsEnabled</code></td>
+<td><code>bool</code></td>
+<td>
+<p>Enable TLS settings for the application.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="LBRouteSettings">LBRouteSettings</h3>
+<section>
+<p>LBRouteSettings</p>
+
+<p>HTTP/TCP routing settings for application exposed via a load balancer service. Enforced at load
+balancer only.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="LBRouteSettings-enable_workflows">
+<td><code>enableWorkflows</code></td>
+<td><code>bool</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="LBRouteSettings-load_balancer_class">
+<td><code>loadBalancerClass</code></td>
+<td><code><a href="#LoadBalancerClass">LoadBalancerClass</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="LBRouteSettings-load_balancer_tier">
+<td><code>loadBalancerTier</code></td>
+<td><code><a href="#LoadBalancerTier">LoadBalancerTier</a></code></td>
+<td>
+<p>Current restrictions: Tier1 load balancers can only route to other tier2 load balancers in any
+cluster (local/remote). They cannot route to internal services in their local clusters. Tier2
+load balancers can route to internal services in the same cluster only.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="LBRouteSettings-routes">
+<td><code>routes</code></td>
+<td><code><a href="#LBRouteSettings-LBRoute">LBRoute[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="InternalRouteSettings">InternalRouteSettings</h3>
+<section>
+<p>InternalRouteSettings</p>
+
+<p>HTTP/TCP routing settings for an internal service in an application. Enforced at the sidecars for
+services inside the same application.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="InternalRouteSettings-http_settings">
+<td><code>httpSettings</code></td>
+<td><code><a href="#HttpSettings">HttpSettings</a></code></td>
+<td>
+<p>HTTP specific settings, transformations and routing rules associated with HTTP traffic to this
+service.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="InternalRouteSettings-tcp_settings">
+<td><code>tcpSettings</code></td>
+<td><code><a href="#TcpSettings">TcpSettings</a></code></td>
+<td>
+<p>TCP specific settings, transformations and routing rules associated with non-HTTP traffic to
+this service.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ExternalRouteSettings">ExternalRouteSettings</h3>
+<section>
+<p>ExternalRouteSettings</p>
+
+<p>HTTP/TCP routing settings for an external service in the &ldquo;system&rdquo; application. Enforced at the
+external facing gateway in the &ldquo;system&rdquo; application.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ExternalRouteSettings-tls">
+<td><code>tls</code></td>
+<td><code><a href="#TLSSettings">TLSSettings</a></code></td>
+<td>
+<p>TLS certificate info for the external service. If nil, the gateway will communicate with the
+external service over plain text.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ExternalRouteSettings-http_settings">
+<td><code>httpSettings</code></td>
+<td><code><a href="#HttpSettings">HttpSettings</a></code></td>
+<td>
+<p>HTTP specific settings, transformations and routing rules associated with HTTP traffic to this
+service.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ExternalRouteSettings-tcp_settings">
+<td><code>tcpSettings</code></td>
+<td><code><a href="#TcpSettings">TcpSettings</a></code></td>
+<td>
+<p>TCP specific settings, transformations and routing rules associated with non-HTTP traffic to
+this service.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Port">Port</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Port-number">
+<td><code>number</code></td>
+<td><code>uint32</code></td>
+<td>
+<p>A valid non-negative integer port number.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Port-protocol">
+<td><code>protocol</code></td>
+<td><code>string</code></td>
+<td>
+<p>The protocol exposed on the port. MUST BE one of HTTP|GRPC|HTTP2|HTTPS|TCP|TLS.</p>
+
+<p>TLS implies the connection will be routed based on the SNI header to the destination without
+terminating the TLS connection.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Port-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Name assigned to the port.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Port-endpoint_port">
+<td><code>endpointPort</code></td>
+<td><code>uint32</code></td>
+<td>
+<p>The endpoint port to which this service port maps to. For example, service port 80 exposed on
+the load balancer could map to an endpoint port 9080 on a VM.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Port-kubernetes_node_port">
+<td><code>kubernetesNodePort</code></td>
+<td><code>uint32</code></td>
+<td>
+<p>Indicates the node port attached to a physical deployment on a kubernetes cluster.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Port-application_port">
+<td><code>applicationPort</code></td>
+<td><code>uint32</code></td>
+<td>
+<p>In cases where IPtables based capture is not used, the sidecar
+and the application could be listening on different ports in the
+same VM. For example, the endpoint_port of 9080 is the port where Envoy listens for inbound
+traffic and
+forwards incoming traffic to the the weblogic application server listening on 127.0.0.1:7070</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Subset">Subset</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Subset-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Subset-labels">
+<td><code>labels</code></td>
+<td><code>map&lt;string,&nbsp;string&gt;</code></td>
+<td>
+<p>Labels apply a filter over the endpoints of a service in the service registry.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="HttpSettings">HttpSettings</h3>
+<section>
+<p>HttpSettings</p>
+
+<p>HTTP settings for a service. Applicable to ports receiving HTTP traffic.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="HttpSettings-sticky_session">
+<td><code>stickySession</code></td>
+<td><code><a href="#HttpSettings-StickySession">StickySession</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="HttpSettings-cors_policy">
+<td><code>corsPolicy</code></td>
+<td><code><a href="#CorsPolicy">CorsPolicy</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="HttpSettings-route_rules">
+<td><code>routeRules</code></td>
+<td><code><a href="#HttpRule">HttpRule[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="TcpSettings">TcpSettings</h3>
+<section>
+<p>TCP settings for a service. Applicable to ports receiving non-HTTP traffic.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="TcpSettings-route">
+<td><code>route</code></td>
+<td><code><a href="#Route">Route</a></code></td>
+<td>
+<p>The destination to which the connection should be routed.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="HttpRule">HttpRule</h3>
+<section>
+<p>A single HTTP rule.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="HttpRule-match">
+<td><code>match</code></td>
+<td><code><a href="#HttpMatchCondition">HttpMatchCondition[]</a></code></td>
+<td>
+<p>One or more match conditions (OR-ed).</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="HttpRule-modify">
+<td><code>modify</code></td>
+<td><code><a href="#HttpModifyAction">HttpModifyAction</a></code></td>
+<td>
+<p>One or more mutations to be performed before forwarding. Includes typical modifications to be
+done on a single request like URL rewrite, host rewrite, headers to add/remove/append.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="HttpRule-route" class="oneof oneof-start">
+<td><code>route</code></td>
+<td><code><a href="#Route">Route (oneof)</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="HttpRule-redirect" class="oneof">
+<td><code>redirect</code></td>
+<td><code><a href="#Redirect">Redirect (oneof)</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="HttpMatchCondition">HttpMatchCondition</h3>
+<section>
+<p>A single match clause to match all aspects of a request.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="HttpMatchCondition-uri">
+<td><code>uri</code></td>
+<td><code><a href="#StringMatch">StringMatch</a></code></td>
+<td>
+<p>URI to match.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="HttpMatchCondition-scheme">
+<td><code>scheme</code></td>
+<td><code><a href="#StringMatch">StringMatch</a></code></td>
+<td>
+<p>URI Scheme</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="HttpMatchCondition-method">
+<td><code>method</code></td>
+<td><code><a href="#StringMatch">StringMatch</a></code></td>
+<td>
+<p>HTTP Method.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="HttpMatchCondition-authority">
+<td><code>authority</code></td>
+<td><code><a href="#StringMatch">StringMatch</a></code></td>
+<td>
+<p>HTTP Authority.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="HttpMatchCondition-headers">
+<td><code>headers</code></td>
+<td><code>map&lt;string,&nbsp;<a href="#StringMatch">StringMatch</a>&gt;</code></td>
+<td>
+<p>The header keys must be lowercase and use hyphen as the separator, e.g. x-request-id.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="StringMatch">StringMatch</h3>
+<section>
+<p>Describes how to match a given string in HTTP headers. Match is case-sensitive.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="StringMatch-exact" class="oneof oneof-start">
+<td><code>exact</code></td>
+<td><code>string (oneof)</code></td>
+<td>
+<p>Exact string match.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="StringMatch-prefix" class="oneof">
+<td><code>prefix</code></td>
+<td><code>string (oneof)</code></td>
+<td>
+<p>Prefix-based match.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="StringMatch-regex" class="oneof">
+<td><code>regex</code></td>
+<td><code>string (oneof)</code></td>
+<td>
+<p>ECMAscript style regex-based match.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="HTTPRewrite">HTTPRewrite</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="HTTPRewrite-uri">
+<td><code>uri</code></td>
+<td><code>string</code></td>
+<td>
+<p>Rewrite the path (or the prefix) portion of the URI with this value. If the original URI was
+matched based on prefix, the value provided in this field will replace the corresponding
+matched prefix.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="HTTPRewrite-authority">
+<td><code>authority</code></td>
+<td><code>string</code></td>
+<td>
+<p>Rewrite the Authority/Host header with this value.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Headers">Headers</h3>
+<section>
+<p>Header manipulation rules.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Headers-request">
+<td><code>request</code></td>
+<td><code><a href="#Headers-HeaderOperations">HeaderOperations</a></code></td>
+<td>
+<p>Header manipulation rules to apply before forwarding a request to the destination service.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Headers-response">
+<td><code>response</code></td>
+<td><code><a href="#Headers-HeaderOperations">HeaderOperations</a></code></td>
+<td>
+<p>Header manipulation rules to apply before returning a response to the caller.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="HttpModifyAction">HttpModifyAction</h3>
+<section>
+<p>HTTP path/url/header modification.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="HttpModifyAction-rewrite">
+<td><code>rewrite</code></td>
+<td><code><a href="#HTTPRewrite">HTTPRewrite</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="HttpModifyAction-headers">
+<td><code>headers</code></td>
+<td><code><a href="#Headers">Headers</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Route">Route</h3>
+<section>
+<p>One or more destinations in a local cluster for the given request.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Route-destinations">
+<td><code>destinations</code></td>
+<td><code><a href="#Route-Destination">Destination[]</a></code></td>
+<td>
+<p>All destinations within a route must be of the same type.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Redirect">Redirect</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Redirect-uri">
+<td><code>uri</code></td>
+<td><code>string</code></td>
+<td>
+<p>On a redirect, overwrite the Path portion of the URL with this value.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Redirect-authority">
+<td><code>authority</code></td>
+<td><code>string</code></td>
+<td>
+<p>On a redirect, overwrite the Authority/Host portion of the URL with this value.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="CorsPolicy">CorsPolicy</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="CorsPolicy-allow_origin">
+<td><code>allowOrigin</code></td>
+<td><code>string[]</code></td>
+<td>
+<p>The list of origins that are allowed to perform CORS requests. The content will be serialized
+into the Access-Control-Allow-Origin header. Wildcard * will allow all origins.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CorsPolicy-allow_methods">
+<td><code>allowMethods</code></td>
+<td><code>string[]</code></td>
+<td>
+<p>List of HTTP methods allowed to access the resource. The content will be serialized into the
+Access-Control-Allow-Methods header.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CorsPolicy-allow_headers">
+<td><code>allowHeaders</code></td>
+<td><code>string[]</code></td>
+<td>
+<p>List of HTTP headers that can be used when requesting the resource. Serialized to
+Access-Control-Allow-Headers header.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CorsPolicy-expose_headers">
+<td><code>exposeHeaders</code></td>
+<td><code>string[]</code></td>
+<td>
+<p>A white list of HTTP headers that the browsers are allowed to access. Serialized into
+Access-Control-Expose-Headers header.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CorsPolicy-max_age">
+<td><code>maxAge</code></td>
+<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#duration">Duration</a></code></td>
+<td>
+<p>Specifies how long the results of a preflight request can be cached. Translates to the
+Access-Control-Max-Age header.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CorsPolicy-allow_credentials">
+<td><code>allowCredentials</code></td>
+<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#boolvalue">BoolValue</a></code></td>
+<td>
+<p>Indicates whether the caller is allowed to send the actual request (not the preflight) using
+credentials. Translates to Access-Control-Allow-Credentials header.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="BasicAuthSettings">BasicAuthSettings</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="BasicAuthSettings-realm">
+<td><code>realm</code></td>
+<td><code>string</code></td>
+<td>
+<p>Realm value for WWW-Authenticate header. If empty, will be set to LoadBalancer&rsquo;s hostname.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="BasicAuthSettings-charset">
+<td><code>charset</code></td>
+<td><code>string</code></td>
+<td>
+<p>Charset value for WWW-Authenticate header. If empty, will be set to &ldquo;UTF-8&rdquo;.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="BasicAuthSettings-users">
+<td><code>users</code></td>
+<td><code><a href="#BasicAuthSettings-User">User[]</a></code></td>
+<td>
+<p>List of basic auth users.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="RateLimitSettings">RateLimitSettings</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="RateLimitSettings-requests_limit">
+<td><code>requestsLimit</code></td>
+<td><code>uint32</code></td>
+<td>
+<p>The number of requests limit per time interval.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="RateLimitSettings-interval">
+<td><code>interval</code></td>
+<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#duration">Duration</a></code></td>
+<td>
+<p>Interval for requests within limit.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="RateLimitSettings-limit_by">
+<td><code>limitBy</code></td>
+<td><code><a href="#RateLimitSettings-LimitBy">LimitBy</a></code></td>
+<td>
+<p>Limit by entity. Defaults to IP.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="LBRouteSettings-LBRoute">LBRouteSettings.LBRoute</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="LBRouteSettings-LBRoute-hostname">
+<td><code>hostname</code></td>
+<td><code>string</code></td>
+<td>
+<p>Hostname with which the application is exposed on this load balancer.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="LBRouteSettings-LBRoute-tls">
+<td><code>tls</code></td>
+<td><code><a href="#TLSSettings">TLSSettings</a></code></td>
+<td>
+<p>TLS certificate info for the application. If nil, the gateway will expose the application on
+port 80 only.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="LBRouteSettings-LBRoute-http_settings">
+<td><code>httpSettings</code></td>
+<td><code><a href="#HttpSettings">HttpSettings</a></code></td>
+<td>
+<p>HTTP specific settings, transformations and routing rules associated with HTTP traffic to
+this service.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="LBRouteSettings-LBRoute-tcp_settings">
+<td><code>tcpSettings</code></td>
+<td><code><a href="#TcpSettings">TcpSettings</a></code></td>
+<td>
+<p>TCP specific settings, transformations and routing rules associated with non-HTTP traffic to
+this service.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="LBRouteSettings-LBRoute-auth_settings">
+<td><code>authSettings</code></td>
+<td><code><a href="#LBRouteSettings-LBRoute-AuthSettings">AuthSettings[]</a></code></td>
+<td>
+<p>One or more auth settings (OR-ed).</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="LBRouteSettings-LBRoute-rate_limit_settings">
+<td><code>rateLimitSettings</code></td>
+<td><code><a href="#RateLimitSettings">RateLimitSettings</a></code></td>
+<td>
+<p>Rate limit settings.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="LBRouteSettings-LBRoute-AuthSettings">LBRouteSettings.LBRoute.AuthSettings</h3>
+<section>
+<p>Available authentication settings.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="LBRouteSettings-LBRoute-AuthSettings-basic_auth_settings" class="oneof oneof-start">
+<td><code>basicAuthSettings</code></td>
+<td><code><a href="#BasicAuthSettings">BasicAuthSettings (oneof)</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="HttpSettings-HTTPCookie">HttpSettings.HTTPCookie</h3>
+<section>
+<p>Describes a HTTP cookie that will be used for sticky sessions. If the cookie is not present, it
+will be generated.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="HttpSettings-HTTPCookie-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Name of the cookie.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="HttpSettings-HTTPCookie-path">
+<td><code>path</code></td>
+<td><code>string</code></td>
+<td>
+<p>Path to set for the cookie.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="HttpSettings-HTTPCookie-ttl">
+<td><code>ttl</code></td>
+<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#duration">Duration</a></code></td>
+<td>
+<p>Lifetime of the cookie.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="HttpSettings-StickySession">HttpSettings.StickySession</h3>
+<section>
+<p>If set, the load balancer will route all requests from a particular client to the same backend
+of the service.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="HttpSettings-StickySession-header" class="oneof oneof-start">
+<td><code>header</code></td>
+<td><code>string (oneof)</code></td>
+<td>
+<p>Hash based on a specific HTTP header.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="HttpSettings-StickySession-cookie" class="oneof">
+<td><code>cookie</code></td>
+<td><code><a href="#HttpSettings-HTTPCookie">HTTPCookie (oneof)</a></code></td>
+<td>
+<p>Hash based on HTTP cookie.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="HttpSettings-StickySession-use_source_ip" class="oneof">
+<td><code>useSourceIp</code></td>
+<td><code>bool (oneof)</code></td>
+<td>
+<p>Hash based on the source IP address.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Headers-HeaderOperations">Headers.HeaderOperations</h3>
+<section>
+<p>HeaderOperations Describes the header manipulations to apply.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Headers-HeaderOperations-set">
+<td><code>set</code></td>
+<td><code>map&lt;string,&nbsp;string&gt;</code></td>
+<td>
+<p>Overwrite the headers specified by key with the given values.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Headers-HeaderOperations-add">
+<td><code>add</code></td>
+<td><code>map&lt;string,&nbsp;string&gt;</code></td>
+<td>
+<p>Append the given values to the headers specified by keys (will create a comma-separated list
+of values).</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Headers-HeaderOperations-remove">
+<td><code>remove</code></td>
+<td><code>string[]</code></td>
+<td>
+<p>Remove a the specified headers.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Route-LocalDestination">Route.LocalDestination</h3>
+<section>
+<p>A destination local to the cluster where the load balancer or sidecar is present.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Route-LocalDestination-application">
+<td><code>application</code></td>
+<td><code>string</code></td>
+<td>
+<p>If omitted, will route to same application as the service. The application field is used by
+load balancers in the system application to route to other applications.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Route-LocalDestination-service">
+<td><code>service</code></td>
+<td><code>string</code></td>
+<td>
+<p>If omitted, will route to the service owning this route.  When used with a Load Balancer
+(shared or dedicated), traffic can be routed to another service in the same application or a
+different application.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Route-LocalDestination-subset">
+<td><code>subset</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Route-LocalDestination-host" class="deprecated ">
+<td><code>host</code></td>
+<td><code>string</code></td>
+<td>
+<p>If omitted, will route to same host as the service.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Route-RemoteDestination">Route.RemoteDestination</h3>
+<section>
+<p>A destination load balancer service in another cluster. This destination type is applicable
+only when used with a load balancer service.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Route-RemoteDestination-application">
+<td><code>application</code></td>
+<td><code>string</code></td>
+<td>
+<p>If omitted, defaults to system application.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Route-RemoteDestination-service">
+<td><code>service</code></td>
+<td><code>string</code></td>
+<td>
+<p>The load balancer service to route the traffic to.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Route-Destination">Route.Destination</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Route-Destination-local" class="oneof oneof-start">
+<td><code>local</code></td>
+<td><code><a href="#Route-LocalDestination">LocalDestination (oneof)</a></code></td>
+<td>
+<p>A local destination.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Route-Destination-remote" class="oneof">
+<td><code>remote</code></td>
+<td><code><a href="#Route-RemoteDestination">RemoteDestination (oneof)</a></code></td>
+<td>
+<p>A remote destination.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Route-Destination-address" class="oneof">
+<td><code>address</code></td>
+<td><code>string (oneof)</code></td>
+<td>
+<p>Instead of specifying local/remote services, you can specify the hostname/IP address to
+which traffic should be routed to. This address should be reachable from the load balancer.
+This destination type is applicable only when used with a load balancer service.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Route-Destination-weight">
+<td><code>weight</code></td>
+<td><code>uint32</code></td>
+<td>
+<p>The value of weight is 100 if omitted. The sum of all weights should add up to 100.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Route-Destination-port">
+<td><code>port</code></td>
+<td><code>uint32</code></td>
+<td>
+<p>Optional.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="BasicAuthSettings-User">BasicAuthSettings.User</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="BasicAuthSettings-User-username">
+<td><code>username</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="BasicAuthSettings-User-password">
+<td><code>password</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ClientSettings">ClientSettings</h3>
+<section>
+<p>ClientSettings</p>
+
+<p>ClientSettings control the reliability knobs in Envoy when making
+outbound connections from a gateway or sidecar.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ClientSettings-http_request_timeout">
+<td><code>httpRequestTimeout</code></td>
+<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#duration">Duration</a></code></td>
+<td>
+<p>Timeout for HTTP requests. Disabled if not set.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ClientSettings-http_retries">
+<td><code>httpRetries</code></td>
+<td><code><a href="#HTTPRetry">HTTPRetry</a></code></td>
+<td>
+<p>Retry policy for HTTP requests. Disabled if not set.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ClientSettings-tcp_connect_timeout">
+<td><code>tcpConnectTimeout</code></td>
+<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#duration">Duration</a></code></td>
+<td>
+<p>TCP connection timeout. Disabled if not set.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ClientSettings-tcp_keepalive">
+<td><code>tcpKeepalive</code></td>
+<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#boolvalue">BoolValue</a></code></td>
+<td>
+<p>If enabled, sets SO_KEEPALIVE on the socket to enable TCP Keepalives.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ClientSettings-circuit_breaker_sensitivity">
+<td><code>circuitBreakerSensitivity</code></td>
+<td><code><a href="#ClientSettings-Sensitivity">Sensitivity</a></code></td>
+<td>
+<p>Circuit breakers in Envoy are applied per endpoint in a load
+balancing pool. By default, circuit breakers are disabled. If
+set, the sensitivity level determines the maximum number of
+consecutive failures that Envoy will tolerate before ejecting an
+endpoint from the load balancing pool.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="HTTPRetry">HTTPRetry</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="HTTPRetry-attempts">
+<td><code>attempts</code></td>
+<td><code>int32</code></td>
+<td>
+<p>Number of retries for a given request. The interval between retries will be determined
+automatically (25ms+).</p>
+
+<p>Actual number of retries attempted depends on the httpReqTimeout.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="HTTPRetry-per_try_timeout">
+<td><code>perTryTimeout</code></td>
+<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#duration">Duration</a></code></td>
+<td>
+<p>Timeout per retry attempt for a given request. format: 1h/1m/1s/1ms. MUST BE &gt;=1ms.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="HTTPRetry-retry_on">
+<td><code>retryOn</code></td>
+<td><code>string</code></td>
+<td>
+<p>Specifies the conditions under which retry takes place. One or more policies can be specified
+using a ‘,’ delimited list. See the <a href="https://www.envoyproxy.io/docs/envoy/latest/configuration/http_filters/router_filter#x-envoy-retry-on">supported
+policies</a>
+and
+<a href="https://www.envoyproxy.io/docs/envoy/latest/configuration/http_filters/router_filter#x-envoy-retry-grpc-on">here</a>
+for more details.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Tenant">Tenant</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Tenant-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Tenant-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Tenant-description">
+<td><code>description</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Tenant-etag">
+<td><code>etag</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="CreateTenantRequest">CreateTenantRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="CreateTenantRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateTenantRequest-description">
+<td><code>description</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="GetTenantRequest">GetTenantRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="GetTenantRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetTenantRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="TenantPolicyRequest">TenantPolicyRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="TenantPolicyRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="TenantPolicyRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="TenantPolicyRequest-policy">
+<td><code>policy</code></td>
+<td><code><a href="#tetrateio-api-q-rbac-v1-Policy">Policy</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ListTenantsRequest">ListTenantsRequest</h3>
+<section>
+</section>
+<h3 id="ListTenantsResponse">ListTenantsResponse</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ListTenantsResponse-tenants">
+<td><code>tenants</code></td>
+<td><code><a href="#Tenant">Tenant[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="DeleteTenantRequest">DeleteTenantRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="DeleteTenantRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="DeleteTenantRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="SyncTenantRequest">SyncTenantRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="SyncTenantRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="SyncTenantRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="SyncTenantRequest-source_type">
+<td><code>sourceType</code></td>
+<td><code><a href="#SourceType">SourceType</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="SyncTenantRequest-users">
+<td><code>users</code></td>
+<td><code><a href="#SyncTenantRequest-SyncUser">SyncUser[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="SyncTenantRequest-teams">
+<td><code>teams</code></td>
+<td><code><a href="#SyncTenantRequest-SyncTeam">SyncTeam[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="SyncTenantResponse">SyncTenantResponse</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="SyncTenantResponse-failed_users">
+<td><code>failedUsers</code></td>
+<td><code><a href="#SyncTenantResponse-FailedIds">FailedIds</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="SyncTenantResponse-failed_teams">
+<td><code>failedTeams</code></td>
+<td><code><a href="#SyncTenantResponse-FailedIds">FailedIds</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Team">Team</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Team-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Team-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Team-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Team-description">
+<td><code>description</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Team-members">
+<td><code>members</code></td>
+<td><code>string[]</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Team-etag">
+<td><code>etag</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Team-source_type">
+<td><code>sourceType</code></td>
+<td><code><a href="#SourceType">SourceType</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="CreateTeamRequest">CreateTeamRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="CreateTeamRequest-parent">
+<td><code>parent</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateTeamRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+<p>Tenant.Id.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateTeamRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+<p>If present, this will be used as the id for the created object.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateTeamRequest-description">
+<td><code>description</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateTeamRequest-members">
+<td><code>members</code></td>
+<td><code>string[]</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateTeamRequest-source_type">
+<td><code>sourceType</code></td>
+<td><code><a href="#SourceType">SourceType</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="GetTeamRequest">GetTeamRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="GetTeamRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetTeamRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetTeamRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ListTeamsRequest">ListTeamsRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ListTeamsRequest-parent">
+<td><code>parent</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ListTeamsRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ListTeamsResponse">ListTeamsResponse</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ListTeamsResponse-teams">
+<td><code>teams</code></td>
+<td><code><a href="#Team">Team[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="DeleteTeamRequest">DeleteTeamRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="DeleteTeamRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="DeleteTeamRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="DeleteTeamRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="User">User</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="User-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="User-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="User-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="User-description">
+<td><code>description</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="User-etag">
+<td><code>etag</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="User-source_type">
+<td><code>sourceType</code></td>
+<td><code><a href="#SourceType">SourceType</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="User-email">
+<td><code>email</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="CreateUserRequest">CreateUserRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="CreateUserRequest-parent">
+<td><code>parent</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateUserRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+<p>Tenant.Id.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateUserRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+<p>If present, this will be used as the id for the created object.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateUserRequest-description">
+<td><code>description</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateUserRequest-source_type">
+<td><code>sourceType</code></td>
+<td><code><a href="#SourceType">SourceType</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateUserRequest-email">
+<td><code>email</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="GetUserRequest">GetUserRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="GetUserRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetUserRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetUserRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ListUsersRequest">ListUsersRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ListUsersRequest-parent">
+<td><code>parent</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ListUsersRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ListUsersResponse">ListUsersResponse</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ListUsersResponse-users">
+<td><code>users</code></td>
+<td><code><a href="#User">User[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="DeleteUserRequest">DeleteUserRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="DeleteUserRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="DeleteUserRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="DeleteUserRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="SyncTenantRequest-SyncUser">SyncTenantRequest.SyncUser</h3>
+<section>
+<p>Information of a user as synchronized from the team source. This differs slightly from a TCC
+user since the fields here are raw info that does not have the context of the TCC hierarchy.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="SyncTenantRequest-SyncUser-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="SyncTenantRequest-SyncUser-description">
+<td><code>description</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="SyncTenantRequest-SyncUser-email">
+<td><code>email</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="SyncTenantRequest-SyncTeam">SyncTenantRequest.SyncTeam</h3>
+<section>
+<p>Information of a team as synchronized from the team source. This differs slightly from a TCC
+user since
+the fields here are raw info that does not have the context of the TCC hierarchy.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="SyncTenantRequest-SyncTeam-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="SyncTenantRequest-SyncTeam-description">
+<td><code>description</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="SyncTenantRequest-SyncTeam-member_user_ids">
+<td><code>memberUserIds</code></td>
+<td><code>string[]</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="SyncTenantRequest-SyncTeam-member_group_ids">
+<td><code>memberGroupIds</code></td>
+<td><code>string[]</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="SyncTenantResponse-FailedIds">SyncTenantResponse.FailedIds</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="SyncTenantResponse-FailedIds-removal">
+<td><code>removal</code></td>
+<td><code>string[]</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="SyncTenantResponse-FailedIds-addition">
+<td><code>addition</code></td>
+<td><code>string[]</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="SyncTenantResponse-FailedIds-update">
+<td><code>update</code></td>
+<td><code>string[]</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="tetrateio-api-q-rbac-v1-Policy">tetrateio.api.q.rbac.v1.Policy</h3>
+<section>
+<p>Policy</p>
+
+<p>A policy defines the set of subjects that can access a resource and under which conditions that
+access is granted.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="tetrateio-api-q-rbac-v1-Policy-bindings">
+<td><code>bindings</code></td>
+<td><code><a href="#tetrateio-api-q-rbac-v1-Binding">Binding[]</a></code></td>
+<td>
+<p>The list of bindings configures the different access profiles that are allowed on the resource
+configured by the policy.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Cluster">Cluster</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Cluster-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Cluster-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Cluster-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Cluster-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Cluster-description">
+<td><code>description</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Cluster-registry">
+<td><code>registry</code></td>
+<td><code><a href="#Registry">Registry</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Cluster-country">
+<td><code>country</code></td>
+<td><code>string</code></td>
+<td>
+<p>Information like datacenter where the cluster is present.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Cluster-datacenter">
+<td><code>datacenter</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Cluster-availability_zone">
+<td><code>availabilityZone</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Cluster-labels">
+<td><code>labels</code></td>
+<td><code>map&lt;string,&nbsp;string&gt;</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Cluster-etag">
+<td><code>etag</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Cluster-kubernetes_cluster_domain">
+<td><code>kubernetesClusterDomain</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="CreateClusterRequest">CreateClusterRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="CreateClusterRequest-parent">
+<td><code>parent</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateClusterRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateClusterRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateClusterRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+<p>if present, this will be used as the id for the created object.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateClusterRequest-description">
+<td><code>description</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateClusterRequest-registry">
+<td><code>registry</code></td>
+<td><code><a href="#Registry">Registry</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateClusterRequest-country">
+<td><code>country</code></td>
+<td><code>string</code></td>
+<td>
+<p>Information like datacenter where the cluster is present.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateClusterRequest-datacenter">
+<td><code>datacenter</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateClusterRequest-availability_zone">
+<td><code>availabilityZone</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateClusterRequest-labels">
+<td><code>labels</code></td>
+<td><code>map&lt;string,&nbsp;string&gt;</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateClusterRequest-kubernetes_cluster_domain">
+<td><code>kubernetesClusterDomain</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="AgentTokens">AgentTokens</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="AgentTokens-tokens">
+<td><code>tokens</code></td>
+<td><code>map&lt;string,&nbsp;string&gt;</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="GetClusterRequest">GetClusterRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="GetClusterRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetClusterRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetClusterRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetClusterRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="GenerateClusterTokensRequest">GenerateClusterTokensRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="GenerateClusterTokensRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GenerateClusterTokensRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GenerateClusterTokensRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GenerateClusterTokensRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GenerateClusterTokensRequest-lifetime">
+<td><code>lifetime</code></td>
+<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#duration">Duration</a></code></td>
+<td>
+<p>Lifetime of the tokens</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ListClustersRequest">ListClustersRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ListClustersRequest-parent">
+<td><code>parent</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ListClustersRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ListClustersRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ListClustersResponse">ListClustersResponse</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ListClustersResponse-clusters">
+<td><code>clusters</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/physical/v1/resources.html#Cluster">Cluster[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="DeleteClusterRequest">DeleteClusterRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="DeleteClusterRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="DeleteClusterRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="DeleteClusterRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="DeleteClusterRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Namespace">Namespace</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Namespace-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Namespace-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Namespace-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Namespace-cluster">
+<td><code>cluster</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Namespace-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Namespace-description">
+<td><code>description</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Namespace-etag">
+<td><code>etag</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Namespace-labels">
+<td><code>labels</code></td>
+<td><code>map&lt;string,&nbsp;string&gt;</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="CreateNamespaceRequest">CreateNamespaceRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="CreateNamespaceRequest-parent">
+<td><code>parent</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateNamespaceRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateNamespaceRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateNamespaceRequest-cluster">
+<td><code>cluster</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateNamespaceRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+<p>if present, this will be used as the id for the created object.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateNamespaceRequest-description">
+<td><code>description</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateNamespaceRequest-labels">
+<td><code>labels</code></td>
+<td><code>map&lt;string,&nbsp;string&gt;</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="GetNamespaceRequest">GetNamespaceRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="GetNamespaceRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetNamespaceRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetNamespaceRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetNamespaceRequest-cluster">
+<td><code>cluster</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetNamespaceRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ListNamespacesRequest">ListNamespacesRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ListNamespacesRequest-parent">
+<td><code>parent</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ListNamespacesRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ListNamespacesRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ListNamespacesRequest-cluster">
+<td><code>cluster</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ListNamespacesResponse">ListNamespacesResponse</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ListNamespacesResponse-namespaces">
+<td><code>namespaces</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/physical/v1/resources.html#Namespace">Namespace[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="DeleteNamespaceRequest">DeleteNamespaceRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="DeleteNamespaceRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="DeleteNamespaceRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="DeleteNamespaceRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="DeleteNamespaceRequest-cluster">
+<td><code>cluster</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="DeleteNamespaceRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Deployment">Deployment</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Deployment-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Deployment-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Deployment-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Deployment-cluster">
+<td><code>cluster</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Deployment-namespace">
+<td><code>namespace</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Deployment-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Deployment-hostname">
+<td><code>hostname</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Deployment-labels">
+<td><code>labels</code></td>
+<td><code>map&lt;string,&nbsp;string&gt;</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Deployment-ports">
+<td><code>ports</code></td>
+<td><code><a href="#Port">Port[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Deployment-etag">
+<td><code>etag</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Deployment-kubernetes_service_ip">
+<td><code>kubernetesServiceIp</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Deployment-kubernetes_external_addresses">
+<td><code>kubernetesExternalAddresses</code></td>
+<td><code>string[]</code></td>
+<td>
+<p>For kubernetes services of type load balancer, this field contains the list of lb hostnames or
+IPs assigned to the service. For services of type nodePort, this field contains the IP
+addresses of the nodes in the cluster.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="CreateDeploymentRequest">CreateDeploymentRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="CreateDeploymentRequest-parent">
+<td><code>parent</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateDeploymentRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateDeploymentRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateDeploymentRequest-cluster">
+<td><code>cluster</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateDeploymentRequest-namespace">
+<td><code>namespace</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateDeploymentRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+<p>if present, this will be used as the id for the created object</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateDeploymentRequest-hostname">
+<td><code>hostname</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateDeploymentRequest-labels">
+<td><code>labels</code></td>
+<td><code>map&lt;string,&nbsp;string&gt;</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateDeploymentRequest-ports">
+<td><code>ports</code></td>
+<td><code><a href="#Port">Port[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateDeploymentRequest-kubernetes_service_ip">
+<td><code>kubernetesServiceIp</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateDeploymentRequest-kubernetes_external_addresses">
+<td><code>kubernetesExternalAddresses</code></td>
+<td><code>string[]</code></td>
+<td>
+<p>For kubernetes services of type load balancer, this field contains the list of lb hostnames or
+IPs assigned to the service. For services of type nodePort, this field contains the IP
+addresses of the nodes in the cluster.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="GetDeploymentRequest">GetDeploymentRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="GetDeploymentRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetDeploymentRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetDeploymentRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetDeploymentRequest-cluster">
+<td><code>cluster</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetDeploymentRequest-namespace">
+<td><code>namespace</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetDeploymentRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ListDeploymentsRequest">ListDeploymentsRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ListDeploymentsRequest-parent">
+<td><code>parent</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ListDeploymentsRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ListDeploymentsRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ListDeploymentsRequest-cluster">
+<td><code>cluster</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ListDeploymentsRequest-namespace">
+<td><code>namespace</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ListDeploymentsResponse">ListDeploymentsResponse</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ListDeploymentsResponse-deployments">
+<td><code>deployments</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/physical/v1/resources.html#Deployment">Deployment[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="DeleteDeploymentRequest">DeleteDeploymentRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="DeleteDeploymentRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="DeleteDeploymentRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="DeleteDeploymentRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="DeleteDeploymentRequest-cluster">
+<td><code>cluster</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="DeleteDeploymentRequest-namespace">
+<td><code>namespace</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="DeleteDeploymentRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Endpoint">Endpoint</h3>
+<section>
+<p>Endpoint defines a network address (IP or hostname) associated with the service.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Endpoint-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Endpoint-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Endpoint-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Endpoint-cluster">
+<td><code>cluster</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Endpoint-namespace">
+<td><code>namespace</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Endpoint-deployment">
+<td><code>deployment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Endpoint-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Endpoint-address">
+<td><code>address</code></td>
+<td><code>string</code></td>
+<td>
+<p>Address associated with the network endpoint without the port. Domain names can be used and
+must be fully-qualified without wildcards.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Endpoint-ports">
+<td><code>ports</code></td>
+<td><code>map&lt;string,&nbsp;uint32&gt;</code></td>
+<td>
+<p>Set of inbound traffic ports associated with the endpoint. The ports must be associated with a
+port name that was declared as part of the deployment.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Endpoint-labels">
+<td><code>labels</code></td>
+<td><code>map&lt;string,&nbsp;string&gt;</code></td>
+<td>
+<p>One or more labels associated with the endpoint.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Endpoint-locality">
+<td><code>locality</code></td>
+<td><code>string</code></td>
+<td>
+<p>The locality associated with the endpoint, in the form country/region/zone. A locality
+corresponds to a failure domain (country/region/zone).</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Endpoint-weight">
+<td><code>weight</code></td>
+<td><code>uint32</code></td>
+<td>
+<p>The load balancing weight associated with the endpoint. Endpoints with higher weights in a pool
+will receive proportionally higher traffic.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Endpoint-etag">
+<td><code>etag</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="CreateEndpointRequest">CreateEndpointRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="CreateEndpointRequest-parent">
+<td><code>parent</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateEndpointRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateEndpointRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateEndpointRequest-cluster">
+<td><code>cluster</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateEndpointRequest-namespace">
+<td><code>namespace</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateEndpointRequest-deployment">
+<td><code>deployment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateEndpointRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+<p>if present, this will be used as the id for the created object.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateEndpointRequest-address">
+<td><code>address</code></td>
+<td><code>string</code></td>
+<td>
+<p>Address associated with the network endpoint without the port. Domain names can be used and
+must be fully-qualified without wildcards.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateEndpointRequest-ports">
+<td><code>ports</code></td>
+<td><code>map&lt;string,&nbsp;uint32&gt;</code></td>
+<td>
+<p>Set of inbound traffic ports associated with the endpoint. The ports must be associated with a
+port name that was declared as part of the deployment.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateEndpointRequest-labels">
+<td><code>labels</code></td>
+<td><code>map&lt;string,&nbsp;string&gt;</code></td>
+<td>
+<p>One or more labels associated with the endpoint.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateEndpointRequest-locality">
+<td><code>locality</code></td>
+<td><code>string</code></td>
+<td>
+<p>The locality associated with the endpoint, in the form country/region/zone. A locality
+corresponds to a failure domain (country/region/zone).</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateEndpointRequest-weight">
+<td><code>weight</code></td>
+<td><code>uint32</code></td>
+<td>
+<p>The load balancing weight associated with the endpoint. Endpoints with higher weights in a pool
+will receive proportionally higher traffic.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="GetEndpointRequest">GetEndpointRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="GetEndpointRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetEndpointRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetEndpointRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetEndpointRequest-cluster">
+<td><code>cluster</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetEndpointRequest-namespace">
+<td><code>namespace</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetEndpointRequest-deployment">
+<td><code>deployment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetEndpointRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ListEndpointsRequest">ListEndpointsRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ListEndpointsRequest-parent">
+<td><code>parent</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ListEndpointsRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ListEndpointsRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ListEndpointsRequest-cluster">
+<td><code>cluster</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ListEndpointsRequest-namespace">
+<td><code>namespace</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ListEndpointsRequest-deployment">
+<td><code>deployment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ListEndpointsResponse">ListEndpointsResponse</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ListEndpointsResponse-endpoints">
+<td><code>endpoints</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/physical/v1/resources.html#Endpoint">Endpoint[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="DeleteEndpointRequest">DeleteEndpointRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="DeleteEndpointRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="DeleteEndpointRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="DeleteEndpointRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="DeleteEndpointRequest-cluster">
+<td><code>cluster</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="DeleteEndpointRequest-namespace">
+<td><code>namespace</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="DeleteEndpointRequest-deployment">
+<td><code>deployment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="DeleteEndpointRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="BulkLoadClusterRequest">BulkLoadClusterRequest</h3>
+<section>
+<p>Cluster, Namespaces, deployments, and endpoints in this request will replace the existing
+contents of a cluster.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="BulkLoadClusterRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="BulkLoadClusterRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="BulkLoadClusterRequest-cluster_with_namespaces">
+<td><code>clusterWithNamespaces</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/physical/v1/resources.html#BulkLoadClusterRequest-ClusterWithNamespaces">ClusterWithNamespaces</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="BulkLoadClusterRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="BulkLoadClusterRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="BulkLoadClusterRequest-parent" class="deprecated ">
+<td><code>parent</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="BulkLoadClusterRequest-clusters" class="deprecated ">
+<td><code>clusters</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/physical/v1/resources.html#BulkLoadClusterRequest-ClusterWithNamespaces">ClusterWithNamespaces[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="GetAllPhysicalResourcesRequest">GetAllPhysicalResourcesRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="GetAllPhysicalResourcesRequest-parent">
+<td><code>parent</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetAllPhysicalResourcesRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetAllPhysicalResourcesRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="GetAllPhysicalResourcesResponse">GetAllPhysicalResourcesResponse</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="GetAllPhysicalResourcesResponse-clusters">
+<td><code>clusters</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/physical/v1/resources.html#Cluster">Cluster[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetAllPhysicalResourcesResponse-namespaces">
+<td><code>namespaces</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/physical/v1/resources.html#Namespace">Namespace[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetAllPhysicalResourcesResponse-deployments">
+<td><code>deployments</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/physical/v1/resources.html#Deployment">Deployment[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetAllPhysicalResourcesResponse-endpoints">
+<td><code>endpoints</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/physical/v1/resources.html#Endpoint">Endpoint[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="BulkLoadClusterRequest-ClusterWithNamespaces">BulkLoadClusterRequest.ClusterWithNamespaces</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="BulkLoadClusterRequest-ClusterWithNamespaces-cluster">
+<td><code>cluster</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/physical/v1/resources.html#Cluster">Cluster</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="BulkLoadClusterRequest-ClusterWithNamespaces-namespaces">
+<td><code>namespaces</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/physical/v1/resources.html#BulkLoadClusterRequest-NamespaceWithDeployments">NamespaceWithDeployments[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="BulkLoadClusterRequest-NamespaceWithDeployments">BulkLoadClusterRequest.NamespaceWithDeployments</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="BulkLoadClusterRequest-NamespaceWithDeployments-namespace">
+<td><code>namespace</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/physical/v1/resources.html#Namespace">Namespace</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="BulkLoadClusterRequest-NamespaceWithDeployments-deployments">
+<td><code>deployments</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/physical/v1/resources.html#BulkLoadClusterRequest-DeploymentWithEndpoints">DeploymentWithEndpoints[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="BulkLoadClusterRequest-DeploymentWithEndpoints">BulkLoadClusterRequest.DeploymentWithEndpoints</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="BulkLoadClusterRequest-DeploymentWithEndpoints-deployment">
+<td><code>deployment</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/physical/v1/resources.html#Deployment">Deployment</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="BulkLoadClusterRequest-DeploymentWithEndpoints-endpoints">
+<td><code>endpoints</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/physical/v1/resources.html#Endpoint">Endpoint[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ServiceDefinition">ServiceDefinition</h3>
+<section>
+<p>ServiceDefinition describes the properties of services running on
+VMs or services outside the mesh. This service definition is
+intended to be authored by the cluster operator where access to
+this service is desired.</p>
+
+<p>The following example declares a VM service called <code>details</code> in the
+<code>bookinfo</code> namespace. The service has no sidecars and requires
+simple TLS connections. The VM service is expected to receive
+traffic from the ingress Gateway.</p>
+
+<pre><code class="language-yaml">apiVersion: registry.tetrate.io/v1alpha1
+kind: ServiceDefinition
+metadata:
+  name: details
+  namespace: bookinfo
+spec:
+  hostname: details.prod.internal.company.com
+  ports:
+  - number: 80
+    name: http
+    protocol: HTTP
+  - number: 443
+    name: https
+    protocol: HTTPS
+  sidecarsPresent: false
+  externalServiceTlsSettings:
+    tlsMode: SIMPLE
+    caCertificates: /path/to/ca/cert/to/verify/server/cert
+  endpointSource:
+    manual:
+      values:
+      - address: 1.1.1.1
+      - address: 2.2.2.2
+</code></pre>
+
+<p>In the above example, services in the bookinfo namespace can access
+the details service by using
+https://details.prod.internal.company.com . The sidecar would do a
+SNI Passthrough and load balance the traffic among the two
+endpoints. Alternatively, they could also access the service as
+plaintext http://details.prod.internal.company.com. The Sidecar in
+a kubernetes pod would intercept the traffic, and initiate simple
+TLS connection to the destination appropriately.</p>
+
+<p>The following example declares a <code>ratings</code> service in the
+<code>bookinfo</code> namespace that represents workloads running on a VM with
+sidecars installed with IPtables traffic capture, with access to
+mutual TLS certificates.</p>
+
+<pre><code class="language-yaml">apiVersion: registry.tetrate.io/v1alpha1
+kind: ServiceDefinition
+metadata:
+  name: ratings
+  namespace: bookinfo
+spec:
+  hostname: ratings.prod.internal.company.com
+  ports:
+  - number: 80
+    name: http
+    protocol: HTTP
+  sidecarsPresent: true
+  endpointSource:
+    manual:
+      values:
+      - address: 3.3.3.3
+      - address: 4.4.4.4
+</code></pre>
+
+<p>In the above example, services in the bookinfo namespace can access
+the ratings service by using
+http://ratings.prod.internal.company.com . The sidecar on
+kubernetes would intercept the traffic and initiate mutual TLS
+connection to the VM sidecar on port 80. The VM sidecar, after TLS
+termination, would forward the traffic to the application process
+on 127.0.0.1:80.</p>
+
+<p>Developing on the previous example, if the VM Service does not have
+IPtables based traffic capture, the application process has to
+either listen on a different port than port 80, or it has to listen
+only on 127.0.0.1 and not on 0.0.0.0. Let us assume that the
+application process is listening on port 9080. The sidecar would
+receive traffic on port 80, do TLS termination and forward the
+traffic to the application process on 127.0.0.1:9080.</p>
+
+<pre><code class="language-yaml">apiVersion: registry.tetrate.io/v1alpha1
+kind: ServiceDefinition
+metadata:
+  name: ratings
+  namespace: bookinfo
+spec:
+  hostname: ratings.prod.internal.company.com
+  ports:
+  - number: 80
+    name: http
+    protocol: HTTP
+    applicationPort: 9080 # where the app process is listening
+  sidecarsPresent: true
+  sidecarSettings:
+    usingIptablesCapture: false
+  endpointSource:
+    manual:
+      values:
+      - address: 3.3.3.3
+      - address: 4.4.4.4
+</code></pre>
+
+<p>In the above example, all outbound traffic from the application
+process will not transit through the sidecar. Let us assume that
+the application wishes to interact with the <code>details</code> VM services in the
+same namespace using the sidecar. The application process can
+choose to use the sidecar in the outbound path as well by treating
+it as a HTTP Proxy on localhost. By setting the HTTP_PROXY
+environment variable to http://localhost:15080, or using a language
+runtime specific option, all outbound plaintext HTTP traffic from
+the application process will be forwarded to the sidecar on port
+15080. The sidecar would then initiate mutual TLS connections or simple TLS connections as
+appropriate to other services in the mesh.</p>
+
+<pre><code class="language-yaml">apiVersion: registry.tetrate.io/v1alpha1
+kind: ServiceDefinition
+metadata:
+  name: ratings
+  namespace: bookinfo
+spec:
+  hostname: ratings.prod.internal.company.com
+  ports:
+  - number: 80
+    name: http
+    protocol: HTTP
+    applicationPort: 9080 # where the app process is listening
+  sidecarsPresent: true
+  sidecarSettings:
+    usingIptablesCapture: false
+    egressHttpProxyPort: 15080 # outbound traffic explicitly sent here.
+  endpointSource:
+    manual:
+      values:
+      - address: 3.3.3.3
+      - address: 4.4.4.4
+</code></pre>
+
+<p>Instead of specifying the endpoints manually, it is possible to automatically obtain the
+list of endpoints from external sources. The appropriate endpoint controller must be installed
+in TSB Local Control Plane for this to work. The following example demonstrates reading the
+endpoints of the ratings service directly from VMware vCenter.</p>
+
+<pre><code class="language-yaml">apiVersion: registry.tetrate.io/v1alpha1
+kind: ServiceDefinition
+metadata:
+  name: ratings
+  namespace: bookinfo
+spec:
+  hostname: ratings.prod.internal.company.com
+  ports:
+  - number: 80
+    name: http
+    protocol: HTTP
+    applicationPort: 9080 # where the app process is listening
+  sidecarsPresent: true
+  sidecarSettings:
+    usingIptablesCapture: false
+    egressHttpProxyPort: 15080 # outbound traffic explicitly sent here.
+  endpointSource:
+    vmware:
+      context: us-dal01 # must match key in the secrets containing the list of vCenter URLs with
+      username/passwords.
+      guestNetwork: &quot;vm-prod-1&quot; # Only get the IPs of VM NICs in this network.
+      vmResourcePaths: # the inventory path
+      - /dal01/vm/apps/bookinfo/ratings-01
+      - /dal01/vm/apps/bookinfo/ratings-02
+      - /dal01/vm/apps/bookinfo/ratings-03
+</code></pre>
+
+<p>In the above example, the IP addresses assigned to the NICs
+belonging to the &ldquo;vm-prod-1&rdquo; network in the VMs with the specified
+inventory paths will be automatically added as endpoints to the
+ratings service and populated in the TSB catalog.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ServiceDefinition-hostname">
+<td><code>hostname</code></td>
+<td><code>string</code></td>
+<td>
+<p>Hostname by which this service will be accessed.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ServiceDefinition-ports">
+<td><code>ports</code></td>
+<td><code><a href="#Port">Port[]</a></code></td>
+<td>
+<p>List of ports and protocols associated with the service.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ServiceDefinition-sidecars_present">
+<td><code>sidecarsPresent</code></td>
+<td><code>bool</code></td>
+<td>
+<p>If set to true, all communication with the endpoints will be over
+mutual TLS. If set to false, TLS settings for communicating with
+the service must be specified explicitly.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ServiceDefinition-sidecar_settings">
+<td><code>sidecarSettings</code></td>
+<td><code><a href="#SidecarSettings">SidecarSettings</a></code></td>
+<td>
+<p>Settings for the sidecar on the VM. If omitted, and
+sidecarsPresent is set to true, the VM will
+be assumed to have sidecars with Istio mutual TLS enabled.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ServiceDefinition-external_service_tls_settings">
+<td><code>externalServiceTlsSettings</code></td>
+<td><code><a href="#TLSSettings">TLSSettings</a></code></td>
+<td>
+<p>When sidecars are not present, the service is assumed to be
+outside the mesh. Specify the TLS settings that client side
+proxies such as Gateways or Sidecars should use to talk to this
+service.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ServiceDefinition-subject_alt_names">
+<td><code>subjectAltNames</code></td>
+<td><code>string[]</code></td>
+<td>
+<p>The list of subject alternate names allowed for workload
+instances that implement this service. This information is used
+to enforce
+<a href="https://istio.io/docs/concepts/security/#secure-naming">secure-naming</a>
+on the client side.  If specified, the client side proxy will
+verify that the server certificate&rsquo;s subject alternate name
+matches one of the specified values.  If omitted, defaults to the
+SAN corresponding to the default service account in the namespace
+where this resource is defined.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ServiceDefinition-endpoint_source">
+<td><code>endpointSource</code></td>
+<td><code><a href="#ServiceDefinition-EndpointSource">EndpointSource</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="SidecarSettings">SidecarSettings</h3>
+<section>
+<p>Settings for the sidecar running on the VMs corresponding to the
+service.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="SidecarSettings-using_iptables_capture">
+<td><code>usingIptablesCapture</code></td>
+<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#boolvalue">BoolValue</a></code></td>
+<td>
+<p>Set to true if the sidecar has IPtables to capture all inbound
+and outbound traffic from the user application
+process. Defaults to true.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="SidecarSettings-egress_http_proxy_port">
+<td><code>egressHttpProxyPort</code></td>
+<td><code>uint32</code></td>
+<td>
+<p>In workloads where IPtables capture is not used, outbound HTTP
+traffic from the application can be proxied though the local
+sidecar on a specific port. To utilize this feature, HTTP proxy
+should be enabled (either via environment variable
+<code>HTTP_PROXY=http://localhost:PORT/</code>, or language runtime
+specific options). Calls from the application for
+http://foo.bar.com will be routed to the local sidecar, which
+in turn will route the call appropriately to the destination
+over mutual TLS.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="StaticEndpoint">StaticEndpoint</h3>
+<section>
+<p>Endpoint defines a network IP address associated with the service.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="StaticEndpoint-address">
+<td><code>address</code></td>
+<td><code>string</code></td>
+<td>
+<p>REQUIRED: Address associated with the network endpoint without the
+port.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="StaticEndpoint-ports">
+<td><code>ports</code></td>
+<td><code>map&lt;string,&nbsp;uint32&gt;</code></td>
+<td>
+<p>Set of ports associated with the endpoint. The ports must be
+associated with a port name that was declared as part of the
+service. If omitted, the endpoint will be assumed to have the same ports
+as the service.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="StaticEndpoint-labels">
+<td><code>labels</code></td>
+<td><code>map&lt;string,&nbsp;string&gt;</code></td>
+<td>
+<p>One or more labels associated with the endpoint.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="StaticEndpoint-locality">
+<td><code>locality</code></td>
+<td><code>string</code></td>
+<td>
+<p>The locality associated with the endpoint. A locality corresponds
+to a failure domain (e.g., country/region/zone). Arbitrary failure
+domain hierarchies can be represented by separating each
+encapsulating failure domain by /. For example, the locality of an
+an endpoint in US, in US-East-1 region, within availability zone
+az-1, in data center rack r11 can be represented as
+us/us-east-1/az-1/r11. Istio will configure the sidecar to route to
+endpoints within the same locality as the sidecar. If none of the
+endpoints in the locality are available, endpoints parent locality
+(but within the same network ID) will be chosen. For example, if
+there are two endpoints in same network (networkID &ldquo;n1&rdquo;), say e1
+with locality us/us-east-1/az-1/r11 and e2 with locality
+us/us-east-1/az-2/r12, a sidecar from us/us-east-1/az-1/r11 locality
+will prefer e1 from the same locality over e2 from a different
+locality. Endpoint e2 could be the IP associated with a gateway
+(that bridges networks n1 and n2), or the IP associated with a
+standard service endpoint.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="StaticEndpoint-weight">
+<td><code>weight</code></td>
+<td><code>uint32</code></td>
+<td>
+<p>The load balancing weight associated with the endpoint. Endpoints
+with higher weights will receive proportionally higher traffic.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ServiceDefinition-ManualSource">ServiceDefinition.ManualSource</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ServiceDefinition-ManualSource-values">
+<td><code>values</code></td>
+<td><code><a href="#StaticEndpoint">StaticEndpoint[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ServiceDefinition-AWSSource">ServiceDefinition.AWSSource</h3>
+<section>
+</section>
+<h3 id="ServiceDefinition-GCPSource">ServiceDefinition.GCPSource</h3>
+<section>
+</section>
+<h3 id="ServiceDefinition-AzureSource">ServiceDefinition.AzureSource</h3>
+<section>
+</section>
+<h3 id="ServiceDefinition-VMwareSource">ServiceDefinition.VMwareSource</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ServiceDefinition-VMwareSource-context">
+<td><code>context</code></td>
+<td><code>string</code></td>
+<td>
+<p>REQUIRED. The key in the secret that maps to the vCenter to
+use. A kubernetes secret with a map of key-&gt;vCenter URLs (in
+https://user:password@host:port/sdk format) must be mounted in
+tsbd pod and supplied using the vmware-credentials-file command
+line argument.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ServiceDefinition-VMwareSource-guest_network">
+<td><code>guestNetwork</code></td>
+<td><code>string</code></td>
+<td>
+<p>When selecting the VM IP address to use on a VM with multiple
+NICs where each NIC is attached to a different network, the
+guestNetwork field determines the network/NIC whose IP
+addresses can be used. If omitted, the IP address from
+guest.IpAddress property (i.e. the default reported in vCenter)
+will be used. Can be omitted if VMs have only one NIC.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ServiceDefinition-VMwareSource-vm_resource_paths">
+<td><code>vmResourcePaths</code></td>
+<td><code>string[]</code></td>
+<td>
+<p>The full (case sensitive) inventory path to the VM resources in
+the vCenter inventory. E.g., /dc0/vm/folder1/folder2/vm-name</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ServiceDefinition-RESTSource">ServiceDefinition.RESTSource</h3>
+<section>
+<p>TSB Local will call out to the API endpoint specified here
+with details of the application/service and will expect
+a list of endpoints in return.</p>
+
+</section>
+<h3 id="ServiceDefinition-EndpointSource">ServiceDefinition.EndpointSource</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ServiceDefinition-EndpointSource-manual">
+<td><code>manual</code></td>
+<td><code><a href="#ServiceDefinition-ManualSource">ManualSource</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ServiceDefinition-EndpointSource-aws">
+<td><code>aws</code></td>
+<td><code><a href="#ServiceDefinition-AWSSource">AWSSource</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ServiceDefinition-EndpointSource-gcp">
+<td><code>gcp</code></td>
+<td><code><a href="#ServiceDefinition-GCPSource">GCPSource</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ServiceDefinition-EndpointSource-azure">
+<td><code>azure</code></td>
+<td><code><a href="#ServiceDefinition-AzureSource">AzureSource</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ServiceDefinition-EndpointSource-vmware">
+<td><code>vmware</code></td>
+<td><code><a href="#ServiceDefinition-VMwareSource">VMwareSource</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ServiceDefinition-EndpointSource-other">
+<td><code>other</code></td>
+<td><code><a href="#ServiceDefinition-RESTSource">RESTSource</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Version">Version</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Version-version">
+<td><code>version</code></td>
+<td><code>string</code></td>
+<td>
+<p>version is the TSB binary version</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="GetVersionRequest">GetVersionRequest</h3>
+<section>
+</section>
+<h3 id="RegistryUpdateResourcesRequest">RegistryUpdateResourcesRequest</h3>
+<section>
+<p>RegistryUpdateResourcesRequest request object.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="RegistryUpdateResourcesRequest-parent">
+<td><code>parent</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="RegistryUpdateResourcesRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+<p>Tenant where this service is residing e.g Tetrate.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="RegistryUpdateResourcesRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+<p>environment are higher-level isolations e.g. prod, staging, development, etc.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="RegistryUpdateResourcesRequest-cluster">
+<td><code>cluster</code></td>
+<td><code>string</code></td>
+<td>
+<p>Unique cluster acting as a source.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="RegistryUpdateResourcesRequest-registrytype">
+<td><code>registrytype</code></td>
+<td><code>string</code></td>
+<td>
+<p>registrytype indicates source of entry. Currently accepted values &ldquo;kubernetes&rdquo;, &ldquo;f5&rdquo;.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="RegistryUpdateResourcesRequest-payload">
+<td><code>payload</code></td>
+<td><code>string</code></td>
+<td>
+<p>JSON bulk payload of all physical resources.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="RegistryConsumerResponse">RegistryConsumerResponse</h3>
+<section>
+<p>RegistryConsumerResponse response returned by server.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="RegistryConsumerResponse-status">
+<td><code>status</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Environment">Environment</h3>
+<section>
+<p>Environment</p>
+
+<p>Environment is a collection of applications, services, load balancers, and clusters where they
+are deployed.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Environment-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Environment-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+<p>Tenant.Id.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Environment-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+<p>A short name for the environment (e.g,, dev, stage, us-1, etc.).</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Environment-description">
+<td><code>description</code></td>
+<td><code>string</code></td>
+<td>
+<p>Additional information for readability.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Environment-client_settings">
+<td><code>clientSettings</code></td>
+<td><code><a href="#ClientSettings">ClientSettings</a></code></td>
+<td>
+<p>Resilience settings that apply to all clusters in the environment.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Environment-etag">
+<td><code>etag</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="CreateEnvironmentRequest">CreateEnvironmentRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="CreateEnvironmentRequest-parent">
+<td><code>parent</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateEnvironmentRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateEnvironmentRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+<p>If present, this will be used as the id for the created object.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateEnvironmentRequest-description">
+<td><code>description</code></td>
+<td><code>string</code></td>
+<td>
+<p>Additional information for readability.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateEnvironmentRequest-client_settings">
+<td><code>clientSettings</code></td>
+<td><code><a href="#ClientSettings">ClientSettings</a></code></td>
+<td>
+<p>Resilience settings that apply to all clusters in the environment.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="GetEnvironmentRequest">GetEnvironmentRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="GetEnvironmentRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetEnvironmentRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetEnvironmentRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="EnvironmentPolicyRequest">EnvironmentPolicyRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="EnvironmentPolicyRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="EnvironmentPolicyRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="EnvironmentPolicyRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="EnvironmentPolicyRequest-policy">
+<td><code>policy</code></td>
+<td><code><a href="#tetrateio-api-q-rbac-v1-Policy">Policy</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ListEnvironmentsRequest">ListEnvironmentsRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ListEnvironmentsRequest-parent">
+<td><code>parent</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ListEnvironmentsRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ListEnvironmentsResponse">ListEnvironmentsResponse</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ListEnvironmentsResponse-environments">
+<td><code>environments</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/logical/v1/resources.html#Environment">Environment[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="DeleteEnvironmentRequest">DeleteEnvironmentRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="DeleteEnvironmentRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="DeleteEnvironmentRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="DeleteEnvironmentRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Application">Application</h3>
+<section>
+<p>Application</p>
+
+<p>An Application is a collection of services. Each application typically corresponds to one or more
+kubernetes namespace or an application deployment on VMs.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Application-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Application-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+<p>Tenant.Id.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Application-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+<p>Environment.Id.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Application-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+<p>short name for the application.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Application-description">
+<td><code>description</code></td>
+<td><code>string</code></td>
+<td>
+<p>Additional information.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Application-client_settings">
+<td><code>clientSettings</code></td>
+<td><code><a href="#ClientSettings">ClientSettings</a></code></td>
+<td>
+<p>Resilience settings that apply to all services within the application, for outbound calls from
+the application&rsquo;s services to other services in the application or to other applications.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Application-namespaces">
+<td><code>namespaces</code></td>
+<td><code>string[]</code></td>
+<td>
+<p>List of namespaces where the application services (or components) are scoped within. If
+omitted, the application is assumed to be scoped in a namespace matching the Id field.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Application-force_mtls_between_services">
+<td><code>forceMtlsBetweenServices</code></td>
+<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#boolvalue">BoolValue</a></code></td>
+<td>
+<p>Indicates whether communication between services in the application should use ONLY mutual TLS
+or not. Defaults to false if not specified. Applications that have services without sidecars
+should set this value to false.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Application-alert_settings">
+<td><code>alertSettings</code></td>
+<td><code><a href="#tetrateio-api-tcc-spm-alert-v1-Settings">Settings</a></code></td>
+<td>
+<p>Alert settings for certain metrics of this application. E.g. SLA rule.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Application-etag">
+<td><code>etag</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="CreateApplicationRequest">CreateApplicationRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="CreateApplicationRequest-parent">
+<td><code>parent</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateApplicationRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+<p>Tenant.Id.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateApplicationRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+<p>Environment.Id.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateApplicationRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+<p>short name for the application.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateApplicationRequest-description">
+<td><code>description</code></td>
+<td><code>string</code></td>
+<td>
+<p>Additional information.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateApplicationRequest-client_settings">
+<td><code>clientSettings</code></td>
+<td><code><a href="#ClientSettings">ClientSettings</a></code></td>
+<td>
+<p>Resilience settings that apply to all services within the application, for outbound calls from
+the application&rsquo;s services to other services.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateApplicationRequest-namespaces">
+<td><code>namespaces</code></td>
+<td><code>string[]</code></td>
+<td>
+<p>List of namespaces where the application services (or components) are scoped within. If
+omitted, the application is assumed to be scoped in a namespace matching the Id field.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateApplicationRequest-force_mtls_between_services">
+<td><code>forceMtlsBetweenServices</code></td>
+<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#boolvalue">BoolValue</a></code></td>
+<td>
+<p>Indicates whether communication between services in the application should use ONLY mutual TLS
+or not. Defaults to false if not specified. Applications that have services without sidecars
+should set this value to false.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateApplicationRequest-alert_settings">
+<td><code>alertSettings</code></td>
+<td><code><a href="#tetrateio-api-tcc-spm-alert-v1-Settings">Settings</a></code></td>
+<td>
+<p>Alert settings for certain metrics of this application. E.g. SLA rule.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="GetApplicationRequest">GetApplicationRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="GetApplicationRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetApplicationRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetApplicationRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetApplicationRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ApplicationPolicyRequest">ApplicationPolicyRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ApplicationPolicyRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ApplicationPolicyRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ApplicationPolicyRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ApplicationPolicyRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ApplicationPolicyRequest-policy">
+<td><code>policy</code></td>
+<td><code><a href="#tetrateio-api-q-rbac-v1-Policy">Policy</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ApplicationAuthzPolicyRequest">ApplicationAuthzPolicyRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ApplicationAuthzPolicyRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ApplicationAuthzPolicyRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ApplicationAuthzPolicyRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ApplicationAuthzPolicyRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ApplicationAuthzPolicyRequest-policy">
+<td><code>policy</code></td>
+<td><code><a href="#tetrateio-api-authz-v1-Policy">Policy</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ListApplicationsRequest">ListApplicationsRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ListApplicationsRequest-parent">
+<td><code>parent</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ListApplicationsRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ListApplicationsRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ListApplicationsResponse">ListApplicationsResponse</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ListApplicationsResponse-applications">
+<td><code>applications</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/logical/v1/resources.html#Application">Application[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="DeleteApplicationRequest">DeleteApplicationRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="DeleteApplicationRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="DeleteApplicationRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="DeleteApplicationRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="DeleteApplicationRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="GetAllLogicalResourcesRequest">GetAllLogicalResourcesRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="GetAllLogicalResourcesRequest-parent">
+<td><code>parent</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetAllLogicalResourcesRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetAllLogicalResourcesRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="GetAllLogicalResourcesResponse">GetAllLogicalResourcesResponse</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="GetAllLogicalResourcesResponse-applications">
+<td><code>applications</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/logical/v1/resources.html#Application">Application[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetAllLogicalResourcesResponse-services">
+<td><code>services</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/logical/v1/resources.html#Service">Service[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="GetAllEnvironmentResourcesRequest">GetAllEnvironmentResourcesRequest</h3>
+<section>
+<p>Includes physical and logical</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="GetAllEnvironmentResourcesRequest-parent">
+<td><code>parent</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetAllEnvironmentResourcesRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetAllEnvironmentResourcesRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="GetAllEnvironmentResourcesResponse">GetAllEnvironmentResourcesResponse</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="GetAllEnvironmentResourcesResponse-services">
+<td><code>services</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/logical/v1/resources.html#Service">Service[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetAllEnvironmentResourcesResponse-clusters">
+<td><code>clusters</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/physical/v1/resources.html#Cluster">Cluster[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetAllEnvironmentResourcesResponse-namespaces">
+<td><code>namespaces</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/physical/v1/resources.html#Namespace">Namespace[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetAllEnvironmentResourcesResponse-deployments">
+<td><code>deployments</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/physical/v1/resources.html#Deployment">Deployment[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetAllEnvironmentResourcesResponse-apps">
+<td><code>apps</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/logical/v1/resources.html#Application">Application[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetAllEnvironmentResourcesResponse-authz_policies">
+<td><code>authzPolicies</code></td>
+<td><code>map&lt;string,&nbsp;<a href="#tetrateio-api-authz-v1-Policy">Policy</a>&gt;</code></td>
+<td>
+<p>authz_policies contains the AuthZ policies for the different resources (Applications, Services)
+indexed by the resource fully qualified name.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetAllEnvironmentResourcesResponse-applications" class="deprecated ">
+<td><code>applications</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/logical/v1/resources.html#GetAllEnvironmentResourcesResponse-ApplicationDetails">ApplicationDetails[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Service">Service</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Service-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Service-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+<p>Tenant.Id.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Service-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+<p>Environment.Id.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Service-application">
+<td><code>application</code></td>
+<td><code>string</code></td>
+<td>
+<p>Application.Id.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Service-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+<p>Short name for the service. Clusters are expected to have namespaces that match the
+application, and services that match the Id, especially on Kubernetes.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Service-description">
+<td><code>description</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Service-hostname">
+<td><code>hostname</code></td>
+<td><code>string</code></td>
+<td>
+<p>FQDN hostname of the service.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Service-labels">
+<td><code>labels</code></td>
+<td><code>map&lt;string,&nbsp;string&gt;</code></td>
+<td>
+<p>User identifiable tags associated with this service.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Service-ports">
+<td><code>ports</code></td>
+<td><code><a href="#Port">Port[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Service-etag">
+<td><code>etag</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Service-namespace">
+<td><code>namespace</code></td>
+<td><code>string</code></td>
+<td>
+<p>Namespace where the service is scoped and should be one of application namespaces. If the
+application has only one namespace and if this field is omitted, this filed would default to
+the application namespace. This field cannot be omitted if the application has more than one
+namespace.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Service-subsets">
+<td><code>subsets</code></td>
+<td><code><a href="#Subset">Subset[]</a></code></td>
+<td>
+<p>One or more versions of the service. Each version has a distinct name and a set of labels that
+help uniquely identify the pods/VMs of that version.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Service-service_type">
+<td><code>serviceType</code></td>
+<td><code><a href="#ServiceType">ServiceType</a></code></td>
+<td>
+<p>Internal/external/load balancer service. External services can be created only in the &ldquo;system&rdquo;
+application.  Load balancer services in the &ldquo;system&rdquo; application act as shared load balancers
+for the entire cluster, while those under user created applications act as a dedicated load
+balancer for that application. Defaults to internal.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Service-lb_settings" class="oneof oneof-start">
+<td><code>lbSettings</code></td>
+<td><code><a href="#LBRouteSettings">LBRouteSettings (oneof)</a></code></td>
+<td>
+<p>Allowed only if the service is of type load balancer.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Service-internal_routes" class="oneof">
+<td><code>internalRoutes</code></td>
+<td><code><a href="#InternalRouteSettings">InternalRouteSettings (oneof)</a></code></td>
+<td>
+<p>Allowed only if the service is of type internal.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Service-external_routes" class="oneof">
+<td><code>externalRoutes</code></td>
+<td><code><a href="#ExternalRouteSettings">ExternalRouteSettings (oneof)</a></code></td>
+<td>
+<p>Allowed only if the service is of type external.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Service-alert_settings">
+<td><code>alertSettings</code></td>
+<td><code><a href="#tetrateio-api-tcc-spm-alert-v1-Settings">Settings</a></code></td>
+<td>
+<p>Alert settings for certain metrics of this service. E.g. SLA rule.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="CreateServiceRequest">CreateServiceRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="CreateServiceRequest-parent">
+<td><code>parent</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateServiceRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+<p>Tenant.Id.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateServiceRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+<p>Environment.Id.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateServiceRequest-application">
+<td><code>application</code></td>
+<td><code>string</code></td>
+<td>
+<p>Application.Id.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateServiceRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+<p>If present, this will be used as the id for the created object.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateServiceRequest-description">
+<td><code>description</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateServiceRequest-hostname">
+<td><code>hostname</code></td>
+<td><code>string</code></td>
+<td>
+<p>FQDN hostname of the service.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateServiceRequest-labels">
+<td><code>labels</code></td>
+<td><code>map&lt;string,&nbsp;string&gt;</code></td>
+<td>
+<p>User identifiable tags associated with this service.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateServiceRequest-ports">
+<td><code>ports</code></td>
+<td><code><a href="#Port">Port[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateServiceRequest-namespace">
+<td><code>namespace</code></td>
+<td><code>string</code></td>
+<td>
+<p>Namespace where the service is scoped. It should be one of application namespaces. If the
+application has only one namespace and if this field is omitted, this filed would default to
+the application namespace. This field cannot be omitted if the application has more than one
+namespace.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateServiceRequest-subsets">
+<td><code>subsets</code></td>
+<td><code><a href="#Subset">Subset[]</a></code></td>
+<td>
+<p>One or more versions of the service. Each version has a distinct name and a set of labels that
+help uniquely identify the pods/VMs of that version.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateServiceRequest-service_type">
+<td><code>serviceType</code></td>
+<td><code><a href="#ServiceType">ServiceType</a></code></td>
+<td>
+<p>Internal/external/load balancer service. External services can be created only in the &ldquo;system&rdquo;
+application.  Load balancer services in the &ldquo;system&rdquo; application act as shared load balancers
+for the entire cluster, while those under user created applications act as a dedicated load
+balancer for that application. Defaults to internal.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateServiceRequest-lb_settings" class="oneof oneof-start">
+<td><code>lbSettings</code></td>
+<td><code><a href="#LBRouteSettings">LBRouteSettings (oneof)</a></code></td>
+<td>
+<p>Allowed only if the service is of type load balancer.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateServiceRequest-internal_routes" class="oneof">
+<td><code>internalRoutes</code></td>
+<td><code><a href="#InternalRouteSettings">InternalRouteSettings (oneof)</a></code></td>
+<td>
+<p>Allowed only if the service is of type internal.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateServiceRequest-external_routes" class="oneof">
+<td><code>externalRoutes</code></td>
+<td><code><a href="#ExternalRouteSettings">ExternalRouteSettings (oneof)</a></code></td>
+<td>
+<p>Allowed only if the service is of type external.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="CreateServiceRequest-alert_settings">
+<td><code>alertSettings</code></td>
+<td><code><a href="#tetrateio-api-tcc-spm-alert-v1-Settings">Settings</a></code></td>
+<td>
+<p>Alert settings for certain metrics of this service. E.g. SLA rule.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="GetServiceRequest">GetServiceRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="GetServiceRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetServiceRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetServiceRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetServiceRequest-application">
+<td><code>application</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetServiceRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ServicePolicyRequest">ServicePolicyRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ServicePolicyRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ServicePolicyRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ServicePolicyRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ServicePolicyRequest-application">
+<td><code>application</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ServicePolicyRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ServicePolicyRequest-policy">
+<td><code>policy</code></td>
+<td><code><a href="#tetrateio-api-q-rbac-v1-Policy">Policy</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ServiceAuthzPolicyRequest">ServiceAuthzPolicyRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ServiceAuthzPolicyRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ServiceAuthzPolicyRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ServiceAuthzPolicyRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ServiceAuthzPolicyRequest-application">
+<td><code>application</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ServiceAuthzPolicyRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ServiceAuthzPolicyRequest-policy">
+<td><code>policy</code></td>
+<td><code><a href="#tetrateio-api-authz-v1-Policy">Policy</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ListServicesRequest">ListServicesRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ListServicesRequest-parent">
+<td><code>parent</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ListServicesRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ListServicesRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ListServicesRequest-application">
+<td><code>application</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ListServicesResponse">ListServicesResponse</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ListServicesResponse-services">
+<td><code>services</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/logical/v1/resources.html#Service">Service[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="DeleteServiceRequest">DeleteServiceRequest</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="DeleteServiceRequest-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Internal use only. Auto populated field.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="DeleteServiceRequest-tenant">
+<td><code>tenant</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="DeleteServiceRequest-environment">
+<td><code>environment</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="DeleteServiceRequest-application">
+<td><code>application</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="DeleteServiceRequest-id">
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="GetAllEnvironmentResourcesResponse-ApplicationDetails">GetAllEnvironmentResourcesResponse.ApplicationDetails</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="GetAllEnvironmentResourcesResponse-ApplicationDetails-application">
+<td><code>application</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/logical/v1/resources.html#Application">Application</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="GetAllEnvironmentResourcesResponse-ApplicationDetails-policy">
+<td><code>policy</code></td>
+<td><code><a href="#tetrateio-api-authz-v1-Policy">Policy</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="tetrateio-api-tcc-spm-alert-v1-Settings">tetrateio.api.tcc.spm.alert.v1.Settings</h3>
+<section>
+<p>Settings</p>
+
+<p>A set of alert rules.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="tetrateio-api-tcc-spm-alert-v1-Settings-rules">
+<td><code>rules</code></td>
+<td><code>map&lt;string,&nbsp;<a href="#tetrateio-api-tcc-spm-alert-v1-Rule">Rule</a>&gt;</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="tetrateio-api-tcc-spm-alert-v1-Settings-notifications">
+<td><code>notifications</code></td>
+<td><code><a href="#tetrateio-api-tcc-spm-alert-v1-Notification">Notification[]</a></code></td>
+<td>
+<p>Application level notification settings.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="tetrateio-api-tcc-spm-alert-v1-Settings-recipients" class="deprecated ">
+<td><code>recipients</code></td>
+<td><code><a href="#tetrateio-api-tcc-spm-alert-v1-Recipient">Recipient[]</a></code></td>
+<td>
+<p>Recipient list. This field is deprecated.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="tetrateio-api-authz-v1-Policy">tetrateio.api.authz.v1.Policy</h3>
+<section>
+<p>Runtime Authorization Policy</p>
+
+<p>Runtime authorization policies are attached to specific resources and define which subjects,
+and under which conditions, are allowed to access them.
+Different subjects can be configured to access the target resource with different conditions
+by setting multiple bindings in the same policy.</p>
+
+<p>The default authorization policy allows access between services within an application, and denies
+cross-application traffic. Traffic between applications must be explicitly enabled by applying
+the corresponding access policy in the target application.</p>
+
+<p>THe following examples show some common policies:</p>
+
+<pre><code># Default deny policy for applications. The absence of bindings means that there is no
+# access allowed from outside the application.
+policy:
+
+# Allow access from the 'bookinfo' application. Requests from the client application
+# present a JWT token for the 'bookinfo' application.
+policy:
+  bindings:
+  - from:
+    - jwt:
+        principal: bookinfo
+        audience: tsb
+        claims:
+          group: applications
+
+# Allow access from the 'bookinfo' application, but only to the '/v1/*'
+# HTTP paths, and only for GET and HEAD requests, on the 'bookinfo.com' host.
+policy:
+  bindings:
+  - from:
+    - jwt:
+        principal: bookinfo
+        audience: tsb
+        claims:
+          group: applications
+    allow_http:
+      to:
+      - paths:
+        - /v1/*
+        hosts:
+        - bookinfo.com
+        methods:
+        - GET
+        - HEAD
+
+# Allow access from the 'bookinfo' application, but only to the '/v1/*'
+# HTTP paths, and only for GET and HEAD requests, on the 'bookinfo.com' host.
+# In this example the client application is identified by checking the value of
+# the 'X-App-Id' request header.
+policy:
+  bindings:
+  - from:
+    - request_headers:
+        X-App-Id: bookinfo
+    allow_http:
+      to:
+      - paths:
+        - /v1/*
+        hosts:
+        - bookinfo.com
+        methods:
+        - GET
+        - HEAD
+
+# When applied to a service, allows traffic only from the configured identities.
+policy:
+  bindings:
+  - from:
+    - cluster_local_service_account: default/bookinfo-sa
+    - subject_alt_name: spiffe://cluster.local/ns/default/sa/bookinfo-sa
+</code></pre>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="tetrateio-api-authz-v1-Policy-bindings">
+<td><code>bindings</code></td>
+<td><code><a href="#tetrateio-api-authz-v1-Binding">Binding[]</a></code></td>
+<td>
+<p>List of bindings that configure access to the target resource.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="tetrateio-api-authz-v1-Policy-etag">
+<td><code>etag</code></td>
+<td><code>string</code></td>
+<td>
+<p>Etag to guard concurrent modifications to the policy.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="TLSMode">TLSMode</h3>
+<section>
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="TLSMode-DISABLED">
+<td><code>DISABLED</code></td>
+<td>
+</td>
+</tr>
+<tr id="TLSMode-SIMPLE">
+<td><code>SIMPLE</code></td>
+<td>
+</td>
+</tr>
+<tr id="TLSMode-MUTUAL">
+<td><code>MUTUAL</code></td>
+<td>
+</td>
+</tr>
+<tr id="TLSMode-SNI_PASSTHROUGH">
+<td><code>SNI_PASSTHROUGH</code></td>
+<td>
+</td>
+</tr>
+<tr id="TLSMode-ISTIO_MUTUAL">
+<td><code>ISTIO_MUTUAL</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="RateLimitSettings-LimitBy">RateLimitSettings.LimitBy</h3>
+<section>
+<p>Available entity options to rate limit by.</p>
+
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="RateLimitSettings-LimitBy-IP">
+<td><code>IP</code></td>
+<td>
+<p>Limit by IP.</p>
+
+</td>
+</tr>
+<tr id="RateLimitSettings-LimitBy-USER">
+<td><code>USER</code></td>
+<td>
+<p>Limit by user. Basic auth must be enabled.</p>
+
+</td>
+</tr>
+<tr id="RateLimitSettings-LimitBy-NONE">
+<td><code>NONE</code></td>
+<td>
+<p>Limit without any entity. This will count all traffic incoming to the proxy for this
+LoadBalancer.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ServiceType">ServiceType</h3>
+<section>
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ServiceType-INTERNAL">
+<td><code>INTERNAL</code></td>
+<td>
+<p>An internal service in an application that is not exposed to the outside world.</p>
+
+</td>
+</tr>
+<tr id="ServiceType-LOADBALANCER">
+<td><code>LOADBALANCER</code></td>
+<td>
+<p>A load balancer service running only the proxy as the workload. A load balancer service inside
+an user application forwards traffic to other services in the application. A load balancer
+service inside the &ldquo;system&rdquo; application forwards traffic to services in other user
+applications.</p>
+
+</td>
+</tr>
+<tr id="ServiceType-EXTERNAL">
+<td><code>EXTERNAL</code></td>
+<td>
+<p>An external service (not in the mesh) accessed by the services in the application.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="LoadBalancerClass">LoadBalancerClass</h3>
+<section>
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="LoadBalancerClass-NONE">
+<td><code>NONE</code></td>
+<td>
+</td>
+</tr>
+<tr id="LoadBalancerClass-ENVOY">
+<td><code>ENVOY</code></td>
+<td>
+</td>
+</tr>
+<tr id="LoadBalancerClass-F5">
+<td><code>F5</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="LoadBalancerTier">LoadBalancerTier</h3>
+<section>
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="LoadBalancerTier-TIER_NOT_SET">
+<td><code>TIER_NOT_SET</code></td>
+<td>
+</td>
+</tr>
+<tr id="LoadBalancerTier-TIER1">
+<td><code>TIER1</code></td>
+<td>
+</td>
+</tr>
+<tr id="LoadBalancerTier-TIER2">
+<td><code>TIER2</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="Registry">Registry</h3>
+<section>
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Registry-UNKNOWN">
+<td><code>UNKNOWN</code></td>
+<td>
+</td>
+</tr>
+<tr id="Registry-KUBERNETES">
+<td><code>KUBERNETES</code></td>
+<td>
+</td>
+</tr>
+<tr id="Registry-VM">
+<td><code>VM</code></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="ClientSettings-Sensitivity">ClientSettings.Sensitivity</h3>
+<section>
+<p>Available sensitivity levels for the circuit breaker.</p>
+
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ClientSettings-Sensitivity-UNSET">
+<td><code>UNSET</code></td>
+<td>
+</td>
+</tr>
+<tr id="ClientSettings-Sensitivity-LOW">
+<td><code>LOW</code></td>
+<td>
+<p>Tolerate upto 20 consecutive 5xx or connection failures from an
+endpoint before ejecting it temporarily from the load balancing
+pool.</p>
+
+</td>
+</tr>
+<tr id="ClientSettings-Sensitivity-MEDIUM">
+<td><code>MEDIUM</code></td>
+<td>
+<p>Tolerate upto 10 consecutive 5xx or connection failures from an
+endpoint before ejecting it temporarily from the load balancing
+pool.</p>
+
+</td>
+</tr>
+<tr id="ClientSettings-Sensitivity-HIGH">
+<td><code>HIGH</code></td>
+<td>
+<p>Tolerate upto 5 consecutive 5xx or connection failures from an
+endpoint before ejecting it temporarily from the load balancing
+pool.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="SourceType">SourceType</h3>
+<section>
+<p>SourceType describes where users and teams come from</p>
+
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="SourceType-INVALID">
+<td><code>INVALID</code></td>
+<td>
+</td>
+</tr>
+<tr id="SourceType-LDAP">
+<td><code>LDAP</code></td>
+<td>
+<p>LDAP is used for users and teams that are automatically synchronized from LDAP</p>
+
+</td>
+</tr>
+<tr id="SourceType-LOCAL">
+<td><code>LOCAL</code></td>
+<td>
+<p>LOCAL is used for users and teams that are manually created using the TCC API and that
+are local to TCC.
+TODO(nacx): Users represent subjects that can be authenticated against an external identity
+Provider
+so it is unlikely that there will be local users. Instead of having local users, we should
+introduce the
+local service account concept as a proper entity in the model, and configure all TCC agents and
+the superuser
+as local service accounts.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>

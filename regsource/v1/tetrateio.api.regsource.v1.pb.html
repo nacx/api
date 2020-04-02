@@ -1,0 +1,97 @@
+---
+title: tetrateio.api.regsource.v1
+layout: protoc-gen-docs
+generator: protoc-gen-docs
+number_of_entries: 3
+---
+<h2 id="Services">Services</h2>
+<h3 id="RegSourceSyncService">RegSourceSyncService</h3>
+<section>
+<p>API that returns all active service instances in the cluster with their pod ip, subset,
+application, cluster and environment</p>
+
+<pre id="RegSourceSyncService-serviceInstanceSync"><code class="language-proto">rpc serviceInstanceSync(SyncRequest) returns (InstanceMetadata)
+</code></pre>
+</section>
+<h2 id="Types">Types</h2>
+<h3 id="SyncRequest">SyncRequest</h3>
+<section>
+</section>
+<h3 id="InstanceMetadata">InstanceMetadata</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="InstanceMetadata-ip">
+<td><code>ip</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="InstanceMetadata-instance">
+<td><code>instance</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="InstanceMetadata-subset">
+<td><code>subset</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="InstanceMetadata-service">
+<td><code>service</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="InstanceMetadata-namespace">
+<td><code>namespace</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="InstanceMetadata-cluster">
+<td><code>cluster</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="InstanceMetadata-env">
+<td><code>env</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>

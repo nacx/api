@@ -1,13 +1,13 @@
 // Copyright (c) Tetrate, Inc 2018 All Rights Reserved.
 syntax = "proto3";
 
-package tetrate.api.audit.v1;
-option go_package = "github.com/tetrateio/tetrate/api/audit/v1;auditv1";
+package tetrateio.api.audit.v1;
+option go_package = "github.com/tetrateio/api/audit/v1";
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
-import "validate/validate.proto";
+import "github.com/envoyproxy/protoc-gen-validate/validate/validate.proto";
 
 // Audit Service
 //

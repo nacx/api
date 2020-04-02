@@ -2,13 +2,13 @@
 
 syntax = "proto3";
 
-package tetrate.api.tcc.core.v1;
-option go_package = "github.com/tetrateio/tetrate/api/tcc/core/v1";
+package tetrateio.api.tcc.core.v1;
+option go_package = "github.com/tetrateio/api/tcc/core/v1";
 
 import "google/protobuf/duration.proto";
 import "google/protobuf/wrappers.proto";
-import "validate/validate.proto";
-import "tlssettings.proto";
+import "github.com/envoyproxy/protoc-gen-validate/validate/validate.proto";
+import "tcc/core/v1/tlssettings.proto";
 
 enum ServiceType {
   // An internal service in an application that is not exposed to the outside world.

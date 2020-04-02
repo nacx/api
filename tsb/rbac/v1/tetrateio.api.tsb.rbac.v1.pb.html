@@ -1,0 +1,452 @@
+---
+title: Role
+description: Configuration for creating various access roles.
+location: https://tetrate.io/docs/reference/config/rbac/v1/role.html
+layout: protoc-gen-docs
+generator: protoc-gen-docs
+number_of_entries: 10
+---
+<p><code>Role</code> is a named collection of permissions that can be assigned to
+any user or team in the system. The set of actions that can be
+performed by a user, such as the ability to create, delete, or
+update configuration will depend on the permissions associated with
+the user&rsquo;s role. Roles are tenant level resources that are defined
+once. <code>RoleBindings</code> in each configuration group will bind a user
+to a specific role defined apriori.</p>
+
+<p>The following example declares a <code>workspace-admin</code> role with the
+ability to create, delete configurations and the ability to set
+RBAC policies on the groups within the workspace.</p>
+
+<pre><code class="language-yaml">apiVersion: rbac.tsb.tetrate.io/v1
+kind: Role
+metadata:
+  name: role1
+  tenant: mycompany
+spec:
+  rules:
+  - types:
+    - apiGroup: api.tsb.tetrate.io/v1
+      kinds:
+      - workspaceSetting
+    permissions:
+    - create
+    - read
+    - delete
+    - write
+    - set_rbac
+  - types:
+    - apiGroup: traffic.tsb.tetrate.io/v1
+    - apiGroup: security.tsb.tetrate.io/v1
+    - apiGroup: gateway.tsb.tetrate.io/v1
+    permissions:
+    - create
+    - delete
+    - read
+    - write
+    - set_rbac
+</code></pre>
+
+<h2 id="Role">Role</h2>
+<section>
+<p><code>Role</code> is a named collection of permissions that can be assigned to
+any user or team in the system.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Role-rules">
+<td><code>rules</code></td>
+<td><code><a href="#Role-Rule">Rule[]</a></code></td>
+<td>
+<p>A set of rules that define the permissions associated with each API group.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="Subject">Subject</h2>
+<section>
+<p>Subject identifies a user or a team under a tenant. Roles are
+assigned to subjects for specific resources in the system.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Subject-user" class="oneof oneof-start">
+<td><code>user</code></td>
+<td><code>string (oneof)</code></td>
+<td>
+<p>The user extracted from LDAP server.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Subject-team" class="oneof">
+<td><code>team</code></td>
+<td><code>string (oneof)</code></td>
+<td>
+<p>A team defined in service bridge.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="Role-ResourceType">Role.ResourceType</h2>
+<section>
+<p>The type of API resource for which the role is being created.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Role-ResourceType-api_group">
+<td><code>apiGroup</code></td>
+<td><code>string</code></td>
+<td>
+<p>A specific API group such as traffic.tsb.tetrate.io/v1.</p>
+
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr id="Role-ResourceType-kinds">
+<td><code>kinds</code></td>
+<td><code>string[]</code></td>
+<td>
+<p>Specific kinds of APIs under the API group. If omitted, the
+role will apply to all kinds under the group.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="Role-Rule">Role.Rule</h2>
+<section>
+<p>A rule defines the set of api groups</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Role-Rule-types">
+<td><code>types</code></td>
+<td><code><a href="#Role-ResourceType">ResourceType[]</a></code></td>
+<td>
+<p>The set of API groups and the api Kinds within the group on which this rule is applicable.</p>
+
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr id="Role-Rule-permissions">
+<td><code>permissions</code></td>
+<td><code><a href="#Permission">Permission[]</a></code></td>
+<td>
+<p>The set of actions allowed for these APIs.</p>
+
+</td>
+<td>
+Yes
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="TenantRoleBinding">TenantRoleBinding</h2>
+<section>
+<p><code>TenantRoleBinding</code> assigns permissions to users under a tenant.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="TenantRoleBinding-role">
+<td><code>role</code></td>
+<td><code>string</code></td>
+<td>
+<p>The role being assinged to the subjects.</p>
+
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr id="TenantRoleBinding-subjects">
+<td><code>subjects</code></td>
+<td><code><a href="#Subject">Subject[]</a></code></td>
+<td>
+<p>The set of users who are being assigned the role.</p>
+
+</td>
+<td>
+Yes
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="WorkspaceRoleBinding">WorkspaceRoleBinding</h2>
+<section>
+<p><code>WorkspaceRoleBinding</code> assigns permissions to users of a workspace.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="WorkspaceRoleBinding-role">
+<td><code>role</code></td>
+<td><code>string</code></td>
+<td>
+<p>The role being assinged to the subjects.</p>
+
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr id="WorkspaceRoleBinding-subjects">
+<td><code>subjects</code></td>
+<td><code><a href="#Subject">Subject[]</a></code></td>
+<td>
+<p>The set of users who are being assigned the role.</p>
+
+</td>
+<td>
+Yes
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="GatewayRoleBinding">GatewayRoleBinding</h2>
+<section>
+<p><code>GatewayRoleBinding</code> assigns permissions to users of gateway groups.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="GatewayRoleBinding-role">
+<td><code>role</code></td>
+<td><code>string</code></td>
+<td>
+<p>The role being assinged to the subjects.</p>
+
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr id="GatewayRoleBinding-subjects">
+<td><code>subjects</code></td>
+<td><code><a href="#Subject">Subject[]</a></code></td>
+<td>
+<p>The set of users who are being assigned the role.</p>
+
+</td>
+<td>
+Yes
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="SecurityRoleBinding">SecurityRoleBinding</h2>
+<section>
+<p><code>SecurityRoleBinding</code> assigns permissions to users of security groups.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="SecurityRoleBinding-role">
+<td><code>role</code></td>
+<td><code>string</code></td>
+<td>
+<p>The role being assinged to the subjects.</p>
+
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr id="SecurityRoleBinding-subjects">
+<td><code>subjects</code></td>
+<td><code><a href="#Subject">Subject[]</a></code></td>
+<td>
+<p>The set of users who are being assigned the role.</p>
+
+</td>
+<td>
+Yes
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="TrafficRoleBinding">TrafficRoleBinding</h2>
+<section>
+<p><code>TrafficRoleBinding</code> assigns permissions to users of traffic groups.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="TrafficRoleBinding-role">
+<td><code>role</code></td>
+<td><code>string</code></td>
+<td>
+<p>The role being assinged to the subjects.</p>
+
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr id="TrafficRoleBinding-subjects">
+<td><code>subjects</code></td>
+<td><code><a href="#Subject">Subject[]</a></code></td>
+<td>
+<p>The set of users who are being assigned the role.</p>
+
+</td>
+<td>
+Yes
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="Permission">Permission</h2>
+<section>
+<p>A permission defines an action that can be performed on a
+resource. By default access to resources is denied unless an
+explicit permission grants access to perform an operation against
+it.</p>
+
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Permission-INVALID">
+<td><code>INVALID</code></td>
+<td>
+<p>Default value to designate no value was explicitly set for the permission.</p>
+
+</td>
+</tr>
+<tr id="Permission-READ">
+<td><code>READ</code></td>
+<td>
+<p>The read permission grants read-only access to the resource.</p>
+
+</td>
+</tr>
+<tr id="Permission-WRITE">
+<td><code>WRITE</code></td>
+<td>
+<p>The write permission allows the subject to modify an existing resource.</p>
+
+</td>
+</tr>
+<tr id="Permission-CREATE">
+<td><code>CREATE</code></td>
+<td>
+<p>The create permission allows subjects to create child resources on the resource.</p>
+
+</td>
+</tr>
+<tr id="Permission-DELETE">
+<td><code>DELETE</code></td>
+<td>
+<p>The delete permission grants permissions to delete the resource.</p>
+
+</td>
+</tr>
+<tr id="Permission-SET_RBAC">
+<td><code>SET_RBAC</code></td>
+<td>
+<p>The set-rbac permission allows subjects to manage the access policies for the resources.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>

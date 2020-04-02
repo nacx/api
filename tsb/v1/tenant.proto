@@ -19,8 +19,8 @@ syntax = "proto3";
 //   name: mycompany
 //```
 //
-package tetrate.api.tsb.v1;
-option go_package = "github.com/tetrateio/tetrate/api/tsb/v1";
+package tetrateio.api.tsb.v1;
+option go_package = "github.com/tetrateio/api/tsb/v1";
 
 // `Tenant` is the root of the Service Bridge object hierarchy.
 message Tenant {

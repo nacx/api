@@ -16,23 +16,23 @@ syntax = "proto3";
 // - nacx
 // - rshriram
 //```
-package tetrate.api.tcc.core.v1;
-option go_package = "github.com/tetrateio/tetrate/api/tcc/core/v1";
+package tetrateio.api.tcc.core.v1;
+option go_package = "github.com/tetrateio/api/tcc/core/v1";
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
-import "validate/validate.proto";
+import "github.com/envoyproxy/protoc-gen-validate/validate/validate.proto";
 
-import "permissions.proto";
-import "rbac.proto";
+import "q/rbac/v1/permissions.proto";
+import "q/rbac/v1/rbac.proto";
 
 service Organization {
-  option (tetrate.api.q.rbac.v1.default_requires) = {
+  option (tetrateio.api.q.rbac.v1.default_requires) = {
     permissions: READ
   };
 
   rpc CreateTenant(CreateTenantRequest) returns (Tenant) {
-    option (tetrate.api.q.rbac.v1.requires) = {
+    option (tetrateio.api.q.rbac.v1.requires) = {
       permissions: CREATE
     };
     option (google.api.http) = {
@@ -48,7 +48,7 @@ service Organization {
   };
 
   rpc UpdateTenant(Tenant) returns (Tenant) {
-    option (tetrate.api.q.rbac.v1.requires) = {
+    option (tetrateio.api.q.rbac.v1.requires) = {
       permissions: WRITE
     };
     option (google.api.http) = {
@@ -64,7 +64,7 @@ service Organization {
   }
 
   rpc DeleteTenant(DeleteTenantRequest) returns (google.protobuf.Empty) {
-    option (tetrate.api.q.rbac.v1.requires) = {
+    option (tetrateio.api.q.rbac.v1.requires) = {
       permissions: DELETE
     };
     option (google.api.http) = {
@@ -72,8 +72,8 @@ service Organization {
     };
   };
 
-  rpc GetTenantPolicy(GetTenantRequest) returns (tetrate.api.q.rbac.v1.Policy) {
-    option (tetrate.api.q.rbac.v1.requires) = {
+  rpc GetTenantPolicy(GetTenantRequest) returns (tetrateio.api.q.rbac.v1.Policy) {
+    option (tetrateio.api.q.rbac.v1.requires) = {
       permissions: SET_POLICY
     };
     option (google.api.http) = {
@@ -82,7 +82,7 @@ service Organization {
   };
 
   rpc SetTenantPolicy(TenantPolicyRequest) returns (google.protobuf.Empty) {
-    option (tetrate.api.q.rbac.v1.requires) = {
+    option (tetrateio.api.q.rbac.v1.requires) = {
       permissions: SET_POLICY
     };
     option (google.api.http) = {
@@ -94,7 +94,7 @@ service Organization {
   // SyncTenant is used by processes that monitor the identity providers to synchronize
   // the users and teams with the ones in TCC
   rpc SyncTenant(SyncTenantRequest) returns (SyncTenantResponse) {
-    option (tetrate.api.q.rbac.v1.requires) = {
+    option (tetrateio.api.q.rbac.v1.requires) = {
       raw_permissions: ["CreateUser", "CreateTeam", "DeleteUser", "DeleteTeam", "WriteTeam"]
     };
     option (google.api.http) = {
@@ -104,7 +104,7 @@ service Organization {
   };
 
   rpc CreateTeam(CreateTeamRequest) returns (Team) {
-    option (tetrate.api.q.rbac.v1.requires) = {
+    option (tetrateio.api.q.rbac.v1.requires) = {
       permissions: CREATE
     };
     option (google.api.http) = {
@@ -114,7 +114,7 @@ service Organization {
   };
 
   rpc UpdateTeam(Team) returns (Team) {
-    option (tetrate.api.q.rbac.v1.requires) = {
+    option (tetrateio.api.q.rbac.v1.requires) = {
       permissions: WRITE
     };
     option (google.api.http) = {
@@ -136,7 +136,7 @@ service Organization {
   }
 
   rpc DeleteTeam(DeleteTeamRequest) returns (google.protobuf.Empty) {
-    option (tetrate.api.q.rbac.v1.requires) = {
+    option (tetrateio.api.q.rbac.v1.requires) = {
       permissions: DELETE
     };
     option (google.api.http) = {
@@ -145,7 +145,7 @@ service Organization {
   };
 
   rpc CreateUser(CreateUserRequest) returns (User) {
-    option (tetrate.api.q.rbac.v1.requires) = {
+    option (tetrateio.api.q.rbac.v1.requires) = {
       permissions: CREATE
     };
     option (google.api.http) = {
@@ -161,7 +161,7 @@ service Organization {
   };
 
   rpc UpdateUser(User) returns (User) {
-    option (tetrate.api.q.rbac.v1.requires) = {
+    option (tetrateio.api.q.rbac.v1.requires) = {
       permissions: WRITE
     };
     option (google.api.http) = {
@@ -171,7 +171,7 @@ service Organization {
   };
 
   rpc DeleteUser(DeleteUserRequest) returns (google.protobuf.Empty) {
-    option (tetrate.api.q.rbac.v1.requires) = {
+    option (tetrateio.api.q.rbac.v1.requires) = {
       permissions: DELETE
     };
     option (google.api.http) = {
@@ -214,7 +214,7 @@ message TenantPolicyRequest {
   // Internal use only. Auto populated field.
   string name = 1;
   string id = 2 [(validate.rules).string.min_len = 1];
-  tetrate.api.q.rbac.v1.Policy policy = 3 [(validate.rules).message.required = true];
+  tetrateio.api.q.rbac.v1.Policy policy = 3 [(validate.rules).message.required = true];
 }
 
 message ListTenantsRequest {

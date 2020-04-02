@@ -117,8 +117,8 @@ syntax = "proto3";
 //
 // TODO(rshriram): Document the list of fields in Istio APIs that are
 // disallowed.
-package tetrate.api.tsb.traffic.v1;
-option go_package = "github.com/tetrateio/tetrate/api/tsb/traffic/v1";
+package tetrateio.api.tsb.traffic.v1;
+option go_package = "github.com/tetrateio/api/tsb/traffic/v1";
 
 import "tsb/types/v1/types.proto";
 
@@ -127,7 +127,7 @@ import "tsb/types/v1/types.proto";
 message Group {
   // Set of namespaces owned exclusively by this group. If omitted,
   // applies to all resources owned by the workspace.
-  repeated tetrate.api.tsb.types.v1.NamespaceSelector namespace_selectors = 1;
+  repeated tetrateio.api.tsb.types.v1.NamespaceSelector namespace_selectors = 1;
 
   // The Configuration types that will be added to this
   // group. `TETRATE` mode indicates that configurations added to this
@@ -136,5 +136,5 @@ message Group {
   // to this group will use Istio Networking APIs such as
   // `VirtualService`, `DestinationRule`, and `Sidecar`. Defaults to
   // `TETRATE` mode.
-  tetrate.api.tsb.types.v1.ConfigMode config_mode = 2;
+  tetrateio.api.tsb.types.v1.ConfigMode config_mode = 2;
 }

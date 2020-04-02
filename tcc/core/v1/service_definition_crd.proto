@@ -1,13 +1,13 @@
 syntax = "proto3";
 
-package tetrate.api.tcc.core.v1;
-option go_package = "github.com/tetrateio/tetrate/api/tcc/core/v1";
+package tetrateio.api.tcc.core.v1;
+option go_package = "github.com/tetrateio/api/tcc/core/v1";
 
 import "google/api/annotations.proto";
 import "google/protobuf/wrappers.proto";
 
-import "routing_info.proto";
-import "tlssettings.proto";
+import "tcc/core/v1/routing_info.proto";
+import "tcc/core/v1/tlssettings.proto";
 
 // ServiceDefinition describes the properties of services running on
 // VMs or services outside the mesh. This service definition is
