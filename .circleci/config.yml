@@ -11,8 +11,10 @@ workflows:
 
 jobs:
   build:
+    working_directory: /home/circleci/api
     machine:
       image: ubuntu-1604:201903-01
     steps:
+      - checkout
       # TODO(dio): Execute lint-all.
       - run: make
