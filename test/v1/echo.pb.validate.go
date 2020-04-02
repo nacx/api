@@ -33,6 +33,9 @@ var (
 	_ = types.DynamicAny{}
 )
 
+// define the regex for a UUID once up-front
+var _echo_uuidPattern = regexp.MustCompile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
+
 // Validate checks the field values on EchoRequest with the rules defined in
 // the proto definition for this message. If any rules are violated, an error
 // is returned.
@@ -43,7 +46,12 @@ func (m *EchoRequest) Validate() error {
 
 	// no validation rules for Id
 
-	// no validation rules for Body
+	if len(m.GetBody()) < 3 {
+		return EchoRequestValidationError{
+			field:  "Body",
+			reason: "value length must be at least 3 bytes",
+		}
+	}
 
 	return nil
 }

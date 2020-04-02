@@ -33,6 +33,9 @@ var (
 	_ = types.DynamicAny{}
 )
 
+// define the regex for a UUID once up-front
+var _alert_log_uuidPattern = regexp.MustCompile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
+
 // Validate checks the field values on AlertLog with the rules defined in the
 // proto definition for this message. If any rules are violated, an error is returned.
 func (m *AlertLog) Validate() error {
@@ -40,28 +43,40 @@ func (m *AlertLog) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Id
-
-	{
-		tmp := m.GetLastTriggered()
-
-		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
-
-			if err := v.Validate(); err != nil {
-				return AlertLogValidationError{
-					field:  "LastTriggered",
-					reason: "embedded message failed validation",
-					cause:  err,
-				}
-			}
+	if m.GetId() < 0 {
+		return AlertLogValidationError{
+			field:  "Id",
+			reason: "value must be greater than or equal to 0",
 		}
 	}
 
-	// no validation rules for RuleName
+	if m.GetLastTriggered() == nil {
+		return AlertLogValidationError{
+			field:  "LastTriggered",
+			reason: "value is required",
+		}
+	}
 
-	// no validation rules for Application
+	if utf8.RuneCountInString(m.GetRuleName()) < 1 {
+		return AlertLogValidationError{
+			field:  "RuleName",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Message
+	if utf8.RuneCountInString(m.GetApplication()) < 1 {
+		return AlertLogValidationError{
+			field:  "Application",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if utf8.RuneCountInString(m.GetMessage()) < 1 {
+		return AlertLogValidationError{
+			field:  "Message",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	// no validation rules for Read
 

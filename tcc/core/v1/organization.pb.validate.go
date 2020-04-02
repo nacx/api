@@ -33,6 +33,9 @@ var (
 	_ = types.DynamicAny{}
 )
 
+// define the regex for a UUID once up-front
+var _organization_uuidPattern = regexp.MustCompile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
+
 // Validate checks the field values on Tenant with the rules defined in the
 // proto definition for this message. If any rules are violated, an error is returned.
 func (m *Tenant) Validate() error {
@@ -42,11 +45,21 @@ func (m *Tenant) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return TenantValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	// no validation rules for Description
 
-	// no validation rules for Etag
+	if utf8.RuneCountInString(m.GetEtag()) < 1 {
+		return TenantValidationError{
+			field:  "Etag",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -113,7 +126,12 @@ func (m *CreateTenantRequest) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Id
+	if !_CreateTenantRequest_Id_Pattern.MatchString(m.GetId()) {
+		return CreateTenantRequestValidationError{
+			field:  "Id",
+			reason: "value does not match regex pattern \"(?i)^[0-9a-z.~\\\\-_]*$\"",
+		}
+	}
 
 	// no validation rules for Description
 
@@ -176,6 +194,8 @@ var _ interface {
 	ErrorName() string
 } = CreateTenantRequestValidationError{}
 
+var _CreateTenantRequest_Id_Pattern = regexp.MustCompile("(?i)^[0-9a-z.~\\-_]*$")
+
 // Validate checks the field values on GetTenantRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, an
 // error is returned.
@@ -186,7 +206,12 @@ func (m *GetTenantRequest) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return GetTenantRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -255,7 +280,19 @@ func (m *TenantPolicyRequest) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return TenantPolicyRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if m.GetPolicy() == nil {
+		return TenantPolicyRequestValidationError{
+			field:  "Policy",
+			reason: "value is required",
+		}
+	}
 
 	{
 		tmp := m.GetPolicy()
@@ -495,7 +532,12 @@ func (m *DeleteTenantRequest) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return DeleteTenantRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -566,9 +608,19 @@ func (m *SyncTenantRequest) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return SyncTenantRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for SourceType
+	if _, ok := SourceType_name[int32(m.GetSourceType())]; !ok {
+		return SyncTenantRequestValidationError{
+			field:  "SourceType",
+			reason: "value must be one of the defined enum values",
+		}
+	}
 
 	for idx, item := range m.GetUsers() {
 		_, _ = idx, item
@@ -775,15 +827,35 @@ func (m *Team) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return TeamValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return TeamValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	// no validation rules for Description
 
-	// no validation rules for Etag
+	if utf8.RuneCountInString(m.GetEtag()) < 1 {
+		return TeamValidationError{
+			field:  "Etag",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for SourceType
+	if _, ok := SourceType_name[int32(m.GetSourceType())]; !ok {
+		return TeamValidationError{
+			field:  "SourceType",
+			reason: "value must be one of the defined enum values",
+		}
+	}
 
 	return nil
 }
@@ -852,13 +924,28 @@ func (m *CreateTeamRequest) Validate() error {
 
 	// no validation rules for Parent
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return CreateTeamRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if !_CreateTeamRequest_Id_Pattern.MatchString(m.GetId()) {
+		return CreateTeamRequestValidationError{
+			field:  "Id",
+			reason: "value does not match regex pattern \"(?i)^[0-9a-z.~\\\\-_]*$\"",
+		}
+	}
 
 	// no validation rules for Description
 
-	// no validation rules for SourceType
+	if _, ok := SourceType_name[int32(m.GetSourceType())]; !ok {
+		return CreateTeamRequestValidationError{
+			field:  "SourceType",
+			reason: "value must be one of the defined enum values",
+		}
+	}
 
 	return nil
 }
@@ -919,6 +1006,8 @@ var _ interface {
 	ErrorName() string
 } = CreateTeamRequestValidationError{}
 
+var _CreateTeamRequest_Id_Pattern = regexp.MustCompile("(?i)^[0-9a-z.~\\-_]*$")
+
 // Validate checks the field values on GetTeamRequest with the rules defined in
 // the proto definition for this message. If any rules are violated, an error
 // is returned.
@@ -929,9 +1018,19 @@ func (m *GetTeamRequest) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return GetTeamRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return GetTeamRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -1000,7 +1099,12 @@ func (m *ListTeamsRequest) Validate() error {
 
 	// no validation rules for Parent
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return ListTeamsRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -1156,9 +1260,19 @@ func (m *DeleteTeamRequest) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return DeleteTeamRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return DeleteTeamRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -1228,15 +1342,35 @@ func (m *User) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return UserValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return UserValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	// no validation rules for Description
 
-	// no validation rules for Etag
+	if utf8.RuneCountInString(m.GetEtag()) < 1 {
+		return UserValidationError{
+			field:  "Etag",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for SourceType
+	if _, ok := SourceType_name[int32(m.GetSourceType())]; !ok {
+		return UserValidationError{
+			field:  "SourceType",
+			reason: "value must be one of the defined enum values",
+		}
+	}
 
 	// no validation rules for Email
 
@@ -1307,13 +1441,28 @@ func (m *CreateUserRequest) Validate() error {
 
 	// no validation rules for Parent
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return CreateUserRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if !_CreateUserRequest_Id_Pattern.MatchString(m.GetId()) {
+		return CreateUserRequestValidationError{
+			field:  "Id",
+			reason: "value does not match regex pattern \"(?i)^[0-9a-z.~\\\\-_]*$\"",
+		}
+	}
 
 	// no validation rules for Description
 
-	// no validation rules for SourceType
+	if _, ok := SourceType_name[int32(m.GetSourceType())]; !ok {
+		return CreateUserRequestValidationError{
+			field:  "SourceType",
+			reason: "value must be one of the defined enum values",
+		}
+	}
 
 	// no validation rules for Email
 
@@ -1376,6 +1525,8 @@ var _ interface {
 	ErrorName() string
 } = CreateUserRequestValidationError{}
 
+var _CreateUserRequest_Id_Pattern = regexp.MustCompile("(?i)^[0-9a-z.~\\-_]*$")
+
 // Validate checks the field values on GetUserRequest with the rules defined in
 // the proto definition for this message. If any rules are violated, an error
 // is returned.
@@ -1386,9 +1537,19 @@ func (m *GetUserRequest) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return GetUserRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return GetUserRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -1457,7 +1618,12 @@ func (m *ListUsersRequest) Validate() error {
 
 	// no validation rules for Parent
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return ListUsersRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -1613,9 +1779,19 @@ func (m *DeleteUserRequest) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return DeleteUserRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return DeleteUserRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -1684,7 +1860,12 @@ func (m *SyncTenantRequest_SyncUser) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return SyncTenantRequest_SyncUserValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	// no validation rules for Description
 
@@ -1757,7 +1938,12 @@ func (m *SyncTenantRequest_SyncTeam) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return SyncTenantRequest_SyncTeamValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	// no validation rules for Description
 

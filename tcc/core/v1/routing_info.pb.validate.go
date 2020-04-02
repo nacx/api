@@ -33,6 +33,9 @@ var (
 	_ = types.DynamicAny{}
 )
 
+// define the regex for a UUID once up-front
+var _routing_info_uuidPattern = regexp.MustCompile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
+
 // Validate checks the field values on LBRouteSettings with the rules defined
 // in the proto definition for this message. If any rules are violated, an
 // error is returned.
@@ -43,7 +46,19 @@ func (m *LBRouteSettings) Validate() error {
 
 	// no validation rules for EnableWorkflows
 
-	// no validation rules for LoadBalancerClass
+	if _, ok := _LBRouteSettings_LoadBalancerClass_NotInLookup[m.GetLoadBalancerClass()]; ok {
+		return LBRouteSettingsValidationError{
+			field:  "LoadBalancerClass",
+			reason: "value must not be in list [0]",
+		}
+	}
+
+	if _, ok := LoadBalancerClass_name[int32(m.GetLoadBalancerClass())]; !ok {
+		return LBRouteSettingsValidationError{
+			field:  "LoadBalancerClass",
+			reason: "value must be one of the defined enum values",
+		}
+	}
 
 	// no validation rules for LoadBalancerTier
 
@@ -123,6 +138,10 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = LBRouteSettingsValidationError{}
+
+var _LBRouteSettings_LoadBalancerClass_NotInLookup = map[LoadBalancerClass]struct{}{
+	0: {},
+}
 
 // Validate checks the field values on InternalRouteSettings with the rules
 // defined in the proto definition for this message. If any rules are
@@ -342,7 +361,12 @@ func (m *Port) Validate() error {
 
 	// no validation rules for Number
 
-	// no validation rules for Protocol
+	if _, ok := _Port_Protocol_InLookup[m.GetProtocol()]; !ok {
+		return PortValidationError{
+			field:  "Protocol",
+			reason: "value must be in list [HTTP GRPC HTTP2 HTTPS TCP TLS UDP SCTP]",
+		}
+	}
 
 	// no validation rules for Name
 
@@ -409,6 +433,17 @@ var _ interface {
 	ErrorName() string
 } = PortValidationError{}
 
+var _Port_Protocol_InLookup = map[string]struct{}{
+	"HTTP":  {},
+	"GRPC":  {},
+	"HTTP2": {},
+	"HTTPS": {},
+	"TCP":   {},
+	"TLS":   {},
+	"UDP":   {},
+	"SCTP":  {},
+}
+
 // Validate checks the field values on Subset with the rules defined in the
 // proto definition for this message. If any rules are violated, an error is returned.
 func (m *Subset) Validate() error {
@@ -416,9 +451,19 @@ func (m *Subset) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Name
+	if utf8.RuneCountInString(m.GetName()) < 1 {
+		return SubsetValidationError{
+			field:  "Name",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Labels
+	if len(m.GetLabels()) < 1 {
+		return SubsetValidationError{
+			field:  "Labels",
+			reason: "value must contain at least 1 pair(s)",
+		}
+	}
 
 	return nil
 }
@@ -598,6 +643,13 @@ var _ interface {
 func (m *TcpSettings) Validate() error {
 	if m == nil {
 		return nil
+	}
+
+	if m.GetRoute() == nil {
+		return TcpSettingsValidationError{
+			field:  "Route",
+			reason: "value is required",
+		}
 	}
 
 	{
@@ -877,7 +929,27 @@ func (m *HttpMatchCondition) Validate() error {
 		}
 	}
 
-	// no validation rules for Headers
+	for key, val := range m.GetHeaders() {
+		_ = val
+
+		// no validation rules for Headers[key]
+
+		{
+			tmp := val
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return HttpMatchConditionValidationError{
+						field:  fmt.Sprintf("Headers[%v]", key),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+		}
+
+	}
 
 	return nil
 }
@@ -1279,6 +1351,13 @@ var _ interface {
 func (m *Route) Validate() error {
 	if m == nil {
 		return nil
+	}
+
+	if len(m.GetDestinations()) < 1 {
+		return RouteValidationError{
+			field:  "Destinations",
+			reason: "value must contain at least 1 item(s)",
+		}
 	}
 
 	for idx, item := range m.GetDestinations() {
@@ -1705,7 +1784,12 @@ func (m *LBRouteSettings_LBRoute) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Hostname
+	if utf8.RuneCountInString(m.GetHostname()) < 1 {
+		return LBRouteSettings_LBRouteValidationError{
+			field:  "Hostname",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	{
 		tmp := m.GetTls()
@@ -1943,22 +2027,24 @@ func (m *HttpSettings_HTTPCookie) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Name
+	if utf8.RuneCountInString(m.GetName()) < 1 {
+		return HttpSettings_HTTPCookieValidationError{
+			field:  "Name",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Path
+	if utf8.RuneCountInString(m.GetPath()) < 1 {
+		return HttpSettings_HTTPCookieValidationError{
+			field:  "Path",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	{
-		tmp := m.GetTtl()
-
-		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
-
-			if err := v.Validate(); err != nil {
-				return HttpSettings_HTTPCookieValidationError{
-					field:  "Ttl",
-					reason: "embedded message failed validation",
-					cause:  err,
-				}
-			}
+	if m.GetTtl() == nil {
+		return HttpSettings_HTTPCookieValidationError{
+			field:  "Ttl",
+			reason: "value is required",
 		}
 	}
 
@@ -2032,7 +2118,13 @@ func (m *HttpSettings_StickySession) Validate() error {
 	switch m.HashKey.(type) {
 
 	case *HttpSettings_StickySession_Header:
-		// no validation rules for Header
+
+		if utf8.RuneCountInString(m.GetHeader()) < 1 {
+			return HttpSettings_StickySessionValidationError{
+				field:  "Header",
+				reason: "value length must be at least 1 runes",
+			}
+		}
 
 	case *HttpSettings_StickySession_Cookie:
 
@@ -2271,7 +2363,12 @@ func (m *Route_RemoteDestination) Validate() error {
 
 	// no validation rules for Application
 
-	// no validation rules for Service
+	if utf8.RuneCountInString(m.GetService()) < 1 {
+		return Route_RemoteDestinationValidationError{
+			field:  "Service",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -2382,6 +2479,12 @@ func (m *Route_Destination) Validate() error {
 
 	case *Route_Destination_Address:
 		// no validation rules for Address
+
+	default:
+		return Route_DestinationValidationError{
+			field:  "Target",
+			reason: "value is required",
+		}
 
 	}
 

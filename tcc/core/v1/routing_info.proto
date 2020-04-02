@@ -169,7 +169,7 @@ message HttpSettings {
     string path = 2 [(validate.rules).string.min_len = 1];
 
     // Lifetime of the cookie.
-    google.protobuf.Duration ttl = 3 [(validate.rules).message.required = true];
+    google.protobuf.Duration ttl = 3 [(validate.rules).duration.required = true];
   }
 
   // If set, the load balancer will route all requests from a particular client to the same backend

@@ -33,7 +33,7 @@ service AuditService {
 // A system log describing something that happened in the system.
 message AuditLog {
   // Time when the audit log was generated.
-  google.protobuf.Timestamp create_time = 1 [(validate.rules).message.required = true];
+  google.protobuf.Timestamp create_time = 1 [(validate.rules).timestamp.required = true];
   // Log severity (INFO, WARN, ERROR...).
   string severity = 2 [(validate.rules).string.min_len = 1];
   // The kind of the audit log (PolicyAssigned, ServiceOrphaned, etc).

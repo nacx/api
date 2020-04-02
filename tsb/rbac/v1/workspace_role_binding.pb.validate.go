@@ -33,6 +33,9 @@ var (
 	_ = types.DynamicAny{}
 )
 
+// define the regex for a UUID once up-front
+var _workspace_role_binding_uuidPattern = regexp.MustCompile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
+
 // Validate checks the field values on WorkspaceRoleBinding with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
@@ -41,7 +44,19 @@ func (m *WorkspaceRoleBinding) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Role
+	if utf8.RuneCountInString(m.GetRole()) < 1 {
+		return WorkspaceRoleBindingValidationError{
+			field:  "Role",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if len(m.GetSubjects()) < 1 {
+		return WorkspaceRoleBindingValidationError{
+			field:  "Subjects",
+			reason: "value must contain at least 1 item(s)",
+		}
+	}
 
 	for idx, item := range m.GetSubjects() {
 		_, _ = idx, item

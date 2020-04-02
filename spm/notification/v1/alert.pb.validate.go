@@ -33,6 +33,9 @@ var (
 	_ = types.DynamicAny{}
 )
 
+// define the regex for a UUID once up-front
+var _alert_uuidPattern = regexp.MustCompile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
+
 // Validate checks the field values on Alert with the rules defined in the
 // proto definition for this message. If any rules are violated, an error is returned.
 func (m *Alert) Validate() error {
@@ -140,7 +143,12 @@ func (m *ListAlertsRequest) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return ListAlertsRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	// no validation rules for Status
 
@@ -306,9 +314,19 @@ func (m *UpdateAlertRequest) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return UpdateAlertRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if m.GetId() < 0 {
+		return UpdateAlertRequestValidationError{
+			field:  "Id",
+			reason: "value must be greater than or equal to 0",
+		}
+	}
 
 	// no validation rules for Status
 
@@ -381,9 +399,19 @@ func (m *DeleteAlertRequest) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return DeleteAlertRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if m.GetId() < 0 {
+		return DeleteAlertRequestValidationError{
+			field:  "Id",
+			reason: "value must be greater than or equal to 0",
+		}
+	}
 
 	return nil
 }
@@ -452,9 +480,19 @@ func (m *GetAlertRequest) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return GetAlertRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if m.GetId() < 0 {
+		return GetAlertRequestValidationError{
+			field:  "Id",
+			reason: "value must be greater than or equal to 0",
+		}
+	}
 
 	return nil
 }

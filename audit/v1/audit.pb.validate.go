@@ -33,6 +33,9 @@ var (
 	_ = types.DynamicAny{}
 )
 
+// define the regex for a UUID once up-front
+var _audit_uuidPattern = regexp.MustCompile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
+
 // Validate checks the field values on AuditLog with the rules defined in the
 // proto definition for this message. If any rules are violated, an error is returned.
 func (m *AuditLog) Validate() error {
@@ -40,28 +43,40 @@ func (m *AuditLog) Validate() error {
 		return nil
 	}
 
-	{
-		tmp := m.GetCreateTime()
-
-		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
-
-			if err := v.Validate(); err != nil {
-				return AuditLogValidationError{
-					field:  "CreateTime",
-					reason: "embedded message failed validation",
-					cause:  err,
-				}
-			}
+	if m.GetCreateTime() == nil {
+		return AuditLogValidationError{
+			field:  "CreateTime",
+			reason: "value is required",
 		}
 	}
 
-	// no validation rules for Severity
+	if utf8.RuneCountInString(m.GetSeverity()) < 1 {
+		return AuditLogValidationError{
+			field:  "Severity",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Kind
+	if utf8.RuneCountInString(m.GetKind()) < 1 {
+		return AuditLogValidationError{
+			field:  "Kind",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Message
+	if utf8.RuneCountInString(m.GetMessage()) < 1 {
+		return AuditLogValidationError{
+			field:  "Message",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for TriggeredBy
+	if utf8.RuneCountInString(m.GetTriggeredBy()) < 1 {
+		return AuditLogValidationError{
+			field:  "TriggeredBy",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	// no validation rules for Properties
 

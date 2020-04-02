@@ -33,6 +33,9 @@ var (
 	_ = types.DynamicAny{}
 )
 
+// define the regex for a UUID once up-front
+var _webhook_uuidPattern = regexp.MustCompile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
+
 // Validate checks the field values on AlertMessage with the rules defined in
 // the proto definition for this message. If any rules are violated, an error
 // is returned.
@@ -41,21 +44,56 @@ func (m *AlertMessage) Validate() error {
 		return nil
 	}
 
-	// no validation rules for ScopeId
+	if m.GetScopeId() < 0 {
+		return AlertMessageValidationError{
+			field:  "ScopeId",
+			reason: "value must be greater than or equal to 0",
+		}
+	}
 
-	// no validation rules for Scope
+	if utf8.RuneCountInString(m.GetScope()) < 1 {
+		return AlertMessageValidationError{
+			field:  "Scope",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Name
+	if utf8.RuneCountInString(m.GetName()) < 1 {
+		return AlertMessageValidationError{
+			field:  "Name",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id0
+	if m.GetId0() < 0 {
+		return AlertMessageValidationError{
+			field:  "Id0",
+			reason: "value must be greater than or equal to 0",
+		}
+	}
 
 	// no validation rules for Id1
 
-	// no validation rules for RuleName
+	if utf8.RuneCountInString(m.GetRuleName()) < 1 {
+		return AlertMessageValidationError{
+			field:  "RuleName",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for AlarmMessage
+	if utf8.RuneCountInString(m.GetAlarmMessage()) < 1 {
+		return AlertMessageValidationError{
+			field:  "AlarmMessage",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for StartTime
+	if m.GetStartTime() < 0 {
+		return AlertMessageValidationError{
+			field:  "StartTime",
+			reason: "value must be greater than or equal to 0",
+		}
+	}
 
 	return nil
 }

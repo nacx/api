@@ -33,6 +33,9 @@ var (
 	_ = types.DynamicAny{}
 )
 
+// define the regex for a UUID once up-front
+var _metadata_uuidPattern = regexp.MustCompile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
+
 // Validate checks the field values on EntityRegisterMetadata with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
@@ -41,11 +44,26 @@ func (m *EntityRegisterMetadata) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Name
+	if utf8.RuneCountInString(m.GetName()) < 1 {
+		return EntityRegisterMetadataValidationError{
+			field:  "Name",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Type
+	if _, ok := EntityType_name[int32(m.GetType())]; !ok {
+		return EntityRegisterMetadataValidationError{
+			field:  "Type",
+			reason: "value must be one of the defined enum values",
+		}
+	}
 
-	// no validation rules for OwnerService
+	if m.GetOwnerService() < 0 {
+		return EntityRegisterMetadataValidationError{
+			field:  "OwnerService",
+			reason: "value must be greater than or equal to 0",
+		}
+	}
 
 	return nil
 }
@@ -181,9 +199,19 @@ func (m *EntityPingPackage) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Id
+	if m.GetId() < 0 {
+		return EntityPingPackageValidationError{
+			field:  "Id",
+			reason: "value must be greater than or equal to 0",
+		}
+	}
 
-	// no validation rules for Type
+	if m.GetType() != 1 {
+		return EntityPingPackageValidationError{
+			field:  "Type",
+			reason: "value must equal 1",
+		}
+	}
 
 	return nil
 }
@@ -317,22 +345,19 @@ func (m *InstanceListCondition) Validate() error {
 		return nil
 	}
 
-	{
-		tmp := m.GetDuration()
-
-		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
-
-			if err := v.Validate(); err != nil {
-				return InstanceListConditionValidationError{
-					field:  "Duration",
-					reason: "embedded message failed validation",
-					cause:  err,
-				}
-			}
+	if m.GetDuration() == nil {
+		return InstanceListConditionValidationError{
+			field:  "Duration",
+			reason: "value is required",
 		}
 	}
 
-	// no validation rules for ServiceId
+	if m.GetServiceId() < 0 {
+		return InstanceListConditionValidationError{
+			field:  "ServiceId",
+			reason: "value must be greater than or equal to 0",
+		}
+	}
 
 	return nil
 }

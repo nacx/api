@@ -33,6 +33,9 @@ var (
 	_ = types.DynamicAny{}
 )
 
+// define the regex for a UUID once up-front
+var _notification_uuidPattern = regexp.MustCompile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
+
 // Validate checks the field values on Notification with the rules defined in
 // the proto definition for this message. If any rules are violated, an error
 // is returned.
@@ -137,11 +140,26 @@ func (m *ListNotificationRequest) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return ListNotificationRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for User
+	if utf8.RuneCountInString(m.GetUser()) < 1 {
+		return ListNotificationRequestValidationError{
+			field:  "User",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Type
+	if _, ok := NotificationType_name[int32(m.GetType())]; !ok {
+		return ListNotificationRequestValidationError{
+			field:  "Type",
+			reason: "value must be one of the defined enum values",
+		}
+	}
 
 	// no validation rules for Status
 
@@ -305,9 +323,19 @@ func (m *UpdateNotificationReadStatusRequest) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return UpdateNotificationReadStatusRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for User
+	if utf8.RuneCountInString(m.GetUser()) < 1 {
+		return UpdateNotificationReadStatusRequestValidationError{
+			field:  "User",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }

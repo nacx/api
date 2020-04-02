@@ -33,6 +33,9 @@ var (
 	_ = types.DynamicAny{}
 )
 
+// define the regex for a UUID once up-front
+var _registryconsumer_uuidPattern = regexp.MustCompile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
+
 // Validate checks the field values on RegistryUpdateResourcesRequest with the
 // rules defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
@@ -43,15 +46,40 @@ func (m *RegistryUpdateResourcesRequest) Validate() error {
 
 	// no validation rules for Parent
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return RegistryUpdateResourcesRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Environment
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return RegistryUpdateResourcesRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Cluster
+	if utf8.RuneCountInString(m.GetCluster()) < 1 {
+		return RegistryUpdateResourcesRequestValidationError{
+			field:  "Cluster",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Registrytype
+	if _, ok := _RegistryUpdateResourcesRequest_Registrytype_InLookup[m.GetRegistrytype()]; !ok {
+		return RegistryUpdateResourcesRequestValidationError{
+			field:  "Registrytype",
+			reason: "value must be in list [k8s vm]",
+		}
+	}
 
-	// no validation rules for Payload
+	if utf8.RuneCountInString(m.GetPayload()) < 1 {
+		return RegistryUpdateResourcesRequestValidationError{
+			field:  "Payload",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -112,6 +140,11 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = RegistryUpdateResourcesRequestValidationError{}
+
+var _RegistryUpdateResourcesRequest_Registrytype_InLookup = map[string]struct{}{
+	"k8s": {},
+	"vm":  {},
+}
 
 // Validate checks the field values on RegistryConsumerResponse with the rules
 // defined in the proto definition for this message. If any rules are

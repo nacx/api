@@ -33,6 +33,9 @@ var (
 	_ = types.DynamicAny{}
 )
 
+// define the regex for a UUID once up-front
+var _client_settings_uuidPattern = regexp.MustCompile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
+
 // Validate checks the field values on ClientSettings with the rules defined in
 // the proto definition for this message. If any rules are violated, an error
 // is returned.
@@ -167,7 +170,12 @@ func (m *HTTPRetry) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Attempts
+	if m.GetAttempts() < 1 {
+		return HTTPRetryValidationError{
+			field:  "Attempts",
+			reason: "value must be greater than or equal to 1",
+		}
+	}
 
 	{
 		tmp := m.GetPerTryTimeout()

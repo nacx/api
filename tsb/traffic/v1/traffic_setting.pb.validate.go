@@ -33,6 +33,9 @@ var (
 	_ = types.DynamicAny{}
 )
 
+// define the regex for a UUID once up-front
+var _traffic_setting_uuidPattern = regexp.MustCompile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
+
 // Validate checks the field values on TrafficSetting with the rules defined in
 // the proto definition for this message. If any rules are violated, an error
 // is returned.
@@ -56,7 +59,12 @@ func (m *TrafficSetting) Validate() error {
 		}
 	}
 
-	// no validation rules for EgressGateway
+	if !_TrafficSetting_EgressGateway_Pattern.MatchString(m.GetEgressGateway()) {
+		return TrafficSettingValidationError{
+			field:  "EgressGateway",
+			reason: "value does not match regex pattern \"^[^/]+/[^/]+$\"",
+		}
+	}
 
 	{
 		tmp := m.GetResilience()
@@ -129,6 +137,8 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = TrafficSettingValidationError{}
+
+var _TrafficSetting_EgressGateway_Pattern = regexp.MustCompile("^[^/]+/[^/]+$")
 
 // Validate checks the field values on ResilienceSettings with the rules
 // defined in the proto definition for this message. If any rules are
@@ -251,7 +261,12 @@ func (m *HTTPRetry) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Attempts
+	if m.GetAttempts() < 1 {
+		return HTTPRetryValidationError{
+			field:  "Attempts",
+			reason: "value must be greater than or equal to 1",
+		}
+	}
 
 	{
 		tmp := m.GetPerTryTimeout()

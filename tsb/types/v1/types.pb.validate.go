@@ -33,6 +33,9 @@ var (
 	_ = types.DynamicAny{}
 )
 
+// define the regex for a UUID once up-front
+var _types_uuidPattern = regexp.MustCompile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
+
 // Validate checks the field values on NamespaceSelector with the rules defined
 // in the proto definition for this message. If any rules are violated, an
 // error is returned.
@@ -41,7 +44,12 @@ func (m *NamespaceSelector) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Name
+	if utf8.RuneCountInString(m.GetName()) < 1 {
+		return NamespaceSelectorValidationError{
+			field:  "Name",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -110,7 +118,12 @@ func (m *WorkloadSelector) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Namespace
+	if utf8.RuneCountInString(m.GetNamespace()) < 1 {
+		return WorkloadSelectorValidationError{
+			field:  "Namespace",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	// no validation rules for Labels
 

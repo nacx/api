@@ -33,11 +33,21 @@ var (
 	_ = types.DynamicAny{}
 )
 
+// define the regex for a UUID once up-front
+var _role_uuidPattern = regexp.MustCompile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
+
 // Validate checks the field values on Role with the rules defined in the proto
 // definition for this message. If any rules are violated, an error is returned.
 func (m *Role) Validate() error {
 	if m == nil {
 		return nil
+	}
+
+	if len(m.GetRules()) < 1 {
+		return RoleValidationError{
+			field:  "Rules",
+			reason: "value must contain at least 1 item(s)",
+		}
 	}
 
 	for idx, item := range m.GetRules() {
@@ -199,7 +209,12 @@ func (m *Role_ResourceType) Validate() error {
 		return nil
 	}
 
-	// no validation rules for ApiGroup
+	if utf8.RuneCountInString(m.GetApiGroup()) < 1 {
+		return Role_ResourceTypeValidationError{
+			field:  "ApiGroup",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -267,6 +282,13 @@ func (m *Role_Rule) Validate() error {
 		return nil
 	}
 
+	if len(m.GetTypes()) < 1 {
+		return Role_RuleValidationError{
+			field:  "Types",
+			reason: "value must contain at least 1 item(s)",
+		}
+	}
+
 	for idx, item := range m.GetTypes() {
 		_, _ = idx, item
 
@@ -285,6 +307,13 @@ func (m *Role_Rule) Validate() error {
 			}
 		}
 
+	}
+
+	if len(m.GetPermissions()) < 1 {
+		return Role_RuleValidationError{
+			field:  "Permissions",
+			reason: "value must contain at least 1 item(s)",
+		}
 	}
 
 	return nil

@@ -33,6 +33,9 @@ var (
 	_ = types.DynamicAny{}
 )
 
+// define the regex for a UUID once up-front
+var _logical_resources_uuidPattern = regexp.MustCompile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
+
 // Validate checks the field values on Environment with the rules defined in
 // the proto definition for this message. If any rules are violated, an error
 // is returned.
@@ -43,9 +46,19 @@ func (m *Environment) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return EnvironmentValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return EnvironmentValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	// no validation rules for Description
 
@@ -64,7 +77,12 @@ func (m *Environment) Validate() error {
 		}
 	}
 
-	// no validation rules for Etag
+	if utf8.RuneCountInString(m.GetEtag()) < 1 {
+		return EnvironmentValidationError{
+			field:  "Etag",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -133,9 +151,19 @@ func (m *CreateEnvironmentRequest) Validate() error {
 
 	// no validation rules for Parent
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return CreateEnvironmentRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if !_CreateEnvironmentRequest_Id_Pattern.MatchString(m.GetId()) {
+		return CreateEnvironmentRequestValidationError{
+			field:  "Id",
+			reason: "value does not match regex pattern \"(?i)^[0-9a-z.~\\\\-_]*$\"",
+		}
+	}
 
 	// no validation rules for Description
 
@@ -213,6 +241,8 @@ var _ interface {
 	ErrorName() string
 } = CreateEnvironmentRequestValidationError{}
 
+var _CreateEnvironmentRequest_Id_Pattern = regexp.MustCompile("(?i)^[0-9a-z.~\\-_]*$")
+
 // Validate checks the field values on GetEnvironmentRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
@@ -223,9 +253,19 @@ func (m *GetEnvironmentRequest) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return GetEnvironmentRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return GetEnvironmentRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -296,9 +336,26 @@ func (m *EnvironmentPolicyRequest) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return EnvironmentPolicyRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return EnvironmentPolicyRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if m.GetPolicy() == nil {
+		return EnvironmentPolicyRequestValidationError{
+			field:  "Policy",
+			reason: "value is required",
+		}
+	}
 
 	{
 		tmp := m.GetPolicy()
@@ -384,7 +441,12 @@ func (m *ListEnvironmentsRequest) Validate() error {
 
 	// no validation rules for Parent
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return ListEnvironmentsRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -542,9 +604,19 @@ func (m *DeleteEnvironmentRequest) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return DeleteEnvironmentRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return DeleteEnvironmentRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -615,11 +687,26 @@ func (m *Application) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return ApplicationValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Environment
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return ApplicationValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return ApplicationValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	// no validation rules for Description
 
@@ -668,7 +755,12 @@ func (m *Application) Validate() error {
 		}
 	}
 
-	// no validation rules for Etag
+	if utf8.RuneCountInString(m.GetEtag()) < 1 {
+		return ApplicationValidationError{
+			field:  "Etag",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -737,11 +829,26 @@ func (m *CreateApplicationRequest) Validate() error {
 
 	// no validation rules for Parent
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return CreateApplicationRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Environment
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return CreateApplicationRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if !_CreateApplicationRequest_Id_Pattern.MatchString(m.GetId()) {
+		return CreateApplicationRequestValidationError{
+			field:  "Id",
+			reason: "value does not match regex pattern \"(?i)^[0-9a-z.~\\\\-_]*$\"",
+		}
+	}
 
 	// no validation rules for Description
 
@@ -849,6 +956,8 @@ var _ interface {
 	ErrorName() string
 } = CreateApplicationRequestValidationError{}
 
+var _CreateApplicationRequest_Id_Pattern = regexp.MustCompile("(?i)^[0-9a-z.~\\-_]*$")
+
 // Validate checks the field values on GetApplicationRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
@@ -859,11 +968,26 @@ func (m *GetApplicationRequest) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return GetApplicationRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Environment
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return GetApplicationRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return GetApplicationRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -934,11 +1058,33 @@ func (m *ApplicationPolicyRequest) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return ApplicationPolicyRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Environment
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return ApplicationPolicyRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return ApplicationPolicyRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if m.GetPolicy() == nil {
+		return ApplicationPolicyRequestValidationError{
+			field:  "Policy",
+			reason: "value is required",
+		}
+	}
 
 	{
 		tmp := m.GetPolicy()
@@ -1024,11 +1170,33 @@ func (m *ApplicationAuthzPolicyRequest) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return ApplicationAuthzPolicyRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Environment
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return ApplicationAuthzPolicyRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return ApplicationAuthzPolicyRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if m.GetPolicy() == nil {
+		return ApplicationAuthzPolicyRequestValidationError{
+			field:  "Policy",
+			reason: "value is required",
+		}
+	}
 
 	{
 		tmp := m.GetPolicy()
@@ -1115,9 +1283,19 @@ func (m *ListApplicationsRequest) Validate() error {
 
 	// no validation rules for Parent
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return ListApplicationsRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Environment
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return ListApplicationsRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -1275,11 +1453,26 @@ func (m *DeleteApplicationRequest) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return DeleteApplicationRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Environment
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return DeleteApplicationRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return DeleteApplicationRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -1350,9 +1543,19 @@ func (m *GetAllLogicalResourcesRequest) Validate() error {
 
 	// no validation rules for Parent
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return GetAllLogicalResourcesRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Environment
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return GetAllLogicalResourcesRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -1532,9 +1735,19 @@ func (m *GetAllEnvironmentResourcesRequest) Validate() error {
 
 	// no validation rules for Parent
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return GetAllEnvironmentResourcesRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Environment
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return GetAllEnvironmentResourcesRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -1724,7 +1937,27 @@ func (m *GetAllEnvironmentResourcesResponse) Validate() error {
 
 	}
 
-	// no validation rules for AuthzPolicies
+	for key, val := range m.GetAuthzPolicies() {
+		_ = val
+
+		// no validation rules for AuthzPolicies[key]
+
+		{
+			tmp := val
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return GetAllEnvironmentResourcesResponseValidationError{
+						field:  fmt.Sprintf("AuthzPolicies[%v]", key),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+		}
+
+	}
 
 	return nil
 }
@@ -1795,17 +2028,42 @@ func (m *Service) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return ServiceValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Environment
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return ServiceValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Application
+	if utf8.RuneCountInString(m.GetApplication()) < 1 {
+		return ServiceValidationError{
+			field:  "Application",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return ServiceValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	// no validation rules for Description
 
-	// no validation rules for Hostname
+	if utf8.RuneCountInString(m.GetHostname()) < 1 {
+		return ServiceValidationError{
+			field:  "Hostname",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	// no validation rules for Labels
 
@@ -1829,7 +2087,12 @@ func (m *Service) Validate() error {
 
 	}
 
-	// no validation rules for Etag
+	if utf8.RuneCountInString(m.GetEtag()) < 1 {
+		return ServiceValidationError{
+			field:  "Etag",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	// no validation rules for Namespace
 
@@ -1992,17 +2255,42 @@ func (m *CreateServiceRequest) Validate() error {
 
 	// no validation rules for Parent
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return CreateServiceRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Environment
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return CreateServiceRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Application
+	if utf8.RuneCountInString(m.GetApplication()) < 1 {
+		return CreateServiceRequestValidationError{
+			field:  "Application",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if !_CreateServiceRequest_Id_Pattern.MatchString(m.GetId()) {
+		return CreateServiceRequestValidationError{
+			field:  "Id",
+			reason: "value does not match regex pattern \"(?i)^[0-9a-z.~\\\\-_]*$\"",
+		}
+	}
 
 	// no validation rules for Description
 
-	// no validation rules for Hostname
+	if utf8.RuneCountInString(m.GetHostname()) < 1 {
+		return CreateServiceRequestValidationError{
+			field:  "Hostname",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	// no validation rules for Labels
 
@@ -2179,6 +2467,8 @@ var _ interface {
 	ErrorName() string
 } = CreateServiceRequestValidationError{}
 
+var _CreateServiceRequest_Id_Pattern = regexp.MustCompile("(?i)^[0-9a-z.~\\-_]*$")
+
 // Validate checks the field values on GetServiceRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, an
 // error is returned.
@@ -2189,13 +2479,33 @@ func (m *GetServiceRequest) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return GetServiceRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Environment
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return GetServiceRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Application
+	if utf8.RuneCountInString(m.GetApplication()) < 1 {
+		return GetServiceRequestValidationError{
+			field:  "Application",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return GetServiceRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -2266,13 +2576,40 @@ func (m *ServicePolicyRequest) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return ServicePolicyRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Environment
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return ServicePolicyRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Application
+	if utf8.RuneCountInString(m.GetApplication()) < 1 {
+		return ServicePolicyRequestValidationError{
+			field:  "Application",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return ServicePolicyRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if m.GetPolicy() == nil {
+		return ServicePolicyRequestValidationError{
+			field:  "Policy",
+			reason: "value is required",
+		}
+	}
 
 	{
 		tmp := m.GetPolicy()
@@ -2358,13 +2695,40 @@ func (m *ServiceAuthzPolicyRequest) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return ServiceAuthzPolicyRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Environment
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return ServiceAuthzPolicyRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Application
+	if utf8.RuneCountInString(m.GetApplication()) < 1 {
+		return ServiceAuthzPolicyRequestValidationError{
+			field:  "Application",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return ServiceAuthzPolicyRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if m.GetPolicy() == nil {
+		return ServiceAuthzPolicyRequestValidationError{
+			field:  "Policy",
+			reason: "value is required",
+		}
+	}
 
 	{
 		tmp := m.GetPolicy()
@@ -2450,11 +2814,26 @@ func (m *ListServicesRequest) Validate() error {
 
 	// no validation rules for Parent
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return ListServicesRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Environment
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return ListServicesRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Application
+	if utf8.RuneCountInString(m.GetApplication()) < 1 {
+		return ListServicesRequestValidationError{
+			field:  "Application",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -2612,13 +2991,33 @@ func (m *DeleteServiceRequest) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return DeleteServiceRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Environment
+	if utf8.RuneCountInString(m.GetEnvironment()) < 1 {
+		return DeleteServiceRequestValidationError{
+			field:  "Environment",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Application
+	if utf8.RuneCountInString(m.GetApplication()) < 1 {
+		return DeleteServiceRequestValidationError{
+			field:  "Application",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return DeleteServiceRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -2748,7 +3147,9 @@ func (e GetAllEnvironmentResourcesResponse_ApplicationDetailsValidationError) Ca
 }
 
 // Key function returns key value.
-func (e GetAllEnvironmentResourcesResponse_ApplicationDetailsValidationError) Key() bool { return e.key }
+func (e GetAllEnvironmentResourcesResponse_ApplicationDetailsValidationError) Key() bool {
+	return e.key
+}
 
 // ErrorName returns error name.
 func (e GetAllEnvironmentResourcesResponse_ApplicationDetailsValidationError) ErrorName() string {

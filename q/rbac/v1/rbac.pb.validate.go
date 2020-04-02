@@ -33,6 +33,9 @@ var (
 	_ = types.DynamicAny{}
 )
 
+// define the regex for a UUID once up-front
+var _rbac_uuidPattern = regexp.MustCompile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
+
 // Validate checks the field values on Role with the rules defined in the proto
 // definition for this message. If any rules are violated, an error is returned.
 func (m *Role) Validate() error {
@@ -108,6 +111,13 @@ var _ interface {
 func (m *Policy) Validate() error {
 	if m == nil {
 		return nil
+	}
+
+	if len(m.GetBindings()) < 1 {
+		return PolicyValidationError{
+			field:  "Bindings",
+			reason: "value must contain at least 1 item(s)",
+		}
 	}
 
 	for idx, item := range m.GetBindings() {
@@ -194,7 +204,31 @@ func (m *Binding) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Role
+	if utf8.RuneCountInString(m.GetRole()) < 1 {
+		return BindingValidationError{
+			field:  "Role",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if len(m.GetSubjects()) < 1 {
+		return BindingValidationError{
+			field:  "Subjects",
+			reason: "value must contain at least 1 item(s)",
+		}
+	}
+
+	for idx, item := range m.GetSubjects() {
+		_, _ = idx, item
+
+		if utf8.RuneCountInString(item) < 1 {
+			return BindingValidationError{
+				field:  fmt.Sprintf("Subjects[%v]", idx),
+				reason: "value length must be at least 1 runes",
+			}
+		}
+
+	}
 
 	return nil
 }
@@ -263,7 +297,31 @@ func (m *CreateRoleRequest) Validate() error {
 
 	// no validation rules for Description
 
-	// no validation rules for Id
+	if len(m.GetPermissions()) < 1 {
+		return CreateRoleRequestValidationError{
+			field:  "Permissions",
+			reason: "value must contain at least 1 item(s)",
+		}
+	}
+
+	for idx, item := range m.GetPermissions() {
+		_, _ = idx, item
+
+		if _, ok := Permission_name[int32(item)]; !ok {
+			return CreateRoleRequestValidationError{
+				field:  fmt.Sprintf("Permissions[%v]", idx),
+				reason: "value must be one of the defined enum values",
+			}
+		}
+
+	}
+
+	if !_CreateRoleRequest_Id_Pattern.MatchString(m.GetId()) {
+		return CreateRoleRequestValidationError{
+			field:  "Id",
+			reason: "value does not match regex pattern \"(?i)^[0-9a-z.~\\\\-_]+$\"",
+		}
+	}
 
 	// no validation rules for DisplayName
 
@@ -326,6 +384,8 @@ var _ interface {
 	ErrorName() string
 } = CreateRoleRequestValidationError{}
 
+var _CreateRoleRequest_Id_Pattern = regexp.MustCompile("(?i)^[0-9a-z.~\\-_]+$")
+
 // Validate checks the field values on UpdateRoleRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, an
 // error is returned.
@@ -334,9 +394,33 @@ func (m *UpdateRoleRequest) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return UpdateRoleRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	// no validation rules for Description
+
+	if len(m.GetPermissions()) < 1 {
+		return UpdateRoleRequestValidationError{
+			field:  "Permissions",
+			reason: "value must contain at least 1 item(s)",
+		}
+	}
+
+	for idx, item := range m.GetPermissions() {
+		_, _ = idx, item
+
+		if _, ok := Permission_name[int32(item)]; !ok {
+			return UpdateRoleRequestValidationError{
+				field:  fmt.Sprintf("Permissions[%v]", idx),
+				reason: "value must be one of the defined enum values",
+			}
+		}
+
+	}
 
 	// no validation rules for Name
 
@@ -561,7 +645,12 @@ func (m *GetRoleRequest) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return GetRoleRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	// no validation rules for Name
 
@@ -630,7 +719,12 @@ func (m *DeleteRoleRequest) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Id
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		return DeleteRoleRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	// no validation rules for Name
 

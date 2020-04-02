@@ -33,6 +33,9 @@ var (
 	_ = types.DynamicAny{}
 )
 
+// define the regex for a UUID once up-front
+var _settings_uuidPattern = regexp.MustCompile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
+
 // Validate checks the field values on Settings with the rules defined in the
 // proto definition for this message. If any rules are violated, an error is returned.
 func (m *Settings) Validate() error {
@@ -40,7 +43,27 @@ func (m *Settings) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Rules
+	for key, val := range m.GetRules() {
+		_ = val
+
+		// no validation rules for Rules[key]
+
+		{
+			tmp := val
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return SettingsValidationError{
+						field:  fmt.Sprintf("Rules[%v]", key),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+		}
+
+	}
 
 	for idx, item := range m.GetRecipients() {
 		_, _ = idx, item
@@ -147,7 +170,12 @@ func (m *Notification) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Condition
+	if _, ok := NotificationCondition_name[int32(m.GetCondition())]; !ok {
+		return NotificationValidationError{
+			field:  "Condition",
+			reason: "value must be one of the defined enum values",
+		}
+	}
 
 	for idx, item := range m.GetRecipients() {
 		_, _ = idx, item
@@ -235,9 +263,65 @@ func (m *Recipient) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Email
+	if err := m._validateEmail(m.GetEmail()); err != nil {
+		return RecipientValidationError{
+			field:  "Email",
+			reason: "value must be a valid email address",
+			cause:  err,
+		}
+	}
 
 	return nil
+}
+
+func (m *Recipient) _validateHostname(host string) error {
+	s := strings.ToLower(strings.TrimSuffix(host, "."))
+
+	if len(host) > 253 {
+		return errors.New("hostname cannot exceed 253 characters")
+	}
+
+	for _, part := range strings.Split(s, ".") {
+		if l := len(part); l == 0 || l > 63 {
+			return errors.New("hostname part must be non-empty and cannot exceed 63 characters")
+		}
+
+		if part[0] == '-' {
+			return errors.New("hostname parts cannot begin with hyphens")
+		}
+
+		if part[len(part)-1] == '-' {
+			return errors.New("hostname parts cannot end with hyphens")
+		}
+
+		for _, r := range part {
+			if (r < 'a' || r > 'z') && (r < '0' || r > '9') && r != '-' {
+				return fmt.Errorf("hostname parts can only contain alphanumeric characters or hyphens, got %q", string(r))
+			}
+		}
+	}
+
+	return nil
+}
+
+func (m *Recipient) _validateEmail(addr string) error {
+	a, err := mail.ParseAddress(addr)
+	if err != nil {
+		return err
+	}
+	addr = a.Address
+
+	if len(addr) > 254 {
+		return errors.New("email addresses cannot exceed 254 characters")
+	}
+
+	parts := strings.SplitN(addr, "@", 2)
+
+	if len(parts[0]) > 64 {
+		return errors.New("email address local phrase cannot exceed 64 characters")
+	}
+
+	return m._validateHostname(parts[1])
 }
 
 // RecipientValidationError is the validation error returned by
@@ -303,28 +387,49 @@ func (m *Rule) Validate() error {
 
 	// no validation rules for Id
 
-	// no validation rules for MetricName
-
-	// no validation rules for Threshold
-
-	// no validation rules for Operator
-
-	{
-		tmp := m.GetPeriod()
-
-		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
-
-			if err := v.Validate(); err != nil {
-				return RuleValidationError{
-					field:  "Period",
-					reason: "embedded message failed validation",
-					cause:  err,
-				}
-			}
+	if _, ok := _Rule_MetricName_InLookup[m.GetMetricName()]; !ok {
+		return RuleValidationError{
+			field:  "MetricName",
+			reason: "value must be in list [service_resp_time service_sla service_cpm service_apdex service_p99 service_p95 service_p90 service_p75 service_p50 service_2xx service_4xx service_5xx service_percentile]",
 		}
 	}
 
-	// no validation rules for Count
+	if val := m.GetThreshold(); val < 0 || val > 100 {
+		return RuleValidationError{
+			field:  "Threshold",
+			reason: "value must be inside range [0, 100]",
+		}
+	}
+
+	// no validation rules for Operator
+
+	if d := m.GetPeriod(); d != nil {
+		dur, err := types.DurationFromProto(d)
+		if err != nil {
+			return RuleValidationError{
+				field:  "Period",
+				reason: "value is not a valid duration",
+				cause:  err,
+			}
+		}
+
+		lt := time.Duration(1*time.Second + 0*time.Nanosecond)
+
+		if dur >= lt {
+			return RuleValidationError{
+				field:  "Period",
+				reason: "value must be less than 1s",
+			}
+		}
+
+	}
+
+	if m.GetCount() < 0 {
+		return RuleValidationError{
+			field:  "Count",
+			reason: "value must be greater than or equal to 0",
+		}
+	}
 
 	{
 		tmp := m.GetSilencePeriod()
@@ -344,6 +449,13 @@ func (m *Rule) Validate() error {
 	// no validation rules for DisplayName
 
 	// no validation rules for Enabled
+
+	if len(m.GetIncludedServices()) < 1 {
+		return RuleValidationError{
+			field:  "IncludedServices",
+			reason: "value must contain at least 1 item(s)",
+		}
+	}
 
 	for idx, item := range m.GetIncludedServices() {
 		_, _ = idx, item
@@ -386,6 +498,13 @@ func (m *Rule) Validate() error {
 	}
 
 	// no validation rules for Severity
+
+	if len(m.GetThresholds()) > 5 {
+		return RuleValidationError{
+			field:  "Thresholds",
+			reason: "value must contain no more than 5 item(s)",
+		}
+	}
 
 	for idx, item := range m.GetThresholds() {
 		_, _ = idx, item
@@ -464,6 +583,22 @@ var _ interface {
 	ErrorName() string
 } = RuleValidationError{}
 
+var _Rule_MetricName_InLookup = map[string]struct{}{
+	"service_resp_time":  {},
+	"service_sla":        {},
+	"service_cpm":        {},
+	"service_apdex":      {},
+	"service_p99":        {},
+	"service_p95":        {},
+	"service_p90":        {},
+	"service_p75":        {},
+	"service_p50":        {},
+	"service_2xx":        {},
+	"service_4xx":        {},
+	"service_5xx":        {},
+	"service_percentile": {},
+}
+
 // Validate checks the field values on Rule_Service with the rules defined in
 // the proto definition for this message. If any rules are violated, an error
 // is returned.
@@ -472,7 +607,12 @@ func (m *Rule_Service) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Name
+	if !_Rule_Service_Name_Pattern.MatchString(m.GetName()) {
+		return Rule_ServiceValidationError{
+			field:  "Name",
+			reason: "value does not match regex pattern \"(?i)^[0-9a-z.~_*\\\\-]+\\\\|[0-9a-z.~_*\\\\-]+\\\\|[0-9a-z.~_*\\\\-]+\\\\|[0-9a-z.~_*\\\\-]+\\\\|[0-9a-z.~_*\\\\-]+$\"",
+		}
+	}
 
 	return nil
 }
@@ -531,6 +671,8 @@ var _ interface {
 	ErrorName() string
 } = Rule_ServiceValidationError{}
 
+var _Rule_Service_Name_Pattern = regexp.MustCompile("(?i)^[0-9a-z.~_*\\-]+\\|[0-9a-z.~_*\\-]+\\|[0-9a-z.~_*\\-]+\\|[0-9a-z.~_*\\-]+\\|[0-9a-z.~_*\\-]+$")
+
 // Validate checks the field values on Rule_AlertThreshold with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
@@ -539,7 +681,12 @@ func (m *Rule_AlertThreshold) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Value
+	if utf8.RuneCountInString(m.GetValue()) < 1 {
+		return Rule_AlertThresholdValidationError{
+			field:  "Value",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }

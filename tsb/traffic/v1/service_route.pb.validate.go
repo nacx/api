@@ -33,6 +33,9 @@ var (
 	_ = types.DynamicAny{}
 )
 
+// define the regex for a UUID once up-front
+var _service_route_uuidPattern = regexp.MustCompile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
+
 // Validate checks the field values on ServiceRoute with the rules defined in
 // the proto definition for this message. If any rules are violated, an error
 // is returned.
@@ -41,7 +44,12 @@ func (m *ServiceRoute) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Service
+	if !_ServiceRoute_Service_Pattern.MatchString(m.GetService()) {
+		return ServiceRouteValidationError{
+			field:  "Service",
+			reason: "value does not match regex pattern \"^[^/]+/[^/]+$\"",
+		}
+	}
 
 	for idx, item := range m.GetSubsets() {
 		_, _ = idx, item
@@ -119,6 +127,8 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = ServiceRouteValidationError{}
+
+var _ServiceRoute_Service_Pattern = regexp.MustCompile("^[^/]+/[^/]+$")
 
 // Validate checks the field values on ServiceRoute_Subset with the rules
 // defined in the proto definition for this message. If any rules are

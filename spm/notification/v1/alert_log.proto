@@ -44,7 +44,7 @@ message AlertLog {
   // Alert id. auto generated.
   uint64 id = 1 [(validate.rules).uint64.gte = 0];
   // Time when the alert log was triggered.
-  google.protobuf.Timestamp last_triggered = 2 [(validate.rules).message.required = true];
+  google.protobuf.Timestamp last_triggered = 2 [(validate.rules).timestamp.required = true];
   // Rule name that trigger this log.
   string rule_name = 3 [(validate.rules).string.min_len = 1];
   // Application name where the rule belong to.

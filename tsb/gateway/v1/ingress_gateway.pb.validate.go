@@ -33,6 +33,9 @@ var (
 	_ = types.DynamicAny{}
 )
 
+// define the regex for a UUID once up-front
+var _ingress_gateway_uuidPattern = regexp.MustCompile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
+
 // Validate checks the field values on IngressGateway with the rules defined in
 // the proto definition for this message. If any rules are violated, an error
 // is returned.
@@ -140,7 +143,12 @@ func (m *HttpServer) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Hostname
+	if utf8.RuneCountInString(m.GetHostname()) < 1 {
+		return HttpServerValidationError{
+			field:  "Hostname",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	{
 		tmp := m.GetTls()
@@ -534,7 +542,27 @@ func (m *HttpMatchCondition) Validate() error {
 		}
 	}
 
-	// no validation rules for Headers
+	for key, val := range m.GetHeaders() {
+		_ = val
+
+		// no validation rules for Headers[key]
+
+		{
+			tmp := val
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return HttpMatchConditionValidationError{
+						field:  fmt.Sprintf("Headers[%v]", key),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+		}
+
+	}
 
 	return nil
 }
@@ -938,7 +966,12 @@ func (m *Route) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Host
+	if !_Route_Host_Pattern.MatchString(m.GetHost()) {
+		return RouteValidationError{
+			field:  "Host",
+			reason: "value does not match regex pattern \"^[^/]+/[^/]+$\"",
+		}
+	}
 
 	// no validation rules for Port
 
@@ -998,6 +1031,8 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = RouteValidationError{}
+
+var _Route_Host_Pattern = regexp.MustCompile("^[^/]+/[^/]+$")
 
 // Validate checks the field values on Redirect with the rules defined in the
 // proto definition for this message. If any rules are violated, an error is returned.
@@ -1429,7 +1464,12 @@ func (m *LocalAuthzRule) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Name
+	if utf8.RuneCountInString(m.GetName()) < 1 {
+		return LocalAuthzRuleValidationError{
+			field:  "Name",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	for idx, item := range m.GetFrom() {
 		_, _ = idx, item
@@ -1615,22 +1655,24 @@ func (m *HttpRouting_HTTPCookie) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Name
+	if utf8.RuneCountInString(m.GetName()) < 1 {
+		return HttpRouting_HTTPCookieValidationError{
+			field:  "Name",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Path
+	if utf8.RuneCountInString(m.GetPath()) < 1 {
+		return HttpRouting_HTTPCookieValidationError{
+			field:  "Path",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	{
-		tmp := m.GetTtl()
-
-		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
-
-			if err := v.Validate(); err != nil {
-				return HttpRouting_HTTPCookieValidationError{
-					field:  "Ttl",
-					reason: "embedded message failed validation",
-					cause:  err,
-				}
-			}
+	if m.GetTtl() == nil {
+		return HttpRouting_HTTPCookieValidationError{
+			field:  "Ttl",
+			reason: "value is required",
 		}
 	}
 
@@ -1704,7 +1746,13 @@ func (m *HttpRouting_StickySession) Validate() error {
 	switch m.HashKey.(type) {
 
 	case *HttpRouting_StickySession_Header:
-		// no validation rules for Header
+
+		if utf8.RuneCountInString(m.GetHeader()) < 1 {
+			return HttpRouting_StickySessionValidationError{
+				field:  "Header",
+				reason: "value length must be at least 1 runes",
+			}
+		}
 
 	case *HttpRouting_StickySession_Cookie:
 
@@ -2102,6 +2150,30 @@ func (m *LocalAuthzRule_HttpOperation) Validate() error {
 		return nil
 	}
 
+	for idx, item := range m.GetPaths() {
+		_, _ = idx, item
+
+		if utf8.RuneCountInString(item) < 1 {
+			return LocalAuthzRule_HttpOperationValidationError{
+				field:  fmt.Sprintf("Paths[%v]", idx),
+				reason: "value length must be at least 1 runes",
+			}
+		}
+
+	}
+
+	for idx, item := range m.GetMethods() {
+		_, _ = idx, item
+
+		if _, ok := _LocalAuthzRule_HttpOperation_Methods_InLookup[item]; !ok {
+			return LocalAuthzRule_HttpOperationValidationError{
+				field:  fmt.Sprintf("Methods[%v]", idx),
+				reason: "value must be in list [GET HEAD POST PUT PATCH DELETE OPTIONS]",
+			}
+		}
+
+	}
+
 	return nil
 }
 
@@ -2162,6 +2234,16 @@ var _ interface {
 	ErrorName() string
 } = LocalAuthzRule_HttpOperationValidationError{}
 
+var _LocalAuthzRule_HttpOperation_Methods_InLookup = map[string]struct{}{
+	"GET":     {},
+	"HEAD":    {},
+	"POST":    {},
+	"PUT":     {},
+	"PATCH":   {},
+	"DELETE":  {},
+	"OPTIONS": {},
+}
+
 // Validate checks the field values on Subject_JWTClaims with the rules defined
 // in the proto definition for this message. If any rules are violated, an
 // error is returned.
@@ -2174,7 +2256,18 @@ func (m *Subject_JWTClaims) Validate() error {
 
 	// no validation rules for Sub
 
-	// no validation rules for Other
+	for key, val := range m.GetOther() {
+		_ = val
+
+		if utf8.RuneCountInString(key) < 1 {
+			return Subject_JWTClaimsValidationError{
+				field:  fmt.Sprintf("Other[%v]", key),
+				reason: "value length must be at least 1 runes",
+			}
+		}
+
+		// no validation rules for Other[key]
+	}
 
 	return nil
 }

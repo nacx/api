@@ -53,10 +53,10 @@ fi
 
 # Build image to use
 if [[ "${IMAGE_VERSION:-}" == "" ]]; then
-  export IMAGE_VERSION=master-2020-03-24T16-16-03
+  export IMAGE_VERSION=2020-04-02
 fi
 if [[ "${IMAGE_NAME:-}" == "" ]]; then
-  export IMAGE_NAME=build-tools
+  export IMAGE_NAME=istio-build-tools
 fi
 
 export UID
@@ -72,7 +72,7 @@ export TARGET_OUT_LINUX="${TARGET_OUT_LINUX:-$(pwd)/out/linux_amd64}"
 export CONTAINER_TARGET_OUT="${CONTAINER_TARGET_OUT:-/work/out/${TARGET_OS}_${TARGET_ARCH}}"
 export CONTAINER_TARGET_OUT_LINUX="${CONTAINER_TARGET_OUT_LINUX:-/work/out/linux_amd64}"
 
-export IMG="${IMG:-gcr.io/istio-testing/${IMAGE_NAME}:${IMAGE_VERSION}}"
+export IMG="${IMG:-gcr.io/tetratelabs/${IMAGE_NAME}:${IMAGE_VERSION}}"
 
 export CONTAINER_CLI="${CONTAINER_CLI:-docker}"
 

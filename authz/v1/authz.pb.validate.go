@@ -33,6 +33,9 @@ var (
 	_ = types.DynamicAny{}
 )
 
+// define the regex for a UUID once up-front
+var _authz_uuidPattern = regexp.MustCompile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
+
 // Validate checks the field values on Policy with the rules defined in the
 // proto definition for this message. If any rules are violated, an error is returned.
 func (m *Policy) Validate() error {
@@ -126,7 +129,12 @@ func (m *Binding) Validate() error {
 		return nil
 	}
 
-	// no validation rules for DisplayName
+	if utf8.RuneCountInString(m.GetDisplayName()) < 1 {
+		return BindingValidationError{
+			field:  "DisplayName",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	// no validation rules for Description
 
@@ -250,12 +258,29 @@ func (m *Subject) Validate() error {
 		}
 	}
 
-	// no validation rules for RequestHeaders
+	for key, val := range m.GetRequestHeaders() {
+		_ = val
+
+		if utf8.RuneCountInString(key) < 1 {
+			return SubjectValidationError{
+				field:  fmt.Sprintf("RequestHeaders[%v]", key),
+				reason: "value length must be at least 1 runes",
+			}
+		}
+
+		// no validation rules for RequestHeaders[key]
+	}
 
 	switch m.TlsIdentity.(type) {
 
 	case *Subject_ClusterLocalServiceAccount:
-		// no validation rules for ClusterLocalServiceAccount
+
+		if !_Subject_ClusterLocalServiceAccount_Pattern.MatchString(m.GetClusterLocalServiceAccount()) {
+			return SubjectValidationError{
+				field:  "ClusterLocalServiceAccount",
+				reason: "value does not match regex pattern \"^$|^[^/]+/[^/]+$\"",
+			}
+		}
 
 	case *Subject_SubjectAltName:
 		// no validation rules for SubjectAltName
@@ -318,6 +343,8 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = SubjectValidationError{}
+
+var _Subject_ClusterLocalServiceAccount_Pattern = regexp.MustCompile("^$|^[^/]+/[^/]+$")
 
 // Validate checks the field values on Binding_HTTP_Rules with the rules
 // defined in the proto definition for this message. If any rules are
@@ -414,7 +441,97 @@ func (m *Binding_HTTP_Rules_Http) Validate() error {
 		return nil
 	}
 
-	// no validation rules for RequestHeaders
+	for idx, item := range m.GetHosts() {
+		_, _ = idx, item
+
+		if err := m._validateHostname(item); err != nil {
+			return Binding_HTTP_Rules_HttpValidationError{
+				field:  fmt.Sprintf("Hosts[%v]", idx),
+				reason: "value must be a valid hostname",
+				cause:  err,
+			}
+		}
+
+	}
+
+	for idx, item := range m.GetPaths() {
+		_, _ = idx, item
+
+		if utf8.RuneCountInString(item) < 1 {
+			return Binding_HTTP_Rules_HttpValidationError{
+				field:  fmt.Sprintf("Paths[%v]", idx),
+				reason: "value length must be at least 1 runes",
+			}
+		}
+
+	}
+
+	for idx, item := range m.GetMethods() {
+		_, _ = idx, item
+
+		if _, ok := _Binding_HTTP_Rules_Http_Methods_InLookup[item]; !ok {
+			return Binding_HTTP_Rules_HttpValidationError{
+				field:  fmt.Sprintf("Methods[%v]", idx),
+				reason: "value must be in list [GET HEAD POST PUT PATCH DELETE OPTIONS]",
+			}
+		}
+
+	}
+
+	for key, val := range m.GetRequestHeaders() {
+		_ = val
+
+		if utf8.RuneCountInString(key) < 1 {
+			return Binding_HTTP_Rules_HttpValidationError{
+				field:  fmt.Sprintf("RequestHeaders[%v]", key),
+				reason: "value length must be at least 1 runes",
+			}
+		}
+
+		// no validation rules for RequestHeaders[key]
+	}
+
+	for idx, item := range m.GetPorts() {
+		_, _ = idx, item
+
+		if val := item; val < 0 || val > 65535 {
+			return Binding_HTTP_Rules_HttpValidationError{
+				field:  fmt.Sprintf("Ports[%v]", idx),
+				reason: "value must be inside range [0, 65535]",
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *Binding_HTTP_Rules_Http) _validateHostname(host string) error {
+	s := strings.ToLower(strings.TrimSuffix(host, "."))
+
+	if len(host) > 253 {
+		return errors.New("hostname cannot exceed 253 characters")
+	}
+
+	for _, part := range strings.Split(s, ".") {
+		if l := len(part); l == 0 || l > 63 {
+			return errors.New("hostname part must be non-empty and cannot exceed 63 characters")
+		}
+
+		if part[0] == '-' {
+			return errors.New("hostname parts cannot begin with hyphens")
+		}
+
+		if part[len(part)-1] == '-' {
+			return errors.New("hostname parts cannot end with hyphens")
+		}
+
+		for _, r := range part {
+			if (r < 'a' || r > 'z') && (r < '0' || r > '9') && r != '-' {
+				return fmt.Errorf("hostname parts can only contain alphanumeric characters or hyphens, got %q", string(r))
+			}
+		}
+	}
 
 	return nil
 }
@@ -475,6 +592,16 @@ var _ interface {
 	ErrorName() string
 } = Binding_HTTP_Rules_HttpValidationError{}
 
+var _Binding_HTTP_Rules_Http_Methods_InLookup = map[string]struct{}{
+	"GET":     {},
+	"HEAD":    {},
+	"POST":    {},
+	"PUT":     {},
+	"PATCH":   {},
+	"DELETE":  {},
+	"OPTIONS": {},
+}
+
 // Validate checks the field values on Subject_JWT with the rules defined in
 // the proto definition for this message. If any rules are violated, an error
 // is returned.
@@ -489,7 +616,25 @@ func (m *Subject_JWT) Validate() error {
 
 	// no validation rules for Presenter
 
-	// no validation rules for Claims
+	for key, val := range m.GetClaims() {
+		_ = val
+
+		if utf8.RuneCountInString(key) < 1 {
+			return Subject_JWTValidationError{
+				field:  fmt.Sprintf("Claims[%v]", key),
+				reason: "value length must be at least 1 runes",
+			}
+		}
+
+		// no validation rules for Claims[key]
+	}
+
+	if m.GetValidation() == nil {
+		return Subject_JWTValidationError{
+			field:  "Validation",
+			reason: "value is required",
+		}
+	}
 
 	{
 		tmp := m.GetValidation()
@@ -571,15 +716,50 @@ func (m *Subject_JWT_Validation) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Issuer
+	if utf8.RuneCountInString(m.GetIssuer()) < 1 {
+		return Subject_JWT_ValidationValidationError{
+			field:  "Issuer",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	for idx, item := range m.GetAudiences() {
+		_, _ = idx, item
+
+		if utf8.RuneCountInString(item) < 1 {
+			return Subject_JWT_ValidationValidationError{
+				field:  fmt.Sprintf("Audiences[%v]", idx),
+				reason: "value length must be at least 1 runes",
+			}
+		}
+
+	}
 
 	switch m.Keys.(type) {
 
 	case *Subject_JWT_Validation_JwksUri:
-		// no validation rules for JwksUri
+
+		if uri, err := url.Parse(m.GetJwksUri()); err != nil {
+			return Subject_JWT_ValidationValidationError{
+				field:  "JwksUri",
+				reason: "value must be a valid URI",
+				cause:  err,
+			}
+		} else if !uri.IsAbs() {
+			return Subject_JWT_ValidationValidationError{
+				field:  "JwksUri",
+				reason: "value must be absolute",
+			}
+		}
 
 	case *Subject_JWT_Validation_Jwks:
-		// no validation rules for Jwks
+
+		if utf8.RuneCountInString(m.GetJwks()) < 1 {
+			return Subject_JWT_ValidationValidationError{
+				field:  "Jwks",
+				reason: "value length must be at least 1 runes",
+			}
+		}
 
 	}
 

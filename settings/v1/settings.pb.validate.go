@@ -33,6 +33,9 @@ var (
 	_ = types.DynamicAny{}
 )
 
+// define the regex for a UUID once up-front
+var _settings_uuidPattern = regexp.MustCompile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
+
 // Validate checks the field values on GetSettingsRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
@@ -43,9 +46,19 @@ func (m *GetSettingsRequest) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return GetSettingsRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if _, ok := _GetSettingsRequest_Id_InLookup[m.GetId()]; !ok {
+		return GetSettingsRequestValidationError{
+			field:  "Id",
+			reason: "value must be in list [system]",
+		}
+	}
 
 	return nil
 }
@@ -106,6 +119,10 @@ var _ interface {
 	ErrorName() string
 } = GetSettingsRequestValidationError{}
 
+var _GetSettingsRequest_Id_InLookup = map[string]struct{}{
+	"system": {},
+}
+
 // Validate checks the field values on Settings with the rules defined in the
 // proto definition for this message. If any rules are violated, an error is returned.
 func (m *Settings) Validate() error {
@@ -115,9 +132,19 @@ func (m *Settings) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return SettingsValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if _, ok := _Settings_Id_InLookup[m.GetId()]; !ok {
+		return SettingsValidationError{
+			field:  "Id",
+			reason: "value must be in list [system]",
+		}
+	}
 
 	// no validation rules for Etag
 
@@ -198,6 +225,10 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = SettingsValidationError{}
+
+var _Settings_Id_InLookup = map[string]struct{}{
+	"system": {},
+}
 
 // Validate checks the field values on SystemSettings with the rules defined in
 // the proto definition for this message. If any rules are violated, an error
@@ -287,19 +318,49 @@ func (m *SMTPSettings) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Host
+	if utf8.RuneCountInString(m.GetHost()) < 1 {
+		return SMTPSettingsValidationError{
+			field:  "Host",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Port
+	if m.GetPort() < 0 {
+		return SMTPSettingsValidationError{
+			field:  "Port",
+			reason: "value must be greater than or equal to 0",
+		}
+	}
 
-	// no validation rules for Username
+	if utf8.RuneCountInString(m.GetUsername()) < 1 {
+		return SMTPSettingsValidationError{
+			field:  "Username",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Password
+	if utf8.RuneCountInString(m.GetPassword()) < 1 {
+		return SMTPSettingsValidationError{
+			field:  "Password",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	// no validation rules for UseTls
 
-	// no validation rules for Authentication
+	if _, ok := SMTPAuthentication_name[int32(m.GetAuthentication())]; !ok {
+		return SMTPSettingsValidationError{
+			field:  "Authentication",
+			reason: "value must be one of the defined enum values",
+		}
+	}
 
-	// no validation rules for FromAddress
+	if utf8.RuneCountInString(m.GetFromAddress()) < 1 {
+		return SMTPSettingsValidationError{
+			field:  "FromAddress",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	return nil
 }
@@ -368,9 +429,19 @@ func (m *GetSettingsPolicyRequest) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return GetSettingsPolicyRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if _, ok := _GetSettingsPolicyRequest_Id_InLookup[m.GetId()]; !ok {
+		return GetSettingsPolicyRequestValidationError{
+			field:  "Id",
+			reason: "value must be in list [system]",
+		}
+	}
 
 	return nil
 }
@@ -431,6 +502,10 @@ var _ interface {
 	ErrorName() string
 } = GetSettingsPolicyRequestValidationError{}
 
+var _GetSettingsPolicyRequest_Id_InLookup = map[string]struct{}{
+	"system": {},
+}
+
 // Validate checks the field values on SetSettingsPolicyRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
@@ -441,9 +516,26 @@ func (m *SetSettingsPolicyRequest) Validate() error {
 
 	// no validation rules for Name
 
-	// no validation rules for Tenant
+	if utf8.RuneCountInString(m.GetTenant()) < 1 {
+		return SetSettingsPolicyRequestValidationError{
+			field:  "Tenant",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
-	// no validation rules for Id
+	if _, ok := _SetSettingsPolicyRequest_Id_InLookup[m.GetId()]; !ok {
+		return SetSettingsPolicyRequestValidationError{
+			field:  "Id",
+			reason: "value must be in list [system]",
+		}
+	}
+
+	if m.GetPolicy() == nil {
+		return SetSettingsPolicyRequestValidationError{
+			field:  "Policy",
+			reason: "value is required",
+		}
+	}
 
 	{
 		tmp := m.GetPolicy()
@@ -518,3 +610,7 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = SetSettingsPolicyRequestValidationError{}
+
+var _SetSettingsPolicyRequest_Id_InLookup = map[string]struct{}{
+	"system": {},
+}
