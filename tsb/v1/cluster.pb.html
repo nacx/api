@@ -1,0 +1,251 @@
+---
+title: Clusters
+description: Configuration for onboarding clusters.
+location: https://tetrate.io/docs/reference/config/v1/cluster.html
+layout: protoc-gen-docs
+generator: protoc-gen-docs
+number_of_entries: 5
+---
+<p>Each Kubernetes cluster managed by Service Bridge should be
+onboarded first before configurations can be applied to the
+services in the cluster. Onboarding a cluster is a two step
+process. First, create a cluster object under the appropriate
+tenant. Once a cluster object is created, its status field should
+provide the set of join tokens that will be used by the Service
+Bridge agent on the cluster to talk to Service Bridge management
+plane. The second step is to deploy the Service Bridge agent on the
+cluster with the join tokens and deploy Istio on the cluster. The
+following example creates a cluster named c1 under the tenant
+mycompany.</p>
+
+<pre><code class="language-yaml">apiVersion: api.tsb.tetrate.io/v1
+kind: Cluster
+metadata:
+  name: c1
+  tenant: mycompany
+spec:
+  tokenTtl: &quot;1hr&quot;
+</code></pre>
+
+<p>Note that configuration profiles such as traffic, security and
+gateway groups will flow to the Bridge agents in the cluster as
+long their requested cluster exists in the Service Bridge
+hierarchy.</p>
+
+<h2 id="Cluster">Cluster</h2>
+<section>
+<p>A Kubernetes cluster managing both pods and VMs.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Cluster-token_ttl">
+<td><code>tokenTtl</code></td>
+<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#duration">Duration</a></code></td>
+<td>
+<p>Lifetime of the tokens. Defaults to 1hr.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Cluster-namespaces">
+<td><code>namespaces</code></td>
+<td><code><a href="#Namespace">Namespace[]</a></code></td>
+<td>
+<p>Read-only data for informational purposes. Any user provided
+value will be ignored. The data here may be stale depending on
+the update frequency from the Bridge agents in the cluster.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="ClusterStatus">ClusterStatus</h2>
+<section>
+<p>The status message for a cluster resource contains the set of join
+tokens that should be used by Service Bridge&rsquo;s agents on the
+cluster.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ClusterStatus-tokens">
+<td><code>tokens</code></td>
+<td><code>map&lt;string,&nbsp;string&gt;</code></td>
+<td>
+<p>Tokens for various agents.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="Namespace">Namespace</h2>
+<section>
+<p>A Kubernetes namespace. These are automatically discovered by the
+Service Bridge agents in the cluster.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Namespace-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Namespace-services">
+<td><code>services</code></td>
+<td><code><a href="#Service">Service[]</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="Service">Service</h2>
+<section>
+<p>A Kubernetes or a VM service. These are automatically discovered by
+the Service Bridge agents in the cluster.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Service-hostname">
+<td><code>hostname</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Service-ports">
+<td><code>ports</code></td>
+<td><code><a href="#Service-Port">Port[]</a></code></td>
+<td>
+<p>The set of ports on which this service is exposed.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Service-kubernetes_service_ip">
+<td><code>kubernetesServiceIp</code></td>
+<td><code>string</code></td>
+<td>
+<p>For services running on Kubernetes, the cluster IP of the service in the cluster.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Service-kubernetes_external_addresses">
+<td><code>kubernetesExternalAddresses</code></td>
+<td><code>string[]</code></td>
+<td>
+<p>For kubernetes services of type load balancer, this field contains the list of lb hostnames or
+IPs assigned to the service. For services of type nodePort, this field contains the IP
+addresses of the nodes in the cluster.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="Service-Port">Service.Port</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Service-Port-number">
+<td><code>number</code></td>
+<td><code>uint32</code></td>
+<td>
+<p>A valid non-negative integer port number.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Service-Port-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Name assigned to the port.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Service-Port-kubernetes_node_port">
+<td><code>kubernetesNodePort</code></td>
+<td><code>uint32</code></td>
+<td>
+<p>Indicates the node port attached to a physical deployment on a kubernetes cluster.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>

@@ -1,0 +1,149 @@
+---
+title: Service Route
+description: Configuration affecting routing for services in a traffic group.
+location: https://tetrate.io/docs/reference/config/traffic/v1/service-route.html
+layout: protoc-gen-docs
+generator: protoc-gen-docs
+number_of_entries: 2
+---
+<p>Service Routes can be used by service owners to configure traffic
+shifting across different versions of a service in a traffic
+group. Traffic to this service can originate from sidecars in same
+or different traffic groups as well as gateways.</p>
+
+<p>The following example creates a traffic group for the sidecars in
+<code>ns1</code>, <code>ns2</code> and <code>ns3</code> namespaces owned by its parent workspace
+<code>w1</code> under tenant <code>mycompany</code> and defines a service route for the
+<code>reviews</code> service in <code>ns1</code> namespace with two subsets <code>v1</code> and
+<code>v2</code>. 80% of the traffic to the reviews service is sent to <code>v1</code>
+while the remaining 20% is sent to <code>v2</code>.</p>
+
+<pre><code class="language-yaml">apiVersion: traffic.tsb.io/v1
+kind: Group
+metadata:
+  name: t1
+  workspace: w1
+  tenant: mycompany
+spec:
+  namespaceSelectors:
+  - name: */ns1
+  - name: */ns2
+  - name: */ns3
+  configMode: TETRATE
+</code></pre>
+
+<p>And the service route for <code>reviews.com</code> service in <code>ns1</code> namespace</p>
+
+<pre><code class="language-yaml">apiVersion: traffic.tsb.io/v1
+kind: ServiceRoute
+metadata:
+  name: reviews
+  group: t1
+  workspace: w1
+  tenant: mycompany
+spec:
+  service: ns1/reviews.com
+  subsets:
+  - name: v1
+    labels:
+      version: v1
+    weight: 80
+  - name: v2
+    labels:
+      version: v2
+    weight: 20
+</code></pre>
+
+<h2 id="ServiceRoute">ServiceRoute</h2>
+<section>
+<p>A service route controls routing configurations for traffic to a
+service in a traffic group.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ServiceRoute-service">
+<td><code>service</code></td>
+<td><code>string</code></td>
+<td>
+<p>The service on which the configuration is being applied. Must be in namespace/FQDN format.</p>
+
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr id="ServiceRoute-subsets">
+<td><code>subsets</code></td>
+<td><code><a href="#ServiceRoute-Subset">Subset[]</a></code></td>
+<td>
+<p>The set of versions of a service and the percentage of traffic to
+send to each version.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="ServiceRoute-Subset">ServiceRoute.Subset</h2>
+<section>
+<p>Subset denotes a specific version of a service. The pods/VMs of a
+subset should be uniquely identifiable using their labels.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ServiceRoute-Subset-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Name used to refer to the subset.</p>
+
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr id="ServiceRoute-Subset-labels">
+<td><code>labels</code></td>
+<td><code>map&lt;string,&nbsp;string&gt;</code></td>
+<td>
+<p>Labels apply a filter over the endpoints of a service in the service registry.</p>
+
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr id="ServiceRoute-Subset-weight">
+<td><code>weight</code></td>
+<td><code>uint32</code></td>
+<td>
+<p>Percentage of traffic to be sent to this subset. The sum of
+weights across all subsets should add up to 100.</p>
+
+</td>
+<td>
+Yes
+</td>
+</tr>
+</tbody>
+</table>
+</section>

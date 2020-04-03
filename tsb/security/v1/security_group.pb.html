@@ -1,0 +1,155 @@
+---
+title: Security Group
+description: Configurations to group a set of sidecars in a workspace for security.
+location: https://tetrate.io/docs/reference/config/security/v1/group.html
+layout: protoc-gen-docs
+generator: protoc-gen-docs
+number_of_entries: 1
+---
+<p>Security Groups allow grouping the sidecars in a set of namespaces
+owned by its parent workspace. Security related configurations can
+then be applied on the group to control the behavior of these
+sidecars. The group can be in one of two modes: <code>TETRATE</code> and
+<code>ISTIO</code>. <code>TETRATE</code> mode is a minimalistic mode that allows users to
+quickly configure the most commonly used features in the service
+mesh using Tetrate specific APIs, while the <code>ISTIO</code> mode provides
+more flexibility for power users by allowing them to configure the
+sidecar&rsquo;s security properties using a restricted subset of Istio
+Security APIs.</p>
+
+<p>The following example creates a security group for the sidecars in
+<code>ns1</code>, <code>ns2</code> and <code>ns3</code> namespaces owned by its parent workspace
+<code>w1</code> under tenant <code>mycompany</code></p>
+
+<pre><code class="language-yaml">apiVersion: security.tsb.tetrate.io/v1
+kind: Group
+metadata:
+  name: t1
+  workspace: w1
+  tenant: mycompany
+spec:
+  namespaceSelectors:
+  - name: */ns1
+  - name: */ns2
+  - name: */ns3
+  configMode: TETRATE
+</code></pre>
+
+<p>And the associated security settings for the sidecars in the group</p>
+
+<pre><code class="language-yaml">apiVersion: security.tsb.tetrate.io/v1
+kind: SecuritySetting
+metadata:
+  name: defaults
+  group: t1
+  workspace: w1
+  tenant: mycompany
+spec:
+  authentication: REQUIRED
+</code></pre>
+
+<p>Under the hood, Service Bridge translates these minimalistic
+settings into Istio APIs such as <code>PeerAuthentication</code>,
+<code>AuthorizationPolicy</code>, etc. for the namespaces managed by the
+security group. These APIs are then pushed to the Istio control
+planes of clusters where the workspace is applicable.</p>
+
+<p>It is possible to create a security group for namespaces in a
+specific cluster as long as the parent workspace owns those
+namespaces in that cluster. For example,</p>
+
+<pre><code class="language-yaml">apiVersion: security.tsb.tetrate.io/v1
+kind: Group
+metadata:
+  name: t1
+  workspace: w1
+  tenant: mycompany
+spec:
+  namespaceSelectors:
+  - name: c1/ns1 # pick ns1 namespace only from c1 cluster
+  - name: */ns2
+  - name: */ns3
+  configMode: TETRATE
+</code></pre>
+
+<p>In the <code>ISTIO</code> mode, it is possible to directly attach Istio
+<code>PeerAuthentication</code>, <code>RequestAuthentication</code>, and
+<code>AuthorizationPolicy</code> to the security group. These configurations
+will be validated for correctness and conflict free operations and
+then pushed to the appropriate Istio control planes.</p>
+
+<p>The following example declares a <code>PeerAuthentication</code> policy for a
+specific workload in the <code>ns1</code> namespace:</p>
+
+<pre><code class="language-yaml">apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: workload-mtls-disable
+  namespace: ns1
+  annotations:
+    tsb.tetrate.io/tenant: mycompany
+    tsb.tetrate.io/workspace: w1
+    tsb.tetrate.io/securityGroup: t1
+spec:
+  selector:
+    matchLabels:
+      app: reviews
+  mtls:
+    mode: DISABLE
+</code></pre>
+
+<p>The namespace where the Istio APIs are applied will need to be part
+of the parent security group. In addition, each API object will need
+to have annotations to indicate the tenant, workspace and the
+security group to which it belongs to.</p>
+
+<p>TODO(rshriram): Document the list of fields in Istio APIs that are
+disallowed.</p>
+
+<h2 id="Group">Group</h2>
+<section>
+<p>A security group manages the security properties of sidecars in a
+group of namespaces owned by the parent workspace.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Group-namespace_selectors">
+<td><code>namespaceSelectors</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/types/v1/types.html#NamespaceSelector">NamespaceSelector[]</a></code></td>
+<td>
+<p>Set of namespaces owned exclusively by this group. If omitted,
+applies to all resources owned by the workspace.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Group-config_mode">
+<td><code>configMode</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/types/v1/types.html#ConfigMode">ConfigMode</a></code></td>
+<td>
+<p>The Configuration types that will be added to this
+group. <code>TETRATE</code> mode indicates that configurations added to this
+group will use Tetrate APIs such as <code>SecuritySetting</code>. <code>ISTIO</code>
+mode indicates that configurations added to this group will use
+Istio Security APIs such as <code>PeerAuthentication</code>,
+<code>RequestAuthentication</code>, and <code>AuthorizationPolicy</code>. Defaults to
+<code>TETRATE</code> mode.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>

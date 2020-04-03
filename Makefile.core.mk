@@ -74,7 +74,7 @@ gen: \
 	generate-tsb-rbac \
 	generate-tsb-security \
 	generate-tsb-traffic \
-	generate-tsb-traffic \
+	generate-tsb-service \
 	generate-tsb-types \
 	generate-tsb \
 	tidy-go
@@ -99,7 +99,7 @@ clean: \
 	clean-tsb-rbac \
 	clean-tsb-security \
 	clean-tsb-traffic \
-	clean-tsb-traffic \
+	clean-tsb-service \
 	clean-tsb-types \
 	clean-tsb
 
@@ -370,7 +370,7 @@ tsb_v1_pb_validate_gos := $(tsb_v1_protos:.proto=.pb.validate.go)
 tsb_v1_pb_doc := $(tsb_v1_path)/tetrate.api.tsb.v1.pb.html
 
 $(tsb_v1_pb_gos) $(tsb_v1_pb_gw_gos) $(tsb_v1_pb_validate_gos) $(tsb_v1_pb_doc): $(tsb_v1_protos)
-	@$(protoc) $(gogofast_plugin) $(grpc_gateway_plugin) $(protoc_gen_validate_plugin) $(protoc_gen_docs_plugin)$(tsb_v1_path) $^
+	@$(protoc) $(gogofast_plugin) $(grpc_gateway_plugin) $(protoc_gen_validate_plugin) $(protoc_gen_docs_plugin_per_file)$(tsb_v1_path) $^
 	@cp -r /tmp/github.com/tetrateio/api/tsb/* tsb
 
 generate-tsb: $(tsb_v1_pb_gos)
@@ -387,7 +387,7 @@ tsb_gateway_v1_pb_validate_gos := $(tsb_gateway_v1_protos:.proto=.pb.validate.go
 tsb_gateway_v1_pb_doc := $(tsb_gateway_v1_path)/tetrate.api.tsb.gateway.v1.pb.html
 
 $(tsb_gateway_v1_pb_gos) $(tsb_gateway_v1_pb_gw_gos) $(tsb_gateway_v1_pb_validate_gos) $(tsb_gateway_v1_pb_doc): $(tsb_gateway_v1_protos)
-	@$(protoc) $(gogofast_plugin) $(grpc_gateway_plugin) $(protoc_gen_validate_plugin) $(protoc_gen_docs_plugin)$(tsb_gateway_v1_path) $^
+	@$(protoc) $(gogofast_plugin) $(grpc_gateway_plugin) $(protoc_gen_validate_plugin) $(protoc_gen_docs_plugin_per_file)$(tsb_gateway_v1_path) $^
 	@cp -r /tmp/github.com/tetrateio/api/tsb/gateway/* tsb/gateway
 
 generate-tsb-gateway: $(tsb_gateway_v1_pb_gos)
@@ -404,7 +404,7 @@ tsb_rbac_v1_pb_validate_gos := $(tsb_rbac_v1_protos:.proto=.pb.validate.go)
 tsb_rbac_v1_pb_doc := $(tsb_rbac_v1_path)/tetrate.api.tsb.gateway.v1.pb.html
 
 $(tsb_rbac_v1_pb_gos) $(tsb_rbac_v1_pb_gw_gos) $(tsb_rbac_v1_pb_validate_gos) $(tsb_rbac_v1_pb_doc): $(tsb_rbac_v1_protos)
-	@$(protoc) $(gogofast_plugin) $(grpc_gateway_plugin) $(protoc_gen_validate_plugin) $(protoc_gen_docs_plugin)$(tsb_rbac_v1_path) $^
+	@$(protoc) $(gogofast_plugin) $(grpc_gateway_plugin) $(protoc_gen_validate_plugin) $(protoc_gen_docs_plugin_per_file)$(tsb_rbac_v1_path) $^
 	@cp -r /tmp/github.com/tetrateio/api/tsb/rbac/* tsb/rbac
 
 generate-tsb-rbac: $(tsb_rbac_v1_pb_gos)
@@ -421,7 +421,7 @@ tsb_security_v1_pb_validate_gos := $(tsb_security_v1_protos:.proto=.pb.validate.
 tsb_security_v1_pb_doc := $(tsb_security_v1_path)/tetrate.api.tsb.security.v1.pb.html
 
 $(tsb_security_v1_pb_gos) $(tsb_security_v1_pb_gw_gos) $(tsb_security_v1_pb_validate_gos) $(tsb_security_v1_pb_doc): $(tsb_security_v1_protos)
-	@$(protoc) $(gogofast_plugin) $(grpc_gateway_plugin) $(protoc_gen_validate_plugin) $(protoc_gen_docs_plugin)$(tsb_security_v1_path) $^
+	@$(protoc) $(gogofast_plugin) $(grpc_gateway_plugin) $(protoc_gen_validate_plugin) $(protoc_gen_docs_plugin_per_file)$(tsb_security_v1_path) $^
 	@cp -r /tmp/github.com/tetrateio/api/tsb/security/* tsb/security
 
 generate-tsb-security: $(tsb_security_v1_pb_gos)
@@ -438,7 +438,7 @@ tsb_traffic_v1_pb_validate_gos := $(tsb_traffic_v1_protos:.proto=.pb.validate.go
 tsb_traffic_v1_pb_doc := $(tsb_traffic_v1_path)/tetrate.api.tsb.traffic.v1.pb.html
 
 $(tsb_traffic_v1_pb_gos) $(tsb_traffic_v1_pb_gw_gos) $(tsb_traffic_v1_pb_validate_gos) $(tsb_traffic_v1_pb_doc): $(tsb_traffic_v1_protos)
-	@$(protoc) $(gogofast_plugin) $(grpc_gateway_plugin) $(protoc_gen_validate_plugin) $(protoc_gen_docs_plugin)$(tsb_traffic_v1_path) $^
+	@$(protoc) $(gogofast_plugin) $(grpc_gateway_plugin) $(protoc_gen_validate_plugin) $(protoc_gen_docs_plugin_per_file)$(tsb_traffic_v1_path) $^
 	@cp -r /tmp/github.com/tetrateio/api/tsb/traffic/* tsb/traffic
 
 generate-tsb-traffic: $(tsb_traffic_v1_pb_gos)
@@ -455,13 +455,30 @@ tsb_types_v1_pb_validate_gos := $(tsb_types_v1_protos:.proto=.pb.validate.go)
 tsb_types_v1_pb_doc := $(tsb_types_v1_path)/tetrate.api.tsb.types.v1.pb.html
 
 $(tsb_types_v1_pb_gos) $(tsb_types_v1_pb_gw_gos) $(tsb_types_v1_pb_validate_gos) $(tsb_types_v1_pb_doc): $(tsb_types_v1_protos)
-	@$(protoc) $(gogofast_plugin) $(grpc_gateway_plugin) $(protoc_gen_validate_plugin) $(protoc_gen_docs_plugin)$(tsb_types_v1_path) $^
+	@$(protoc) $(gogofast_plugin) $(grpc_gateway_plugin) $(protoc_gen_validate_plugin) $(protoc_gen_docs_plugin_per_file)$(tsb_types_v1_path) $^
 	@cp -r /tmp/github.com/tetrateio/api/tsb/types/* tsb/types
 
 generate-tsb-types: $(tsb_types_v1_pb_gos)
 
 clean-tsb-types:
 	@rm -fr $(tsb_types_v1_pb_gos) $(tsb_types_v1_pb_gw_gos) $(tsb_types_v1_pb_validate_gos) $(tsb_types_v1_pb_doc)
+
+# tsb/service/...
+tsb_service_v1_path := tsb/service/v1
+tsb_service_v1_protos := $(wildcard $(tsb_service_v1_path)/*.proto)
+tsb_service_v1_pb_gos := $(tsb_service_v1_protos:.proto=.pb.go)
+tsb_service_v1_pb_gw_gos := $(tsb_service_v1_protos:.proto=.pb.gw.go)
+tsb_service_v1_pb_validate_gos := $(tsb_service_v1_protos:.proto=.pb.validate.go)
+tsb_service_v1_pb_doc := $(tsb_service_v1_path)/tetrate.api.tsb.service.v1.pb.html
+
+$(tsb_service_v1_pb_gos) $(tsb_service_v1_pb_gw_gos) $(tsb_service_v1_pb_validate_gos) $(tsb_service_v1_pb_doc): $(tsb_service_v1_protos)
+	@$(protoc) $(gogofast_plugin) $(grpc_service_plugin) $(protoc_gen_validate_plugin) $(protoc_gen_docs_plugin_per_file)$(tsb_service_v1_path) $^
+	@cp -r /tmp/github.com/tetrateio/api/tsb/service/* tsb/service
+
+generate-tsb-service: $(tsb_service_v1_pb_gos)
+
+clean-tsb-service:
+	@rm -fr $(tsb_service_v1_pb_gos) $(tsb_service_v1_pb_gw_gos) $(tsb_service_v1_pb_validate_gos) $(tsb_service_v1_pb_doc)
 
 # Include common targets.
 include common/Makefile.common.mk

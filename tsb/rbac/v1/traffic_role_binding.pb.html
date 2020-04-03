@@ -1,0 +1,74 @@
+---
+title: Traffic Role Binding
+description: Configuration for assigning access roles to users of traffic groups.
+location: https://tetrate.io/docs/reference/config/rbac/v1/traffic-role-binding.html
+layout: protoc-gen-docs
+generator: protoc-gen-docs
+number_of_entries: 1
+---
+<p><code>TrafficRoleBinding</code> is an assignment of roles to a set of users or
+teams to access resources under a Traffic group.  The user or team
+information is obtained from an LDAP server that should have been
+configured as part of Service Bridge installation. Note that a
+<code>TrafficRoleBinding</code> can be created or modified only by users who
+have <code>set_rbac</code> permission on the Traffic group.</p>
+
+<p>The following example assigns the <code>traffic-admin</code> role to users
+<code>alice</code>, <code>bob</code>, and members of the <code>traffic-ops</code> team for
+traffic group <code>g1</code> under workspace <code>w1</code> owned by the tenant
+<code>mycompany</code>.</p>
+
+<pre><code class="language-yaml">apiVersion: rbac.tsb.tetrate.io/v1
+kind: TrafficRoleBinding
+metadata:
+  name: traffic-g1
+  tenant: mycompany
+  workspace: w1
+  group: g1
+spec:
+  role: traffic-admin
+  subjects:
+  - user: alice
+  - user: bob
+  - team: traffic-ops
+</code></pre>
+
+<h2 id="TrafficRoleBinding">TrafficRoleBinding</h2>
+<section>
+<p><code>TrafficRoleBinding</code> assigns permissions to users of traffic groups.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="TrafficRoleBinding-role">
+<td><code>role</code></td>
+<td><code>string</code></td>
+<td>
+<p>The role being assinged to the subjects.</p>
+
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr id="TrafficRoleBinding-subjects">
+<td><code>subjects</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/rbac/v1/role.html#Subject">Subject[]</a></code></td>
+<td>
+<p>The set of users who are being assigned the role.</p>
+
+</td>
+<td>
+Yes
+</td>
+</tr>
+</tbody>
+</table>
+</section>

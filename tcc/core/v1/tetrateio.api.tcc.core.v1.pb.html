@@ -1658,141 +1658,6 @@ No
 </tbody>
 </table>
 </section>
-<h3 id="ClientSettings">ClientSettings</h3>
-<section>
-<p>ClientSettings</p>
-
-<p>ClientSettings control the reliability knobs in Envoy when making
-outbound connections from a gateway or sidecar.</p>
-
-<table class="message-fields">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-<th>Required</th>
-</tr>
-</thead>
-<tbody>
-<tr id="ClientSettings-http_request_timeout">
-<td><code>httpRequestTimeout</code></td>
-<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#duration">Duration</a></code></td>
-<td>
-<p>Timeout for HTTP requests. Disabled if not set.</p>
-
-</td>
-<td>
-No
-</td>
-</tr>
-<tr id="ClientSettings-http_retries">
-<td><code>httpRetries</code></td>
-<td><code><a href="#HTTPRetry">HTTPRetry</a></code></td>
-<td>
-<p>Retry policy for HTTP requests. Disabled if not set.</p>
-
-</td>
-<td>
-No
-</td>
-</tr>
-<tr id="ClientSettings-tcp_connect_timeout">
-<td><code>tcpConnectTimeout</code></td>
-<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#duration">Duration</a></code></td>
-<td>
-<p>TCP connection timeout. Disabled if not set.</p>
-
-</td>
-<td>
-No
-</td>
-</tr>
-<tr id="ClientSettings-tcp_keepalive">
-<td><code>tcpKeepalive</code></td>
-<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#boolvalue">BoolValue</a></code></td>
-<td>
-<p>If enabled, sets SO_KEEPALIVE on the socket to enable TCP Keepalives.</p>
-
-</td>
-<td>
-No
-</td>
-</tr>
-<tr id="ClientSettings-circuit_breaker_sensitivity">
-<td><code>circuitBreakerSensitivity</code></td>
-<td><code><a href="#ClientSettings-Sensitivity">Sensitivity</a></code></td>
-<td>
-<p>Circuit breakers in Envoy are applied per endpoint in a load
-balancing pool. By default, circuit breakers are disabled. If
-set, the sensitivity level determines the maximum number of
-consecutive failures that Envoy will tolerate before ejecting an
-endpoint from the load balancing pool.</p>
-
-</td>
-<td>
-No
-</td>
-</tr>
-</tbody>
-</table>
-</section>
-<h3 id="HTTPRetry">HTTPRetry</h3>
-<section>
-<table class="message-fields">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-<th>Required</th>
-</tr>
-</thead>
-<tbody>
-<tr id="HTTPRetry-attempts">
-<td><code>attempts</code></td>
-<td><code>int32</code></td>
-<td>
-<p>Number of retries for a given request. The interval between retries will be determined
-automatically (25ms+).</p>
-
-<p>Actual number of retries attempted depends on the httpReqTimeout.</p>
-
-</td>
-<td>
-No
-</td>
-</tr>
-<tr id="HTTPRetry-per_try_timeout">
-<td><code>perTryTimeout</code></td>
-<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#duration">Duration</a></code></td>
-<td>
-<p>Timeout per retry attempt for a given request. format: 1h/1m/1s/1ms. MUST BE &gt;=1ms.</p>
-
-</td>
-<td>
-No
-</td>
-</tr>
-<tr id="HTTPRetry-retry_on">
-<td><code>retryOn</code></td>
-<td><code>string</code></td>
-<td>
-<p>Specifies the conditions under which retry takes place. One or more policies can be specified
-using a ‘,’ delimited list. See the <a href="https://www.envoyproxy.io/docs/envoy/latest/configuration/http_filters/router_filter#x-envoy-retry-on">supported
-policies</a>
-and
-<a href="https://www.envoyproxy.io/docs/envoy/latest/configuration/http_filters/router_filter#x-envoy-retry-grpc-on">here</a>
-for more details.</p>
-
-</td>
-<td>
-No
-</td>
-</tr>
-</tbody>
-</table>
-</section>
 <h3 id="Tenant">Tenant</h3>
 <section>
 <table class="message-fields">
@@ -5759,6 +5624,141 @@ No
 </tbody>
 </table>
 </section>
+<h3 id="ClientSettings">ClientSettings</h3>
+<section>
+<p>ClientSettings</p>
+
+<p>ClientSettings control the reliability knobs in Envoy when making
+outbound connections from a gateway or sidecar.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ClientSettings-http_request_timeout">
+<td><code>httpRequestTimeout</code></td>
+<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#duration">Duration</a></code></td>
+<td>
+<p>Timeout for HTTP requests. Disabled if not set.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ClientSettings-http_retries">
+<td><code>httpRetries</code></td>
+<td><code><a href="#HTTPRetry">HTTPRetry</a></code></td>
+<td>
+<p>Retry policy for HTTP requests. Disabled if not set.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ClientSettings-tcp_connect_timeout">
+<td><code>tcpConnectTimeout</code></td>
+<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#duration">Duration</a></code></td>
+<td>
+<p>TCP connection timeout. Disabled if not set.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ClientSettings-tcp_keepalive">
+<td><code>tcpKeepalive</code></td>
+<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#boolvalue">BoolValue</a></code></td>
+<td>
+<p>If enabled, sets SO_KEEPALIVE on the socket to enable TCP Keepalives.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ClientSettings-circuit_breaker_sensitivity">
+<td><code>circuitBreakerSensitivity</code></td>
+<td><code><a href="#ClientSettings-Sensitivity">Sensitivity</a></code></td>
+<td>
+<p>Circuit breakers in Envoy are applied per endpoint in a load
+balancing pool. By default, circuit breakers are disabled. If
+set, the sensitivity level determines the maximum number of
+consecutive failures that Envoy will tolerate before ejecting an
+endpoint from the load balancing pool.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="HTTPRetry">HTTPRetry</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="HTTPRetry-attempts">
+<td><code>attempts</code></td>
+<td><code>int32</code></td>
+<td>
+<p>Number of retries for a given request. The interval between retries will be determined
+automatically (25ms+).</p>
+
+<p>Actual number of retries attempted depends on the httpReqTimeout.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="HTTPRetry-per_try_timeout">
+<td><code>perTryTimeout</code></td>
+<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#duration">Duration</a></code></td>
+<td>
+<p>Timeout per retry attempt for a given request. format: 1h/1m/1s/1ms. MUST BE &gt;=1ms.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="HTTPRetry-retry_on">
+<td><code>retryOn</code></td>
+<td><code>string</code></td>
+<td>
+<p>Specifies the conditions under which retry takes place. One or more policies can be specified
+using a ‘,’ delimited list. See the <a href="https://www.envoyproxy.io/docs/envoy/latest/configuration/http_filters/router_filter#x-envoy-retry-on">supported
+policies</a>
+and
+<a href="https://www.envoyproxy.io/docs/envoy/latest/configuration/http_filters/router_filter#x-envoy-retry-grpc-on">here</a>
+for more details.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
 <h3 id="Environment">Environment</h3>
 <section>
 <p>Environment</p>
@@ -7995,6 +7995,48 @@ applications.</p>
 </tbody>
 </table>
 </section>
+<h3 id="SourceType">SourceType</h3>
+<section>
+<p>SourceType describes where users and teams come from</p>
+
+<table class="enum-values">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="SourceType-INVALID">
+<td><code>INVALID</code></td>
+<td>
+</td>
+</tr>
+<tr id="SourceType-LDAP">
+<td><code>LDAP</code></td>
+<td>
+<p>LDAP is used for users and teams that are automatically synchronized from LDAP</p>
+
+</td>
+</tr>
+<tr id="SourceType-LOCAL">
+<td><code>LOCAL</code></td>
+<td>
+<p>LOCAL is used for users and teams that are manually created using the TCC API and that
+are local to TCC.
+TODO(nacx): Users represent subjects that can be authenticated against an external identity
+Provider
+so it is unlikely that there will be local users. Instead of having local users, we should
+introduce the
+local service account concept as a proper entity in the model, and configure all TCC agents and
+the superuser
+as local service accounts.</p>
+
+</td>
+</tr>
+</tbody>
+</table>
+</section>
 <h3 id="ClientSettings-Sensitivity">ClientSettings.Sensitivity</h3>
 <section>
 <p>Available sensitivity levels for the circuit breaker.</p>
@@ -8036,48 +8078,6 @@ pool.</p>
 <p>Tolerate upto 5 consecutive 5xx or connection failures from an
 endpoint before ejecting it temporarily from the load balancing
 pool.</p>
-
-</td>
-</tr>
-</tbody>
-</table>
-</section>
-<h3 id="SourceType">SourceType</h3>
-<section>
-<p>SourceType describes where users and teams come from</p>
-
-<table class="enum-values">
-<thead>
-<tr>
-<th>Name</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr id="SourceType-INVALID">
-<td><code>INVALID</code></td>
-<td>
-</td>
-</tr>
-<tr id="SourceType-LDAP">
-<td><code>LDAP</code></td>
-<td>
-<p>LDAP is used for users and teams that are automatically synchronized from LDAP</p>
-
-</td>
-</tr>
-<tr id="SourceType-LOCAL">
-<td><code>LOCAL</code></td>
-<td>
-<p>LOCAL is used for users and teams that are manually created using the TCC API and that
-are local to TCC.
-TODO(nacx): Users represent subjects that can be authenticated against an external identity
-Provider
-so it is unlikely that there will be local users. Instead of having local users, we should
-introduce the
-local service account concept as a proper entity in the model, and configure all TCC agents and
-the superuser
-as local service accounts.</p>
 
 </td>
 </tr>
