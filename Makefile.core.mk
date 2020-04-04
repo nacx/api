@@ -75,6 +75,7 @@ gen: \
 	generate-tsb-security \
 	generate-tsb-traffic \
 	generate-tsb-service \
+	generate-tsb-internal \
 	generate-tsb-types \
 	generate-tsb \
 	tidy-go
@@ -100,6 +101,7 @@ clean: \
 	clean-tsb-security \
 	clean-tsb-traffic \
 	clean-tsb-service \
+	clean-tsb-internal \
 	clean-tsb-types \
 	clean-tsb
 
@@ -472,13 +474,30 @@ tsb_service_v1_pb_validate_gos := $(tsb_service_v1_protos:.proto=.pb.validate.go
 tsb_service_v1_pb_doc := $(tsb_service_v1_path)/tetrate.api.tsb.service.v1.pb.html
 
 $(tsb_service_v1_pb_gos) $(tsb_service_v1_pb_gw_gos) $(tsb_service_v1_pb_validate_gos) $(tsb_service_v1_pb_doc): $(tsb_service_v1_protos)
-	@$(protoc) $(gogofast_plugin) $(grpc_service_plugin) $(protoc_gen_validate_plugin) $(protoc_gen_docs_plugin_per_file)$(tsb_service_v1_path) $^
+	@$(protoc) $(gogofast_plugin) $(grpc_gateway_plugin) $(protoc_gen_validate_plugin) $(protoc_gen_docs_plugin_per_file)$(tsb_service_v1_path) $^
 	@cp -r /tmp/github.com/tetrateio/api/tsb/service/* tsb/service
 
 generate-tsb-service: $(tsb_service_v1_pb_gos)
 
 clean-tsb-service:
 	@rm -fr $(tsb_service_v1_pb_gos) $(tsb_service_v1_pb_gw_gos) $(tsb_service_v1_pb_validate_gos) $(tsb_service_v1_pb_doc)
+
+# tsb/internal/...
+tsb_internal_v1_path := tsb/internal/v1
+tsb_internal_v1_protos := $(wildcard $(tsb_internal_v1_path)/*.proto)
+tsb_internal_v1_pb_gos := $(tsb_internal_v1_protos:.proto=.pb.go)
+tsb_internal_v1_pb_gw_gos := $(tsb_internal_v1_protos:.proto=.pb.gw.go)
+tsb_internal_v1_pb_validate_gos := $(tsb_internal_v1_protos:.proto=.pb.validate.go)
+# No html docs for internal protos. We dont want this in the web.
+
+$(tsb_internal_v1_pb_gos) $(tsb_internal_v1_pb_gw_gos) $(tsb_internal_v1_pb_validate_gos): $(tsb_internal_v1_protos)
+	@$(protoc) $(gogofast_plugin) $(grpc_gateway_plugin) $(protoc_gen_validate_plugin) $^
+	@cp -r /tmp/github.com/tetrateio/api/tsb/internal/* tsb/internal
+
+generate-tsb-internal: $(tsb_internal_v1_pb_gos)
+
+clean-tsb-internal:
+	@rm -fr $(tsb_internal_v1_pb_gos) $(tsb_internal_v1_pb_gw_gos) $(tsb_internal_v1_pb_validate_gos)
 
 # Include common targets.
 include common/Makefile.common.mk

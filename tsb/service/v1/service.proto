@@ -5,48 +5,18 @@ syntax = "proto3";
 package tetrateio.api.tsb.service.v1;
 option go_package = "github.com/tetrateio/api/tsb/service/v1";
 
+import "tsb/types/v1/types.proto";
+
 service TSB {
   // used by bridge apply -f, the UI
   // No REST API. UI and cli will use grpc directly.
-  rpc Apply(Object) returns (Object) {
+  rpc Apply(tetrateio.api.tsb.types.v1.Object) returns (tetrateio.api.tsb.types.v1.Object) {
   };
 
   // for both list and get
-  rpc Get(Object) returns (Object) {
+  rpc Get(tetrateio.api.tsb.types.v1.Object) returns (tetrateio.api.tsb.types.v1.Object) {
   };
 
-  rpc Delete(Object) returns (Object) {
+  rpc Delete(tetrateio.api.tsb.types.v1.Object) returns (tetrateio.api.tsb.types.v1.Object) {
   };
-}
-
-// Format for all API objects in TSB
-message Object {
-  // api.tsb.tetrate.io/v1, traffic.tsb.tetrate.io/v1,
-  // security.tsb.tetrate.io/v1, gateway.tsb.tetrate.io/v1,
-  // networking.istio.io/v1beta1, security.istio.io/v1beta1, etc.
-  string api_version = 1;
-  // Workspace, Cluster, Tenant, Team, User, WorkspaceSetting, Group
-  // (under traffic.tsb.tetrate.io and security.tsb.tetrate.io),
-  // TrafficSetting, SecuritySetting, etc.
-  string kind = 2;
-  ObjectMeta metadata = 3;
-  bytes spec = 4;
-  // Contains errors, tokens (in case of cluster onboarding, and other information).
-  bytes status = 5;
-}
-
-message ObjectMeta {
-  string name = 1;
-  // Applicable for Istio objects
-  string namespace = 2;
-  string tenant = 3;
-  string workspace = 4;
-  string group = 5;
-  string resource_version = 6;
-  map<string, string> labels = 7;
-  // Istio artifacts should contain 3 annotations
-  // tsb.tetrate.io/tenant, tsb.tetrate.io/workspace,
-  // tsb.tetrate.io/trafficGroup or tsb.tetrate.io/securityGroup or
-  // tsb.tetrate.io/gatewayGroup
-  map<string, string> annotations = 8;
 }

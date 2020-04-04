@@ -50,3 +50,46 @@ enum ConfigMode {
   // Indicates that the configurations to be added to the group will use Istio APIs.
   ISTIO = 1;
 }
+
+// Format for all API objects in TSB
+message Object {
+  // api.tsb.tetrate.io/v1, traffic.tsb.tetrate.io/v1,
+  // security.tsb.tetrate.io/v1, gateway.tsb.tetrate.io/v1,
+  // networking.istio.io/v1beta1, security.istio.io/v1beta1, etc.
+  string api_version = 1 [(google.api.field_behavior) = REQUIRED, (validate.rules).string.min_len = 1];
+  // Workspace, Cluster, Tenant, Team, User, WorkspaceSetting, Group
+  // (under traffic.tsb.tetrate.io and security.tsb.tetrate.io),
+  // TrafficSetting, SecuritySetting, etc.
+  string kind = 2 [(google.api.field_behavior) = REQUIRED, (validate.rules).string.min_len = 1];
+  ObjectMeta metadata = 3 [(google.api.field_behavior) = REQUIRED];
+  bytes spec = 4;
+  // Contains errors, tokens (in case of cluster onboarding, and other information).
+  bytes status = 5;
+}
+
+// Metadata associated with each API Object.
+message ObjectMeta {
+  // Name associated with the object. The object name must be unique
+  // within the `kind` and the parent. For example, all workspaces
+  // under a tenant should have a unique name. Traffic groups under a
+  // workspace should have a unique name, while names are not required
+  // to be unique across traffic groups in different workspaces.
+  string name = 1 [(google.api.field_behavior) = REQUIRED, (validate.rules).string.min_len = 1];
+  // Applicable when using Istio objects.
+  string namespace = 2;
+  // The tenant to which the object belongs to.
+  string tenant = 3;
+  // The workspace to which the object belongs to.
+  string workspace = 4;
+  // The traffic/security/gateway group to which the object belongs to.
+  string group = 5;
+  // Resource version is used internally to track propagation of resources to the data planes.
+  string resource_version = 6;
+  // User specified labels to attach to the objects.
+  map<string, string> labels = 7;
+  // Istio artifacts should contain 3 annotations
+  // tsb.tetrate.io/tenant, tsb.tetrate.io/workspace,
+  // tsb.tetrate.io/trafficGroup or tsb.tetrate.io/securityGroup or
+  // tsb.tetrate.io/gatewayGroup
+  map<string, string> annotations = 8;
+}
