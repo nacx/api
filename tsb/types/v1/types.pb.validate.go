@@ -227,9 +227,35 @@ func (m *Object) Validate() error {
 		}
 	}
 
-	// no validation rules for Spec
+	{
+		tmp := m.GetSpec()
 
-	// no validation rules for Status
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return ObjectValidationError{
+					field:  "Spec",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+	}
+
+	{
+		tmp := m.GetStatus()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return ObjectValidationError{
+					field:  "Status",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+	}
 
 	return nil
 }

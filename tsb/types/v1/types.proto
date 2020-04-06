@@ -3,6 +3,7 @@
 syntax = "proto3";
 
 import "google/api/field_behavior.proto";
+import "google/protobuf/struct.proto";
 import "github.com/envoyproxy/protoc-gen-validate/validate/validate.proto";
 
 // $title: Common Object Types
@@ -64,9 +65,9 @@ message Object {
   // TrafficSetting, SecuritySetting, etc.
   string kind = 2 [(google.api.field_behavior) = REQUIRED, (validate.rules).string.min_len = 1];
   ObjectMeta metadata = 3 [(google.api.field_behavior) = REQUIRED];
-  bytes spec = 4;
+  google.protobuf.Struct spec = 4;
   // Contains errors, tokens (in case of cluster onboarding, and other information).
-  bytes status = 5;
+  google.protobuf.Struct status = 5;
 }
 
 // Metadata associated with each API Object.

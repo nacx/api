@@ -104,6 +104,152 @@ var _ interface {
 	ErrorName() string
 } = UserValidationError{}
 
+// Validate checks the field values on TenantName with the rules defined in the
+// proto definition for this message. If any rules are violated, an error is returned.
+func (m *TenantName) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Name
+
+	return nil
+}
+
+// TenantNameValidationError is the validation error returned by
+// TenantName.Validate if the designated constraints aren't met.
+type TenantNameValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e TenantNameValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e TenantNameValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e TenantNameValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e TenantNameValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e TenantNameValidationError) ErrorName() string { return "TenantNameValidationError" }
+
+// Error satisfies the builtin error interface
+func (e TenantNameValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sTenantName.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = TenantNameValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = TenantNameValidationError{}
+
+// Validate checks the field values on ObjectArray with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *ObjectArray) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	{
+		tmp := m.GetValues()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return ObjectArrayValidationError{
+					field:  "Values",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+	}
+
+	return nil
+}
+
+// ObjectArrayValidationError is the validation error returned by
+// ObjectArray.Validate if the designated constraints aren't met.
+type ObjectArrayValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ObjectArrayValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ObjectArrayValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ObjectArrayValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ObjectArrayValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ObjectArrayValidationError) ErrorName() string { return "ObjectArrayValidationError" }
+
+// Error satisfies the builtin error interface
+func (e ObjectArrayValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sObjectArray.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ObjectArrayValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ObjectArrayValidationError{}
+
 // Validate checks the field values on UserResources with the rules defined in
 // the proto definition for this message. If any rules are violated, an error
 // is returned.

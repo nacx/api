@@ -83,6 +83,100 @@ func (m *User) GetTenant() string {
 	return ""
 }
 
+type TenantName struct {
+	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *TenantName) Reset()         { *m = TenantName{} }
+func (m *TenantName) String() string { return proto.CompactTextString(m) }
+func (*TenantName) ProtoMessage()    {}
+func (*TenantName) Descriptor() ([]byte, []int) {
+	return fileDescriptor_a702199a77438d56, []int{1}
+}
+func (m *TenantName) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *TenantName) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_TenantName.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *TenantName) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TenantName.Merge(m, src)
+}
+func (m *TenantName) XXX_Size() int {
+	return m.Size()
+}
+func (m *TenantName) XXX_DiscardUnknown() {
+	xxx_messageInfo_TenantName.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_TenantName proto.InternalMessageInfo
+
+func (m *TenantName) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+type ObjectArray struct {
+	Values               *v1.Object `protobuf:"bytes,1,opt,name=values,proto3" json:"values,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}   `json:"-"`
+	XXX_unrecognized     []byte     `json:"-"`
+	XXX_sizecache        int32      `json:"-"`
+}
+
+func (m *ObjectArray) Reset()         { *m = ObjectArray{} }
+func (m *ObjectArray) String() string { return proto.CompactTextString(m) }
+func (*ObjectArray) ProtoMessage()    {}
+func (*ObjectArray) Descriptor() ([]byte, []int) {
+	return fileDescriptor_a702199a77438d56, []int{2}
+}
+func (m *ObjectArray) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ObjectArray) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ObjectArray.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *ObjectArray) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ObjectArray.Merge(m, src)
+}
+func (m *ObjectArray) XXX_Size() int {
+	return m.Size()
+}
+func (m *ObjectArray) XXX_DiscardUnknown() {
+	xxx_messageInfo_ObjectArray.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ObjectArray proto.InternalMessageInfo
+
+func (m *ObjectArray) GetValues() *v1.Object {
+	if m != nil {
+		return m.Values
+	}
+	return nil
+}
+
 type UserResources struct {
 	Values               []*UserResources_ResourceAndPermission `protobuf:"bytes,3,rep,name=values,proto3" json:"values,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}                               `json:"-"`
@@ -94,7 +188,7 @@ func (m *UserResources) Reset()         { *m = UserResources{} }
 func (m *UserResources) String() string { return proto.CompactTextString(m) }
 func (*UserResources) ProtoMessage()    {}
 func (*UserResources) Descriptor() ([]byte, []int) {
-	return fileDescriptor_a702199a77438d56, []int{1}
+	return fileDescriptor_a702199a77438d56, []int{3}
 }
 func (m *UserResources) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -146,7 +240,7 @@ func (m *UserResources_ResourceAndPermission) Reset()         { *m = UserResourc
 func (m *UserResources_ResourceAndPermission) String() string { return proto.CompactTextString(m) }
 func (*UserResources_ResourceAndPermission) ProtoMessage()    {}
 func (*UserResources_ResourceAndPermission) Descriptor() ([]byte, []int) {
-	return fileDescriptor_a702199a77438d56, []int{1, 0}
+	return fileDescriptor_a702199a77438d56, []int{3, 0}
 }
 func (m *UserResources_ResourceAndPermission) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -191,6 +285,8 @@ func (m *UserResources_ResourceAndPermission) GetPermission() v11.Permission {
 
 func init() {
 	proto.RegisterType((*User)(nil), "tetrateio.api.tsb.internal.v1.User")
+	proto.RegisterType((*TenantName)(nil), "tetrateio.api.tsb.internal.v1.TenantName")
+	proto.RegisterType((*ObjectArray)(nil), "tetrateio.api.tsb.internal.v1.ObjectArray")
 	proto.RegisterType((*UserResources)(nil), "tetrateio.api.tsb.internal.v1.UserResources")
 	proto.RegisterType((*UserResources_ResourceAndPermission)(nil), "tetrateio.api.tsb.internal.v1.UserResources.ResourceAndPermission")
 }
@@ -198,32 +294,34 @@ func init() {
 func init() { proto.RegisterFile("tsb/internal/v1/internal.proto", fileDescriptor_a702199a77438d56) }
 
 var fileDescriptor_a702199a77438d56 = []byte{
-	// 394 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x53, 0xc1, 0xaa, 0xd3, 0x40,
-	0x14, 0x6d, 0xda, 0x52, 0xea, 0x14, 0x5d, 0x0c, 0xb4, 0x86, 0x80, 0xa1, 0x44, 0x84, 0x2e, 0x74,
-	0x42, 0x23, 0xb8, 0x14, 0x5a, 0xd1, 0xe2, 0xc6, 0x4a, 0xd4, 0x4d, 0x77, 0x93, 0xf4, 0xa2, 0x91,
-	0x64, 0x26, 0xcc, 0xdc, 0x44, 0xfa, 0x0f, 0x7e, 0x83, 0xdf, 0xe3, 0xd2, 0x85, 0x1f, 0xf0, 0xe8,
-	0x97, 0x3c, 0x32, 0x4d, 0xd3, 0xbe, 0x47, 0x29, 0x79, 0xbb, 0x9b, 0xb9, 0xf7, 0x9c, 0x39, 0xe7,
-	0xe4, 0x0e, 0x71, 0x51, 0x47, 0x7e, 0x22, 0x10, 0x94, 0xe0, 0xa9, 0x5f, 0xce, 0x9b, 0x9a, 0xe5,
-	0x4a, 0xa2, 0xa4, 0xcf, 0x10, 0x50, 0x71, 0x84, 0x44, 0x32, 0x9e, 0x27, 0x0c, 0x75, 0xc4, 0x9a,
-	0x89, 0x72, 0xee, 0x4c, 0x2a, 0xb8, 0x8a, 0x78, 0x5c, 0x41, 0x95, 0x4c, 0xe1, 0x00, 0x73, 0xec,
-	0xea, 0x1c, 0x77, 0x39, 0xe8, 0xaa, 0x61, 0x8a, 0x43, 0xc7, 0x0b, 0x48, 0xff, 0x9b, 0x06, 0x45,
-	0x29, 0xe9, 0x0b, 0x9e, 0x81, 0x6d, 0x4d, 0xad, 0xd9, 0xa3, 0xd0, 0xd4, 0x74, 0x42, 0x06, 0x08,
-	0x82, 0x0b, 0xb4, 0xbb, 0xe6, 0xb4, 0xfe, 0xf2, 0x7e, 0x77, 0xc9, 0xe3, 0x0a, 0x14, 0x82, 0x96,
-	0x85, 0x8a, 0x41, 0xd3, 0x0d, 0x19, 0x94, 0x3c, 0x2d, 0x40, 0xdb, 0xbd, 0x69, 0x6f, 0x36, 0x0a,
-	0x96, 0xec, 0xaa, 0x4e, 0x76, 0x07, 0xcd, 0x8e, 0xd5, 0x42, 0x6c, 0x3f, 0x83, 0xca, 0x12, 0xad,
-	0x13, 0x29, 0xc2, 0x9a, 0xd1, 0xf9, 0x63, 0x91, 0xf1, 0xc5, 0x09, 0xfa, 0x96, 0x0c, 0x55, 0xdd,
-	0x30, 0xba, 0x47, 0x81, 0x77, 0xe1, 0xde, 0x83, 0xdb, 0x72, 0xce, 0xd6, 0xd1, 0x4f, 0x88, 0x31,
-	0x6c, 0x30, 0xf4, 0x3d, 0x21, 0x79, 0xc3, 0x66, 0x3c, 0x3e, 0x09, 0x5e, 0x5c, 0x60, 0xa8, 0x02,
-	0xad, 0x08, 0xce, 0xc4, 0x9d, 0x01, 0x83, 0xff, 0x5d, 0x32, 0xfc, 0x58, 0x9b, 0xa3, 0x9c, 0x8c,
-	0x57, 0x80, 0x8b, 0x34, 0xfd, 0x6a, 0xb2, 0x3a, 0x45, 0xd4, 0x42, 0x9a, 0xd3, 0x62, 0xc6, 0xeb,
-	0xd0, 0x82, 0xb8, 0x2b, 0xc0, 0x77, 0x69, 0xa1, 0xf1, 0x2c, 0xc5, 0x0f, 0x52, 0x7d, 0x81, 0x14,
-	0x62, 0x94, 0x8a, 0xbe, 0xba, 0xc6, 0xf3, 0x89, 0x67, 0xa0, 0x73, 0x1e, 0xc3, 0x71, 0xbc, 0xe5,
-	0xb5, 0x82, 0x3c, 0x5d, 0xc1, 0xc9, 0xd0, 0xfa, 0x97, 0x80, 0xed, 0x72, 0x67, 0x96, 0xe7, 0x79,
-	0x8b, 0xdf, 0xed, 0xbc, 0x7c, 0xc8, 0x4e, 0x78, 0x9d, 0xe5, 0x9b, 0xbf, 0x7b, 0xd7, 0xfa, 0xb7,
-	0x77, 0xad, 0x9b, 0xbd, 0x6b, 0x6d, 0x66, 0xdf, 0x13, 0xfc, 0x51, 0x44, 0x2c, 0x96, 0x99, 0xdf,
-	0xf0, 0xf8, 0x3c, 0x4f, 0xfc, 0x7b, 0x2f, 0x26, 0x1a, 0x98, 0xc5, 0x7e, 0x7d, 0x1b, 0x00, 0x00,
-	0xff, 0xff, 0x47, 0xc3, 0x7c, 0xd7, 0x4b, 0x03, 0x00, 0x00,
+	// 430 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x53, 0xc1, 0x6e, 0xd3, 0x40,
+	0x10, 0xad, 0xd3, 0x2a, 0x2a, 0x13, 0xc1, 0x61, 0xa5, 0x96, 0xc8, 0x12, 0x56, 0x64, 0x84, 0x14,
+	0x10, 0xac, 0x15, 0x23, 0x71, 0xe0, 0x80, 0x94, 0x20, 0x88, 0x7a, 0xa1, 0x28, 0xc0, 0xa5, 0xb7,
+	0xb5, 0x3b, 0x02, 0x23, 0x67, 0xd7, 0xda, 0x1d, 0x1b, 0xe5, 0xc0, 0x1f, 0xf0, 0x0d, 0x7c, 0x0f,
+	0x47, 0x3e, 0x01, 0xe5, 0xca, 0x4f, 0xa0, 0x5d, 0x3b, 0x8e, 0x81, 0xa8, 0x6d, 0x6e, 0x63, 0xcf,
+	0x7b, 0x6f, 0x66, 0xde, 0xcc, 0x42, 0x40, 0x26, 0x89, 0x32, 0x49, 0xa8, 0xa5, 0xc8, 0xa3, 0x6a,
+	0xd2, 0xc6, 0xbc, 0xd0, 0x8a, 0x14, 0xbb, 0x47, 0x48, 0x5a, 0x10, 0x66, 0x8a, 0x8b, 0x22, 0xe3,
+	0x64, 0x12, 0xde, 0x22, 0xaa, 0x89, 0x7f, 0x6a, 0xe9, 0x3a, 0x11, 0xa9, 0xa5, 0x6a, 0x95, 0x63,
+	0x4d, 0xf3, 0x87, 0xf6, 0x3f, 0xad, 0x0a, 0x34, 0x36, 0xe1, 0x82, 0x3a, 0x13, 0xc6, 0x70, 0xf4,
+	0xc1, 0xa0, 0x66, 0x0c, 0x8e, 0xa4, 0x58, 0xe2, 0xd0, 0x1b, 0x79, 0xe3, 0x5b, 0x0b, 0x17, 0xb3,
+	0x53, 0xe8, 0x13, 0x4a, 0x21, 0x69, 0xd8, 0x73, 0x7f, 0x9b, 0xaf, 0x70, 0x04, 0xf0, 0xde, 0x45,
+	0x6f, 0x2c, 0x6a, 0x07, 0x33, 0x3c, 0x83, 0xc1, 0x79, 0xf2, 0x19, 0x53, 0x9a, 0x6a, 0x2d, 0x56,
+	0xec, 0x39, 0xf4, 0x2b, 0x91, 0x97, 0x68, 0x1c, 0x68, 0x10, 0x87, 0xfc, 0xff, 0x31, 0xea, 0xa6,
+	0xaa, 0x09, 0xaf, 0x89, 0x8b, 0x86, 0x11, 0x7e, 0xeb, 0xc1, 0x6d, 0xdb, 0xe1, 0x02, 0x8d, 0x2a,
+	0x75, 0x8a, 0x86, 0x5d, 0xb4, 0x6a, 0x87, 0xa3, 0xc3, 0xf1, 0x20, 0x9e, 0xf1, 0x2b, 0x4d, 0xe1,
+	0x7f, 0xb1, 0xf9, 0x26, 0x9a, 0xca, 0xcb, 0xb7, 0xa8, 0x97, 0x99, 0x31, 0x99, 0x92, 0x9b, 0x6a,
+	0xfe, 0x77, 0x0f, 0x4e, 0x76, 0x22, 0xd8, 0x0b, 0x38, 0xd6, 0x4d, 0x62, 0x8f, 0x29, 0x5a, 0x0e,
+	0x7b, 0x05, 0x50, 0xb4, 0x6a, 0xce, 0xd0, 0x3b, 0xf1, 0x83, 0x1d, 0x0a, 0x76, 0x7b, 0x56, 0xa0,
+	0xd3, 0x5c, 0x87, 0x18, 0xff, 0xee, 0xc1, 0xf1, 0x59, 0x33, 0x1c, 0x2b, 0xe0, 0x64, 0x8e, 0x34,
+	0xcd, 0xf3, 0x7a, 0x1d, 0x5b, 0x8b, 0x1e, 0x5e, 0x63, 0xc9, 0x76, 0x7d, 0xfe, 0xa3, 0x6b, 0xa0,
+	0x9d, 0x3d, 0x86, 0x07, 0xec, 0x2b, 0x04, 0x73, 0xa4, 0x97, 0x79, 0x69, 0xa8, 0x63, 0xea, 0x6b,
+	0xa5, 0xdf, 0x61, 0x8e, 0x29, 0x29, 0xcd, 0x9e, 0x5c, 0xe5, 0x8a, 0xad, 0x68, 0x0a, 0x91, 0xe2,
+	0x06, 0xbe, 0x67, 0x79, 0x09, 0x77, 0xe7, 0xb8, 0x9d, 0xf3, 0xfc, 0x8b, 0xc4, 0xcb, 0xd9, 0xca,
+	0x1d, 0xf0, 0xfd, 0x1b, 0x5c, 0x81, 0xff, 0x78, 0x9f, 0x53, 0x09, 0x0f, 0x66, 0xcf, 0x7e, 0xac,
+	0x03, 0xef, 0xe7, 0x3a, 0xf0, 0x7e, 0xad, 0x03, 0xef, 0x62, 0xfc, 0x31, 0xa3, 0x4f, 0x65, 0xc2,
+	0x53, 0xb5, 0x8c, 0x5a, 0x9d, 0x48, 0x14, 0x59, 0xf4, 0xcf, 0xab, 0x4d, 0xfa, 0xee, 0x71, 0x3d,
+	0xfd, 0x13, 0x00, 0x00, 0xff, 0xff, 0x00, 0xea, 0x32, 0x8f, 0xcf, 0x03, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -238,14 +336,14 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type InternalClient interface {
-	// Used by tsbd.
-	// Returns an array of objects embedded inside the Object.spec.
+	// Used by tsbd. Argument is an object containing the tenant name.
+	// Returns an array of objects.
 	// Look at the object metadata of each element to identify the type.
-	GetAllTenantResources(ctx context.Context, in *v1.Object, opts ...grpc.CallOption) (*v1.Object, error)
+	GetAllTenantResources(ctx context.Context, in *TenantName, opts ...grpc.CallOption) (*ObjectArray, error)
 	// Used by UI.
 	// returns an array of Cluster objects.
 	// Where each cluster has the list of namespaces/services selected by the selector.
-	GetClusterResourcesForSelector(ctx context.Context, in *v1.NamespaceSelector, opts ...grpc.CallOption) (*v1.Object, error)
+	GetClusterResourcesForSelector(ctx context.Context, in *v1.NamespaceSelector, opts ...grpc.CallOption) (*ObjectArray, error)
 	// Used by UI.
 	// returns an array of object metadata and the user's permissions on that object.
 	GetResourcesOwnedByUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*UserResources, error)
@@ -259,8 +357,8 @@ func NewInternalClient(cc *grpc.ClientConn) InternalClient {
 	return &internalClient{cc}
 }
 
-func (c *internalClient) GetAllTenantResources(ctx context.Context, in *v1.Object, opts ...grpc.CallOption) (*v1.Object, error) {
-	out := new(v1.Object)
+func (c *internalClient) GetAllTenantResources(ctx context.Context, in *TenantName, opts ...grpc.CallOption) (*ObjectArray, error) {
+	out := new(ObjectArray)
 	err := c.cc.Invoke(ctx, "/tetrateio.api.tsb.internal.v1.Internal/GetAllTenantResources", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -268,8 +366,8 @@ func (c *internalClient) GetAllTenantResources(ctx context.Context, in *v1.Objec
 	return out, nil
 }
 
-func (c *internalClient) GetClusterResourcesForSelector(ctx context.Context, in *v1.NamespaceSelector, opts ...grpc.CallOption) (*v1.Object, error) {
-	out := new(v1.Object)
+func (c *internalClient) GetClusterResourcesForSelector(ctx context.Context, in *v1.NamespaceSelector, opts ...grpc.CallOption) (*ObjectArray, error) {
+	out := new(ObjectArray)
 	err := c.cc.Invoke(ctx, "/tetrateio.api.tsb.internal.v1.Internal/GetClusterResourcesForSelector", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -288,14 +386,14 @@ func (c *internalClient) GetResourcesOwnedByUser(ctx context.Context, in *User, 
 
 // InternalServer is the server API for Internal service.
 type InternalServer interface {
-	// Used by tsbd.
-	// Returns an array of objects embedded inside the Object.spec.
+	// Used by tsbd. Argument is an object containing the tenant name.
+	// Returns an array of objects.
 	// Look at the object metadata of each element to identify the type.
-	GetAllTenantResources(context.Context, *v1.Object) (*v1.Object, error)
+	GetAllTenantResources(context.Context, *TenantName) (*ObjectArray, error)
 	// Used by UI.
 	// returns an array of Cluster objects.
 	// Where each cluster has the list of namespaces/services selected by the selector.
-	GetClusterResourcesForSelector(context.Context, *v1.NamespaceSelector) (*v1.Object, error)
+	GetClusterResourcesForSelector(context.Context, *v1.NamespaceSelector) (*ObjectArray, error)
 	// Used by UI.
 	// returns an array of object metadata and the user's permissions on that object.
 	GetResourcesOwnedByUser(context.Context, *User) (*UserResources, error)
@@ -305,10 +403,10 @@ type InternalServer interface {
 type UnimplementedInternalServer struct {
 }
 
-func (*UnimplementedInternalServer) GetAllTenantResources(ctx context.Context, req *v1.Object) (*v1.Object, error) {
+func (*UnimplementedInternalServer) GetAllTenantResources(ctx context.Context, req *TenantName) (*ObjectArray, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllTenantResources not implemented")
 }
-func (*UnimplementedInternalServer) GetClusterResourcesForSelector(ctx context.Context, req *v1.NamespaceSelector) (*v1.Object, error) {
+func (*UnimplementedInternalServer) GetClusterResourcesForSelector(ctx context.Context, req *v1.NamespaceSelector) (*ObjectArray, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetClusterResourcesForSelector not implemented")
 }
 func (*UnimplementedInternalServer) GetResourcesOwnedByUser(ctx context.Context, req *User) (*UserResources, error) {
@@ -320,7 +418,7 @@ func RegisterInternalServer(s *grpc.Server, srv InternalServer) {
 }
 
 func _Internal_GetAllTenantResources_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v1.Object)
+	in := new(TenantName)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -332,7 +430,7 @@ func _Internal_GetAllTenantResources_Handler(srv interface{}, ctx context.Contex
 		FullMethod: "/tetrateio.api.tsb.internal.v1.Internal/GetAllTenantResources",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InternalServer).GetAllTenantResources(ctx, req.(*v1.Object))
+		return srv.(InternalServer).GetAllTenantResources(ctx, req.(*TenantName))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -429,6 +527,79 @@ func (m *User) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.Name)
 		copy(dAtA[i:], m.Name)
 		i = encodeVarintInternal(dAtA, i, uint64(len(m.Name)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *TenantName) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *TenantName) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *TenantName) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.Name) > 0 {
+		i -= len(m.Name)
+		copy(dAtA[i:], m.Name)
+		i = encodeVarintInternal(dAtA, i, uint64(len(m.Name)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *ObjectArray) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ObjectArray) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ObjectArray) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Values != nil {
+		{
+			size, err := m.Values.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintInternal(dAtA, i, uint64(size))
+		}
 		i--
 		dAtA[i] = 0xa
 	}
@@ -543,6 +714,38 @@ func (m *User) Size() (n int) {
 	}
 	l = len(m.Tenant)
 	if l > 0 {
+		n += 1 + l + sovInternal(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *TenantName) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Name)
+	if l > 0 {
+		n += 1 + l + sovInternal(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *ObjectArray) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Values != nil {
+		l = m.Values.Size()
 		n += 1 + l + sovInternal(uint64(l))
 	}
 	if m.XXX_unrecognized != nil {
@@ -686,6 +889,182 @@ func (m *User) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			m.Tenant = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipInternal(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthInternal
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthInternal
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *TenantName) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowInternal
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: TenantName: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: TenantName: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowInternal
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthInternal
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthInternal
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Name = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipInternal(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthInternal
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthInternal
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *ObjectArray) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowInternal
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ObjectArray: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ObjectArray: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Values", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowInternal
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthInternal
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthInternal
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Values == nil {
+				m.Values = &v1.Object{}
+			}
+			if err := m.Values.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex

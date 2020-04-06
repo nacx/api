@@ -11,16 +11,16 @@ import "tsb/types/v1/types.proto";
 // Internal APIs between Tetrate components in Service Bridge. Not for
 // public consumption.
 service Internal {
-  // Used by tsbd.
-  // Returns an array of objects embedded inside the Object.spec.
+  // Used by tsbd. Argument is an object containing the tenant name.
+  // Returns an array of objects.
   // Look at the object metadata of each element to identify the type.
-  rpc GetAllTenantResources(tetrateio.api.tsb.types.v1.Object) returns (tetrateio.api.tsb.types.v1.Object) {
+  rpc GetAllTenantResources(TenantName) returns (ObjectArray) {
   };
 
   // Used by UI.
   // returns an array of Cluster objects.
   // Where each cluster has the list of namespaces/services selected by the selector.
-  rpc GetClusterResourcesForSelector(tetrateio.api.tsb.types.v1.NamespaceSelector) returns (tetrateio.api.tsb.types.v1.Object) {
+  rpc GetClusterResourcesForSelector(tetrateio.api.tsb.types.v1.NamespaceSelector) returns (ObjectArray) {
   };
 
   // Used by UI.
@@ -31,6 +31,14 @@ service Internal {
 message User {
   string name = 1;
   string tenant = 2;
+}
+
+message TenantName {
+  string name = 1;
+}
+
+message ObjectArray {
+  tetrateio.api.tsb.types.v1.Object values = 1;
 }
 
 message UserResources {
