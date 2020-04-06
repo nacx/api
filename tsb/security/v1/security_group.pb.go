@@ -73,7 +73,7 @@
 //```
 //
 // In the `ISTIO` mode, it is possible to directly attach Istio
-// `PeerAuthentication`, `RequestAuthentication`, and
+// Security v1beta1 APIs - `PeerAuthentication`, and
 // `AuthorizationPolicy` to the security group. These configurations
 // will be validated for correctness and conflict free operations and
 // then pushed to the appropriate Istio control planes.
@@ -142,9 +142,8 @@ type Group struct {
 	// group. `TETRATE` mode indicates that configurations added to this
 	// group will use Tetrate APIs such as `SecuritySetting`. `ISTIO`
 	// mode indicates that configurations added to this group will use
-	// Istio Security APIs such as `PeerAuthentication`,
-	// `RequestAuthentication`, and `AuthorizationPolicy`. Defaults to
-	// `TETRATE` mode.
+	// Istio Security v1beta1 APIs such as `PeerAuthentication`, and
+	// `AuthorizationPolicy`. Defaults to `TETRATE` mode.
 	ConfigMode           v1.ConfigMode `protobuf:"varint,2,opt,name=config_mode,json=configMode,proto3,enum=tetrateio.api.tsb.types.v1.ConfigMode" json:"config_mode,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
 	XXX_unrecognized     []byte        `json:"-"`

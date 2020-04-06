@@ -62,9 +62,11 @@ spec:
 </code></pre>
 
 <p>In the <code>ISTIO</code> mode, it is possible to directly attach Istio
-<code>VirtualService</code>, and <code>Gateway</code> to the gateway group. These
-configurations will be validated for correctness and conflict free
-operations and then pushed to the appropriate Istio control planes.</p>
+Networking v1beta1 APIs - <code>VirtualService</code>, and <code>Gateway</code>, and
+Istio Security v1beta1 APIs - <code>RequestAuthentication</code>, and
+<code>AuthorizationPolicy</code> to the gateway group. These configurations
+will be validated for correctness and conflict free operations and
+then pushed to the appropriate Istio control planes.</p>
 
 <p>The following example declares a <code>Gateway</code> and a <code>VirtualService</code>
 for a specific workload in the <code>ns1</code> namespace:</p>
@@ -160,8 +162,10 @@ Yes
 group. <code>TETRATE</code> mode indicates that configurations added to this
 group will use Tetrate APIs such as <code>IngressGateway</code>. <code>ISTIO</code>
 mode indicates that configurations added to this group will use
-Istio Networking APIs such as <code>Gateway</code> and
-<code>VirtualService</code>. Defaults to <code>TETRATE</code> mode.</p>
+Istio Networking v1beta1 APIs such as <code>Gateway</code> and
+<code>VirtualService</code>, Istio Security v1beta1 APIs such as
+<code>RequestAuthentication</code> and <code>AuthorizationPolicy</code>. Defaults to
+<code>TETRATE</code> mode.</p>
 
 </td>
 <td>

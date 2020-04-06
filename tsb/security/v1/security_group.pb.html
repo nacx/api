@@ -75,7 +75,7 @@ spec:
 </code></pre>
 
 <p>In the <code>ISTIO</code> mode, it is possible to directly attach Istio
-<code>PeerAuthentication</code>, <code>RequestAuthentication</code>, and
+Security v1beta1 APIs - <code>PeerAuthentication</code>, and
 <code>AuthorizationPolicy</code> to the security group. These configurations
 will be validated for correctness and conflict free operations and
 then pushed to the appropriate Istio control planes.</p>
@@ -144,9 +144,8 @@ Yes
 group. <code>TETRATE</code> mode indicates that configurations added to this
 group will use Tetrate APIs such as <code>SecuritySetting</code>. <code>ISTIO</code>
 mode indicates that configurations added to this group will use
-Istio Security APIs such as <code>PeerAuthentication</code>,
-<code>RequestAuthentication</code>, and <code>AuthorizationPolicy</code>. Defaults to
-<code>TETRATE</code> mode.</p>
+Istio Security v1beta1 APIs such as <code>PeerAuthentication</code>, and
+<code>AuthorizationPolicy</code>. Defaults to <code>TETRATE</code> mode.</p>
 
 </td>
 <td>

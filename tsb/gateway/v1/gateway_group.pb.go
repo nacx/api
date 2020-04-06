@@ -59,9 +59,11 @@
 //```
 //
 // In the `ISTIO` mode, it is possible to directly attach Istio
-// `VirtualService`, and `Gateway` to the gateway group. These
-// configurations will be validated for correctness and conflict free
-// operations and then pushed to the appropriate Istio control planes.
+// Networking v1beta1 APIs - `VirtualService`, and `Gateway`, and
+// Istio Security v1beta1 APIs - `RequestAuthentication`, and
+// `AuthorizationPolicy` to the gateway group. These configurations
+// will be validated for correctness and conflict free operations and
+// then pushed to the appropriate Istio control planes.
 //
 // The following example declares a `Gateway` and a `VirtualService`
 // for a specific workload in the `ns1` namespace:
@@ -158,8 +160,10 @@ type Group struct {
 	// group. `TETRATE` mode indicates that configurations added to this
 	// group will use Tetrate APIs such as `IngressGateway`. `ISTIO`
 	// mode indicates that configurations added to this group will use
-	// Istio Networking APIs such as `Gateway` and
-	// `VirtualService`. Defaults to `TETRATE` mode.
+	// Istio Networking v1beta1 APIs such as `Gateway` and
+	// `VirtualService`, Istio Security v1beta1 APIs such as
+	// `RequestAuthentication` and `AuthorizationPolicy`. Defaults to
+	// `TETRATE` mode.
 	ConfigMode           v1.ConfigMode `protobuf:"varint,2,opt,name=config_mode,json=configMode,proto3,enum=tetrateio.api.tsb.types.v1.ConfigMode" json:"config_mode,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
 	XXX_unrecognized     []byte        `json:"-"`
