@@ -5,12 +5,13 @@ syntax = "proto3";
 package tetrateio.api.tsb.internal.v1;
 option go_package = "github.com/tetrateio/api/tsb/internal/v1";
 
+import "tsb/rbac/v1/role.proto";
 import "tsb/types/v1/types.proto";
 
 // Internal APIs between Tetrate components in Service Bridge. Not for
 // public consumption.
 service Internal {
-  // Used by UI and tsbd.
+  // Used by tsbd.
   // Returns an array of objects embedded inside the Object.spec.
   // Look at the object metadata of each element to identify the type.
   rpc GetAllTenantResources(tetrateio.api.tsb.types.v1.Object) returns (tetrateio.api.tsb.types.v1.Object) {
@@ -19,6 +20,29 @@ service Internal {
   // Used by UI.
   // returns an array of Cluster objects.
   // Where each cluster has the list of namespaces/services selected by the selector.
-  rpc GetResourcesForSelector(tetrateio.api.tsb.types.v1.NamespaceSelector) returns (tetrateio.api.tsb.types.v1.Object) {
+  rpc GetClusterResourcesForSelector(tetrateio.api.tsb.types.v1.NamespaceSelector) returns (tetrateio.api.tsb.types.v1.Object) {
   };
+
+  // Used by UI.
+  // returns an array of object metadata and the user's permissions on that object.
+  rpc GetResourcesOwnedByUser(User) returns (UserResources) {};
+}
+
+message User {
+  string name = 1;
+  string tenant = 2;
+}
+
+message UserResources {
+
+  message ResourceAndPermission {
+    // This is the TSB object without the spec field to reduce the
+    // load on the server.  The object will have object meta,
+    // apiVersion and the Kind fields to be able to identify the the
+    // resource.
+    tetrateio.api.tsb.types.v1.Object resource = 1;
+    tetrateio.api.tsb.rbac.v1.Permission permission = 2;
+  }
+
+  repeated ResourceAndPermission values = 3;
 }

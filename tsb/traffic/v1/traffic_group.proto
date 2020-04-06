@@ -31,10 +31,11 @@ syntax = "proto3";
 //   workspace: w1
 //   tenant: mycompany
 // spec:
-//   namespaceSelectors:
-//   - name: */ns1
-//   - name: */ns2
-//   - name: */ns3
+//   namespaceSelector:
+//     names:
+//     - */ns1
+//     - */ns2
+//     - */ns3
 //   configMode: TETRATE
 //```
 //
@@ -71,10 +72,11 @@ syntax = "proto3";
 //   workspace: w1
 //   tenant: mycompany
 // spec:
-//   namespaceSelectors:
-//   - name: c1/ns1 # pick ns1 namespace only from c1 cluster
-//   - name: */ns2
-//   - name: */ns3
+//   namespaceSelector:
+//     names:
+//     - c1/ns1 # pick ns1 namespace only from c1 cluster
+//     - */ns2
+//     - */ns3
 //   configMode: TETRATE
 //```
 //
@@ -120,14 +122,17 @@ syntax = "proto3";
 package tetrateio.api.tsb.traffic.v1;
 option go_package = "github.com/tetrateio/api/tsb/traffic/v1";
 
+import "github.com/envoyproxy/protoc-gen-validate/validate/validate.proto";
+import "google/api/field_behavior.proto";
 import "tsb/types/v1/types.proto";
 
 // A traffic group manages the routing properties of sidecars in a
 // group of namespaces owned by the parent workspace.
 message Group {
   // Set of namespaces owned exclusively by this group. If omitted,
-  // applies to all resources owned by the workspace.
-  repeated tetrateio.api.tsb.types.v1.NamespaceSelector namespace_selectors = 1;
+  // applies to all resources owned by the workspace. Use `*/*` to
+  // claim all cluster resources under the workspace.
+  tetrateio.api.tsb.types.v1.NamespaceSelector namespace_selector = 1 [(google.api.field_behavior) = REQUIRED, (validate.rules).message.required = true];
 
   // The Configuration types that will be added to this
   // group. `TETRATE` mode indicates that configurations added to this

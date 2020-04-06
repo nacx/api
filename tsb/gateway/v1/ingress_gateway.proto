@@ -78,17 +78,17 @@ message IngressGateway {
   // this ingress gateway. There can be only one ingress gateway for a
   // given workload selector.
   tetrateio.api.tsb.types.v1.WorkloadSelector workload_selector = 1
-      [(google.api.field_behavior) = REQUIRED];
+    [(google.api.field_behavior) = REQUIRED, (validate.rules).message.required = true];
 
   // One or more HTTP or HTTPS servers exposed by the gateway. The
   // server exposes configuration for TLS termination, request
   // authentication/authorization, HTTP routing, etc.
-  repeated HttpServer http = 2;
+  repeated HttpServer http = 2 [(google.api.field_behavior) = REQUIRED, (validate.rules).repeated.min_items = 1];
 }
 
 message HttpServer {
   // Hostname with which the service can be expected to be accessed by clients.
-  string hostname = 1 [(validate.rules).string.min_len = 1];
+  string hostname = 1 [(google.api.field_behavior) = REQUIRED, (validate.rules).string.min_len = 1];
   // TLS certificate info. If omitted, the gateway will expose the host on port 80.
   ServerTLSSettings tls = 2;
   // Configuration to authenticate clients.
@@ -104,13 +104,13 @@ message HttpRouting {
   // will be generated.
   message HTTPCookie {
     // Name of the cookie.
-    string name = 1 [(validate.rules).string.min_len = 1];
+    string name = 1 [(google.api.field_behavior) = REQUIRED, (validate.rules).string.min_len = 1];
 
     // Path to set for the cookie.
-    string path = 2 [(validate.rules).string.min_len = 1];
+    string path = 2 [(google.api.field_behavior) = REQUIRED, (validate.rules).string.min_len = 1];
 
     // Lifetime of the cookie.
-    google.protobuf.Duration ttl = 3 [(validate.rules).timestamp.required = true];
+    google.protobuf.Duration ttl = 3 [(google.api.field_behavior) = REQUIRED, (validate.rules).timestamp.required = true];
   }
 
   // If set, the load balancer will route all requests from a particular client to the same backend
@@ -209,7 +209,7 @@ message HttpModifyAction {
 // One or more destinations in a local cluster for the given request.
 message Route {
   // The destination service in `<namespace>/<fqdn>` format.
-  string host = 1 [(validate.rules).string.pattern = "^[^/]+/[^/]+$"];
+  string host = 1 [(google.api.field_behavior) = REQUIRED, (validate.rules).string.pattern = "^[^/]+/[^/]+$"];
   uint32 port = 2;
 }
 
@@ -267,7 +267,7 @@ message Authentication {
     //
     // Example: https://foobar.auth0.com
     // Example: 1234567-compute@developer.gserviceaccount.com
-    string issuer = 1 [(google.api.field_behavior) = REQUIRED];
+    string issuer = 1 [(google.api.field_behavior) = REQUIRED, (validate.rules).string.min_len = 1];
 
     // The list of JWT
     // [audiences](https://tools.ietf.org/html/rfc7519#section-4.1.3).
@@ -331,7 +331,7 @@ message Authorization {
 // subjects.
 message LocalAuthzRule {
   // A friendly name to identify the binding.
-  string name = 1 [(validate.rules).string.min_len = 1];
+  string name = 1 [(google.api.field_behavior) = REQUIRED, (validate.rules).string.min_len = 1];
 
   message HttpOperation {
     // The request path where the request is made against. E.g. ["/accounts"].

@@ -43,24 +43,26 @@ func (m *Workspace) Validate() error {
 		return nil
 	}
 
-	for idx, item := range m.GetNamespaceSelectors() {
-		_, _ = idx, item
+	if m.GetNamespaceSelector() == nil {
+		return WorkspaceValidationError{
+			field:  "NamespaceSelector",
+			reason: "value is required",
+		}
+	}
 
-		{
-			tmp := item
+	{
+		tmp := m.GetNamespaceSelector()
 
-			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
 
-				if err := v.Validate(); err != nil {
-					return WorkspaceValidationError{
-						field:  fmt.Sprintf("NamespaceSelectors[%v]", idx),
-						reason: "embedded message failed validation",
-						cause:  err,
-					}
+			if err := v.Validate(); err != nil {
+				return WorkspaceValidationError{
+					field:  "NamespaceSelector",
+					reason: "embedded message failed validation",
+					cause:  err,
 				}
 			}
 		}
-
 	}
 
 	{

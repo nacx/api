@@ -43,24 +43,26 @@ func (m *Group) Validate() error {
 		return nil
 	}
 
-	for idx, item := range m.GetNamespaceSelectors() {
-		_, _ = idx, item
+	if m.GetNamespaceSelector() == nil {
+		return GroupValidationError{
+			field:  "NamespaceSelector",
+			reason: "value is required",
+		}
+	}
 
-		{
-			tmp := item
+	{
+		tmp := m.GetNamespaceSelector()
 
-			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
 
-				if err := v.Validate(); err != nil {
-					return GroupValidationError{
-						field:  fmt.Sprintf("NamespaceSelectors[%v]", idx),
-						reason: "embedded message failed validation",
-						cause:  err,
-					}
+			if err := v.Validate(); err != nil {
+				return GroupValidationError{
+					field:  "NamespaceSelector",
+					reason: "embedded message failed validation",
+					cause:  err,
 				}
 			}
 		}
-
 	}
 
 	// no validation rules for ConfigMode

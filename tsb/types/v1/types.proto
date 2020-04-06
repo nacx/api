@@ -19,12 +19,14 @@ option go_package = "github.com/tetrateio/api/tsb/types/v1";
 // Security, or a Gateway group to further scope the set of namespaces
 // that will belong to a specific configuration group.
 message NamespaceSelector {
-  // - `*/ns1` implies `ns1` namespace in any cluster under the tenant.
+  // - `*/ns1` implies `ns1` namespace in any cluster under the tenant/workspace.
   //
-  // - `c1/ns1` implies `ns1` namespace from `c1` cluster.
+  // - `c1/ns1` implies `ns1` namespace from `c1` cluster under tenant/workspace.
   //
-  // - `c1/*` implies all namespaces in `c1` cluster.
-  string name = 1 [(google.api.field_behavior) = REQUIRED, (validate.rules).string.min_len = 1];
+  // - `c1/*` implies all namespaces in `c1` cluster under tenant/workspace.
+  //
+  // - `*/*` implies all namespaces in all clusters under the tenant/workspace.
+  repeated string names = 1 [(google.api.field_behavior) = REQUIRED, (validate.rules).repeated.items.string.pattern = "^[^/]+/[^/]+$"];
 }
 
 // `WorkloadSelector` selects one or more workloads in a

@@ -7,11 +7,14 @@ import (
 	context "context"
 	fmt "fmt"
 	proto "github.com/gogo/protobuf/proto"
+	v11 "github.com/tetrateio/api/tsb/rbac/v1"
 	v1 "github.com/tetrateio/api/tsb/types/v1"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	io "io"
 	math "math"
+	math_bits "math/bits"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -25,24 +28,202 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
+type User struct {
+	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Tenant               string   `protobuf:"bytes,2,opt,name=tenant,proto3" json:"tenant,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *User) Reset()         { *m = User{} }
+func (m *User) String() string { return proto.CompactTextString(m) }
+func (*User) ProtoMessage()    {}
+func (*User) Descriptor() ([]byte, []int) {
+	return fileDescriptor_a702199a77438d56, []int{0}
+}
+func (m *User) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *User) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_User.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *User) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_User.Merge(m, src)
+}
+func (m *User) XXX_Size() int {
+	return m.Size()
+}
+func (m *User) XXX_DiscardUnknown() {
+	xxx_messageInfo_User.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_User proto.InternalMessageInfo
+
+func (m *User) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *User) GetTenant() string {
+	if m != nil {
+		return m.Tenant
+	}
+	return ""
+}
+
+type UserResources struct {
+	Values               []*UserResources_ResourceAndPermission `protobuf:"bytes,3,rep,name=values,proto3" json:"values,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                               `json:"-"`
+	XXX_unrecognized     []byte                                 `json:"-"`
+	XXX_sizecache        int32                                  `json:"-"`
+}
+
+func (m *UserResources) Reset()         { *m = UserResources{} }
+func (m *UserResources) String() string { return proto.CompactTextString(m) }
+func (*UserResources) ProtoMessage()    {}
+func (*UserResources) Descriptor() ([]byte, []int) {
+	return fileDescriptor_a702199a77438d56, []int{1}
+}
+func (m *UserResources) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *UserResources) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_UserResources.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *UserResources) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UserResources.Merge(m, src)
+}
+func (m *UserResources) XXX_Size() int {
+	return m.Size()
+}
+func (m *UserResources) XXX_DiscardUnknown() {
+	xxx_messageInfo_UserResources.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_UserResources proto.InternalMessageInfo
+
+func (m *UserResources) GetValues() []*UserResources_ResourceAndPermission {
+	if m != nil {
+		return m.Values
+	}
+	return nil
+}
+
+type UserResources_ResourceAndPermission struct {
+	// This is the TSB object without the spec field to reduce the
+	// load on the server.  The object will have object meta,
+	// apiVersion and the Kind fields to be able to identify the the
+	// resource.
+	Resource             *v1.Object     `protobuf:"bytes,1,opt,name=resource,proto3" json:"resource,omitempty"`
+	Permission           v11.Permission `protobuf:"varint,2,opt,name=permission,proto3,enum=tetrateio.api.tsb.rbac.v1.Permission" json:"permission,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *UserResources_ResourceAndPermission) Reset()         { *m = UserResources_ResourceAndPermission{} }
+func (m *UserResources_ResourceAndPermission) String() string { return proto.CompactTextString(m) }
+func (*UserResources_ResourceAndPermission) ProtoMessage()    {}
+func (*UserResources_ResourceAndPermission) Descriptor() ([]byte, []int) {
+	return fileDescriptor_a702199a77438d56, []int{1, 0}
+}
+func (m *UserResources_ResourceAndPermission) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *UserResources_ResourceAndPermission) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_UserResources_ResourceAndPermission.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *UserResources_ResourceAndPermission) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UserResources_ResourceAndPermission.Merge(m, src)
+}
+func (m *UserResources_ResourceAndPermission) XXX_Size() int {
+	return m.Size()
+}
+func (m *UserResources_ResourceAndPermission) XXX_DiscardUnknown() {
+	xxx_messageInfo_UserResources_ResourceAndPermission.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_UserResources_ResourceAndPermission proto.InternalMessageInfo
+
+func (m *UserResources_ResourceAndPermission) GetResource() *v1.Object {
+	if m != nil {
+		return m.Resource
+	}
+	return nil
+}
+
+func (m *UserResources_ResourceAndPermission) GetPermission() v11.Permission {
+	if m != nil {
+		return m.Permission
+	}
+	return v11.Permission_INVALID
+}
+
+func init() {
+	proto.RegisterType((*User)(nil), "tetrateio.api.tsb.internal.v1.User")
+	proto.RegisterType((*UserResources)(nil), "tetrateio.api.tsb.internal.v1.UserResources")
+	proto.RegisterType((*UserResources_ResourceAndPermission)(nil), "tetrateio.api.tsb.internal.v1.UserResources.ResourceAndPermission")
+}
+
 func init() { proto.RegisterFile("tsb/internal/v1/internal.proto", fileDescriptor_a702199a77438d56) }
 
 var fileDescriptor_a702199a77438d56 = []byte{
-	// 220 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x90, 0xb1, 0x4a, 0xc6, 0x30,
-	0x14, 0x46, 0xcd, 0x22, 0x92, 0x31, 0x20, 0xca, 0x0f, 0x66, 0xe8, 0xe4, 0x62, 0x42, 0x15, 0xdc,
-	0x75, 0xb0, 0xb8, 0x28, 0xa8, 0x93, 0xdb, 0x4d, 0xb8, 0x68, 0x24, 0x4d, 0x42, 0x72, 0x5b, 0xf0,
-	0x0d, 0x1d, 0x7d, 0x01, 0x41, 0xfa, 0x24, 0xd2, 0x56, 0x2b, 0x28, 0xfc, 0x74, 0xbb, 0xc3, 0x39,
-	0xe7, 0xc2, 0xc7, 0x25, 0x15, 0xa3, 0x5d, 0x20, 0xcc, 0x01, 0xbc, 0xee, 0xeb, 0xe5, 0x56, 0x29,
-	0x47, 0x8a, 0xe2, 0x88, 0x90, 0x32, 0x10, 0xba, 0xa8, 0x20, 0x39, 0x45, 0xc5, 0xa8, 0x85, 0xe8,
-	0xeb, 0xcd, 0xe1, 0xa8, 0xd3, 0x6b, 0xc2, 0x32, 0xba, 0xd3, 0x31, 0x8b, 0xa7, 0x1f, 0x8c, 0xef,
-	0x5d, 0x7f, 0x93, 0x02, 0xf8, 0x7e, 0x83, 0x74, 0xe1, 0xfd, 0x03, 0x06, 0x08, 0x74, 0x87, 0x25,
-	0x76, 0xd9, 0x62, 0x11, 0x95, 0xfa, 0xdf, 0x9f, 0x2b, 0x7d, 0xad, 0x6e, 0xcd, 0x0b, 0x5a, 0xda,
-	0xac, 0x60, 0xaa, 0x1d, 0x11, 0xf8, 0x41, 0x83, 0xbf, 0xe5, 0xab, 0x98, 0xef, 0xd1, 0xa3, 0xa5,
-	0x98, 0xc5, 0xc9, 0xb6, 0xc0, 0x0d, 0xb4, 0x58, 0x12, 0x58, 0xfc, 0xc1, 0xd7, 0xfd, 0xbb, 0x3c,
-	0x7f, 0x1b, 0x24, 0x7b, 0x1f, 0x24, 0xfb, 0x1c, 0x24, 0x7b, 0x3c, 0x7e, 0x72, 0xf4, 0xdc, 0x19,
-	0x65, 0x63, 0xab, 0x17, 0x5b, 0x43, 0x72, 0xfa, 0xcf, 0xbe, 0x66, 0x77, 0x9a, 0xe7, 0xec, 0x2b,
-	0x00, 0x00, 0xff, 0xff, 0x47, 0x57, 0x3a, 0xa5, 0x79, 0x01, 0x00, 0x00,
+	// 394 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x53, 0xc1, 0xaa, 0xd3, 0x40,
+	0x14, 0x6d, 0xda, 0x52, 0xea, 0x14, 0x5d, 0x0c, 0xb4, 0x86, 0x80, 0xa1, 0x44, 0x84, 0x2e, 0x74,
+	0x42, 0x23, 0xb8, 0x14, 0x5a, 0xd1, 0xe2, 0xc6, 0x4a, 0xd4, 0x4d, 0x77, 0x93, 0xf4, 0xa2, 0x91,
+	0x64, 0x26, 0xcc, 0xdc, 0x44, 0xfa, 0x0f, 0x7e, 0x83, 0xdf, 0xe3, 0xd2, 0x85, 0x1f, 0xf0, 0xe8,
+	0x97, 0x3c, 0x32, 0x4d, 0xd3, 0xbe, 0x47, 0x29, 0x79, 0xbb, 0x9b, 0xb9, 0xf7, 0x9c, 0x39, 0xe7,
+	0xe4, 0x0e, 0x71, 0x51, 0x47, 0x7e, 0x22, 0x10, 0x94, 0xe0, 0xa9, 0x5f, 0xce, 0x9b, 0x9a, 0xe5,
+	0x4a, 0xa2, 0xa4, 0xcf, 0x10, 0x50, 0x71, 0x84, 0x44, 0x32, 0x9e, 0x27, 0x0c, 0x75, 0xc4, 0x9a,
+	0x89, 0x72, 0xee, 0x4c, 0x2a, 0xb8, 0x8a, 0x78, 0x5c, 0x41, 0x95, 0x4c, 0xe1, 0x00, 0x73, 0xec,
+	0xea, 0x1c, 0x77, 0x39, 0xe8, 0xaa, 0x61, 0x8a, 0x43, 0xc7, 0x0b, 0x48, 0xff, 0x9b, 0x06, 0x45,
+	0x29, 0xe9, 0x0b, 0x9e, 0x81, 0x6d, 0x4d, 0xad, 0xd9, 0xa3, 0xd0, 0xd4, 0x74, 0x42, 0x06, 0x08,
+	0x82, 0x0b, 0xb4, 0xbb, 0xe6, 0xb4, 0xfe, 0xf2, 0x7e, 0x77, 0xc9, 0xe3, 0x0a, 0x14, 0x82, 0x96,
+	0x85, 0x8a, 0x41, 0xd3, 0x0d, 0x19, 0x94, 0x3c, 0x2d, 0x40, 0xdb, 0xbd, 0x69, 0x6f, 0x36, 0x0a,
+	0x96, 0xec, 0xaa, 0x4e, 0x76, 0x07, 0xcd, 0x8e, 0xd5, 0x42, 0x6c, 0x3f, 0x83, 0xca, 0x12, 0xad,
+	0x13, 0x29, 0xc2, 0x9a, 0xd1, 0xf9, 0x63, 0x91, 0xf1, 0xc5, 0x09, 0xfa, 0x96, 0x0c, 0x55, 0xdd,
+	0x30, 0xba, 0x47, 0x81, 0x77, 0xe1, 0xde, 0x83, 0xdb, 0x72, 0xce, 0xd6, 0xd1, 0x4f, 0x88, 0x31,
+	0x6c, 0x30, 0xf4, 0x3d, 0x21, 0x79, 0xc3, 0x66, 0x3c, 0x3e, 0x09, 0x5e, 0x5c, 0x60, 0xa8, 0x02,
+	0xad, 0x08, 0xce, 0xc4, 0x9d, 0x01, 0x83, 0xff, 0x5d, 0x32, 0xfc, 0x58, 0x9b, 0xa3, 0x9c, 0x8c,
+	0x57, 0x80, 0x8b, 0x34, 0xfd, 0x6a, 0xb2, 0x3a, 0x45, 0xd4, 0x42, 0x9a, 0xd3, 0x62, 0xc6, 0xeb,
+	0xd0, 0x82, 0xb8, 0x2b, 0xc0, 0x77, 0x69, 0xa1, 0xf1, 0x2c, 0xc5, 0x0f, 0x52, 0x7d, 0x81, 0x14,
+	0x62, 0x94, 0x8a, 0xbe, 0xba, 0xc6, 0xf3, 0x89, 0x67, 0xa0, 0x73, 0x1e, 0xc3, 0x71, 0xbc, 0xe5,
+	0xb5, 0x82, 0x3c, 0x5d, 0xc1, 0xc9, 0xd0, 0xfa, 0x97, 0x80, 0xed, 0x72, 0x67, 0x96, 0xe7, 0x79,
+	0x8b, 0xdf, 0xed, 0xbc, 0x7c, 0xc8, 0x4e, 0x78, 0x9d, 0xe5, 0x9b, 0xbf, 0x7b, 0xd7, 0xfa, 0xb7,
+	0x77, 0xad, 0x9b, 0xbd, 0x6b, 0x6d, 0x66, 0xdf, 0x13, 0xfc, 0x51, 0x44, 0x2c, 0x96, 0x99, 0xdf,
+	0xf0, 0xf8, 0x3c, 0x4f, 0xfc, 0x7b, 0x2f, 0x26, 0x1a, 0x98, 0xc5, 0x7e, 0x7d, 0x1b, 0x00, 0x00,
+	0xff, 0xff, 0x47, 0xc3, 0x7c, 0xd7, 0x4b, 0x03, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -57,14 +238,17 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type InternalClient interface {
-	// Used by UI and tsbd.
+	// Used by tsbd.
 	// Returns an array of objects embedded inside the Object.spec.
 	// Look at the object metadata of each element to identify the type.
 	GetAllTenantResources(ctx context.Context, in *v1.Object, opts ...grpc.CallOption) (*v1.Object, error)
 	// Used by UI.
 	// returns an array of Cluster objects.
 	// Where each cluster has the list of namespaces/services selected by the selector.
-	GetResourcesForSelector(ctx context.Context, in *v1.NamespaceSelector, opts ...grpc.CallOption) (*v1.Object, error)
+	GetClusterResourcesForSelector(ctx context.Context, in *v1.NamespaceSelector, opts ...grpc.CallOption) (*v1.Object, error)
+	// Used by UI.
+	// returns an array of object metadata and the user's permissions on that object.
+	GetResourcesOwnedByUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*UserResources, error)
 }
 
 type internalClient struct {
@@ -84,9 +268,18 @@ func (c *internalClient) GetAllTenantResources(ctx context.Context, in *v1.Objec
 	return out, nil
 }
 
-func (c *internalClient) GetResourcesForSelector(ctx context.Context, in *v1.NamespaceSelector, opts ...grpc.CallOption) (*v1.Object, error) {
+func (c *internalClient) GetClusterResourcesForSelector(ctx context.Context, in *v1.NamespaceSelector, opts ...grpc.CallOption) (*v1.Object, error) {
 	out := new(v1.Object)
-	err := c.cc.Invoke(ctx, "/tetrateio.api.tsb.internal.v1.Internal/GetResourcesForSelector", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/tetrateio.api.tsb.internal.v1.Internal/GetClusterResourcesForSelector", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *internalClient) GetResourcesOwnedByUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*UserResources, error) {
+	out := new(UserResources)
+	err := c.cc.Invoke(ctx, "/tetrateio.api.tsb.internal.v1.Internal/GetResourcesOwnedByUser", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -95,14 +288,17 @@ func (c *internalClient) GetResourcesForSelector(ctx context.Context, in *v1.Nam
 
 // InternalServer is the server API for Internal service.
 type InternalServer interface {
-	// Used by UI and tsbd.
+	// Used by tsbd.
 	// Returns an array of objects embedded inside the Object.spec.
 	// Look at the object metadata of each element to identify the type.
 	GetAllTenantResources(context.Context, *v1.Object) (*v1.Object, error)
 	// Used by UI.
 	// returns an array of Cluster objects.
 	// Where each cluster has the list of namespaces/services selected by the selector.
-	GetResourcesForSelector(context.Context, *v1.NamespaceSelector) (*v1.Object, error)
+	GetClusterResourcesForSelector(context.Context, *v1.NamespaceSelector) (*v1.Object, error)
+	// Used by UI.
+	// returns an array of object metadata and the user's permissions on that object.
+	GetResourcesOwnedByUser(context.Context, *User) (*UserResources, error)
 }
 
 // UnimplementedInternalServer can be embedded to have forward compatible implementations.
@@ -112,8 +308,11 @@ type UnimplementedInternalServer struct {
 func (*UnimplementedInternalServer) GetAllTenantResources(ctx context.Context, req *v1.Object) (*v1.Object, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllTenantResources not implemented")
 }
-func (*UnimplementedInternalServer) GetResourcesForSelector(ctx context.Context, req *v1.NamespaceSelector) (*v1.Object, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetResourcesForSelector not implemented")
+func (*UnimplementedInternalServer) GetClusterResourcesForSelector(ctx context.Context, req *v1.NamespaceSelector) (*v1.Object, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetClusterResourcesForSelector not implemented")
+}
+func (*UnimplementedInternalServer) GetResourcesOwnedByUser(ctx context.Context, req *User) (*UserResources, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetResourcesOwnedByUser not implemented")
 }
 
 func RegisterInternalServer(s *grpc.Server, srv InternalServer) {
@@ -138,20 +337,38 @@ func _Internal_GetAllTenantResources_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Internal_GetResourcesForSelector_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Internal_GetClusterResourcesForSelector_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(v1.NamespaceSelector)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(InternalServer).GetResourcesForSelector(ctx, in)
+		return srv.(InternalServer).GetClusterResourcesForSelector(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tetrateio.api.tsb.internal.v1.Internal/GetResourcesForSelector",
+		FullMethod: "/tetrateio.api.tsb.internal.v1.Internal/GetClusterResourcesForSelector",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InternalServer).GetResourcesForSelector(ctx, req.(*v1.NamespaceSelector))
+		return srv.(InternalServer).GetClusterResourcesForSelector(ctx, req.(*v1.NamespaceSelector))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Internal_GetResourcesOwnedByUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(User)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InternalServer).GetResourcesOwnedByUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/tetrateio.api.tsb.internal.v1.Internal/GetResourcesOwnedByUser",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InternalServer).GetResourcesOwnedByUser(ctx, req.(*User))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -165,10 +382,640 @@ var _Internal_serviceDesc = grpc.ServiceDesc{
 			Handler:    _Internal_GetAllTenantResources_Handler,
 		},
 		{
-			MethodName: "GetResourcesForSelector",
-			Handler:    _Internal_GetResourcesForSelector_Handler,
+			MethodName: "GetClusterResourcesForSelector",
+			Handler:    _Internal_GetClusterResourcesForSelector_Handler,
+		},
+		{
+			MethodName: "GetResourcesOwnedByUser",
+			Handler:    _Internal_GetResourcesOwnedByUser_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "tsb/internal/v1/internal.proto",
 }
+
+func (m *User) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *User) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *User) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.Tenant) > 0 {
+		i -= len(m.Tenant)
+		copy(dAtA[i:], m.Tenant)
+		i = encodeVarintInternal(dAtA, i, uint64(len(m.Tenant)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Name) > 0 {
+		i -= len(m.Name)
+		copy(dAtA[i:], m.Name)
+		i = encodeVarintInternal(dAtA, i, uint64(len(m.Name)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *UserResources) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *UserResources) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *UserResources) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.Values) > 0 {
+		for iNdEx := len(m.Values) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Values[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintInternal(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x1a
+		}
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *UserResources_ResourceAndPermission) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *UserResources_ResourceAndPermission) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *UserResources_ResourceAndPermission) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Permission != 0 {
+		i = encodeVarintInternal(dAtA, i, uint64(m.Permission))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.Resource != nil {
+		{
+			size, err := m.Resource.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintInternal(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func encodeVarintInternal(dAtA []byte, offset int, v uint64) int {
+	offset -= sovInternal(v)
+	base := offset
+	for v >= 1<<7 {
+		dAtA[offset] = uint8(v&0x7f | 0x80)
+		v >>= 7
+		offset++
+	}
+	dAtA[offset] = uint8(v)
+	return base
+}
+func (m *User) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Name)
+	if l > 0 {
+		n += 1 + l + sovInternal(uint64(l))
+	}
+	l = len(m.Tenant)
+	if l > 0 {
+		n += 1 + l + sovInternal(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *UserResources) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.Values) > 0 {
+		for _, e := range m.Values {
+			l = e.Size()
+			n += 1 + l + sovInternal(uint64(l))
+		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *UserResources_ResourceAndPermission) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Resource != nil {
+		l = m.Resource.Size()
+		n += 1 + l + sovInternal(uint64(l))
+	}
+	if m.Permission != 0 {
+		n += 1 + sovInternal(uint64(m.Permission))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func sovInternal(x uint64) (n int) {
+	return (math_bits.Len64(x|1) + 6) / 7
+}
+func sozInternal(x uint64) (n int) {
+	return sovInternal(uint64((x << 1) ^ uint64((int64(x) >> 63))))
+}
+func (m *User) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowInternal
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: User: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: User: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowInternal
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthInternal
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthInternal
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Name = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Tenant", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowInternal
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthInternal
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthInternal
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Tenant = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipInternal(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthInternal
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthInternal
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *UserResources) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowInternal
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: UserResources: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: UserResources: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Values", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowInternal
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthInternal
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthInternal
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Values = append(m.Values, &UserResources_ResourceAndPermission{})
+			if err := m.Values[len(m.Values)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipInternal(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthInternal
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthInternal
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *UserResources_ResourceAndPermission) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowInternal
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ResourceAndPermission: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ResourceAndPermission: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Resource", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowInternal
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthInternal
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthInternal
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Resource == nil {
+				m.Resource = &v1.Object{}
+			}
+			if err := m.Resource.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Permission", wireType)
+			}
+			m.Permission = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowInternal
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Permission |= v11.Permission(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipInternal(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthInternal
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthInternal
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func skipInternal(dAtA []byte) (n int, err error) {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return 0, ErrIntOverflowInternal
+			}
+			if iNdEx >= l {
+				return 0, io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		wireType := int(wire & 0x7)
+		switch wireType {
+		case 0:
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return 0, ErrIntOverflowInternal
+				}
+				if iNdEx >= l {
+					return 0, io.ErrUnexpectedEOF
+				}
+				iNdEx++
+				if dAtA[iNdEx-1] < 0x80 {
+					break
+				}
+			}
+			return iNdEx, nil
+		case 1:
+			iNdEx += 8
+			return iNdEx, nil
+		case 2:
+			var length int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return 0, ErrIntOverflowInternal
+				}
+				if iNdEx >= l {
+					return 0, io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				length |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if length < 0 {
+				return 0, ErrInvalidLengthInternal
+			}
+			iNdEx += length
+			if iNdEx < 0 {
+				return 0, ErrInvalidLengthInternal
+			}
+			return iNdEx, nil
+		case 3:
+			for {
+				var innerWire uint64
+				var start int = iNdEx
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return 0, ErrIntOverflowInternal
+					}
+					if iNdEx >= l {
+						return 0, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					innerWire |= (uint64(b) & 0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				innerWireType := int(innerWire & 0x7)
+				if innerWireType == 4 {
+					break
+				}
+				next, err := skipInternal(dAtA[start:])
+				if err != nil {
+					return 0, err
+				}
+				iNdEx = start + next
+				if iNdEx < 0 {
+					return 0, ErrInvalidLengthInternal
+				}
+			}
+			return iNdEx, nil
+		case 4:
+			return iNdEx, nil
+		case 5:
+			iNdEx += 4
+			return iNdEx, nil
+		default:
+			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
+		}
+	}
+	panic("unreachable")
+}
+
+var (
+	ErrInvalidLengthInternal = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowInternal   = fmt.Errorf("proto: integer overflow")
+)

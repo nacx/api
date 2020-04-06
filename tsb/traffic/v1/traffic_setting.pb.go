@@ -23,10 +23,11 @@
 //   workspace: w1
 //   tenant: mycompany
 // spec:
-//   namespaceSelectors:
-//   - name: */ns1
-//   - name: */ns2
-//   - name: */ns3
+//   namespaceSelector:
+//     names:
+//     - */ns1
+//     - */ns2
+//     - */ns3
 //   configMode: TETRATE
 //```
 //

@@ -35,3 +35,241 @@ var (
 
 // define the regex for a UUID once up-front
 var _internal_uuidPattern = regexp.MustCompile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
+
+// Validate checks the field values on User with the rules defined in the proto
+// definition for this message. If any rules are violated, an error is returned.
+func (m *User) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Name
+
+	// no validation rules for Tenant
+
+	return nil
+}
+
+// UserValidationError is the validation error returned by User.Validate if the
+// designated constraints aren't met.
+type UserValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e UserValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e UserValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e UserValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e UserValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e UserValidationError) ErrorName() string { return "UserValidationError" }
+
+// Error satisfies the builtin error interface
+func (e UserValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sUser.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = UserValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = UserValidationError{}
+
+// Validate checks the field values on UserResources with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *UserResources) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	for idx, item := range m.GetValues() {
+		_, _ = idx, item
+
+		{
+			tmp := item
+
+			if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+				if err := v.Validate(); err != nil {
+					return UserResourcesValidationError{
+						field:  fmt.Sprintf("Values[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					}
+				}
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// UserResourcesValidationError is the validation error returned by
+// UserResources.Validate if the designated constraints aren't met.
+type UserResourcesValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e UserResourcesValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e UserResourcesValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e UserResourcesValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e UserResourcesValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e UserResourcesValidationError) ErrorName() string { return "UserResourcesValidationError" }
+
+// Error satisfies the builtin error interface
+func (e UserResourcesValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sUserResources.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = UserResourcesValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = UserResourcesValidationError{}
+
+// Validate checks the field values on UserResources_ResourceAndPermission with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, an error is returned.
+func (m *UserResources_ResourceAndPermission) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	{
+		tmp := m.GetResource()
+
+		if v, ok := interface{}(tmp).(interface{ Validate() error }); ok {
+
+			if err := v.Validate(); err != nil {
+				return UserResources_ResourceAndPermissionValidationError{
+					field:  "Resource",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+	}
+
+	// no validation rules for Permission
+
+	return nil
+}
+
+// UserResources_ResourceAndPermissionValidationError is the validation error
+// returned by UserResources_ResourceAndPermission.Validate if the designated
+// constraints aren't met.
+type UserResources_ResourceAndPermissionValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e UserResources_ResourceAndPermissionValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e UserResources_ResourceAndPermissionValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e UserResources_ResourceAndPermissionValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e UserResources_ResourceAndPermissionValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e UserResources_ResourceAndPermissionValidationError) ErrorName() string {
+	return "UserResources_ResourceAndPermissionValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e UserResources_ResourceAndPermissionValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sUserResources_ResourceAndPermission.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = UserResources_ResourceAndPermissionValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = UserResources_ResourceAndPermissionValidationError{}

@@ -73,17 +73,20 @@ message ServiceRoute {
   // subset should be uniquely identifiable using their labels.
   message Subset {
     // Name used to refer to the subset.
-    string name = 1 [(google.api.field_behavior) = REQUIRED];
+    string name = 1 [(google.api.field_behavior) = REQUIRED, (validate.rules).string.min_len = 1];
 
     // Labels apply a filter over the endpoints of a service in the service registry.
-    map<string, string> labels = 2 [(google.api.field_behavior) = REQUIRED];
+    map<string, string> labels = 2;
 
-    // Percentage of traffic to be sent to this subset. The sum of
-    // weights across all subsets should add up to 100.
-    uint32 weight = 3 [(google.api.field_behavior) = REQUIRED];
+    // Percentage of traffic to be sent to this subset. Weight if not
+    // specified will be assumed to be 0 if there are multiple
+    // subsets. If there is only one subset, the weight will be
+    // assumed to be 1. The sum of non-zero weights across all subsets
+    // should add up to 100.
+    uint32 weight = 3;
   };
 
   // The set of versions of a service and the percentage of traffic to
   // send to each version.
-  repeated Subset subsets = 2;
+  repeated Subset subsets = 2 [(google.api.field_behavior) = REQUIRED, (validate.rules).repeated.min_items = 1];
 }

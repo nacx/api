@@ -24,10 +24,11 @@ syntax = "proto3";
 //   workspace: w1
 //   tenant: mycompany
 // spec:
-//   namespaceSelectors:
-//   - name: */ns1
-//   - name: */ns2
-//   - name: */ns3
+//   namespaceSelector:
+//     names:
+//     - */ns1
+//     - */ns2
+//     - */ns3
 //   configMode: TETRATE
 //```
 //
@@ -141,5 +142,5 @@ message AuthorizationSettings {
   // - `ns1/*` indicates all service accounts in the `ns1` namespace.
   //
   // - `ns1/svc1-sa` indicates `svc1-sa` service account in `ns1` namespace.
-  repeated string service_accounts = 2;
+  repeated string service_accounts = 2 [(validate.rules).repeated.items.string.min_len = 1];
 };

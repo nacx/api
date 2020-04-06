@@ -44,6 +44,13 @@ func (m *IngressGateway) Validate() error {
 		return nil
 	}
 
+	if m.GetWorkloadSelector() == nil {
+		return IngressGatewayValidationError{
+			field:  "WorkloadSelector",
+			reason: "value is required",
+		}
+	}
+
 	{
 		tmp := m.GetWorkloadSelector()
 
@@ -56,6 +63,13 @@ func (m *IngressGateway) Validate() error {
 					cause:  err,
 				}
 			}
+		}
+	}
+
+	if len(m.GetHttp()) < 1 {
+		return IngressGatewayValidationError{
+			field:  "Http",
+			reason: "value must contain at least 1 item(s)",
 		}
 	}
 
@@ -1914,7 +1928,12 @@ func (m *Authentication_JWT) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Issuer
+	if utf8.RuneCountInString(m.GetIssuer()) < 1 {
+		return Authentication_JWTValidationError{
+			field:  "Issuer",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	switch m.Keys.(type) {
 

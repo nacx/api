@@ -18,9 +18,10 @@ metadata:
   name: w1
   tenant: mycompany
 spec:
-  namespacesSelectors:
-  - name: */ns1
-  - name: */ns2
+  namespacesSelector:
+    names:
+    - */ns1
+    - */ns2
 </code></pre>
 
 <p>The following example claims <code>ns1</code> namespace only from the <code>c1</code>
@@ -32,9 +33,10 @@ metadata:
   name: w1
   tenant: mycompany
 spec:
-  namespaceSelectors:
-  - name: c1/ns1
-  - name: c2/*
+  namespaceSelector:
+    names:
+    - c1/ns1
+    - c2/*
 </code></pre>
 
 <h2 id="Workspace">Workspace</h2>
@@ -51,14 +53,15 @@ spec:
 </tr>
 </thead>
 <tbody>
-<tr id="Workspace-namespace_selectors">
-<td><code>namespaceSelectors</code></td>
-<td><code><a href="https://tetrate.io/docs/reference/config/types/v1/types.html#NamespaceSelector">NamespaceSelector[]</a></code></td>
+<tr id="Workspace-namespace_selector">
+<td><code>namespaceSelector</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/types/v1/types.html#NamespaceSelector">NamespaceSelector</a></code></td>
 <td>
 <p>Set of namespaces owned exclusively by this workspace. A
 workspace can own all namespaces of a cluster or a set of
 namespaces across any cluster or a set of namespaces in a
-specific cluster.</p>
+specific cluster. Use <code>*/*</code> to claim all cluster resources under
+the tenant.</p>
 
 </td>
 <td>

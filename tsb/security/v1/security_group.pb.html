@@ -28,10 +28,11 @@ metadata:
   workspace: w1
   tenant: mycompany
 spec:
-  namespaceSelectors:
-  - name: */ns1
-  - name: */ns2
-  - name: */ns3
+  namespaceSelector:
+    names:
+    - */ns1
+    - */ns2
+    - */ns3
   configMode: TETRATE
 </code></pre>
 
@@ -65,10 +66,11 @@ metadata:
   workspace: w1
   tenant: mycompany
 spec:
-  namespaceSelectors:
-  - name: c1/ns1 # pick ns1 namespace only from c1 cluster
-  - name: */ns2
-  - name: */ns3
+  namespaceSelector:
+    names:
+    - c1/ns1 # pick ns1 namespace only from c1 cluster
+    - */ns2
+    - */ns3
   configMode: TETRATE
 </code></pre>
 
@@ -121,16 +123,17 @@ group of namespaces owned by the parent workspace.</p>
 </tr>
 </thead>
 <tbody>
-<tr id="Group-namespace_selectors">
-<td><code>namespaceSelectors</code></td>
-<td><code><a href="https://tetrate.io/docs/reference/config/types/v1/types.html#NamespaceSelector">NamespaceSelector[]</a></code></td>
+<tr id="Group-namespace_selector">
+<td><code>namespaceSelector</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/types/v1/types.html#NamespaceSelector">NamespaceSelector</a></code></td>
 <td>
 <p>Set of namespaces owned exclusively by this group. If omitted,
-applies to all resources owned by the workspace.</p>
+applies to all resources owned by the workspace. Use <code>*/*</code> to
+claim all cluster resources under the workspace.</p>
 
 </td>
 <td>
-No
+Yes
 </td>
 </tr>
 <tr id="Group-config_mode">

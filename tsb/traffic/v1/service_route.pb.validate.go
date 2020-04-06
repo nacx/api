@@ -51,6 +51,13 @@ func (m *ServiceRoute) Validate() error {
 		}
 	}
 
+	if len(m.GetSubsets()) < 1 {
+		return ServiceRouteValidationError{
+			field:  "Subsets",
+			reason: "value must contain at least 1 item(s)",
+		}
+	}
+
 	for idx, item := range m.GetSubsets() {
 		_, _ = idx, item
 
@@ -138,7 +145,12 @@ func (m *ServiceRoute_Subset) Validate() error {
 		return nil
 	}
 
-	// no validation rules for Name
+	if utf8.RuneCountInString(m.GetName()) < 1 {
+		return ServiceRoute_SubsetValidationError{
+			field:  "Name",
+			reason: "value length must be at least 1 runes",
+		}
+	}
 
 	// no validation rules for Labels
 

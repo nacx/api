@@ -89,7 +89,7 @@ send to each version.</p>
 
 </td>
 <td>
-No
+Yes
 </td>
 </tr>
 </tbody>
@@ -129,19 +129,22 @@ Yes
 
 </td>
 <td>
-Yes
+No
 </td>
 </tr>
 <tr id="ServiceRoute-Subset-weight">
 <td><code>weight</code></td>
 <td><code>uint32</code></td>
 <td>
-<p>Percentage of traffic to be sent to this subset. The sum of
-weights across all subsets should add up to 100.</p>
+<p>Percentage of traffic to be sent to this subset. Weight if not
+specified will be assumed to be 0 if there are multiple
+subsets. If there is only one subset, the weight will be
+assumed to be 1. The sum of non-zero weights across all subsets
+should add up to 100.</p>
 
 </td>
 <td>
-Yes
+No
 </td>
 </tr>
 </tbody>

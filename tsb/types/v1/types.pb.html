@@ -25,16 +25,18 @@ that will belong to a specific configuration group.</p>
 </tr>
 </thead>
 <tbody>
-<tr id="NamespaceSelector-name">
-<td><code>name</code></td>
-<td><code>string</code></td>
+<tr id="NamespaceSelector-names">
+<td><code>names</code></td>
+<td><code>string[]</code></td>
 <td>
 <ul>
-<li><p><code>*/ns1</code> implies <code>ns1</code> namespace in any cluster under the tenant.</p></li>
+<li><p><code>*/ns1</code> implies <code>ns1</code> namespace in any cluster under the tenant/workspace.</p></li>
 
-<li><p><code>c1/ns1</code> implies <code>ns1</code> namespace from <code>c1</code> cluster.</p></li>
+<li><p><code>c1/ns1</code> implies <code>ns1</code> namespace from <code>c1</code> cluster under tenant/workspace.</p></li>
 
-<li><p><code>c1/*</code> implies all namespaces in <code>c1</code> cluster.</p></li>
+<li><p><code>c1/*</code> implies all namespaces in <code>c1</code> cluster under tenant/workspace.</p></li>
+
+<li><p><code>*/*</code> implies all namespaces in all clusters under the tenant/workspace.</p></li>
 </ul>
 
 </td>

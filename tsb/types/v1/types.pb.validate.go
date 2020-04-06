@@ -44,11 +44,16 @@ func (m *NamespaceSelector) Validate() error {
 		return nil
 	}
 
-	if utf8.RuneCountInString(m.GetName()) < 1 {
-		return NamespaceSelectorValidationError{
-			field:  "Name",
-			reason: "value length must be at least 1 runes",
+	for idx, item := range m.GetNames() {
+		_, _ = idx, item
+
+		if !_NamespaceSelector_Names_Pattern.MatchString(item) {
+			return NamespaceSelectorValidationError{
+				field:  fmt.Sprintf("Names[%v]", idx),
+				reason: "value does not match regex pattern \"^[^/]+/[^/]+$\"",
+			}
 		}
+
 	}
 
 	return nil
@@ -109,6 +114,8 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = NamespaceSelectorValidationError{}
+
+var _NamespaceSelector_Names_Pattern = regexp.MustCompile("^[^/]+/[^/]+$")
 
 // Validate checks the field values on WorkloadSelector with the rules defined
 // in the proto definition for this message. If any rules are violated, an

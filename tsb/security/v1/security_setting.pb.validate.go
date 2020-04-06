@@ -128,6 +128,18 @@ func (m *AuthorizationSettings) Validate() error {
 
 	// no validation rules for Mode
 
+	for idx, item := range m.GetServiceAccounts() {
+		_, _ = idx, item
+
+		if utf8.RuneCountInString(item) < 1 {
+			return AuthorizationSettingsValidationError{
+				field:  fmt.Sprintf("ServiceAccounts[%v]", idx),
+				reason: "value length must be at least 1 runes",
+			}
+		}
+
+	}
+
 	return nil
 }
 
