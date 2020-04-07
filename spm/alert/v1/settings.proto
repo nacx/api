@@ -6,7 +6,7 @@ package tetrateio.api.tcc.spm.alert.v1;
 option go_package = "github.com/tetrateio/api/spm/alert/v1";
 
 import "google/protobuf/duration.proto";
-import "github.com/envoyproxy/protoc-gen-validate/validate/validate.proto";
+import "validate/validate.proto";
 
 // Settings
 //

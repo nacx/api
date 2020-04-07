@@ -6,7 +6,7 @@ all: gen
 repo_dir := .
 out_path = /tmp
 
-protoc = protoc -Icommon-protos -I.
+protoc = protoc -Icommon-protos/github.com/envoyproxy/protoc-gen-validate -Icommon-protos -I.
 prototool = prototool
 
 go_plugin_prefix := --go_out=plugins=grpc,

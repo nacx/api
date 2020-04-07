@@ -50,7 +50,7 @@ option go_package = "github.com/tetrateio/api/tcc/core/v1";
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 import "google/protobuf/wrappers.proto";
-import "github.com/envoyproxy/protoc-gen-validate/validate/validate.proto";
+import "validate/validate.proto";
 
 import "tcc/core/v1/routing_info.proto";
 import "tcc/core/v1/client_settings.proto";

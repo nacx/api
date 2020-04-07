@@ -9,7 +9,7 @@ option java_package = "io.tetrate.spm.tsb.meta.proto";
 // However, the following go_package entry is added.
 option go_package = "github.com/tetrateio/api/spm/metadata/v1";
 // However, the following validation package is also added.
-import "github.com/envoyproxy/protoc-gen-validate/validate/validate.proto";
+import "validate/validate.proto";
 
 // Service provided at TSB side,
 // SPM uses this as 3rd part storage implementation, to support existing query(s) from UI side.

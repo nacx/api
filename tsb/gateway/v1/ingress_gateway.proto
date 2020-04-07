@@ -68,7 +68,7 @@ option go_package = "github.com/tetrateio/api/tsb/gateway/v1";
 import "google/api/field_behavior.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/wrappers.proto";
-import "github.com/envoyproxy/protoc-gen-validate/validate/validate.proto";
+import "validate/validate.proto";
 import "tsb/types/v1/types.proto";
 
 // `IngressGateway` configures a workload to act as an ingress gateway into the mesh.

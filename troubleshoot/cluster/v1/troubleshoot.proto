@@ -6,7 +6,7 @@ package tetrateio.api.troubleshoot.cluster.v1;
 option go_package = "github.com/tetrateio/api/troubleshoot/cluster/v1;clustertroubleshootv1";
 
 import "google/protobuf/duration.proto";
-import "github.com/envoyproxy/protoc-gen-validate/validate/validate.proto";
+import "validate/validate.proto";
 
 // Cluster Troubleshooting Service
 //

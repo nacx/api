@@ -4,7 +4,7 @@ syntax = "proto3";
 
 import "google/api/field_behavior.proto";
 import "google/protobuf/struct.proto";
-import "github.com/envoyproxy/protoc-gen-validate/validate/validate.proto";
+import "validate/validate.proto";
 
 // $title: Common Object Types
 // $description: Definition of objects shared by different APIs.

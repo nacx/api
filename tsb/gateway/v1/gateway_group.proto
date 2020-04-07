@@ -133,7 +133,7 @@ package tetrateio.api.tsb.gateway.v1;
 option go_package = "github.com/tetrateio/api/tsb/gateway/v1";
 
 import "google/api/field_behavior.proto";
-import "github.com/envoyproxy/protoc-gen-validate/validate/validate.proto";
+import "validate/validate.proto";
 import "tsb/types/v1/types.proto";
 
 // A gateway group manages the gateways in a group of namespaces owned

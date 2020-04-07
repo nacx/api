@@ -35,7 +35,7 @@ package tetrateio.api.tsb.rbac.v1;
 option go_package = "github.com/tetrateio/api/tsb/rbac/v1";
 
 import "google/api/field_behavior.proto";
-import "github.com/envoyproxy/protoc-gen-validate/validate/validate.proto";
+import "validate/validate.proto";
 import "tsb/rbac/v1/role.proto";
 
 // `TenantRoleBinding` assigns permissions to users under a tenant.

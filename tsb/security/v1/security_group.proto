@@ -114,7 +114,7 @@ syntax = "proto3";
 package tetrateio.api.tsb.security.v1;
 option go_package = "github.com/tetrateio/api/tsb/security/v1";
 
-import "github.com/envoyproxy/protoc-gen-validate/validate/validate.proto";
+import "validate/validate.proto";
 import "google/api/field_behavior.proto";
 import "tsb/types/v1/types.proto";
 

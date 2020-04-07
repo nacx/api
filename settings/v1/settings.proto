@@ -7,7 +7,7 @@ option go_package = "github.com/tetrateio/api/settings/v1;settingsv1";
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
-import "github.com/envoyproxy/protoc-gen-validate/validate/validate.proto";
+import "validate/validate.proto";
 
 import "q/rbac/v1/permissions.proto";
 import "q/rbac/v1/rbac.proto";

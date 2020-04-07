@@ -46,7 +46,7 @@ option go_package = "github.com/tetrateio/api/tsb/v1";
 
 import "google/api/field_behavior.proto";
 import "google/protobuf/wrappers.proto";
-import "github.com/envoyproxy/protoc-gen-validate/validate/validate.proto";
+import "validate/validate.proto";
 import "tsb/types/v1/types.proto";
 
 // A Kubernetes cluster managing both pods and VMs.

@@ -60,7 +60,7 @@ package tetrateio.api.tsb.traffic.v1;
 option go_package = "github.com/tetrateio/api/tsb/traffic/v1";
 
 import "google/api/field_behavior.proto";
-import "github.com/envoyproxy/protoc-gen-validate/validate/validate.proto";
+import "validate/validate.proto";
 
 // A service route controls routing configurations for traffic to a
 // service in a traffic group.
