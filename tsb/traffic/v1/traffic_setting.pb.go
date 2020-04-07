@@ -142,7 +142,7 @@ func (ResilienceSettings_Sensitivity) EnumDescriptor() ([]byte, []int) {
 type ReachabilitySettings_Mode int32
 
 const (
-	// Inherit from parent if possible. Otherwise treated as NAMESPACE.
+	// Inherit from parent if possible. Otherwise treated as `CLUSTER`.
 	ReachabilitySettings_UNSET ReachabilitySettings_Mode = 0
 	// The workload may talk to any service in its own namespace.
 	ReachabilitySettings_NAMESPACE ReachabilitySettings_Mode = 1
@@ -184,7 +184,7 @@ func (ReachabilitySettings_Mode) EnumDescriptor() ([]byte, []int) {
 
 // A traffic setting applies configuration to a set of sidecars in a
 // traffic group or a workspace. When applied to a traffic group,
-// missing fields will inherit values from the workspace-wide setting.
+// missing fields will inherit values from the workspace-wide setting if any.
 type TrafficSetting struct {
 	// The set of services and hosts accessed by a workload (and hence
 	// its sidecar) in the mesh. Defining the set of services accessed
@@ -424,10 +424,6 @@ func (m *HTTPRetry) GetRetryOn() string {
 // dependencies) in advance reduces the memory and CPU consumption
 // both the Istio control plane and the individual Envoy sidecars in
 // the data plane.
-//
-// **NOTE**: When used in `WorkspaceSetting`, reachability if not
-// specified defaults to `NAMESPACE` mode, i.e. workloads will be
-// able to reach only services within their namespace.
 type ReachabilitySettings struct {
 	// A short cut for specifying the set of services accessed by the workload.
 	Mode ReachabilitySettings_Mode `protobuf:"varint,1,opt,name=mode,proto3,enum=tetrateio.api.tsb.traffic.v1.ReachabilitySettings_Mode" json:"mode,omitempty"`

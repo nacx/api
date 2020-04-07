@@ -72,7 +72,7 @@ spec:
 <section>
 <p>A security setting applies configuration to a set of sidecars in a
 security group or a workspace. When applied to a security group,
-missing fields will inherit values from the workspace-wide setting.</p>
+missing fields will inherit values from the workspace-wide setting if any.</p>
 
 <table class="message-fields">
 <thead>
@@ -116,10 +116,6 @@ No
 <p><code>AuthorizationSettings</code> define the set of service accounts in one
 or more namespaces allowed to access a workload (and hence its
 sidecar) in the mesh.</p>
-
-<p><strong>NOTE</strong>: When used in <code>WorkspaceSetting</code>, authorization if not
-specified defaults to <code>NAMESPACE</code> mode, i.e. workloads will only
-allow traffic from other workloads in the same namespace.</p>
 
 <table class="message-fields">
 <thead>

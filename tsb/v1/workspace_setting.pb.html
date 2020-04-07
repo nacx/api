@@ -54,11 +54,12 @@ without a specific security group will inherit these settings. If
 omitted, the following semantics apply:</p>
 
 <ol>
-<li><p>Sidecars will accept connections from clients using
-Istio Mutual TLS as well as legacy clients using plaintext
-(i.e. any traffic not using Istio Mutual TLS authentication)</p></li>
+<li><p>Sidecars will accept connections from clients using Istio
+Mutual TLS as well as legacy clients using plaintext (i.e. any
+traffic not using Istio Mutual TLS authentication),
+i.e. authentication mode defaults to <code>OPTIONAL</code>.</p></li>
 
-<li><p>No authorization will be performed.</p></li>
+<li><p>No authorization will be performed, i.e., authorization mode defaults to <code>DISABLED</code>.</p></li>
 </ol>
 
 </td>
@@ -75,9 +76,8 @@ without a specific traffic group will inherit these settings. If
 omitted, the following semantics apply:</p>
 
 <ol>
-<li><p>Sidecars will be able to reach only services within their
-namespace in the cluster, i.e. reachability mode defaults to
-<code>NAMESPACE</code>.</p></li>
+<li><p>Sidecars will be able to reach any service in the
+cluster, i.e. reachability mode defaults to <code>CLUSTER</code>.</p></li>
 
 <li><p>Traffic to unknown destinations will be directly routed from
 the sidecar to the destination.</p></li>

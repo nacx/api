@@ -87,7 +87,7 @@ import "validate/validate.proto";
 
 // A traffic setting applies configuration to a set of sidecars in a
 // traffic group or a workspace. When applied to a traffic group,
-// missing fields will inherit values from the workspace-wide setting.
+// missing fields will inherit values from the workspace-wide setting if any.
 message TrafficSetting {
   // The set of services and hosts accessed by a workload (and hence
   // its sidecar) in the mesh. Defining the set of services accessed
@@ -173,14 +173,10 @@ message HTTPRetry {
 // dependencies) in advance reduces the memory and CPU consumption
 // both the Istio control plane and the individual Envoy sidecars in
 // the data plane.
-//
-// **NOTE**: When used in `WorkspaceSetting`, reachability if not
-// specified defaults to `NAMESPACE` mode, i.e. workloads will be
-// able to reach only services within their namespace.
 message ReachabilitySettings {
   // A short cut for defining the common reachability patterns
   enum Mode {
-    // Inherit from parent if possible. Otherwise treated as NAMESPACE.
+    // Inherit from parent if possible. Otherwise treated as `CLUSTER`.
     UNSET = 0;
     // The workload may talk to any service in its own namespace.
     NAMESPACE = 1;

@@ -57,19 +57,19 @@ type WorkspaceSetting struct {
 	// without a specific security group will inherit these settings. If
 	// omitted, the following semantics apply:
 	//
-	// 1. Sidecars will accept connections from clients using
-	// Istio Mutual TLS as well as legacy clients using plaintext
-	// (i.e. any traffic not using Istio Mutual TLS authentication)
+	// 1. Sidecars will accept connections from clients using Istio
+	// Mutual TLS as well as legacy clients using plaintext (i.e. any
+	// traffic not using Istio Mutual TLS authentication),
+	// i.e. authentication mode defaults to `OPTIONAL`.
 	//
-	// 2. No authorization will be performed.
+	// 2. No authorization will be performed, i.e., authorization mode defaults to `DISABLED`.
 	DefaultSecuritySetting *v1.SecuritySetting `protobuf:"bytes,1,opt,name=default_security_setting,json=defaultSecuritySetting,proto3" json:"default_security_setting,omitempty"`
 	// Traffic settings for all sidecars in this workspace. Sidecars
 	// without a specific traffic group will inherit these settings. If
 	// omitted, the following semantics apply:
 	//
-	// 1. Sidecars will be able to reach only services within their
-	// namespace in the cluster, i.e. reachability mode defaults to
-	// `NAMESPACE`.
+	// 1. Sidecars will be able to reach any service in the
+	// cluster, i.e. reachability mode defaults to `CLUSTER`.
 	//
 	// 2. Traffic to unknown destinations will be directly routed from
 	// the sidecar to the destination.

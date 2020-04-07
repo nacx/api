@@ -78,7 +78,7 @@ import "validate/validate.proto";
 
 // A security setting applies configuration to a set of sidecars in a
 // security group or a workspace. When applied to a security group,
-// missing fields will inherit values from the workspace-wide setting.
+// missing fields will inherit values from the workspace-wide setting if any.
 message SecuritySetting {
   // AuthenticationMode indicates whether to accept only Istio mutual
   // TLS authenticated traffic or allow legacy plaintext traffic as
@@ -106,10 +106,6 @@ message SecuritySetting {
 // `AuthorizationSettings` define the set of service accounts in one
 // or more namespaces allowed to access a workload (and hence its
 // sidecar) in the mesh.
-//
-// **NOTE**: When used in `WorkspaceSetting`, authorization if not
-// specified defaults to `NAMESPACE` mode, i.e. workloads will only
-// allow traffic from other workloads in the same namespace.
 message AuthorizationSettings {
   // A short cut for defining the common authorization patterns
   enum Mode {

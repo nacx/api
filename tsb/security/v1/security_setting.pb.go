@@ -174,7 +174,7 @@ func (AuthorizationSettings_Mode) EnumDescriptor() ([]byte, []int) {
 
 // A security setting applies configuration to a set of sidecars in a
 // security group or a workspace. When applied to a security group,
-// missing fields will inherit values from the workspace-wide setting.
+// missing fields will inherit values from the workspace-wide setting if any.
 type SecuritySetting struct {
 	// Specifies whether the sidecars should accept only mutual TLS
 	// authenticated traffic or allow legacy plaintext traffic as well.
@@ -237,10 +237,6 @@ func (m *SecuritySetting) GetAuthorization() *AuthorizationSettings {
 // `AuthorizationSettings` define the set of service accounts in one
 // or more namespaces allowed to access a workload (and hence its
 // sidecar) in the mesh.
-//
-// **NOTE**: When used in `WorkspaceSetting`, authorization if not
-// specified defaults to `NAMESPACE` mode, i.e. workloads will only
-// allow traffic from other workloads in the same namespace.
 type AuthorizationSettings struct {
 	// A short cut for specifying the set of allowed callers.
 	Mode AuthorizationSettings_Mode `protobuf:"varint,1,opt,name=mode,proto3,enum=tetrateio.api.tsb.security.v1.AuthorizationSettings_Mode" json:"mode,omitempty"`
