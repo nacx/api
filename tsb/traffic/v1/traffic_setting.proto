@@ -100,7 +100,7 @@ message TrafficSetting {
   // traffic should be forwarded to from the sidecar. If not
   // specified, the sidecar will send the unknown traffic directly to
   // the IP requested by the application. Must be in
-  // <namespace>/<fqdn> format.
+  // `<namespace>/<fqdn>` format.
   string egress_gateway = 2 [(validate.rules).string.pattern = "^[^/]+/[^/]+$"];
 
   // Resilience settings such as timeouts, retries, etc., affecting

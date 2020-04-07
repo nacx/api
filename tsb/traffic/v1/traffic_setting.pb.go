@@ -196,7 +196,7 @@ type TrafficSetting struct {
 	// traffic should be forwarded to from the sidecar. If not
 	// specified, the sidecar will send the unknown traffic directly to
 	// the IP requested by the application. Must be in
-	// <namespace>/<fqdn> format.
+	// `<namespace>/<fqdn>` format.
 	EgressGateway string `protobuf:"bytes,2,opt,name=egress_gateway,json=egressGateway,proto3" json:"egress_gateway,omitempty"`
 	// Resilience settings such as timeouts, retries, etc., affecting
 	// outbound traffic from sidecars.
