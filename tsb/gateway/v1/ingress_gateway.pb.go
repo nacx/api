@@ -1220,8 +1220,8 @@ type ServerTLSSettings struct {
 	Mode ServerTLSSettings_TLSMode `protobuf:"varint,1,opt,name=mode,proto3,enum=tetrateio.api.tsb.gateway.v1.ServerTLSSettings_TLSMode" json:"mode,omitempty"`
 	// The name of the secret in Kubernetes that holds the TLS certs
 	// including the CA certificates. The secret (type generic) should
-	// contain the following keys and values: key: <privateKey>, cert:
-	// <serverCert>, cacert: <CACertificate>.
+	// contain the following keys and values: key: `<privateKey>`, cert:
+	// `<serverCert>`, cacert: `<CACertificate>`.
 	SecretName           string   `protobuf:"bytes,2,opt,name=secret_name,json=secretName,proto3" json:"secret_name,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`

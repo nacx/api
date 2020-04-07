@@ -75,8 +75,8 @@ type TLSSettings struct {
 	CaCertificates string `protobuf:"bytes,5,opt,name=ca_certificates,json=caCertificates,proto3" json:"ca_certificates,omitempty"`
 	// For proxies running on Kubernetes, the name of the secret that holds the TLS certs including
 	// the CA certificates. Currently applicable only on Kubernetes. The secret (type generic) should
-	// contain the following keys and values: key: <privateKey>, cert: <serverCert>, cacert:
-	// <CACertificate>.  If the service is exposed via a load balancer, the secret must be accessible
+	// contain the following keys and values: key: `<privateKey>`, cert: `<serverCert>`, cacert:
+	// `<CACertificate>`.  If the service is exposed via a load balancer, the secret must be accessible
 	// to it.
 	SecretName           string   `protobuf:"bytes,6,opt,name=secret_name,json=secretName,proto3" json:"secret_name,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`

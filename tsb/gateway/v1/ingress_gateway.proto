@@ -254,8 +254,8 @@ message ServerTLSSettings {
 
   // The name of the secret in Kubernetes that holds the TLS certs
   // including the CA certificates. The secret (type generic) should
-  // contain the following keys and values: key: <privateKey>, cert:
-  // <serverCert>, cacert: <CACertificate>.
+  // contain the following keys and values: key: `<privateKey>`, cert:
+  // `<serverCert>`, cacert: `<CACertificate>`.
   string secret_name = 2;
 }
 
