@@ -7,14 +7,20 @@ option go_package = "github.com/tetrateio/api/tsb/internal/v1";
 
 import "tsb/rbac/v1/role.proto";
 import "tsb/types/v1/types.proto";
+import "google/protobuf/empty.proto";
 
 // Internal APIs between Tetrate components in Service Bridge. Not for
 // public consumption.
 service Internal {
   // Used by tsbd. Argument is an object containing the tenant name.
-  // Returns an array of objects.
+  // Returns an array of objects everytime there is an update at the
   // Look at the object metadata of each element to identify the type.
   rpc GetAllTenantResources(TenantName) returns (ObjectArray) {
+  };
+
+  // Used by tsbd to push registry data from a cluster to management plane.
+  // Object is a cluster object containing all the namespaces and services in that cluster.
+  rpc UpdateClusterResources(tetrateio.api.tsb.types.v1.Object) returns (google.protobuf.Empty) {
   };
 
   // Used by UI.

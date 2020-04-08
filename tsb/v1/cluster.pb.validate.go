@@ -319,6 +319,10 @@ func (m *Service) Validate() error {
 
 	// no validation rules for KubernetesServiceIp
 
+	// no validation rules for NumKubernetesEndpoints
+
+	// no validation rules for NumVmEndpoints
+
 	return nil
 }
 

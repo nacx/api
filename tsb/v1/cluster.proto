@@ -85,4 +85,9 @@ message Service {
   // IPs assigned to the service. For services of type nodePort, this field contains the IP
   // addresses of the nodes in the cluster.
   repeated string kubernetes_external_addresses = 4;
+  // The number of kubernetes pods providing this service. Note that a
+  // service could be hosted on both pods and VMs.
+  uint32 num_kubernetes_endpoints = 5;
+  // The number of VMs providing this service.
+  uint32 num_vm_endpoints = 6;
 }
