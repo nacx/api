@@ -2,8 +2,8 @@
 
 syntax = "proto3";
 
-package tetrateio.api.tsb.internal.v1;
-option go_package = "github.com/tetrateio/api/tsb/internal/v1";
+package tetrateio.api.tsb.private.v1;
+option go_package = "github.com/tetrateio/api/tsb/private/v1";
 
 import "tsb/rbac/v1/role.proto";
 import "tsb/types/v1/types.proto";

@@ -75,7 +75,7 @@ gen: \
 	generate-tsb-security \
 	generate-tsb-traffic \
 	generate-tsb-service \
-	generate-tsb-internal \
+	generate-tsb-private \
 	generate-tsb-types \
 	generate-tsb \
 	tidy-go
@@ -101,7 +101,7 @@ clean: \
 	clean-tsb-security \
 	clean-tsb-traffic \
 	clean-tsb-service \
-	clean-tsb-internal \
+	clean-tsb-private \
 	clean-tsb-types \
 	clean-tsb
 
@@ -482,22 +482,22 @@ generate-tsb-service: $(tsb_service_v1_pb_gos)
 clean-tsb-service:
 	@rm -fr $(tsb_service_v1_pb_gos) $(tsb_service_v1_pb_gw_gos) $(tsb_service_v1_pb_validate_gos) $(tsb_service_v1_pb_doc)
 
-# tsb/internal/...
-tsb_internal_v1_path := tsb/internal/v1
-tsb_internal_v1_protos := $(wildcard $(tsb_internal_v1_path)/*.proto)
-tsb_internal_v1_pb_gos := $(tsb_internal_v1_protos:.proto=.pb.go)
-tsb_internal_v1_pb_gw_gos := $(tsb_internal_v1_protos:.proto=.pb.gw.go)
-tsb_internal_v1_pb_validate_gos := $(tsb_internal_v1_protos:.proto=.pb.validate.go)
-# No html docs for internal protos. We dont want this in the web.
+# tsb/private/...
+tsb_private_v1_path := tsb/private/v1
+tsb_private_v1_protos := $(wildcard $(tsb_private_v1_path)/*.proto)
+tsb_private_v1_pb_gos := $(tsb_private_v1_protos:.proto=.pb.go)
+tsb_private_v1_pb_gw_gos := $(tsb_private_v1_protos:.proto=.pb.gw.go)
+tsb_private_v1_pb_validate_gos := $(tsb_private_v1_protos:.proto=.pb.validate.go)
+# No html docs for private protos. We dont want this in the web.
 
-$(tsb_internal_v1_pb_gos) $(tsb_internal_v1_pb_gw_gos) $(tsb_internal_v1_pb_validate_gos): $(tsb_internal_v1_protos)
+$(tsb_private_v1_pb_gos) $(tsb_private_v1_pb_gw_gos) $(tsb_private_v1_pb_validate_gos): $(tsb_private_v1_protos)
 	@$(protoc) $(gogofast_plugin) $(grpc_gateway_plugin) $(protoc_gen_validate_plugin) $^
-	@cp -r /tmp/github.com/tetrateio/api/tsb/internal/* tsb/internal
+	@cp -r /tmp/github.com/tetrateio/api/tsb/private/* tsb/private
 
-generate-tsb-internal: $(tsb_internal_v1_pb_gos)
+generate-tsb-private: $(tsb_private_v1_pb_gos)
 
-clean-tsb-internal:
-	@rm -fr $(tsb_internal_v1_pb_gos) $(tsb_internal_v1_pb_gw_gos) $(tsb_internal_v1_pb_validate_gos)
+clean-tsb-private:
+	@rm -fr $(tsb_private_v1_pb_gos) $(tsb_private_v1_pb_gw_gos) $(tsb_private_v1_pb_validate_gos)
 
 # Include common targets.
 include common/Makefile.common.mk
