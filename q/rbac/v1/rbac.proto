@@ -32,9 +32,7 @@ service RBAC {
 
   // List all existing roles in the system.
   rpc ListRoles(ListRolesRequest) returns (ListRolesResponse) {
-    option (requires) = {
-      permissions: READ
-    };
+    option (requires).defer_permission_check_to_application = true;
     option (google.api.http).get = "/v1/admin/rbac/roles";
   };
 

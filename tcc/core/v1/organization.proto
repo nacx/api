@@ -58,6 +58,9 @@ service Organization {
   };
 
   rpc ListTenants(ListTenantsRequest) returns (ListTenantsResponse) {
+    option (tetrateio.api.q.rbac.v1.requires) = {
+      defer_permission_check_to_application: true
+    };
     option (google.api.http) = {
       get: "/v1/tenants"
     };
@@ -130,6 +133,9 @@ service Organization {
   };
 
   rpc ListTeams(ListTeamsRequest) returns (ListTeamsResponse) {
+    option (tetrateio.api.q.rbac.v1.requires) = {
+      defer_permission_check_to_application: true
+    };
     option (google.api.http) = {
       get: "/v1/tenants/{tenant}/teams"
     };
@@ -180,6 +186,9 @@ service Organization {
   };
 
   rpc ListUsers(ListUsersRequest) returns (ListUsersResponse) {
+    option (tetrateio.api.q.rbac.v1.requires) = {
+      defer_permission_check_to_application: true
+    };
     option (google.api.http) = {
       get: "/v1/tenants/{tenant}/users"
     };

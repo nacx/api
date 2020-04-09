@@ -94,6 +94,9 @@ service LogicalResourceModel {
   };
 
   rpc ListEnvironments(ListEnvironmentsRequest) returns (ListEnvironmentsResponse) {
+    option (tetrateio.api.q.rbac.v1.requires) = {
+      defer_permission_check_to_application: true
+    };
     option (google.api.http) = {
       get: "/v1/tenants/{tenant}/environments"
     };
@@ -130,14 +133,7 @@ service LogicalResourceModel {
   rpc GetAllEnvironmentResources(GetAllEnvironmentResourcesRequest)
       returns (GetAllEnvironmentResourcesResponse) {
     option (tetrateio.api.q.rbac.v1.requires) = {
-      raw_permissions: [
-        "ReadApplication",
-        "ReadService",
-        "ReadCluster",
-        "ReadNamespace",
-        "ReadDeployment",
-        "ReadAuthzPolicy"
-      ]
+      defer_permission_check_to_application: true
     };
     option (google.api.http) = {
       get: "/v1/tenants/{tenant}/environments/{environment}:getAllResources"
@@ -171,6 +167,9 @@ service LogicalResourceModel {
   };
 
   rpc ListApplications(ListApplicationsRequest) returns (ListApplicationsResponse) {
+    option (tetrateio.api.q.rbac.v1.requires) = {
+      defer_permission_check_to_application: true
+    };
     option (google.api.http) = {
       get: "/v1/tenants/{tenant}/environments/{environment}/applications"
     };
@@ -242,6 +241,9 @@ service LogicalResourceModel {
   };
 
   rpc ListServices(ListServicesRequest) returns (ListServicesResponse) {
+    option (tetrateio.api.q.rbac.v1.requires) = {
+      defer_permission_check_to_application: true
+    };
     option (google.api.http) = {
       get: "/v1/tenants/{tenant}/environments/{environment}/applications/{application}/services"
     };
@@ -319,7 +321,7 @@ service LogicalResourceModel {
   rpc GetAllLogicalResources(GetAllLogicalResourcesRequest)
       returns (GetAllLogicalResourcesResponse) {
     option (tetrateio.api.q.rbac.v1.requires) = {
-      raw_permissions: ["ReadApplication", "ReadService"]
+      defer_permission_check_to_application: true
     };
     option (google.api.http) = {
       get: "/v1/tenants/{tenant}/environments/{environment}:getAllLogicalResources"
