@@ -13,14 +13,23 @@ import "google/protobuf/empty.proto";
 // public consumption.
 service Internal {
   // Used by tsbd. Argument is an object containing the tenant name.
-  // Returns an array of objects everytime there is an update at the
-  // Look at the object metadata of each element to identify the type.
-  rpc GetAllTenantResources(TenantName) returns (ObjectArray) {
+  // Returns an array of objects (including workspaces, settings,
+  // groups, etc. except the cluster data) everytime there is an
+  // update to the model. Look at the object metadata of each element
+  // to identify the type.
+  rpc GetAllWorkspaces(TenantName) returns (stream ObjectArray) {
   };
 
-  // Used by tsbd to push registry data from a cluster to management plane.
-  // Object is a cluster object containing all the namespaces and services in that cluster.
-  rpc UpdateClusterResources(tetrateio.api.tsb.types.v1.Object) returns (google.protobuf.Empty) {
+  // Used by tsbd. Argument is an object containing the tenant name.
+  // Returns an array of cluster objects everytime there is an update
+  // to one of the clusters not associated with the tenant.
+  rpc GetAllClusters(TenantName) returns (stream ObjectArray) {
+  };
+
+  // Used by tsbd to push registry data from a cluster to management
+  // plane. Updates arrive in a stream. Object is a cluster object
+  // containing all the namespaces and services in that cluster.
+  rpc UpdateClusterResources(stream tetrateio.api.tsb.types.v1.Object) returns (google.protobuf.Empty) {
   };
 
   // Used by UI.
