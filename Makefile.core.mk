@@ -60,6 +60,8 @@ gen: \
 	generate-operator-common \
 	generate-operator-managementplane \
 	generate-operator-controlplane \
+	generate-install-types \
+	generate-install-managementplane \
 	generate-q-rbac \
 	generate-regsource \
 	generate-settings \
@@ -166,7 +168,7 @@ operator_managementplane_v1alpha1_pb_doc := $(operator_managementplane_v1alpha1_
 
 $(operator_managementplane_v1alpha1_pb_gos) $(operator_managementplane_v1alpha1_pb_doc): $(operator_managementplane_v1alpha1_protos)
 	@$(protoc) $(go_plugin) $(protoc_gen_docs_plugin)$(operator_managementplane_v1alpha1_path) $^
-	@cp -r /tmp/github.com/tetrateio/api/operator/managementplane/* operator/managementplane
+	@cp -r /tmp/github.com/tetrateio/api/operator/managementplane/v1alpha1/* operator/managementplane/v1alpha1
 	@go run $(repo_dir)/operator/fixup_structs/main.go -f $(operator_managementplane_v1alpha1_path)/values_types.pb.go
 	@go run $(repo_dir)/operator/fixup_structs/main.go -f $(operator_managementplane_v1alpha1_path)/component.pb.go
 	@go run $(repo_dir)/operator/fixup_structs/main.go -f $(operator_managementplane_v1alpha1_path)/operator.pb.go
@@ -175,7 +177,6 @@ generate-operator-managementplane: $(operator_managementplane_v1alpha1_pb_gos)
 
 clean-operator-managementplane:
 	@rm -fr $(operator_managementplane_v1alpha1_pb_gos)
-
 
 # operator/controlplane/...
 operator_controlplane_v1alpha1_path := operator/controlplane/v1alpha1
@@ -193,6 +194,37 @@ generate-operator-controlplane: $(operator_controlplane_v1alpha1_pb_gos)
 
 clean-operator-controlplane:
 	@rm -fr $(operator_controlplane_v1alpha1_pb_gos)
+
+# install/...
+# install/types/...
+install_types_path := install/types
+install_types_protos := $(wildcard $(install_types_path)/*.proto)
+install_types_pb_gos := $(install_types_protos:.proto=.pb.go)
+
+$(install_types_pb_gos): $(install_types_protos)
+	@$(protoc) $(go_plugin) $(install_types_path) $^
+	@cp -r /tmp/github.com/tetrateio/api/install/types/* install/types
+	@go run $(repo_dir)/install/types/main.go -f $(install_types_path)/kubernetes.pb.go
+
+generate-install-types: $(install_types_pb_gos)
+
+clean-install-types:
+	@rm -fr $(install_types_pb_gos)
+
+# install/manamentplane/...
+install_managementplane_v1alpha1_path := install/managementplane/v1alpha1
+install_managementplane_v1alpha1_protos := $(wildcard $(install_managementplane_v1alpha1_path)/*.proto)
+install_managementplane_v1alpha1_pb_gos := $(install_managementplane_v1alpha1_protos:.proto=.pb.go)
+install_managementplane_v1alpha1_pb_doc := $(install_managementplane_v1alpha1_path)/tetrateio.api.install.managementplane.v1alpha1.pb.html
+
+$(install_managementplane_v1alpha1_pb_gos) $(install_managementplane_v1alpha1_pb_doc): $(install_managementplane_v1alpha1_protos)
+	@$(protoc) $(go_plugin) $(protoc_gen_docs_plugin)$(install_managementplane_v1alpha1_path) $^
+	@cp -r /tmp/github.com/tetrateio/api/install/managementplane/v1alpha1/* install/managementplane/v1alpha1
+
+generate-install-managementplane: $(install_managementplane_v1alpha1_pb_gos)
+
+clean-install-managementplane:
+	@rm -fr $(install_managementplane_v1alpha1_pb_gos)
 
 # q/...
 # q/rbac/...

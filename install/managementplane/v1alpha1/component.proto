@@ -1,0 +1,136 @@
+// Copyright (c) Tetrate, Inc 2020 All Rights Reserved.
+
+syntax = "proto3";
+
+package tetrateio.api.install.managementplane.v1alpha1;
+option go_package = "github.com/tetrateio/api/install/managementplane/v1alpha1";
+
+import "install/types/component.proto";
+import "install/types/kubernetes.proto";
+
+import "google/protobuf/duration.proto";
+
+// ApiServer overrides settings for the main TSB component.
+message ApiServer {
+  // Flags are the collection of command line flags passed to component's binary.
+  repeated tetrateio.api.install.types.Flag flags = 1;
+
+  // Infrastructure specific configuration
+  oneof Infrastructure {
+    // Override default Kubernetes configuration settings
+    tetrateio.api.install.types.KubernetesResourcesSpec k8s = 50;
+  }
+}
+
+message IamServer {
+  // Flags are the collection of command line flags passed to component's binary.
+  repeated tetrateio.api.install.types.Flag flags = 1;
+
+  // Infrastructure specific configuration
+  oneof Infrastructure {
+    // Override default Kubernetes configuration settings
+    tetrateio.api.install.types.KubernetesResourcesSpec k8s = 50;
+  }
+}
+
+message WebUi {
+  // Flags are the collection of command line flags passed to component's binary.
+  repeated tetrateio.api.install.types.Flag flags = 1;
+
+  // Infrastructure specific configuration
+  oneof Infrastructure {
+    // Override default Kubernetes configuration settings
+    tetrateio.api.install.types.KubernetesResourcesSpec k8s = 50;
+  }
+}
+
+message FrontEnvoy {
+  // Flags are the collection of command line flags passed to component's binary.
+  repeated tetrateio.api.install.types.Flag flags = 1;
+
+  // Infrastructure specific configuration
+  oneof Infrastructure {
+    // Override default Kubernetes configuration settings
+    tetrateio.api.install.types.KubernetesResourcesSpec k8s = 50;
+  }
+
+  // Configure the timeout when making an authentication request to the IAM server
+  google.protobuf.Duration iam_timeout = 100;
+
+  // Configure the port FrontEnvoy exposes
+  string port = 101;
+}
+
+message TeamSync {
+  // Flags are the collection of command line flags passed to component's binary.
+  repeated tetrateio.api.install.types.Flag flags = 1;
+
+  // Infrastructure specific configuration
+  oneof Infrastructure {
+    // Override default Kubernetes configuration settings
+    tetrateio.api.install.types.KubernetesResourcesSpec k8s = 50;
+  }
+
+  // Standard five field cron format
+  // For example, "0 * * * *" triggers the sync hourly at minute 0.
+  string cron = 100;
+}
+
+message SpmSync {
+  // Flags are the collection of command line flags passed to component's binary.
+  repeated tetrateio.api.install.types.Flag flags = 1;
+
+  // Infrastructure specific configuration
+  oneof Infrastructure {
+    // Override default Kubernetes configuration settings
+    tetrateio.api.install.types.KubernetesResourcesSpec k8s = 50;
+  }
+
+  // Standard five field cron format
+  // For example, "0/5 * * * *" triggers the sync every 5 minutes.
+  string cron = 100;
+}
+
+message SpmServer {
+  // Flags are the collection of command line flags passed to component's binary.
+  repeated tetrateio.api.install.types.Flag flags = 1;
+
+  // Infrastructure specific configuration
+  oneof Infrastructure {
+    // Override default Kubernetes configuration settings
+    tetrateio.api.install.types.KubernetesResourcesSpec k8s = 50;
+  }
+}
+
+message Oap {
+  // Flags are the collection of command line flags passed to component's binary.
+  repeated tetrateio.api.install.types.Flag flags = 1;
+
+  // Infrastructure specific configuration
+  oneof Infrastructure {
+    // Override default Kubernetes configuration settings
+    tetrateio.api.install.types.KubernetesResourcesSpec k8s = 50;
+  }
+}
+
+message Zipkin {
+  // Flags are the collection of command line flags passed to component's binary.
+  repeated tetrateio.api.install.types.Flag flags = 1;
+
+  // Infrastructure specific configuration
+  oneof Infrastructure {
+    // Override default Kubernetes configuration settings
+    tetrateio.api.install.types.KubernetesResourcesSpec k8s = 50;
+  }
+}
+
+message OpenTelemetryCollector {
+  // Flags are the collection of command line flags passed to component's binary.
+  repeated tetrateio.api.install.types.Flag flags = 1;
+
+  // Infrastructure specific configuration
+  oneof Infrastructure {
+    // Override default Kubernetes configuration settings
+    tetrateio.api.install.types.KubernetesResourcesSpec k8s = 50;
+  }
+}

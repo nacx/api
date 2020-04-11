@@ -1,0 +1,1083 @@
+---
+title: tetrateio.api.install.managementplane.v1alpha1
+layout: protoc-gen-docs
+generator: protoc-gen-docs
+number_of_entries: 20
+---
+<h2 id="PostgresSettings">PostgresSettings</h2>
+<section>
+<p>Detail connection details for Postgres</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="PostgresSettings-host">
+<td><code>host</code></td>
+<td><code>string</code></td>
+<td>
+<p>Postgres host address (can be hostname or IP address)</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="PostgresSettings-port">
+<td><code>port</code></td>
+<td><code>int32</code></td>
+<td>
+<p>Port Postgress is listening on</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="ElasticSearchSettings">ElasticSearchSettings</h2>
+<section>
+<p>Configure an Elastic Search connection</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ElasticSearchSettings-host">
+<td><code>host</code></td>
+<td><code>string</code></td>
+<td>
+<p>Elastic Search host address (can be hostname or IP address)</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ElasticSearchSettings-port">
+<td><code>port</code></td>
+<td><code>int32</code></td>
+<td>
+<p>Port Elastic Search is listening on</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ElasticSearchSettings-selfSigned">
+<td><code>selfSigned</code></td>
+<td><code>bool</code></td>
+<td>
+<p>Disables certificate verification</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="LDAPSettings">LDAPSettings</h2>
+<section>
+<p>Detail connection and query mappings for LDAP</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="LDAPSettings-host">
+<td><code>host</code></td>
+<td><code>string</code></td>
+<td>
+<p>LDAP server host address (can be hostname or IP address)</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="LDAPSettings-port">
+<td><code>port</code></td>
+<td><code>int32</code></td>
+<td>
+<p>Port the LDAP server is listening on</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="LDAPSettings-disable_tls">
+<td><code>disableTls</code></td>
+<td><code>bool</code></td>
+<td>
+<p>Disable secure connections to the LDAP server.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="LDAPSettings-search">
+<td><code>search</code></td>
+<td><code><a href="#LDAPSettings-Search">Search</a></code></td>
+<td>
+<p>Configure common properties to be used when running queries against the LDAP server.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="LDAPSettings-iam">
+<td><code>iam</code></td>
+<td><code><a href="#LDAPSettings-IAM">IAM</a></code></td>
+<td>
+<p>Configure how IAM validates credentials against the LDAP server.
+The field are not exclusive; if both are configured, a direct match against the DN is attempted first
+and the filter based match will be used as a fallback.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="LDAPSettings-sync">
+<td><code>sync</code></td>
+<td><code><a href="#LDAPSettings-Sync">Sync</a></code></td>
+<td>
+<p>Sync configures how existing users and groups are retrieved from the LDAP server.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="LDAPSettings-Search">LDAPSettings.Search</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="LDAPSettings-Search-base_DN">
+<td><code>baseDN</code></td>
+<td><code>string</code></td>
+<td>
+<p>The location at which LDAP search operations will start from.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="LDAPSettings-Search-recursive">
+<td><code>recursive</code></td>
+<td><code>bool</code></td>
+<td>
+<p>Recursively search the LDAP tree.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="LDAPSettings-Search-timeout">
+<td><code>timeout</code></td>
+<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#duration">Duration</a></code></td>
+<td>
+<p>The timeout when querying the LDAP server.
+If omitted, the query is bound by the timeout set by the LDAP server.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="LDAPSettings-IAM">LDAPSettings.IAM</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="LDAPSettings-IAM-match_DN">
+<td><code>matchDN</code></td>
+<td><code>string</code></td>
+<td>
+<p>Configure how a user can be directly bound to a DN pattern.
+If all users can be found with a given pattern, we can bind them directly. Otherwise, a
+MatchFilter should be configured to perform a search of the DN for the given user.
+In Active Directory the bind operation is directly done using the username (in the user@domain form)
+so when connecting to an AD instance this should be set to just: %s.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="LDAPSettings-IAM-match_filter">
+<td><code>matchFilter</code></td>
+<td><code>string</code></td>
+<td>
+<p>The pattern used to search for a user DN. This will be used when the user DN cannot
+be directly resolved by matching the configured MatchDN.</p>
+
+<p>Here are some example search patterns for common LDAP implementations:
+- OpenLDAP: &ldquo;CN=%s,CN=Users&rdquo;
+- Active Directory: &ldquo;(&amp;(objectClass=user)(samAccountName=%s))&rdquo;</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="LDAPSettings-Sync">LDAPSettings.Sync</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="LDAPSettings-Sync-users_filter">
+<td><code>usersFilter</code></td>
+<td><code>string</code></td>
+<td>
+<p>The LDAP filter that will be used to fetch all the users that are to be synced to TSB.
+e.g. &ldquo;(objectClass=user)&rdquo;</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="LDAPSettings-Sync-groups_filter">
+<td><code>groupsFilter</code></td>
+<td><code>string</code></td>
+<td>
+<p>The LDAP filter that will be used to fetch all the groups that are to be synced to TSB.
+e.g. &ldquo;(objectClass=group)&rdquo;</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="LDAPSettings-Sync-membership_attribute">
+<td><code>membershipAttribute</code></td>
+<td><code>string</code></td>
+<td>
+<p>The name of the attribute in a Group record returned from LDAP that represents a member of the group.
+e.g. &ldquo;member&rdquo;</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="ApiServer">ApiServer</h2>
+<section>
+<p>ApiServer overrides settings for the main TSB component.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ApiServer-flags">
+<td><code>flags</code></td>
+<td><code><a href="#tetrateio-api-install-types-Flag">Flag[]</a></code></td>
+<td>
+<p>Flags are the collection of command line flags passed to component&rsquo;s binary.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ApiServer-k8s" class="oneof oneof-start">
+<td><code>k8s</code></td>
+<td><code><a href="#tetrateio-api-install-types-KubernetesResourcesSpec">KubernetesResourcesSpec (oneof)</a></code></td>
+<td>
+<p>Override default Kubernetes configuration settings</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="IamServer">IamServer</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="IamServer-flags">
+<td><code>flags</code></td>
+<td><code><a href="#tetrateio-api-install-types-Flag">Flag[]</a></code></td>
+<td>
+<p>Flags are the collection of command line flags passed to component&rsquo;s binary.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="IamServer-k8s" class="oneof oneof-start">
+<td><code>k8s</code></td>
+<td><code><a href="#tetrateio-api-install-types-KubernetesResourcesSpec">KubernetesResourcesSpec (oneof)</a></code></td>
+<td>
+<p>Override default Kubernetes configuration settings</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="WebUi">WebUi</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="WebUi-flags">
+<td><code>flags</code></td>
+<td><code><a href="#tetrateio-api-install-types-Flag">Flag[]</a></code></td>
+<td>
+<p>Flags are the collection of command line flags passed to component&rsquo;s binary.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="WebUi-k8s" class="oneof oneof-start">
+<td><code>k8s</code></td>
+<td><code><a href="#tetrateio-api-install-types-KubernetesResourcesSpec">KubernetesResourcesSpec (oneof)</a></code></td>
+<td>
+<p>Override default Kubernetes configuration settings</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="FrontEnvoy">FrontEnvoy</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="FrontEnvoy-flags">
+<td><code>flags</code></td>
+<td><code><a href="#tetrateio-api-install-types-Flag">Flag[]</a></code></td>
+<td>
+<p>Flags are the collection of command line flags passed to component&rsquo;s binary.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="FrontEnvoy-k8s" class="oneof oneof-start">
+<td><code>k8s</code></td>
+<td><code><a href="#tetrateio-api-install-types-KubernetesResourcesSpec">KubernetesResourcesSpec (oneof)</a></code></td>
+<td>
+<p>Override default Kubernetes configuration settings</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="FrontEnvoy-iam_timeout">
+<td><code>iamTimeout</code></td>
+<td><code><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#duration">Duration</a></code></td>
+<td>
+<p>Configure the timeout when making an authentication request to the IAM server</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="FrontEnvoy-port">
+<td><code>port</code></td>
+<td><code>string</code></td>
+<td>
+<p>Configure the port FrontEnvoy exposes</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="TeamSync">TeamSync</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="TeamSync-flags">
+<td><code>flags</code></td>
+<td><code><a href="#tetrateio-api-install-types-Flag">Flag[]</a></code></td>
+<td>
+<p>Flags are the collection of command line flags passed to component&rsquo;s binary.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="TeamSync-k8s" class="oneof oneof-start">
+<td><code>k8s</code></td>
+<td><code><a href="#tetrateio-api-install-types-KubernetesResourcesSpec">KubernetesResourcesSpec (oneof)</a></code></td>
+<td>
+<p>Override default Kubernetes configuration settings</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="TeamSync-cron">
+<td><code>cron</code></td>
+<td><code>string</code></td>
+<td>
+<p>Standard five field cron format
+For example, &ldquo;0 * * * *&rdquo; triggers the sync hourly at minute 0.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="SpmSync">SpmSync</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="SpmSync-flags">
+<td><code>flags</code></td>
+<td><code><a href="#tetrateio-api-install-types-Flag">Flag[]</a></code></td>
+<td>
+<p>Flags are the collection of command line flags passed to component&rsquo;s binary.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="SpmSync-k8s" class="oneof oneof-start">
+<td><code>k8s</code></td>
+<td><code><a href="#tetrateio-api-install-types-KubernetesResourcesSpec">KubernetesResourcesSpec (oneof)</a></code></td>
+<td>
+<p>Override default Kubernetes configuration settings</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="SpmSync-cron">
+<td><code>cron</code></td>
+<td><code>string</code></td>
+<td>
+<p>Standard five field cron format
+For example, &ldquo;0/5 * * * *&rdquo; triggers the sync every 5 minutes.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="SpmServer">SpmServer</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="SpmServer-flags">
+<td><code>flags</code></td>
+<td><code><a href="#tetrateio-api-install-types-Flag">Flag[]</a></code></td>
+<td>
+<p>Flags are the collection of command line flags passed to component&rsquo;s binary.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="SpmServer-k8s" class="oneof oneof-start">
+<td><code>k8s</code></td>
+<td><code><a href="#tetrateio-api-install-types-KubernetesResourcesSpec">KubernetesResourcesSpec (oneof)</a></code></td>
+<td>
+<p>Override default Kubernetes configuration settings</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="Oap">Oap</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Oap-flags">
+<td><code>flags</code></td>
+<td><code><a href="#tetrateio-api-install-types-Flag">Flag[]</a></code></td>
+<td>
+<p>Flags are the collection of command line flags passed to component&rsquo;s binary.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Oap-k8s" class="oneof oneof-start">
+<td><code>k8s</code></td>
+<td><code><a href="#tetrateio-api-install-types-KubernetesResourcesSpec">KubernetesResourcesSpec (oneof)</a></code></td>
+<td>
+<p>Override default Kubernetes configuration settings</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="Zipkin">Zipkin</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Zipkin-flags">
+<td><code>flags</code></td>
+<td><code><a href="#tetrateio-api-install-types-Flag">Flag[]</a></code></td>
+<td>
+<p>Flags are the collection of command line flags passed to component&rsquo;s binary.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="Zipkin-k8s" class="oneof oneof-start">
+<td><code>k8s</code></td>
+<td><code><a href="#tetrateio-api-install-types-KubernetesResourcesSpec">KubernetesResourcesSpec (oneof)</a></code></td>
+<td>
+<p>Override default Kubernetes configuration settings</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="OpenTelemetryCollector">OpenTelemetryCollector</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="OpenTelemetryCollector-flags">
+<td><code>flags</code></td>
+<td><code><a href="#tetrateio-api-install-types-Flag">Flag[]</a></code></td>
+<td>
+<p>Flags are the collection of command line flags passed to component&rsquo;s binary.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="OpenTelemetryCollector-k8s" class="oneof oneof-start">
+<td><code>k8s</code></td>
+<td><code><a href="#tetrateio-api-install-types-KubernetesResourcesSpec">KubernetesResourcesSpec (oneof)</a></code></td>
+<td>
+<p>Override default Kubernetes configuration settings</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="tetrateio-api-install-types-Flag">tetrateio.api.install.types.Flag</h2>
+<section>
+<p>A flag to be passed to the component binary</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="tetrateio-api-install-types-Flag-name">
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>
+<p>Must include &lsquo;-&rsquo; or &lsquo;&ndash;&rsquo; prefix</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="tetrateio-api-install-types-Flag-value">
+<td><code>value</code></td>
+<td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="tetrateio-api-install-types-KubernetesResourcesSpec">tetrateio.api.install.types.KubernetesResourcesSpec</h2>
+<section>
+<p>KubernetesResourcesConfig is a common set of k8s resource configs for components.
+This spec should eventually replace the values.yaml of the helm template</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="tetrateio-api-install-types-KubernetesResourcesSpec-env">
+<td><code>env</code></td>
+<td><code><a href="#tetrateio-api-install-types-EnvVar">EnvVar[]</a></code></td>
+<td>
+<p>Deployment environment variables.
+https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="tetrateio-api-install-types-KubernetesResourcesSpec-image_pull_policy">
+<td><code>imagePullPolicy</code></td>
+<td><code>string</code></td>
+<td>
+<p>k8s imagePullPolicy.
+https://kubernetes.io/docs/concepts/containers/images/</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="tetrateio-api-install-types-KubernetesResourcesSpec-pod_annotations">
+<td><code>podAnnotations</code></td>
+<td><code>map&lt;string,&nbsp;string&gt;</code></td>
+<td>
+<p>k8s pod annotations.
+https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="tetrateio-api-install-types-KubernetesResourcesSpec-readiness_probe">
+<td><code>readinessProbe</code></td>
+<td><code><a href="#tetrateio-api-install-types-ReadinessProbe">ReadinessProbe</a></code></td>
+<td>
+<p>k8s readinessProbe settings.
+https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
+k8s.io.api.core.v1.Probe readiness_probe = 9;</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="tetrateio-api-install-types-KubernetesResourcesSpec-replica_count">
+<td><code>replicaCount</code></td>
+<td><code>uint32</code></td>
+<td>
+<p>k8s Deployment replicas setting.
+https://kubernetes.io/docs/concepts/workloads/controllers/deployment/</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="tetrateio-api-install-types-KubernetesResourcesSpec-resources">
+<td><code>resources</code></td>
+<td><code><a href="#tetrateio-api-install-types-Resources">Resources</a></code></td>
+<td>
+<p>k8s resources settings.
+https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="tetrateio-api-install-types-KubernetesResourcesSpec-service">
+<td><code>service</code></td>
+<td><code><a href="#tetrateio-api-install-types-ServiceSpec">ServiceSpec</a></code></td>
+<td>
+<p>k8s Service settings.
+https://kubernetes.io/docs/concepts/services-networking/service/</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="tetrateio-api-install-types-KubernetesResourcesSpec-strategy">
+<td><code>strategy</code></td>
+<td><code><a href="#tetrateio-api-install-types-DeploymentStrategy">DeploymentStrategy</a></code></td>
+<td>
+<p>k8s deployment strategy.
+https://kubernetes.io/docs/concepts/workloads/controllers/deployment/</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="tetrateio-api-install-types-KubernetesResourcesSpec-service_annotations">
+<td><code>serviceAnnotations</code></td>
+<td><code>map&lt;string,&nbsp;string&gt;</code></td>
+<td>
+<p>k8s service annotations.
+https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="ManagementPlaneSpec">ManagementPlaneSpec</h2>
+<section>
+<p>ManagementPlaneSpec defines the desired installed state of TSB management plane components.
+Specifying an empty ManagementPlaneSpec results in a default installation.</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ManagementPlaneSpec-hub">
+<td><code>hub</code></td>
+<td><code>string</code></td>
+<td>
+<p>TSB container hub path e.g. docker.io/tetrate.</p>
+
+</td>
+<td>
+Yes
+</td>
+</tr>
+<tr id="ManagementPlaneSpec-components">
+<td><code>components</code></td>
+<td><code><a href="https://tetrate.io/docs/reference/config/install/v1alpha1/managementplane.html#ManagementPlaneComponentSet">ManagementPlaneComponentSet</a></code></td>
+<td>
+<p>The set of components that make up the management plane.
+Use this to override settings for individual components.</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ManagementPlaneSpec-postgres" class="oneof oneof-start">
+<td><code>postgres</code></td>
+<td><code><a href="#PostgresSettings">PostgresSettings (oneof)</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ManagementPlaneSpec-elastic" class="oneof oneof-start">
+<td><code>elastic</code></td>
+<td><code><a href="#ElasticSearchSettings">ElasticSearchSettings (oneof)</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ManagementPlaneSpec-ldap" class="oneof oneof-start">
+<td><code>ldap</code></td>
+<td><code><a href="#LDAPSettings">LDAPSettings (oneof)</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="ManagementPlaneComponentSet">ManagementPlaneComponentSet</h2>
+<section>
+<p>The set of components that make up the management plane</p>
+
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="ManagementPlaneComponentSet-api_server">
+<td><code>apiServer</code></td>
+<td><code><a href="#ApiServer">ApiServer</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ManagementPlaneComponentSet-iam_server">
+<td><code>iamServer</code></td>
+<td><code><a href="#IamServer">IamServer</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ManagementPlaneComponentSet-web_ui">
+<td><code>webUi</code></td>
+<td><code><a href="#WebUi">WebUi</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ManagementPlaneComponentSet-front_envoy">
+<td><code>frontEnvoy</code></td>
+<td><code><a href="#FrontEnvoy">FrontEnvoy</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ManagementPlaneComponentSet-spm_server">
+<td><code>spmServer</code></td>
+<td><code><a href="#SpmServer">SpmServer</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ManagementPlaneComponentSet-spm_sync">
+<td><code>spmSync</code></td>
+<td><code><a href="#SpmSync">SpmSync</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ManagementPlaneComponentSet-team_sync">
+<td><code>teamSync</code></td>
+<td><code><a href="#TeamSync">TeamSync</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ManagementPlaneComponentSet-oap">
+<td><code>oap</code></td>
+<td><code><a href="#Oap">Oap</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ManagementPlaneComponentSet-zipkin">
+<td><code>zipkin</code></td>
+<td><code><a href="#Zipkin">Zipkin</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+<tr id="ManagementPlaneComponentSet-collector">
+<td><code>collector</code></td>
+<td><code><a href="#OpenTelemetryCollector">OpenTelemetryCollector</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>

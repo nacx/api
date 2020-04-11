@@ -1,0 +1,82 @@
+// Copyright (c) Tetrate, Inc 2020 All Rights Reserved.
+
+syntax = "proto3";
+
+package tetrateio.api.install.managementplane.v1alpha1;
+option go_package = "github.com/tetrateio/api/install/managementplane/v1alpha1";
+
+import "google/protobuf/duration.proto";
+
+// Detail connection details for Postgres 
+message PostgresSettings {
+  // Postgres host address (can be hostname or IP address)
+  string host = 1;
+  // Port Postgress is listening on
+  int32 port = 2;
+}
+
+// Configure an Elastic Search connection
+message ElasticSearchSettings {
+  // Elastic Search host address (can be hostname or IP address)
+  string host = 1;
+  // Port Elastic Search is listening on
+  int32 port = 2;
+  // Disables certificate verification
+  bool selfSigned = 3;
+}
+
+// Detail connection and query mappings for LDAP
+message LDAPSettings {
+  // LDAP server host address (can be hostname or IP address)
+  string host = 1;
+  // Port the LDAP server is listening on
+  int32 port = 2;
+  // Disable secure connections to the LDAP server.
+  bool disable_tls = 3;
+
+  message Search {
+    // The location at which LDAP search operations will start from.
+    string base_DN = 1;
+    // Recursively search the LDAP tree.
+    bool recursive = 2;
+    // The timeout when querying the LDAP server.
+    // If omitted, the query is bound by the timeout set by the LDAP server.
+    google.protobuf.Duration timeout = 3;
+  }
+  // Configure common properties to be used when running queries against the LDAP server.
+  Search search = 10;
+
+  message IAM {
+    // Configure how a user can be directly bound to a DN pattern.
+		// If all users can be found with a given pattern, we can bind them directly. Otherwise, a
+		// MatchFilter should be configured to perform a search of the DN for the given user.
+    // In Active Directory the bind operation is directly done using the username (in the user@domain form)
+    // so when connecting to an AD instance this should be set to just: %s.
+    string match_DN = 1;
+    // The pattern used to search for a user DN. This will be used when the user DN cannot 
+    // be directly resolved by matching the configured MatchDN.
+    //
+		// Here are some example search patterns for common LDAP implementations:
+		// - OpenLDAP: "CN=%s,CN=Users"
+		// - Active Directory: "(&(objectClass=user)(samAccountName=%s))"
+    string match_filter = 2;
+  }
+  // Configure how IAM validates credentials against the LDAP server.
+  // The field are not exclusive; if both are configured, a direct match against the DN is attempted first
+  // and the filter based match will be used as a fallback.
+  IAM iam = 20;
+
+  message Sync {
+    // The LDAP filter that will be used to fetch all the users that are to be synced to TSB.
+    // e.g. "(objectClass=user)"
+    string users_filter = 1;
+    // The LDAP filter that will be used to fetch all the groups that are to be synced to TSB.
+    // e.g. "(objectClass=group)"
+    string groups_filter = 2;
+    // The name of the attribute in a Group record returned from LDAP that represents a member of the group.
+    // e.g. "member"
+    string membership_attribute = 3;
+  }
+  // Sync configures how existing users and groups are retrieved from the LDAP server.
+  Sync sync = 30;
+}

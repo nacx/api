@@ -1,0 +1,13 @@
+// Copyright (c) Tetrate, Inc 2020 All Rights Reserved.
+
+syntax = "proto3";
+
+package tetrateio.api.install.types;
+option go_package = "github.com/tetrateio/api/install/types";
+
+// A flag to be passed to the component binary
+message Flag {
+  // Must include '-' or '--' prefix
+  string name = 1;
+  string value = 2;
+}

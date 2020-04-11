@@ -1,0 +1,141 @@
+// Copyright (c) Tetrate, Inc 2020 All Rights Reserved.
+
+syntax = "proto3";
+
+// $title: Management Plane
+// $description: Configuration to describe a TSB management plane installation.
+// $location: https://tetrate.io/docs/reference/config/install/v1alpha1/managementplane.html
+
+// ManagementPlane resource exposes a set of configurations necessary to automatically install
+// the Service Bridge management plane on a cluster. 
+//
+// A resource containing only the container registry hub will install a demo profile of Service Bridge with
+// all the necessary components, such as Postgres, Elasticsearch, and LDAP server. Please note that these
+// additional components are demonstrative purposes only and should not be used in production.
+// Production setups should point to a user managed Postgres and Elasticsearch as well as the enterprise LDAP server.
+//
+// ```yaml
+// apiVersion: install.tetrate.io/v1alpha1
+// kind: ManagementPlane
+// metadata:
+//   name: managementplane
+// spec:
+//   hub: docker.io/tetrate
+//```
+//
+// To move from the demo installation to production readiness, configure the top level settings
+// that enable TSB to connect to external dependencies. When one of these settings stanzas are added
+// the operator will delete the relevant demo component and configure the management plane to talk
+// to the dependencies described.
+//
+// ```yaml
+// apiVersion: install.tetrate.io/v1alpha1
+// kind: ManagementPlane
+// metadata:
+//   name: managementplane
+// spec:
+//   postgresSettings:
+//     host: postgres.database
+//     port: 5432
+//   elasticSearchSettings:
+//     host: elastic.search
+//     port: 9200
+//   LDAPSettings:
+//     host: tetrate.activedirectory
+//     port: 389
+//      ...
+//```
+//
+// Top level settings deal with higher level concepts like persistence, but configuration
+// can also be overridden per component. For example, to configure the API server to log in
+// json format add the flag to the component.
+//
+// ```yaml
+// apiVersion: install.tetrate.io/v1alpha1
+// kind: ManagementPlane
+// metadata:
+//   name: managementplane
+// spec:
+//   components:
+//     apiServer:
+//       flags:
+//       - name: --log-as-json
+//         value: true
+//```
+//
+// To configure infrastructure specific settings such as resource limits in Kubernetes,
+// set the relevent field in a component. Remember that the installation API is an
+// override API so if these fields are unset the operator will use sensible defaults.
+// Only a subset of Kubernetes configuration is available and only for individual components.
+//
+// ```yaml
+// apiVersion: install.tetrate.io/v1alpha1
+// kind: ManagementPlane
+// metadata:
+//   name: managementplane
+// spec:
+//   components:
+//     opentelemetry:
+//       k8s:
+//         resources:
+//           limits:
+//             memory: 500Mi
+//           requests:
+//             memory: 750Mi
+//```
+
+package tetrateio.api.install.managementplane.v1alpha1;
+option go_package = "github.com/tetrateio/api/install/managementplane/v1alpha1";
+
+import "google/api/field_behavior.proto";
+import "validate/validate.proto";
+import "install/managementplane/v1alpha1/component.proto";
+import "install/managementplane/v1alpha1/settings.proto";
+
+// ManagementPlaneSpec defines the desired installed state of TSB management plane components.
+// Specifying an empty ManagementPlaneSpec results in a default installation.
+message ManagementPlaneSpec {
+  // TSB container hub path e.g. docker.io/tetrate.
+  string hub = 1 [(google.api.field_behavior) = REQUIRED, (validate.rules).message.required = true];
+
+  // The set of components that make up the management plane.
+  // Use this to override settings for individual components.
+  ManagementPlaneComponentSet components = 50;
+
+  // Configure the data store for TSB to persist its data to.
+  // This is a mandatory setting for production. If omitted, the operator will assume
+  // a demo installation and for your convenience install a demo grade data store.
+  oneof data_store {
+    PostgresSettings postgres = 100;
+  }
+  
+  // Configure the store that TSB will use to persist application telemetry data
+  // This is a mandatory setting for production. If omitted, the operator will assume
+  // a demo installation and for your convenience install a demo grade telemetry store.
+  oneof telemetry_store {
+    ElasticSearchSettings elastic = 200;
+  }
+
+  // Configure the Identity Provider TSB will use as the source of users.
+  // This identity provider is used for user authentication and to periodically synchronize the
+  // information of existing users and groups into the platform.
+  // This is a mandatory setting for production. If omitted, the operator will assume
+  // a demo installation and for your convenience install a demo identity provider.
+  oneof identity_provider {
+    LDAPSettings ldap = 300;
+  }
+}
+
+// The set of components that make up the management plane
+message ManagementPlaneComponentSet {
+  ApiServer api_server = 1;
+  IamServer iam_server = 2;
+  WebUi web_ui = 3;
+  FrontEnvoy front_envoy = 4;
+  SpmServer spm_server = 5;
+  SpmSync spm_sync = 6;
+  TeamSync team_sync = 7;
+  Oap oap = 8;
+  Zipkin zipkin = 9;
+  OpenTelemetryCollector collector = 10;
+}
