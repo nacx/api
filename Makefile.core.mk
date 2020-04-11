@@ -59,6 +59,7 @@ gen: \
 	generate-authz \
 	generate-operator-common \
 	generate-operator-managementplane \
+	generate-operator-controlplane \
 	generate-q-rbac \
 	generate-regsource \
 	generate-settings \
@@ -85,6 +86,7 @@ clean: \
 	clean-authz \
 	clean-operator-common \
 	clean-operator-managementplane \
+	clean-operator-controlplane \
 	clean-q-rbac \
 	clean-regsource \
 	clean-settings \
@@ -173,6 +175,24 @@ generate-operator-managementplane: $(operator_managementplane_v1alpha1_pb_gos)
 
 clean-operator-managementplane:
 	@rm -fr $(operator_managementplane_v1alpha1_pb_gos)
+
+
+# operator/controlplane/...
+operator_controlplane_v1alpha1_path := operator/controlplane/v1alpha1
+operator_controlplane_v1alpha1_protos := $(wildcard $(operator_controlplane_v1alpha1_path)/*.proto)
+operator_controlplane_v1alpha1_pb_gos := $(operator_controlplane_v1alpha1_protos:.proto=.pb.go)
+operator_controlplane_v1alpha1_pb_doc := $(operator_controlplane_v1alpha1_path)/tetrate.api.operator.controlplane.v1alpha1.pb.html
+
+$(operator_controlplane_v1alpha1_pb_gos) $(operator_controlplane_v1alpha1_pb_doc): $(operator_controlplane_v1alpha1_protos)
+	@$(protoc) $(go_plugin) $(protoc_gen_docs_plugin)$(operator_controlplane_v1alpha1_path) $^
+	@cp -r /tmp/github.com/tetrateio/api/operator/controlplane/* operator/controlplane
+	@go run $(repo_dir)/operator/fixup_structs/main.go -f $(operator_controlplane_v1alpha1_path)/controlplane_component.pb.go
+	@go run $(repo_dir)/operator/fixup_structs/main.go -f $(operator_controlplane_v1alpha1_path)/controlplane.pb.go
+
+generate-operator-controlplane: $(operator_controlplane_v1alpha1_pb_gos)
+
+clean-operator-controlplane:
+	@rm -fr $(operator_controlplane_v1alpha1_pb_gos)
 
 # q/...
 # q/rbac/...

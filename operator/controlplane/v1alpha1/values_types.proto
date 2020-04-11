@@ -1,0 +1,108 @@
+// Copyright (c) Tetrate, Inc 2020 All Rights Reserved.
+
+syntax = 'proto3';
+
+package tetrateio.api.operator.controlplane.v1alpha1;
+option go_package = "github.com/tetrateio/api/operator/controlplane/v1alpha1";
+
+import "google/protobuf/wrappers.proto";
+
+import "operator/common/kubernetes.proto";
+
+// Values configuration composition
+message Values {
+  GlobalConfig global = 1;
+  TsbdConfig tsbd = 2;
+  OapConfig oap = 3;
+  TracingConfig tracing = 4;
+  OpentelConfig opentelemetry = 5;
+  IOPConfig iop = 6;
+}
+
+// For readability with the preexisting values yaml keys, camel case vars are used
+
+// Global Configuration for TSB Management Plane components.
+message GlobalConfig {
+  // Specifies the docker hub for TSB images.
+  string hub = 1;
+  
+    // tsb api server endpoint details
+  message TSBServer{
+    string host = 2;
+    int32 port = 3;
+    string tenant = 4;
+    string cluster = 5;
+    string environment = 6;
+  }
+
+  TSBServer tcc = 2;
+
+  // elasticsearch related values
+  message ElasticSearch {
+    string user = 4;
+    string password = 5;
+    Ssl ssl = 6;
+    message Ssl {
+      google.protobuf.BoolValue enabled = 1;
+    }
+  }
+  ElasticSearch elasticsearch = 3;
+}
+
+message TsbdConfig{
+  google.protobuf.BoolValue disableauthz = 1;
+  string token = 2;
+}
+
+message OapConfig {
+  google.protobuf.BoolValue enabledPackedDownsampling = 1;
+  string analysis = 2;
+  string token = 3;
+  string logLevel = 4;
+  operator.common.Resources resources = 5;
+  // elasticsearch related values
+  message ElasticSearch {
+    string host = 1;
+    int32 port = 2;
+    string secretFile = 3;
+  }
+  ElasticSearch elasticsearch = 6;
+  OapExternalServices externalServices = 7;
+  int32 dayStep = 8;
+}
+
+message OapExternalServices {
+  message MetaData {
+  google.protobuf.BoolValue enabled = 1;
+    string host = 2;
+    int32 port = 3;
+  }
+  message Configuration {
+  google.protobuf.BoolValue enabled = 1;
+    string clusterName = 2;
+    int32 period = 3;
+  }
+  MetaData metadata = 1;
+  Configuration configuration = 2;
+  map<string, string> webhook = 3;
+}
+
+message TracingConfig{
+  // elasticsearch related values
+  message ElasticSearch {
+    string host = 1;
+    int32 port = 2;
+  }
+  ElasticSearch elasticsearch = 1;
+  message ZipkinConfig {
+    string token = 1;
+  }
+  ZipkinConfig zipkin =2;
+}
+
+message OpentelConfig {
+    string token = 1;
+}
+
+message IOPConfig {
+}

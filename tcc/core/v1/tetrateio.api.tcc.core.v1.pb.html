@@ -110,6 +110,13 @@ the users and teams with the ones in TCC</p>
 <pre id="PhysicalResourceModel-DeleteEndpoint"><code class="language-proto">rpc DeleteEndpoint(DeleteEndpointRequest) returns (google.protobuf.Empty)
 </code></pre>
 </section>
+<h3 id="Info">Info</h3>
+<section>
+<pre id="Info-GetVersion"><code class="language-proto">rpc GetVersion(GetVersionRequest) returns (Version)
+</code></pre>
+<p>GetVersion returns the version of the TSB binary</p>
+
+</section>
 <h3 id="RegistryConsumer">RegistryConsumer</h3>
 <section>
 <p>RegistryConsumer</p>
@@ -180,13 +187,6 @@ last call, and determines resources to create, modify, delete.</p>
 </code></pre>
 <pre id="LogicalResourceModel-GetAllLogicalResources"><code class="language-proto">rpc GetAllLogicalResources(GetAllLogicalResourcesRequest) returns (GetAllLogicalResourcesResponse)
 </code></pre>
-</section>
-<h3 id="Info">Info</h3>
-<section>
-<pre id="Info-GetVersion"><code class="language-proto">rpc GetVersion(GetVersionRequest) returns (Version)
-</code></pre>
-<p>GetVersion returns the version of the TSB binary</p>
-
 </section>
 <h2 id="Types">Types</h2>
 <h3 id="TLSSettings">TLSSettings</h3>
@@ -5488,6 +5488,35 @@ No
 </tbody>
 </table>
 </section>
+<h3 id="Version">Version</h3>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="Version-version">
+<td><code>version</code></td>
+<td><code>string</code></td>
+<td>
+<p>version is the TSB binary version</p>
+
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h3 id="GetVersionRequest">GetVersionRequest</h3>
+<section>
+</section>
 <h3 id="RegistryUpdateResourcesRequest">RegistryUpdateResourcesRequest</h3>
 <section>
 <p>RegistryUpdateResourcesRequest request object.</p>
@@ -7769,35 +7798,6 @@ No
 </tr>
 </tbody>
 </table>
-</section>
-<h3 id="Version">Version</h3>
-<section>
-<table class="message-fields">
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-<th>Required</th>
-</tr>
-</thead>
-<tbody>
-<tr id="Version-version">
-<td><code>version</code></td>
-<td><code>string</code></td>
-<td>
-<p>version is the TSB binary version</p>
-
-</td>
-<td>
-No
-</td>
-</tr>
-</tbody>
-</table>
-</section>
-<h3 id="GetVersionRequest">GetVersionRequest</h3>
-<section>
 </section>
 <h3 id="TLSMode">TLSMode</h3>
 <section>

@@ -1,0 +1,38 @@
+// Copyright (c) Tetrate, Inc 2020 All Rights Reserved.
+
+syntax = "proto3";
+
+package tetrateio.api.operator.controlplane.v1alpha1;
+option go_package = "github.com/tetrateio/api/operator/controlplane/v1alpha1";
+
+import "operator/controlplane/v1alpha1/controlplane_component.proto";
+
+// ControlPlaneUserConfigSpec defines the desired installed state of control plane components.
+// The spec is a used to define a customization of the prebuilt configuration that is supplied with
+// TSB release. Because the spec is a customization API, specifying an empty ControlPlaneUserConfigSpec
+// results in a default values for control plane components.
+message ControlPlaneUserConfigSpec {
+  // Default root for docker image paths e.g. docker.io/tetrate
+  string hub = 11;
+  // Default version tag for docker images e.g. 0.6.9
+  string tag = 12;
+  // Namespace for running control plane components
+  string namespace = 13;
+
+  // Kubernetes resource settings, enablement and component-specific settings that are not internal
+  // to the component.
+  ControlPlaneComponentSetSpec components = 50;
+
+  // Overrides for default values.yaml. This is a validated pass-through to Helm templates.
+  // See the Helm installation options for schema details:
+  // Most of the thing that is available in ControlPlaneUserConfigSpec should be set above rather than
+  // using
+  // the
+  // passthrough. This includes Kubernetes resource settings for components in
+  // KubernetesResourcesSpec.
+  TypMapStringInterface values = 100;
+}
+
+// GOTYPE: map[string]interface{}
+message TypMapStringInterface {
+}
