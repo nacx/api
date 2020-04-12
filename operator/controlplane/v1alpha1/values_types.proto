@@ -105,4 +105,8 @@ message OpentelConfig {
 }
 
 message IOPConfig {
+  message Istiod {
+    int32 traceSamplingRate = 2;
+  }
+  Istiod istiod = 1;
 }

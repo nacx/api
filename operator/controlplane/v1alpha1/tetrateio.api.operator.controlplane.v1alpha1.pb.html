@@ -2,7 +2,7 @@
 title: tetrateio.api.operator.controlplane.v1alpha1
 layout: protoc-gen-docs
 generator: protoc-gen-docs
-number_of_entries: 29
+number_of_entries: 30
 ---
 <h2 id="Values">Values</h2>
 <section>
@@ -342,6 +342,27 @@ No
 </section>
 <h2 id="IOPConfig">IOPConfig</h2>
 <section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="IOPConfig-istiod">
+<td><code>istiod</code></td>
+<td><code><a href="#IOPConfig-Istiod">Istiod</a></code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
 </section>
 <h2 id="GlobalConfig-TSBServer">GlobalConfig.TSBServer</h2>
 <section>
@@ -651,6 +672,30 @@ No
 <tr id="TracingConfig-ZipkinConfig-token">
 <td><code>token</code></td>
 <td><code>string</code></td>
+<td>
+</td>
+<td>
+No
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<h2 id="IOPConfig-Istiod">IOPConfig.Istiod</h2>
+<section>
+<table class="message-fields">
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr id="IOPConfig-Istiod-traceSamplingRate">
+<td><code>traceSamplingRate</code></td>
+<td><code>int32</code></td>
 <td>
 </td>
 <td>
